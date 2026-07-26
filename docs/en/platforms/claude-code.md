@@ -2,6 +2,8 @@
 
 This GitHub repository can be used as a Claude Plugin Marketplace.
 
+The method relies on web search in some cases for fact-checking and gathering context. Confirm that the WebSearch/WebFetch tools are available in Claude Code.
+
 ## Install
 
 ```text

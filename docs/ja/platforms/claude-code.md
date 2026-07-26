@@ -2,6 +2,8 @@
 
 このGitHubリポジトリはClaude Plugin Marketplaceとして利用できます。
 
+本方法論は事実確認や文脈収集をWeb検索に依存する場面があります。Claude CodeでWebSearch/WebFetchツールが利用可能な設定になっていることを確認してください。
+
 ## インストール
 
 Claude Code内で実行します。
