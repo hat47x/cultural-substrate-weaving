@@ -47,6 +47,16 @@ Claude Desktop単体のプラグインブラウザーは、すでに登録済み
 
 クラウドセッションにプラグインブラウザーはありません。上記の`.claude/settings.json`の`extraKnownMarketplaces`と`enabledPlugins`をリポジトリに設定し、セッション開始時に自動導入させてください。
 
+## より簡単な代替方法：スキルのアップロード
+
+Plugin Marketplace経由の導入が難しい場合は、Claude本体の汎用Skills機能（Claude Desktop／claude.aiの「カスタマイズ」＞「スキル」）からのアップロードでも利用できます。マーケットプレイス登録やターミナル操作は不要です。
+
+1. GitHub Releasesから`openai-skill-metered`または`openai-skill-interactive`のZIPを取得します（[Codexで使う](codex.md)と共通のパッケージです）。
+2. Claude Desktopの「カスタマイズ」＞「スキル」＞「追加」＞「スキルをアップロード」から、そのZIPをそのままアップロードします。
+3. claude.ai Web版でも、設定の「スキル」から同様にアップロードできます。
+
+**注意**：この形式のSKILL.mdには明示呼び出し専用の設定（`disable-model-invocation`）が含まれていません。そのためPlugin版（`csw-method-ja`）と異なり、Claudeが関連すると判断した場面で自動的に呼び出されます（`openai-skill-interactive`と同様の挙動）。トークン消費を抑えたい場合は、上記のPlugin Marketplace経由の導入を優先してください。
+
 ## WSLセッション
 
 WSLセッションではプラグインを利用できません。
