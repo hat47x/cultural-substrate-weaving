@@ -30,8 +30,7 @@ Create separate GPTs per locale at first. Mixing two Knowledge languages in one 
 Separately from custom GPTs, you can also install this into ChatGPT's own Skills feature. This currently requires a ChatGPT Business, Enterprise, Healthcare, or Edu workspace — it isn't available on individual Free/Plus/Pro accounts. Workspace admins must also have the "Enable skills" and "Enable skill uploading" permissions turned on.
 
 1. Download the `openai-skill-metered` or `openai-skill-interactive` ZIP from GitHub Releases (the same package used in [Use with Codex](codex.md); both are treated identically for ChatGPT).
-2. In the ChatGPT sidebar, open Plugins and select the Skills tab.
-3. Go to Create → Upload and upload that ZIP as-is.
-4. ChatGPT scans the upload automatically. If it's marked "Needs Review" or "Blocked," review the content before proceeding.
+2. In ChatGPT web, go to Plugins → Skills → **+** → **Upload from computer**, and upload that ZIP as-is.
+3. ChatGPT scans the upload automatically. If it's marked "Needs Review" or "Blocked," review the content before proceeding.
 
 Personal skills don't sync between desktop and web/mobile, so upload separately on each surface if you use both.
