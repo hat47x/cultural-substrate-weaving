@@ -4,6 +4,14 @@ on:
   push:
     tags:
       - "v*"
+  release:
+    types: [published]
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: Existing release tag to (re-)publish assets for
+        required: true
+        type: string
 
 permissions:
   contents: write
@@ -13,13 +21,23 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v7
+        with:
+          ref: ${{ inputs.tag || github.ref }}
       - uses: actions/setup-python@v5
         with:
           python-version: "3.11"
       - run: make release-check
       - name: Verify tag and VERSION
-        run: test "${GITHUB_REF_NAME#v}" = "$(cat VERSION)"
-      - name: Create GitHub Release
+        env:
+          TAG: ${{ inputs.tag || github.ref_name }}
+        run: test "${TAG#v}" = "$(cat VERSION)"
+      - name: Publish release assets
         env:
           GH_TOKEN: ${{ github.token }}
-        run: gh release create "$GITHUB_REF_NAME" dist/packages/* dist/reports/* dist/release-manifest.json --generate-notes
+          TAG: ${{ inputs.tag || github.ref_name }}
+        run: |
+          if gh release view "$TAG" >/dev/null 2>&1; then
+            gh release upload "$TAG" dist/packages/* dist/reports/* dist/release-manifest.json --clobber
+          else
+            gh release create "$TAG" dist/packages/* dist/reports/* dist/release-manifest.json --generate-notes
+          fi
