@@ -24,3 +24,14 @@ If you maintain the repository, `python scripts/build.py` generates the same con
 Replace Instructions, remove old Knowledge files, upload the new files, and follow `deploy-checklist.md`.
 
 Create separate GPTs per locale at first. Mixing two Knowledge languages in one GPT can make retrieval terminology and response language less stable.
+
+## Alternative: upload it as a Skill (Business/Enterprise/Healthcare/Edu)
+
+Separately from custom GPTs, you can also install this into ChatGPT's own Skills feature. This currently requires a ChatGPT Business, Enterprise, Healthcare, or Edu workspace — it isn't available on individual Free/Plus/Pro accounts. Workspace admins must also have the "Enable skills" and "Enable skill uploading" permissions turned on.
+
+1. Download the `openai-skill-metered` or `openai-skill-interactive` ZIP from GitHub Releases (the same package used in [Use with Codex](codex.md); both are treated identically for ChatGPT).
+2. In the ChatGPT sidebar, open Plugins and select the Skills tab.
+3. Go to Create → Upload and upload that ZIP as-is.
+4. ChatGPT scans the upload automatically. If it's marked "Needs Review" or "Blocked," review the content before proceeding.
+
+Personal skills don't sync between desktop and web/mobile, so upload separately on each surface if you use both.

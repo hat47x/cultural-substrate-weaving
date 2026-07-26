@@ -28,3 +28,14 @@ GPTの作成・編集はChatGPTのWeb版で行います。
 5. GPTのバージョン履歴を確認して保存します。
 
 GPTsは通常のChatGPTメモリを正本として使わないため、詳細方法論はInstructionsとKnowledgeで管理します。
+
+## 代替方法：Skillsへのアップロード（Business/Enterprise/Healthcare/Edu向け）
+
+カスタムGPTとは別に、ChatGPT本体のSkills機能からのアップロードでも利用できます。ただし現状はChatGPT Business・Enterprise・Healthcare・Eduのワークスペースのみ利用可能で、個人のFree/Plus/Proアカウントでは使えません。ワークスペース管理者が「Enable skills」「Enable skill uploading」の権限を有効にしている必要もあります。
+
+1. GitHub Releasesから`openai-skill-metered`または`openai-skill-interactive`のZIPを取得します（[Codexで使う](codex.md)と共通のパッケージです。ChatGPT向けにはどちらも同じ内容として扱われます）。
+2. ChatGPTのサイドバーで「Plugins」を開き、「Skills」タブを選びます。
+3. 「Create」＞「Upload」から、そのZIPをそのままアップロードします。
+4. アップロード後、ChatGPT側で自動スキャンが行われます。「Needs Review」や「Blocked」と表示された場合は、内容を確認したうえで対応してください。
+
+個人用Skillsはデスクトップ版とWeb/モバイル版で同期されないため、両方で使う場合はそれぞれの環境で個別にアップロードしてください。
