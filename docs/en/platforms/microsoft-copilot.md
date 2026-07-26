@@ -17,8 +17,9 @@ If you have a Microsoft 365 Copilot license, you can create the agent directly w
 3. Fill in **Name** and **Description** (30 and 1,000 characters respectively).
 4. Paste the contents of the extracted `instructions.txt` into **Instructions** as-is. It's already validated to stay within the 8,000-character limit at build time.
 5. Under **Knowledge**, upload each file under `knowledge/`. Agent Builder doesn't accept Markdown (`.md`), so rename each file's extension to `.txt` before uploading (the content is plain text, so renaming is enough). Drag and drop them, or use the upload arrow icon. No SharePoint site is required (up to 20 knowledge sources).
-6. Test both activation and non-activation examples on the **Try it** tab.
-7. After creating the agent, use the **Share** button to share it directly with specific people or groups. To make it available org-wide, use the **…** menu → **Submit to your org catalog**; an admin reviews and publishes it to the organization's Agent Store.
+6. Also under **Knowledge**, enable **Search all websites**. The method relies on web search for fact-checking and gathering context in some cases, so leaving it off reduces judgment quality.
+7. Test both activation and non-activation examples on the **Try it** tab.
+8. After creating the agent, use the **Share** button to share it directly with specific people or groups. To make it available org-wide, use the **…** menu → **Submit to your org catalog**; an admin reviews and publishes it to the organization's Agent Store.
 
 ## Method B: Agents Toolkit CLI (advanced / org-managed deployment)
 
