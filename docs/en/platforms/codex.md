@@ -1,5 +1,7 @@
 # Use with Codex
 
+The method relies on web search in some cases for fact-checking and gathering context. Confirm that Codex's network access / web search tool is enabled.
+
 ## Install
 
 1. Download an OpenAI Skill ZIP for your locale from GitHub Releases.

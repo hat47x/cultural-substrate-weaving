@@ -1,5 +1,7 @@
 # Codexで使う
 
+本方法論は事実確認や文脈収集をWeb検索に依存する場面があります。Codexのネットワークアクセス／Web検索ツールが利用可能な設定になっていることを確認してください。
+
 ## 最も簡単な方法
 
 1. GitHub Releasesから`openai-skill-metered`または`openai-skill-interactive`のZIPを取得します。

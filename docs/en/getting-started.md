@@ -2,6 +2,8 @@
 
 This repository serves two audiences.
 
+The method assumes it can pull in current facts and context via dynamic web search. Enable web search / browsing on whichever platform you use; see each platform guide for how.
+
 ## People who use the method
 
 Download the ZIP for your platform and locale from GitHub Releases. You do not need to edit the repository.
