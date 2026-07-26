@@ -55,7 +55,7 @@ def build_claude(locale: str, config: dict, router: str, claude_config: dict) ->
         "name": c["plugin_name"],
         "description": c["description"],
         "version": version(),
-        "author": {"name": "cultural-substrate-weaving contributors"},
+        "author": {"name": "hat47x"},
         "homepage": "https://github.com/hat47x/cultural-substrate-weaving",
         "repository": "https://github.com/hat47x/cultural-substrate-weaving",
         "license": "MIT",
@@ -74,7 +74,7 @@ def build_claude(locale: str, config: dict, router: str, claude_config: dict) ->
     shutil.copytree(plugin_root, dist_root / "plugins" / c["plugin_name"], dirs_exist_ok=True)
     standalone = {
         "name": f"cultural-substrate-weaving-{locale_short(locale)}",
-        "owner": {"name": "cultural-substrate-weaving contributors"},
+        "owner": {"name": "hat47x"},
         "description": c["description"],
         "version": version(),
         "plugins": [{
@@ -199,7 +199,7 @@ def build_canonical(locale: str) -> None:
 def write_root_marketplace(plugin_entries: list[dict]) -> None:
     marketplace = {
         "name": "cultural-substrate-weaving",
-        "owner": {"name": "cultural-substrate-weaving contributors"},
+        "owner": {"name": "hat47x"},
         "description": "Localized plugins for structural metacognition and target-specific validation.",
         "version": version(),
         "plugins": plugin_entries,
