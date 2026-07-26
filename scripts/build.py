@@ -56,8 +56,8 @@ def build_claude(locale: str, config: dict, router: str, claude_config: dict) ->
         "description": c["description"],
         "version": version(),
         "author": {"name": "cultural-substrate-weaving contributors"},
-        "homepage": "https://github.com/OWNER/cultural-substrate-weaving",
-        "repository": "https://github.com/OWNER/cultural-substrate-weaving",
+        "homepage": "https://github.com/hat47x/cultural-substrate-weaving",
+        "repository": "https://github.com/hat47x/cultural-substrate-weaving",
         "license": "MIT",
     }
     write_text(

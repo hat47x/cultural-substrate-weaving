@@ -4,10 +4,8 @@ This GitHub repository can be used as a Claude Plugin Marketplace.
 
 ## Install
 
-Replace `OWNER` with the actual GitHub user or organization.
-
 ```text
-/plugin marketplace add OWNER/cultural-substrate-weaving
+/plugin marketplace add hat47x/cultural-substrate-weaving
 /plugin install csw-method-en@cultural-substrate-weaving
 /reload-plugins
 ```

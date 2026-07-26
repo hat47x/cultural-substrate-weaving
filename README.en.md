@@ -35,7 +35,7 @@ Cultural, philosophical, and traditional frameworks are not the primary purpose.
 Python 3.11 or later is required. No third-party Python packages are needed.
 
 ```bash
-git clone https://github.com/OWNER/cultural-substrate-weaving.git
+git clone https://github.com/hat47x/cultural-substrate-weaving.git
 cd cultural-substrate-weaving
 make check
 make package

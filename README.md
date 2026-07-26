@@ -35,7 +35,7 @@
 Python 3.11以上が必要です。外部Pythonパッケージは不要です。
 
 ```bash
-git clone https://github.com/OWNER/cultural-substrate-weaving.git
+git clone https://github.com/hat47x/cultural-substrate-weaving.git
 cd cultural-substrate-weaving
 make check
 make package

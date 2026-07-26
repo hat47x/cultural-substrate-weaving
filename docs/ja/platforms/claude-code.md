@@ -4,10 +4,10 @@
 
 ## インストール
 
-Claude Code内で実行します。`OWNER`は実際のGitHubユーザーまたは組織名へ置き換えてください。
+Claude Code内で実行します。
 
 ```text
-/plugin marketplace add OWNER/cultural-substrate-weaving
+/plugin marketplace add hat47x/cultural-substrate-weaving
 /plugin install csw-method-ja@cultural-substrate-weaving
 /reload-plugins
 ```
@@ -15,7 +15,7 @@ Claude Code内で実行します。`OWNER`は実際のGitHubユーザーまた�
 CLIから追加する場合:
 
 ```bash
-claude plugin marketplace add OWNER/cultural-substrate-weaving
+claude plugin marketplace add hat47x/cultural-substrate-weaving
 ```
 
 ## 呼び出し
