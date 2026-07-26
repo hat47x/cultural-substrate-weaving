@@ -49,6 +49,16 @@ Once registered, install it from Desktop via **+** → **Plugins** → **Add plu
 
 The plugin browser isn't available in cloud sessions. Configure `extraKnownMarketplaces` and `enabledPlugins` in `.claude/settings.json` as shown above so the plugin installs automatically at session start.
 
+## A simpler alternative: upload it as a Skill
+
+If the Plugin Marketplace route is inconvenient, you can instead use Claude's general-purpose Skills feature (Customize → Skills in Claude Desktop or claude.ai). No marketplace registration or terminal use is required.
+
+1. Download the `openai-skill-metered` or `openai-skill-interactive` ZIP from GitHub Releases (the same package used in [Use with Codex](codex.md)).
+2. In Claude Desktop, go to Customize → Skills → Add → Upload a skill, and upload that ZIP as-is.
+3. On claude.ai web, the Skills settings support the same upload.
+
+**Caveat**: this SKILL.md doesn't set the explicit-invocation-only flag (`disable-model-invocation`) that the Plugin package (`csw-method-en`) does. So unlike the plugin, Claude will invoke it automatically whenever it judges the skill relevant (the same behavior as `openai-skill-interactive`). If you want to minimize token consumption, prefer the Plugin Marketplace route above instead.
+
 ## WSL sessions
 
 Plugins aren't available in WSL sessions.
