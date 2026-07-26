@@ -1,0 +1,16 @@
+{
+  "router_max_bytes": {
+    "ja-JP": 10000,
+    "en-US": 12000
+  },
+  "openai_skill_md_max_bytes": {
+    "ja-JP": 11000,
+    "en-US": 13000
+  },
+  "claude_skill_md_max_bytes": {
+    "ja-JP": 11000,
+    "en-US": 13000
+  },
+  "m365_instructions_max_chars": 8000,
+  "gpt_knowledge_max_files": 10
+}

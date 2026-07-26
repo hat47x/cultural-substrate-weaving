@@ -1,0 +1,39 @@
+# Generated artifacts
+dist/
+.tmp/
+build/
+*.zip
+
+# Python
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.venv/
+venv/
+
+# Environment and secrets
+.env
+.env.*
+!.env.*.example
+*.local
+*.secret
+
+# Microsoft 365 Agents Toolkit generated files
+appPackage/build/
+env/.env.*
+!env/.env.*.example
+
+# Editors and OS
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+
+# Coverage and logs
+.coverage
+htmlcov/
+*.log

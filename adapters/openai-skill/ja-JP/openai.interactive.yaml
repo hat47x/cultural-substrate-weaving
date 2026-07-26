@@ -1,0 +1,6 @@
+interface:
+  display_name: "Cultural Substrate Weaving — 日本語"
+  short_description: "構造を対象側で検証し、対象固有の判断・設計へ変換する"
+  default_prompt: "通常手法の基準線を置き、有意な増分が見込める場合だけ限定または全体適用してください。"
+policy:
+  allow_implicit_invocation: true

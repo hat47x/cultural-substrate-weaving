@@ -1,0 +1,11 @@
+{
+  "name": "csw-method-ja",
+  "description": "構造を対象側で検証し、対象固有の判断・設計へ変換する日本語版。",
+  "version": "0.1.0",
+  "author": {
+    "name": "cultural-substrate-weaving contributors"
+  },
+  "homepage": "https://github.com/OWNER/cultural-substrate-weaving",
+  "repository": "https://github.com/OWNER/cultural-substrate-weaving",
+  "license": "MIT"
+}

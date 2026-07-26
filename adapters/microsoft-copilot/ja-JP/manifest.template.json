@@ -1,0 +1,33 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/teams/v1.28/MicrosoftTeams.schema.json",
+  "manifestVersion": "1.28",
+  "version": "{{VERSION}}",
+  "id": "${{M365_APP_ID}}",
+  "developer": {
+    "name": "${{DEVELOPER_NAME}}",
+    "websiteUrl": "${{DEVELOPER_WEBSITE_URL}}",
+    "privacyUrl": "${{PRIVACY_URL}}",
+    "termsOfUseUrl": "${{TERMS_URL}}"
+  },
+  "icons": {
+    "outline": "outline.png",
+    "color": "color.png"
+  },
+  "name": {
+    "short": "構造メタ認知",
+    "full": "Cultural Substrate Weaving — 日本語"
+  },
+  "description": {
+    "short": "構造を対象側で検証し、対象固有の判断へ変換します。",
+    "full": "文筆、設計、分析、開発などで関係、接続の欠落、反作用、時間差、不可逆性を検査し、対象固有の判断、表現、設計、手順へ変換するMicrosoft 365 Copilotエージェントです。"
+  },
+  "accentColor": "#F4F1EA",
+  "copilotAgents": {
+    "declarativeAgents": [
+      {
+        "id": "cultural-substrate-weaving-ja-jp",
+        "file": "declarativeAgent.json"
+      }
+    ]
+  }
+}

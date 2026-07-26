@@ -1,0 +1,14 @@
+{
+  "ja-JP": {
+    "plugin_name": "csw-method-ja",
+    "skill_name": "cultural-substrate-weaving-ja",
+    "description": "構造を対象側で検証し、対象固有の判断・設計へ変換する日本語版。",
+    "display": "Cultural Substrate Weaving — 日本語"
+  },
+  "en-US": {
+    "plugin_name": "csw-method-en",
+    "skill_name": "cultural-substrate-weaving-en",
+    "description": "English structural metacognition method with target-side validation and target-specific transformation.",
+    "display": "Cultural Substrate Weaving — English"
+  }
+}

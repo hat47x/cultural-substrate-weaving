@@ -1,0 +1,107 @@
+{
+  "name": "cultural-substrate-weaving",
+  "version": "0.1.0",
+  "canonical_locale": "ja-JP",
+  "locales": {
+    "ja-JP": {
+      "label": "日本語",
+      "status": "canonical",
+      "description": "文筆・設計・分析・開発など、あらゆる構造を扱う領域でメタ認知を高め、対象固有の関係・欠落・反作用・時間差を探索・検証・変換する汎用AIスキル。文化的・思想的・伝統的体系は、補助モデルとして選択的に活用する。"
+    },
+    "en-US": {
+      "label": "English",
+      "status": "translated",
+      "review_note": "Initial English translation is usable, but independent human review is recommended before authoritative publication.",
+      "description": "A general-purpose AI method for improving metacognition wherever structure is analyzed, designed, written, or implemented. It explores, validates, and transforms target-specific relationships, missing connections, feedback effects, and time lags; cultural, philosophical, and traditional frameworks are optional auxiliary models."
+    }
+  },
+  "router": "ROUTER.md",
+  "modules": [
+    {
+      "id": "activation",
+      "source": "core/activation.md",
+      "skill_reference": "00-activation.md"
+    },
+    {
+      "id": "principles-and-constraints",
+      "source": "core/principles-and-constraints.md",
+      "skill_reference": "00-principles-and-constraints.md"
+    },
+    {
+      "id": "iteration",
+      "source": "core/iteration.md",
+      "skill_reference": "00-iteration.md"
+    },
+    {
+      "id": "scope-and-facts",
+      "source": "methods/scope-and-facts.md",
+      "skill_reference": "01-scope-and-facts.md"
+    },
+    {
+      "id": "system-selection",
+      "source": "methods/system-selection.md",
+      "skill_reference": "02-system-selection.md"
+    },
+    {
+      "id": "transformation",
+      "source": "methods/transformation.md",
+      "skill_reference": "03-transformation.md"
+    },
+    {
+      "id": "generation-and-validation",
+      "source": "methods/generation-and-validation.md",
+      "skill_reference": "04-generation-and-validation.md"
+    },
+    {
+      "id": "character-and-taiheki",
+      "source": "domains/character-and-taiheki.md",
+      "skill_reference": "05-character-and-taiheki.md"
+    },
+    {
+      "id": "output-and-collaboration",
+      "source": "domains/output-and-collaboration.md",
+      "skill_reference": "06-output-and-collaboration.md"
+    },
+    {
+      "id": "creative-patterns",
+      "source": "domains/creative-patterns.md",
+      "skill_reference": "07-creative-patterns.md"
+    },
+    {
+      "id": "governance-and-records",
+      "source": "governance/governance-and-records.md",
+      "skill_reference": "08-governance-and-records.md"
+    },
+    {
+      "id": "evaluation-and-domains",
+      "source": "governance/evaluation-and-domains.md",
+      "skill_reference": "09-evaluation-and-domains.md"
+    }
+  ],
+  "knowledge_groups": {
+    "00-core.md": [
+      "core/activation.md",
+      "core/principles-and-constraints.md",
+      "core/iteration.md"
+    ],
+    "01-analysis-methods.md": [
+      "methods/scope-and-facts.md",
+      "methods/system-selection.md"
+    ],
+    "02-transformation-and-generation.md": [
+      "methods/transformation.md",
+      "methods/generation-and-validation.md"
+    ],
+    "03-character-and-creative.md": [
+      "domains/character-and-taiheki.md",
+      "domains/creative-patterns.md"
+    ],
+    "04-output-and-collaboration.md": [
+      "domains/output-and-collaboration.md"
+    ],
+    "05-governance-and-evaluation.md": [
+      "governance/governance-and-records.md",
+      "governance/evaluation-and-domains.md"
+    ]
+  }
+}

@@ -1,0 +1,98 @@
+{
+  "canonical_locale": "ja-JP",
+  "supported_locales": [
+    "ja-JP",
+    "en-US"
+  ],
+  "policy": "Canonical Japanese changes require translation-status review before release.",
+  "locales": {
+    "ja-JP": {
+      "status": "canonical"
+    },
+    "en-US": {
+      "status": "translated",
+      "human_review": "recommended",
+      "source_version": "0.2.0"
+    }
+  },
+  "files": {
+    "ROUTER.md": {
+      "ja_sha256": "3d6b09ce684f28a7f76054674c775ae9c23fd5d967750039e90b1aa69333d8db",
+      "en_present": true,
+      "en_source_ja_sha256": "3d6b09ce684f28a7f76054674c775ae9c23fd5d967750039e90b1aa69333d8db",
+      "en_status": "translated"
+    },
+    "core/activation.md": {
+      "ja_sha256": "809b7b5a6e271bb65db9436686ad77ce54328bdf194495572c2ab6c90e3b57c8",
+      "en_present": true,
+      "en_source_ja_sha256": "809b7b5a6e271bb65db9436686ad77ce54328bdf194495572c2ab6c90e3b57c8",
+      "en_status": "translated"
+    },
+    "core/iteration.md": {
+      "ja_sha256": "97333d697f0f765b09f6f8e8e41c7b7269c327219b82201c4362dd1e1bc63f2b",
+      "en_present": true,
+      "en_source_ja_sha256": "97333d697f0f765b09f6f8e8e41c7b7269c327219b82201c4362dd1e1bc63f2b",
+      "en_status": "translated"
+    },
+    "core/principles-and-constraints.md": {
+      "ja_sha256": "6cc5e4d1c3d48724434833a50a2c107564703f1f61fd8dad6b6135d4e9a83e9a",
+      "en_present": true,
+      "en_source_ja_sha256": "6cc5e4d1c3d48724434833a50a2c107564703f1f61fd8dad6b6135d4e9a83e9a",
+      "en_status": "translated"
+    },
+    "domains/character-and-taiheki.md": {
+      "ja_sha256": "fd5fb7b0316a4001acde003ced6f8d2e49727558a2db4e11139cc553af553916",
+      "en_present": true,
+      "en_source_ja_sha256": "fd5fb7b0316a4001acde003ced6f8d2e49727558a2db4e11139cc553af553916",
+      "en_status": "translated"
+    },
+    "domains/creative-patterns.md": {
+      "ja_sha256": "d07353cb7c4ffc961ba527741d3c7b3163f532605dc6ef1e7a32c319ef94d49d",
+      "en_present": true,
+      "en_source_ja_sha256": "d07353cb7c4ffc961ba527741d3c7b3163f532605dc6ef1e7a32c319ef94d49d",
+      "en_status": "translated"
+    },
+    "domains/output-and-collaboration.md": {
+      "ja_sha256": "b93ab6330b48222fe1926403d185ff202ee327c02610e685c1a8f6d5635617e5",
+      "en_present": true,
+      "en_source_ja_sha256": "b93ab6330b48222fe1926403d185ff202ee327c02610e685c1a8f6d5635617e5",
+      "en_status": "translated"
+    },
+    "governance/evaluation-and-domains.md": {
+      "ja_sha256": "5098bd11bd0f8797acb49d97e64bc3dacdfb4938f3346bc4be390c270e941629",
+      "en_present": true,
+      "en_source_ja_sha256": "5098bd11bd0f8797acb49d97e64bc3dacdfb4938f3346bc4be390c270e941629",
+      "en_status": "translated"
+    },
+    "governance/governance-and-records.md": {
+      "ja_sha256": "e0c9c3076d340a84a0c37114fe74f0844b7e832ceb336738ff1b223ac7ae9525",
+      "en_present": true,
+      "en_source_ja_sha256": "e0c9c3076d340a84a0c37114fe74f0844b7e832ceb336738ff1b223ac7ae9525",
+      "en_status": "translated"
+    },
+    "methods/generation-and-validation.md": {
+      "ja_sha256": "011f49ec39059ec6b9a7fd2a2281caee0db1a0d7a5c194baea063fcb56bd842b",
+      "en_present": true,
+      "en_source_ja_sha256": "011f49ec39059ec6b9a7fd2a2281caee0db1a0d7a5c194baea063fcb56bd842b",
+      "en_status": "translated"
+    },
+    "methods/scope-and-facts.md": {
+      "ja_sha256": "a5ddd8c5486e8ed1259dca4046a1d9d8458c1be028f9930490c84c11b38a0a47",
+      "en_present": true,
+      "en_source_ja_sha256": "a5ddd8c5486e8ed1259dca4046a1d9d8458c1be028f9930490c84c11b38a0a47",
+      "en_status": "translated"
+    },
+    "methods/system-selection.md": {
+      "ja_sha256": "660fe6461a8b01c7829408ed889cbfa6d5ec95213a452dafe221b04eb167d8d4",
+      "en_present": true,
+      "en_source_ja_sha256": "660fe6461a8b01c7829408ed889cbfa6d5ec95213a452dafe221b04eb167d8d4",
+      "en_status": "translated"
+    },
+    "methods/transformation.md": {
+      "ja_sha256": "f8e3a0ab5d23d21d21dc1c377b366a3c3f11a632d161289807305b4c1b11e44a",
+      "en_present": true,
+      "en_source_ja_sha256": "f8e3a0ab5d23d21d21dc1c377b366a3c3f11a632d161289807305b4c1b11e44a",
+      "en_status": "translated"
+    }
+  }
+}

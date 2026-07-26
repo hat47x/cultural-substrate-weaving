@@ -1,0 +1,21 @@
+version: 1.0.0
+environmentFolderPath: ./env
+
+provision:
+  - uses: copilotAgent/publish
+    with:
+      appPackagePath: ./appPackage/build/appPackage.${{TEAMSFX_ENV}}.zip
+      scope: ${{AGENT_SCOPE}}
+    writeToEnvironmentFile:
+      titleId: M365_TITLE_ID
+      appId: M365_PUBLISHED_APP_ID
+      shareLink: M365_SHARE_LINK
+
+publish:
+  - uses: copilotAgent/publish
+    with:
+      appPackagePath: ./appPackage/build/appPackage.${{TEAMSFX_ENV}}.zip
+      scope: tenant
+    writeToEnvironmentFile:
+      titleId: M365_TENANT_TITLE_ID
+      appId: M365_TENANT_APP_ID

@@ -1,0 +1,33 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/teams/v1.28/MicrosoftTeams.schema.json",
+  "manifestVersion": "1.28",
+  "version": "{{VERSION}}",
+  "id": "${{M365_APP_ID}}",
+  "developer": {
+    "name": "${{DEVELOPER_NAME}}",
+    "websiteUrl": "${{DEVELOPER_WEBSITE_URL}}",
+    "privacyUrl": "${{PRIVACY_URL}}",
+    "termsOfUseUrl": "${{TERMS_URL}}"
+  },
+  "icons": {
+    "outline": "outline.png",
+    "color": "color.png"
+  },
+  "name": {
+    "short": "Structure Meta",
+    "full": "Cultural Substrate Weaving — English"
+  },
+  "description": {
+    "short": "Validates structures and produces target-specific judgments.",
+    "full": "A Microsoft 365 Copilot agent for structural metacognition across writing, design, analysis, and development, examining relationships, missing connections, feedback effects, time lags, and irreversible choices."
+  },
+  "accentColor": "#F4F1EA",
+  "copilotAgents": {
+    "declarativeAgents": [
+      {
+        "id": "cultural-substrate-weaving-en-us",
+        "file": "declarativeAgent.json"
+      }
+    ]
+  }
+}

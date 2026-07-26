@@ -1,0 +1,41 @@
+name: Validate Microsoft 365 Copilot packages
+
+on:
+  workflow_dispatch:
+    inputs:
+      locale:
+        description: Locale to validate
+        required: true
+        default: en-US
+        type: choice
+        options: [ja-JP, en-US]
+      sharepoint_site_url:
+        description: Optional SharePoint site URL
+        required: false
+        type: string
+
+permissions:
+  contents: read
+
+jobs:
+  package:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - run: npm install -g @microsoft/m365agentstoolkit-cli
+      - run: python scripts/init_m365_env.py --locale "${{ inputs.locale }}" --env dev --non-interactive --sharepoint-url "${{ inputs.sharepoint_site_url }}"
+      - run: python scripts/build.py
+      - working-directory: dist/${{ inputs.locale }}/microsoft-copilot/agent-project
+        run: atk package --env dev
+      - working-directory: dist/${{ inputs.locale }}/microsoft-copilot/agent-project
+        run: atk validate --env dev
+      - uses: actions/upload-artifact@v4
+        with:
+          name: microsoft-365-copilot-${{ inputs.locale }}
+          path: dist/${{ inputs.locale }}/microsoft-copilot/agent-project/appPackage/build/

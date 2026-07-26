@@ -1,0 +1,61 @@
+---
+name: cultural-substrate-weaving-ja
+description: 文筆・設計・分析・開発など、あらゆる構造を扱う領域でメタ認知を高め、対象固有の関係・欠落・反作用・時間差を探索・検証・変換する汎用AIスキル。文化的・思想的・伝統的体系は、補助モデルとして選択的に活用する。
+disable-model-invocation: true
+---
+
+# 文化的体系を対象固有の構造へ変換・統合する技法
+
+**外部体系から得た構造は、対象へ返して検証する。残った構造は、体系ではなく対象に属する。**
+
+文化的体系は、構造候補の供給源として使う。候補の採否は、対象の事実・目的・意図・領域条件で決める。採用した構造を、対象固有の表現・設計・手順へ変換する。
+
+規則が競合する場合は、四つの評価観点と五つの必須制約を優先する。個別規則は、上位原則だけでは判断できない事項に限定する。判断に迷った場合は、冒頭の原則へ戻る。
+
+**本スキルの列挙は、確認する方向を示す例示であり、閉じた集合ではない。** 該当項目がない場合は、対象ごとの動的層に必要な項目を定義する。列挙の充足を達成条件とせず、列挙にない事象も検討対象に含める。複数の対象で同じ項目が必要になった場合に限り、静的規則への追加を再検討する。
+
+## 最小実行手順
+
+1. **基準線を置く**：領域固有の手法だけで得られる理解を確認する。
+2. **増分を判定する**：関係、接続の欠落、反作用、時間差、不可逆性、超過性の探索が新しい判断を生むかを確認する。
+3. **適用範囲を選ぶ**：通常手法／限定適用／全体適用のいずれかを選ぶ。判断が拮抗する場合は通常手法または限定適用から始める。
+4. **必要な参照だけを読む**：各参照から得たい情報を一文で定義し、目的を説明できるファイルだけを読む。
+5. **探索・検証・変換を行う**：体系から構造候補を取得し、対象側で採否を決め、対象固有の表現・設計・手順へ変換する。
+6. **対象側の増分で止める**：抽象度や説明量だけが増え、新しい事実・関係・条件・反証・判断が生じない場合は終了する。
+
+### 常時維持する判断軸
+
+- **対象固有性**：分類で説明できない具体性と例外を保持する。
+- **可視性**：受け手が判断できる情報を示し、明示による損失も確認する。
+- **生成性**：超過性・自律性・再生成性を確認する。
+- **非競合性**：共有可能な価値と有限資源を区別する。
+- **必須制約**：対象固有の目的、受け手の判断余地、受容可能な明示度、有限資源、書き手の意図と対象側の必要を保持する。
+
+## 参照ファイルを選ぶ
+
+明白な非発動・限定適用では、`SKILL.md`の最小実行手順だけで判定を開始できる。詳細な判断が必要になった時点で、次の参照を追加する。
+
+| 判断・処理 | 読むファイル |
+|---|---|
+| 発動判断が曖昧、明示指定の適合性、途中終了 | [00-activation.md](references/00-activation.md) |
+| 四観点・五制約の競合、高影響・不可逆・明示度の判断 | [00-principles-and-constraints.md](references/00-principles-and-constraints.md) |
+| 一度で定まらない分析、外部化、周回、増分停止 | [00-iteration.md](references/00-iteration.md) |
+| 適用範囲、主要な変化構造、基準線、事実整理 | [01-scope-and-facts.md](references/01-scope-and-facts.md) |
+| 体系・先行事例の選定、同種性、不採用条件 | [02-system-selection.md](references/02-system-selection.md) |
+| 関係種別、欠落と接続、複数体系、対象専用手順 | [03-transformation.md](references/03-transformation.md) |
+| 候補生成、超過性、価値と資源、追加内容の採否 | [04-generation-and-validation.md](references/04-generation-and-validation.md) |
+| 人物造形、身体的一貫性、体癖 | [05-character-and-taiheki.md](references/05-character-and-taiheki.md) |
+| 受け手、明示度、協働者、引継ぎ | [06-output-and-collaboration.md](references/06-output-and-collaboration.md) |
+| 経験、反復、時間、深層、笑い、感情、連作 | [07-creative-patterns.md](references/07-creative-patterns.md) |
+| 静的・動的層、終了条件、判断記録、規則整理 | [08-governance-and-records.md](references/08-governance-and-records.md) |
+| 最終評価、領域別の適用境界 | [09-evaluation-and-domains.md](references/09-evaluation-and-domains.md) |
+
+### 読み込み順
+
+- **限定適用**：対象に直接必要な参照を一つ選んで開始する。判断軸の詳細が必要な場合だけ`00-principles-and-constraints.md`を追加する。
+- **全体適用**：`00-principles-and-constraints.md`と`01-scope-and-facts.md`から始める。体系選定時に`02-system-selection.md`、変換時に`03-transformation.md`、確定前に`09-evaluation-and-domains.md`を読む。
+- **反復分析**：一度の探索・検証・変換で構造が定まらない場合に`00-iteration.md`を読む。
+- **高影響・不可逆な判断**：`00-principles-and-constraints.md`と`08-governance-and-records.md`を読む。
+
+参照数は固定しない。新しい情報種別が必要な場合に追加する。参照を一括して読み込まず、対象固有の追加項目は動的層に置く。
+

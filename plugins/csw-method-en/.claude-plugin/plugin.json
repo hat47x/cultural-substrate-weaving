@@ -1,0 +1,11 @@
+{
+  "name": "csw-method-en",
+  "description": "English structural metacognition method with target-side validation and target-specific transformation.",
+  "version": "0.1.0",
+  "author": {
+    "name": "cultural-substrate-weaving contributors"
+  },
+  "homepage": "https://github.com/OWNER/cultural-substrate-weaving",
+  "repository": "https://github.com/OWNER/cultural-substrate-weaving",
+  "license": "MIT"
+}

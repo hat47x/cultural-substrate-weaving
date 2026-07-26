@@ -1,0 +1,11 @@
+[project]
+name = "cultural-substrate-weaving-build"
+version = "0.1.0"
+description = "Build and validate multilingual platform adapters for cultural-substrate-weaving"
+requires-python = ">=3.11"
+license = {text = "MIT"}
+
+[tool.csw]
+canonical_locale = "ja-JP"
+source_root = "src"
+dist_root = "dist"

@@ -1,0 +1,36 @@
+{
+  "ja-JP": [
+    {
+      "id": "ja-ordinary-proofreading",
+      "request": "この文章の誤字を直してください。",
+      "expected": "no_activation"
+    },
+    {
+      "id": "ja-limited-character",
+      "request": "人物の緊張時と弛緩時の一貫性だけ確認してください。",
+      "expected": "limited"
+    },
+    {
+      "id": "ja-full-system",
+      "request": "複数主体、責任、時間差、不可逆性を含む制度案の構造を設計してください。",
+      "expected": "full"
+    }
+  ],
+  "en-US": [
+    {
+      "id": "en-ordinary-proofreading",
+      "request": "Correct the typos in this paragraph.",
+      "expected": "no_activation"
+    },
+    {
+      "id": "en-limited-character",
+      "request": "Check only the character's consistency under tension and relaxation.",
+      "expected": "limited"
+    },
+    {
+      "id": "en-full-system",
+      "request": "Design a policy structure involving multiple actors, responsibility, time lags, and irreversible decisions.",
+      "expected": "full"
+    }
+  ]
+}

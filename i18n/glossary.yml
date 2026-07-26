@@ -1,0 +1,29 @@
+canonical_locale: ja-JP
+terms:
+  対象固有性:
+    en: target specificity
+    note_ja: 既存分類に還元できない具体性、例外、対象との距離を含む。
+  他者性:
+    en: otherness
+    note_ja: 対象を完全に説明・所有したとみなさないための距離。
+  超過性:
+    en: generative excess
+    note_ja: 割り当てられた機能を超えて、想定外の利用・意味・関係を生む性質。
+  自律性:
+    en: autonomy
+    note_ja: 中心要素や作成者が不在でも機能する性質。
+  再生成性:
+    en: regenerative capacity
+    note_ja: 再読・再利用・再検討によって新しい理解や価値を生む性質。
+  非競合性:
+    en: non-rivalry
+    note_ja: 共有しても価値が減らず、維持または拡大し得る性質。
+  接続の欠落:
+    en: missing connection
+    note_ja: 要素自体ではなく、順序・責任・情報流などの接続が欠けた状態。
+  対象へ返して検証する:
+    en: return the structure to the target for validation
+    note_ja: 外部体系の権威ではなく、対象側の事実・目的・意図・条件で採否を決める。
+  体癖:
+    en: Taiheki
+    note_ja: 英訳では固有名詞として保持し、body-pattern typologyを補足説明に使う。
