@@ -59,4 +59,4 @@ make package
 
 ## ライセンス
 
-MIT Licenseです。公開者情報、Microsoft 365 Agentのプライバシーポリシー等は、公開前に実際の情報へ置き換えてください。
+MIT License
