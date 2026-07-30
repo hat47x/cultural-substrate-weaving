@@ -38,6 +38,9 @@ Organize facts using these rules.
 - Count the same evidence only once at the same level.
 - Define comparison axes before comparing multiple targets.
 - Preserve contradictions and multiple views before integration.
+- When judging something "sparse" or "missing," state the comparison. Without one, record "measured value only; normality withheld." Where the count is three or fewer, state the count.
+
+When the material covers only part of the target, record that coverage. Partial material still settles static classification, such as the type of a relationship. Direction, precedence, and behavior over time require the whole, and extrapolating them from a part can invert them. **Treat observations from partial material as hypotheses and do not use them to design a reproducible procedure.**
 
 Also extract recurring objects, placements, vocabulary, bodily sensations, and verbs that express relationships inside the target.
 
