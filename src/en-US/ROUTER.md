@@ -43,6 +43,7 @@ For obvious non-application or limited application, begin with the minimum proce
 | Experience, repetition, time, depth, humor, emotion, and series | [07-creative-patterns.md](domains/creative-patterns.md) |
 | Static and dynamic layers, exit conditions, decision records, and rule maintenance | [08-governance-and-records.md](governance/governance-and-records.md) |
 | Final evaluation and domain-specific boundaries | [09-evaluation-and-domains.md](governance/evaluation-and-domains.md) |
+| Integrating many fragments, carding, and detecting blanks | [10-integration.md](methods/integration.md) |
 
 ### Loading order
 

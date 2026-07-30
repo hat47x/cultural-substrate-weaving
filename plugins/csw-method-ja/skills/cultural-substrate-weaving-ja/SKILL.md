@@ -49,6 +49,7 @@ disable-model-invocation: true
 | 経験、反復、時間、深層、笑い、感情、連作 | [07-creative-patterns.md](references/07-creative-patterns.md) |
 | 静的・動的層、終了条件、判断記録、規則整理 | [08-governance-and-records.md](references/08-governance-and-records.md) |
 | 最終評価、領域別の適用境界 | [09-evaluation-and-domains.md](references/09-evaluation-and-domains.md) |
+| 多数の断片の統合、カード化、空白の検出 | [10-integration.md](references/10-integration.md) |
 
 ### 読み込み順
 
