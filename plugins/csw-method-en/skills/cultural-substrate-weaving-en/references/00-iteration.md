@@ -16,4 +16,8 @@ When one pass does not establish the structure, make additional passes. **Treat 
 
 Do not stop each pass at placement or correspondence alone. Express the primary relationships in prose or another domain-appropriate, verifiable form. Treat relationships that cannot yet be expressed as unresolved items for the next validation pass. Choose among prose, diagrams, equations, state transitions, contracts, code, and tests according to the domain and validation purpose.
 
-For every pass, record whether it produced a new fact, unit, relationship, condition, falsifier, or judgment. Stop when only abstraction or explanation volume grows and no target-side increment remains. Do not prescribe a fixed number of passes.
+Change the question with each pass: current state (what is happening), problem statement (what is wrong), essence (why it is so), vision, measures, sequencing, verification. The previous pass's externalized output and its blanks become the next pass's material. Do not skip stages, and in particular do not skip essence and jump to measures.
+
+**A blank is an instruction for the next round of information gathering.** If blanks do not drive acquisition of material from outside, passes close inside the previous output and lose contact with external validation.
+
+For every pass, record whether it produced a new fact, unit, relationship, condition, falsifier, or judgment. Stop when only abstraction or explanation volume grows and no target-side increment remains. However, **if an untried stage remains, try one before stopping.** If that trial yields no increment, record "tried, no increment" and stop. The yield of an untried move cannot be measured, so a verdict of "no increment" is self-fulfilling. Do not prescribe a fixed number of passes.

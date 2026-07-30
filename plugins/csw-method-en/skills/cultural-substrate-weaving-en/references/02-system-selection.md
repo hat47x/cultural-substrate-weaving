@@ -24,6 +24,21 @@ Choose one of three uses.
 
 Define the use first and make evaluation criteria explicit.
 
+A framework is not a single thing; it has two layers, and only one of them can classify.
+
+- **Position layer:** the part whose count is fixed in advance and whose positions carry meanings defined before looking at the target — the five phases of wuxing, the six lines of a hexagram, the five relations of the Confucian scheme, the role set of a noh play. Closed.
+- **Interpretive layer:** the part that fits any target — line statements, the correspondence tables of colors and tastes, the personality descriptions attached to a type. Open. **The better-known parts usually belong here.**
+
+Distinguish the layers by the type of predicate that decides which position a target element goes into (the assignment).
+
+- **Counting predicate:** decided by how often a word or description occurs in the target. Whether the kinship positions are filled, for instance, is decided by how many times "father" and "mother" appear. Position layer.
+- **Computing predicate:** decided by a procedure independent of the target, such as a calendar assigning a date to a solar term. Position layer.
+- **Similarity judgment:** decided by the analyst finding a resemblance, such as reading the vocabulary of a line statement as "overlapping" the target's. Interpretive layer.
+
+**Fix the assignment in the position layer first, then use the interpretive layer. Do not let an interpretive reading change the assignment.** Where the analyst can choose the assignment, the whole framework falls into the interpretive layer. To classify with a framework whose assignment is not set by an external procedure, supply an external convention that maps positions to observable facts of the target uniquely.
+
+Do not discard the interpretive layer. It cannot judge, but it can search second-order effects (strengthening one position, what becomes excessive and what gets suppressed), generate falsifying hypotheses (a counter-hypothesis from an inverted viewpoint), perform sensitivity analysis (which single change alters the whole character), supply inspection items, and provide templates for conflict structure. The target's evidence decides adoption.
+
 Before detecting absence or bias, determine whether the framework's elements and the target's structural units are of the same kind. Only compatible units support reasoning about missing or overrepresented elements. For example, archetypes or story types and a set of individual scenes or facts are different units. In that combination, search for analogous relationships or expression candidates rather than missing elements.
 
 When structural units differ, treat exhaustive review as a search for analogous relationships and sampling as a test for coincidental matches. Do not use either as evidence of absence.
