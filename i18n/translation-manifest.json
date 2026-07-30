@@ -77,15 +77,15 @@
       "en_status": "translated"
     },
     "methods/scope-and-facts.md": {
-      "ja_sha256": "917e62e6421b116b7c91795fe08b6b512b031eec74b3abf80a5f0b6994ed7e64",
+      "ja_sha256": "92298c1155690f7759dd45c2ec78ace0c0fd5c9ca216e594e3b8012bc32e955c",
       "en_present": true,
-      "en_source_ja_sha256": "917e62e6421b116b7c91795fe08b6b512b031eec74b3abf80a5f0b6994ed7e64",
+      "en_source_ja_sha256": "92298c1155690f7759dd45c2ec78ace0c0fd5c9ca216e594e3b8012bc32e955c",
       "en_status": "translated"
     },
     "methods/system-selection.md": {
-      "ja_sha256": "0dcdffac70d6a2b7264983e1561b8eb02d65d7fc8e24cf1c371ef285a7cb6d63",
+      "ja_sha256": "f9e083bbd05aeb1786f82fa1b87c0affdaf96e638a930af073cd97b9c0df15c3",
       "en_present": true,
-      "en_source_ja_sha256": "0dcdffac70d6a2b7264983e1561b8eb02d65d7fc8e24cf1c371ef285a7cb6d63",
+      "en_source_ja_sha256": "f9e083bbd05aeb1786f82fa1b87c0affdaf96e638a930af073cd97b9c0df15c3",
       "en_status": "translated"
     },
     "methods/transformation.md": {

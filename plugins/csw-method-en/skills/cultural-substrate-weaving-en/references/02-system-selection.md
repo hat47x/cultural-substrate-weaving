@@ -26,7 +26,7 @@ Define the use first and make evaluation criteria explicit.
 
 A framework is not a single thing; it has two layers, and only one of them can classify.
 
-- **Position layer:** the part whose count is fixed in advance and whose positions carry meanings defined before looking at the target — the five phases of wuxing, the six lines of a hexagram, the five relations of the Confucian scheme, the role set of a noh play. Closed.
+- **Position layer:** the set of places the framework holds in advance, fixed in number, each carrying a meaning defined before looking at the target — the five phases of wuxing, the six lines of a hexagram, the five relations of the Confucian scheme, the role set of a noh play. Closed.
 - **Interpretive layer:** the part that fits any target — line statements, the correspondence tables of colors and tastes, the personality descriptions attached to a type. Open. **The better-known parts usually belong here.**
 
 Distinguish the layers by the type of predicate that decides which position a target element goes into (the assignment).
@@ -35,7 +35,7 @@ Distinguish the layers by the type of predicate that decides which position a ta
 - **Computing predicate:** decided by a procedure independent of the target, such as a calendar assigning a date to a solar term. Position layer.
 - **Similarity judgment:** decided by the analyst finding a resemblance, such as reading the vocabulary of a line statement as "overlapping" the target's. Interpretive layer.
 
-**Fix the assignment in the position layer first, then use the interpretive layer. Do not let an interpretive reading change the assignment.** Where the analyst can choose the assignment, the whole framework falls into the interpretive layer. To classify with a framework whose assignment is not set by an external procedure, supply an external convention that maps positions to observable facts of the target uniquely.
+**Fix the assignment in the position layer first, then use the interpretive layer. Do not let an interpretive reading change the assignment.** Where the analyst can choose the assignment, the whole framework falls into the interpretive layer. To classify with a framework whose assignment is not set by an external procedure, supply an external convention that maps positions to observable facts of the target uniquely. The same framework can hold its assignment differently depending on use; declare the use first and judge by where the assignment sits for that use.
 
 Do not discard the interpretive layer. It cannot judge, but it can search second-order effects (strengthening one position, what becomes excessive and what gets suppressed), generate falsifying hypotheses (a counter-hypothesis from an inverted viewpoint), perform sensitivity analysis (which single change alters the whole character), supply inspection items, and provide templates for conflict structure. The target's evidence decides adoption.
 
@@ -50,6 +50,11 @@ For heterogeneous frameworks, switch to one of these uses:
 - generate expression candidates.
 
 Before adopting a framework, define results that would lead to rejection. Exclude frameworks that fit every possible result, because they add confirmation without discriminating hypotheses.
+
+After adopting one, apply two checks.
+
+- **Inversion check:** try to refute the claim the framework produced. If the attempted refutation gets absorbed as further support, reject that framework for that target. If a genuine counter-example exists, do not absorb it: narrow the claim and keep it.
+- **Substitution check:** if another framework surfaces the same absence, that absence comes from the target rather than the framework. Record the framework's contribution as zero. The finding itself still stands.
 
 Investigate precedents as well. Frameworks provide relational structures; precedents show ways to instantiate them. Choose precedents with the same technical problem.
 
