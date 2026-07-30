@@ -76,6 +76,11 @@
       "id": "evaluation-and-domains",
       "source": "governance/evaluation-and-domains.md",
       "skill_reference": "09-evaluation-and-domains.md"
+    },
+    {
+      "id": "integration",
+      "source": "methods/integration.md",
+      "skill_reference": "10-integration.md"
     }
   ],
   "knowledge_groups": {
@@ -86,7 +91,8 @@
     ],
     "01-analysis-methods.md": [
       "methods/scope-and-facts.md",
-      "methods/system-selection.md"
+      "methods/system-selection.md",
+      "methods/integration.md"
     ],
     "02-transformation-and-generation.md": [
       "methods/transformation.md",
