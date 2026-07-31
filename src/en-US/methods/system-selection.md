@@ -51,10 +51,11 @@ For heterogeneous frameworks, switch to one of these uses:
 
 Before adopting a framework, define results that would lead to rejection. Exclude frameworks that fit every possible result, because they add confirmation without discriminating hypotheses.
 
-After adopting one, apply two checks.
+After adopting one, apply three checks.
 
 - **Inversion check:** try to refute the claim the framework produced. If the attempted refutation gets absorbed as further support, reject that framework for that target. If a genuine counter-example exists, do not absorb it: narrow the claim and keep it.
 - **Substitution check:** if another framework surfaces the same absence, that absence comes from the target rather than the framework. Record the framework's contribution as zero. The finding itself still stands.
+- **Misfit record:** list the places where the framework did not fit the target. If no such place exists, the framework has not yet been tested. **The places it missed are usually more useful than the places it hit**, because resolving a miss sends you back into the target. A vivid fit invites being written up as a result; that is an inducement in the writing, not a property of the target.
 
 Investigate precedents as well. Frameworks provide relational structures; precedents show ways to instantiate them. Choose precedents with the same technical problem.
 
