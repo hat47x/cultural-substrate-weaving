@@ -16,7 +16,7 @@ When rules conflict, prioritize the four evaluation perspectives and five mandat
 
 ## Minimum execution procedure
 
-1. **Establish a baseline:** Record what domain-specific methods alone can explain.
+1. **Establish a baseline and what to preserve:** Record what domain-specific methods alone can explain, and the target-specific strengths, facts, and causal links that must survive any change.
 2. **Assess the increment:** Determine whether exploring relationships, missing connections, feedback effects, time lags, irreversibility, or generative excess could produce a new judgment.
 3. **Choose the scope:** Use the ordinary method, limited application, or full application. When the decision is close, begin with the ordinary method or limited application.
 4. **Read only the references needed:** State in one sentence what you expect to obtain from each reference and read only files whose purpose you can explain.

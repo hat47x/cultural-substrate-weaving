@@ -51,11 +51,16 @@ For heterogeneous frameworks, switch to one of these uses:
 
 Before adopting a framework, define results that would lead to rejection. Exclude frameworks that fit every possible result, because they add confirmation without discriminating hypotheses.
 
-After adopting one, apply three checks.
+After adopting one, apply four checks.
 
 - **Inversion check:** try to refute the claim the framework produced. If the attempted refutation gets absorbed as further support, reject that framework for that target. If a genuine counter-example exists, do not absorb it: narrow the claim and keep it.
 - **Substitution check:** if another framework surfaces the same absence, that absence comes from the target rather than the framework. Record the framework's contribution as zero. The finding itself still stands.
 - **Misfit record:** list the places where the framework did not fit the target. If no such place exists, the framework has not yet been tested. **The places it missed are usually more useful than the places it hit**, because resolving a miss sends you back into the target. A vivid fit invites being written up as a result; that is an inducement in the writing, not a property of the target.
+- **Removal check:** delete the framework's name, its correspondence tables, and its line statements or attribution charts, then judge finding by finding whether each still stands as a statement about the target, and record the counts. Only what stands counts as a result, and it belongs to the target. **Do not ask whether the question could have been reached without the framework.** The position layer produces findings precisely by supplying places the target does not hold, so requiring re-derivability discards everything the position layer produced. Measure the framework's contribution by how many surviving findings the baseline did not reach, not by whether it is indispensable.
+
+Place a framework that has passed the checks into one of four states: carried into the artifact, internal scaffolding (absent from the artifact but supporting the analysis), auxiliary model, or rejected. A high degree of fit is not a reason to carry it into the artifact.
+
+Over-application shows up in the output as these signs. One-to-one correspondences multiply. The framework reaches completion because unfilled positions get filled. Only explanation volume grows. Conflict and irreversibility get absorbed into harmony or redemption. Count the signs and check whether the actual proposal shows the same shape.
 
 Investigate precedents as well. Frameworks provide relational structures; precedents show ways to instantiate them. Choose precedents with the same technical problem.
 
