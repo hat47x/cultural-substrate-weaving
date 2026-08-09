@@ -19,10 +19,12 @@ The checklist detects mismatches in activation and application. Treat unmet item
 9. Recorded problem patterns reusable for the next target.
 10. The target-specific dynamic procedure generated a target-specific judgment beyond repetition of static rules.
 11. When no increment emerged, stopped formal correspondence and reduced or ended the application scope.
+12. Listed in advance what must not be broken, and confirmed that local repairs did not smooth out the target's characteristic variation.
+13. Applied the removal check to each adopted framework, and recorded how many findings survived along with the adoption state: carried into the artifact, internal scaffolding, auxiliary model, or rejected.
 
 ## 12. Domain-specific application policy
 
 - **Fiction creation:** Generate structures that integrate multiple functions, character consistency, temporal structures, and changing repetition.
-- **Essays and social analysis:** Search for cycles, placement, externalization, feedback effects, time lags, overlooked participants, and counterexamples. Support evidence and causal judgments with domain-specific sources.
+- **Essays and social analysis:** Search for cycles, placement, externalization, feedback effects, time lags, overlooked participants, and counterexamples. Support evidence and causal judgments with domain-specific sources. When testing against sources, include not only successes and institutional ideals but also failures, abuses, litigation, later corrections, and limits.
 - **Interpretation and translation:** Discover and preserve existing structures. Manage source structures separately from analyst-generated hypotheses.
 - **Academic, technical, legal, and journalistic work:** Generate hypotheses, failure patterns, falsification conditions, and research questions. Establish facts, evidence, specialist classifications, and legal interpretation through domain-specific methods. When results only rephrase an existing classification, determine whether a second axis with a different classification principle generates a new question.

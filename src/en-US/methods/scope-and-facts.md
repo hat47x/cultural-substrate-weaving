@@ -28,7 +28,11 @@ Define the target's primary change structure in one sentence: “What changes in
 
 **Write out in full, as a finished product, what domain-specific methods alone can explain.** Do not substitute a summary or an imagined baseline. A self-reported baseline comes out lower than the measured one, which makes any increment claim unverifiable. Where possible, use actual output produced without activating this method, or an existing analysis supplied from outside.
 
+Alongside the baseline, **list what must not be broken by any change:** the target's strengths, the facts and causal links that must not move, its voice, its pace, its deliberate unevenness. This method's checks all point toward absence and misfit, so unless what is to be preserved is written down, a local repair propagates across the whole target and smooths out its characteristic variation. Do not extend the repair of a local problem to the whole target automatically.
+
 Evaluate this method by the understanding, judgments, or design candidates added to that baseline. However, **increment cannot be measured by coverage of the exploration axes** (relationships, missing connections, feedback effects, time lags, irreversibility, generative excess), because the baseline can fill the same axes. What can be measured is whether claims within an axis became countable — whether the output says "zero kinship terms across the full count" rather than "family is barely mentioned."
+
+Separate the attribution of the increment as well. **When the writer changes the problem statement itself, do not count that change as a finding of this method.** Do not treat a design candidate as a finished result.
 
 Organize facts using these rules.
 

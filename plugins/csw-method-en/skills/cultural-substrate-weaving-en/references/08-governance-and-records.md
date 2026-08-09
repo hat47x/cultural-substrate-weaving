@@ -37,6 +37,9 @@ Give mechanisms used in exceptional situations a normal-time use as well. Prefer
 Decision records should include:
 
 - reasons for the decision;
+- the origin of the judgment: facts inside the target, the writer's own judgment, ordinary analysis, fragment integration, a cultural framework, or an external source;
+- what was to be preserved before the change;
+- the framework's adoption state: carried into the artifact, internal scaffolding, auxiliary model, or rejected;
 - alternatives considered and rejected;
 - constraints at the time;
 - items left unresolved;
@@ -46,6 +49,8 @@ Decision records should include:
 Retain decision records as an information base for future reevaluation, change, or withdrawal.
 
 Record target-specific procedures in that target's design materials. Reuse only solved problem patterns in the next target. Index them by technical problem rather than subject name. Treat problem patterns as reproducible and shareable knowledge assets.
+
+Do not count the same change more than once as a whole-target diagnosis, an individual diff, a generalization into a rule, and a later correction. Bundle records that share a causal mechanism and an adoption outcome into one chain, and keep the record count separate from the count of independent effects.
 
 When rules act too strongly, adjust them in this order.
 
