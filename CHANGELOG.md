@@ -13,6 +13,7 @@
 - `08-governance-and-records`, `09-evaluation-and-domains`: record judgment origin, preserved items, and adoption state; do not count one change several times.
 - `02-system-selection`: split the position layer into a derivable part and a conventional part. The conventional part carries the lineage, so declare which lineage, cite it, and name an alternative; a lineage declared from recall alone is a self-report rather than a checkable operation. Check the derivable part mechanically before use.
 - `08-governance-and-records`: keep framework content out of the static layer. The static layer holds the procedure for retrieving, checking, and returning it — not the tables.
+- `02-system-selection`: counting something does not make it a counting predicate. Only mechanical membership qualifies; counting a set the analyst rules on item by item is a similarity judgment whose numeric output hides the judgment. Report the margin that decided the value, and declare whether the predicate applies to the events narrated or to the act of narrating.
 - `02-system-selection`: a framework supplies the number of positions but not the rule for cutting the target into that many; the cut is part of the assignment. Settle whether the external convention is really in place by assigning twice independently, and do not build a conclusion on a position that came out split. Self-reported uncertainty does not predict which positions split.
 
 ## 0.1.0 — Initial public release

@@ -35,6 +35,10 @@ Distinguish the layers by the type of predicate that decides which position a ta
 - **Computing predicate:** decided by a procedure independent of the target, such as a calendar assigning a date to a solar term. Position layer.
 - **Similarity judgment:** decided by the analyst finding a resemblance, such as reading the vocabulary of a line statement as "overlapping" the target's. Interpretive layer.
 
+**Counting something does not make it a counting predicate.** It is one only when membership in what is counted is decided mechanically, by a string or a format. Counting a set like "predicates expressing a volitional act," where the analyst rules on each item one at a time, is a similarity judgment — and **the numeric form of the output hides the judgment that produced it.** When reporting counts, report the margin that decided the value as well. Where the margin is small, what decides the value is not the target but the tie-break convention and the handling of borderline cases.
+
+Declare which layer the predicate applies to as well: the events narrated, or the act of narrating them. Left undeclared, one procedure measures a different layer at each position.
+
 **Fix the assignment in the position layer first, then use the interpretive layer. Do not let an interpretive reading change the assignment.** Where the analyst can choose the assignment, the whole framework falls into the interpretive layer. To classify with a framework whose assignment is not set by an external procedure, supply an external convention that maps positions to observable facts of the target uniquely. The same framework can hold its assignment differently depending on use; declare the use first and judge by where the assignment sits for that use.
 
 A framework supplies the number of positions; it does not supply the rule for cutting the target into that many. The cut is part of the assignment and falls under the same external convention.
