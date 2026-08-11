@@ -37,6 +37,10 @@ Distinguish the layers by the type of predicate that decides which position a ta
 
 **Fix the assignment in the position layer first, then use the interpretive layer. Do not let an interpretive reading change the assignment.** Where the analyst can choose the assignment, the whole framework falls into the interpretive layer. To classify with a framework whose assignment is not set by an external procedure, supply an external convention that maps positions to observable facts of the target uniquely. The same framework can hold its assignment differently depending on use; declare the use first and judge by where the assignment sits for that use.
 
+A framework supplies the number of positions; it does not supply the rule for cutting the target into that many. The cut is part of the assignment and falls under the same external convention.
+
+Whether the convention is actually in place is settled by **assigning twice, independently.** A position the two runs do not fill the same way is a position the framework is not classifying for this target. **Do not write a conclusion that rests on a position that came out split.** Self-reported uncertainty does not predict this: positions flagged as contested can agree, and positions flagged as settled can split.
+
 The position layer is not uniform; it splits in two.
 
 - **The derivable part:** regenerable from a rule and mechanically checkable — the bit representation of the trigrams and how six lines compose from two of them, or a calendar's arithmetic. It does not rest on recall.
