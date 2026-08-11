@@ -37,6 +37,15 @@ Distinguish the layers by the type of predicate that decides which position a ta
 
 **Fix the assignment in the position layer first, then use the interpretive layer. Do not let an interpretive reading change the assignment.** Where the analyst can choose the assignment, the whole framework falls into the interpretive layer. To classify with a framework whose assignment is not set by an external procedure, supply an external convention that maps positions to observable facts of the target uniquely. The same framework can hold its assignment differently depending on use; declare the use first and judge by where the assignment sits for that use.
 
+The position layer is not uniform; it splits in two.
+
+- **The derivable part:** regenerable from a rule and mechanically checkable — the bit representation of the trigrams and how six lines compose from two of them, or a calendar's arithmetic. It does not rest on recall.
+- **The conventional part:** it has no generating rule, so there is nothing to do but consult a table — the King Wen numbering of the hexagrams, or which pairs of nodes the Tree of Life draws a path between. **This is the part that carries the lineage.**
+
+The conventional part differs, under one and the same framework name, by period, sect, school, and modern reinterpretation. **Declare the lineage adopted, cite where it comes from, and name at least one alternative lineage and how it differs.** A lineage declared without consulting an external source is a self-report, not a checkable operation. Recall leans toward the most-published lineage, which is often the most recent overlay.
+
+Externalize the derivable part and check it mechanically before use: element counts, transition counts, whether the inverse operation returns the original, whether it invented a connection that does not exist. Do not use a structure you cannot check as a position layer.
+
 Do not discard the interpretive layer. It cannot judge, but it can search second-order effects (strengthening one position, what becomes excessive and what gets suppressed), generate falsifying hypotheses (a counter-hypothesis from an inverted viewpoint), perform sensitivity analysis (which single change alters the whole character), supply inspection items, and provide templates for conflict structure. The target's evidence decides adoption.
 
 Before detecting absence or bias, determine whether the framework's elements and the target's structural units are of the same kind. Only compatible units support reasoning about missing or overrepresented elements. For example, archetypes or story types and a set of individual scenes or facts are different units. In that combination, search for analogous relationships or expression candidates rather than missing elements.
