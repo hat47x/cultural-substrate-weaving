@@ -13,6 +13,8 @@ This method operates in two layers.
 
 Use static documents as a basis for generating dynamic procedures. Put information that changes with the target in the dynamic layer.
 
+**Do not put a framework's content into the static layer** — element lists, correspondence tables, catalogues of imagery or interpretation, historical accounts of lineages. Retrieve the part you need when you need it, and hold it in the dynamic layer as a structure built for that use alone. What the static layer holds is the procedure: what to retrieve, how to check it, and how to return it to the target.
+
 Four common failure patterns are:
 
 - static rules continue to accumulate;

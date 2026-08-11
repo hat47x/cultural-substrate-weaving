@@ -65,9 +65,9 @@
       "en_status": "translated"
     },
     "governance/governance-and-records.md": {
-      "ja_sha256": "b071fbd30e6b3ecdf2e886c4c80ccc0fd8cd512d5b23185d081832a77d6efa28",
+      "ja_sha256": "9c5ab8965f4a73358f3464ac0cc31f7f932b7ef8b7c6b879081eb4e1c9edd237",
       "en_present": true,
-      "en_source_ja_sha256": "b071fbd30e6b3ecdf2e886c4c80ccc0fd8cd512d5b23185d081832a77d6efa28",
+      "en_source_ja_sha256": "9c5ab8965f4a73358f3464ac0cc31f7f932b7ef8b7c6b879081eb4e1c9edd237",
       "en_status": "translated"
     },
     "methods/generation-and-validation.md": {
@@ -83,9 +83,9 @@
       "en_status": "translated"
     },
     "methods/system-selection.md": {
-      "ja_sha256": "68634a38829e34c0051818d88d479eccd11413238ce8740e7c3eeebc9013bf71",
+      "ja_sha256": "06140106acba7f15982e06f7e3b9f2c3dd1f57b18675fa3afb9d06ce0552b5fe",
       "en_present": true,
-      "en_source_ja_sha256": "68634a38829e34c0051818d88d479eccd11413238ce8740e7c3eeebc9013bf71",
+      "en_source_ja_sha256": "06140106acba7f15982e06f7e3b9f2c3dd1f57b18675fa3afb9d06ce0552b5fe",
       "en_status": "translated"
     },
     "methods/transformation.md": {

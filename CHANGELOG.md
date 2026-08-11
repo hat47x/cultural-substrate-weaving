@@ -11,6 +11,8 @@
 - `00-iteration`: do not file a pass's output back into the existing structure; hand off blanks that have become domain implementation questions instead of filling them.
 - `10-integration`: a question from an external framework is not observed fact until returned to the target. Zero cross-check difference shows traceability, not completeness.
 - `08-governance-and-records`, `09-evaluation-and-domains`: record judgment origin, preserved items, and adoption state; do not count one change several times.
+- `02-system-selection`: split the position layer into a derivable part and a conventional part. The conventional part carries the lineage, so declare which lineage, cite it, and name an alternative; a lineage declared from recall alone is a self-report rather than a checkable operation. Check the derivable part mechanically before use.
+- `08-governance-and-records`: keep framework content out of the static layer. The static layer holds the procedure for retrieving, checking, and returning it — not the tables.
 
 ## 0.1.0 — Initial public release
 
