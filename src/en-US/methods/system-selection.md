@@ -37,7 +37,11 @@ Distinguish the layers by the type of predicate that decides which position a ta
 
 **Counting something does not make it a counting predicate.** It is one only when membership in what is counted is decided mechanically, by a string or a format. Counting a set like "predicates expressing a volitional act," where the analyst rules on each item one at a time, is a similarity judgment — and **the numeric form of the output hides the judgment that produced it.** When reporting counts, report the margin that decided the value as well. Where the margin is small, what decides the value is not the target but the tie-break convention and the handling of borderline cases.
 
-Declare which layer the predicate applies to as well: the events narrated, or the act of narrating them. Left undeclared, one procedure measures a different layer at each position.
+Declare which layer the predicate applies to as well: the events narrated, the act of narrating them, or a separate story the target quotes. Left undeclared, one procedure measures a different layer at each position.
+
+**An assignment being determinate and an assignment being right are different things.** A mechanical predicate that pours a relation the target does not hold into a position will reproduce that same error every time. What the position layer buys is reproducibility, not correctness. Reproducibility is worth having because the error lands in the same place every time and can therefore be **caught and corrected**. For every position that came out filled, take what filled it back to the target and check.
+
+**There are two kinds of empty position.** In one, no candidate for the relation appears in the target at all. In the other, candidates appear but the relation is never named. Reporting both as "empty" erases the difference. The first is a property of the target, the second a gap in the description, and they send you after different material next.
 
 **Fix the assignment in the position layer first, then use the interpretive layer. Do not let an interpretive reading change the assignment.** Where the analyst can choose the assignment, the whole framework falls into the interpretive layer. To classify with a framework whose assignment is not set by an external procedure, supply an external convention that maps positions to observable facts of the target uniquely. The same framework can hold its assignment differently depending on use; declare the use first and judge by where the assignment sits for that use.
 
