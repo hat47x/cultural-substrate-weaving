@@ -10,6 +10,8 @@
 - `01-scope-and-facts`: list what must not be broken alongside the baseline. A change the writer makes to the problem statement is not a finding of this method.
 - `00-iteration`: do not file a pass's output back into the existing structure; hand off blanks that have become domain implementation questions instead of filling them.
 - `10-integration`: a question from an external framework is not observed fact until returned to the target. Zero cross-check difference shows traceability, not completeness.
+- `ROUTER`: the minimum procedure named only one route to an increment. It now names both — take structure from a framework, or integrate the target's own material and find its blanks — with the reading order pointing at `10-integration` when material is plentiful or the structure unsettled.
+- `06-output-and-collaboration`: put the falsification condition into the artifact, not only the working record.
 - `00-principles-and-constraints`: the analyst's own values and default stances are structures brought in from outside the target, and get the same checks as a cultural framework; where a constraint means weakening or cutting the account, record what was lost and count that loss the way an addition is counted. Also: do not widen an entrusted scope, and do not narrow it through excessive self-restraint.
 - `01-scope-and-facts`: do not infer sameness or centrality from how often something recurs; establish what each occurrence does first.
 - `09-evaluation-and-domains`: do not balance an account into "problems on both sides" where an asymmetry of power, responsibility, or harm actually exists.

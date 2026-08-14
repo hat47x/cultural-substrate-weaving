@@ -17,9 +17,9 @@
   },
   "files": {
     "ROUTER.md": {
-      "ja_sha256": "5a27033a0e1cc0e6298164ea162b6f0f982fcbd8c7add8978c0629c8fcc95a92",
+      "ja_sha256": "0719dc18d565e447f3681e8382e143839b78d8af3d79afbc74f1c2bc3ec7c1d1",
       "en_present": true,
-      "en_source_ja_sha256": "5a27033a0e1cc0e6298164ea162b6f0f982fcbd8c7add8978c0629c8fcc95a92",
+      "en_source_ja_sha256": "0719dc18d565e447f3681e8382e143839b78d8af3d79afbc74f1c2bc3ec7c1d1",
       "en_status": "translated"
     },
     "core/activation.md": {
@@ -53,9 +53,9 @@
       "en_status": "translated"
     },
     "domains/output-and-collaboration.md": {
-      "ja_sha256": "b93ab6330b48222fe1926403d185ff202ee327c02610e685c1a8f6d5635617e5",
+      "ja_sha256": "1228ab9c64c4eff2a49bcb3487d99b2c259db8d3833006968b0380ec41e789ff",
       "en_present": true,
-      "en_source_ja_sha256": "b93ab6330b48222fe1926403d185ff202ee327c02610e685c1a8f6d5635617e5",
+      "en_source_ja_sha256": "1228ab9c64c4eff2a49bcb3487d99b2c259db8d3833006968b0380ec41e789ff",
       "en_status": "translated"
     },
     "governance/evaluation-and-domains.md": {
