@@ -46,6 +46,6 @@ Organize facts using these rules.
 
 When the material covers only part of the target, record that coverage. Partial material still settles static classification, such as the type of a relationship. Direction, precedence, and behavior over time require the whole, and extrapolating them from a part can invert them. **Treat observations from partial material as hypotheses and do not use them to design a reproducible procedure.**
 
-Also extract recurring objects, placements, vocabulary, bodily sensations, and verbs that express relationships inside the target.
+Also extract recurring objects, placements, vocabulary, bodily sensations, and verbs that express relationships inside the target. **But do not infer sameness or centrality from how often something recurs.** The same word or object can appear repeatedly while doing different work each time, for a different subject, at a different moment, in a different place. Establish what each occurrence is doing before counting them together.
 
 Choose as the initial analysis point the place where the target first becomes dysfunctional. Conduct exhaustive investigation after checking that point.

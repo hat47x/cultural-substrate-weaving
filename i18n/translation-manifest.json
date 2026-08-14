@@ -35,9 +35,9 @@
       "en_status": "translated"
     },
     "core/principles-and-constraints.md": {
-      "ja_sha256": "6cc5e4d1c3d48724434833a50a2c107564703f1f61fd8dad6b6135d4e9a83e9a",
+      "ja_sha256": "538d9335549e8474ac97a47bbbc49c2b5bcab4cdc63d4b89614b948c2e43932c",
       "en_present": true,
-      "en_source_ja_sha256": "6cc5e4d1c3d48724434833a50a2c107564703f1f61fd8dad6b6135d4e9a83e9a",
+      "en_source_ja_sha256": "538d9335549e8474ac97a47bbbc49c2b5bcab4cdc63d4b89614b948c2e43932c",
       "en_status": "translated"
     },
     "domains/character-and-taiheki.md": {
@@ -59,9 +59,9 @@
       "en_status": "translated"
     },
     "governance/evaluation-and-domains.md": {
-      "ja_sha256": "b71a66dd31e543495d15550656de70ae2ca4f065780fa2445335df7ac63fb77d",
+      "ja_sha256": "c2535be3768ed140dd80f7f9a13e84fca49d4f3e8d9afb53d8405992a84d6cd3",
       "en_present": true,
-      "en_source_ja_sha256": "b71a66dd31e543495d15550656de70ae2ca4f065780fa2445335df7ac63fb77d",
+      "en_source_ja_sha256": "c2535be3768ed140dd80f7f9a13e84fca49d4f3e8d9afb53d8405992a84d6cd3",
       "en_status": "translated"
     },
     "governance/governance-and-records.md": {
@@ -77,9 +77,9 @@
       "en_status": "translated"
     },
     "methods/scope-and-facts.md": {
-      "ja_sha256": "af72259e8711bf5828ec2422a7a14c65e9b3e722776f87de03d1a9e88c234c7a",
+      "ja_sha256": "7acd815a0592acfdfc7a0b56a329ecd8a6f3e4b3a3da2ed8e13560f8e62a920f",
       "en_present": true,
-      "en_source_ja_sha256": "af72259e8711bf5828ec2422a7a14c65e9b3e722776f87de03d1a9e88c234c7a",
+      "en_source_ja_sha256": "7acd815a0592acfdfc7a0b56a329ecd8a6f3e4b3a3da2ed8e13560f8e62a920f",
       "en_status": "translated"
     },
     "methods/system-selection.md": {
@@ -95,9 +95,9 @@
       "en_status": "translated"
     },
     "methods/integration.md": {
-      "ja_sha256": "c5d4bfe88de22d6711dc981c2bf3e3ea038db11287f30c46cd6a254ba605bb5b",
+      "ja_sha256": "e099bc68a3647a3360258ba8cad708fb7797fb3b345736d868b1f5171ee8ff6f",
       "en_present": true,
-      "en_source_ja_sha256": "c5d4bfe88de22d6711dc981c2bf3e3ea038db11287f30c46cd6a254ba605bb5b",
+      "en_source_ja_sha256": "e099bc68a3647a3360258ba8cad708fb7797fb3b345736d868b1f5171ee8ff6f",
       "en_status": "translated"
     }
   }
