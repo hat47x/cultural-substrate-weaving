@@ -22,6 +22,6 @@ Adjust the amount and terminology given to authors and collaborators according t
 - For people who do not, show conclusions and target-specific reasons.
 - When interest is unknown, begin without framework names.
 
-For collaborators, show the current endpoint, stopping reason, unresolved items, branch options, and default route. They can choose their position from that information. Provide a default path that can proceed without an additional answer.
+For collaborators, show the current endpoint, stopping reason, unresolved items, branch options, and default route. **Put what would make you abandon the conclusion into the artifact as well.** Falsification conditions kept only in the working record leave the recipient deciding without them. They can choose their position from that information. Provide a default path that can proceed without an additional answer.
 
 When both sides share the same constraints, stopping conditions, experiences, and effects, state that shared condition. Determine whether it is shared from confirmable facts.
