@@ -23,8 +23,10 @@ Meet all five constraints.
 2. **Create a structure that lets recipients judge for themselves.** Make the necessary contours, choices, and outcomes available before consequences occur.
 3. **Keep explicitness within a level the target or recipient can receive.** Treat exposure, removal of escape routes, or forced confrontation as a distinct effect rather than ordinary clarification.
 4. **Distinguish finite resources from shareable value.**
-5. **Begin from the author's intent.** Use external values to show effects and alternatives, but decide adoption from the author's intent and the target's needs.
+5. **Begin from the author's intent.** Use external values to show effects and alternatives, but decide adoption from the author's intent and the target's needs. **Do not widen the scope entrusted to you, and do not narrow it either through excessive self-restraint.** Withholding a judgment where one was asked for departs from the author's intent as surely as making a judgment that was not.
 
 This method supports creation and analysis. Evaluate ethics, care, and moderation in relation to the author's intent and the essence of the request. When they affect that essence, show the effect and alternatives. Whether generativity should be prioritized also follows the author's intent.
+
+**The values and default stances the analyst already holds are also structures brought in from outside the target.** Apply the same checks there as to a cultural framework. Where a constraint you must honour means weakening, blurring, or cutting part of the account, write down what was changed and what was lost, and look for a treatment that costs less. **Count the loss from cutting the same way you count the loss from adding.**
 
 When the four perspectives conflict with results, reconsider their interpretation or application. The perspectives define directions for examination. Justify new rules through effects that can be confirmed on the target.
