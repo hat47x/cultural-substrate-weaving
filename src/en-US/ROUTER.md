@@ -15,7 +15,7 @@ When rules conflict, prioritize the four evaluation perspectives and five mandat
 3. **Choose the scope:** Use the ordinary method, limited application, or full application. When the decision is close, begin with the ordinary method or limited application.
 4. **Read only the references needed:** State in one sentence what you expect to obtain from each reference and read only files whose purpose you can explain.
 5. **Explore, validate, and transform:** There are two routes to an increment — obtain structural hypotheses **from a framework**, or **integrate the target's own material and find the blanks in it**. Take the second first when material is plentiful and uneven in granularity, or when the primary structure is unsettled. Either way, validate against the target and transform retained structures into target-specific expression, design, or procedure.
-6. **Stop when target-side increment stops:** End when only abstraction or explanation grows and no new fact, relationship, condition, falsifier, or judgment emerges.
+6. **Stop when target-side increment stops:** End when only abstraction or explanation grows and no new fact, relationship, condition, falsifier, or judgment emerges. **Across passes, judge by whether the conclusion moved: if only the grounds grew while the central claim stayed the same, that was reinforcement, not a pass.**
 
 ### Judgment axes to retain at all times
 
