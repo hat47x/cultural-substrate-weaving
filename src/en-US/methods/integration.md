@@ -14,6 +14,7 @@ Treat each fragment as a speaker rather than an object of classification. Listen
 - **The side with more vocabulary is not the side that knows the meaning.** The analyst's fluency overwrites the material. Doubt polished wording most.
 - **A fragment cannot say "that's wrong."** The analyst must construct that objection artificially. Every check below is a substitute for it.
 - Do not write a label before the group is assembled. The sooner wording arrives, the more likely the analyst had prepared it.
+- **An attention you cannot give a reason for goes onto a card without one.** How strongly something catches you and how likely your reading of it is to be right are separate. Do not promote it to a hypothesis on a reason supplied afterwards, and do not discard it for lacking one. It is allowed to disappear.
 
 The most common failure is producing a plausible classification scheme. Classification pours material into a frame the analyst already holds; the material has not spoken.
 
@@ -28,7 +29,7 @@ The operation has four parts.
 
 Follow five steps. The operation above is called when cutting cards out of the material, when folding groups up a level, and when writing a label.
 
-1. **Card:** run the operation above on the material. **Prohibit noun endings; end each card with a verb** (a noun alone does not determine what is being appealed). Attach the source, and **keep the source separate from the path by which it was found** (for material embedded in a post, the material is the source and the post is the path). **A question obtained from an external framework does not sit at the same level as observed fact until it is returned to the target and yields a new observation or a refutation.**
+1. **Card:** run the operation above on the material. **Prohibit noun endings; end each card with a verb** (a noun alone does not determine what is being appealed). Attach the source, and **keep the source separate from the path by which it was found** (for material embedded in a post, the material is the source and the post is the path). **A question obtained from an external framework does not sit at the same level as observed fact until it is returned to the target and yields a new observation or a refutation.** **Do not give cards a type field.** Confidence, role, and importance belong in the card's own sentence. A type assigned up front means every later look at the fragment goes through that tag.
 2. **Group:** collect fragments whose appeals are close. Two or three per first-level group. **Leave fragments that fit no group where they are** (a single isolated card is sometimes the most important). Fold through successive levels to five to seven groups, at most ten. **Do not group by source, speaker, position, or card type.** Use those after grouping, to audit bias and independence. **Do not count a repost of the same event, or two cards derived from one, as two independent appeals.**
 3. **Label:** run the operation above on the group. State in one sentence what the group wants to say. A label is not a category name.
 4. **Place:** draw relationships, distinguishing causal, mutual, opposing, and temporal order. Draw opposition as opposition. **Draw the relationships not drawn.** Draw from the whole downward, the reverse of how groups were assembled.
