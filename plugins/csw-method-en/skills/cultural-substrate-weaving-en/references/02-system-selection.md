@@ -60,6 +60,8 @@ The conventional part differs, under one and the same framework name, by period,
 
 Externalize the derivable part and check it mechanically before use: element counts, transition counts, whether the inverse operation returns the original, whether it invented a connection that does not exist. Do not use a structure you cannot check as a position layer.
 
+What a framework produced is **kept with its provenance rather than held back**: which framework and which part of it, which operation produced what, and whether the result is an analogy, a question, a hypothesis, or a transition. Nothing stops being generated; it stays traceable.
+
 Do not discard the interpretive layer. It cannot judge, but it can search second-order effects (strengthening one position, what becomes excessive and what gets suppressed), generate falsifying hypotheses (a counter-hypothesis from an inverted viewpoint), perform sensitivity analysis (which single change alters the whole character), supply inspection items, and provide templates for conflict structure. The target's evidence decides adoption.
 
 Before detecting absence or bias, determine whether the framework's elements and the target's structural units are of the same kind. Only compatible units support reasoning about missing or overrepresented elements. For example, archetypes or story types and a set of individual scenes or facts are different units. In that combination, search for analogous relationships or expression candidates rather than missing elements.

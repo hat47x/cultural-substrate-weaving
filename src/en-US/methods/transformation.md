@@ -16,6 +16,8 @@ Before transferring a relationship, state its type:
 - normative priority;
 - symbolic analogy.
 
+When the material is the conduct of people or organizations, **separate observation, recurrence, function, and intent**: what was recorded, whether the same kind of thing recurs across several actors, what the pattern protects or suppresses as a result, and whether any direct source shows that effect was the aim. **Function may be named. Intent is not to be read.** That an act functions to protect someone is not that the person intended it to.
+
 Validate element correspondence separately from causal or temporal correspondence. Compare generation, inhibition, hierarchy, and cycles with the target for each relationship type.
 
 In hierarchical frameworks, distinguish stage sequences from overlapping layers. Some principles look like one element while changing the meaning of every layer. Treat an ordinary element separately from a condition for interpreting the whole.
