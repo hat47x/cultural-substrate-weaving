@@ -58,7 +58,7 @@ The position layer is not uniform; it splits in two.
 
 The conventional part differs, under one and the same framework name, by period, sect, school, and modern reinterpretation. **Declare the lineage adopted, cite where it comes from, and name at least one alternative lineage and how it differs.** A lineage declared without consulting an external source is a self-report, not a checkable operation. Recall leans toward the most-published lineage, which is often the most recent overlay.
 
-Externalize the derivable part and check it mechanically before use: element counts, transition counts, whether the inverse operation returns the original, whether it invented a connection that does not exist. Do not use a structure you cannot check as a position layer.
+Externalize the derivable part and check it mechanically before use: element counts, transition counts, whether the inverse operation returns the original, whether it invented a connection that does not exist. **Do not use a derivable part that fails the check.** Some frameworks have no derivable part at all: where the positions are merely enumerated, with no transitions and no operations, the element count is the only thing there is to check, and that is not a weakness in the framework. **What gets checked there is the convention, not the framework** — whether the external convention that decides the assignment resolves uniquely on formal conditions alone.
 
 What a framework produced is **kept with its provenance rather than held back**: which framework and which part of it, which operation produced what, and whether the result is an analogy, a question, a hypothesis, or a transition. Nothing stops being generated; it stays traceable.
 
