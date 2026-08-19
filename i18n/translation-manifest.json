@@ -83,9 +83,9 @@
       "en_status": "translated"
     },
     "methods/system-selection.md": {
-      "ja_sha256": "72523e45436146d1a2cf9b60039a000f70df208ce4e98f2ec36fdf3b9765f87a",
+      "ja_sha256": "6490c8d9c11ce256b06a8a9018562ee77b10c5b7c9d370044422ff0438d7f09e",
       "en_present": true,
-      "en_source_ja_sha256": "72523e45436146d1a2cf9b60039a000f70df208ce4e98f2ec36fdf3b9765f87a",
+      "en_source_ja_sha256": "6490c8d9c11ce256b06a8a9018562ee77b10c5b7c9d370044422ff0438d7f09e",
       "en_status": "translated"
     },
     "methods/transformation.md": {
