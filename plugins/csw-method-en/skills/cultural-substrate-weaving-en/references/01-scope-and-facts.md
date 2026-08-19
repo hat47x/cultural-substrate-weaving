@@ -42,7 +42,7 @@ Organize facts using these rules.
 - Count the same evidence only once at the same level.
 - Define comparison axes before comparing multiple targets.
 - Preserve contradictions and multiple views before integration.
-- When judging something "sparse" or "missing," state the comparison. Without one, record "measured value only; normality withheld." Where the count is three or fewer, state the count.
+- When judging something "sparse," "missing," "frequent," or "skewed," state the comparison. Judging an excess needs the same comparison as judging an absence. Without one, record "measured value only; normality withheld." Where the count is three or fewer, state the count.
 
 **Do not set the threshold for collecting at the threshold for publishing.** Low-confidence testimony, unease you cannot give a reason for, and explanations that both still hold stay on the collecting side with their source and their uncertainty attached, and pass a separate check on the way out. **Carrying the publishing threshold back to the collecting stage loses the weak signals that only pay off later.** Nor does what was collected go out at the confidence it was collected with.
 
