@@ -1,7 +1,7 @@
 {
   "name": "csw-method-ja",
   "version": "0.2.0",
-  "description": "構造を対象側で検証し、対象固有の判断・設計へ変換する日本語版。",
+  "description": "文章・設計・分析・アーキテクチャの構造レビュー。接続の欠落、反作用、時間差、不可逆な選択を洗い出し、各所見を対象に照合してから報告します。明示呼び出し専用。",
   "author": {
     "name": "hat47x"
   },
@@ -18,7 +18,7 @@
   "skills": "./skills/",
   "interface": {
     "displayName": "Cultural Substrate Weaving — 日本語",
-    "shortDescription": "構造を対象側で検証し、対象固有の判断・設計へ変換する日本語版。",
+    "shortDescription": "文章・設計・分析・アーキテクチャの構造レビュー。接続の欠落、反作用、時間差、不可逆な選択を洗い出し、各所見を対象に照合してから報告します。明示呼び出し専用。",
     "developerName": "hat47x",
     "category": "Productivity"
   }
