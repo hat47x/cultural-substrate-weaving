@@ -69,6 +69,9 @@ def build_claude(locale: str, config: dict, router: str, claude_config: dict) ->
     write_text(skill_root / "SKILL.md", content)
     copy_references(locale, skill_root, config)
 
+    readme = (ADAPTERS / "claude-code" / locale / "README.md").read_text(encoding="utf-8")
+    write_text(plugin_root / "README.md", readme.replace("{{VERSION}}", version()))
+
     # A locale-specific standalone marketplace package.
     dist_root = DIST / locale / "claude-plugin"
     shutil.copytree(plugin_root, dist_root / "plugins" / c["plugin_name"], dirs_exist_ok=True)

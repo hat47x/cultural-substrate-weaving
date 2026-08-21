@@ -9,7 +9,7 @@
     {
       "name": "csw-method-ja",
       "source": "./plugins/csw-method-ja",
-      "description": "構造を対象側で検証し、対象固有の判断・設計へ変換する日本語版。",
+      "description": "文章・設計・分析・アーキテクチャの構造レビュー。接続の欠落、反作用、時間差、不可逆な選択を洗い出し、各所見を対象に照合してから報告します。明示呼び出し専用。",
       "version": "0.2.0",
       "category": "productivity",
       "tags": [
@@ -23,7 +23,7 @@
     {
       "name": "csw-method-en",
       "source": "./plugins/csw-method-en",
-      "description": "English structural metacognition method with target-side validation and target-specific transformation.",
+      "description": "Structural review for writing, design, analysis, and architecture: surfaces missing connections, feedback effects, time lags, and irreversible choices, then validates each finding against your target. Explicit invocation only.",
       "version": "0.2.0",
       "category": "productivity",
       "tags": [
