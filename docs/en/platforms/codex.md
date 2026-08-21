@@ -2,7 +2,19 @@
 
 The method relies on web search in some cases for fact-checking and gathering context. Confirm that Codex's network access / web search tool is enabled.
 
-## Install (Codex CLI and IDE extension)
+## Install as a plugin (nothing to download)
+
+This repository is also a Codex plugin marketplace. No ZIP, no extraction.
+
+```bash
+codex plugin marketplace add hat47x/cultural-substrate-weaving
+```
+
+Then install `csw-method-en` (or `csw-method-ja`). The plugin directory is shared with the Claude Code plugin and carries both a `.codex-plugin/plugin.json` and a `.claude-plugin/plugin.json`.
+
+Codex moved from standalone skills to plugins in June 2026, and `openai/skills` is deprecated. The skill layout below is kept for existing users; prefer the plugin for new installs.
+
+## Install as a skill (legacy, Codex CLI and IDE extension)
 
 The CLI and the IDE extension both run on your local machine and read skills from the same filesystem.
 
