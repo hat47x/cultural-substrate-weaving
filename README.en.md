@@ -6,6 +6,8 @@ A general-purpose AI method for improving metacognition wherever structure is wr
 
 Cultural, philosophical, and traditional frameworks are not the primary purpose. They are optional auxiliary models for discovering structures that ordinary domain-specific methods may not reveal.
 
+> **This is under validation.** The method and its delivery paths work, but only two applied cases support its effectiveness so far ([worked examples](docs/en/examples.md)). The falsification condition is stated, and each case is measured and published against it. Until the case count grows, treat the method as under validation.
+
 ## Install
 
 **Claude Code** — this repository is the plugin marketplace. Nothing to download.
@@ -15,10 +17,10 @@ claude plugin marketplace add hat47x/cultural-substrate-weaving
 ```
 
 ```bash
-claude plugin install csw-method-en@cultural-substrate-weaving
+claude plugin install cultural-substrate-weaving-en@cultural-substrate-weaving
 ```
 
-For Japanese, use `csw-method-ja@cultural-substrate-weaving`. Invoke with `/csw-method-en:cultural-substrate-weaving-en`. Desktop, cloud sessions, and team-wide setup are covered in [Use with Claude Code](docs/en/platforms/claude-code.md).
+For Japanese, use `cultural-substrate-weaving-ja@cultural-substrate-weaving`. Invoke with `/cultural-substrate-weaving-en:weave`. Desktop, cloud sessions, and team-wide setup are covered in [Use with Claude Code](docs/en/platforms/claude-code.md).
 
 **Codex** — the same repository is also a Codex plugin marketplace. Nothing to download.
 
@@ -26,7 +28,7 @@ For Japanese, use `csw-method-ja@cultural-substrate-weaving`. Invoke with `/csw-
 codex plugin marketplace add hat47x/cultural-substrate-weaving
 ```
 
-Then install `csw-method-en` (or `csw-method-ja`). See [Use with Codex](docs/en/platforms/codex.md).
+Then install `cultural-substrate-weaving-en` (or `cultural-substrate-weaving-ja`). See [Use with Codex](docs/en/platforms/codex.md).
 
 **ChatGPT custom GPT and Microsoft 365 Copilot**: download the ZIP for your locale and platform from [GitHub Releases](https://github.com/hat47x/cultural-substrate-weaving/releases). The guides in the table below cover each one.
 

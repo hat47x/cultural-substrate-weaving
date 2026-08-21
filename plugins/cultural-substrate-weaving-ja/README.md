@@ -13,7 +13,7 @@ claude plugin marketplace add hat47x/cultural-substrate-weaving
 ```
 
 ```bash
-claude plugin install csw-method-ja@cultural-substrate-weaving
+claude plugin install cultural-substrate-weaving-ja@cultural-substrate-weaving
 ```
 
 Codexは同じプラグインディレクトリを読みます:
@@ -27,7 +27,7 @@ codex plugin marketplace add hat47x/cultural-substrate-weaving
 **明示呼び出し専用**です。自動では起動せず、呼ばない限りトークンを消費しません。
 
 ```text
-/csw-method-ja:cultural-substrate-weaving-ja <依頼内容>
+/cultural-substrate-weaving-ja:weave <依頼内容>
 ```
 
 例:
@@ -47,6 +47,10 @@ codex plugin marketplace add hat47x/cultural-substrate-weaving
 2. **判断が次へ渡る経路が存在しない。** 「判断できない」の線引きは人によって違い、記録は1行、集計は件数のみ。ある当番の判断が次の当番へ届かない。
 
 どちらも基準線には現れず、どちらも体系ではなく規程についての言明です。
+
+## 適用事例
+
+[適用事例](https://github.com/hat47x/cultural-substrate-weaving/blob/main/docs/ja/examples.md)に、基準線と増分を並べた測定記録があります。**現在2件。方法論の有効性を立証する量ではありません。** 反証条件を明示したうえで、事例を照らして公開しています。
 
 ## 中身
 

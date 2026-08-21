@@ -13,7 +13,7 @@ claude plugin marketplace add hat47x/cultural-substrate-weaving
 ```
 
 ```bash
-claude plugin install csw-method-en@cultural-substrate-weaving
+claude plugin install cultural-substrate-weaving-en@cultural-substrate-weaving
 ```
 
 Codex reads the same plugin directory:
@@ -27,7 +27,7 @@ codex plugin marketplace add hat47x/cultural-substrate-weaving
 The skill is **explicit-invocation only**. It never fires on its own, and it costs nothing until you call it.
 
 ```text
-/csw-method-en:cultural-substrate-weaving-en <your request>
+/cultural-substrate-weaving-en:weave <your request>
 ```
 
 Examples:
@@ -47,6 +47,10 @@ Two findings came from the structural pass and survived the removal check:
 2. **No path carries judgment forward.** Where the line falls for "cannot answer" varies by person, records are one line, and only counts are aggregated — so what one engineer decided never reaches the next.
 
 Neither is in the baseline review. Both are statements about the policy, not about any framework.
+
+## Worked examples
+
+[Worked examples](https://github.com/hat47x/cultural-substrate-weaving/blob/main/docs/en/examples.md) records each application with its baseline alongside the increment. **Two cases so far — not enough to establish that the method works.** The falsification condition is stated and each case is measured against it.
 
 ## What is in this plugin
 

@@ -1,0 +1,134 @@
+# Worked examples
+
+Records of the method actually being applied. These are **measurement records rather than a display of successes**: each one states what ordinary methods alone produce (the baseline) before showing what was added to it.
+
+**There are two cases so far. That is not enough to establish that the method works.** The stated falsification condition is that findings surviving the removal check do not exceed the baseline; two cases are merely consistent with it. More will be added.
+
+---
+
+## Case 1: structure of a validation suite (software engineering)
+
+**Target**: `scripts/validate.py` in this repository — a validation suite of ten check functions.
+
+**What must not break**: `make check` completes in about a second, needs no network, and does not require the plugin to be installed.
+
+**Primary change structure**: a change to the source travels through generated artifacts into the user's environment, and the checks are what stop it.
+
+### Baseline (ordinary code review)
+
+1. `check_translation_hashes` verifies only that the English file **exists**. An empty file passes.
+2. `check_semantics` searches the concatenation of all files. A required phrase that migrates into the wrong file still passes.
+3. `check_modules` compares bytes, but only for the OpenAI tree under `dist/`. **The `plugins/` tree that users actually install is never content-compared.**
+4. `check_versions` does a substring search on `pyproject.toml`. A dependency pinned to the same version string would satisfy it.
+5. `check_budgets` reads the `plugins/` SKILL.md for **size only**, never content.
+
+### Framework pass
+
+**Framework**: the six lines of a hexagram. **Use**: structural model.
+
+**Unit compatibility**: the framework's units are ordered positions; the target's units are ordered stages in a pipeline. Same kind of unit, and the same principle of division (position within a progression), so they are compatible at the position layer.
+
+**External convention**: assign each check to the position matching **the layer of file it reads**. This follows mechanically from the paths the code opens, so it is a counting predicate.
+
+| Position | Layer | Checks |
+|---|---|---|
+| 1st | Source | `check_json_files`, `check_locale_parity` |
+| 2nd | Translation | `check_translation_hashes` |
+| 3rd | Semantic content | `check_semantics` |
+| 4th | Generated | `check_modules`, `check_budgets` |
+| 5th | Packaged catalogue | `check_claude_marketplace`, `check_codex_marketplace`, `check_m365` |
+| 6th | — | **empty** |
+
+**Sensitivity of the stipulation**: assigning by the layer a check *protects* rather than the layer it *reads* moves `check_budgets` toward the 4th/5th boundary. **The 6th stays empty either way**, so the empty position does not rest on the stipulation.
+
+**Which kind of empty**: candidates exist — the artifact really is consumed — but the relation is never named. That is a gap in the description, so there is something to go and get.
+
+### Finding
+
+**No check reads the artifact as the consumer receives it.** Whether the SKILL.md frontmatter parses, whether a cross-reference inside a reference file resolves in the installed layout, whether the plugin loads at all — none of these are checked.
+
+### The four checks
+
+- **Inversion**: do `check_m365` or `check_claude_marketplace` already cover the 6th? Both inspect the package, not the consumed state. A tool that would cover it (`claude plugin validate`) exists but is not wired into `make check`. **Not refuted; the attempt strengthened it.**
+- **Substitution**: a plain pipeline model (source → build → package → ship) surfaces the same absence. **Nothing about this framework in particular was needed for it.** The finding still stands.
+- **Misfit record**: the hexagram supplies correspondence between paired lines and the centrality of the 2nd and 5th, neither of which maps onto a check pipeline. Those are listable before looking at the target, so they are subtracted. After subtraction no further misfits appeared — **which means the framework was barely tested.**
+- **Removal check**: delete every hexagram term. "Nothing in `make check` reads the artifact in the form the consumer receives it" stands as a statement about `validate.py`. **One surviving finding.**
+
+### Verification
+
+The finding was confirmed against a real failure. Earlier in the same session a reference file was written with `[02a-framework-application.md](methods/framework-application.md)` inside it. `make check` passed — but the build rewrites links only in the router, not inside reference files, so the link would have shipped dead. It was caught by reading `build.py`, not by any check.
+
+A `check_reference_links` check was added from the finding, and the same bug was re-injected to confirm detection:
+
+```text
+ERROR: Unresolvable link in installed layout:
+  plugins/cultural-substrate-weaving-ja/skills/weave/references/02-system-selection.md
+  -> methods/framework-application.md
+```
+
+### Honest accounting
+
+| | Count |
+|---|---|
+| Baseline | 5 |
+| Surviving the removal check | 1 |
+| Of those, specific to the framework | **0** (substitution shows a plain model finds it) |
+
+What the framework did was force the question **"is there a position after the last one?"** The baseline's check-by-check reading never asked it. The finding does not depend on the framework; the question did.
+
+> Note: `AGENTS.md` forbids applying this method automatically to routine repository maintenance. This case is a deliberate application for validation, not automatic application to routine work.
+
+---
+
+## Case 2: structure of an operations policy (analysing existing text)
+
+**Target**: a 15-line on-call policy for first-response to customer enquiries. Rotation is daily; the on-call engineer remains the customer's single point of contact even after escalating; response records are one line each and aggregated monthly as counts.
+
+**What must not break**: the 30-minute first response, the single point of contact, and keeping implementation work off the on-call engineer's day.
+
+### Baseline (ordinary review)
+
+No after-hours coverage; no definition of "cannot answer"; no deadline on escalated cases; no rule for when an urgent swap cannot be agreed; monthly aggregation produces counts with no stated use; no handling of mid-month absence; no exceptions named for the "as a rule" clause. Seven findings.
+
+### Framework pass
+
+**Framework**: the five Confucian relations. **Use**: structural model. **External convention**: for each relation, a counting predicate on whether the corresponding pair of actors is named in the policy.
+
+| Position | Assignment | State |
+|---|---|---|
+| Ruler–subject | Manager and on-call | Present |
+| Husband–wife | On-call and owning engineer | Present |
+| Friend–friend | On-call to on-call | Partial (same-day swap only) |
+| Elder–younger | Yesterday's and today's on-call | **Empty** (gap in the description) |
+| Parent–child | Succession, induction | **Empty** (gap in the description) |
+
+### Findings and removal check
+
+1. **Daily rotation structurally contradicts the single-point-of-contact promise.** The engineer holding an escalated case is a different person tomorrow, and no handoff is defined.
+2. **No path carries judgment to the next engineer.** Where the line falls varies by person, records are one line, and only counts are aggregated.
+
+Delete every Confucian term and both still stand as statements about the policy. **Two surviving findings.**
+
+The second appears as a **connection between** two baseline findings — "no definition of cannot-answer" and "counts only". The baseline listed both and did not join them.
+
+### Honest accounting
+
+| | Count |
+|---|---|
+| Baseline | 7 |
+| Surviving the removal check | 2 |
+
+---
+
+## Totals so far
+
+| | Count |
+|---|---|
+| Cases | 2 |
+| Baseline findings | 12 |
+| Surviving the removal check | 3 |
+| Confirmed specific to the framework | 0 |
+
+**Two cases do not establish that the method works.** The zero in the last row is worth reading directly: the frameworks generated the questions, but the findings themselves could have been reached by other means. That is exactly what the substitution check is designed to report, and it is recorded rather than hidden.
+
+Further cases will widen the range — new writing, larger software designs, and runs that combine more than one framework.

@@ -31,7 +31,7 @@ class MultilingualBuildTests(unittest.TestCase):
         marketplace = json.loads((ROOT / ".claude-plugin/marketplace.json").read_text(encoding="utf-8"))
         self.assertEqual(
             {plugin["name"] for plugin in marketplace["plugins"]},
-            {"csw-method-ja", "csw-method-en"},
+            {"cultural-substrate-weaving-ja", "cultural-substrate-weaving-en"},
         )
 
     def test_m365_instruction_limit_for_each_locale(self):

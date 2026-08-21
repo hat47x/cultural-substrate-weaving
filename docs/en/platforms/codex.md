@@ -10,7 +10,7 @@ This repository is also a Codex plugin marketplace. No ZIP, no extraction.
 codex plugin marketplace add hat47x/cultural-substrate-weaving
 ```
 
-Then install `csw-method-en` (or `csw-method-ja`). The plugin directory is shared with the Claude Code plugin and carries both a `.codex-plugin/plugin.json` and a `.claude-plugin/plugin.json`.
+Then install `cultural-substrate-weaving-en` (or `cultural-substrate-weaving-ja`). The plugin directory is shared with the Claude Code plugin and carries both a `.codex-plugin/plugin.json` and a `.claude-plugin/plugin.json`.
 
 Codex moved from standalone skills to plugins in June 2026, and `openai/skills` is deprecated. The skill layout below is kept for existing users; prefer the plugin for new installs.
 

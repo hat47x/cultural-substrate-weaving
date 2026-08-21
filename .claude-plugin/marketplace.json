@@ -7,8 +7,8 @@
   "version": "0.2.0",
   "plugins": [
     {
-      "name": "csw-method-ja",
-      "source": "./plugins/csw-method-ja",
+      "name": "cultural-substrate-weaving-ja",
+      "source": "./plugins/cultural-substrate-weaving-ja",
       "description": "文章・設計・分析・アーキテクチャの構造レビュー。接続の欠落、反作用、時間差、不可逆な選択を洗い出し、各所見を対象に照合してから報告します。明示呼び出し専用。",
       "version": "0.2.0",
       "category": "productivity",
@@ -21,8 +21,8 @@
       ]
     },
     {
-      "name": "csw-method-en",
-      "source": "./plugins/csw-method-en",
+      "name": "cultural-substrate-weaving-en",
+      "source": "./plugins/cultural-substrate-weaving-en",
       "description": "Structural review for writing, design, analysis, and architecture: surfaces missing connections, feedback effects, time lags, and irreversible choices, then validates each finding against your target. Explicit invocation only.",
       "version": "0.2.0",
       "category": "productivity",

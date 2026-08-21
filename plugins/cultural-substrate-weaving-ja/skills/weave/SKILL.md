@@ -1,5 +1,5 @@
 ---
-name: cultural-substrate-weaving-ja
+name: weave
 description: 文筆・設計・分析・開発など、あらゆる構造を扱う領域でメタ認知を高め、対象固有の関係・欠落・反作用・時間差を探索・検証・変換する汎用AIスキル。文化的・思想的・伝統的体系は、補助モデルとして選択的に活用する。
 disable-model-invocation: true
 ---

@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import json
+import re
 import sys
 from pathlib import Path
 
@@ -146,9 +147,27 @@ def check_budgets(errors: list[str]) -> dict:
     return metrics
 
 
+def check_reference_links(errors: list[str]) -> None:
+    """Read the built artifact the way the consumer receives it.
+
+    Every other check reads a source, a generated tree, or a catalogue. None
+    read a reference file as it sits in an installed plugin, where a link
+    written against the source layout no longer resolves.
+    """
+    link = re.compile(r"\[[^\]]*\]\(([^)]+)\)")
+    for skill_md in PLUGINS.rglob("skills/*/SKILL.md"):
+        for path in sorted((skill_md.parent / "references").glob("*.md")) + [skill_md]:
+            for target in link.findall(path.read_text(encoding="utf-8")):
+                target = target.split("#", 1)[0].strip()
+                if not target or target.startswith(("http://", "https://", "mailto:")):
+                    continue
+                if not (path.parent / target).exists():
+                    fail(errors, f"Unresolvable link in installed layout: {path.relative_to(ROOT)} -> {target}")
+
+
 def check_claude_marketplace(errors: list[str]) -> None:
     marketplace = read_json(ROOT / ".claude-plugin/marketplace.json")
-    expected = {"csw-method-ja", "csw-method-en"}
+    expected = {"cultural-substrate-weaving-ja", "cultural-substrate-weaving-en"}
     actual = {plugin["name"] for plugin in marketplace.get("plugins", [])}
     if actual != expected:
         fail(errors, f"Claude marketplace plugins mismatch: {actual}")
@@ -163,7 +182,7 @@ def check_claude_marketplace(errors: list[str]) -> None:
 
 def check_codex_marketplace(errors: list[str]) -> None:
     marketplace = read_json(ROOT / ".agents/plugins/marketplace.json")
-    expected = {"csw-method-ja", "csw-method-en"}
+    expected = {"cultural-substrate-weaving-ja", "cultural-substrate-weaving-en"}
     actual = {plugin["name"] for plugin in marketplace.get("plugins", [])}
     if actual != expected:
         fail(errors, f"Codex marketplace plugins mismatch: {actual}")
@@ -209,6 +228,7 @@ def main() -> None:
     check_semantics(errors)
     check_modules(errors)
     metrics = check_budgets(errors)
+    check_reference_links(errors)
     check_claude_marketplace(errors)
     check_codex_marketplace(errors)
     check_m365(errors)

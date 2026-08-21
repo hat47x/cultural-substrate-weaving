@@ -1,13 +1,13 @@
 {
   "ja-JP": {
-    "plugin_name": "csw-method-ja",
-    "skill_name": "cultural-substrate-weaving-ja",
+    "plugin_name": "cultural-substrate-weaving-ja",
+    "skill_name": "weave",
     "description": "文章・設計・分析・アーキテクチャの構造レビュー。接続の欠落、反作用、時間差、不可逆な選択を洗い出し、各所見を対象に照合してから報告します。明示呼び出し専用。",
     "display": "Cultural Substrate Weaving — 日本語"
   },
   "en-US": {
-    "plugin_name": "csw-method-en",
-    "skill_name": "cultural-substrate-weaving-en",
+    "plugin_name": "cultural-substrate-weaving-en",
+    "skill_name": "weave",
     "description": "Structural review for writing, design, analysis, and architecture: surfaces missing connections, feedback effects, time lags, and irreversible choices, then validates each finding against your target. Explicit invocation only.",
     "display": "Cultural Substrate Weaving — English"
   }

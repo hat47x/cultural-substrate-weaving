@@ -12,7 +12,7 @@
 
 ```text
 /plugin marketplace add hat47x/cultural-substrate-weaving
-/plugin install csw-method-ja@cultural-substrate-weaving
+/plugin install cultural-substrate-weaving-ja@cultural-substrate-weaving
 /reload-plugins
 ```
 
@@ -20,7 +20,7 @@
 
 ```bash
 claude plugin marketplace add hat47x/cultural-substrate-weaving
-claude plugin install csw-method-ja@cultural-substrate-weaving
+claude plugin install cultural-substrate-weaving-ja@cultural-substrate-weaving
 ```
 
 ## Claude Desktop（Codeタブ、ローカル・SSHセッション）
@@ -37,7 +37,7 @@ Claude Desktop単体のプラグインブラウザーは、すでに登録済み
       "source": { "source": "github", "repo": "hat47x/cultural-substrate-weaving" }
     }
   },
-  "enabledPlugins": ["csw-method-ja@cultural-substrate-weaving"]
+  "enabledPlugins": ["cultural-substrate-weaving-ja@cultural-substrate-weaving"]
 }
 ```
 
@@ -55,7 +55,7 @@ Plugin Marketplace経由の導入が難しい場合は、Claude本体の汎用Sk
 2. Claude Desktopの「カスタマイズ」＞「スキル」＞「追加」＞「スキルをアップロード」から、そのZIPをそのままアップロードします。
 3. claude.ai Web版でも、設定の「スキル」から同様にアップロードできます。
 
-**注意**：この形式のSKILL.mdには明示呼び出し専用の設定（`disable-model-invocation`）が含まれていません。そのためPlugin版（`csw-method-ja`）と異なり、Claudeが関連すると判断した場面で自動的に呼び出されます（`openai-skill-interactive`と同様の挙動）。トークン消費を抑えたい場合は、上記のPlugin Marketplace経由の導入を優先してください。
+**注意**：この形式のSKILL.mdには明示呼び出し専用の設定（`disable-model-invocation`）が含まれていません。そのためPlugin版（`cultural-substrate-weaving-ja`）と異なり、Claudeが関連すると判断した場面で自動的に呼び出されます（`openai-skill-interactive`と同様の挙動）。トークン消費を抑えたい場合は、上記のPlugin Marketplace経由の導入を優先してください。
 
 ## WSLセッション
 
@@ -68,7 +68,7 @@ WSLセッションではプラグインを利用できません。
 ## 呼び出し
 
 ```text
-/csw-method-ja:cultural-substrate-weaving-ja このアーキテクチャの責任境界を検査してください。
+/cultural-substrate-weaving-ja:weave このアーキテクチャの責任境界を検査してください。
 ```
 
 明示呼び出しを標準にしているため、不要なトークン消費を抑えられます。
