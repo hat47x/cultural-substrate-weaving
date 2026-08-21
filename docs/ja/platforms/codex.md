@@ -2,7 +2,19 @@
 
 本方法論は事実確認や文脈収集をWeb検索に依存する場面があります。Codexのネットワークアクセス／Web検索ツールが利用可能な設定になっていることを確認してください。
 
-## 最も簡単な方法（Codex CLI・IDE拡張）
+## 最も簡単な方法（プラグイン・ダウンロード不要）
+
+このリポジトリはCodexのPlugin Marketplaceでもあります。ZIPの取得も展開も不要です。
+
+```bash
+codex plugin marketplace add hat47x/cultural-substrate-weaving
+```
+
+追加後、`csw-method-ja`（英語版は`csw-method-en`）をインストールします。Claude Code版と同じプラグインディレクトリを共有しており、`.codex-plugin/plugin.json`と`.claude-plugin/plugin.json`の両方を持ちます。
+
+Codexは2026年6月にスキル単体の配布からプラグイン形式へ移行し、`openai/skills`は非推奨となりました。以下のスキル形式は、既存利用者のために当面残していますが、新規導入はプラグイン形式を推奨します。
+
+## スキル形式（従来方式・Codex CLI・IDE拡張）
 
 ローカルマシンで動くCodex CLIとIDE拡張は、同じファイルシステムからスキルを読みます。
 

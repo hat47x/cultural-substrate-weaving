@@ -1,0 +1,25 @@
+{
+  "name": "csw-method-en",
+  "version": "0.2.0",
+  "description": "English structural metacognition method with target-side validation and target-specific transformation.",
+  "author": {
+    "name": "hat47x"
+  },
+  "homepage": "https://github.com/hat47x/cultural-substrate-weaving",
+  "repository": "https://github.com/hat47x/cultural-substrate-weaving",
+  "license": "MIT",
+  "keywords": [
+    "analysis",
+    "design",
+    "writing",
+    "architecture",
+    "en"
+  ],
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "Cultural Substrate Weaving — English",
+    "shortDescription": "English structural metacognition method with target-side validation and target-specific transformation.",
+    "developerName": "hat47x",
+    "category": "Productivity"
+  }
+}

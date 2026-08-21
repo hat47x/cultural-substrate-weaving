@@ -101,6 +101,55 @@ def build_claude(locale: str, config: dict, router: str, claude_config: dict) ->
     }
 
 
+def build_codex_plugin(locale: str, claude_config: dict) -> dict:
+    """Add a Codex plugin manifest to the plugin directory Claude Code already uses.
+
+    Codex and Claude Code both read skills from `skills/<name>/SKILL.md`, so one
+    plugin directory carries both manifests. Only the manifest and the
+    marketplace catalog differ.
+    """
+    c = claude_config[locale]
+    plugin_manifest = {
+        "name": c["plugin_name"],
+        "version": version(),
+        "description": c["description"],
+        "author": {"name": "hat47x"},
+        "homepage": "https://github.com/hat47x/cultural-substrate-weaving",
+        "repository": "https://github.com/hat47x/cultural-substrate-weaving",
+        "license": "MIT",
+        "keywords": ["analysis", "design", "writing", "architecture", locale_short(locale)],
+        "skills": "./skills/",
+        "interface": {
+            "displayName": c["display"],
+            "shortDescription": c["description"],
+            "developerName": "hat47x",
+            "category": "Productivity",
+        },
+    }
+    write_text(
+        PLUGINS / c["plugin_name"] / ".codex-plugin" / "plugin.json",
+        json.dumps(plugin_manifest, ensure_ascii=False, indent=2) + "\n",
+    )
+    return {
+        "name": c["plugin_name"],
+        "source": {"source": "local", "path": f"./plugins/{c['plugin_name']}"},
+        "policy": {"installation": "AVAILABLE", "authentication": "ON_USE"},
+        "category": "Productivity",
+    }
+
+
+def write_root_codex_marketplace(plugin_entries: list[dict]) -> None:
+    marketplace = {
+        "name": "cultural-substrate-weaving",
+        "interface": {"displayName": "Cultural Substrate Weaving"},
+        "plugins": plugin_entries,
+    }
+    write_text(
+        ROOT / ".agents" / "plugins" / "marketplace.json",
+        json.dumps(marketplace, ensure_ascii=False, indent=2) + "\n",
+    )
+
+
 def build_gpt(locale: str, config: dict, router: str) -> None:
     target = DIST / locale / "chatgpt-gpt"
     prefix = (ADAPTERS / "chatgpt-gpt" / locale / "instructions-prefix.md").read_text(encoding="utf-8").rstrip()
@@ -231,16 +280,19 @@ def main() -> None:
     config = manifest()
     claude_config = json.loads((ADAPTERS / "claude-code" / "locales.json").read_text(encoding="utf-8"))
     plugin_entries = []
+    codex_entries = []
 
     for locale in locales():
         router = (locale_source(locale) / config["router"]).read_text(encoding="utf-8")
         build_openai(locale, config, router)
         plugin_entries.append(build_claude(locale, config, router, claude_config))
+        codex_entries.append(build_codex_plugin(locale, claude_config))
         build_gpt(locale, config, router)
         build_m365(locale, config, router)
         build_canonical(locale)
 
     write_root_marketplace(plugin_entries)
+    write_root_codex_marketplace(codex_entries)
     write_release_manifest()
     print(f"Built {config['name']} v{version()} for {', '.join(locales())}")
 

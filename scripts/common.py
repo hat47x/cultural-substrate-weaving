@@ -47,7 +47,7 @@ def locale_source(locale: str) -> Path:
 
 
 def clean_generated() -> None:
-    for path in (DIST, PLUGINS, ROOT / ".claude-plugin"):
+    for path in (DIST, PLUGINS, ROOT / ".claude-plugin", ROOT / ".agents"):
         if path.exists():
             shutil.rmtree(path)
     DIST.mkdir(parents=True)

@@ -161,6 +161,29 @@ def check_claude_marketplace(errors: list[str]) -> None:
             fail(errors, f"Claude plugin version mismatch: {plugin['name']}")
 
 
+def check_codex_marketplace(errors: list[str]) -> None:
+    marketplace = read_json(ROOT / ".agents/plugins/marketplace.json")
+    expected = {"csw-method-ja", "csw-method-en"}
+    actual = {plugin["name"] for plugin in marketplace.get("plugins", [])}
+    if actual != expected:
+        fail(errors, f"Codex marketplace plugins mismatch: {actual}")
+    for plugin in marketplace.get("plugins", []):
+        source = ROOT / plugin["source"]["path"]
+        if not source.exists():
+            fail(errors, f"Codex plugin source missing: {plugin['source']['path']}")
+            continue
+        manifest_path = source / ".codex-plugin/plugin.json"
+        if not manifest_path.exists():
+            fail(errors, f"Codex plugin manifest missing: {plugin['name']}")
+            continue
+        codex_manifest = read_json(manifest_path)
+        if codex_manifest.get("version") != version():
+            fail(errors, f"Codex plugin version mismatch: {plugin['name']}")
+        skills_dir = source / codex_manifest.get("skills", "./skills/").lstrip("./")
+        if not any(skills_dir.rglob("SKILL.md")):
+            fail(errors, f"Codex plugin declares skills but none found: {plugin['name']}")
+
+
 def check_m365(errors: list[str]) -> None:
     for locale in locales():
         base = DIST / locale / "microsoft-copilot/agent-project/appPackage"
@@ -187,6 +210,7 @@ def main() -> None:
     check_modules(errors)
     metrics = check_budgets(errors)
     check_claude_marketplace(errors)
+    check_codex_marketplace(errors)
     check_m365(errors)
     report = {
         "version": version(),

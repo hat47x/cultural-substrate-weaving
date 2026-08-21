@@ -1,0 +1,32 @@
+{
+  "name": "cultural-substrate-weaving",
+  "interface": {
+    "displayName": "Cultural Substrate Weaving"
+  },
+  "plugins": [
+    {
+      "name": "csw-method-ja",
+      "source": {
+        "source": "local",
+        "path": "./plugins/csw-method-ja"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_USE"
+      },
+      "category": "Productivity"
+    },
+    {
+      "name": "csw-method-en",
+      "source": {
+        "source": "local",
+        "path": "./plugins/csw-method-en"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_USE"
+      },
+      "category": "Productivity"
+    }
+  ]
+}
