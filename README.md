@@ -6,6 +6,8 @@
 
 文化的・思想的・伝統的体系は中核目的ではなく、通常の領域固有手法だけでは捉えにくい構造を探索するための、選択的な補助モデルとして扱います。
 
+> **現在は検証段階です。** 方法論と配布経路は動作しますが、有効性を裏づける適用事例はまだ2件しかありません（[適用事例](docs/ja/examples.md)）。反証条件は明示してあり、事例はその条件に照らして測定・公開しています。件数が揃うまで、本方法論は「検証中」の位置づけです。
+
 ## インストール
 
 **Claude Code**（このリポジトリがそのままPlugin Marketplaceです。ダウンロード不要）
@@ -15,10 +17,10 @@ claude plugin marketplace add hat47x/cultural-substrate-weaving
 ```
 
 ```bash
-claude plugin install csw-method-ja@cultural-substrate-weaving
+claude plugin install cultural-substrate-weaving-ja@cultural-substrate-weaving
 ```
 
-英語版は`csw-method-en@cultural-substrate-weaving`。呼び出しは`/csw-method-ja:cultural-substrate-weaving-ja`です。Desktop・クラウドセッション・チーム共有の手順は[Claude Codeで使う](docs/ja/platforms/claude-code.md)にあります。
+英語版は`cultural-substrate-weaving-en@cultural-substrate-weaving`。呼び出しは`/cultural-substrate-weaving-ja:weave`です。Desktop・クラウドセッション・チーム共有の手順は[Claude Codeで使う](docs/ja/platforms/claude-code.md)にあります。
 
 **Codex**（同じリポジトリがCodexのPlugin Marketplaceでもあります。ダウンロード不要）
 
@@ -26,7 +28,7 @@ claude plugin install csw-method-ja@cultural-substrate-weaving
 codex plugin marketplace add hat47x/cultural-substrate-weaving
 ```
 
-追加後に`csw-method-ja`（英語版は`csw-method-en`）をインストールします。詳細は[Codexで使う](docs/ja/platforms/codex.md)。
+追加後に`cultural-substrate-weaving-ja`（英語版は`cultural-substrate-weaving-en`）をインストールします。詳細は[Codexで使う](docs/ja/platforms/codex.md)。
 
 **ChatGPT custom GPT / Microsoft 365 Copilot**は[GitHub Releases](https://github.com/hat47x/cultural-substrate-weaving/releases)から言語とプラットフォームに対応するZIPを取得してください。手順は下の表のガイドにあります。
 

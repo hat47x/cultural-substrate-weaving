@@ -5,10 +5,10 @@
   },
   "plugins": [
     {
-      "name": "csw-method-ja",
+      "name": "cultural-substrate-weaving-ja",
       "source": {
         "source": "local",
-        "path": "./plugins/csw-method-ja"
+        "path": "./plugins/cultural-substrate-weaving-ja"
       },
       "policy": {
         "installation": "AVAILABLE",
@@ -17,10 +17,10 @@
       "category": "Productivity"
     },
     {
-      "name": "csw-method-en",
+      "name": "cultural-substrate-weaving-en",
       "source": {
         "source": "local",
-        "path": "./plugins/csw-method-en"
+        "path": "./plugins/cultural-substrate-weaving-en"
       },
       "policy": {
         "installation": "AVAILABLE",

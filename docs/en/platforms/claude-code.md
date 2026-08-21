@@ -12,17 +12,17 @@ Run this inside an interactive session:
 
 ```text
 /plugin marketplace add hat47x/cultural-substrate-weaving
-/plugin install csw-method-en@cultural-substrate-weaving
+/plugin install cultural-substrate-weaving-en@cultural-substrate-weaving
 /reload-plugins
 ```
 
-The Japanese plugin is `csw-method-ja`.
+The Japanese plugin is `cultural-substrate-weaving-ja`.
 
 To add it non-interactively (e.g. from a script):
 
 ```bash
 claude plugin marketplace add hat47x/cultural-substrate-weaving
-claude plugin install csw-method-en@cultural-substrate-weaving
+claude plugin install cultural-substrate-weaving-en@cultural-substrate-weaving
 ```
 
 ## Claude Desktop (Code tab, local and SSH sessions)
@@ -39,7 +39,7 @@ Desktop's own plugin browser only lists marketplaces that are already registered
       "source": { "source": "github", "repo": "hat47x/cultural-substrate-weaving" }
     }
   },
-  "enabledPlugins": ["csw-method-en@cultural-substrate-weaving"]
+  "enabledPlugins": ["cultural-substrate-weaving-en@cultural-substrate-weaving"]
 }
 ```
 
@@ -57,7 +57,7 @@ If the Plugin Marketplace route is inconvenient, you can instead use Claude's ge
 2. In Claude Desktop, go to Customize → Skills → Add → Upload a skill, and upload that ZIP as-is.
 3. On claude.ai web, the Skills settings support the same upload.
 
-**Caveat**: this SKILL.md doesn't set the explicit-invocation-only flag (`disable-model-invocation`) that the Plugin package (`csw-method-en`) does. So unlike the plugin, Claude will invoke it automatically whenever it judges the skill relevant (the same behavior as `openai-skill-interactive`). If you want to minimize token consumption, prefer the Plugin Marketplace route above instead.
+**Caveat**: this SKILL.md doesn't set the explicit-invocation-only flag (`disable-model-invocation`) that the Plugin package (`cultural-substrate-weaving-en`) does. So unlike the plugin, Claude will invoke it automatically whenever it judges the skill relevant (the same behavior as `openai-skill-interactive`). If you want to minimize token consumption, prefer the Plugin Marketplace route above instead.
 
 ## WSL sessions
 
@@ -70,7 +70,7 @@ This appears when a `/plugin` command is run somewhere other than an interactive
 ## Invoke
 
 ```text
-/csw-method-en:cultural-substrate-weaving-en Review the responsibility boundaries and time-lag effects in this architecture.
+/cultural-substrate-weaving-en:weave Review the responsibility boundaries and time-lag effects in this architecture.
 ```
 
 The plugins use explicit invocation by default to reduce unnecessary context and token consumption.

@@ -1,5 +1,5 @@
 ---
-name: cultural-substrate-weaving-en
+name: weave
 description: A general-purpose AI method for improving metacognition wherever structure is analyzed, designed, written, or implemented. It explores, validates, and transforms target-specific relationships, missing connections, feedback effects, and time lags; cultural, philosophical, and traditional frameworks are optional auxiliary models.
 disable-model-invocation: true
 ---
