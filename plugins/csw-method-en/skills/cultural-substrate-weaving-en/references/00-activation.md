@@ -4,7 +4,9 @@ Read this file when deciding activation scope, implicit activation, explicit inv
 
 ## 0. Decide whether to activate
 
-Activate the method when it is likely to provide a **meaningful increment over domain-specific methods**. For implicit activation, prioritize precision. When the decision is evenly balanced, do not activate.
+Activate the method when it is likely to provide a **meaningful increment over domain-specific methods**. For implicit activation, prioritize precision so the method does not interrupt unrelated work.
+
+**Do not make non-activation the default for an evenly balanced decision.** Left balanced and unactivated, whether an increment existed goes unmeasured and stands as "no increment." The return on an untried move cannot be measured, so that verdict is self-fulfilling. When the decision is balanced, **try it at the cheapest scope and measure.** Under implicit activation, try limited application where the cost of interrupting is low; where that cost is high (see "Conditions for prioritizing ordinary methods" below), run the ordinary procedure first.
 
 Choose one of three scopes.
 
@@ -39,11 +41,13 @@ Decide activation from these conditions, not from words in the request. Terms su
 
 ### When the user explicitly invokes the method
 
-Even after explicit invocation, determine scope from increment and validation feasibility.
+**Explicit invocation replaces the activation decision.** Do not decline an explicitly invoked activation on the prediction that the increment will be small. Declining leaves the increment unmeasured, and the verdict "it was not needed" fulfills itself. An explicit invocation is an entrusted scope, and narrowing it on a prediction is the excessive self-restraint the five required constraints forbid. What gets adjusted is the scope of application, not whether to activate.
 
 - If an increment is plausible, choose limited or full application.
-- If ordinary methods can achieve the objective, briefly explain why and use them.
+- Where ordinary methods appear sufficient, **still run limited application.** Write out what ordinary methods yield as the baseline first, then show what was added to it. If nothing was added, report "limited application run, no increment." **Do not skip it at the prediction stage.**
 - If validation material is insufficient, retain framework-derived readings as hypotheses and state the information or research questions needed.
+
+When choosing a scope narrower than the one specified, say so and give the reason. Ground the reason in what was measured on the target, not in what was predicted.
 
 ### Stopping conditions after activation
 

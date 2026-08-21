@@ -17,15 +17,15 @@
   },
   "files": {
     "ROUTER.md": {
-      "ja_sha256": "383f1880dd7cd3cc95f912c50285a0b65ea52948220ab328321e6300f239b966",
+      "ja_sha256": "77886315d0cb1b394031e01d996b5ffc2e37e816e27ba9f1b3f8e970d2e45d8f",
       "en_present": true,
-      "en_source_ja_sha256": "383f1880dd7cd3cc95f912c50285a0b65ea52948220ab328321e6300f239b966",
+      "en_source_ja_sha256": "77886315d0cb1b394031e01d996b5ffc2e37e816e27ba9f1b3f8e970d2e45d8f",
       "en_status": "translated"
     },
     "core/activation.md": {
-      "ja_sha256": "809b7b5a6e271bb65db9436686ad77ce54328bdf194495572c2ab6c90e3b57c8",
+      "ja_sha256": "047b098cb6d23614adbe3cab32af56f952c6782959cd066cf5222ef31f28402e",
       "en_present": true,
-      "en_source_ja_sha256": "809b7b5a6e271bb65db9436686ad77ce54328bdf194495572c2ab6c90e3b57c8",
+      "en_source_ja_sha256": "047b098cb6d23614adbe3cab32af56f952c6782959cd066cf5222ef31f28402e",
       "en_status": "translated"
     },
     "core/iteration.md": {
@@ -41,63 +41,69 @@
       "en_status": "translated"
     },
     "domains/character-and-taiheki.md": {
-      "ja_sha256": "fd5fb7b0316a4001acde003ced6f8d2e49727558a2db4e11139cc553af553916",
+      "ja_sha256": "934366d4bca951f72bef68747bd4249c792ac7eca90363eb2eb5a0e4c84f4fb1",
       "en_present": true,
-      "en_source_ja_sha256": "fd5fb7b0316a4001acde003ced6f8d2e49727558a2db4e11139cc553af553916",
+      "en_source_ja_sha256": "934366d4bca951f72bef68747bd4249c792ac7eca90363eb2eb5a0e4c84f4fb1",
       "en_status": "translated"
     },
     "domains/creative-patterns.md": {
-      "ja_sha256": "d07353cb7c4ffc961ba527741d3c7b3163f532605dc6ef1e7a32c319ef94d49d",
+      "ja_sha256": "35b48d4dfa8a76897f23ab415fbb885a3d084524d6c88b4a21741b6d7d503043",
       "en_present": true,
-      "en_source_ja_sha256": "d07353cb7c4ffc961ba527741d3c7b3163f532605dc6ef1e7a32c319ef94d49d",
+      "en_source_ja_sha256": "35b48d4dfa8a76897f23ab415fbb885a3d084524d6c88b4a21741b6d7d503043",
       "en_status": "translated"
     },
     "domains/output-and-collaboration.md": {
-      "ja_sha256": "1228ab9c64c4eff2a49bcb3487d99b2c259db8d3833006968b0380ec41e789ff",
+      "ja_sha256": "8a1e916785d449208724d236338707f1031ee2044657c0045b3d206e22a372e8",
       "en_present": true,
-      "en_source_ja_sha256": "1228ab9c64c4eff2a49bcb3487d99b2c259db8d3833006968b0380ec41e789ff",
+      "en_source_ja_sha256": "8a1e916785d449208724d236338707f1031ee2044657c0045b3d206e22a372e8",
       "en_status": "translated"
     },
     "governance/evaluation-and-domains.md": {
-      "ja_sha256": "c2535be3768ed140dd80f7f9a13e84fca49d4f3e8d9afb53d8405992a84d6cd3",
+      "ja_sha256": "e7ba1e6633053b5c27cb31f981231dc8b5ade0e95f8f459da9833b1d3cbf07bf",
       "en_present": true,
-      "en_source_ja_sha256": "c2535be3768ed140dd80f7f9a13e84fca49d4f3e8d9afb53d8405992a84d6cd3",
+      "en_source_ja_sha256": "e7ba1e6633053b5c27cb31f981231dc8b5ade0e95f8f459da9833b1d3cbf07bf",
       "en_status": "translated"
     },
     "governance/governance-and-records.md": {
-      "ja_sha256": "9c5ab8965f4a73358f3464ac0cc31f7f932b7ef8b7c6b879081eb4e1c9edd237",
+      "ja_sha256": "d70a74e2007dcfd874dd46c1f04d91500651fd6033eb30fbe63b49023a25d6d7",
       "en_present": true,
-      "en_source_ja_sha256": "9c5ab8965f4a73358f3464ac0cc31f7f932b7ef8b7c6b879081eb4e1c9edd237",
+      "en_source_ja_sha256": "d70a74e2007dcfd874dd46c1f04d91500651fd6033eb30fbe63b49023a25d6d7",
       "en_status": "translated"
     },
     "methods/generation-and-validation.md": {
-      "ja_sha256": "011f49ec39059ec6b9a7fd2a2281caee0db1a0d7a5c194baea063fcb56bd842b",
+      "ja_sha256": "42a4a28d68d4bbb63bbe8020f1058c380505f975c222862cbf4f94967947495e",
       "en_present": true,
-      "en_source_ja_sha256": "011f49ec39059ec6b9a7fd2a2281caee0db1a0d7a5c194baea063fcb56bd842b",
+      "en_source_ja_sha256": "42a4a28d68d4bbb63bbe8020f1058c380505f975c222862cbf4f94967947495e",
       "en_status": "translated"
     },
     "methods/scope-and-facts.md": {
-      "ja_sha256": "2a4475af9253fed1d6f599a52c6d3fa94d65e7d0f452bd6939ef20ced3b6fb6d",
+      "ja_sha256": "8de2896d10cabd943c8d89a6e6d1009ad5e8559017bf4e5b255ca95ce290382d",
       "en_present": true,
-      "en_source_ja_sha256": "2a4475af9253fed1d6f599a52c6d3fa94d65e7d0f452bd6939ef20ced3b6fb6d",
+      "en_source_ja_sha256": "8de2896d10cabd943c8d89a6e6d1009ad5e8559017bf4e5b255ca95ce290382d",
       "en_status": "translated"
     },
     "methods/system-selection.md": {
-      "ja_sha256": "b6ae12d83d31d8be6418e0cf2cd981685f38edda77e4e23f0785c14dc91b7319",
+      "ja_sha256": "8fa67d7787a2d4403d4fc326685a24be00bab43b2a8408d7664a5a7428fc4d11",
       "en_present": true,
-      "en_source_ja_sha256": "b6ae12d83d31d8be6418e0cf2cd981685f38edda77e4e23f0785c14dc91b7319",
+      "en_source_ja_sha256": "8fa67d7787a2d4403d4fc326685a24be00bab43b2a8408d7664a5a7428fc4d11",
+      "en_status": "translated"
+    },
+    "methods/framework-application.md": {
+      "ja_sha256": "e46e630fa98a6d7aa7215fde93056d458dcf60fe4da509643d8c35fb715b0d76",
+      "en_present": true,
+      "en_source_ja_sha256": "e46e630fa98a6d7aa7215fde93056d458dcf60fe4da509643d8c35fb715b0d76",
       "en_status": "translated"
     },
     "methods/transformation.md": {
-      "ja_sha256": "950e30275a497004c338a66f9eee55882d68631b2c8dbaba2ae8428e2b7459b4",
+      "ja_sha256": "7e35e55ce3c6f791c8ea9451e5c8db522bfd88ad6a6c00fd3c85a22ba7db17de",
       "en_present": true,
-      "en_source_ja_sha256": "950e30275a497004c338a66f9eee55882d68631b2c8dbaba2ae8428e2b7459b4",
+      "en_source_ja_sha256": "7e35e55ce3c6f791c8ea9451e5c8db522bfd88ad6a6c00fd3c85a22ba7db17de",
       "en_status": "translated"
     },
     "methods/integration.md": {
-      "ja_sha256": "0bc87281c481adfc25abc32d9cc9308d6fd8e7a718ec616571fe1f56af085ffe",
+      "ja_sha256": "2fe0f3bdd8e2d33f212cfba9b1f0efa908c65f19b135331bc600975d6e23f887",
       "en_present": true,
-      "en_source_ja_sha256": "0bc87281c481adfc25abc32d9cc9308d6fd8e7a718ec616571fe1f56af085ffe",
+      "en_source_ja_sha256": "2fe0f3bdd8e2d33f212cfba9b1f0efa908c65f19b135331bc600975d6e23f887",
       "en_status": "translated"
     }
   }

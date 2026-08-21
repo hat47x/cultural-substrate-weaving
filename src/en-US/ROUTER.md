@@ -12,7 +12,7 @@ When rules conflict, prioritize the four evaluation perspectives and five mandat
 
 1. **Establish a baseline and what to preserve:** Record what domain-specific methods alone can explain, and the target-specific strengths, facts, and causal links that must survive any change.
 2. **Assess the increment:** Determine whether exploring relationships, missing connections, feedback effects, time lags, irreversibility, or generative excess could produce a new judgment.
-3. **Choose the scope:** Use the ordinary method, limited application, or full application. When the decision is close, begin with the ordinary method or limited application.
+3. **Choose the scope:** Use the ordinary method, limited application, or full application. **When the decision is close, begin with limited application and measure.** Under explicit invocation, run limited application even where the ordinary method appears sufficient.
 4. **Read only the references needed:** State in one sentence what you expect to obtain from each reference and read only files whose purpose you can explain.
 5. **Explore, validate, and transform:** There are two routes to an increment — obtain structural hypotheses **from a framework**, or **integrate the target's own material and find the blanks in it**. Take the second first when material is plentiful and uneven in granularity, or when the primary structure is unsettled. Either way, validate against the target and transform retained structures into target-specific expression, design, or procedure.
 6. **Stop when target-side increment stops:** End when only abstraction or explanation grows and no new fact, relationship, condition, falsifier, or judgment emerges. **Across passes, judge by whether the conclusion moved: if only the grounds grew while the central claim stayed the same, that was reinforcement, not a pass.**
@@ -36,6 +36,7 @@ For obvious non-application or limited application, begin with the minimum proce
 | Iterative analysis, externalization, repeated passes, or stopping by increment | [00-iteration.md](core/iteration.md) |
 | Scope, primary change structure, baseline, and facts | [01-scope-and-facts.md](methods/scope-and-facts.md) |
 | Framework and precedent selection, unit compatibility, and rejection conditions | [02-system-selection.md](methods/system-selection.md) |
+| Fixing the assignment, the four post-adoption checks, over-application | [02a-framework-application.md](methods/framework-application.md) |
 | Relationship types, missing elements and connections, multiple frameworks, and target-specific procedures | [03-transformation.md](methods/transformation.md) |
 | Candidate generation, generative excess, value and resources, and adoption decisions | [04-generation-and-validation.md](methods/generation-and-validation.md) |
 | Character construction, bodily consistency, and Taiheki | [05-character-and-taiheki.md](domains/character-and-taiheki.md) |
@@ -48,7 +49,7 @@ For obvious non-application or limited application, begin with the minimum proce
 ### Loading order
 
 - **Limited application:** Start with one reference directly required by the target. Add `00-principles-and-constraints.md` only when detailed judgment axes are needed.
-- **Full application:** Begin with `00-principles-and-constraints.md` and `01-scope-and-facts.md`. Read `10-integration.md` first when material is plentiful and uneven, or the primary structure is unsettled. Read `02-system-selection.md` when selecting frameworks, `03-transformation.md` when transforming relationships, and `09-evaluation-and-domains.md` before finalizing.
+- **Full application:** Begin with `00-principles-and-constraints.md` and `01-scope-and-facts.md`. Read `10-integration.md` first when material is plentiful and uneven, or the primary structure is unsettled. Read `02-system-selection.md` when selecting frameworks, `02a-framework-application.md` once one is adopted, `03-transformation.md` when transforming relationships, and `09-evaluation-and-domains.md` before finalizing.
 - **Iterative analysis:** Read `00-iteration.md` when one explore-validate-transform pass does not establish the structure.
 - **High-impact or irreversible judgment:** Read `00-principles-and-constraints.md` and `08-governance-and-records.md`.
 

@@ -106,9 +106,21 @@ def check_budgets(errors: list[str]) -> dict:
     metrics = {}
     claude_config = read_json(ROOT / "adapters/claude-code/locales.json")
     for locale in locales():
-        router_size = (locale_source(locale) / config["router"]).stat().st_size
+        router = locale_source(locale) / config["router"]
+        router_size = router.stat().st_size
         if router_size > budgets["router_max_bytes"][locale]:
             fail(errors, f"{locale}: router exceeds byte budget: {router_size}")
+        reference_cap = budgets["reference_max_bytes"][locale]
+        corpus_bytes = 0
+        for path in sorted(locale_source(locale).rglob("*.md")):
+            size = path.stat().st_size
+            corpus_bytes += size
+            if path == router:
+                continue
+            if size > reference_cap:
+                fail(errors, f"{locale}: reference exceeds byte budget: {path.relative_to(ROOT)}: {size}")
+        if corpus_bytes > budgets["corpus_max_bytes"][locale]:
+            fail(errors, f"{locale}: source corpus exceeds byte budget: {corpus_bytes}")
         for profile in ("interactive", "metered"):
             size = (DIST / locale / "openai-skill" / profile / config["name"] / "SKILL.md").stat().st_size
             if size > budgets["openai_skill_md_max_bytes"][locale]:
@@ -127,6 +139,7 @@ def check_budgets(errors: list[str]) -> dict:
         metrics[locale] = {
             "router_bytes": router_size,
             "claude_skill_bytes": claude_size,
+            "source_corpus_bytes": corpus_bytes,
             "m365_instruction_chars": m365_chars,
             "gpt_knowledge_files": knowledge_count,
         }
