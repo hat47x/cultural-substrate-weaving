@@ -1,7 +1,7 @@
 {
   "name": "csw-method-ja",
   "description": "構造を対象側で検証し、対象固有の判断・設計へ変換する日本語版。",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "author": {
     "name": "hat47x"
   },

@@ -4,13 +4,13 @@
     "name": "hat47x"
   },
   "description": "Localized plugins for structural metacognition and target-specific validation.",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "plugins": [
     {
       "name": "csw-method-ja",
       "source": "./plugins/csw-method-ja",
       "description": "構造を対象側で検証し、対象固有の判断・設計へ変換する日本語版。",
-      "version": "0.1.0",
+      "version": "0.2.0",
       "category": "productivity",
       "tags": [
         "analysis",
@@ -24,7 +24,7 @@
       "name": "csw-method-en",
       "source": "./plugins/csw-method-en",
       "description": "English structural metacognition method with target-side validation and target-specific transformation.",
-      "version": "0.1.0",
+      "version": "0.2.0",
       "category": "productivity",
       "tags": [
         "analysis",
