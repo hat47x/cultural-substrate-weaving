@@ -27,10 +27,13 @@ def main() -> None:
     config = manifest()
     claude = read_json(ROOT / "adapters/claude-code/locales.json")
     files = []
+    references = []
+    corpus = {}
     for locale in locales():
         c = claude[locale]
+        router = locale_source(locale) / config["router"]
         paths = [
-            locale_source(locale) / config["router"],
+            router,
             DIST / locale / "openai-skill/interactive" / config["name"] / "SKILL.md",
             DIST / locale / "openai-skill/metered" / config["name"] / "SKILL.md",
             PLUGINS / c["plugin_name"] / "skills" / c["skill_name"] / "SKILL.md",
@@ -38,14 +41,28 @@ def main() -> None:
             DIST / locale / "microsoft-copilot/instructions.txt",
         ]
         files.extend(entry(locale, path) for path in paths)
+        sources = sorted(locale_source(locale).rglob("*.md"))
+        references.extend(entry(locale, path) for path in sources if path != router)
+        chars = sum(len(path.read_text(encoding="utf-8")) for path in sources)
+        corpus[locale] = {
+            "files": len(sources),
+            "bytes": sum(path.stat().st_size for path in sources),
+            "characters": chars,
+            "estimated_tokens": estimate_tokens(locale, chars),
+        }
     report = {
         "note": "Planning ranges only; platform tokenizers differ.",
-        "files": files,
+        "corpus": corpus,
+        "delivery_files": files,
+        "reference_files": references,
     }
     write_text(DIST / "reports/token-budget.json", json.dumps(report, ensure_ascii=False, indent=2) + "\n")
-    for item in files:
+    for item in files + references:
         t = item["estimated_tokens"]
         print(f"{item['locale']} {item['path']}: {item['bytes']} bytes, approx {t['low']}-{t['high']} tokens")
+    for locale, item in corpus.items():
+        t = item["estimated_tokens"]
+        print(f"{locale} CORPUS ({item['files']} files): {item['bytes']} bytes, approx {t['low']}-{t['high']} tokens")
 
 
 if __name__ == "__main__":

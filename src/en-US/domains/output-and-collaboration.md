@@ -2,8 +2,6 @@
 
 Read this file when designing explicitness, recipient-specific entry routes, collaboration, and handoff.
 
-Select from the lists according to the target. Put target-specific additions in the dynamic layer.
-
 ## 7. Adapt output to recipients and collaborators
 
 Transform framework concepts into character responses, scene changes, institutional effects, temporal transitions, design elements, or checks. In documents that show rationale, record the analysis procedure, the framework's use, and validation results.

@@ -2,8 +2,6 @@
 
 Read this file when auxiliary patterns involving experience, repetition, time, depth, humor, emotion, or series are needed.
 
-Select from the lists according to the target. Put target-specific additions in the dynamic layer.
-
 ## 8. Use auxiliary patterns when needed
 
 Generalize only the use and type of layer. Put concrete content in the target-specific dynamic layer and do not promote it into fixed evaluation criteria.

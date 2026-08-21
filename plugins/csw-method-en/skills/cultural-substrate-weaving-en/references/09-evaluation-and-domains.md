@@ -2,8 +2,6 @@
 
 Read this file before finalizing an artifact and when checking application boundaries in specialist domains.
 
-Select from the lists according to the target. Put target-specific additions in the dynamic layer.
-
 ## 11. Evaluate the application result
 
 The checklist detects mismatches in activation and application. Treat unmet items as entry points for reconsideration.

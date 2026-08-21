@@ -2,8 +2,6 @@
 
 Read this file when checking bodily consistency and the first and second Taiheki components in character design, description, or revision.
 
-Select from the lists according to the target. Put target-specific additions in the dynamic layer.
-
 ## 6. Check character consistency
 
 Use Taiheki not as an empirical theory, but as an external typology for checking consistency in character portrayal. Limit it to consistency checking; do not use it for diagnosis or personality evaluation.

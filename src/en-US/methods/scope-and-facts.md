@@ -2,8 +2,6 @@
 
 Read this file when defining scope, the primary change structure, the baseline, and the facts.
 
-Select from the lists according to the target. Put target-specific additions in the dynamic layer.
-
 ## 1. Define the scope
 
 First decide three axes.

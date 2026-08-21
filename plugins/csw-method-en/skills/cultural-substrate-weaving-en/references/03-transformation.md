@@ -2,8 +2,6 @@
 
 Read this file when converting relationships inside a framework into target-specific questions, checks, and procedures.
 
-Select from the lists according to the target. Put target-specific additions in the dynamic layer.
-
 ## 4. Transform into a target-specific procedure
 
 Convert framework relationships into verbs, questions, and checks usable on the target.

@@ -2,8 +2,6 @@
 
 Read this file when handling rule volume, dynamic procedures, exit and return conditions, and decision records.
 
-Select from the lists according to the target. Put target-specific additions in the dynamic layer.
-
 ## 9. Separate static rules from dynamic procedures
 
 This method operates in two layers.

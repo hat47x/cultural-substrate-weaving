@@ -1,4 +1,6 @@
 {
+  "_note": "Byte ceilings. reference_max_bytes and corpus_max_bytes are ratchets: lower them when reduction lands, and raise them only for a reviewed structural change, recorded in _baseline below. Never raise either to accommodate content growth.",
+  "_baseline": "v0.2.0+unreleased. Content reduction: ja-JP 74189 -> 72292, en-US 74259 -> 72675. Then methods/system-selection.md was split into system-selection + framework-application, which cut the largest reference from 14509 to 11856 (ja-JP) and brought both files under the 100-line reference guideline, at a structural cost of 670 bytes (ja-JP) and 702 bytes (en-US) in file headers, cross-pointers, and router rows.",
   "router_max_bytes": {
     "ja-JP": 10000,
     "en-US": 12000
@@ -10,6 +12,14 @@
   "claude_skill_md_max_bytes": {
     "ja-JP": 11000,
     "en-US": 13000
+  },
+  "reference_max_bytes": {
+    "ja-JP": 11856,
+    "en-US": 11831
+  },
+  "corpus_max_bytes": {
+    "ja-JP": 72962,
+    "en-US": 73377
   },
   "m365_instructions_max_chars": 8000,
   "gpt_knowledge_max_files": 10

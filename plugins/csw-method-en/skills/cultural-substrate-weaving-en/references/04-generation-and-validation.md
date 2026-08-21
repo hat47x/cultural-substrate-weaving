@@ -2,8 +2,6 @@
 
 Read this file when generating candidates and validating generative excess, target-side necessity, value, and resource consumption.
 
-Select from the lists according to the target. Put target-specific additions in the dynamic layer.
-
 ## 5. Generate candidates and validate them on the target
 
 Expand candidates across qualitatively different domains such as objects, places, institutions, bodies, actions, and time. Include relationships in which elements change one another's states. Look for integrated elements that realize multiple functions through one action or mechanism.
