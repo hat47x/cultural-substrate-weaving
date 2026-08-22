@@ -18,12 +18,15 @@ Use limited application when the target's primary change structure is already de
 
 ### Required conditions for implicit activation
 
-All four conditions must be met.
+All five conditions must be met.
 
-1. **The task concerns structure:** Its purpose is creation, design, revision, modeling, causal analysis, or structural review.
-2. **Multiple dimensions interact:** At least two among elements, actors, relationships, time, responsibility, value, and constraints are handled together.
-3. **Target-side validation is possible:** The resulting structure can be compared with facts, purpose, intent, requirements, or field conditions of the target.
-4. **An outcome beyond ordinary analysis is plausible:** The method may generate a new judgment, design candidate, falsification condition, or research question.
+1. **The problem space is open:** no single answer settles it, the candidates worth exploring cannot be enumerated in advance, and fixing the destination is itself part of the work.
+2. **The task concerns structure:** Its purpose is creation, design, revision, modeling, causal analysis, or structural review.
+3. **Multiple dimensions interact:** At least two among elements, actors, relationships, time, responsibility, value, and constraints are handled together.
+4. **Target-side validation is possible:** The resulting structure can be compared with facts, purpose, intent, requirements, or field conditions of the target.
+5. **An outcome beyond ordinary analysis is plausible:** The method may generate a new judgment, design candidate, falsification condition, or research question.
+
+**The first condition is the load-bearing one.** A closed problem space — one where an answer can be settled, the candidates enumerated, and verification decides the matter — is served by ordinary methods. Holding structure, interacting dimensions, and verifiability is not enough on its own: **a closed problem space satisfies two through five and still fails at the first.** Analysing an industry's structure, designing what a product should be worth, working out the shape of something not yet made — a search space that is wide and a destination that is undecided — is where this method belongs.
 
 ### Conditions for prioritizing ordinary methods
 
@@ -51,13 +54,17 @@ When choosing a scope narrower than the one specified, say so and give the reaso
 
 ### Stopping conditions after activation
 
-Reduce scope or terminate when any of the following occurs:
+Stopping is decided by **whether the material has run out.** Reduce scope or terminate when any of the following occurs:
 
+- **no new card is raised** — further passes bring no new unit up out of the material;
+- **the increment that comes out duplicates what is already there;**
+- **the framework returns the same result** — laying the position layer over the target points nowhere the baseline did not;
 - the baseline alone achieves the objective;
 - no framework with structural units compatible with the target can be identified;
-- results remain paraphrases of ordinary analysis, existing theory, or known information;
-- target-side validation material is insufficient;
-- adding frameworks increases only confirmation or explanation volume;
-- analysis cost, explanation burden, or risk of misunderstanding exceeds the increment obtained.
+- target-side validation material is insufficient.
+
+**Cost is not a stopping condition.** Whether analysis cost or explanation burden outweighs the increment is not this method's judgment to make. Whether to let an exploration run long or cut it off is **the human's decision**, weighing spend against expectation. This method judges only whether the material is exhausted.
+
+Where usage limits are tight, the human sets a pass count or a budget up front and hands it over. The method assumes an environment without a hard ceiling.
 
 Record the activation decision and stopping reason in the internal work record. When non-activation or early termination affects the user's expectations, state the conclusion and reason briefly.

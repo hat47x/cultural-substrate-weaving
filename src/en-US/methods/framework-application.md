@@ -46,6 +46,24 @@ What a framework produced is **kept with its provenance rather than held back**:
 
 Do not discard the interpretive layer. It cannot judge, but it can search second-order effects (strengthening one position, what becomes excessive and what gets suppressed), generate falsifying hypotheses (a counter-hypothesis from an inverted viewpoint), perform sensitivity analysis (which single change alters the whole character), supply inspection items, and provide templates for conflict structure. The target's evidence decides adoption.
 
+## 3ab. Run the transitions
+
+Do this when the declared use is the **transition model**. Treat the position layer as a set of states and run the framework's transition rules — generation and restraint cycles, changing lines, ordered phases — over the target.
+
+Fixing the assignment works as in `3a`. On top of that, produce the following.
+
+1. **Lay the grid of states:** use the set of positions as a grid covering the search space. Assign to each state whichever events, elements, or actors of the target sit in it. Keep the empty states on the grid.
+2. **Try the transitions:** move from state to state as the framework's rules allow, and for each transition judge whether a corresponding movement actually exists in the target. **Judge from observable facts of the target; never from the transition rule saying one ought to be there.**
+3. **Sort what the run produced into three:**
+   - **States never reached:** no transition enters them. Separate a target that does not hold the state from an entrance that was never described.
+   - **Transitions that never fire:** present in the rules, unobserved in the target. Separate forbidden from not-yet-happened from happening-but-unrecorded.
+   - **States entered but never left:** transitions in, none out. These are candidates for irreversibility.
+4. **Measure the grid's coverage:** record what share of the target's elements landed in any state at all. A low share means the grid covered a fragment of the target.
+
+**A transition run produces hypotheses, not properties of the target.** Take all three categories back to the target and check them. "Transitions that never fire" especially: the likeliest explanation is that the framework forbids them. Record the framework's own prohibitions separately from the target's absences.
+
+**A framework without transition rules cannot be used this way.** Forcing movement through a framework that merely enumerates positions makes the transitions themselves the analyst's similarity judgment. Return the use to the structural model instead.
+
 ## 3b. Check after adoption
 
 After adopting one, apply four checks.
@@ -53,7 +71,7 @@ After adopting one, apply four checks.
 - **Inversion check:** try to refute the claim the framework produced. If the attempted refutation gets absorbed as further support, reject that framework for that target. If a genuine counter-example exists, do not absorb it: narrow the claim and keep it.
 - **Substitution check:** if another framework surfaces the same absence, that absence comes from the target rather than the framework. **Record that nothing about this framework in particular was needed for that absence.** The finding itself still stands. How much the framework contributed is counted by the removal check below. **Record a framework you could not apply separately from one you applied that did not surface the absence.** Failing to build an assignment procedure is not evidence that the absence did not reproduce.
 - **Misfit record:** list the places where the framework did not fit the target. If no such place exists, the framework has not yet been tested. **The places it missed are usually more useful than the places it hit**, because resolving a miss sends you back into the target. **But a misfit you could have written before looking at the target is not a finding about the target.** The kinds of relation a framework does not handle at all follow from its coverage and can be listed before it touches anything. **List them first, and subtract them from the misfits the application turns up.**
-- **Removal check:** delete the framework's name, its correspondence tables, and its line statements or attribution charts, then judge finding by finding whether each still stands as a statement about the target, and record the counts. Only what stands counts as a result, and it belongs to the target. **Do not ask whether the question could have been reached without the framework.** Requiring re-derivability discards everything the position layer produced, since it produces findings by supplying places the target does not hold. Measure the framework's contribution by how many surviving findings the baseline did not reach, not by whether it is indispensable. Where one finding came out of two frameworks, record it under both and do not count it twice toward contribution.
+- **Removal check:** delete the framework's name, its correspondence tables, and its line statements or attribution charts, then judge finding by finding whether each still stands as a statement about the target, and record the counts. Only what stands counts as a result, and it belongs to the target. **Do not ask whether the question could have been reached without the framework.** Requiring re-derivability discards everything the position layer produced, since it produces findings by supplying places the target does not hold. Show the framework's contribution by the surviving findings the baseline did not reach, not by whether it is indispensable. **A count is a guard against overclaiming, not a measure of value.** Use it in one direction only: nothing survived, so withdraw the claim. Do not score the work by how many survived — the depth of what was understood does not show up in the count. Where one finding came out of two frameworks, record it under both and do not count it twice toward contribution.
 
 Place a framework that has passed the checks into one of four states: carried into the artifact, internal scaffolding (absent from the artifact but supporting this analysis), auxiliary model (kept in a form that carries over to the next target), or rejected. A high degree of fit is not a reason to carry it into the artifact. **Rejection does not retract the findings.** Surviving findings a rejected framework produced stay attributed to the target. Decide the state by the framework's validity, not by how much it produced.
 

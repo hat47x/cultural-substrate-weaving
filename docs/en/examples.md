@@ -2,11 +2,21 @@
 
 Records of the method actually being applied. These are **measurement records rather than a display of successes**: each one states what ordinary methods alone produce (the baseline) before showing what was added to it.
 
-**There are two cases so far. That is not enough to establish that the method works.** The stated falsification condition is that findings surviving the removal check do not exceed the baseline; two cases are merely consistent with it. More will be added.
+**There are two cases so far, and one of them is a record of misapplying the method. That is not enough to establish that it works.**
+
+**Do not read the counts as a score.** A removal-check count is a guard against overclaiming, not a measure of value (see [02a](../../src/en-US/methods/framework-application.md)). The tallies below exist for one direction only: nothing survived, so withdraw the claim.
+
+**This method is for open problem spaces.** Where an answer can be settled and the candidates enumerated, ordinary methods suffice. Its purpose is to get past the point where repeating the same move stops paying — not to produce more from the same number of tokens. Getting past that point takes more passes, not fewer.
 
 ---
 
-## Case 1: structure of a validation suite (software engineering)
+## Case 1: structure of a validation suite (**a record of misapplication**)
+
+> **This case is out of scope.** It fails the first activation condition in `00-activation`, that the problem space be open. A validation suite is a closed problem space — an answer can be settled, the checks enumerated, and verification decides the matter — so ordinary methods suffice.
+>
+> **The text at the time permitted this misapplication.** Activation turned on structure, interacting dimensions, verifiability, and plausible increment, and asked nothing about how open the problem space was. This case is what added the first condition, so it is kept as a record of the failure.
+>
+> What follows is preserved as it was judged at the time. **The findings hold, but they do not demonstrate the method's value** — the substitution check already reported that they were not specific to the framework, which is the expected result in a closed problem space.
 
 **Target**: `scripts/validate.py` in this repository — a validation suite of ten check functions.
 

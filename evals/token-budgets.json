@@ -1,6 +1,11 @@
 {
-  "_note": "Byte ceilings. reference_max_bytes and corpus_max_bytes are ratchets: lower them when reduction lands, and raise them only for a reviewed structural change, recorded in _baseline below. Never raise either to accommodate content growth.",
-  "_baseline": "v0.2.0+unreleased. Content reduction: ja-JP 74189 -> 72292, en-US 74259 -> 72675. Then methods/system-selection.md was split into system-selection + framework-application, which cut the largest reference from 14509 to 11856 (ja-JP) and brought both files under the 100-line reference guideline, at a structural cost of 670 bytes (ja-JP) and 702 bytes (en-US) in file headers, cross-pointers, and router rows.",
+  "_note": "Byte ceilings. reference_max_bytes and corpus_max_bytes are tripwires, not caps: they do not forbid growth, they force it to stop and be accounted for here before it lands. Raise either only together with a line in _history saying what the growth bought. Lower them whenever reduction lands.",
+  "_history": [
+    "v0.2.0+unreleased baseline: ja-JP 74189, en-US 74259.",
+    "Content reduction: ja-JP 72292, en-US 72675. Removed the preamble repeated in ten reference files and cut restatement from 02 and 10.",
+    "Structural: split methods/system-selection.md into selection + framework-application. Largest reference 14509 -> 11856 (ja-JP), both halves under the 100-line reference guideline, at a cost of 670 bytes (ja-JP) and 702 (en-US) in headers, cross-pointers, and router rows. Corpus ja-JP 72962, en-US 73377.",
+    "Content growth, deliberate: ja-JP 78048, en-US 78109 (+5086 / +4732). Bought the method's stated purpose, which the text did not previously carry — an openness precondition on activation that a closed problem space fails, stopping decided by exhaustion of material rather than by cost, cost handed to the human as their call, a fourth framework use (transition model) with its procedure, and the statement that a count guards against overclaiming rather than measuring value. Largest reference 11856 -> 14380 (ja-JP), still 80 lines."
+  ],
   "router_max_bytes": {
     "ja-JP": 10000,
     "en-US": 12000
@@ -14,12 +19,12 @@
     "en-US": 13000
   },
   "reference_max_bytes": {
-    "ja-JP": 11856,
-    "en-US": 11831
+    "ja-JP": 14380,
+    "en-US": 14086
   },
   "corpus_max_bytes": {
-    "ja-JP": 72962,
-    "en-US": 73377
+    "ja-JP": 78048,
+    "en-US": 78109
   },
   "m365_instructions_max_chars": 8000,
   "gpt_knowledge_max_files": 10

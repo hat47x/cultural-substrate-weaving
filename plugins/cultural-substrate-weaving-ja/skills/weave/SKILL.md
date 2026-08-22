@@ -10,6 +10,8 @@ disable-model-invocation: true
 
 文化的体系は、構造候補の供給源として使う。候補の採否は、対象の事実・目的・意図・領域条件で決める。採用した構造を、対象固有の表現・設計・手順へ変換する。
 
+**適用先は、探索空間が広大で到達点が未定の対象である。** 正解が確定でき候補を列挙し尽くせる閉じた問題では、通常手法で足りる。**本方法論の目的は、同じ手を繰り返すだけでは頭打ちになる地点を越えることであり、同一のトークン量でより良い結果を出すことではない。** 体系による状態の格子と、断片の積み上げは、探索が一つの筋へ固まるのを防ぐために置いてある。突破には、通常手法より多くの往復を要する。
+
 規則が競合する場合は、四つの評価観点と五つの必須制約を優先する。個別規則は、上位原則だけでは判断できない事項に限定する。判断に迷った場合は、冒頭の原則へ戻る。
 
 **本スキルの列挙は、確認する方向を示す例示であり、閉じた集合ではない。** 該当項目がない場合は、対象ごとの動的層に必要な項目を定義する。列挙の充足を達成条件とせず、列挙にない事象も検討対象に含める。複数の対象で同じ項目が必要になった場合に限り、静的規則への追加を再検討する。
@@ -42,7 +44,7 @@ disable-model-invocation: true
 | 一度で定まらない分析、外部化、周回、増分停止 | [00-iteration.md](references/00-iteration.md) |
 | 適用範囲、主要な変化構造、基準線、事実整理 | [01-scope-and-facts.md](references/01-scope-and-facts.md) |
 | 体系・先行事例の選定、同種性、不採用条件 | [02-system-selection.md](references/02-system-selection.md) |
-| 割当の確定、採用後の四検査、過剰適用 | [02a-framework-application.md](references/02a-framework-application.md) |
+| 割当の確定、遷移試行、採用後の四検査 | [02a-framework-application.md](references/02a-framework-application.md) |
 | 関係種別、欠落と接続、複数体系、対象専用手順 | [03-transformation.md](references/03-transformation.md) |
 | 候補生成、超過性、価値と資源、追加内容の採否 | [04-generation-and-validation.md](references/04-generation-and-validation.md) |
 | 人物造形、身体的一貫性、体癖 | [05-character-and-taiheki.md](references/05-character-and-taiheki.md) |
