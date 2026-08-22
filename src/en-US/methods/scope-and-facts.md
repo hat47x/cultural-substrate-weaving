@@ -12,13 +12,10 @@ First decide three axes.
 
 Choose the stance with the recipient's current position in mind. Showing a difference may help a recipient who has not recognized a problem; reflecting the situation may help an isolated recipient. For an exhausted recipient, choose a stance that limits additional burden. Decide the stance first and subordinate external frameworks to it.
 
-For something that will be used, examine five points.
+For something that will be used, examine two points.
 
 1. **Location of facts:** Before the target exists, separate field facts from design hypotheses. Treat concepts as hypotheses.
-2. **Autonomy:** Can users achieve the objective without support from the creator?
-3. **Irreversibility:** Separate reversible from irreversible changes. Define rationale, falsification conditions, and withdrawal procedures before irreversible changes.
-4. **Capability change:** Evaluate user capability growth separately from increased dependence on the target.
-5. **Visibility of boundaries:** Can users judge the target's state, choices, consequences, and responsibility boundaries?
+2. **Irreversibility:** Separate reversible from irreversible changes. Define rationale, falsification conditions, and withdrawal procedures before irreversible changes.
 
 Define the target's primary change structure in one sentence: “What changes into what, and what promotes or inhibits that change?”
 

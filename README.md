@@ -32,6 +32,12 @@ codex plugin marketplace add hat47x/cultural-substrate-weaving
 
 **ChatGPT custom GPT / Microsoft 365 Copilot**は[GitHub Releases](https://github.com/hat47x/cultural-substrate-weaving/releases)から言語とプラットフォームに対応するZIPを取得してください。手順は下の表のガイドにあります。
 
+## 呼ぶ側が用意するもの
+
+本スキルが与えるのは**文化的体系に基づく構造供給の能力**だけです。依頼の立て方、モデルの既定の傾向の補正、作品としての出来は扱いません。それらは**呼ぶ側のコンテキスト**が担います。
+
+用意しなければ、スキルは働きますが、期待した場所では働きません。→ **[呼ぶ側が用意するもの](docs/ja/usage-context.md)**
+
 ## 対応言語
 
 | 言語 | 状態 | 備考 |

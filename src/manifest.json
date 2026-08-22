@@ -68,11 +68,6 @@
       "skill_reference": "06-output-and-collaboration.md"
     },
     {
-      "id": "creative-patterns",
-      "source": "domains/creative-patterns.md",
-      "skill_reference": "07-creative-patterns.md"
-    },
-    {
       "id": "governance-and-records",
       "source": "governance/governance-and-records.md",
       "skill_reference": "08-governance-and-records.md"
@@ -105,8 +100,7 @@
       "methods/generation-and-validation.md"
     ],
     "03-character-and-creative.md": [
-      "domains/character-and-taiheki.md",
-      "domains/creative-patterns.md"
+      "domains/character-and-taiheki.md"
     ],
     "04-output-and-collaboration.md": [
       "domains/output-and-collaboration.md"

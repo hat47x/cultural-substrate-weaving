@@ -24,8 +24,6 @@ Judgments may be individually valid yet collectively reduce space, readable volu
 
 Separate excessive rule volume from missing connections among rules. When the problem is insufficient connection, repair connections before deleting rules.
 
-The stronger the purpose, belief, or organizational agreement in a domain, the more deliberately examine it at a distance from interests and emotional conformity. Distinguish careful review or reservation from opposition to the purpose.
-
 ## 10. Design exit conditions and decision records
 
 Define exit conditions when starting work, operations, or exceptional measures. For exception handling, define conditions for returning to normal operation. Exit conditions prevent provisional states from becoming permanent and burdens from accumulating.
