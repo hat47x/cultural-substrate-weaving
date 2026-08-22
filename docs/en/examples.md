@@ -132,6 +132,14 @@ The second appears as a **connection between** two baseline findings — "no def
 
 ## Case 3: planning a short story (an open problem space, controlled)
 
+> **This record is provisional. The treatment arm has not converged.**
+>
+> It stopped on a **session usage limit**, not because its material ran out. Two framework uses were still untried, and it had just said it was entering its final pass.
+>
+> The stopping conditions in `00-activation` turn on exhaustion of material, not on cost. **Evaluating an unconverged run is the self-fulfilling verdict the method itself names**: the return on an untried move cannot be measured, so a finding of "no increment" justifies itself.
+>
+> **The conclusions under "Observation 5" and "Observation 6" below were drawn from that unconverged output.** They will be re-measured and rewritten after it converges. Observations 1 to 4 record facts that do not change with convergence — the baseline's identity with the control's plan, the sensitivity of the stipulation, and two operations pointing at one absence — so they stand.
+
 **This is the only case so far that meets the precondition.** Planning a story admits no settled answer, its candidates cannot be enumerated, and fixing the destination is part of the work.
 
 ### Design

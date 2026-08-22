@@ -23,9 +23,9 @@
       "en_status": "translated"
     },
     "core/activation.md": {
-      "ja_sha256": "7fb4c72a2db068047e7ac81392710ada416c8bf883c6ebed07856b3c499ee6f8",
+      "ja_sha256": "0dcf006ccf5e692af44a74e621058ff4c8811133e7760d0a34e3b25a200fefe0",
       "en_present": true,
-      "en_source_ja_sha256": "7fb4c72a2db068047e7ac81392710ada416c8bf883c6ebed07856b3c499ee6f8",
+      "en_source_ja_sha256": "0dcf006ccf5e692af44a74e621058ff4c8811133e7760d0a34e3b25a200fefe0",
       "en_status": "translated"
     },
     "core/iteration.md": {

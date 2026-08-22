@@ -67,4 +67,6 @@ Stopping is decided by **whether the material has run out.** Reduce scope or ter
 
 Where usage limits are tight, the human sets a pass count or a budget up front and hands it over. The method assumes an environment without a hard ceiling.
 
+**A pass cut short from outside is not a pass that stopped.** When a usage limit, a timeout, or the human's own cutoff ends the work, what exists at that moment is progress, not a result. If none of the stopping conditions above were met, record that. **Do not judge whether an increment exists at the point of interruption.** Doing so treats the return on an untried move as zero, and that verdict justifies itself. Resume if resuming is possible. If it is handed over without resuming, **say that it did not converge, and name the moves not yet tried.**
+
 Record the activation decision and stopping reason in the internal work record. When non-activation or early termination affects the user's expectations, state the conclusion and reason briefly.
