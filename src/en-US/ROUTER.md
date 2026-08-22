@@ -4,6 +4,8 @@
 
 Use cultural, philosophical, and traditional frameworks as optional sources of structural hypotheses. Decide whether to retain a hypothesis using the target's facts, purpose, intent, and domain conditions. Transform retained structures into target-specific expression, design, or procedure.
 
+**This method is for targets whose search space is wide and whose destination is undecided.** A closed problem, where an answer settles it and the candidates can be enumerated, is served by ordinary methods. **Its purpose is to get past the point where repeating the same move stops paying, not to produce a better result from the same number of tokens.** The grid of states a framework supplies, and the accumulation of fragments, are there to stop the search from setting into one groove. Getting past that point takes more passes than ordinary methods, not fewer.
+
 When rules conflict, prioritize the four evaluation perspectives and five mandatory constraints. Add individual rules only for decisions that cannot be resolved by higher-level principles. When uncertain, return to the principle above.
 
 **Lists in this method indicate directions for examination; they are not closed sets.** When no listed item fits, define the necessary item in the target-specific dynamic layer. Do not treat completion of a list as the goal, and do not exclude phenomena merely because they are not listed. Consider promoting an item to a static rule only after the same need has been confirmed across multiple targets.
@@ -36,7 +38,7 @@ For obvious non-application or limited application, begin with the minimum proce
 | Iterative analysis, externalization, repeated passes, or stopping by increment | [00-iteration.md](core/iteration.md) |
 | Scope, primary change structure, baseline, and facts | [01-scope-and-facts.md](methods/scope-and-facts.md) |
 | Framework and precedent selection, unit compatibility, and rejection conditions | [02-system-selection.md](methods/system-selection.md) |
-| Fixing the assignment, the four post-adoption checks, over-application | [02a-framework-application.md](methods/framework-application.md) |
+| Fixing the assignment, running transitions, the four post-adoption checks | [02a-framework-application.md](methods/framework-application.md) |
 | Relationship types, missing elements and connections, multiple frameworks, and target-specific procedures | [03-transformation.md](methods/transformation.md) |
 | Candidate generation, generative excess, value and resources, and adoption decisions | [04-generation-and-validation.md](methods/generation-and-validation.md) |
 | Character construction, bodily consistency, and Taiheki | [05-character-and-taiheki.md](domains/character-and-taiheki.md) |

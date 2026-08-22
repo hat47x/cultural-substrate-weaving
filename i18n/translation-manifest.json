@@ -17,15 +17,15 @@
   },
   "files": {
     "ROUTER.md": {
-      "ja_sha256": "77886315d0cb1b394031e01d996b5ffc2e37e816e27ba9f1b3f8e970d2e45d8f",
+      "ja_sha256": "3d1feb794fc9d134351438c531696014436bdff15ccc77c0bc0216e2488ba140",
       "en_present": true,
-      "en_source_ja_sha256": "77886315d0cb1b394031e01d996b5ffc2e37e816e27ba9f1b3f8e970d2e45d8f",
+      "en_source_ja_sha256": "3d1feb794fc9d134351438c531696014436bdff15ccc77c0bc0216e2488ba140",
       "en_status": "translated"
     },
     "core/activation.md": {
-      "ja_sha256": "047b098cb6d23614adbe3cab32af56f952c6782959cd066cf5222ef31f28402e",
+      "ja_sha256": "7fb4c72a2db068047e7ac81392710ada416c8bf883c6ebed07856b3c499ee6f8",
       "en_present": true,
-      "en_source_ja_sha256": "047b098cb6d23614adbe3cab32af56f952c6782959cd066cf5222ef31f28402e",
+      "en_source_ja_sha256": "7fb4c72a2db068047e7ac81392710ada416c8bf883c6ebed07856b3c499ee6f8",
       "en_status": "translated"
     },
     "core/iteration.md": {
@@ -83,15 +83,15 @@
       "en_status": "translated"
     },
     "methods/system-selection.md": {
-      "ja_sha256": "8fa67d7787a2d4403d4fc326685a24be00bab43b2a8408d7664a5a7428fc4d11",
+      "ja_sha256": "9c595d96bd0a3cd8fc99b0512ce80a83df1186831444b9fa0fd86f63f2038771",
       "en_present": true,
-      "en_source_ja_sha256": "8fa67d7787a2d4403d4fc326685a24be00bab43b2a8408d7664a5a7428fc4d11",
+      "en_source_ja_sha256": "9c595d96bd0a3cd8fc99b0512ce80a83df1186831444b9fa0fd86f63f2038771",
       "en_status": "translated"
     },
     "methods/framework-application.md": {
-      "ja_sha256": "e46e630fa98a6d7aa7215fde93056d458dcf60fe4da509643d8c35fb715b0d76",
+      "ja_sha256": "b049c6e8b9ffa7b5d972a06eb17145f2fb5e37f6931d9f4dfd31b290113bd697",
       "en_present": true,
-      "en_source_ja_sha256": "e46e630fa98a6d7aa7215fde93056d458dcf60fe4da509643d8c35fb715b0d76",
+      "en_source_ja_sha256": "b049c6e8b9ffa7b5d972a06eb17145f2fb5e37f6931d9f4dfd31b290113bd697",
       "en_status": "translated"
     },
     "methods/transformation.md": {

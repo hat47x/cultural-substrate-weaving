@@ -14,13 +14,14 @@ Narrow candidates by differences in structural type rather than by listing frame
 - historical context;
 - competing interpretations and limits.
 
-Choose one of three uses.
+Choose one of four uses.
 
 1. **Structural model:** Examine relationships and placement across the target.
 2. **Consistency model:** Examine the behavior of one unit, such as a character, institution, or organization.
 3. **Temporal model:** Examine timing, cycles, accumulation, recurrence, and phase change.
+4. **Transition model:** Treat the framework as a state machine and run its transitions over the target. Look for states never reached, transitions that never fire, and states entered but never left.
 
-Define the use first and make evaluation criteria explicit.
+Define the use first and make evaluation criteria explicit. **The transition model lays the framework's states over the search space as a grid and reads the target by which cells fill and which stay empty.** It looks at where things can move rather than at static placement, so declare it separately from the structural model. The procedure is in `02a-framework-application.md`.
 
 Before detecting absence or bias, determine whether the framework's elements and the target's structural units are of the same kind. Only compatible units support reasoning about missing or overrepresented elements. For example, archetypes or story types and a set of individual scenes or facts are different units. In that combination, search for analogous relationships or expression candidates rather than missing elements.
 
