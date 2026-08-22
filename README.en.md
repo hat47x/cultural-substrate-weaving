@@ -32,6 +32,12 @@ Then install `cultural-substrate-weaving-en` (or `cultural-substrate-weaving-ja`
 
 **ChatGPT custom GPT and Microsoft 365 Copilot**: download the ZIP for your locale and platform from [GitHub Releases](https://github.com/hat47x/cultural-substrate-weaving/releases). The guides in the table below cover each one.
 
+## What the caller supplies
+
+This skill provides only **capability grounded in cultural frameworks**. It does not handle how a request is framed, correcting the model's own habits, or how good the finished work is. Those belong to **the context you build around it**.
+
+Skip this and the skill still runs — just not where you expected. → **[What the caller supplies](docs/en/usage-context.md)**
+
 ## Supported locales
 
 | Locale | Status | Note |
