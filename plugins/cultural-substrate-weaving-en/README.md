@@ -39,18 +39,21 @@ Examples:
 
 ## A worked example
 
-Given a short on-call rotation policy (rotation is daily; the on-call engineer stays the customer's single point of contact even after escalating; response records are one line and counted monthly), an ordinary review returns the obvious gaps: no after-hours coverage, no definition of "cannot answer", no deadline on escalated cases.
+For the premise "a small factory in a provincial city closes down; a short story covering that year", a controlled run used three agents sharing no context: a control with no method, a treatment applying it in full, and a blind judge.
 
-Two findings came from the structural pass and survived the removal check:
+**Both arms landed independently on the same central metaphor.** The judge, knowing nothing of the method, wrote that anyone setting out to write this premise seriously "arrives here about eighty per cent of the time". **A third party confirmed the local optimum.**
 
-1. **Daily rotation contradicts the single-point-of-contact promise.** The engineer who owns an escalated case is a different person tomorrow, and no handoff is defined.
-2. **No path carries judgment forward.** Where the line falls for "cannot answer" varies by person, records are one line, and only counts are aggregated — so what one engineer decided never reaches the next.
+The baseline the treatment wrote for itself was structurally the control's plan. The framework pass moved the central claim off it — the closure went from endpoint to starting point, the eleven months after became the book, and an antagonist appeared.
 
-Neither is in the baseline review. Both are statements about the policy, not about any framework.
+**A transition run found a state never reached, and the one card the KJ integration could not group landed exactly there.** Separate routes, one absence.
+
+The judge expects the control to be finished and more to remain from the treatment. **On the 2,000-character opening itself, the control is the better piece of writing.** Both arms also dropped the same character, so the method did not break the blind spot they shared.
+
+The treatment produced about six times the output. This is not a comparison at equal token spend.
 
 ## Worked examples
 
-[Worked examples](https://github.com/hat47x/cultural-substrate-weaving/blob/main/docs/en/examples.md) records each application with its baseline alongside the increment. **Two cases so far — not enough to establish that the method works.** The falsification condition is stated and each case is measured against it.
+[Worked examples](https://github.com/hat47x/cultural-substrate-weaving/blob/main/docs/en/examples.md) records each application with its baseline alongside the increment. **Three cases so far, only one of which meets the precondition — not enough to establish that the method works.** The falsification condition is stated and each case is measured against it.
 
 ## What is in this plugin
 

@@ -2,7 +2,7 @@
 
 Records of the method actually being applied. These are **measurement records rather than a display of successes**: each one states what ordinary methods alone produce (the baseline) before showing what was added to it.
 
-**There are two cases so far, and one of them is a record of misapplying the method. That is not enough to establish that it works.**
+**There are three cases so far. One is a record of misapplying the method, one is borderline, and only the third meets the method's own precondition. That is not enough to establish that it works.**
 
 **Do not read the counts as a score.** A removal-check count is a guard against overclaiming, not a measure of value (see [02a](../../src/en-US/methods/framework-application.md)). The tallies below exist for one direction only: nothing survived, so withdraw the claim.
 
@@ -130,15 +130,129 @@ The second appears as a **connection between** two baseline findings — "no def
 
 ---
 
-## Totals so far
+## Case 3: planning a short story (an open problem space, controlled)
 
-| | Count |
+**This is the only case so far that meets the precondition.** Planning a story admits no settled answer, its candidates cannot be enumerated, and fixing the destination is part of the work.
+
+### Design
+
+To secure independence, **three agents that shared no context** were used.
+
+| Role | Condition |
 |---|---|
-| Cases | 2 |
-| Baseline findings | 12 |
-| Surviving the removal check | 3 |
-| Confirmed specific to the framework | 0 |
+| Control | The premise only. Knows nothing of the method |
+| Treatment | The same premise, plus full application of the method |
+| Judge | Both plans anonymised into a matched format. Knows nothing of the method |
 
-**Two cases do not establish that the method works.** The zero in the last row is worth reading directly: the frameworks generated the questions, but the findings themselves could have been reached by other means. That is exactly what the substitution check is designed to report, and it is recorded rather than hidden.
+Premise: **"A small factory in a provincial city closes down. A short story covering that year."** Plan plus a 2,000-character opening.
 
-Further cases will widen the range — new writing, larger software designs, and runs that combine more than one framework.
+### Observation 1: both landed in the same place
+
+**Both agents independently titled the piece after the riser** — the sacrificial reservoir of molten iron set above a casting to feed its shrinkage, cut off after solidification and melted down again. Both made it the central metaphor.
+
+More telling: **the baseline the treatment agent wrote for itself was structurally the control's plan** — four seasons, decision to notice to last job to removal, closing on traces in the floor. Its own assessment of that baseline:
+
+> This plan works. But the structure is already known. The search has set into a single groove. Every scene is doing nothing but heading toward the ending; not one scene carries two functions.
+
+**A local optimum exists, and independent attempts converge on it.** That is the method's own precondition, observed.
+
+### Observation 2: the central claim moved
+
+The treatment adopted a Buddhist memorial-day system as a **transition model** — declaring the lineage, naming an alternative sect and the difference between them, and **recording explicitly that it had not consulted primary sources and was therefore self-reporting.**
+
+**It measured the sensitivity of the stipulation.** Where to place the day of death comes from neither the framework nor the target:
+
+| Placing the day of death at | Result |
+|---|---|
+| The dissolution resolution | Memorial days and statutory deadlines overlap; the grid loses discrimination |
+| The handover of the premises | Seven of nine positions empty |
+| **The last day of operation** | **Eight of nine positions filled** |
+
+> The stipulation moves the result a long way. Every conclusion from here is therefore not about the target but **about the target given that the last day of operation is the day of death.** Do not drop that qualifier.
+
+| | Baseline | Final plan |
+|---|---|---|
+| The year | April to March, chosen without noticing | Last product shipped, to the same date a year later, chosen deliberately |
+| Structure | Decision, notice, last job, removal | **The closure is chapter one. The remaining eleven months are "after the end"** |
+| Theme | The end of craft, succession broken | **You can choose the date of the end; the speed of ending differs by thing** |
+| Opposing pole | **None** | The neighbour who complained for forty years, standing before the silent factory |
+
+### Observation 3: two operations pointed at the same blank
+
+The transition run found the fourteenth-day position **never reached**. Independently, the KJ integration left exactly one card in no group at all: "the person who was waiting for it to close."
+
+> This is the only place where fragment integration and the transition model pointed independently at the same spot.
+
+That became the opposing pole. **A grid of states and an accumulation of fragments arrived at one absence by separate routes** — which is the mechanism the method hypothesises.
+
+Grid coverage came out at 50 per cent. The uncovered half — monthly rent, quarterly filings, the summer and new-year holidays, snow, the neighbour — was reused as "time a day-count grid cannot measure", and became the reason the second half of the story runs as sparse monthly fragments. **A misfit put to work rather than discarded.**
+
+### Observation 4: where the frameworks ended up
+
+| Framework | State |
+|---|---|
+| Memorial days | Internal scaffolding — no framework term appears in the work |
+| The twenty-four solar terms | Internal scaffolding |
+| Wuxing | **Rejected** — the inversion check saw every edge absorbed as supporting evidence |
+| Periodic rebuilding of a shrine | Auxiliary model |
+
+The treatment wrote, unprompted:
+
+> The first state is empty. Do not offer that as evidence of a strict check. It is the shape of where two rules meet, not the quality of a judgment.
+
+> Read a count of zero signs only after measuring how much of the target the work accounts for. Where the work explains nothing — money, one character's interior, anything past the year — no sign can appear either.
+
+### Observation 5: the blind verdict
+
+The judge, knowing nothing of the method, was given both plans anonymised and asked to describe where they diverge structurally, **without scoring them.**
+
+On the common landing, independently:
+
+> This is close to the standard answer for a contemporary Japanese short story about provincial industrial decline. Third-person limited, no emotion words, density built from technical vocabulary, one technical intern, a quiet ending. Anyone setting out to write this premise seriously in Japanese today **arrives here about eighty per cent of the time.**
+
+**A third party confirmed the local optimum without being told one was being looked for.**
+
+On the divergence: the control put the closure at the endpoint, the treatment at the starting point. The control gained the ninety-two-to-zero spine, an ensemble, and an outside world, and lost the inside of the decision and the after. The treatment gained the empty lot of the genre — the year that follows — a deliberately uneven time signature in which the form enacts the theme, and an antagonist; and it lost its largest scene to chapter one and pushed the employees into the background.
+
+On the prose: the control's opening is **skilful**, the treatment's is **trustworthy**. The control has a habit of adding one more explanatory line after landing a good one; the treatment leaks poetry its viewpoint character would not have, and plants one piece of foreshadowing too visibly. **On the opening itself the judge reads the control as stronger.**
+
+A year out: the control is likelier to be finished; **more would remain from the treatment.** Three reasons — the treatment's theme is a discovery where the control's is a confirmation; the treatment has an other and the control has none; and **only the treatment's ending is undetermined, leaving room for what the author learns while writing.** By number of memorable scenes, the control wins.
+
+### Observation 6: the experiment found a defect in the method
+
+The judge named what **both** plans dropped:
+
+> Both use the technical intern as decoration. In each plan the person whose life is most upended by the closure ends as an ornament in a single scene.
+
+The treatment had **listed "do not make this character a victim" among the things not to break.** It still failed.
+
+**The fault is the method's.** `01-scope-and-facts` requires listing what must not be broken, and item 12 of `09-evaluation-and-domains` checked that the list was made and that local repairs had not smoothed out variation — but **nothing required checking each listed item against the finished work.** Listing does not preserve.
+
+Item 12 now carries that check. **This is the first time an application in an open problem space produced a defect in the method itself.**
+
+The judge also proposed the strongest synthesis: the treatment's time design, with the intern's visa expiry as the count running through it — the material both plans dropped, made the spine.
+
+### Cost
+
+The treatment produced about six times the output of the control. **That is what the method expects.** This is not a comparison at equal token spend.
+
+### Limits
+
+- **n = 1**
+- The treatment agent knew it was being asked to demonstrate a method, so movement for its own sake cannot be excluded
+- What was compared is a plan and 2,000 characters, not a finished work. A more novel structure need not make a better story
+- The treatment hit a session limit during its final pass, with two framework uses still untried
+
+## Where this stands
+
+| Case | Problem space | Standing |
+|---|---|---|
+| 1 Validation suite | **Closed** | A record of misapplication; fails the precondition |
+| 2 Operations policy | Closed-ish | Reference only; a policy can have a settled answer |
+| 3 Short story plan | **Open** | **The only case meeting the precondition** |
+
+**What case 3 shows**: a local optimum exists, and a blind third party independently put it at eighty per cent of attempts. The central claim moved. A transition run and a KJ integration pointed at one absence by separate routes. The judge expects more to remain from the treatment. And **one defect in the method surfaced** — a preservation list that nothing audits.
+
+**What it does not show**: the control wrote the better 2,000 characters, and is likelier to finish. **Both plans dropped the same person, so the method did not break the blind spot they shared.** n = 1, and the design and its reading are mine.
+
+What is needed next is more cases in open problem spaces — industry analysis, product value work. Targets chosen by the requester make stronger evidence than targets chosen by the analyst.
