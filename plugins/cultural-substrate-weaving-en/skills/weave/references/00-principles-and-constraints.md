@@ -1,32 +1,27 @@
-# Four Evaluation Perspectives and Five Mandatory Constraints
+# Attribution to the Target, and Justifying a Rule
 
-Read this file when judgment axes conflict, when a decision is high-impact or irreversible, or when target specificity and explicitness require detailed examination.
+Read this file when separating what belongs to the framework from what belongs to the target. The test for resolving a conflict between rules is here too.
 
-## Four evaluation perspectives
+## The principle of attribution
 
-Evaluate effects on the target from four perspectives.
+**Return structures obtained from external frameworks to the target for validation. Whatever remains belongs not to the framework, but to the target.**
 
-- **Target specificity (otherness):** State what existing classifications can explain, and preserve what exceeds them as target-specific information. Maintain distance from the target and prioritize concrete detail and exceptions over total explanation.
-- **Visibility:** Enable recipients to judge their position, current state, and what may happen next. Increase explicitness until necessary distinctions and judgments are possible. Do not increase it further when additional explicitness would damage target specificity, participant safety, or the recipient's room for judgment. Examine both the understanding gained and the losses caused by explicitness.
-- **Generativity:** Examine three properties. **Generative excess** is the capacity of an element to work beyond its assigned function and produce uses, meanings, or relationships not anticipated at design time. **Autonomy** is the capacity to function without a central element or creator being present. **Regenerative capacity** is the capacity to produce new understanding or value through rereading, reuse, or reconsideration. The more these properties coexist, the more value may arise after initial use.
-- **Non-rivalry:** Examine whether sharing preserves or expands value. This includes understanding, patterns of attention, meaning, solved problem patterns, and capabilities gained by recipients. Record finite resource allocation separately from shareable value.
+**When rules conflict, take the reading under which that statement stays true.** Where both readings keep it true, decide from the target's own material.
 
-The four perspectives interact. Target specificity supports generativity, and generativity produces shareable value. Adjust visibility to target specificity and the recipient's state. Restricting a target to a single instrumental use reduces generative excess and regenerative capacity.
+## Target specificity
 
-The author chooses the intended reach—one particular person, long-term use, or society as a whole—and the path of influence, such as persuasion or resonance.
+State the extent to which existing classifications explain the target, and **hold whatever exceeds that extent as target-specific information.** Preserve the distance from the target as well, and prefer concrete detail and exceptions to a complete account.
 
-## Five mandatory constraints
+This is not presentation; it is the condition under which the removal check works at all. What survives deleting the framework's vocabulary is decided by whether the survivor belongs to the target — and that judgment is impossible unless the range explained by classification has been stated.
 
-Meet all five constraints.
+**Hold the target's own purpose, properties, and exceptions as conditions independent of the purpose of the work.** Rewriting a property of the target to suit the work means every later assignment measures the work's purpose rather than the target.
 
-1. **Retain the target's own purpose, properties, and exceptions as judgment conditions independent of the work objective.**
-2. **Create a structure that lets recipients judge for themselves.** Make the necessary contours, choices, and outcomes available before consequences occur.
-3. **Keep explicitness within a level the target or recipient can receive.** Treat exposure, removal of escape routes, or forced confrontation as a distinct effect rather than ordinary clarification.
-4. **Distinguish finite resources from shareable value.**
-5. **Begin from the author's intent.** Use external values to show effects and alternatives, but decide adoption from the author's intent and the target's needs. **Do not widen the scope entrusted to you, and do not narrow it either through excessive self-restraint.** Withholding a judgment where one was asked for departs from the author's intent as surely as making a judgment that was not.
+## Justifying a rule
 
-This method supports creation and analysis. Evaluate ethics, care, and moderation in relation to the author's intent and the essence of the request. When they affect that essence, show the effect and alternatives. Whether generativity should be prioritized also follows the author's intent.
+**Justify a new rule by an effect observable on the target.** Do not add a rule whose effect cannot be shown.
 
-**The values and default stances the analyst already holds are also structures brought in from outside the target.** Apply the same checks there as to a cultural framework. Where a constraint you must honour means weakening, blurring, or cutting part of the account, write down what was changed and what was lost, and look for a treatment that costs less. **Count the loss from cutting the same way you count the loss from adding.**
+Where the principle and a result conflict, re-examine the interpretation of the principle or how it was applied. The principle fixes the direction of examination; it does not settle the result in advance.
 
-When the four perspectives conflict with results, reconsider their interpretation or application. The perspectives define directions for examination. Justify new rules through effects that can be confirmed on the target.
+## What this document does not cover
+
+Consideration for the recipient of the artifact, an upper bound on explicitness, shareable value, correcting the model's own default tendencies, how good the finished work is — none of these support the capability this method provides. **Specify them in the caller's context.**

@@ -6,7 +6,9 @@ Use cultural, philosophical, and traditional frameworks as optional sources of s
 
 **This method is for targets whose search space is wide and whose destination is undecided.** A closed problem, where an answer settles it and the candidates can be enumerated, is served by ordinary methods. **Its purpose is to get past the point where repeating the same move stops paying, not to produce a better result from the same number of tokens.** The grid of states a framework supplies, and the accumulation of fragments, are there to stop the search from setting into one groove. Getting past that point takes more passes than ordinary methods, not fewer.
 
-When rules conflict, prioritize the four evaluation perspectives and five mandatory constraints. Add individual rules only for decisions that cannot be resolved by higher-level principles. When uncertain, return to the principle above.
+**When rules conflict, take the reading under which the principle above stays true.** Where both readings keep it true, decide from the target's own material. Add individual rules only for decisions that principle cannot resolve.
+
+**What this method provides is capability grounded in cultural frameworks.** It carries only the judgments that exercising the capability requires. Consideration for the recipient of the artifact, an upper bound on explicitness, correcting the model's own default tendencies, how good the finished work is — none of these support the capability, so this method does not cover them. **Specify them in the caller's context.**
 
 **Lists in this method indicate directions for examination; they are not closed sets.** When no listed item fits, define the necessary item in the target-specific dynamic layer. Do not treat completion of a list as the goal, and do not exclude phenomena merely because they are not listed. Consider promoting an item to a static rule only after the same need has been confirmed across multiple targets.
 
@@ -21,11 +23,10 @@ When rules conflict, prioritize the four evaluation perspectives and five mandat
 
 ### Judgment axes to retain at all times
 
-- **Target specificity:** Preserve concrete details and exceptions that classifications cannot fully explain.
-- **Visibility:** Show enough information for the recipient to judge, while also checking losses caused by additional explicitness.
-- **Generativity:** Examine generative excess, autonomy, and regenerative capacity.
-- **Non-rivalry:** Distinguish shareable value from finite resources.
-- **Mandatory constraints:** Preserve the target's own purpose, the recipient's room for judgment, an acceptable level of explicitness, finite resources, and both authorial intent and target-side necessity.
+- **Attribution:** structure taken from a framework goes back to the target; what remains belongs to the target.
+- **Target specificity:** state what classification explains, and preserve the concrete detail and exceptions beyond it.
+- **Independence:** hold the target's purpose, properties, and exceptions as conditions independent of the work's purpose.
+- **Justification:** justify a new rule by an effect observable on the target.
 
 ## Select reference files
 
@@ -34,7 +35,7 @@ For obvious non-application or limited application, begin with the minimum proce
 | Judgment or process | File to read |
 |---|---|
 | Ambiguous activation, suitability after explicit invocation, or early termination | [00-activation.md](core/activation.md) |
-| Conflicts among the four perspectives and five constraints; high-impact, irreversible, or explicitness decisions | [00-principles-and-constraints.md](core/principles-and-constraints.md) |
+| Attribution, conflicts between rules, and justifying a rule | [00-principles-and-constraints.md](core/principles-and-constraints.md) |
 | Iterative analysis, externalization, repeated passes, or stopping by increment | [00-iteration.md](core/iteration.md) |
 | Scope, primary change structure, baseline, and facts | [01-scope-and-facts.md](methods/scope-and-facts.md) |
 | Framework and precedent selection, unit compatibility, and rejection conditions | [02-system-selection.md](methods/system-selection.md) |
@@ -43,7 +44,6 @@ For obvious non-application or limited application, begin with the minimum proce
 | Candidate generation, generative excess, value and resources, and adoption decisions | [04-generation-and-validation.md](methods/generation-and-validation.md) |
 | Character construction, bodily consistency, and Taiheki | [05-character-and-taiheki.md](domains/character-and-taiheki.md) |
 | Recipients, explicitness, collaborators, and handoff | [06-output-and-collaboration.md](domains/output-and-collaboration.md) |
-| Experience, repetition, time, depth, humor, emotion, and series | [07-creative-patterns.md](domains/creative-patterns.md) |
 | Static and dynamic layers, exit conditions, decision records, and rule maintenance | [08-governance-and-records.md](governance/governance-and-records.md) |
 | Final evaluation and domain-specific boundaries | [09-evaluation-and-domains.md](governance/evaluation-and-domains.md) |
 | Integrating many fragments, carding, and detecting blanks | [10-integration.md](methods/integration.md) |

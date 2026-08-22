@@ -3,7 +3,6 @@
     "required_phrases": [
       "外部体系から得た構造は、対象へ返して検証する。",
       "対象固有性",
-      "超過性",
       "要素自体の欠落と、接続の欠落を区別する",
       "静的規則と動的手順を分離する"
     ],
@@ -15,7 +14,6 @@
     "required_phrases": [
       "Return structures obtained from external frameworks to the target for validation.",
       "Target specificity",
-      "Generative excess",
       "Distinguish a missing element from a missing connection.",
       "Separate static rules from dynamic procedures"
     ],

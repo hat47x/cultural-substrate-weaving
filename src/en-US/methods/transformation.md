@@ -47,6 +47,8 @@ Separate absence detection from consistency checking.
 
 Use consistency checking for a single unit.
 
+Where layers of differing depth are involved, distinguish the unspoken bodily response held by one person, the shared experience accumulated in a place or an object, and the isomorphic structure that recurs locally and across the whole. **Use a separate framework for each layer, and integrate them by the principle of change they share.**
+
 When combining multiple frameworks, verify axis independence. Each axis needs a rationale independent of the target and a distinct classification principle. Do not derive a global axis from one member of the comparison group. Extract structures independently from each target before comparison.
 
 When crossing continuous frameworks, preserve them as continuous quantities. If a sparse matrix fits the target, keep it sparse.
