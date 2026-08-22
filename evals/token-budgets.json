@@ -4,7 +4,8 @@
     "v0.2.0+unreleased baseline: ja-JP 74189, en-US 74259.",
     "Content reduction: ja-JP 72292, en-US 72675. Removed the preamble repeated in ten reference files and cut restatement from 02 and 10.",
     "Structural: split methods/system-selection.md into selection + framework-application. Largest reference 14509 -> 11856 (ja-JP), both halves under the 100-line reference guideline, at a cost of 670 bytes (ja-JP) and 702 (en-US) in headers, cross-pointers, and router rows. Corpus ja-JP 72962, en-US 73377.",
-    "Content growth, deliberate: ja-JP 78048, en-US 78109 (+5086 / +4732). Bought the method's stated purpose, which the text did not previously carry — an openness precondition on activation that a closed problem space fails, stopping decided by exhaustion of material rather than by cost, cost handed to the human as their call, a fourth framework use (transition model) with its procedure, and the statement that a count guards against overclaiming rather than measuring value. Largest reference 11856 -> 14380 (ja-JP), still 80 lines."
+    "Content growth, deliberate: ja-JP 78048, en-US 78109 (+5086 / +4732). Bought the method's stated purpose, which the text did not previously carry — an openness precondition on activation that a closed problem space fails, stopping decided by exhaustion of material rather than by cost, cost handed to the human as their call, a fourth framework use (transition model) with its procedure, and the statement that a count guards against overclaiming rather than measuring value. Largest reference 11856 -> 14380 (ja-JP), still 80 lines.",
+    "Content growth, from a defect the method found in itself: ja-JP 78233, en-US 78261 (+185 / +152). A controlled run in an open problem space listed a preserved item and then broke it, because item 12 of 09-evaluation-and-domains checked that the list was written and never that the finished work honoured it. Item 12 now audits the list item by item and requires an unhonoured item to be reported as unhonoured."
   ],
   "router_max_bytes": {
     "ja-JP": 10000,
@@ -23,8 +24,8 @@
     "en-US": 14086
   },
   "corpus_max_bytes": {
-    "ja-JP": 78048,
-    "en-US": 78109
+    "ja-JP": 78233,
+    "en-US": 78261
   },
   "m365_instructions_max_chars": 8000,
   "gpt_knowledge_max_files": 10

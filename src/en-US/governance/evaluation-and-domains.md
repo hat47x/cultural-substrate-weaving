@@ -17,7 +17,7 @@ The checklist detects mismatches in activation and application. Treat unmet item
 9. Recorded problem patterns reusable for the next target.
 10. The target-specific dynamic procedure generated a target-specific judgment beyond repetition of static rules.
 11. When no increment emerged, stopped formal correspondence and reduced or ended the application scope.
-12. Listed in advance what must not be broken, and confirmed that local repairs did not smooth out the target's characteristic variation.
+12. Listed in advance what must not be broken, and confirmed that local repairs did not smooth out the target's characteristic variation. **Checked each listed item against the finished work, one at a time.** Listing does not preserve. Where an item was not preserved, say that it was not.
 13. Applied the removal check to each adopted framework, and recorded how many findings survived along with the adoption state: carried into the artifact, internal scaffolding, auxiliary model, or rejected.
 
 ## 12. Domain-specific application policy
