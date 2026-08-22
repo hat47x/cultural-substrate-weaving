@@ -132,13 +132,13 @@ The second appears as a **connection between** two baseline findings — "no def
 
 ## Case 3: planning a short story (an open problem space, controlled)
 
-> **This record is provisional. The treatment arm has not converged.**
+> **All three arms have converged, and a three-way blind verdict has been taken.**
 >
-> It stopped on a **session usage limit**, not because its material ran out. Two framework uses were still untried, and it had just said it was entering its final pass.
+> For the record: the treatment first stopped on a **session usage limit**, not because its material ran out. I evaluated it at that interruption point and recorded a negative conclusion — the self-fulfilling verdict `00-activation` names, since the return on an untried move cannot be measured. On resuming, **the central claim moved right after that interruption point (passes 9–10).** That mistake produced one correction to the method (Observation 7).
 >
-> The stopping conditions in `00-activation` turn on exhaustion of material, not on cost. **Evaluating an unconverged run is the self-fulfilling verdict the method itself names**: the return on an untried move cannot be measured, so a finding of "no increment" justifies itself.
+> The original control had also written only once. Since the hypothesis is about getting past a plateau that plain repetition hits, **the correct control is repetition without the method.** A third arm was added (Observation 8).
 >
-> **The conclusions under "Observation 5" and "Observation 6" below were drawn from that unconverged output.** They will be re-measured and rewritten after it converges. Observations 1 to 4 record facts that do not change with convergence — the baseline's identity with the control's plan, the sensitivity of the stipulation, and two operations pointing at one absence — so they stand.
+> The appendix keeps the verdict taken at the unconverged point, **not overwritten, as a record of what the wrong judgment looked like.**
 
 **This is the only case so far that meets the precondition.** Planning a story admits no settled answer, its candidates cannot be enumerated, and fixing the destination is part of the work.
 
@@ -210,46 +210,128 @@ The treatment wrote, unprompted:
 
 > Read a count of zero signs only after measuring how much of the target the work accounts for. Where the work explains nothing — money, one character's interior, anything past the year — no sign can appear either.
 
-### Observation 5: the blind verdict
+### Observation 5: convergence (passes 7–12)
 
-The judge, knowing nothing of the method, was given both plans anonymised and asked to describe where they diverge structurally, **without scoring them.**
+Six further passes after resuming; total treatment spend 212K tokens.
 
-On the common landing, independently:
+| Pass | Use / operation | Central claim |
+|---|---|---|
+| 7 | Re-materialize the prose | Unmoved (3 new units) |
+| 8 | Structural model (Confucian relations) | Unmoved (reinforcement) |
+| 9 | Consistency model (the pre-modern "house" applied to the organization) | **Moved** |
+| 10 | Rewrite the central claim | **Moved** |
+| 11 | Audit the preserved items | Unmoved |
+| 12 | Re-materialize the revised prose | Unmoved |
 
-> This is close to the standard answer for a contemporary Japanese short story about provincial industrial decline. Third-person limited, no emotion words, density built from technical vocabulary, one technical intern, a quiet ending. Anyone setting out to write this premise seriously in Japanese today **arrives here about eighty per cent of the time.**
+**The interruption point was pass 6. The claim moved right after it, in passes 9–10.**
 
-**A third party confirmed the local optimum without being told one was being looked for.**
+The new central claim:
 
-On the divergence: the control put the closure at the endpoint, the treatment at the starting point. The control gained the ninety-two-to-zero spine, an ensemble, and an outside world, and lost the inside of the decision and the after. The treatment gained the empty lot of the genre — the year that follows — a deliberately uneven time signature in which the form enacts the theme, and an antagonist; and it lost its largest scene to chapter one and pushed the employees into the background.
+> **All that vanishes in a closure is one line in a corporate register.** The machines get bought and run in another factory. The skill goes with the workers who move on. (…) **What takes a year is not disappearance, but a shift into a state with no name.**
 
-On the prose: the control's opening is **skilful**, the treatment's is **trustworthy**. The control has a habit of adding one more explanatory line after landing a good one; the treatment leaks poetry its viewpoint character would not have, and plants one piece of foreshadowing too visibly. **On the opening itself the judge reads the control as stronger.**
+And the old theme was overturned outright — **"what broke was the corporation and the place, not the skill; the old theme was factually wrong."**
 
-A year out: the control is likelier to be finished; **more would remain from the treatment.** Three reasons — the treatment's theme is a discovery where the control's is a confirmation; the treatment has an other and the control has none; and **only the treatment's ending is undetermined, leaving room for what the author learns while writing.** By number of memorable scenes, the control wins.
+The treatment ran its own check on the move:
 
-### Observation 6: the experiment found a defect in the method
+> Did I move this because I wanted to move it? **No.** Pass 7's blank 19 and pass 9's E-1/E-3 came from the material as things the old claim could not explain. **The material pushed.**
 
-The judge named what **both** plans dropped:
+**Stopping condition**: "the increment duplicates what is already there" (primary) / "the framework returns what the baseline already had" (secondary). **New cards were still rising, so the first condition did not apply.** All four uses in `02` were exhausted. **Judged by the material, not by cost.**
 
-> Both use the technical intern as decoration. In each plan the person whose life is most upended by the closure ends as an ornament in a single scene.
+### Observation 6: auditing the preserved items found three failures
 
-The treatment had **listed "do not make this character a victim" among the things not to break.** It still failed.
+The clause added to item 12 of `09` after the earlier blind verdict — "check each listed item against the finished work, one at a time" — **worked immediately on the very next run.**
 
-**The fault is the method's.** `01-scope-and-facts` requires listing what must not be broken, and item 12 of `09-evaluation-and-domains` checked that the list was made and that local repairs had not smoothed out variation — but **nothing required checking each listed item against the finished work.** Listing does not preserve.
+- The headcount ("six employees") had no grounding; only four appear in the prose → corrected to five. **This was an error in the preservation list itself**, not something the work failed to honour.
+- "Use the season as a working condition" was violated by one detail that only marks a date, not a working condition → **one declared violation.**
+- The retention period on a record form ("five years") could not be settled → left undetermined, with a falsification condition attached.
 
-Item 12 now carries that check. **This is the first time an application in an open problem space produced a defect in the method itself.**
+> **Without the audit, none of these three would have surfaced.**
 
-The judge also proposed the strongest synthesis: the treatment's time design, with the intern's visa expiry as the count running through it — the material both plans dropped, made the spine.
+### Observation 7: a conclusion withdrawn
+
+I had written that "both arms dropped the same character, so the method did not break the shared blind spot." **I withdraw that.** In the converged output:
+
+- "The youngest person knew the closing procedures best"
+- "The skill did not break — both workers carry on"
+
+The intern moves from decoration to a structural position. **The negative verdict drawn at the unconverged point turned out to be wrong.**
+
+### Observation 8: a third arm (iteration without the method)
+
+Noticing the control had written only once, a third arm was added. **The hypothesis is about getting past a plateau plain repetition hits, so the correct control is repetition without the method.** A single-shot control cannot separate the effect of iteration itself from the effect of the method.
+
+| | Single-shot control | Iterated control | Treatment |
+|---|---:|---:|---:|
+| Passes | 1 | 10 | 12 |
+| Tokens | 57K | **163K** | 212K |
+| Times the theme moved | — | 2 / 10 | 2 / 12 |
+| Stopping reason | request complete | revisions became paraphrase | increment duplicated |
+
+**The local optimum was confirmed independently a third time.** The iterated control, unprompted:
+
+> The first plan I wrote in pass 1 was nearly identical to the existing `novel-control.md` — the same competent female clerk, the same second-generation owner, the same old craftsman, the same Vietnamese intern, twelve months, a shrinking count, ages within a few years. **That is evidence my "unexpected" choice was this task's default pull, and grounds to discard the whole vessel.**
+
+**And the iterated control escaped the local optimum too.** It replaced the whole setting — a foundry became an offset print shop — and reached "precision has no direction": thirty-nine years of a falsified time card kept on the shelf beside the true machine log. **On fewer tokens than the treatment.**
+
+The route out differed. The iterated control:
+
+> Both times the theme moved, it did not move because I was trying to rework the theme. **It came out of fixing a technical failure.**
+
+The treatment's move, in pass 9, came from following the rule "try one untried stage before stopping." **Accident versus procedure.** With n = 1 each, no claim of reproducibility follows.
+
+### Observation 9: the three-way blind verdict
+
+All three plans were anonymised and given to a new judge who knew nothing of the method (the earlier judge was not reused, since it had seen the unconverged version).
+
+On the shared pull, the judge found the decisive evidence unprompted:
+
+> **B and C, without knowing of each other, both chose a foundry and both chose the riser as their central metaphor.** A metaphor two independent plans arrive at is not a discovery but a default answer, and C loses by staking its theme on it.
+
+On the kind of escape:
+
+| | Verdict |
+|---|---|
+| Iterated control | Kept the vessel, moved off it on an **ethical coordinate** (the viewpoint character allocates zero to the man owed the most) |
+| Treatment | Moved off it in **form** (the time structure that puts the closure in chapter one and the remaining eleven months "after the end") |
+| Single-shot control | **Did not move off it** |
+
+> **B moved in form, A moved in ethics. C did not move.**
+
+On the prose: the iterated control has the highest density but its skill shows; **the treatment's "discipline of speaking only through objects is the most thorough"** (singling out "five minutes early, because the scrap bin wasn't emptied" as the standout line), though one paragraph on the hollow left by a wooden mold strays outside the viewpoint. The single-shot control explains more, and **is the only one of the three with more than one place where the viewpoint character becomes an information-delivery device.**
+
+A year out: the iterated control leaves a proposition (it puts the reader on the side of the person who caused harm). The treatment leaves a state (the feel of an absent vocabulary; **highest ceiling, highest failure risk**). The single-shot control leaves an image (best liked, forgotten soonest).
+
+**Stated directly**: the single-shot control is a notch weaker. **The iterated control and the treatment are not weak — they simply depend on different things** (restraint versus endurance).
+
+### Observation 10: what all three dropped — a finding about the caller's context, not the method
+
+> The standard answer sits deeper than the vessel or the center: in **the stance toward the premise itself.** (…) **All three plans take it as given that this factory's closing is a loss.**
+
+Dropped: the zero-sum fact that a closure is someone else's gain in orders; the question of whether the company's not surviving might have been correct; the younger side's viewpoint; bodily harm; personal guarantees and the home put up against them. The treatment did not reach these either, across 12 passes, 212K tokens, and all four framework uses.
+
+**But this is not a defect in the method.** It is a finding that **the request itself — "write the year a factory closes" — had already assumed loss.** How a request is framed is not the method's job. All three plans dropped the same thing because all three received the same request.
+
+**What the skill itself is for is a framework supplying structure and that structure being returned to the target for validation.** What a request assumes, and what the model does by default, belong to **the context the caller builds around the skill.** That boundary is now stated in [AGENTS.md](../../AGENTS.md).
+
+A clause drawn from this finding was briefly added to `01-scope-and-facts` — telling the analyst to rule on the stance a request implies — and then **reverted as a confusion of roles.** A finding from an experiment does not automatically become a change to the skill. Of the three findings this experiment produced, two belonged to the skill (auditing the preservation list; what an interrupted run is worth) and one belonged to the context.
+
+### Appendix: the verdict taken at the interruption point (kept as a record)
+
+As noted in Observation 5, the treatment was first evaluated at the pass-6 interruption, with only two arms (control and treatment) put to a judge. **The text below is preserved, not overwritten.** At that point, Observations 7 and 9 had not yet corrected it.
+
+The finding that both plans used the technical intern as decoration was, at that point, treated as a defect in the method. Passes 5–7 later showed the treatment converging and the intern moving into a structural position (Observation 7), and Observation 10 showed this class of finding properly belongs to the caller's context. **The current conclusion differs from the one recorded here.** See Observations 7 and 10.
 
 ### Cost
 
-The treatment produced about six times the output of the control. **That is what the method expects.** This is not a comparison at equal token spend.
+The treatment produced about 4 times the output of the single-shot control and about 1.3 times the iterated control. **This is not a comparison at equal token spend.** It is what the method's design — run until the material is exhausted — expects.
 
 ### Limits
 
-- **n = 1**
+- **n = 1** per arm
 - The treatment agent knew it was being asked to demonstrate a method, so movement for its own sake cannot be excluded
 - What was compared is a plan and 2,000 characters, not a finished work. A more novel structure need not make a better story
-- The treatment hit a session limit during its final pass, with two framework uses still untried
+- Both the iterated control and the treatment stopped on their own report that "the increment duplicates what is already there" — whether the material had genuinely run dry was not verified from outside
+- The experiment's design, the premise, and the format shown to the judges were all mine
 
 ## Where this stands
 
@@ -257,10 +339,16 @@ The treatment produced about six times the output of the control. **That is what
 |---|---|---|
 | 1 Validation suite | **Closed** | A record of misapplication; fails the precondition |
 | 2 Operations policy | Closed-ish | Reference only; a policy can have a settled answer |
-| 3 Short story plan | **Open** | **The only case meeting the precondition** |
+| 3 Short story plan (three arms) | **Open** | **The only case meeting the precondition** |
 
-**What case 3 shows**: a local optimum exists, and a blind third party independently put it at eighty per cent of attempts. The central claim moved. A transition run and a KJ integration pointed at one absence by separate routes. The judge expects more to remain from the treatment. And **one defect in the method surfaced** — a preservation list that nothing audits.
+**What case 3 shows**
 
-**What it does not show**: the control wrote the better 2,000 characters, and is likelier to finish. **Both plans dropped the same person, so the method did not break the blind spot they shared.** n = 1, and the design and its reading are mine.
+- **A local optimum is real.** Three independent attempts — control, iterated control, treatment — first landed in the same place. A blind judge, told nothing of the experiment's design, independently named that landing "about eighty per cent of the time."
+- **Escape happens without the method too.** The iterated control escaped by replacing the vessel outright, in 10 passes and 163K tokens. The treatment escaped by keeping the vessel and shifting the center, in 12 passes and 212K tokens. The judge called both "not weak, just different strengths." **The method's effect looks less like enabling escape and more like the shape the escape takes** — a formal departure a framework's structure tends to induce.
+- **The route from framework to moved claim is traceable.** A consistency-model pass produced a new center, and the old theme was judged factually wrong. A transition run and a KJ integration independently pointed at the same blank — the missing opposing pole.
+- **One defect in the method was found and fixed.** A preservation list is not honoured merely by being written; it has to be checked against the finished work.
+- **One finding was separated out as belonging to the caller's context.** All three arms inherited the premise's emotional stance without questioning it — a fact about how the request was framed, not a defect in the method. A clause drawn from it was briefly added to the skill, then reverted (Observation 10, AGENTS.md).
+
+**What it does not show**: on the 2,000-character opening itself, the judge read the iterated control as the densest and the treatment as merely "trustworthy." **Using the method is not shown to produce better prose.** n = 1, and the design and its reading are mine.
 
 What is needed next is more cases in open problem spaces — industry analysis, product value work. Targets chosen by the requester make stronger evidence than targets chosen by the analyst.
