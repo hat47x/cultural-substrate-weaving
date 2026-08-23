@@ -47,6 +47,8 @@ Separate absence detection from consistency checking.
 
 Use consistency checking for a single unit.
 
+**Layering orthogonal frameworks produces structure no single framework yields. Reach for it.** Where one framework supplies the positions and another cuts the same target by a different classification principle, the intersections of the two grids hold places neither framework can name on its own.
+
 When combining multiple frameworks, verify axis independence. Each axis needs a rationale independent of the target and a distinct classification principle. Do not derive a global axis from one member of the comparison group. Extract structures independently from each target before comparison.
 
 When crossing continuous frameworks, preserve them as continuous quantities. If a sparse matrix fits the target, keep it sparse.
@@ -57,7 +59,7 @@ When using multiple frameworks, examine these risks.
 2. Agreement among frameworks may originate in the interpreter's conversion rules rather than the target.
 3. Symbols not linked to target facts or causal relationships merely rephrase existing understanding.
 
-Add a second or later framework only when it handles an information type the first cannot.
+Give a second or later framework an information type the first cannot handle. Layering frameworks that share a classification principle adds confirmation without opening new intersections.
 
 When a small, closed, discrete set can be examined at comparable depth and completeness matters, prefer complete review over sampling. Because information volume, work, and post-hoc fitting increase, define fit criteria, the number of candidates for detailed review, and stopping conditions before starting.
 

@@ -59,6 +59,7 @@ Fixing the assignment works as in `3a`. On top of that, produce the following.
    - **Transitions that never fire:** present in the rules, unobserved in the target. Separate forbidden from not-yet-happened from happening-but-unrecorded.
    - **States entered but never left:** transitions in, none out. These are candidates for irreversibility.
 4. **Measure the grid's coverage:** record what share of the target's elements landed in any state at all. A low share means the grid covered a fragment of the target.
+5. **Separate the trajectories factor by factor:** do not collapse what happened on the grid into one account. For each element or actor, write the states it passed through and in what order as its own sequence, and compare the sequences. Where factors pass through the same states in different orders, that difference belongs to the target rather than the framework. **Collapsing the factors averages away the fact that different ones took different routes at different times.**
 
 **A transition run produces hypotheses, not properties of the target.** Take all three categories back to the target and check them. "Transitions that never fire" especially: the likeliest explanation is that the framework forbids them. Record the framework's own prohibitions separately from the target's absences.
 
