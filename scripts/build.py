@@ -190,8 +190,8 @@ def build_m365(locale: str, config: dict, router: str) -> None:
         (ADAPTERS / "microsoft-copilot" / locale / "conversation-starters.json").read_text(encoding="utf-8")
     )
     names = {
-        "ja-JP": ("Cultural Substrate Weaving — 日本語", "構造を対象側で検証し、対象固有の判断へ変換します。"),
-        "en-US": ("Cultural Substrate Weaving — English", "Validates structural hypotheses and produces target-specific judgments."),
+        "ja-JP": ("Cultural Substrate Weaving — 日本語", "文化的体系とKJ法で構造候補と空白を探索し、対象側で検証します。"),
+        "en-US": ("Cultural Substrate Weaving — English", "Explores structure candidates and gaps with cultural frameworks and KJ, then validates them on the target."),
     }
     agent = {
         "$schema": "https://developer.microsoft.com/json-schemas/copilot/declarative-agent/v1.8/schema.json",
@@ -252,7 +252,7 @@ def write_root_marketplace(plugin_entries: list[dict]) -> None:
     marketplace = {
         "name": "cultural-substrate-weaving",
         "owner": {"name": "hat47x"},
-        "description": "Localized plugins for structural metacognition and target-specific validation.",
+        "description": "Localized skills for cultural-framework exploration, KJ integration, and target-side validation.",
         "version": version(),
         "plugins": plugin_entries,
     }

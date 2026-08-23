@@ -24,4 +24,4 @@ Where the principle and a result conflict, re-examine the interpretation of the 
 
 ## What this document does not cover
 
-Consideration for the recipient of the artifact, an upper bound on explicitness, shareable value, correcting the model's own default tendencies, how good the finished work is — none of these support the capability this method provides. **Specify them in the caller's context.**
+Domain-specific quality criteria, professional procedures, output presentation, and corrections to the model's style or defaults do not support the two core capabilities of this method. **Specify them in the caller's context or in a domain-specific skill used alongside it.**

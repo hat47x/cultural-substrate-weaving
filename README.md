@@ -2,41 +2,34 @@
 
 [日本語](README.md) | [English](README.en.md)
 
-文筆・設計・分析・開発など、あらゆる「構造」を扱う領域でメタ認知を高め、対象固有の関係・接続の欠落・反作用・時間差・不可逆性を探索、検証、変換する汎用的なAI方法論です。
+**文化的・思想的・伝統的体系による構造候補の供給**と、**KJ法による断片統合・空白探索**を組み合わせ、通常の領域手法では立ち上がりにくい問い・関係・状態・遷移候補を探索し、対象側で検証する補助スキルです。
 
-文化的・思想的・伝統的体系は中核目的ではなく、通常の領域固有手法だけでは捉えにくい構造を探索するための、選択的な補助モデルとして扱います。
+本スキルは、執筆、経営、ソフトウェア開発、法務などの領域固有知識や品質基準を置き換えません。必要に応じて**領域固有スキルと併用**し、本スキルは文化的体系とKJ法から生じる増分を担当します。
 
-> **現在は検証段階です。** 方法論と配布経路は動作しますが、有効性を裏づける適用事例はまだ2件しかありません（[適用事例](docs/ja/examples.md)）。反証条件は明示してあり、事例はその条件に照らして測定・公開しています。件数が揃うまで、本方法論は「検証中」の位置づけです。
+> **現在は検証段階です。** 現行版の比較検証はこれから行います。
 
 ## インストール
 
-**Claude Code**（このリポジトリがそのままPlugin Marketplaceです。ダウンロード不要）
+**Claude Code**
 
 ```bash
 claude plugin marketplace add hat47x/cultural-substrate-weaving
-```
-
-```bash
 claude plugin install cultural-substrate-weaving-ja@cultural-substrate-weaving
 ```
 
-英語版は`cultural-substrate-weaving-en@cultural-substrate-weaving`。呼び出しは`/cultural-substrate-weaving-ja:weave`です。Desktop・クラウドセッション・チーム共有の手順は[Claude Codeで使う](docs/ja/platforms/claude-code.md)にあります。
-
-**Codex**（同じリポジトリがCodexのPlugin Marketplaceでもあります。ダウンロード不要）
+**Codex**
 
 ```bash
 codex plugin marketplace add hat47x/cultural-substrate-weaving
 ```
 
-追加後に`cultural-substrate-weaving-ja`（英語版は`cultural-substrate-weaving-en`）をインストールします。詳細は[Codexで使う](docs/ja/platforms/codex.md)。
+追加後に`cultural-substrate-weaving-ja`（英語版は`cultural-substrate-weaving-en`）をインストールします。
 
-**ChatGPT custom GPT / Microsoft 365 Copilot**は[GitHub Releases](https://github.com/hat47x/cultural-substrate-weaving/releases)から言語とプラットフォームに対応するZIPを取得してください。手順は下の表のガイドにあります。
+**ChatGPT custom GPT / Microsoft 365 Copilot**はGitHub Releasesから言語とプラットフォームに対応するZIPを取得してください。
 
 ## 呼ぶ側が用意するもの
 
-本スキルが与えるのは**文化的体系に基づく構造供給の能力**だけです。依頼の立て方、モデルの既定の傾向の補正、作品としての出来は扱いません。それらは**呼ぶ側のコンテキスト**が担います。
-
-用意しなければ、スキルは働きますが、期待した場所では働きません。→ **[呼ぶ側が用意するもの](docs/ja/usage-context.md)**
+本スキルは領域固有の専門能力を提供しません。課題の専門的な正確性、品質基準、実装手順、文体などは、依頼側のコンテキストまたは併用する領域スキルが担います。→ **[呼ぶ側が用意するもの](docs/ja/usage-context.md)**
 
 ## 対応言語
 
@@ -47,20 +40,11 @@ codex plugin marketplace add hat47x/cultural-substrate-weaving
 
 ## 対応プラットフォーム
 
-- OpenAI Codex Skill（暗黙発動版／明示発動版）
+- OpenAI Codex Skill
 - Claude Code Plugin Marketplace
 - ChatGPT custom GPT更新パック
 - Microsoft 365 Copilot declarative agent
 - `AGENTS.md`／`CLAUDE.md`からの参照
-
-## 初めて使う方
-
-| 利用先 | 日本語ガイド | English guide |
-|---|---|---|
-| Codex | [Codexで使う](docs/ja/platforms/codex.md) | [Use with Codex](docs/en/platforms/codex.md) |
-| Claude Code | [Claude Codeで使う](docs/ja/platforms/claude-code.md) | [Use with Claude Code](docs/en/platforms/claude-code.md) |
-| ChatGPT GPTs | [カスタムGPTを作る](docs/ja/platforms/chatgpt-gpt.md) | [Create a custom GPT](docs/en/platforms/chatgpt-gpt.md) |
-| Microsoft 365 Copilot | [Copilot Agentを作る](docs/ja/platforms/microsoft-copilot.md) | [Create a Copilot agent](docs/en/platforms/microsoft-copilot.md) |
 
 ## ビルド
 
@@ -73,8 +57,6 @@ make check
 make package
 ```
 
-成果物は`dist/<locale>/`と`dist/packages/`に生成されます。
-
 ## 正本・翻訳・生成物
 
 - `src/ja-JP/`: 意味上の正本
@@ -82,36 +64,22 @@ make package
 - `i18n/`: 用語集、翻訳元ハッシュ、査読方針
 - `adapters/`: プラットフォームと言語ごとのテンプレート
 - `scripts/`: 多言語成果物の生成・検証
-- `plugins/`: Claude Marketplace用に生成され、Git管理する成果物
+- `plugins/`: 生成され、Git管理する成果物
 - `dist/`: リリース用生成物。Git管理しない
 
 ## 中核原則
 
-> 外部体系から得た構造は、対象へ返して検証する。残った構造は、体系ではなく対象に属する。
+> **外部体系から得た構造は、対象へ返して検証する。残った構造は、体系ではなく対象に属する。**
+
+KJ法では、材料を先験的な種類へ押し込めず、意味の一体性と証拠状態を保ちながら統合します。
+
+> **意味の一体性を守るためには結合し、証拠状態を守るためには分割する。**
 
 ## なぜ外部体系を使うのか（機序の仮説）
 
-本方法論は、文化的・思想的・伝統的体系が「正しい」ことを主張しません。**機械学習の転移学習に相当する作用を仮説として置いています。**
+文化的体系が「正しい」ことを主張するものではありません。対象を見る前から存在する位置・関係・遷移を、通常分析とは異なる探索方向を生む事前構造として利用する、という仮説です。
 
-転移学習では、大量の源ドメインで事前学習した表現を、データの乏しい目標ドメインへ持ち込みます。事前学習された表現そのものが正しいかではなく、**目標ドメインでの性能が上がるか**で価値が決まります。
-
-| 転移学習 | 本方法論 |
-|---|---|
-| 事前学習コーパス | 文化的体系（多数の対象を通過して残った構造） |
-| 事前学習された表現 | **位置の層**：対象を見る前に意味が定義された、数の決まった置き場所 |
-| 帰納バイアス（事前分布） | 対象自身が持たない位置を供給する |
-| 目標ドメインでの微調整 | **割当**と、対象側での検証 |
-| ドメイン不一致の検査 | **同種性**：単位の種類と分類原理が合うか |
-| 負の転移 | **過剰適用**：合わない構造を押し付ける |
-| アブレーション | **除去検査**：体系の語彙を全部消し、なお成立する所見を数える |
-| 事前学習部分の保持／破棄 | 採用状態：反映／内部足場／補助模型／不採用 |
-
-仮説の要点は二つです。
-
-1. **単一の対象からは誘導できない構造を、事前分布として持ち込める。** 文化的体系は多数の対象を通過して淘汰された構造なので、この性質を持つと考えます。
-2. **最も有用な出力は、事前分布と対象が食い違う場所である。** 位置が埋まらないこと自体が所見になります。空白の検出が主産物であるのはこのためです。
-
-**これは仮説であって、測定された主張ではありません。** 反証条件は、除去検査を通過した所見が基準線を上回らないことです。体系を使わない基準線と比べて生存所見が増えないなら、転移は起きていません。本方法論は、この比較を毎回要求します。
+最終的には体系名や対応表を除去し、なお対象について成立する所見だけを残します。体系を使わない基準線と比べて生存所見が増えない場合、本スキル固有の増分は確認できません。
 
 ## ライセンス
 

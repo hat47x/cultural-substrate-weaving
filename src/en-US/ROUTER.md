@@ -1,58 +1,54 @@
-# A Method for Transforming Structural Models into Target-Specific Structures
+# Explore and integrate target structure with cultural frameworks and the KJ method
 
-**Return structures obtained from external frameworks to the target for validation. Whatever remains belongs not to the framework, but to the target.**
+**Return structures obtained from external frameworks to the target for validation. What remains belongs to the target, not to the framework.**
 
-Use cultural, philosophical, and traditional frameworks as optional sources of structural hypotheses. Decide whether to retain a hypothesis using the target's facts, purpose, intent, and domain conditions. Transform retained structures into target-specific expression, design, or procedure.
+This skill combines two capabilities:
 
-**This method is for targets whose search space is wide and whose destination is undecided.** A closed problem, where an answer settles it and the candidates can be enumerated, is served by ordinary methods. **Its purpose is to get past the point where repeating the same move stops paying, not to produce a better result from the same number of tokens.** The grid of states a framework supplies, and the accumulation of fragments, are there to stop the search from setting into one groove. Getting past that point takes more passes than ordinary methods, not fewer.
+1. **Cultural-framework structure supply:** use positions, relations, states, and transitions that exist before seeing the target as search directions ordinary analysis may not produce.
+2. **KJ integration:** do not force heterogeneous fragments into prior categories; let semantic units, relations, contradictions, isolates, and gaps arise from the material side.
 
-**When rules conflict, take the reading under which the principle above stays true.** Where both readings keep it true, decide from the target's own material. Add individual rules only for decisions that principle cannot resolve.
+The skill does not supply domain expertise or quality criteria in writing, management, software engineering, law, or other fields. Use it alongside a domain skill when needed.
 
-**What this method provides is capability grounded in cultural frameworks.** It carries only the judgments that exercising the capability requires. Consideration for the recipient of the artifact, an upper bound on explicitness, correcting the model's own default tendencies, how good the finished work is — none of these support the capability, so this method does not cover them. **Specify them in the caller's context.**
+**Its natural target is an open problem space whose destination is not already settled.** Prefer ordinary methods for closed problems.
 
-**Lists in this method indicate directions for examination; they are not closed sets.** When no listed item fits, define the necessary item in the target-specific dynamic layer. Do not treat completion of a list as the goal, and do not exclude phenomena merely because they are not listed. Consider promoting an item to a static rule only after the same need has been confirmed across multiple targets.
+## Minimal procedure
 
-## Minimum execution procedure
+1. **Set baseline and preservation constraints:** use actual domain-method output where possible and record target facts, strengths, and exceptions that must not be destroyed.
+2. **Choose scope:** no, limited, or full activation; when close, measure with a cheap limited pass.
+3. **Read only needed references.**
+4. **Explore through two routes:** obtain structure candidates from cultural frameworks; when material is numerous or heterogeneous, use KJ to raise semantic units, relations, and gaps. Iterate between the routes when useful.
+5. **Return candidates to the target:** correspondence is not the result; retain only questions, relations, states, transitions, and falsification conditions that hold on the target side.
+6. **Compare with baseline and stop:** end when no new target-side increment appears.
 
-1. **Establish a baseline and what to preserve:** Record what domain-specific methods alone can explain, and the target-specific strengths, facts, and causal links that must survive any change.
-2. **Assess the increment:** Determine whether exploring relationships, missing connections, feedback effects, time lags, irreversibility, or generative excess could produce a new judgment.
-3. **Choose the scope:** Use the ordinary method, limited application, or full application. **When the decision is close, begin with limited application and measure.** Under explicit invocation, run limited application even where the ordinary method appears sufficient.
-4. **Read only the references needed:** State in one sentence what you expect to obtain from each reference and read only files whose purpose you can explain.
-5. **Explore, validate, and transform:** There are two routes to an increment — obtain structural hypotheses **from a framework**, or **integrate the target's own material and find the blanks in it**. Take the second first when material is plentiful and uneven in granularity, or when the primary structure is unsettled. Either way, validate against the target and transform retained structures into target-specific expression, design, or procedure.
-6. **Stop when target-side increment stops:** End when only abstraction or explanation grows and no new fact, relationship, condition, falsifier, or judgment emerges. **Across passes, judge by whether the conclusion moved: if only the grounds grew while the central claim stayed the same, that was reinforcement, not a pass.**
+### Persistent judgment axes
 
-### Judgment axes to retain at all times
+- **Attribution:** return framework-derived structure to the target.
+- **Target specificity:** preserve concrete exceptions and what classification cannot explain.
+- **Epistemic state:** do not mix observation, inference, intent, and framework-derived hypothesis.
+- **Provenance:** preserve source, discovery path, and derivation lineage.
+- **Justification:** justify new rules by effects visible on the target.
 
-- **Attribution:** structure taken from a framework goes back to the target; what remains belongs to the target.
-- **Target specificity:** state what classification explains, and preserve the concrete detail and exceptions beyond it.
-- **Independence:** hold the target's purpose, properties, and exceptions as conditions independent of the work's purpose.
-- **Justification:** justify a new rule by an effect observable on the target.
+## Choose references
 
-## Select reference files
-
-For obvious non-application or limited application, begin with the minimum procedure in `SKILL.md`. Add the following references only when more detailed judgment is required.
-
-| Judgment or process | File to read |
+| Decision / operation | Read |
 |---|---|
-| Ambiguous activation, suitability after explicit invocation, or early termination | [00-activation.md](core/activation.md) |
-| Attribution, conflicts between rules, and justifying a rule | [00-principles-and-constraints.md](core/principles-and-constraints.md) |
-| Iterative analysis, externalization, repeated passes, or stopping by increment | [00-iteration.md](core/iteration.md) |
-| Scope, primary change structure, baseline, and facts | [01-scope-and-facts.md](methods/scope-and-facts.md) |
-| Framework and precedent selection, unit compatibility, and rejection conditions | [02-system-selection.md](methods/system-selection.md) |
-| Fixing the assignment, running transitions, the four post-adoption checks | [02a-framework-application.md](methods/framework-application.md) |
-| Relationship types, missing elements and connections, multiple frameworks, and target-specific procedures | [03-transformation.md](methods/transformation.md) |
-| Candidate generation, generative excess, value and resources, and adoption decisions | [04-generation-and-validation.md](methods/generation-and-validation.md) |
-| Character construction, bodily consistency, and Taiheki | [05-character-and-taiheki.md](domains/character-and-taiheki.md) |
-| Recipients, explicitness, collaborators, and handoff | [06-output-and-collaboration.md](domains/output-and-collaboration.md) |
-| Static and dynamic layers, exit conditions, decision records, and rule maintenance | [08-governance-and-records.md](governance/governance-and-records.md) |
-| Final evaluation and domain-specific boundaries | [09-evaluation-and-domains.md](governance/evaluation-and-domains.md) |
-| Integrating many fragments, carding, and detecting blanks | [10-integration.md](methods/integration.md) |
+| Activation, explicit invocation, stopping | [00-activation.md](core/activation.md) |
+| Attribution, rule conflict, justification | [00-principles-and-constraints.md](core/principles-and-constraints.md) |
+| Iteration, rematerialization, stopping on increment | [00-iteration.md](core/iteration.md) |
+| Scope, baseline, preservation, fact boundaries | [01-scope-and-facts.md](methods/scope-and-facts.md) |
+| Cultural-framework selection, compatibility, rejection | [02-system-selection.md](methods/system-selection.md) |
+| Assignment, transitions, inversion/substitution/removal checks | [02a-framework-application.md](methods/framework-application.md) |
+| Relation types, missing elements/connections, multiple frameworks | [03-transformation.md](methods/transformation.md) |
+| Limited Taiheki exploration of human bodily reactions | [05-human-and-taiheki.md](domains/human-and-taiheki.md) |
+| Static/dynamic separation and decision provenance | [08-governance-and-records.md](governance/governance-and-records.md) |
+| Final evaluation and boundary with domain skills | [09-evaluation.md](governance/evaluation.md) |
+| Many fragments, carding, grouping, A/B, gap discovery | [10-integration.md](methods/integration.md) |
 
 ### Loading order
 
-- **Limited application:** Start with one reference directly required by the target. Add `00-principles-and-constraints.md` only when detailed judgment axes are needed.
-- **Full application:** Begin with `00-principles-and-constraints.md` and `01-scope-and-facts.md`. Read `10-integration.md` first when material is plentiful and uneven, or the primary structure is unsettled. Read `02-system-selection.md` when selecting frameworks, `02a-framework-application.md` once one is adopted, `03-transformation.md` when transforming relationships, and `09-evaluation-and-domains.md` before finalizing.
-- **Iterative analysis:** Read `00-iteration.md` when one explore-validate-transform pass does not establish the structure.
-- **High-impact or irreversible judgment:** Read `00-principles-and-constraints.md` and `08-governance-and-records.md`.
+- **Limited application:** start with the one directly relevant reference.
+- **Full application:** establish `01-scope-and-facts.md`; if material is numerous or heterogeneous, read `10-integration.md`; if using a framework, proceed through `02-system-selection.md` → `02a-framework-application.md`, then `03-transformation.md` as needed. Finish with `09-evaluation.md`.
+- **Iterative work:** read `00-iteration.md`.
+- **Human/Taiheki:** do not load merely because a human appears; load only on explicit request or when bodily consistency itself is the inquiry.
 
-Do not fix the number of references in advance. Add a reference only when a new information type is needed. Do not load all references at once. Put target-specific additions in the dynamic layer.
+Do not fix the number of references or load them all at once. Keep target-specific content in the dynamic layer.

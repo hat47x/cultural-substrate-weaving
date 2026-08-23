@@ -6,13 +6,13 @@
       "expected": "no_activation"
     },
     {
-      "id": "ja-limited-character",
-      "request": "人物の緊張時と弛緩時の一貫性だけ確認してください。",
+      "id": "ja-limited-consistency",
+      "request": "この対象について、緊張時と弛緩時に観察された身体反応の一貫性だけを外部類型で確認してください。",
       "expected": "limited"
     },
     {
-      "id": "ja-full-system",
-      "request": "複数主体、責任、時間差、不可逆性を含む制度案の構造を設計してください。",
+      "id": "ja-full-open-structure",
+      "request": "複数主体、責任、時間差、不可逆性を含み、到達点自体が未定の制度構想について、材料を統合しながら構造候補を探索してください。",
       "expected": "full"
     }
   ],
@@ -23,13 +23,13 @@
       "expected": "no_activation"
     },
     {
-      "id": "en-limited-character",
-      "request": "Check only the character's consistency under tension and relaxation.",
+      "id": "en-limited-consistency",
+      "request": "For this person, use an external type only to check consistency in observed bodily reactions under tension and relaxation.",
       "expected": "limited"
     },
     {
-      "id": "en-full-system",
-      "request": "Design a policy structure involving multiple actors, responsibility, time lags, and irreversible decisions.",
+      "id": "en-full-open-structure",
+      "request": "Explore structural candidates for an unsettled policy concept involving multiple actors, responsibility, time lags, and irreversible choices while integrating heterogeneous material.",
       "expected": "full"
     }
   ]

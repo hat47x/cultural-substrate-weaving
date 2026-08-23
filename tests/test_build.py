@@ -43,13 +43,15 @@ class MultilingualBuildTests(unittest.TestCase):
     def test_gpt_knowledge_group_count_for_each_locale(self):
         for locale in LOCALES:
             files = list((ROOT / f"dist/{locale}/chatgpt-gpt/knowledge").glob("*.md"))
-            self.assertEqual(len(files), 6)
+            self.assertEqual(len(files), 4)
 
     def test_skill_frontmatter_uses_expected_language_description(self):
         ja = (ROOT / "dist/ja-JP/openai-skill/metered/cultural-substrate-weaving/SKILL.md").read_text(encoding="utf-8")
         en = (ROOT / "dist/en-US/openai-skill/metered/cultural-substrate-weaving/SKILL.md").read_text(encoding="utf-8")
-        self.assertIn("汎用AIスキル", ja)
-        self.assertIn("general-purpose AI method", en)
+        self.assertIn("文化的体系", ja)
+        self.assertIn("KJ法", ja)
+        self.assertIn("cultural frameworks", en)
+        self.assertIn("KJ", en)
 
 
 if __name__ == "__main__":
