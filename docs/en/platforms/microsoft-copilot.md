@@ -32,7 +32,7 @@ Use this if you need something Agent Builder can't do: AppSource distribution, t
 
 ### 1. Add SharePoint knowledge (effectively required)
 
-The declarative agent's `instructions` field only carries the activation check, minimum execution steps, and the judgment axes — nothing more. The 11 detailed reference modules that back actual judgment (activation criteria, the four viewpoints and five constraints, iteration, scope and facts, system selection, transformation, generation and validation, character and taiheki, output and collaboration, creative patterns, governance and records, final evaluation) exist only under `knowledge/`, and an agent built this way has no way to read them unless they're grounded via SharePoint. Without this step, the agent can only handle the shallow "obviously not applicable / narrow scope" cases — most of the method simply doesn't work. Don't use the `agent-project/` from the package as-is; rebuild it with the steps below first.
+The declarative agent's `instructions` field carries only the activation decision, minimal procedure, and persistent judgment axes. Detailed cultural-framework application, KJ integration, the human/Taiheki special case, governance, and evaluation live under `knowledge/`; without SharePoint grounding the agent cannot use most of those references. Do not use the packaged `agent-project/` as-is; rebuild it with the steps below first.
 
 1. Upload the files under `knowledge/` to one SharePoint site or document library.
 2. Clone the repository.

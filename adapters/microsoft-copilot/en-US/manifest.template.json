@@ -14,12 +14,12 @@
     "color": "color.png"
   },
   "name": {
-    "short": "Structure Meta",
+    "short": "Framework + KJ",
     "full": "Cultural Substrate Weaving — English"
   },
   "description": {
-    "short": "Validates structures and produces target-specific judgments.",
-    "full": "A Microsoft 365 Copilot agent for structural metacognition across writing, design, analysis, and development, examining relationships, missing connections, feedback effects, time lags, and irreversible choices."
+    "short": "Explores structure candidates and gaps with cultural frameworks and KJ.",
+    "full": "A Microsoft 365 Copilot agent that combines cultural-framework structure supply with KJ integration and gap discovery, validating only findings that add to the domain-method baseline and hold on the target side."
   },
   "accentColor": "#F4F1EA",
   "copilotAgents": {

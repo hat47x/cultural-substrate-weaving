@@ -1,25 +1,21 @@
-# Exploration, Validation, Transformation, and Iteration
+# Exploration, validation, transformation, and iteration
 
-Read this file when one pass does not establish the structure, or when choosing externalization formats and stopping conditions.
+Read this when structure does not settle in one pass and the work needs externalization and another round.
 
-## Core process
+## Basic loop
 
-After activation, repeat three processes.
+Repeat three operations:
 
-1. **Explore:** Obtain structures that are difficult to derive from the target alone, using external frameworks and precedents.
-2. **Validate:** Compare structural hypotheses with the target's facts, purpose, intent, and domain conditions. Retain fitting parts and reject non-fitting parts.
-3. **Transform:** Convert retained structures into expression, design, or procedure that recipients can use.
+1. **Explore:** obtain positions, relations, states, or transition candidates from cultural frameworks that are difficult to derive from the target alone. When material is numerous or heterogeneous, use KJ integration to let semantic units, relations, and gaps arise from the material side.
+2. **Validate:** check candidates against target facts, purposes, and conditions, retaining only what fits.
+3. **Transform:** externalize retained relations into target-checkable questions, diagrams, descriptions, procedures, or other forms.
 
-Move between exploration and transformation according to validation results. Apply only sections relevant to the target.
+An externalized result can become material for the next round. The domain decides whether the suitable form is prose, diagram, equation, state transition, contract, code, test, or something else.
 
-When one pass does not establish the structure, make additional passes. **Treat the transformed output as input to the next exploration pass.** Use diagrams, mappings, summaries, prose, equations, state transitions, test cases, or other externalized forms as new material; extract units and relationships again, then re-enter exploration. Implicit relationships are difficult to inspect while they remain inside the analysis, so externalize them into a form that can be validated.
+Do not force the previous round directly into existing categories. When useful, return it to ungrouped material at the same level of abstraction, while preserving a path back to source material.
 
-Do not stop each pass at placement or correspondence alone. Express the primary relationships in prose or another domain-appropriate, verifiable form. Treat relationships that cannot yet be expressed as unresolved items for the next validation pass. Choose among prose, diagrams, equations, state transitions, contracts, code, and tests according to the domain and validation purpose.
+A gap can drive the next exploration or information-gathering question, but producing gaps is not a success criterion.
 
-Change the question with each pass: current state (what is happening), problem statement (what is wrong), essence (why it is so), vision, measures, sequencing, verification. The previous pass's externalized output and its blanks become the next pass's material. Do not skip stages, and in particular do not skip essence and jump to measures.
+For each round, record which new fact, semantic unit, relation, condition, falsification, question, or judgment appeared. Distinguish a changed conclusion from mere reinforcement. Stop when only abstraction or explanation grows and no target-side increment remains.
 
-**Do not file the previous pass's output directly into existing groups, chapters, or problem categories; return it to unarranged material at the same level of abstraction.** Filing it turns the pass into an addition to the existing structure, and the outline stops changing. Even after rematerializing it, preserve a path back to the original material.
-
-**A blank is an instruction for the next round of information gathering.** If blanks do not drive acquisition of material from outside, passes close inside the previous output and lose contact with external validation.
-
-For every pass, record whether it produced a new fact, unit, relationship, condition, falsifier, or judgment. **Tell whether you have frozen by whether the conclusion moved: if only the grounds grew while the central claim stayed where it was, that pass was reinforcement, not a pass.** Stop when only abstraction or explanation volume grows and no target-side increment remains. However, **if an untried stage remains, try one before stopping.** If that trial yields no increment, record "tried, no increment" and stop. The yield of an untried move cannot be measured, so a verdict of "no increment" is self-fulfilling. Distinguish being stuck, being done, and being out of scope. Do not prescribe a fixed number of passes.
+Problem-solving work may move through questions such as what is happening, what is the problem, why, what is desired, what to do, in what order, and what happened after execution. This is a representative orchestration, not a fixed KJ core. Keep track of the current question and move backward, forward, or deeper as needed.

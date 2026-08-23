@@ -2,69 +2,51 @@
 
 [日本語](README.md) | [English](README.en.md)
 
-A general-purpose AI method for improving metacognition wherever structure is written, analyzed, designed, or implemented. It explores, validates, and transforms target-specific relationships, missing connections, feedback effects, time lags, and irreversible choices.
+A complementary AI skill that combines **structure candidates from cultural, philosophical, and traditional frameworks** with **KJ-method integration and gap discovery**. It explores questions, relations, states, and transitions that ordinary domain methods may not surface, then validates them against the target.
 
-Cultural, philosophical, and traditional frameworks are not the primary purpose. They are optional auxiliary models for discovering structures that ordinary domain-specific methods may not reveal.
+The skill does **not** replace domain expertise or quality criteria in writing, management, software engineering, law, or other fields. Use it alongside a **domain-specific skill** when appropriate; cultural-substrate-weaving is responsible only for the increment produced by its cultural-framework and KJ capabilities.
 
-> **This is under validation.** The method and its delivery paths work, but only two applied cases support its effectiveness so far ([worked examples](docs/en/examples.md)). The falsification condition is stated, and each case is measured and published against it. Until the case count grows, treat the method as under validation.
+> **The current release is still under validation.** Comparative validation of the current version is the next step.
 
 ## Install
 
-**Claude Code** — this repository is the plugin marketplace. Nothing to download.
+**Claude Code**
 
 ```bash
 claude plugin marketplace add hat47x/cultural-substrate-weaving
-```
-
-```bash
 claude plugin install cultural-substrate-weaving-en@cultural-substrate-weaving
 ```
 
-For Japanese, use `cultural-substrate-weaving-ja@cultural-substrate-weaving`. Invoke with `/cultural-substrate-weaving-en:weave`. Desktop, cloud sessions, and team-wide setup are covered in [Use with Claude Code](docs/en/platforms/claude-code.md).
-
-**Codex** — the same repository is also a Codex plugin marketplace. Nothing to download.
+**Codex**
 
 ```bash
 codex plugin marketplace add hat47x/cultural-substrate-weaving
 ```
 
-Then install `cultural-substrate-weaving-en` (or `cultural-substrate-weaving-ja`). See [Use with Codex](docs/en/platforms/codex.md).
-
-**ChatGPT custom GPT and Microsoft 365 Copilot**: download the ZIP for your locale and platform from [GitHub Releases](https://github.com/hat47x/cultural-substrate-weaving/releases). The guides in the table below cover each one.
+For ChatGPT custom GPT and Microsoft 365 Copilot, use the platform package from GitHub Releases.
 
 ## What the caller supplies
 
-This skill provides only **capability grounded in cultural frameworks**. It does not handle how a request is framed, correcting the model's own habits, or how good the finished work is. Those belong to **the context you build around it**.
+This skill does not provide domain-specific professional competence. Accuracy standards, implementation procedures, craft quality, style, and other domain criteria belong to the caller's context or to another domain skill used alongside this one. See **[Usage context](docs/en/usage-context.md)**.
 
-Skip this and the skill still runs — just not where you expected. → **[What the caller supplies](docs/en/usage-context.md)**
-
-## Supported locales
+## Languages
 
 | Locale | Status | Note |
 |---|---|---|
-| Japanese (`ja-JP`) | Semantic canonical source | Governs method-level interpretation |
-| English (`en-US`) | Translated | Usable; independent human review is recommended before authoritative publication |
+| Japanese (`ja-JP`) | Semantic canonical source | Authoritative method text |
+| English (`en-US`) | Translation | Usable; independent human review is recommended before authoritative publication |
 
-## Platform adapters
+## Platforms
 
-- OpenAI Codex Skill, in implicit and explicit-invocation profiles
+- OpenAI Codex Skill
 - Claude Code Plugin Marketplace
 - ChatGPT custom GPT update pack
 - Microsoft 365 Copilot declarative agent
-- Project entry points for `AGENTS.md` and `CLAUDE.md`
-
-## First steps
-
-| Platform | English guide | Japanese guide |
-|---|---|---|
-| Codex | [Use with Codex](docs/en/platforms/codex.md) | [Codexで使う](docs/ja/platforms/codex.md) |
-| Claude Code | [Use with Claude Code](docs/en/platforms/claude-code.md) | [Claude Codeで使う](docs/ja/platforms/claude-code.md) |
-| ChatGPT GPTs | [Create a custom GPT](docs/en/platforms/chatgpt-gpt.md) | [カスタムGPTを作る](docs/ja/platforms/chatgpt-gpt.md) |
-| Microsoft 365 Copilot | [Create a Copilot agent](docs/en/platforms/microsoft-copilot.md) | [Copilot Agentを作る](docs/ja/platforms/microsoft-copilot.md) |
+- References from `AGENTS.md` / `CLAUDE.md`
 
 ## Build
 
-Python 3.11 or later is required. No third-party Python packages are needed.
+Python 3.11+; no external Python packages are required.
 
 ```bash
 git clone https://github.com/hat47x/cultural-substrate-weaving.git
@@ -73,46 +55,20 @@ make check
 make package
 ```
 
-Generated artifacts are written under `dist/<locale>/` and `dist/packages/`.
-
-## Source, translations, and generated files
-
-- `src/ja-JP/`: semantic canonical source
-- `src/en-US/`: structurally parallel English translation
-- `i18n/`: glossary, source hashes, and review policy
-- `adapters/`: platform- and locale-specific templates
-- `scripts/`: multilingual build and validation
-- `plugins/`: generated and committed Claude Marketplace plugins
-- `dist/`: release artifacts; not committed
-
 ## Core principle
 
-> Return structures obtained from external frameworks to the target for validation. Whatever remains belongs not to the framework, but to the target.
+> **Return structures obtained from external frameworks to the target for validation. What remains belongs to the target, not to the framework.**
 
-## Why an external framework at all (a hypothesis about the mechanism)
+In KJ integration, do not force material into prior card types. Preserve semantic unity and epistemic boundaries while integrating it.
 
-This method does not claim that cultural, philosophical, or traditional frameworks are true. **It hypothesizes that they act the way transfer learning acts in machine learning.**
+> **Join when semantic unity must be preserved; split when epistemic state must be preserved.**
 
-In transfer learning, a representation pretrained on a large source domain is carried into a target domain that has too little data to induce it. What decides the value of the pretrained representation is not whether it is itself correct, but **whether performance on the target improves.**
+## Why use an external framework? A hypothesis
 
-| Transfer learning | This method |
-|---|---|
-| Pretraining corpus | A cultural framework — a structure that survived passage through many targets |
-| Pretrained representation | The **position layer**: a fixed set of places whose meanings are defined before looking at the target |
-| Inductive bias (a prior) | Supplies positions the target does not hold on its own |
-| Fine-tuning on the target | **Assignment**, and validation against the target |
-| Domain-mismatch check | **Unit compatibility**: whether the kinds of unit and the principles of division agree |
-| Negative transfer | **Over-application**: imposing a structure that does not fit |
-| Ablation | The **removal check**: delete the framework's vocabulary and count the findings that still stand |
-| Keeping or discarding the pretrained part | Adoption state: carried into the artifact, internal scaffolding, auxiliary model, rejected |
+The method does not claim that cultural frameworks are true. It treats their pre-existing positions, relations, and transitions as prior structure that may open search directions ordinary analysis does not produce.
 
-The hypothesis has two parts.
-
-1. **A structure that cannot be induced from one target can be carried in as a prior.** Cultural frameworks are structures selected across many targets, so they are taken to have this property.
-2. **The most useful output is where the prior and the target disagree.** A position that will not fill is itself a finding. This is why detecting blanks is the primary product.
-
-**This is a hypothesis, not a measured claim.** It is falsified when findings that survive the removal check do not exceed the baseline. If surviving findings do not increase against a baseline built without the framework, no transfer occurred. The method requires that comparison on every run.
+At the end, framework names and correspondence tables are removed. Only findings that still stand as statements about the target remain. If surviving findings do not exceed a no-framework baseline, no skill-specific increment has been demonstrated.
 
 ## License
 
-MIT License. Replace publisher details and Microsoft 365 privacy and terms URLs before public deployment.
+MIT License

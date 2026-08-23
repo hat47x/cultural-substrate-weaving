@@ -6,13 +6,13 @@
     "ja-JP": {
       "label": "日本語",
       "status": "canonical",
-      "description": "文筆・設計・分析・開発など、あらゆる構造を扱う領域でメタ認知を高め、対象固有の関係・欠落・反作用・時間差を探索・検証・変換する汎用AIスキル。文化的・思想的・伝統的体系は、補助モデルとして選択的に活用する。"
+      "description": "文化的体系による構造候補の供給とKJ法による断片統合・空白探索を組み合わせ、対象側で成立する増分を検証する補助AIスキル。領域固有の専門知識は併用スキルに委ねる。"
     },
     "en-US": {
       "label": "English",
       "status": "translated",
       "review_note": "Initial English translation is usable, but independent human review is recommended before authoritative publication.",
-      "description": "A general-purpose AI method for improving metacognition wherever structure is analyzed, designed, written, or implemented. It explores, validates, and transforms target-specific relationships, missing connections, feedback effects, and time lags; cultural, philosophical, and traditional frameworks are optional auxiliary models."
+      "description": "A complementary AI skill combining cultural-framework structure supply with KJ-method integration and gap discovery, validating only target-side increments while leaving domain expertise to companion skills."
     }
   },
   "router": "ROUTER.md",
@@ -53,19 +53,9 @@
       "skill_reference": "03-transformation.md"
     },
     {
-      "id": "generation-and-validation",
-      "source": "methods/generation-and-validation.md",
-      "skill_reference": "04-generation-and-validation.md"
-    },
-    {
-      "id": "character-and-taiheki",
-      "source": "domains/character-and-taiheki.md",
-      "skill_reference": "05-character-and-taiheki.md"
-    },
-    {
-      "id": "output-and-collaboration",
-      "source": "domains/output-and-collaboration.md",
-      "skill_reference": "06-output-and-collaboration.md"
+      "id": "human-and-taiheki",
+      "source": "domains/human-and-taiheki.md",
+      "skill_reference": "05-human-and-taiheki.md"
     },
     {
       "id": "governance-and-records",
@@ -73,9 +63,9 @@
       "skill_reference": "08-governance-and-records.md"
     },
     {
-      "id": "evaluation-and-domains",
-      "source": "governance/evaluation-and-domains.md",
-      "skill_reference": "09-evaluation-and-domains.md"
+      "id": "evaluation",
+      "source": "governance/evaluation.md",
+      "skill_reference": "09-evaluation.md"
     },
     {
       "id": "integration",
@@ -89,25 +79,19 @@
       "core/principles-and-constraints.md",
       "core/iteration.md"
     ],
-    "01-analysis-methods.md": [
+    "01-framework-and-kj.md": [
       "methods/scope-and-facts.md",
       "methods/system-selection.md",
       "methods/framework-application.md",
+      "methods/transformation.md",
       "methods/integration.md"
     ],
-    "02-transformation-and-generation.md": [
-      "methods/transformation.md",
-      "methods/generation-and-validation.md"
+    "02-human-and-taiheki.md": [
+      "domains/human-and-taiheki.md"
     ],
-    "03-character-and-creative.md": [
-      "domains/character-and-taiheki.md"
-    ],
-    "04-output-and-collaboration.md": [
-      "domains/output-and-collaboration.md"
-    ],
-    "05-governance-and-evaluation.md": [
+    "03-governance-and-evaluation.md": [
       "governance/governance-and-records.md",
-      "governance/evaluation-and-domains.md"
+      "governance/evaluation.md"
     ]
   }
 }

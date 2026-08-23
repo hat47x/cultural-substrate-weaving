@@ -2,19 +2,23 @@
 
 ## What belongs in the skill, and what does not
 
-The skill's purpose is to **give a generative AI capability grounded in cultural frameworks** — position layers, transition models, assignment procedures, and the checks that return a framework's output to the target. That is its whole role.
+The skill has two core capabilities:
 
-It is **not** the skill's job to correct the model's own tendencies or to supply general competence at writing, analysis, or design. Those belong to the **context the caller sets up around the skill** — the prompt, the assignment's framing, the standing instructions of the session.
+1. **Cultural-framework exploration** — obtain position layers, relations, transitions, and other structure candidates from cultural, philosophical, and traditional frameworks, then return them to the target for validation.
+2. **KJ-method integration** — preserve heterogeneous fragments as living semantic units, let relations and gaps emerge without premature classification, and integrate them while retaining provenance and epistemic boundaries.
+
+It is **not** the skill's job to supply domain expertise in writing, management, software engineering, product design, law, medicine, or other fields. Domain-specific quality criteria and procedures belong to the caller's context or to another installed skill used alongside this one.
 
 Before adding anything to `src/<locale>/`, classify it:
 
-| Belongs in the skill | Belongs in the caller's context |
+| Belongs in the skill | Belongs in domain/caller context |
 |---|---|
-| How a framework supplies structure, and how that structure is assigned, run, and validated against the target | How the request is framed, and what the request's wording already assumes |
-| The method's own procedure and the checks on that procedure | Correcting the model's defaults, style, or bias |
-| When the method applies, and when it has exhausted its material | General craft quality, and how good the finished work is |
+| How a cultural framework supplies structure and how that structure is validated against the target | Domain-specific professional knowledge and quality criteria |
+| KJ carding, grouping, integration, gap discovery, and transformation checks | Writing craft, management practice, software design, legal analysis, etc. |
+| Activation, attribution, falsification, stopping, and provenance rules required by the two capabilities | General communication, output design, collaboration, or model-style correction |
+| Taiheki as a limited cultural/body framework for observing human bodily consistency | Character-writing technique or personality diagnosis |
 
-A finding from an experiment is not automatically a change to the skill. **A finding about how the request was posed, or about what the model does by default, is a finding about the context — record it in the case write-up and leave the skill alone.**
+A finding from an experiment is not automatically a change to the skill. A finding about how a request was posed, about domain quality, or about the model's default style belongs outside the skill unless it is necessary to execute or validate the two core capabilities.
 
 ## Working rules
 

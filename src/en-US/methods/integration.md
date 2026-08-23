@@ -10,7 +10,7 @@ This procedure derives from the KJ method. The lineage adopted is Kawakita Jiro,
 
 **Circulation and original run opposite here.** The most read are the two simplified paperbacks; the most complete is the least read — the 1986 summation. Filling gaps from memory drifts toward the simplified form.
 
-Attested KJ practice covers: one item to a card, a sentence a third party can read, a label that is not a category name, covering the material before raising a label, and the A-type diagram / B-type narration distinction. **The four card fields — source, path, stage, and collector — are modern additions whose attestation could not be confirmed in the public sources.** Card and group counts are treated here as guides.
+Attested KJ practice emphasizes cards readable by a third party, labels that are not category names, covering the material before raising a label, and the A-type diagram / B-type narration distinction. **Card boundaries and the handling of provenance, discovery path, stage, and collector include modern adaptations for generative-AI use.** Do not use card counts or character counts as rules for semantic boundaries.
 
 When a judgment is unsettled, do not derive it from this document: go to the primary sources above and to related KJ techniques. **When those sources cannot be reached, record the judgment as self-reported and proceed.** Do not declare a lineage from memory alone.
 
@@ -28,9 +28,9 @@ Treat each fragment as a speaker rather than an object of classification. Listen
 
 The most common failure is producing a plausible classification scheme. Classification pours material into a frame the analyst already holds; the material has not spoken.
 
-**The card is not where restraint applies.** A card's job is fidelity to the material; value judgment belongs at placement, narration, and output. The KJ method is field science because chaos can enter it as chaos — no hypothesis rises from material already evened out at the door.
+**Keep cards faithful to the material.** No hypothesis rises from material already evened out at the door. Hypothesis space can remain broad at collection time, while publication and execution use separate thresholds. Do not sanitize source material on entry, and do not turn an uncomfortable possibility into fact.
 
-Opposing views are **not balanced within one card; they are raised as separate cards.** One item to a card makes this so. Both sides appear not inside a card but as tension on the diagram. **Balance struck card by card removes, at input, the poles the diagram was supposed to draw opposition between.** The failure sign "no opposition appears in the diagram" usually originates here, and because the cause sits on the card side, the diagram will not reveal it.
+Preserve opposing views so integration does not erase their difference. Split them when speaker, epistemic state, or evaluation changes. When ambivalence is inseparable within one experience, it may remain in one card expressed in natural language. Prematurely averaging opposition into "both sides are the same" can remove the poles the later diagram needed to show.
 
 **The analyst's own ethics, values, and default stances are structures brought in from outside the target.** Apply to them the checks imposed on a cultural framework. Weakening a card, blurring it, dropping the actor, downgrading an assertion to a guess — done as consideration, the act itself leaves no record. **Do not set the threshold for collecting at the threshold for publishing.** Restraint at the output stage is visible, recordable, and reversible. Restraint at the card stage is none of these.
 
@@ -47,25 +47,25 @@ The operation has four parts.
 
 Follow five steps. The operation above is called when cutting cards out of the material, when folding groups up a level, and when writing a label.
 
-1. **Card:** run the operation above on the material. **Prohibit noun endings; end each card with a verb** (a noun alone does not determine what is being appealed). One item to a card, in a sentence a third party can read for its meaning.
+1. **Card:** run the operation above on the material. Write natural language that can be understood on its own as a claim or experience. Do not replace it with a category label, but do not impose mechanical bans on noun endings, length, or one-clause form. **Do not split semantic unity; do not merge different epistemic states.**
 
    A card carries four fields and no more: **source** (the position it can be taken back to), **path** (for material embedded in a post, the material is the source and the post is the path), **stage** (raised straight from the material, raised from a group, or derived from another card), and **who collected it, and when**. **There is no field for confidence, role, importance, feeling, or type.** Those belong in the card's own sentence. A type assigned up front means every later look at the fragment goes through that tag.
 
    **A field whose value repeats may be written once on the set and left off the individual cards.** When cards of different origin come into one space, write the omitted fields back in.
 
    **A question obtained from an external framework does not sit at the same level as observed fact until it is returned to the target and yields a new observation or a refutation.**
-2. **Group:** collect fragments whose appeals are close. Two or three per first-level group. Fold through successive levels to five to seven groups, at most ten. **These numbers are guides, not caps.** When a count falls outside them, establish whether the material requires it or the grouping has failed. Do not split or merge groups to reach a number. **Leave fragments that fit no group where they are** (a single isolated card is sometimes the most important). **Do not group by source, speaker, position, or card type.** Use those after grouping, to audit bias and independence. **Do not count a repost of the same event, or two cards derived from one, as two independent appeals.**
+2. **Group:** collect fragments whose appeals are close. Starting with small groups can be a useful heuristic, but card counts and final group counts are not success conditions. Let semantic boundaries in the material govern; do not split or merge to hit a number. **Leave fragments that fit no group where they are** (a single isolated card is sometimes the most important). **Do not group by source, speaker, position, or card type.** Use those after grouping, to audit bias and independence. **Do not count a repost of the same event, or two cards derived from one, as two independent appeals.**
 3. **Label:** run the operation above on the group. State in one sentence what the group wants to say. A label is not a category name.
 4. **Place:** draw relationships, distinguishing causal, mutual, opposing, and temporal order. Draw opposition as opposition. **Draw the relationships not drawn.** Draw from the whole downward, the reverse of how groups were assembled.
 5. **Narrate:** read the diagram aloud. Do not narrate in an order absent from the diagram.
 
 Apply four checks.
 
-- **Label portability:** if the label also holds on another group, it is a category name. Rewrite it.
+- **Label portability:** if the label is so general that it fits another group just as well, check whether it has escaped into a category name. This is a warning rather than an automatic invalidation; ask whether the label actually voices what is specific to this group.
 - **Return check:** carry the label back to each fragment and test whether it states what that fragment meant. Alongside the five additions above, watch for the fragment answering back that this is not what it meant. If even one fragment resists, either the label or the grouping is wrong. **Settle which by raising the label twice, independently. If both attempts stumble in the same place in the same way, what needs fixing is the grouping, not the label.**
-- **Enumerate blanks:** state in words every place where "a group should be here but is not." **Zero blanks indicates insufficient search, not complete material.**
+- **Gap check:** verbalize a missing voice or relation when the layout makes one visible, and use it as a possible next question. If none appears, check once for oversight, but **do not invent a gap to satisfy the method.**
 - **Two-way cross-check:** anything in the narration but not in the diagram lacks grounds. For anything in the diagram that the narration dropped, ask why it cannot be narrated. Usually no instance exists there. Register it as a blank. **Zero difference shows traceability across media; it does not show that the target is complete.**
 
-Failure signs: a label holds on another group; first-level groups of five or more; zero fragments left ungrouped; zero blanks reported; no opposition appears in the diagram; both sides evened into one card at the card stage; the force the material carried is weaker on the card; the actor has disappeared from the card; sources cannot be traced; the analyst's vocabulary appears in labels; no folding process occurred; the narration is tidier than the diagram; labels came fluently; labels were written without covering the material; the actor has disappeared from the label.
+Treat these as warning signs rather than automatic failure conditions: labels that fit any group, large classification boxes formed immediately, opposition smoothed into harmony, weakened material, lost actors or provenance, analyst vocabulary overtaking source language, or narration becoming much tidier than the diagram. **Warnings trigger a check for the analyst's frame overtaking the material. Difficulty, isolation, gaps, or rewriting are not success criteria either.**
 
 **When detected but not removable, do not remove it: mark its provenance.** This procedure does not prevent imposition. It only makes imposition visible.

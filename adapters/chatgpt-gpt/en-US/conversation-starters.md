@@ -1,3 +1,3 @@
-- Review the responsibility, information flow, and irreversible choices in this policy proposal.
-- Use limited application to examine character, time, and repetition in this story.
-- If the method adds no increment over ordinary analysis, proceed without it.
+- Integrate this material with the KJ method and look for relations and gaps hidden by prior categories.
+- Use ordinary analysis as the baseline, then apply a cultural framework narrowly and check whether it produces a new question.
+- First decide whether this task has enough potential increment to activate this skill.
