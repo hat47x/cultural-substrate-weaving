@@ -53,9 +53,9 @@
       "en_status": "translated"
     },
     "domains/output-and-collaboration.md": {
-      "ja_sha256": "8a1e916785d449208724d236338707f1031ee2044657c0045b3d206e22a372e8",
+      "ja_sha256": "5afb2bb65882497b0685a7305baf1b7c726692a82e8f425a2320b4dfb1ee8150",
       "en_present": true,
-      "en_source_ja_sha256": "8a1e916785d449208724d236338707f1031ee2044657c0045b3d206e22a372e8",
+      "en_source_ja_sha256": "5afb2bb65882497b0685a7305baf1b7c726692a82e8f425a2320b4dfb1ee8150",
       "en_status": "translated"
     },
     "governance/evaluation-and-domains.md": {
@@ -83,21 +83,21 @@
       "en_status": "translated"
     },
     "methods/system-selection.md": {
-      "ja_sha256": "9c595d96bd0a3cd8fc99b0512ce80a83df1186831444b9fa0fd86f63f2038771",
+      "ja_sha256": "8b60994e7bed1ebc118caca04e3cb563b9a729249525e563d4849a6f0fb1c264",
       "en_present": true,
-      "en_source_ja_sha256": "9c595d96bd0a3cd8fc99b0512ce80a83df1186831444b9fa0fd86f63f2038771",
+      "en_source_ja_sha256": "8b60994e7bed1ebc118caca04e3cb563b9a729249525e563d4849a6f0fb1c264",
       "en_status": "translated"
     },
     "methods/framework-application.md": {
-      "ja_sha256": "b049c6e8b9ffa7b5d972a06eb17145f2fb5e37f6931d9f4dfd31b290113bd697",
+      "ja_sha256": "ebddf3494ff9968b81493e6ff0ba8a984d195d1516086fec16017fe64bff43bc",
       "en_present": true,
-      "en_source_ja_sha256": "b049c6e8b9ffa7b5d972a06eb17145f2fb5e37f6931d9f4dfd31b290113bd697",
+      "en_source_ja_sha256": "ebddf3494ff9968b81493e6ff0ba8a984d195d1516086fec16017fe64bff43bc",
       "en_status": "translated"
     },
     "methods/transformation.md": {
-      "ja_sha256": "7e35e55ce3c6f791c8ea9451e5c8db522bfd88ad6a6c00fd3c85a22ba7db17de",
+      "ja_sha256": "1d31c19ad8379b521b53799d519ae9bc67b0acb266eb60315c28d1c47fffdc2c",
       "en_present": true,
-      "en_source_ja_sha256": "7e35e55ce3c6f791c8ea9451e5c8db522bfd88ad6a6c00fd3c85a22ba7db17de",
+      "en_source_ja_sha256": "1d31c19ad8379b521b53799d519ae9bc67b0acb266eb60315c28d1c47fffdc2c",
       "en_status": "translated"
     },
     "methods/integration.md": {
