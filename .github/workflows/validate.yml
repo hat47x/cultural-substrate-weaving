@@ -31,6 +31,8 @@ jobs:
           else
             make check
           fi
+      - name: Verify tracked generated artifacts are current
+        run: git diff --exit-code -- .claude-plugin .agents plugins
       - uses: actions/upload-artifact@v7
         with:
           name: multilingual-validation-reports
