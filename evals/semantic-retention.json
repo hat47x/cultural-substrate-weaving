@@ -5,8 +5,7 @@
       "対象固有性",
       "要素自体の欠落と、接続の欠落を区別する",
       "静的規則と動的手順を分離する",
-      "次の周回は直後でなくてよい。",
-      "再開時には前回のまとまりを正解として固定せず"
+      "体系を採用したことは、全要素・全解釈語・全遷移を使い切る義務を意味しない。"
     ],
     "forbidden_in_router": [
       "相互作用する次元が三つ以上"
@@ -18,8 +17,7 @@
       "Target specificity",
       "Distinguish a missing element from a missing connection.",
       "Separate static rules from dynamic procedures",
-      "The next round need not happen immediately.",
-      "On reopening, do not treat the prior grouping as the answer"
+      "Adopting a framework does not require exhausting all of its elements, interpretive vocabulary, or transitions."
     ],
     "forbidden_in_router": [
       "three or more interacting dimensions"
