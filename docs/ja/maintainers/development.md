@@ -44,5 +44,6 @@ make check
 - `kj-atlas-cognitive-coevolution.md`: KJ Atlas dogfoodによる長期4arm比較と、skill / caller / product / experimentの帰属ゲート。
 - `kj-atlas-case000-lessons.md`: 比較プロトコル以前の既存dogfoodを遡及的に読んだ初期教訓。
 - `framework-loading-depth-observation.md`: frameworkをどこまでworking contextへ読み込んだかと、増分・anchoring・early stopの関係を長期観察する補助プロトコル。
+- `kj-atlas-case001-longitudinal-companion.md`: 独立4armを汚さず、継続チャットで問いの遅延効果・再活性化・KJ再編・実採用を追うprospective companion lane。
 
 研究文書は、現行方法論の根拠や限界を追えるようにするための履歴です。方法論正本と同じ規範力を持たせません。
