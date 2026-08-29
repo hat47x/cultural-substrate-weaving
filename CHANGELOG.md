@@ -2,6 +2,10 @@
 
 ## Unreleased
 
+No unreleased changes are recorded after the v0.3.0 release candidate.
+
+## 0.3.0 — 2026-08-30
+
 - Bounded framework application depth: adopting a framework no longer implies exhausting all positions, interpretive vocabulary, or transitions; application stays scoped to target-side need and stops rather than filling unused structure.
 - Extended iterative KJ work across delayed rounds: carry unresolved questions, isolated semantic units, and held relations forward; reopen them when later material touches them; and observe whether earlier questions change later research, regrouping, artifacts, or decisions without treating that record as causal proof.
 - Purified the skill boundary: domain-specific craft, output-design, and general collaboration guidance are no longer part of the runtime method. The intended composition is a domain skill or domain method plus cultural-substrate-weaving.
