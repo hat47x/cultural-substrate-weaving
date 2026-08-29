@@ -2,6 +2,7 @@
 
 ## Unreleased
 
+- Extended iterative KJ work across delayed rounds: carry unresolved questions, isolated semantic units, and held relations forward; reopen them when later material touches them; and observe whether earlier questions change later research, regrouping, artifacts, or decisions without treating that record as causal proof.
 - Purified the skill boundary: domain-specific craft, output-design, and general collaboration guidance are no longer part of the runtime method. The intended composition is a domain skill or domain method plus cultural-substrate-weaving.
 - Retired the standalone creative-pattern module. Taiheki remains only as a limited cultural/body-oriented lens for human observation, not as an automatic character-writing module or diagnosis.
 - Reworked KJ integration around semantic units and epistemic boundaries: join to preserve semantic unity, split to preserve evidence state, keep unresolved attention in natural language, and treat fixed counts and error signs as heuristics rather than truth conditions.
