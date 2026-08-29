@@ -23,6 +23,8 @@ Choose one of four uses.
 
 Define the use first and make evaluation criteria explicit. **The transition model lays the framework's states over the search space as a grid and reads the target by which cells fill and which stay empty.** It looks at where things can move rather than at static placement, so declare it separately from the structural model. The procedure is in `02a-framework-application.md`.
 
+**Choosing a use and choosing an application depth are separate decisions. Adopting a framework does not require exhausting all of its elements, interpretive vocabulary, or transitions.** Declare the layer and scope needed for the target-side question first. If that scope produces no increment, do not fill empty positions or unused operations merely to exhaust the framework. Broaden the scope only when a target-side need appears.
+
 **The temporal and transition models produce structure that static placement cannot. Reach for them.** A placement diagram gets you as far as which element sits where. Following each factor's change of state gets you when it enters and when it leaves, whether it can return, and which orderings are the only ones that occur. **Those are properties of the target, and placement does not show them.**
 
 Before detecting absence or bias, determine whether the framework's elements and the target's structural units are of the same kind. Only compatible units support reasoning about missing or overrepresented elements. For example, if an external framework uses types as its units while the target uses individual events, the units are heterogeneous even if their counts look comparable. Do not infer absence from that pairing; use it only for candidate relations or questions.
@@ -39,4 +41,4 @@ For heterogeneous frameworks, switch to one of these uses:
 
 Before adopting a framework, define results that would lead to rejection. Exclude frameworks that fit every possible result, because they add confirmation without discriminating hypotheses.
 
-**A framework you decide to adopt goes on to `02a-framework-application.md`, which holds the assignment procedure and the four post-adoption checks. A finding that has not been through those checks is not a result.**
+**A framework you decide to adopt goes on to `02a-framework-application.md` with its declared use and application scope intact. That file holds the assignment procedure and the four post-adoption checks. A finding that has not been through those checks is not a result.**
