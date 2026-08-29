@@ -12,7 +12,7 @@
     "en-US": {
       "status": "translated",
       "human_review": "recommended",
-      "source_version": "0.2.0"
+      "source_version": "0.3.0"
     }
   },
   "files": {
@@ -29,9 +29,9 @@
       "en_status": "translated"
     },
     "core/iteration.md": {
-      "ja_sha256": "1311a5713a4c4d10edd09aee3b527bf6cca4e300d70566ac68267c2622340c8b",
+      "ja_sha256": "15ea177d515b5b963a073149318824cda2b78ac2575598249b1fccd6ee403989",
       "en_present": true,
-      "en_source_ja_sha256": "1311a5713a4c4d10edd09aee3b527bf6cca4e300d70566ac68267c2622340c8b",
+      "en_source_ja_sha256": "15ea177d515b5b963a073149318824cda2b78ac2575598249b1fccd6ee403989",
       "en_status": "translated"
     },
     "core/principles-and-constraints.md": {
@@ -47,9 +47,9 @@
       "en_status": "translated"
     },
     "governance/evaluation.md": {
-      "ja_sha256": "5ec2486105254b017990b13b1c2fc4aeb1dee362f7071d33b67c2b77ec13fc44",
+      "ja_sha256": "0d179a489407d14a249e7be4eca4538f9ddf0a684d0505498e6e10972ceba138",
       "en_present": true,
-      "en_source_ja_sha256": "5ec2486105254b017990b13b1c2fc4aeb1dee362f7071d33b67c2b77ec13fc44",
+      "en_source_ja_sha256": "0d179a489407d14a249e7be4eca4538f9ddf0a684d0505498e6e10972ceba138",
       "en_status": "translated"
     },
     "governance/governance-and-records.md": {
@@ -77,9 +77,9 @@
       "en_status": "translated"
     },
     "methods/system-selection.md": {
-      "ja_sha256": "9b39dd568b9655499c135ff4c40895824ef8411d357af8908d1491c60f8b21c8",
+      "ja_sha256": "0378d538fd68794d89130415ee661b5ec31dd4047f5eb22d74b6f4397fda88d0",
       "en_present": true,
-      "en_source_ja_sha256": "9b39dd568b9655499c135ff4c40895824ef8411d357af8908d1491c60f8b21c8",
+      "en_source_ja_sha256": "0378d538fd68794d89130415ee661b5ec31dd4047f5eb22d74b6f4397fda88d0",
       "en_status": "translated"
     },
     "methods/transformation.md": {

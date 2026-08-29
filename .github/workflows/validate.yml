@@ -2,7 +2,10 @@ name: Validate
 
 on:
   push:
-    branches: [main]
+    branches:
+      - main
+      - "develop/**"
+      - "release/**"
   pull_request:
 
 permissions:
@@ -16,8 +19,26 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.11"
-      - run: make check
+      - name: Run validation
+        shell: bash
+        env:
+          BASE_REF: ${{ github.base_ref }}
+        run: |
+          if [[ "${GITHUB_REF_NAME}" == "main" ]] || \
+             [[ "${GITHUB_REF_NAME}" == release/* ]] || \
+             [[ "${GITHUB_EVENT_NAME}" == "pull_request" && "${BASE_REF}" == "main" ]]; then
+            make release-check
+          else
+            make check
+          fi
+      - name: Verify tracked generated artifacts are current
+        run: git diff --exit-code -- .claude-plugin .agents plugins
       - uses: actions/upload-artifact@v7
         with:
           name: multilingual-validation-reports
           path: dist/reports/
+      - uses: actions/upload-artifact@v7
+        with:
+          name: release-candidate-packages
+          path: dist/packages/
+          if-no-files-found: ignore
