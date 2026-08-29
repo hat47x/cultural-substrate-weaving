@@ -12,7 +12,7 @@
     "en-US": {
       "status": "translated",
       "human_review": "recommended",
-      "source_version": "0.2.0"
+      "source_version": "0.3.0"
     }
   },
   "files": {
@@ -29,9 +29,9 @@
       "en_status": "translated"
     },
     "core/iteration.md": {
-      "ja_sha256": "1311a5713a4c4d10edd09aee3b527bf6cca4e300d70566ac68267c2622340c8b",
+      "ja_sha256": "15ea177d515b5b963a073149318824cda2b78ac2575598249b1fccd6ee403989",
       "en_present": true,
-      "en_source_ja_sha256": "1311a5713a4c4d10edd09aee3b527bf6cca4e300d70566ac68267c2622340c8b",
+      "en_source_ja_sha256": "15ea177d515b5b963a073149318824cda2b78ac2575598249b1fccd6ee403989",
       "en_status": "translated"
     },
     "core/principles-and-constraints.md": {
