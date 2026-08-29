@@ -20,6 +20,19 @@ Before adding anything to `src/<locale>/`, classify it:
 
 A finding from an experiment is not automatically a change to the skill. A finding about how a request was posed, about domain quality, or about the model's default style belongs outside the skill unless it is necessary to execute or validate the two core capabilities.
 
+## Branch and release workflow
+
+Use a lightweight Git Flow around versioned development lines.
+
+- `main` is the release-quality canonical branch and the base for a new version line.
+- Start the next version as `develop/vX.Y.Z` from the current `main`. The branch name declares the intended release version.
+- Small repository-maintenance changes may be committed directly to the active `develop/vX.Y.Z` branch.
+- Substantial method changes, experiments, or isolated implementation work should use a short-lived branch such as `feature/<topic>`, `research/<topic>`, or `fix/<topic>` from the active develop branch and target that develop branch with a pull request.
+- Finalize a release by bringing the active develop branch back to `main`, running the full release checks, and tagging `vX.Y.Z`. The tag must match `VERSION`.
+- Urgent released-version fixes may use `hotfix/vX.Y.Z` from `main`; merge the fix back into both `main` and any active develop line when applicable.
+- Do not make method-content commits directly to `main` except for an explicitly chosen hotfix path.
+- If `main` advances while a develop line is active, reconcile those changes into the develop line before release rather than letting the branches silently diverge.
+
 ## Working rules
 
 - Edit method content only under `src/<locale>/`.
