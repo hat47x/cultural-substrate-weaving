@@ -2,6 +2,21 @@
 
 This file records publication-boundary facts that are not fully expressible by version headings alone.
 
+## v0.4.0
+
+Status: **published Git tag and GitHub Release.**
+
+- Published tag: `v0.4.0`
+- Tagged commit: `eb31af5bb934934315b03d95c2d30980b6bb36ff`
+- Release PR: #62
+- GitHub Release: `https://github.com/hat47x/cultural-substrate-weaving/releases/tag/v0.4.0`
+- Release workflow run #7 completed successfully through the final remote asset verification step.
+- Published set: 12 locale × platform package ZIPs, 3 validation/research reports, and `release-manifest.json`.
+- Final manifest: 34,981 bytes; SHA-256 `6cddeb03f3f4ecae078417d1c08250f8196880c11597f1b86e7e626c2601d14e`.
+- The published Release retains the bilingual validation-stage disclosure: technical release success does not establish method effectiveness.
+
+The annotated tag resolves to the validated `main` commit above. The release workflow re-ran `make release-check`, verified tag/version, `main` ancestry, the dated changelog boundary, and the final remote asset set/state/size/SHA-256 values before completion.
+
 ## v0.3.0
 
 Status: **validated and merged to `main`, but never published as a Git tag or GitHub Release; superseded by the v0.4.0 release line.**
