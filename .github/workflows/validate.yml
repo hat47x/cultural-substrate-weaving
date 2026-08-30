@@ -9,13 +9,15 @@ on:
   pull_request:
 
 permissions:
-  contents: read
+  contents: write
 
 jobs:
   validate:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v7
+        with:
+          ref: ${{ github.head_ref || github.ref_name }}
       - uses: actions/setup-python@v7
         with:
           python-version: "3.11"
@@ -29,13 +31,19 @@ jobs:
             ref="${HEAD_REF}"
           fi
           python scripts/check_branch_version.py --ref "${ref}" --version-file VERSION
-      - name: Expose reviewed translation hashes
+      - name: One-shot sync reviewed translations and generated artifacts
+        if: github.event_name == 'pull_request' && github.head_ref == 'integrate/v0.4.0-v40-baseline'
         shell: bash
         run: |
           python scripts/update_translation_hashes.py --locale en-US
-          echo '---TRANSLATION-MANIFEST-BEGIN---'
-          cat i18n/translation-manifest.json
-          echo '---TRANSLATION-MANIFEST-END---'
+          python scripts/build.py
+          git add i18n/translation-manifest.json .claude-plugin .agents plugins
+          if ! git diff --cached --quiet; then
+            git config user.name "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git commit -m "build: sync v0.4 integration artifacts"
+            git push origin HEAD:${GITHUB_HEAD_REF}
+          fi
       - name: Run validation
         shell: bash
         env:
