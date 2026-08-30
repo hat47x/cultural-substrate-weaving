@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+## 0.4.0 — 2026-08-31
+
 - Separated CSW activation scope from cultural-framework loading depth. A run may use the skill without opening a framework, and framework contact now progresses only as needed through `not_loaded / probe / preview / full / enacted` rather than treating deeper loading as success.
 - Separated exploratory framework use from attribution use. Frameworks may freely generate questions, contrasts, hypotheses, research targets, and compositional resources, while claims about the target require target-side support and the relevant homogeneity, assignment, convention, lineage, and transition checks.
 - Reframed the removal check as de-binding rather than evidence generation, and added explicit provenance states: `target_supported / framework_generated / cross_field_emergent / unresolved`.
@@ -21,6 +23,7 @@
 - Added a validation-stage disclosure to newly created GitHub Releases and require `gh release create --verify-tag`, so a technically green package release does not silently present the method as empirically established or create an unintended tag.
 - Required GitHub Release publication to come from a commit already present in `main` history, preventing a version-correct tag on a development or release branch from bypassing the merge-to-main gate.
 - Added post-publication verification of the remote GitHub Release against the final manifest, rejecting missing or extra assets and checking uploaded state, byte size, and SHA-256 digest after create/upload.
+- Recorded v0.3.0 as a validated intermediate boundary that was never tagged or published, and explicitly superseded it with the v0.4.0 release line instead of backfilling it under the older release workflow.
 - Added a CI branch-version contract: `develop/vX.Y.Z` and `release/vX.Y.Z` must carry the same `VERSION`, preventing a development or release line from silently building packages under a different version.
 - Added runtime-package boundary tests so generated OpenAI and Claude/Codex references must match the canonical manifest exactly, while repository-only research, maintainer, test, and workflow material stays out of runtime output trees.
 - Added generated-skill link integrity tests so local Markdown links stay inside the runtime package, resolve to bundled files, and reference only manifest-declared runtime references.
