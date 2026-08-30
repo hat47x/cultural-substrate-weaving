@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+- Recorded the completed v0.4.0 publication boundary in maintainer release history after the tag, GitHub Release, and remote asset verification succeeded.
+
 ## 0.4.0 — 2026-08-31
 
 - Separated CSW activation scope from cultural-framework loading depth. A run may use the skill without opening a framework, and framework contact now progresses only as needed through `not_loaded / probe / preview / full / enacted` rather than treating deeper loading as success.
