@@ -44,4 +44,6 @@ Taihekiは特例として残しています。人間が登場するだけでは�
 
 ## 効果検証について
 
-現行版は、領域スキル単独と「領域スキル + 本スキル」の比較で検証します。
+v0.4.0開発線では、Web Chat Living Labを用いて実作業をprospectiveに観測します。通常は仕事を止めない`natural_work`を使い、方法変更の判断、害の確認、重要な回帰確認など、より強い比較が必要な場合だけ`paired_check`で領域側の基準線とCSW併用側を比べます。
+
+文化的体系を開かなかった`non_activation`や、使わない方がよかった`useful_nonuse`も正規の観測結果です。公開観測はまだ限定的であり、現時点では本スキルの有効性が確立したとは扱いません。詳細は **[Web Chat Living Lab](experiments/web-chat-living-lab.md)** を参照してください。

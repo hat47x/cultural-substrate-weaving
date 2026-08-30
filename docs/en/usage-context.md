@@ -44,4 +44,6 @@ Taiheki remains as a special case. It is not activated merely because a human ap
 
 ## Validation status
 
-Evaluate the current version by comparing a domain skill alone with the same domain skill plus cultural-substrate-weaving.
+On the v0.4.0 development line, real work is observed prospectively through the Web Chat Living Lab. Use `natural_work` by default so the real task is not stopped for experimental formality. Use `paired_check` only when a method-change decision, harm check, important regression check, or another need for stronger comparison makes it useful to compare a domain baseline with the same task plus CSW.
+
+`non_activation` and `useful_nonuse` are normal observation outcomes. Public observations are still limited, so the effectiveness of the skill is not treated as established at this stage. See **[Web Chat Living Lab](experiments/web-chat-living-lab.md)** for the operating protocol.

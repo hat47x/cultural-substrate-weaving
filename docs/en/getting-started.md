@@ -2,7 +2,7 @@
 
 This repository serves two audiences.
 
-The method assumes it can pull in current facts and context via dynamic web search. Enable web search / browsing on whichever platform you use; see each platform guide for how.
+The method can be used with supplied material alone. Web search / browsing is useful when the task requires current fact checking, external context, or source discovery. If Web search is unavailable, do not fill missing facts by guesswork; preserve them as missing material or further search targets. See each platform guide for how to enable browsing when you need it.
 
 ## People who use the method
 
