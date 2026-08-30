@@ -14,3 +14,11 @@ Closed record setとして検査する場合は、roundとeventをまとめて�
 ```bash
 python scripts/validate_living_lab.py --record-set research/living-lab/observations/*.json
 ```
+
+公開観測を後から見直すための一覧は、次で生成できる。
+
+```bash
+python scripts/summarize_living_lab.py
+```
+
+既定では `dist/reports/living-lab-observation-summary.json` に出力され、通常の `make check` とCIでも生成される。これは評価スコアではなく、roundごとの課題、発動範囲、event、残差、再開条件を読み返すためのinventoryである。件数や分布をKPI、勝敗、因果効果として解釈しない。
