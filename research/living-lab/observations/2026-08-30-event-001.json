@@ -1,0 +1,19 @@
+{
+  "schema_version": "0.1",
+  "event_id": "event-2026-08-30-001",
+  "round_id": "round-2026-08-30-001",
+  "event_type": "useful_nonuse",
+  "observation_mode": "prospective",
+  "recorded_at": "2026-08-30T17:31:00+09:00",
+  "summary": "Repository release, CI, and observation-infrastructure work remained within Git/GitHub and software-engineering conventions; no cultural framework was opened, and the task did not need to be reshaped to manufacture framework use.",
+  "evidence_refs": [
+    "github:issue:25",
+    "github:issue:31",
+    "github:branch:research/living-lab-prospective-round-001"
+  ],
+  "artifact_refs": [
+    "github:issue:31"
+  ],
+  "reopening_condition": "Reconsider activation only if the task develops unresolved cross-domain structure that repository and software-engineering methods do not adequately expose.",
+  "notes": "This event records an activation boundary, not a claim that CSW is generally unnecessary for technical work."
+}
