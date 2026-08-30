@@ -34,8 +34,26 @@ jobs:
           GH_TOKEN: ${{ github.token }}
           TAG: ${{ inputs.tag || github.ref_name }}
         run: |
+          python - <<'PY' > "$RUNNER_TEMP/release-assets.txt"
+          import json
+          from pathlib import Path
+
+          manifest = json.loads(Path("dist/release-manifest.json").read_text(encoding="utf-8"))
+          for relative in manifest["release_assets"]:
+              path = Path("dist") / relative
+              if not path.is_file():
+                  raise SystemExit(f"release asset missing after validation: {path}")
+              print(path.as_posix())
+          PY
+
+          mapfile -t ASSETS < "$RUNNER_TEMP/release-assets.txt"
+          if (( ${#ASSETS[@]} == 0 )); then
+            echo "release manifest declared no assets" >&2
+            exit 1
+          fi
+
           if gh release view "$TAG" >/dev/null 2>&1; then
-            gh release upload "$TAG" dist/packages/* dist/reports/* dist/release-manifest.json --clobber
+            gh release upload "$TAG" "${ASSETS[@]}" --clobber
           else
-            gh release create "$TAG" dist/packages/* dist/reports/* dist/release-manifest.json --generate-notes
+            gh release create "$TAG" "${ASSETS[@]}" --generate-notes
           fi
