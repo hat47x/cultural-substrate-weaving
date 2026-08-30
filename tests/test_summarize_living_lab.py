@@ -32,9 +32,18 @@ class LivingLabSummaryTests(unittest.TestCase):
     def test_public_observations_summarize_without_scoring(self) -> None:
         summary = MODULE.summarize(self.records)
         self.assertIn("not KPIs", summary["interpretation_note"])
+        self.assertIn("coverage context only", summary["interpretation_note"])
+        self.assertEqual(
+            summary["inventory"]["task_domains"],
+            {"software and research-method repository operations": 1},
+        )
         self.assertEqual(summary["inventory"]["activation_scopes"], {"non_activation": 1})
         self.assertEqual(summary["inventory"]["event_types"], {"useful_nonuse": 1})
         self.assertEqual(summary["rounds"][0]["round_id"], "round-2026-08-30-001")
+        self.assertEqual(
+            summary["rounds"][0]["task_domain"],
+            "software and research-method repository operations",
+        )
         self.assertEqual(summary["rounds"][0]["events"][0]["event_type"], "useful_nonuse")
 
     def test_summary_requires_a_closed_record_set(self) -> None:

@@ -22,3 +22,5 @@ python scripts/summarize_living_lab.py
 ```
 
 既定では `dist/reports/living-lab-observation-summary.json` に出力され、通常の `make check` とCIでも生成される。これは評価スコアではなく、roundごとの課題、発動範囲、event、残差、再開条件を読み返すためのinventoryである。件数や分布をKPI、勝敗、因果効果として解釈しない。
+
+summaryには、roundに `task.domain` が記録されていれば、その原文と分布も含める。これは観測が特定領域へ偏っていないか後から気づくためのcoverage contextであり、領域分類を固定するものでも、各領域の件数ノルマを置くものでもない。
