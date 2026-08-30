@@ -103,6 +103,16 @@ eventは、方法の因果効果を証明するものではない。「何が起
 
 過去事例を後から読み直して付けたものは `retrospective`、事前にこの観測系を置いた状態で記録したものは `prospective` とする。両者を混同しない。
 
+## 私的記録と公開観測を分ける
+
+実案件のround/eventは、公開リポジトリへそのまま置くことを前提にしない。私的なチャット、未公開原稿、社内資料、顧客情報などへ触れる記録は、原則として `.living-lab/` またはリポジトリ外へ置く。`.living-lab/` はREADMEを除いてGit管理外である。
+
+公開して差し支えない観測だけを `research/living-lab/observations/` に置く。公開記録は、公開情報だけで構成するか、私的原本とは別に匿名化・抽象化した記録を作る。元資料の本文を複製するより、必要に応じて `chat:case-a-round-3` や `artifact:draft-7` のような不透明な参照を使う。
+
+この区別は研究上の格付けではない。私的記録と公開記録のどちらも同じround/event形式を使える。公開できるかどうかと、観測として有用かどうかは別の判断である。
+
+公開観測集合はCIでもclosed record setとして検証する。これにより、公開したeventが存在しないroundを参照していないか、IDが重複していないかを継続的に確認できる。
+
 ## 記録しないもの
 
 観測のための作業が本体より重くなったら、この仕組みの設計目的から外れている。原則として次は記録しない。
@@ -149,6 +159,9 @@ python scripts/validate_living_lab.py path/to/round.json path/to/event.json
 
 # 一群の記録としてID重複とevent→round参照まで検査
 python scripts/validate_living_lab.py --record-set path/to/round.json path/to/event.json
+
+# 公開観測集合をclosed record setとして検査
+python scripts/validate_living_lab.py --record-set research/living-lab/observations/*.json
 ```
 
 個別検査では、eventの対応roundが別の保管場所にあってもよい。`--record-set`を付けた場合は、与えたファイル群を一つの閉じた記録集合として扱い、`round_id` / `event_id` の重複と、eventが参照するroundの存在も確認する。
