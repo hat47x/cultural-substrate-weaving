@@ -42,6 +42,7 @@ make check
 
 - `v39-deepseek-api-validation.md`: fresh-context API検証の負結果、装置上の限界、現行方法論へ実際に帰属した変更。
 - `kj-atlas-cognitive-coevolution.md`: KJ Atlas dogfoodによる長期4arm比較と、skill / caller / product / experimentの帰属ゲート。
+- `kj-atlas-case-portfolio-freeze.md`: KJ Atlas Case 001〜003の問い・product/skill snapshot・arm treatment・review順序の凍結状態と、現行CSWを比較条件へ逆流させない二重線。
 - `kj-atlas-case000-lessons.md`: 比較プロトコル以前の既存dogfoodを遡及的に読んだ初期教訓。
 - `framework-loading-depth-observation.md`: frameworkをどこまでworking contextへ読み込んだかと、増分・anchoring・early stopの関係を長期観察する補助プロトコル。
 - `framework-use-lifecycle-trace.md`: frameworkが候補に上がった段階、実際に読んだ範囲、体系固有操作、対象側への採用を分離して追う研究用来歴。
