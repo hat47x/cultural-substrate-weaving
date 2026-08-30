@@ -23,7 +23,7 @@ Choose one of four uses.
 
 Define the use first and make evaluation criteria explicit. **The transition model lays the framework's states over the search space as a grid and reads the target by which cells fill and which stay empty.** It looks at where things can move rather than at static placement, so declare it separately from the structural model. The procedure is in `02a-framework-application.md`.
 
-**Choosing a use and choosing an application depth are separate decisions. Adopting a framework does not require exhausting all of its elements, interpretive vocabulary, or transitions.** Declare the layer and scope needed for the target-side question first. If that scope produces no increment, do not fill empty positions or unused operations merely to exhaust the framework. Broaden the scope only when a target-side need appears.
+**Choosing a use and choosing an application scope are separate decisions. Adopting a framework does not require exhausting all of its elements, interpretive vocabulary, or transitions.** Declare the layer and scope needed for the target-side question first. If that scope produces no increment, do not fill empty positions or unused operations merely to exhaust the framework. Broaden the scope only when a target-side need appears.
 
 **The temporal and transition models produce structure that static placement cannot. Reach for them.** A placement diagram gets you as far as which element sits where. Following each factor's change of state gets you when it enters and when it leaves, whether it can return, and which orderings are the only ones that occur. **Those are properties of the target, and placement does not show them.**
 

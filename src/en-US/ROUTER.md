@@ -9,12 +9,12 @@ This skill combines two capabilities:
 
 The skill does not supply domain expertise or quality criteria in writing, management, software engineering, law, or other fields. Use it alongside a domain skill when needed.
 
-**Its natural target is an open problem space whose destination is not already settled.** Prefer ordinary methods for closed problems.
+**Its natural target is an open problem space whose destination is not already settled.** Prefer ordinary methods for closed problems. Under an explicit instruction, still run a limited pass and measure it against the baseline.
 
 ## Minimal procedure
 
 1. **Set baseline and preservation constraints:** use actual domain-method output where possible and record target facts, strengths, and exceptions that must not be destroyed.
-2. **Choose scope:** no, limited, or full activation; when close, measure with a cheap limited pass.
+2. **Choose the activation breadth:** no, limited, or full activation; when close, measure with a cheap limited pass.
 3. **Read only needed references.**
 4. **Explore through two routes:** obtain structure candidates from cultural frameworks; when material is numerous or heterogeneous, use KJ to raise semantic units, relations, and gaps. Iterate between the routes when useful.
 5. **Return candidates to the target:** correspondence is not the result; retain only questions, relations, states, transitions, and falsification conditions that hold on the target side.
@@ -35,7 +35,7 @@ The skill does not supply domain expertise or quality criteria in writing, manag
 | Activation, explicit invocation, stopping | [00-activation.md](core/activation.md) |
 | Attribution, rule conflict, justification | [00-principles-and-constraints.md](core/principles-and-constraints.md) |
 | Iteration, rematerialization, stopping on increment | [00-iteration.md](core/iteration.md) |
-| Scope, baseline, preservation, fact boundaries | [01-scope-and-facts.md](methods/scope-and-facts.md) |
+| Target scope, baseline, preservation, fact boundaries | [01-scope-and-facts.md](methods/scope-and-facts.md) |
 | Cultural-framework selection, compatibility, rejection | [02-system-selection.md](methods/system-selection.md) |
 | Assignment, transitions, inversion/substitution/removal checks | [02a-framework-application.md](methods/framework-application.md) |
 | Relation types, missing elements/connections, multiple frameworks | [03-transformation.md](methods/transformation.md) |
