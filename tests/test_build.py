@@ -93,7 +93,7 @@ class MultilingualBuildTests(unittest.TestCase):
                     continue
                 relative = path.relative_to(runtime_root)
                 if REPOSITORY_ONLY_PARTS.intersection(relative.parts):
-                    offenders.append(str(runtime_root.name / relative) if False else str(relative))
+                    offenders.append(f"{runtime_root.name}/{relative}")
         self.assertEqual(offenders, [])
 
 
