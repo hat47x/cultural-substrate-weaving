@@ -46,6 +46,20 @@ Use a lightweight Git Flow around versioned development lines.
 - Do not make method-content commits directly to `main` except for an explicitly chosen hotfix path.
 - If `main` advances while a develop line is active, reconcile those changes into the develop line before release rather than letting the branches silently diverge.
 
+## Japanese development-document drafting
+
+For Japanese development, maintainer, research, experiment, and operational documents, completing the technical content is not the final drafting step.
+
+1. Draft the facts, structure, constraints, and technical meaning first.
+2. Check that the draft preserves the intended meaning, identifiers, schema field names, commands, and evidence boundaries.
+3. **Always perform a separate natural-Japanese rewriting pass after the content is settled.** Treat natural Japanese as the highest-priority prose criterion at this stage. Rewrite awkward word order, missing or overloaded particles, excessive noun chains, literal translations, and unnecessary English insertions while preserving technical meaning.
+4. Reread the whole document as continuous Japanese prose rather than validating only changed lines. A locally correct sentence may still be unnatural in the surrounding paragraph.
+5. Keep literal identifiers and established technical terms when they are needed for precision, but do not let their English wording determine the surrounding Japanese syntax.
+
+In short: **自然な日本語であることを最優先し、内容確定後に必ず独立した推敲工程を通す。** A first draft, generated draft, or literal translation is not considered complete until this pass has been performed.
+
+Apply this rule to existing Japanese development documents as well as new ones. When an existing document is reviewed and no wording change is needed, that review may be recorded as completed without forcing a cosmetic diff.
+
 ## Working rules
 
 - Edit method content only under `src/<locale>/`.
