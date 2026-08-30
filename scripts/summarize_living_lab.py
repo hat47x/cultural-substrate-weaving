@@ -44,6 +44,7 @@ def summarize(records: list[dict[str, Any]]) -> dict[str, Any]:
                 "observed_at": round_record["observed_at"],
                 "mode": round_record["mode"],
                 "activation_scope": round_record["activation_scope"],
+                "task_domain": round_record["task"].get("domain"),
                 "task_summary": round_record["task"]["summary"],
                 "framework_contacts": round_record["framework_contacts"],
                 "artifacts": round_record["artifacts"],
@@ -63,17 +64,25 @@ def summarize(records: list[dict[str, Any]]) -> dict[str, Any]:
             }
         )
 
+    task_domains = [
+        record["task"]["domain"]
+        for record in rounds
+        if isinstance(record["task"].get("domain"), str) and record["task"]["domain"].strip()
+    ]
+
     return {
         "schema_version": "0.1",
         "interpretation_note": (
             "This is an inventory for review. Counts and distributions are not KPIs, scores, "
-            "win/loss labels, or proof of causal effect."
+            "win/loss labels, or proof of causal effect. Task-domain distribution is coverage "
+            "context only and does not define a required quota or taxonomy."
         ),
         "record_ids": {
             "rounds": [record["round_id"] for record in rounds],
             "events": [record["event_id"] for record in events],
         },
         "inventory": {
+            "task_domains": _counter(task_domains),
             "modes": _counter([record["mode"] for record in rounds]),
             "activation_scopes": _counter([record["activation_scope"] for record in rounds]),
             "event_types": _counter([record["event_type"] for record in events]),

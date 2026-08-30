@@ -9,7 +9,7 @@ ROOT = Path(__file__).resolve().parents[1]
 LOCALES = ("ja-JP", "en-US")
 MANIFEST = json.loads((ROOT / "src/manifest.json").read_text(encoding="utf-8"))
 EXPECTED_REFERENCES = {module["skill_reference"] for module in MANIFEST["modules"]}
-REPOSITORY_ONLY_PARTS = {"docs", "evals", "tests", ".github", "maintainers"}
+REPOSITORY_ONLY_PARTS = {"docs", "evals", "tests", ".github", "maintainers", "research"}
 MARKDOWN_LINK = re.compile(r"\[[^\]]+\]\(([^)]+)\)")
 
 
