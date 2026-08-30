@@ -2,16 +2,20 @@
 
 ## 編集対象
 
+主な編集対象は次のとおりです。
+
 - 方法論の意味上の正本: `src/ja-JP/`
 - 英語翻訳: `src/en-US/`
-- 翻訳用語・状態: `i18n/`
+- 翻訳用語・翻訳状態: `i18n/`
 - プラットフォーム固有の文言や設定: `adapters/`
 - テストケース: `evals/`
 - 生成処理: `scripts/`
 
-`dist/`を直接編集しません。`plugins/`はClaude Marketplace配布に必要な生成物なので、`build.py`で再生成してコミットします。
+`dist/`は直接編集しません。`plugins/`はClaude Marketplaceでの配布に必要な生成物なので、元となるファイルを修正したうえで`build.py`から再生成し、生成結果をコミットします。
 
 ## 開発サイクル
+
+通常の検査は次のコマンドで実行します。
 
 ```bash
 make build
@@ -20,32 +24,60 @@ make test
 make tokens
 ```
 
-`make check`で一括実行できます。
+まとめて確認する場合は`make check`を使います。
+
+## 日本語の開発文書を作成・更新する場合
+
+日本語の開発・保守・研究・実験・運用文書は、内容を書き終えた時点で完成とはしません。**内容と構造を固めた後に、自然な日本語であることを最優先する独立した推敲工程を必ず入れます。**
+
+対象には、少なくとも次を含みます。
+
+- `docs/ja/maintainers/`
+- `docs/ja/experiments/`
+- 日本語を含む研究・観測用README
+- 日本語で記述するアーキテクチャや開発運用の説明文書
+- PRやIssueで継続的に参照する日本語の設計・検証記録
+
+推奨する順序は次のとおりです。
+
+1. 事実、制約、構造、判断理由、識別子を先に確定する。
+2. 技術的な意味、schema名、コマンド、commit、数値、証拠の境界が変わっていないことを確認する。
+3. 内容が固まった後、文書全体を日本語として読み直す。
+4. 英語を直訳したような語順、名詞の連結、助詞の不足、同じ主語の過度な省略、長すぎる一文、不要な英語の差し込みを直す。
+5. 変更箇所だけでなく、段落どうしのつながりや見出しから本文への流れも含めて通読する。
+
+schemaのフィールド名、コマンド名、正式な製品名、比較条件のラベルなど、識別のために必要な英語はそのまま残します。ただし、英語の語順を日本語本文の骨格にしません。たとえば`framework_use`というフィールド名は保持しても、説明文では「framework useをtraceする」のような表現を必要以上に使わず、「文化体系をどの段階まで利用したかを記録する」のように、日本語の文章として自然な形を優先します。
+
+生成AIが作った初稿、英語資料からの直訳、技術要素を並べただけの下書きは、この推敲を通す前には完成稿とみなしません。
+
+既存文書にも同じ基準を適用します。見直した結果、すでに自然で修正の必要がない文書は、差分を作るためだけに書き換える必要はありません。
 
 ## 正本を変更した場合
 
-1. `src/ja-JP/`を変更する
-2. 同じ相対パスの`src/en-US/`を更新する
-3. 用語集を確認する
-4. 翻訳査読後に次を実行する
+1. `src/ja-JP/`を変更する。
+2. 同じ相対パスの`src/en-US/`を更新する。
+3. 用語集を確認する。
+4. 翻訳を査読した後に、次を実行する。
 
 ```bash
 python scripts/update_translation_hashes.py --locale en-US
 make check
 ```
 
-ハッシュ更新コマンドは、翻訳を確認した後にだけ実行してください。
+ハッシュ更新コマンドは、翻訳を確認してから実行してください。
 
 ## 研究・検証記録
 
-方法論へ規則を追加する前に、観察・実験・帰属判定をmaintainer文書へ残します。単一ケースや単一モデルの所見を、直ちに`src/<locale>/`へ昇格させません。
+方法論へ新しい規則を加える前に、観察、実験、帰属判定をmaintainer文書として残します。単一ケースや単一モデルで得られた所見を、そのまま`src/<locale>/`へ昇格させません。
 
-- `v39-deepseek-api-validation.md`: fresh-context API検証の負結果、装置上の限界、現行方法論へ実際に帰属した変更。
-- `kj-atlas-cognitive-coevolution.md`: KJ Atlas dogfoodによる長期4arm比較と、skill / caller / product / experimentの帰属ゲート。
-- `kj-atlas-case-portfolio-freeze.md`: KJ Atlas Case 001〜003の問い・product/skill snapshot・arm treatment・review順序の凍結状態と、現行CSWを比較条件へ逆流させない二重線。
-- `kj-atlas-case000-lessons.md`: 比較プロトコル以前の既存dogfoodを遡及的に読んだ初期教訓。
-- `framework-loading-depth-observation.md`: frameworkをどこまでworking contextへ読み込んだかと、増分・anchoring・early stopの関係を長期観察する補助プロトコル。
-- `framework-use-lifecycle-trace.md`: frameworkが候補に上がった段階、実際に読んだ範囲、体系固有操作、対象側への採用を分離して追う研究用来歴。
-- `kj-atlas-case001-longitudinal-companion.md`: 独立4armを汚さず、継続チャットで問いの遅延効果・再活性化・KJ再編・実採用を追うprospective companion lane。
+主な記録は次のとおりです。
 
-研究文書は、現行方法論の根拠や限界を追えるようにするための履歴です。方法論正本と同じ規範力を持たせません。
+- `v39-deepseek-api-validation.md`: fresh-context API検証で得られた負の結果、実験装置上の限界、そこから現行方法論へ実際に帰属した変更。
+- `kj-atlas-cognitive-coevolution.md`: KJ Atlasのdogfoodを用いた長期4-arm比較と、skill / caller / product / experimentを分ける帰属ゲート。
+- `kj-atlas-case-portfolio-freeze.md`: KJ Atlas Case 001〜003について、問い、product/skill snapshot、arm treatment、review順序をどの時点で固定したか、および現行CSWを比較条件へ逆流させないための境界。
+- `kj-atlas-case000-lessons.md`: 比較プロトコル以前の既存dogfoodを遡及的に読み直して得た初期教訓。
+- `framework-loading-depth-observation.md`: 文化体系をどこまで作業コンテキストへ読み込んだかと、有用な増分、anchoring、early stopとの関係を長期的に観察する補助プロトコル。
+- `framework-use-lifecycle-trace.md`: 文化体系が候補に上がった段階、実際に読んだ範囲、体系固有の操作、対象側への採用を分けて追跡する研究用の来歴記録。
+- `kj-atlas-case001-longitudinal-companion.md`: 独立4-arm比較を汚さず、継続チャットの中で問いの遅延効果、再活性化、KJ再編、実際の採用を追うprospectiveな観察線。
+
+これらの研究文書は、現行方法論の根拠と限界を後から追えるようにするための履歴です。方法論の正本と同じ規範力は持ちません。
