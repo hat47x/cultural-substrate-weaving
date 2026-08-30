@@ -65,3 +65,13 @@ jobs:
             NOTES="$(cat .github/release-validation-note.md)"
             gh release create "$TAG" "${ASSETS[@]}" --verify-tag --generate-notes --notes "$NOTES"
           fi
+      - name: Verify published release assets
+        env:
+          GH_TOKEN: ${{ github.token }}
+          TAG: ${{ inputs.tag || github.ref_name }}
+        run: |
+          gh api "repos/${GITHUB_REPOSITORY}/releases/tags/${TAG}" > "$RUNNER_TEMP/published-release.json"
+          python scripts/verify_published_release.py \
+            --manifest dist/release-manifest.json \
+            --release-json "$RUNNER_TEMP/published-release.json" \
+            --tag "$TAG"

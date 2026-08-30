@@ -71,6 +71,16 @@ The independent post-package validator also rejects private/local file names if 
 
 The GitHub Release workflow reads the already validated `release_assets` list and passes that exact list to `gh release create` or `gh release upload`. Do not duplicate the publication list as workflow globs.
 
+After GitHub accepts the upload, publication is checked again against the **remote Release object**. The workflow fetches the Release through the GitHub API and runs `scripts/verify_published_release.py`, which requires:
+
+- the published tag to match the intended tag;
+- the published asset-name set to match the manifest-declared set exactly, with no missing or extra/manual assets;
+- every asset to be in the uploaded state;
+- published byte sizes to match the final manifest; and
+- GitHub's published `sha256:` digest for every asset to match the final manifest (including a directly computed digest for `release-manifest.json`, which cannot hash itself inside the manifest).
+
+This post-publication check is intentionally separate from package construction. `gh release upload --clobber` does not remove unrelated pre-existing assets, so an existing Release with stale/manual extras must fail verification instead of being silently treated as an exact manifest publication.
+
 ## Publication disclosure
 
 A technically green release candidate is not evidence that the method is empirically effective. While the project remains in validation, newly created GitHub Releases must keep that distinction visible to readers who arrive directly at the Release page.
@@ -98,6 +108,6 @@ Before tagging a new release:
 4. merge the validated release candidate to `main`;
 5. confirm the post-merge Validate workflow succeeds;
 6. create and push `vX.Y.Z` at the intended release commit that is now in `main` history; and
-7. confirm the Release workflow and published asset set succeed, including the validation-stage disclosure while it remains applicable.
+7. confirm the Release workflow succeeds **including the final remote asset-set / size / SHA-256 verification** and the validation-stage disclosure while it remains applicable.
 
 Do not move an existing release tag to include later development work.
