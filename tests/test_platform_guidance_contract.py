@@ -44,6 +44,14 @@ class PlatformGuidanceContractTests(unittest.TestCase):
         self.assertIn("skill format (direct placement)", en.lower())
         self.assertNotIn("standalone skills to plugins in june", en.lower())
 
+    def test_readmes_match_current_codex_distribution_model(self) -> None:
+        ja = (ROOT / "README.md").read_text(encoding="utf-8")
+        en = (ROOT / "README.en.md").read_text(encoding="utf-8")
+        self.assertIn("OpenAI Codex Plugin / 直接配置Skill", ja)
+        self.assertNotIn("- OpenAI Codex Skill\n", ja)
+        self.assertIn("OpenAI Codex Plugin / directly placed Skill", en)
+        self.assertNotIn("- OpenAI Codex Skill\n", en)
+
     def test_claude_wsl_is_not_blanket_disabled(self) -> None:
         ja = self.read("ja", "claude-code.md")
         en = self.read("en", "claude-code.md")

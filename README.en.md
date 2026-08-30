@@ -38,7 +38,7 @@ This skill does not provide domain-specific professional competence. Accuracy st
 
 ## Platforms
 
-- OpenAI Codex Skill
+- OpenAI Codex Plugin / directly placed Skill
 - Claude Code Plugin Marketplace
 - ChatGPT custom GPT update pack
 - Microsoft 365 Copilot declarative agent
