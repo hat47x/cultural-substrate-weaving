@@ -29,6 +29,14 @@ class ReleaseLifecycleContractTests(unittest.TestCase):
         self.assertIn("release_assets", text)
         self.assertNotIn("older build-script manifest-writing step", text)
 
+    def test_maintainer_guide_preserves_validation_disclosure_boundary(self) -> None:
+        text = (ROOT / "docs" / "maintainers" / "release.md").read_text(encoding="utf-8")
+        self.assertIn("Publication disclosure", text)
+        self.assertIn(".github/release-validation-note.md", text)
+        self.assertIn("gh release create --verify-tag", text)
+        self.assertIn("technically green release candidate is not evidence", text)
+        self.assertIn("does not rewrite the release notes", text)
+
 
 if __name__ == "__main__":
     unittest.main()
