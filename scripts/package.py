@@ -10,13 +10,38 @@ from common import DIST, ROOT, locale_short, locales, manifest, sha256, version,
 ZIP_TIMESTAMP = (1980, 1, 1, 0, 0, 0)
 
 
+def is_private_local_name(name: str) -> bool:
+    """Return whether a file name belongs to local/private configuration.
+
+    Example templates remain publishable, while actual environment/local/secret
+    files are release blockers rather than silently bundled artifacts.
+    """
+    if name in {".env", ".local", ".secret"}:
+        return True
+    if name.startswith(".env.") and not name.endswith(".example"):
+        return True
+    return name.endswith((".local", ".secret"))
+
+
+def iter_publishable_files(source: Path):
+    for path in sorted(source.rglob("*")):
+        if path.is_symlink():
+            raise RuntimeError(f"release package source contains a symlink: {path}")
+        if not path.is_file():
+            continue
+        if is_private_local_name(path.name):
+            raise RuntimeError(f"release package source contains local/private configuration: {path}")
+        yield path
+
+
 def zip_tree(source: Path, target: Path, root_name: str | None = None) -> None:
-    """Create a stable ZIP for the same source tree.
+    """Create a stable ZIP for the same publishable source tree.
 
     Git checkouts do not preserve file modification times, so using ZipFile.write()
     makes package hashes vary across otherwise identical builds. Normalize archive
     paths, timestamps, and permission bits while preserving whether a source file is
-    executable.
+    executable. Local/private configuration and symlinks fail closed before they can
+    become release members.
     """
     target.parent.mkdir(parents=True, exist_ok=True)
     with zipfile.ZipFile(
@@ -25,7 +50,7 @@ def zip_tree(source: Path, target: Path, root_name: str | None = None) -> None:
         compression=zipfile.ZIP_DEFLATED,
         compresslevel=9,
     ) as archive:
-        for path in sorted(p for p in source.rglob("*") if p.is_file()):
+        for path in iter_publishable_files(source):
             relative = path.relative_to(source)
             arcname = Path(root_name) / relative if root_name else relative
             mode = 0o755 if path.stat().st_mode & 0o111 else 0o644
