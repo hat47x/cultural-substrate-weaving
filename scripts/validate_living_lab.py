@@ -9,6 +9,7 @@ from pathlib import Path
 from typing import Any
 
 ROOT = Path(__file__).resolve().parents[1]
+SCHEMA_VERSION = "0.1"
 
 ROUND_REQUIRED = {
     "schema_version",
@@ -31,6 +32,19 @@ ROUND_ALLOWED = ROUND_REQUIRED | {
     "comparison",
     "notes",
 }
+ENVIRONMENT_REQUIRED: set[str] = set()
+ENVIRONMENT_ALLOWED = {"platform", "model_label", "product_mode", "tools", "notes"}
+TASK_REQUIRED = {"summary"}
+TASK_ALLOWED = {"summary", "domain", "source_refs", "preservation_set"}
+CONTACT_REQUIRED = {"framework", "depth", "use"}
+CONTACT_ALLOWED = CONTACT_REQUIRED | {"notes"}
+COMPARISON_REQUIRED = {"baseline_chat_ref", "treatment_chat_ref"}
+COMPARISON_ALLOWED = COMPARISON_REQUIRED | {
+    "evaluator_chat_ref",
+    "run_order",
+    "difference_notes",
+}
+
 EVENT_REQUIRED = {
     "schema_version",
     "event_id",
@@ -47,11 +61,13 @@ EVENT_ALLOWED = EVENT_REQUIRED | {
     "reopening_condition",
     "notes",
 }
+
 DEPTHS = {"probe", "preview", "full", "enacted"}
 USES = {"exploration", "attribution"}
 ACTIVATION_SCOPES = {"non_activation", "limited_use", "exploratory_use"}
 ROUND_MODES = {"natural_work", "paired_check"}
 INVOCATIONS = {"none", "implicit", "explicit"}
+RUN_ORDERS = {"baseline_first", "treatment_first", "parallel_or_unknown"}
 EVENT_TYPES = {
     "question_shift",
     "search_shift",
@@ -83,10 +99,17 @@ def _require_list(value: Any, label: str) -> list[Any]:
     return value
 
 
-def _require_nonempty_string(value: Any, label: str) -> str:
-    if not isinstance(value, str) or not value.strip():
-        raise ValidationError(f"{label} must be a non-empty string")
+def _require_string(value: Any, label: str) -> str:
+    if not isinstance(value, str):
+        raise ValidationError(f"{label} must be a string")
     return value
+
+
+def _require_nonempty_string(value: Any, label: str) -> str:
+    text = _require_string(value, label)
+    if not text.strip():
+        raise ValidationError(f"{label} must be a non-empty string")
+    return text
 
 
 def _check_keys(data: dict[str, Any], required: set[str], allowed: set[str], label: str) -> None:
@@ -105,26 +128,41 @@ def _check_enum(value: Any, allowed: set[str], label: str) -> None:
 
 def _check_datetime(value: Any, label: str) -> None:
     text = _require_nonempty_string(value, label)
+    if "T" not in text:
+        raise ValidationError(f"{label} must be an ISO-8601 date-time")
     try:
-        datetime.fromisoformat(text.replace("Z", "+00:00"))
+        parsed = datetime.fromisoformat(text.replace("Z", "+00:00"))
     except ValueError as exc:
         raise ValidationError(f"{label} must be an ISO-8601 date-time") from exc
+    if parsed.tzinfo is None:
+        raise ValidationError(f"{label} must include a timezone offset")
 
 
-def _check_string_list(value: Any, label: str, *, nonempty: bool = False, unique: bool = False) -> None:
+def _check_string_list(
+    value: Any,
+    label: str,
+    *,
+    nonempty: bool = False,
+    unique: bool = False,
+    item_nonempty: bool = True,
+) -> None:
     items = _require_list(value, label)
     if nonempty and not items:
         raise ValidationError(f"{label} must contain at least one item")
     for index, item in enumerate(items):
-        _require_nonempty_string(item, f"{label}[{index}]")
+        if item_nonempty:
+            _require_nonempty_string(item, f"{label}[{index}]")
+        else:
+            _require_string(item, f"{label}[{index}]")
     if unique and len(items) != len(set(items)):
         raise ValidationError(f"{label} must not contain duplicates")
 
 
 def validate_round(data: dict[str, Any]) -> None:
     _check_keys(data, ROUND_REQUIRED, ROUND_ALLOWED, "round")
-    if data["schema_version"] != "0.1":
-        raise ValidationError("round.schema_version must be 0.1")
+    if data["schema_version"] != SCHEMA_VERSION:
+        raise ValidationError(f"round.schema_version must be {SCHEMA_VERSION}")
+
     round_id = _require_nonempty_string(data["round_id"], "round.round_id")
     if not ID_RE.fullmatch(round_id) or not round_id.startswith("round-"):
         raise ValidationError("round.round_id must start with round-")
@@ -133,11 +171,30 @@ def validate_round(data: dict[str, Any]) -> None:
     _check_datetime(data["observed_at"], "round.observed_at")
     _check_enum(data["activation_scope"], ACTIVATION_SCOPES, "round.activation_scope")
 
+    if "environment" in data:
+        environment = _require_object(data["environment"], "round.environment")
+        _check_keys(environment, ENVIRONMENT_REQUIRED, ENVIRONMENT_ALLOWED, "round.environment")
+        if "platform" in environment:
+            _require_nonempty_string(environment["platform"], "round.environment.platform")
+        for field in ("model_label", "product_mode", "notes"):
+            if field in environment:
+                _require_string(environment[field], f"round.environment.{field}")
+        if "tools" in environment:
+            _check_string_list(
+                environment["tools"],
+                "round.environment.tools",
+                unique=True,
+                item_nonempty=False,
+            )
+
     if "invocation" in data:
         _check_enum(data["invocation"], INVOCATIONS, "round.invocation")
 
     task = _require_object(data["task"], "round.task")
-    _require_nonempty_string(task.get("summary"), "round.task.summary")
+    _check_keys(task, TASK_REQUIRED, TASK_ALLOWED, "round.task")
+    _require_nonempty_string(task["summary"], "round.task.summary")
+    if "domain" in task:
+        _require_string(task["domain"], "round.task.domain")
     if "source_refs" in task:
         _check_string_list(task["source_refs"], "round.task.source_refs", unique=True)
     if "preservation_set" in task:
@@ -151,34 +208,50 @@ def validate_round(data: dict[str, Any]) -> None:
 
     contacts = _require_list(data["framework_contacts"], "round.framework_contacts")
     for index, raw in enumerate(contacts):
-        contact = _require_object(raw, f"round.framework_contacts[{index}]")
-        expected = {"framework", "depth", "use"}
-        missing = expected - contact.keys()
-        extra = contact.keys() - (expected | {"notes"})
-        if missing:
-            raise ValidationError(f"framework contact {index} missing: {', '.join(sorted(missing))}")
-        if extra:
-            raise ValidationError(f"framework contact {index} unknown fields: {', '.join(sorted(extra))}")
-        _require_nonempty_string(contact["framework"], f"framework contact {index}.framework")
-        _check_enum(contact["depth"], DEPTHS, f"framework contact {index}.depth")
-        _check_enum(contact["use"], USES, f"framework contact {index}.use")
+        label = f"round.framework_contacts[{index}]"
+        contact = _require_object(raw, label)
+        _check_keys(contact, CONTACT_REQUIRED, CONTACT_ALLOWED, label)
+        _require_nonempty_string(contact["framework"], f"{label}.framework")
+        _check_enum(contact["depth"], DEPTHS, f"{label}.depth")
+        _check_enum(contact["use"], USES, f"{label}.use")
+        if "notes" in contact:
+            _require_string(contact["notes"], f"{label}.notes")
 
     if data["activation_scope"] == "non_activation" and contacts:
         raise ValidationError("non_activation rounds must not contain framework_contacts")
 
     comparison = data.get("comparison")
-    if data["mode"] == "paired_check":
+    if data["mode"] == "paired_check" and comparison is None:
+        raise ValidationError("paired_check rounds must contain comparison")
+    if comparison is not None:
         comparison = _require_object(comparison, "round.comparison")
-        _require_nonempty_string(comparison.get("baseline_chat_ref"), "round.comparison.baseline_chat_ref")
-        _require_nonempty_string(comparison.get("treatment_chat_ref"), "round.comparison.treatment_chat_ref")
-    elif comparison is not None:
-        _require_object(comparison, "round.comparison")
+        _check_keys(comparison, COMPARISON_REQUIRED, COMPARISON_ALLOWED, "round.comparison")
+        _require_nonempty_string(
+            comparison["baseline_chat_ref"], "round.comparison.baseline_chat_ref"
+        )
+        _require_nonempty_string(
+            comparison["treatment_chat_ref"], "round.comparison.treatment_chat_ref"
+        )
+        if "evaluator_chat_ref" in comparison:
+            _require_string(
+                comparison["evaluator_chat_ref"], "round.comparison.evaluator_chat_ref"
+            )
+        if "run_order" in comparison:
+            _check_enum(comparison["run_order"], RUN_ORDERS, "round.comparison.run_order")
+        if "difference_notes" in comparison:
+            _check_string_list(
+                comparison["difference_notes"], "round.comparison.difference_notes"
+            )
+
+    if "notes" in data:
+        _require_string(data["notes"], "round.notes")
 
 
 def validate_event(data: dict[str, Any]) -> None:
     _check_keys(data, EVENT_REQUIRED, EVENT_ALLOWED, "event")
-    if data["schema_version"] != "0.1":
-        raise ValidationError("event.schema_version must be 0.1")
+    if data["schema_version"] != SCHEMA_VERSION:
+        raise ValidationError(f"event.schema_version must be {SCHEMA_VERSION}")
+
     event_id = _require_nonempty_string(data["event_id"], "event.event_id")
     round_id = _require_nonempty_string(data["round_id"], "event.round_id")
     if not ID_RE.fullmatch(event_id) or not event_id.startswith("event-"):
@@ -193,6 +266,9 @@ def validate_event(data: dict[str, Any]) -> None:
     for field in ("artifact_refs", "framework_refs"):
         if field in data:
             _check_string_list(data[field], f"event.{field}", unique=True)
+    for field in ("reopening_condition", "notes"):
+        if field in data:
+            _require_string(data[field], f"event.{field}")
 
 
 def validate_record(data: dict[str, Any]) -> str:
