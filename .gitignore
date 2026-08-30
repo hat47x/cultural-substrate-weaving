@@ -20,6 +20,10 @@ venv/
 *.local
 *.secret
 
+# Local/private Web Chat Living Lab records
+.living-lab/*
+!.living-lab/README.md
+
 # Microsoft 365 Agents Toolkit generated files
 appPackage/build/
 env/.env.*
