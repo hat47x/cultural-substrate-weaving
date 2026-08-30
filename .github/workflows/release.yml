@@ -4,8 +4,6 @@ on:
   push:
     tags:
       - "v*"
-  release:
-    types: [published]
   workflow_dispatch:
     inputs:
       tag:
@@ -23,7 +21,8 @@ jobs:
       - uses: actions/checkout@v7
         with:
           ref: ${{ inputs.tag || github.ref }}
-      - uses: actions/setup-python@v5
+          fetch-depth: 0
+      - uses: actions/setup-python@v7
         with:
           python-version: "3.11"
       - run: make release-check
@@ -31,13 +30,48 @@ jobs:
         env:
           TAG: ${{ inputs.tag || github.ref_name }}
         run: test "${TAG#v}" = "$(cat VERSION)"
+      - name: Verify release commit is on main
+        run: |
+          git fetch --no-tags origin main
+          git merge-base --is-ancestor HEAD origin/main
+      - name: Verify changelog release boundary
+        run: python scripts/check_release_changelog.py --version "$(cat VERSION)" --changelog CHANGELOG.md
       - name: Publish release assets
         env:
           GH_TOKEN: ${{ github.token }}
           TAG: ${{ inputs.tag || github.ref_name }}
         run: |
-          if gh release view "$TAG" >/dev/null 2>&1; then
-            gh release upload "$TAG" dist/packages/* dist/reports/* dist/release-manifest.json --clobber
-          else
-            gh release create "$TAG" dist/packages/* dist/reports/* dist/release-manifest.json --generate-notes
+          python - <<'PY' > "$RUNNER_TEMP/release-assets.txt"
+          import json
+          from pathlib import Path
+
+          manifest = json.loads(Path("dist/release-manifest.json").read_text(encoding="utf-8"))
+          for relative in manifest["release_assets"]:
+              path = Path("dist") / relative
+              if not path.is_file():
+                  raise SystemExit(f"release asset missing after validation: {path}")
+              print(path.as_posix())
+          PY
+
+          mapfile -t ASSETS < "$RUNNER_TEMP/release-assets.txt"
+          if (( ${#ASSETS[@]} == 0 )); then
+            echo "release manifest declared no assets" >&2
+            exit 1
           fi
+
+          if gh release view "$TAG" >/dev/null 2>&1; then
+            gh release upload "$TAG" "${ASSETS[@]}" --clobber
+          else
+            NOTES="$(cat .github/release-validation-note.md)"
+            gh release create "$TAG" "${ASSETS[@]}" --verify-tag --generate-notes --notes "$NOTES"
+          fi
+      - name: Verify published release assets
+        env:
+          GH_TOKEN: ${{ github.token }}
+          TAG: ${{ inputs.tag || github.ref_name }}
+        run: |
+          gh api "repos/${GITHUB_REPOSITORY}/releases/tags/${TAG}" > "$RUNNER_TEMP/published-release.json"
+          python scripts/verify_published_release.py \
+            --manifest dist/release-manifest.json \
+            --release-json "$RUNNER_TEMP/published-release.json" \
+            --tag "$TAG"

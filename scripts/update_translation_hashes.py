@@ -32,8 +32,10 @@ def main() -> None:
             "en_status": "translated",
         }
 
+    data["locales"][args.locale]["source_version"] = config["version"]
+
     path.write_text(json.dumps(data, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
-    print("Updated translation source hashes.")
+    print("Updated translation source hashes and source version.")
     print("Use this command only after reviewing the translation against the current canonical source.")
 
 

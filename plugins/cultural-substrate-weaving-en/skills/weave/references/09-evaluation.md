@@ -1,23 +1,55 @@
 # 09-evaluation
 
-Read this before finalizing a run to assess skill-specific increment and overapplication.
+Read this before finalizing an application result to check skill-specific increment, provenance, and over-application.
 
-## 11. Review the application
+## 11. Check the result
 
-1. Chose no, limited, or full activation and established a domain-method baseline.
-2. For each cultural framework used, checked unit compatibility, intended use, and rejection conditions.
-3. Limited application to the layer needed by the target-side question and did not treat filling every position or running every operation as a result in itself.
-4. Returned framework-derived structure to the target and rejected or deferred what did not hold there.
-5. When using KJ, avoided prior card types/categories and preserved semantic units, epistemic state, and provenance.
-6. Checked whether the skill produced a question, semantic unit, relation, state, transition, falsification condition, or research task absent from the baseline.
-7. Checked each preservation constraint against the actual result.
-8. Performed the removal check and treated only findings that still stand without framework vocabulary as target-side results.
-9. Did not double-count reposts/derivations of one piece of evidence or the same finding rediscovered by multiple frameworks.
-10. If no increment appeared, stopped formal correspondence and reduced or ended application.
-11. Did not substitute this skill's evaluation for domain-specific quality, accuracy, or feasibility criteria.
+1. A domain-method **baseline** and preservation set were established.
+2. When KJ was used, semantic units, evidence state, provenance, isolates, and unresolved material were preserved.
+3. When a cultural framework was used, there was a target-side reason to open another cognitive field.
+4. `not_loaded / probe / preview / full / enacted` were distinguished, and depth itself was not treated as success.
+5. **Exploratory use and attribution use** were not mixed. Attribution use applied the needed homogeneity, assignment, lineage, convention, and transition checks.
+6. Misfit was rejected, backgrounded, or held instead of rereading the target merely to complete the framework.
+7. **The removal check was not mistaken for evidence generation.** Surviving removal of framework vocabulary did not by itself move an item to `target_supported`.
+8. `target_supported / framework_generated / cross_field_emergent / unresolved` were separated when needed, and target findings had independent target-side support.
+9. The exit matched the purpose: research/diagnosis returned questions, hypotheses, and falsification conditions; generation/composition treated framework structure as compositional material rather than empirical fact.
+10. Reposts, derivatives, and rediscovery through multiple frameworks were not double-counted as independent support.
+11. When no increment appeared, the run stopped or narrowed. `not_loaded`, stopping at preview, and rejection were not treated as failures.
+12. Domain-specific correctness, quality, and feasibility were not replaced by this skill's own evaluation.
 
-## Relationship to domain skills
+## Look for increment
 
-This skill does not define domain-specific quality criteria, professional accuracy, or operating procedures. Use a domain skill, source material, standards, or professional procedure as the baseline when needed.
+Measure change on the target or real-work side rather than framework count or mapping count.
 
-The object of evaluation is **what became newly visible after adding cultural-framework exploration and KJ integration, and whether that finding holds on the target side**.
+- A concrete question, falsification condition, or research target appeared.
+- Search or observation targets changed.
+- KJ groupings, relations, or blanks were reconfigured.
+- New findings gained support from target-side material.
+- Something was actually adopted into an artifact, research plan, design, or decision.
+- An old residual was reactivated by later material.
+- Conditions for not using or not deepening a framework became clearer.
+- Over-application or provenance confusion was detected and corrected.
+
+Do not collapse these into one quality score.
+
+## Check over-application
+
+- One-to-one mappings multiply until the framework looks cleaner than the target.
+- Empty positions are being filled for completeness.
+- A framework-generated question becomes target fact without evidence.
+- Derivatives are counted as multiple independent supports.
+- Conflict, irreversibility, locality, or asymmetry is absorbed into a harmonious explanation.
+- Explanation volume grows while artifacts, research, or decisions do not move.
+- Observation overhead becomes heavier than the real task.
+
+When these signs appear, return to target-side material and inspect loading depth, use mode, attribution, and application scope.
+
+## Long-running work
+
+Use the events in `core/iteration.md` and `08-governance-and-records.md` when useful. What survives into later real work matters, but it does not by itself prove a causal effect of the method.
+
+## Relationship to domain-specific skills
+
+This skill does not define domain-specific quality criteria, expert correctness, or operational procedure. Use domain skills, sources, standards, or professional procedures as the baseline when needed.
+
+The evaluation question for this skill is: **what difference did cultural frameworks and KJ make to questions, material arrangement, research, composition, or decisions, and which parts could responsibly remain?**

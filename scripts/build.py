@@ -7,8 +7,8 @@ from pathlib import Path
 
 from common import (
     ADAPTERS, DIST, PLUGINS, ROOT, clean_generated, copy_file, locale_heading,
-    locale_short, locale_source, locales, load_env_file, manifest,
-    replace_router_links, sha256, version, write_text
+    locale_short, locale_source, locales, manifest,
+    replace_router_links, version, write_text
 )
 
 
@@ -175,6 +175,19 @@ def substitute_manifest(template: dict, current_version: str):
     return json.loads(raw)
 
 
+def explicit_m365_sharepoint_url(locale: str) -> str:
+    """Return an explicitly injected SharePoint URL, never one from a local env file.
+
+    Public/release builds are tenant-neutral by default. Deployment-specific builds
+    may opt in by setting either a locale-specific variable or the generic variable.
+    """
+    locale_key = f"CSW_M365_SHAREPOINT_SITE_URL_{locale.replace('-', '_')}"
+    return (
+        os.environ.get(locale_key, "").strip()
+        or os.environ.get("CSW_M365_SHAREPOINT_SITE_URL", "").strip()
+    )
+
+
 def build_m365(locale: str, config: dict, router: str) -> None:
     target = DIST / locale / "microsoft-copilot"
     project = target / "agent-project"
@@ -202,11 +215,7 @@ def build_m365(locale: str, config: dict, router: str) -> None:
         "conversation_starters": starters,
     }
 
-    env_path = ADAPTERS / "microsoft-copilot" / locale / "env" / ".env.dev"
-    env_values = load_env_file(env_path)
-    sharepoint_url = os.environ.get(f"CSW_M365_SHAREPOINT_SITE_URL_{locale.replace('-', '_')}", "").strip()
-    if not sharepoint_url:
-        sharepoint_url = env_values.get("SHAREPOINT_SITE_URL", "").strip()
+    sharepoint_url = explicit_m365_sharepoint_url(locale)
     if sharepoint_url:
         agent["capabilities"] = [{
             "name": "OneDriveAndSharePoint",
@@ -232,10 +241,6 @@ def build_m365(locale: str, config: dict, router: str) -> None:
     )
     for example in (ADAPTERS / "microsoft-copilot" / "common" / "env").glob("*.example"):
         copy_file(example, project / "env" / example.name)
-    if env_path.parent.exists():
-        for actual in env_path.parent.glob(".env.*"):
-            if not actual.name.endswith(".example"):
-                copy_file(actual, project / "env" / actual.name)
 
     for filename, modules in config["knowledge_groups"].items():
         write_text(target / "knowledge" / filename, concatenate_modules(locale, config, modules))
@@ -262,22 +267,6 @@ def write_root_marketplace(plugin_entries: list[dict]) -> None:
     )
 
 
-def write_release_manifest() -> None:
-    files = []
-    for path in sorted(p for p in DIST.rglob("*") if p.is_file()):
-        if path.name == "release-manifest.json":
-            continue
-        files.append({
-            "path": str(path.relative_to(DIST)),
-            "bytes": path.stat().st_size,
-            "sha256": sha256(path),
-        })
-    write_text(
-        DIST / "release-manifest.json",
-        json.dumps({"version": version(), "locales": locales(), "files": files}, ensure_ascii=False, indent=2) + "\n",
-    )
-
-
 def main() -> None:
     clean_generated()
     config = manifest()
@@ -296,7 +285,6 @@ def main() -> None:
 
     write_root_marketplace(plugin_entries)
     write_root_codex_marketplace(codex_entries)
-    write_release_manifest()
     print(f"Built {config['name']} v{version()} for {', '.join(locales())}")
 
 

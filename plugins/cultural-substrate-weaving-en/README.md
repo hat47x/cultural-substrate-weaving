@@ -2,7 +2,7 @@
 
 A complementary skill that combines cultural-framework structure candidates with KJ integration to explore questions, relations, and gaps absent from ordinary analysis, then validates them against the target.
 
-Version 0.3.0 · MIT · [Repository](https://github.com/hat47x/cultural-substrate-weaving)
+Version 0.4.0 · MIT · [Repository](https://github.com/hat47x/cultural-substrate-weaving)
 
 ## Install
 

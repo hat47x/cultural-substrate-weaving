@@ -16,9 +16,19 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v7
-      - uses: actions/setup-python@v5
+      - uses: actions/setup-python@v7
         with:
           python-version: "3.11"
+      - name: Verify branch version contract
+        shell: bash
+        env:
+          HEAD_REF: ${{ github.head_ref }}
+        run: |
+          ref="${GITHUB_REF_NAME}"
+          if [[ "${GITHUB_EVENT_NAME}" == "pull_request" ]]; then
+            ref="${HEAD_REF}"
+          fi
+          python scripts/check_branch_version.py --ref "${ref}" --version-file VERSION
       - name: Run validation
         shell: bash
         env:
@@ -41,4 +51,9 @@ jobs:
         with:
           name: release-candidate-packages
           path: dist/packages/
+          if-no-files-found: ignore
+      - uses: actions/upload-artifact@v7
+        with:
+          name: release-candidate-manifest
+          path: dist/release-manifest.json
           if-no-files-found: ignore
