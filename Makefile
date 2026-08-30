@@ -2,7 +2,6 @@
 
 build:
 	python scripts/build.py
-	rm -f dist/release-manifest.json
 
 validate:
 	python scripts/validate.py
