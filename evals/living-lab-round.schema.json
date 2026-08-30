@@ -1,0 +1,244 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/hat47x/cultural-substrate-weaving/evals/living-lab-round.schema.json",
+  "title": "Cultural Substrate Weaving Web Chat Living Lab Round",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "round_id",
+    "case_id",
+    "mode",
+    "observed_at",
+    "task",
+    "activation_scope",
+    "framework_contacts",
+    "artifacts",
+    "residuals",
+    "reopening_conditions"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "0.1"
+    },
+    "round_id": {
+      "type": "string",
+      "pattern": "^round-[A-Za-z0-9._-]+$"
+    },
+    "case_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "mode": {
+      "enum": [
+        "natural_work",
+        "paired_check"
+      ]
+    },
+    "observed_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "environment": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "platform": {
+          "type": "string",
+          "minLength": 1
+        },
+        "model_label": {
+          "type": "string"
+        },
+        "product_mode": {
+          "type": "string"
+        },
+        "tools": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "uniqueItems": true
+        },
+        "notes": {
+          "type": "string"
+        }
+      }
+    },
+    "task": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "summary"
+      ],
+      "properties": {
+        "summary": {
+          "type": "string",
+          "minLength": 1
+        },
+        "domain": {
+          "type": "string"
+        },
+        "source_refs": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "uniqueItems": true
+        },
+        "preservation_set": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      }
+    },
+    "material_delta_refs": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      },
+      "uniqueItems": true
+    },
+    "invocation": {
+      "enum": [
+        "none",
+        "implicit",
+        "explicit"
+      ]
+    },
+    "activation_scope": {
+      "enum": [
+        "non_activation",
+        "limited_use",
+        "exploratory_use"
+      ]
+    },
+    "framework_contacts": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "framework",
+          "depth",
+          "use"
+        ],
+        "properties": {
+          "framework": {
+            "type": "string",
+            "minLength": 1
+          },
+          "depth": {
+            "enum": [
+              "probe",
+              "preview",
+              "full",
+              "enacted"
+            ]
+          },
+          "use": {
+            "enum": [
+              "exploration",
+              "attribution"
+            ]
+          },
+          "notes": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "kj_snapshot_refs": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      },
+      "uniqueItems": true
+    },
+    "artifacts": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      },
+      "uniqueItems": true
+    },
+    "residuals": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "reopening_conditions": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "comparison": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "baseline_chat_ref",
+        "treatment_chat_ref"
+      ],
+      "properties": {
+        "baseline_chat_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "treatment_chat_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "evaluator_chat_ref": {
+          "type": "string"
+        },
+        "run_order": {
+          "enum": [
+            "baseline_first",
+            "treatment_first",
+            "parallel_or_unknown"
+          ]
+        },
+        "difference_notes": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      }
+    },
+    "notes": {
+      "type": "string"
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "mode": {
+            "const": "paired_check"
+          }
+        },
+        "required": [
+          "mode"
+        ]
+      },
+      "then": {
+        "required": [
+          "comparison"
+        ]
+      }
+    }
+  ]
+}
