@@ -1,0 +1,58 @@
+{
+  "schema_version": "0.1",
+  "round_id": "round-paired-example-001",
+  "case_id": "paired-example-case",
+  "mode": "paired_check",
+  "observed_at": "2026-08-30T16:10:00+09:00",
+  "environment": {
+    "platform": "web_chat",
+    "model_label": "same-visible-label-where-practical",
+    "product_mode": "interactive chat",
+    "tools": [],
+    "notes": "Baseline and treatment use fresh chats and the same supplied task material."
+  },
+  "task": {
+    "summary": "Compare a domain-method baseline with the same task plus CSW without turning the comparison into a framework-count contest.",
+    "domain": "example",
+    "source_refs": [
+      "artifact:paired-input-001"
+    ],
+    "preservation_set": [
+      "Keep target-specific exceptions visible.",
+      "Do not promote framework-generated questions into target facts without independent support."
+    ]
+  },
+  "material_delta_refs": [],
+  "invocation": "explicit",
+  "activation_scope": "exploratory_use",
+  "framework_contacts": [
+    {
+      "framework": "example-framework",
+      "depth": "preview",
+      "use": "exploration",
+      "notes": "The preview is used only to generate a comparison question."
+    }
+  ],
+  "kj_snapshot_refs": [],
+  "artifacts": [
+    "artifact:baseline-output-001",
+    "artifact:treatment-output-001"
+  ],
+  "residuals": [
+    "The observed difference may still reflect ordinary Web-chat variance."
+  ],
+  "reopening_conditions": [
+    "Repeat only if the difference matters to a method-change decision or appears across another real task."
+  ],
+  "comparison": {
+    "baseline_chat_ref": "chat:baseline-fresh-001",
+    "treatment_chat_ref": "chat:treatment-fresh-001",
+    "evaluator_chat_ref": "chat:evaluator-fresh-001",
+    "run_order": "baseline_first",
+    "difference_notes": [
+      "Treatment produced a concrete research question absent from the baseline.",
+      "Neither output is treated as better merely because one used a cultural framework."
+    ]
+  },
+  "notes": "A paired check improves comparability but is not treated as strict causal proof."
+}
