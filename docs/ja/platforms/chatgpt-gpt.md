@@ -12,7 +12,7 @@ GPTの作成・編集はChatGPTのWeb版で行います。
 
 1. ChatGPTの「GPTs」から「作成」を開きます。
 2. 「構成」画面で名前と説明を入力します。
-3. 「機能」で「ウェブ検索」を有効にします。本方法論は事実確認や文脈収集を検索に依存する場面があるため、無効のままでは判断精度が落ちます。
+3. 現在の事実、外部文脈、追加の出典探索を扱う用途では、「機能」の「ウェブ検索」を有効にします。手元の資料だけを対象にするKJ統合や構造探索では必須ではありません。検索を使えない場合は、不足する外部事実を推測で補わないようにします。
 4. 展開した`instructions.md`をInstructionsへ貼り付けます。
 5. `knowledge/`内の全ファイルをKnowledgeへアップロードします。
 6. `conversation-starters.md`の例を会話スターターへ登録します。
@@ -29,12 +29,12 @@ GPTの作成・編集はChatGPTのWeb版で行います。
 
 GPTsは通常のChatGPTメモリを正本として使わないため、詳細方法論はInstructionsとKnowledgeで管理します。
 
-## 代替方法：Skillsへのアップロード（Business/Enterprise/Healthcare/Edu向け）
+## 代替方法：Skillsへのアップロード（対象ワークスペース向け）
 
-カスタムGPTとは別に、ChatGPT本体のSkills機能からのアップロードでも利用できます。ただし現状はChatGPT Business・Enterprise・Healthcare・Eduのワークスペースのみ利用可能で、個人のFree/Plus/Proアカウントでは使えません。ワークスペース管理者が「Enable skills」「Enable skill uploading」の権限を有効にしている必要もあります。
+カスタムGPTとは別に、ChatGPT本体のSkills機能からのアップロードでも利用できます。Skillsは現在、対象となるChatGPT Business・Enterprise・Healthcare・Eduユーザーに提供され、利用可否はワークスペース設定・ロール・製品面にも依存します。
 
-1. GitHub Releasesから`openai-skill-metered`または`openai-skill-interactive`のZIPを取得します（[Codexで使う](codex.md)と共通のパッケージです。ChatGPT向けにはどちらも同じ内容として扱われます）。
-2. ChatGPT Web版で「プラグイン」＞「スキル」＞「＋」＞「パソコンからアップロード」を選び、そのZIPをそのままアップロードします。
+1. GitHub Releasesから`openai-skill-metered`または`openai-skill-interactive`のZIPを取得します（[Codexで使う](codex.md)と共通のパッケージです。ChatGPTでは、どちらもアップロード可能なSkillとして扱えます）。
+2. ChatGPTのサイドバーから「プラグイン」を開き、Plugin Directoryの「Skills」タブで「作成」→「パソコンからアップロード」を選び、そのZIPをそのままアップロードします。
 3. アップロード後、ChatGPT側で自動スキャンが行われます。「Needs Review」や「Blocked」と表示された場合は、内容を確認したうえで対応してください。
 
-個人用Skillsはデスクトップ版とWeb/モバイル版で同期されないため、両方で使う場合はそれぞれの環境で個別にアップロードしてください。
+Skillsの利用可否や同期範囲は製品・ワークスペースによって異なるため、ChatGPTとCodexで同じSkillが自動的に共有されるとは前提にしないでください。
