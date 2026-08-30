@@ -31,12 +31,10 @@ jobs:
           python scripts/check_branch_version.py --ref "${ref}" --version-file VERSION
       - name: Run validation
         shell: bash
-        env:
-          BASE_REF: ${{ github.base_ref }}
         run: |
-          if [[ "${GITHUB_REF_NAME}" == "main" ]] || \
-             [[ "${GITHUB_REF_NAME}" == release/* ]] || \
-             [[ "${GITHUB_EVENT_NAME}" == "pull_request" && "${BASE_REF}" == "main" ]]; then
+          if [[ "${GITHUB_EVENT_NAME}" == "pull_request" ]] || \
+             [[ "${GITHUB_REF_NAME}" == "main" ]] || \
+             [[ "${GITHUB_REF_NAME}" == release/* ]]; then
             make release-check
           else
             make check
