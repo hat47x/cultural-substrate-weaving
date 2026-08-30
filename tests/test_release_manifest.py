@@ -36,6 +36,14 @@ class ReleaseManifestTests(unittest.TestCase):
         source.mkdir(parents=True)
         (source / "payload.txt").write_text("payload\n", encoding="utf-8")
 
+        m365_source = root / "m365-source"
+        m365_agent = m365_source / "agent-project" / "appPackage" / "declarativeAgent.json"
+        m365_agent.parent.mkdir(parents=True)
+        m365_agent.write_text(
+            json.dumps({"version": "v1.8", "name": "test agent"}) + "\n",
+            encoding="utf-8",
+        )
+
         internal = dist / "ja-JP" / "generated" / "internal.txt"
         internal.parent.mkdir(parents=True)
         internal.write_text("build provenance\n", encoding="utf-8")
@@ -46,7 +54,8 @@ class ReleaseManifestTests(unittest.TestCase):
             path.write_text("{}\n", encoding="utf-8")
 
         for relative in VALIDATOR.expected_package_paths(self.VERSION, self.LOCALES):
-            PACKAGE.zip_tree(source, dist / relative)
+            package_source = m365_source if "-m365-copilot-" in relative else source
+            PACKAGE.zip_tree(package_source, dist / relative)
 
         files = []
         manifest_path = dist / "release-manifest.json"
@@ -126,6 +135,36 @@ class ReleaseManifestTests(unittest.TestCase):
             errors: list[str] = []
             VALIDATOR.validate_zip(path, "private.zip", errors)
             self.assertTrue(any("local/private configuration" in error for error in errors), errors)
+
+    def test_m365_release_rejects_tenant_specific_sharepoint_url(self) -> None:
+        with tempfile.TemporaryDirectory() as temp_dir:
+            root = Path(temp_dir)
+            source = root / "source"
+            agent = source / "agent-project" / "appPackage" / "declarativeAgent.json"
+            agent.parent.mkdir(parents=True)
+            agent.write_text(
+                json.dumps(
+                    {
+                        "version": "v1.8",
+                        "name": "tenant agent",
+                        "capabilities": [
+                            {
+                                "name": "OneDriveAndSharePoint",
+                                "items_by_url": [
+                                    {"url": "https://tenant.sharepoint.com/sites/private-csw"}
+                                ],
+                            }
+                        ],
+                    }
+                )
+                + "\n",
+                encoding="utf-8",
+            )
+            package_path = root / "m365.zip"
+            PACKAGE.zip_tree(source, package_path)
+            errors: list[str] = []
+            VALIDATOR.validate_m365_tenant_neutral(package_path, "m365.zip", errors)
+            self.assertTrue(any("tenant-neutral" in error for error in errors), errors)
 
 
 if __name__ == "__main__":

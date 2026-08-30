@@ -90,6 +90,41 @@ def validate_zip(path: Path, label: str, errors: list[str]) -> None:
         errors.append(f"invalid release ZIP {label}: {exc}")
 
 
+def validate_m365_tenant_neutral(path: Path, label: str, errors: list[str]) -> None:
+    """Reject tenant-specific SharePoint URLs from the public M365 release ZIP."""
+    try:
+        with zipfile.ZipFile(path) as archive:
+            matches = [
+                name
+                for name in archive.namelist()
+                if name.endswith("/agent-project/appPackage/declarativeAgent.json")
+                or name == "agent-project/appPackage/declarativeAgent.json"
+            ]
+            if len(matches) != 1:
+                errors.append(
+                    f"M365 release ZIP must contain exactly one declarativeAgent.json: {label}: {matches}"
+                )
+                return
+            try:
+                agent = json.loads(archive.read(matches[0]).decode("utf-8"))
+            except (KeyError, UnicodeDecodeError, json.JSONDecodeError) as exc:
+                errors.append(f"cannot read M365 declarativeAgent.json: {label}: {exc}")
+                return
+            for capability in agent.get("capabilities", []):
+                if not isinstance(capability, dict):
+                    continue
+                if capability.get("name") != "OneDriveAndSharePoint":
+                    continue
+                urls = capability.get("items_by_url")
+                if isinstance(urls, list) and urls:
+                    errors.append(
+                        "public M365 release package must be tenant-neutral; "
+                        f"remove OneDriveAndSharePoint site URLs before release: {label}"
+                    )
+    except (OSError, zipfile.BadZipFile) as exc:
+        errors.append(f"invalid M365 release ZIP {label}: {exc}")
+
+
 def validate_release(
     dist: Path,
     expected_version: str,
@@ -200,7 +235,10 @@ def validate_release(
         )
 
     for relative in sorted(actual_packages):
-        validate_zip(dist / relative, relative, errors)
+        path = dist / relative
+        validate_zip(path, relative, errors)
+        if "-m365-copilot-" in relative:
+            validate_m365_tenant_neutral(path, relative, errors)
 
     return errors
 
