@@ -29,6 +29,8 @@ jobs:
         env:
           TAG: ${{ inputs.tag || github.ref_name }}
         run: test "${TAG#v}" = "$(cat VERSION)"
+      - name: Verify changelog release boundary
+        run: python scripts/check_release_changelog.py --version "$(cat VERSION)" --changelog CHANGELOG.md
       - name: Publish release assets
         env:
           GH_TOKEN: ${{ github.token }}
