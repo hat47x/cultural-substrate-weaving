@@ -1,44 +1,85 @@
-# 02 — Framework Selection
+# 02-system-selection
 
-Read this file when selecting cultural frameworks and checking unit compatibility, rejection conditions, and limits.
+Read this when choosing a cultural framework and deciding why and how deeply to use it.
 
-## 3. Investigate framework candidates
+## 3. Start from unresolved target structure
 
-Narrow candidates by differences in structural type rather than by listing framework names. For each framework, examine:
+Do not begin with a list of framework names or by asking which culture resembles the target. First look for structure the target-side analysis still has trouble holding.
 
-- components and classification principles;
-- relationships among elements;
-- time, cycles, and stages;
-- generation and inhibition;
-- original domain of application;
-- historical context;
-- competing interpretations and limits.
+- multiple states or positions
+- paths, intermediate points, branches, return paths
+- cycles, phases, accumulation, recurrence, offset
+- boundaries, transition bands, center/periphery
+- multiple timescales
+- flow, connection, bottlenecks
+- continua and partitioning
+- a need for questions outside the current problem framing
 
-Choose one of four uses.
+For candidate frameworks, inspect their elements and classification principles, relations, time/cycle/stage structure, original domain of use, historical context, variants, and limits.
 
-1. **Structural model:** Examine relationships and placement across the target.
-2. **Consistency model:** Examine the behavior of a single target by comparison with an externally supplied type.
-3. **Temporal model:** Examine timing, cycles, accumulation, recurrence, and phase change.
-4. **Transition model:** Treat the framework as a state machine and run its transitions over the target. Look for states never reached, transitions that never fire, and states entered but never left.
+Do not collapse candidates into one fit score. Ask **what different way of seeing the currently unresolved target structure the framework can supply**.
 
-Define the use first and make evaluation criteria explicit. **The transition model lays the framework's states over the search space as a grid and reads the target by which cells fill and which stay empty.** It looks at where things can move rather than at static placement, so declare it separately from the structural model. The procedure is in `02a-framework-application.md`.
+## 3a. Exploratory use and attribution use
 
-**Choosing a use and choosing an application scope are separate decisions. Adopting a framework does not require exhausting all of its elements, interpretive vocabulary, or transitions.** Declare the layer and scope needed for the target-side question first. If that scope produces no increment, do not fill empty positions or unused operations merely to exhaust the framework. Broaden the scope only when a target-side need appears.
+### Exploratory use
 
-**The temporal and transition models produce structure that static placement cannot. Reach for them.** A placement diagram gets you as far as which element sits where. Following each factor's change of state gets you when it enters and when it leaves, whether it can return, and which orderings are the only ones that occur. **Those are properties of the target, and placement does not show them.**
+Use the framework as a cognitive field that generates questions, contrasts, hypotheses, research targets, and compositional candidates. The target need not be assigned to every framework position.
 
-Before detecting absence or bias, determine whether the framework's elements and the target's structural units are of the same kind. Only compatible units support reasoning about missing or overrepresented elements. For example, if an external framework uses types as its units while the target uses individual events, the units are heterogeneous even if their counts look comparable. Do not infer absence from that pairing; use it only for candidate relations or questions.
+What emerges remains `framework_generated` until independently supported on the target side. Exploratory usefulness does not make it a target fact, gap, or cause.
 
-**Compatibility is a property of the framework paired with a layer, not of the framework.** One framework can be compatible at one layer and incompatible at another. Do not write that a framework is compatible without saying at which layer. **Units of the same kind still make an incompatible pair when the principle of division differs.** Where the framework divides its positions by order and the target divides itself by something else, no absence follows.
+### Attribution use
 
-When structural units differ, treat exhaustive review as a search for analogous relationships and sampling as a test for coincidental matches. Do not use either as evidence of absence.
+Use this when claiming that the target has a framework-shaped position, missing transition, or other structure.
 
-For heterogeneous frameworks, switch to one of these uses:
+Then inspect homogeneity between framework and target units, the assignment procedure, external conventions, and lineage differences. See `02a-framework-application.md`.
 
-- obtain verbs that express relationships;
+**Do not silently switch from exploration to attribution.** Re-satisfy the attribution conditions when the claim changes.
+
+## 3b. Model use
+
+Choose as needed.
+
+1. **Structural model**: inspect relation and placement.
+2. **Consistency model**: compare the behavior of one target with an externally derived pattern.
+3. **Temporal model**: inspect cycles, accumulation, recurrence, and stage change.
+4. **Transition model**: test states and transitions, looking for unreachable states, transitions that never occur, and states that do not return.
+
+The exit differs by use. Exploration produces questions and comparison axes. Attribution requires target-side evidence for cycles, transitions, or irreversibility before they become findings.
+
+Model choice, application scope, and loading depth are separate. Adopting a framework does not require exhausting all of its elements, interpretive vocabulary, or transitions.
+
+Temporal and transition models can generate questions not visible in static placement, but **running the framework produces candidate target structure, not a target property by itself**.
+
+## 3c. Homogeneity
+
+Before attributing a gap or bias to the target, ask whether framework elements and target structural units are homogeneous.
+
+Homogeneity belongs to the **framework-layer-target combination**, not to the framework alone. The same framework may be homogeneous at one layer and heterogeneous at another. Even units of the same apparent type may differ in classification principle.
+
+Heterogeneous frameworks can still be used exploratorily to:
+
+- obtain verbs for relations;
 - establish contrast axes;
-- generate expression candidates.
+- turn blanks into questions;
+- generate expression or composition candidates;
+- unsettle units fixed by the current problem framing.
 
-Before adopting a framework, define results that would lead to rejection. Exclude frameworks that fit every possible result, because they add confirmation without discriminating hypotheses.
+## 3d. Loading depth
 
-**A framework you decide to adopt goes on to `02a-framework-application.md` with its declared use and application scope intact. That file holds the assignment procedure and the four post-adoption checks. A finding that has not been through those checks is not a result.**
+Use `probe / preview / full / enacted` from `core/activation.md`.
+
+Do not set a fixed fit threshold. High apparent fit guarantees neither valid attribution nor usefulness.
+
+## 3e. Conditions for rejection or reduction
+
+Do not deepen when:
+
+- every outcome can be made to fit, so no falsifiable difference appears;
+- target-side questions do not increase and only framework vocabulary grows;
+- gaps or causes are being attributed without homogeneity or an assignment procedure;
+- irreversibility, asymmetry, locality, or evidence state is being thinned;
+- target material is being reread merely to complete the framework.
+
+Rejecting a framework does not require deleting every question it generated. Keep what survives return to the target with provenance intact.
+
+When continuing, carry the declared **exploration/attribution mode, model use, application scope, and loading depth** into `02a-framework-application.md`.
