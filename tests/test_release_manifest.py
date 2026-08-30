@@ -118,6 +118,15 @@ class ReleaseManifestTests(unittest.TestCase):
             VALIDATOR.validate_zip(path, "unsafe.zip", errors)
             self.assertTrue(any("stay inside the release root" in error for error in errors), errors)
 
+    def test_private_local_zip_member_is_rejected(self) -> None:
+        with tempfile.TemporaryDirectory() as temp_dir:
+            path = Path(temp_dir) / "private.zip"
+            with zipfile.ZipFile(path, "w") as archive:
+                archive.writestr("bundle/agent-project/env/.env.dev", "TOKEN=secret")
+            errors: list[str] = []
+            VALIDATOR.validate_zip(path, "private.zip", errors)
+            self.assertTrue(any("local/private configuration" in error for error in errors), errors)
+
 
 if __name__ == "__main__":
     unittest.main()
