@@ -71,6 +71,15 @@ The independent post-package validator also rejects private/local file names if 
 
 The GitHub Release workflow reads the already validated `release_assets` list and passes that exact list to `gh release create` or `gh release upload`. Do not duplicate the publication list as workflow globs.
 
+## Publication disclosure
+
+A technically green release candidate is not evidence that the method is empirically effective. While the project remains in validation, newly created GitHub Releases must keep that distinction visible to readers who arrive directly at the Release page.
+
+- `.github/release-validation-note.md` is prepended to GitHub's automatically generated notes for a newly created Release.
+- Keep that note semantically aligned with the validation-stage wording in the top-level README. Do not remove it merely because packaging and release validation are green.
+- The Release workflow uses `gh release create --verify-tag`; publication must refer to a tag that already exists remotely rather than allowing the CLI to synthesize one.
+- `workflow_dispatch` is for re-publishing assets for an existing tag. When the Release already exists, the workflow uploads/clobbers the validated assets but does not rewrite the release notes. If an existing release needs a disclosure correction, edit its notes deliberately rather than expecting asset re-publication to do so.
+
 ## Tag and publication flow
 
 A `vX.Y.Z` tag push is the canonical automatic publication path. The tag must match the checked-out `VERSION`.
@@ -84,6 +93,6 @@ Before tagging a new release:
 3. merge the validated release candidate to `main`;
 4. confirm the post-merge Validate workflow succeeds;
 5. create and push `vX.Y.Z` at the intended release commit; and
-6. confirm the Release workflow and published asset set succeed.
+6. confirm the Release workflow and published asset set succeed, including the validation-stage disclosure while it remains applicable.
 
 Do not move an existing release tag to include later development work.
