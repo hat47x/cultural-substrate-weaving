@@ -120,7 +120,9 @@ stop_reason: 独立した割当規約を用意できず、遷移試行へ進め�
 
 B/Dで文化体系を扱った場合、必要ならこのtraceを**実験者側の補助来歴**として残す。blind reviewerへは、armやframeworkを推測させる情報を渡さない。
 
-長期companion laneでは、`framework_use`だけでは区別が不足する重要ラウンドに限ってこのtraceを添える。
+Case 001の独立B/Dは事前登録済みのskill snapshotに固定されている。新しいCSW文書やこのtraceをarmのmodel/operator inputへ追加しない。**run出力と既存run recordを固定した後に、既に残っている記録から実験者が補助traceを作る。** traceを書くために追加質問、追加framework探索、再実行を行わない。これにより、現在の方法論改善が凍結済み比較条件へ逆流することを防ぐ。
+
+長期companion laneでは、`framework_use`だけでは区別が不足する重要ラウンドに限ってこのtraceを添える。こちらは独立A〜Dとは別のprospective観察であり、使用した`method_ref`を記録する。
 
 ## 方法論正本への昇格条件
 
