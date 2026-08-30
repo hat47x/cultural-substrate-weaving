@@ -68,7 +68,7 @@ Webチャットは完全には再現できない。そのため、paired check�
 
 ## ラウンド記録
 
-ラウンド記録の機械可読形式は `evals/living-lab-round.schema.json` にある。例は `evals/living-lab-round.example.json` を参照する。
+ラウンド記録の機械可読形式は `evals/living-lab-round.schema.json` にある。通常ラウンドの例は `evals/living-lab-round.example.json`、paired checkの正常系は `evals/living-lab-paired.example.json` を参照する。
 
 最低限、次を追えることを重視する。
 
@@ -141,9 +141,17 @@ eventは、方法の因果効果を証明するものではない。「何が起
 同梱例と手元の記録は、外部依存なしで検査できる。
 
 ```bash
+# 同梱の natural / paired / event を一つのrecord setとして検査
 python scripts/validate_living_lab.py
+
+# 個別ファイルだけを形式検査
 python scripts/validate_living_lab.py path/to/round.json path/to/event.json
+
+# 一群の記録としてID重複とevent→round参照まで検査
+python scripts/validate_living_lab.py --record-set path/to/round.json path/to/event.json
 ```
+
+個別検査では、eventの対応roundが別の保管場所にあってもよい。`--record-set`を付けた場合は、与えたファイル群を一つの閉じた記録集合として扱い、`round_id` / `event_id` の重複と、eventが参照するroundの存在も確認する。
 
 validatorは、研究の質を採点するものではない。必須欄、識別子、enum、paired checkの比較参照、eventの根拠参照など、記録形式上の矛盾を検出するためのものである。
 
