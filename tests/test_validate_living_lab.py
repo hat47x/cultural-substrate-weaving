@@ -22,13 +22,20 @@ class LivingLabValidationTests(unittest.TestCase):
         cls.round_record = json.loads(
             (ROOT / "evals" / "living-lab-round.example.json").read_text(encoding="utf-8")
         )
+        cls.paired_record = json.loads(
+            (ROOT / "evals" / "living-lab-paired.example.json").read_text(encoding="utf-8")
+        )
         cls.event_record = json.loads(
             (ROOT / "evals" / "living-lab-event.example.json").read_text(encoding="utf-8")
         )
 
     def test_examples_are_valid(self) -> None:
         self.assertEqual(MODULE.validate_record(self.round_record), "round")
+        self.assertEqual(MODULE.validate_record(self.paired_record), "round")
         self.assertEqual(MODULE.validate_record(self.event_record), "event")
+        MODULE.validate_record_set(
+            [self.round_record, self.paired_record, self.event_record]
+        )
 
     def test_paired_check_requires_comparison_refs(self) -> None:
         record = copy.deepcopy(self.round_record)
@@ -54,6 +61,20 @@ class LivingLabValidationTests(unittest.TestCase):
         record["event_type"] = "framework_count_increased"
         with self.assertRaises(MODULE.ValidationError):
             MODULE.validate_event(record)
+
+    def test_record_set_rejects_orphan_event(self) -> None:
+        event = copy.deepcopy(self.event_record)
+        event["round_id"] = "round-missing-001"
+        with self.assertRaises(MODULE.ValidationError):
+            MODULE.validate_record_set([self.round_record, event])
+
+    def test_record_set_rejects_duplicate_round_id(self) -> None:
+        duplicate = copy.deepcopy(self.round_record)
+        with self.assertRaises(MODULE.ValidationError):
+            MODULE.validate_record_set([self.round_record, duplicate])
+
+    def test_single_event_can_still_be_validated_without_round_file(self) -> None:
+        self.assertEqual(MODULE.validate_record(self.event_record), "event")
 
 
 if __name__ == "__main__":
