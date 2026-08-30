@@ -1,19 +1,39 @@
 from __future__ import annotations
 
 import json
+import stat
 import zipfile
 from pathlib import Path
 
 from common import DIST, ROOT, locale_short, locales, manifest, sha256, version, write_text
 
+ZIP_TIMESTAMP = (1980, 1, 1, 0, 0, 0)
+
 
 def zip_tree(source: Path, target: Path, root_name: str | None = None) -> None:
+    """Create a stable ZIP for the same source tree.
+
+    Git checkouts do not preserve file modification times, so using ZipFile.write()
+    makes package hashes vary across otherwise identical builds. Normalize archive
+    paths, timestamps, and permission bits while preserving whether a source file is
+    executable.
+    """
     target.parent.mkdir(parents=True, exist_ok=True)
-    with zipfile.ZipFile(target, "w", compression=zipfile.ZIP_DEFLATED) as archive:
+    with zipfile.ZipFile(
+        target,
+        "w",
+        compression=zipfile.ZIP_DEFLATED,
+        compresslevel=9,
+    ) as archive:
         for path in sorted(p for p in source.rglob("*") if p.is_file()):
             relative = path.relative_to(source)
             arcname = Path(root_name) / relative if root_name else relative
-            archive.write(path, arcname=str(arcname))
+            mode = 0o755 if path.stat().st_mode & 0o111 else 0o644
+            info = zipfile.ZipInfo(arcname.as_posix(), date_time=ZIP_TIMESTAMP)
+            info.compress_type = zipfile.ZIP_DEFLATED
+            info.create_system = 3
+            info.external_attr = (stat.S_IFREG | mode) << 16
+            archive.writestr(info, path.read_bytes(), compress_type=zipfile.ZIP_DEFLATED, compresslevel=9)
 
 
 def main() -> None:
