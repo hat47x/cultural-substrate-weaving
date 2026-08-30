@@ -15,6 +15,7 @@
 - Updated GitHub Actions Python setup to `actions/setup-python@v7`, removing the Node 20 deprecation path from validation, release, and Microsoft 365 packaging workflows.
 - Simplified release triggering so tag pushes are the canonical automatic publication path and `workflow_dispatch` is the explicit re-publication path; publishing a GitHub Release no longer recursively starts the release workflow a second time.
 - Made release ZIP metadata reproducible across checkout/file-mtime changes by normalizing archive paths, timestamps, and permission bits, with regression coverage for byte-identical repeated packaging of the same source tree.
+- Clarified release-manifest semantics by separating the full build-file inventory from `release_assets`, and added an independent post-package validator for manifest coverage, hashes, required reports, package-set completeness, reproducible ZIP metadata, and unsafe archive paths.
 - Added a CI branch-version contract: `develop/vX.Y.Z` and `release/vX.Y.Z` must carry the same `VERSION`, preventing a development or release line from silently building packages under a different version.
 - Added runtime-package boundary tests so generated OpenAI and Claude/Codex references must match the canonical manifest exactly, while repository-only research, maintainer, test, and workflow material stays out of runtime output trees.
 - Added generated-skill link integrity tests so local Markdown links stay inside the runtime package, resolve to bundled files, and reference only manifest-declared runtime references.
