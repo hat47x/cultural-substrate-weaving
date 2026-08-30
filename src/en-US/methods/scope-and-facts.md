@@ -1,8 +1,8 @@
 # 01-scope-and-facts
 
-Read this when defining scope, baseline, preservation constraints, facts, and inference boundaries.
+Read this when defining the target's scope, baseline, preservation constraints, facts, and inference boundaries.
 
-## 1. Define scope
+## 1. Define the target's scope
 
 Define the target scope and what counts as target-side material. For a target that does not yet exist, separate observed facts from design or planning hypotheses.
 
@@ -18,7 +18,7 @@ At the same time, record target-specific strengths, facts, causal relations, exc
 
 Record skill-specific increment as a **new question, semantic unit, relation, state, transition candidate, falsification condition, or research task** absent from the baseline. If the caller or analyst changed the problem definition itself, do not count that change as a discovery by the skill.
 
-## 3. Separate fact, inference, and provenance
+## 2a. Separate fact, inference, and provenance
 
 - Do not mix directly observed/verified material with interpretation, causal inference, or inferred intent.
 - Preserve provenance. Do not confuse the path by which information was found with the original source of the information.
@@ -28,7 +28,7 @@ Record skill-specific increment as a **new question, semantic unit, relation, st
 
 **Do not use the same threshold for collection and externalization.** Low-confidence testimony, unexplained salience, and multiple plausible explanations may remain in research/KJ material when provenance and uncertainty are explicit. Apply a separate responsibility check before publication or execution.
 
-## 4. Coverage and recurrence
+## 2b. Coverage and recurrence
 
 When material covers only part of the target, record that coverage. Do not infer global direction, dominance, or temporal behavior from partial material.
 

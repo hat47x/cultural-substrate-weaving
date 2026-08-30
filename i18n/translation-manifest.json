@@ -17,9 +17,9 @@
   },
   "files": {
     "ROUTER.md": {
-      "ja_sha256": "2da64b458798df8a41964484bfd55d6b4a82d8fbf10b9c45adc7c8d58dacc168",
+      "ja_sha256": "6b72790f35b4934740982a4ec722ee9b51ecdb3e46b0aa2f8592b9f4353924c9",
       "en_present": true,
-      "en_source_ja_sha256": "2da64b458798df8a41964484bfd55d6b4a82d8fbf10b9c45adc7c8d58dacc168",
+      "en_source_ja_sha256": "6b72790f35b4934740982a4ec722ee9b51ecdb3e46b0aa2f8592b9f4353924c9",
       "en_status": "translated"
     },
     "core/activation.md": {
@@ -35,9 +35,9 @@
       "en_status": "translated"
     },
     "core/principles-and-constraints.md": {
-      "ja_sha256": "7362d699f0fbb6c64c9c1b5f19c817e3ff8a0fe67e7e7eefef0fa3e04e994a82",
+      "ja_sha256": "0297359fca803e04809e151dcb9386f27b7e9cab9536dbea3ae940f9574c77e6",
       "en_present": true,
-      "en_source_ja_sha256": "7362d699f0fbb6c64c9c1b5f19c817e3ff8a0fe67e7e7eefef0fa3e04e994a82",
+      "en_source_ja_sha256": "0297359fca803e04809e151dcb9386f27b7e9cab9536dbea3ae940f9574c77e6",
       "en_status": "translated"
     },
     "domains/human-and-taiheki.md": {
@@ -71,15 +71,15 @@
       "en_status": "translated"
     },
     "methods/scope-and-facts.md": {
-      "ja_sha256": "d21a0b0077f53b4aa1c4d44db6e874900058839e56c7459305a981104444eaa1",
+      "ja_sha256": "6be9a64203bd8275a50d85c851c2b5c7ddda48dcdc6a37a9f213d0dcd5275679",
       "en_present": true,
-      "en_source_ja_sha256": "d21a0b0077f53b4aa1c4d44db6e874900058839e56c7459305a981104444eaa1",
+      "en_source_ja_sha256": "6be9a64203bd8275a50d85c851c2b5c7ddda48dcdc6a37a9f213d0dcd5275679",
       "en_status": "translated"
     },
     "methods/system-selection.md": {
-      "ja_sha256": "0378d538fd68794d89130415ee661b5ec31dd4047f5eb22d74b6f4397fda88d0",
+      "ja_sha256": "d0a8c0f8aa288e3473d4f74f56f72154da287ace9f6d07850fb6fe1d00f6d739",
       "en_present": true,
-      "en_source_ja_sha256": "0378d538fd68794d89130415ee661b5ec31dd4047f5eb22d74b6f4397fda88d0",
+      "en_source_ja_sha256": "d0a8c0f8aa288e3473d4f74f56f72154da287ace9f6d07850fb6fe1d00f6d739",
       "en_status": "translated"
     },
     "methods/transformation.md": {

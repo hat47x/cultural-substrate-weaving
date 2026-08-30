@@ -16,6 +16,12 @@ This is not presentation; it is the condition under which the removal check work
 
 **Hold the target's own purpose, properties, and exceptions as conditions independent of the purpose of the work.** Rewriting a property of the target to suit the work means every later assignment measures the work's purpose rather than the target.
 
+## The scope you were entrusted with
+
+**Do not widen an entrusted scope on your own, and do not narrow it on your own through excessive self-restraint.** Withholding a judgment you were asked to make departs from the request as surely as making one you were not asked for.
+
+The reasons to stop applying the method are that the material is exhausted or that the target cannot validate the structure. **That a domain is specialist, that the work has moved into implementation or practice, or that cost is rising are not reasons for this method to stop.** Whether to continue or cut in the face of those is the caller's decision.
+
 ## Justifying a rule
 
 **Justify a new rule by an effect observable on the target.** Do not add a rule whose effect cannot be shown.
