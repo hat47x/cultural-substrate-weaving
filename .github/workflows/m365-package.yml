@@ -29,8 +29,18 @@ jobs:
         with:
           node-version: "22"
       - run: npm install -g @microsoft/m365agentstoolkit-cli
-      - run: python scripts/init_m365_env.py --locale "${{ inputs.locale }}" --env dev --non-interactive --sharepoint-url "${{ inputs.sharepoint_site_url }}"
-      - run: python scripts/build.py
+      - name: Create deployment-only toolkit environment
+        run: python scripts/init_m365_env.py --locale "${{ inputs.locale }}" --env dev --non-interactive --sharepoint-url "${{ inputs.sharepoint_site_url }}"
+      - name: Build tenant-specific validation project
+        env:
+          CSW_M365_SHAREPOINT_SITE_URL: ${{ inputs.sharepoint_site_url }}
+        run: python scripts/build.py
+      - name: Stage deployment-only toolkit environment
+        shell: bash
+        run: |
+          mkdir -p "dist/${{ inputs.locale }}/microsoft-copilot/agent-project/env"
+          cp "adapters/microsoft-copilot/${{ inputs.locale }}/env/.env.dev" \
+             "dist/${{ inputs.locale }}/microsoft-copilot/agent-project/env/.env.dev"
       - working-directory: dist/${{ inputs.locale }}/microsoft-copilot/agent-project
         run: atk package --env dev
       - working-directory: dist/${{ inputs.locale }}/microsoft-copilot/agent-project
