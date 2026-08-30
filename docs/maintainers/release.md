@@ -88,6 +88,8 @@ A `vX.Y.Z` tag push is the canonical automatic publication path. The tag must ma
 
 A release candidate may keep its pending changes under `## Unreleased`. Once publication is deliberately chosen, freeze that material under exactly one dated heading of the form `## X.Y.Z — YYYY-MM-DD`, then restore an `## Unreleased` section for later work. The Release workflow checks the dated version heading before publishing, so packaging success alone cannot silently turn an unfrozen changelog into a release.
 
+Publication must also come from repository history that has actually reached `main`. The Release workflow checks out full history and requires the tagged/selected commit to be an ancestor of `origin/main`. A version-correct tag on a release or development branch therefore cannot bypass the documented merge-to-main step.
+
 Before tagging a new release:
 
 1. reconcile the active `develop/vX.Y.Z` line with `main` if necessary;
@@ -95,7 +97,7 @@ Before tagging a new release:
 3. run/confirm `make release-check` on that finalized release candidate;
 4. merge the validated release candidate to `main`;
 5. confirm the post-merge Validate workflow succeeds;
-6. create and push `vX.Y.Z` at the intended release commit; and
+6. create and push `vX.Y.Z` at the intended release commit that is now in `main` history; and
 7. confirm the Release workflow and published asset set succeed, including the validation-stage disclosure while it remains applicable.
 
 Do not move an existing release tag to include later development work.
