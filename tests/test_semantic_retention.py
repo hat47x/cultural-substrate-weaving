@@ -9,6 +9,20 @@ SPEC = ROOT / "evals/semantic-retention.json"
 
 
 class SemanticRetentionTests(unittest.TestCase):
+    def test_file_scoped_rules_cover_the_same_modules_in_each_locale(self):
+        spec = json.loads(SPEC.read_text(encoding="utf-8"))
+        guarded_files = {
+            locale: set(rules.get("required_by_file", {}))
+            for locale, rules in spec.items()
+        }
+        first_locale, *other_locales = guarded_files
+        for locale in other_locales:
+            self.assertEqual(
+                guarded_files[first_locale],
+                guarded_files[locale],
+                f"file-scoped semantic guards differ: {first_locale} vs {locale}",
+            )
+
     def test_required_phrases_stay_in_their_owning_modules(self):
         spec = json.loads(SPEC.read_text(encoding="utf-8"))
         for locale, rules in spec.items():
