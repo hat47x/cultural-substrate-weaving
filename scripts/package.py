@@ -72,9 +72,29 @@ def main() -> None:
             "bytes": path.stat().st_size,
             "sha256": sha256(path),
         })
+
+    release_assets = ["release-manifest.json"]
+    for root in (DIST / "packages", DIST / "reports"):
+        release_assets.extend(
+            str(path.relative_to(DIST))
+            for path in sorted(root.glob("*"))
+            if path.is_file()
+        )
+
     write_text(
         DIST / "release-manifest.json",
-        json.dumps({"version": v, "locales": locales(), "files": files}, ensure_ascii=False, indent=2) + "\n",
+        json.dumps(
+            {
+                "schema_version": "1",
+                "version": v,
+                "locales": locales(),
+                "files": files,
+                "release_assets": release_assets,
+            },
+            ensure_ascii=False,
+            indent=2,
+        )
+        + "\n",
     )
 
 
