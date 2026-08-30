@@ -8,7 +8,7 @@ from pathlib import Path
 from common import (
     ADAPTERS, DIST, PLUGINS, ROOT, clean_generated, copy_file, locale_heading,
     locale_short, locale_source, locales, manifest,
-    replace_router_links, sha256, version, write_text
+    replace_router_links, version, write_text
 )
 
 
@@ -267,22 +267,6 @@ def write_root_marketplace(plugin_entries: list[dict]) -> None:
     )
 
 
-def write_release_manifest() -> None:
-    files = []
-    for path in sorted(p for p in DIST.rglob("*") if p.is_file()):
-        if path.name == "release-manifest.json":
-            continue
-        files.append({
-            "path": str(path.relative_to(DIST)),
-            "bytes": path.stat().st_size,
-            "sha256": sha256(path),
-        })
-    write_text(
-        DIST / "release-manifest.json",
-        json.dumps({"version": version(), "locales": locales(), "files": files}, ensure_ascii=False, indent=2) + "\n",
-    )
-
-
 def main() -> None:
     clean_generated()
     config = manifest()
@@ -301,7 +285,6 @@ def main() -> None:
 
     write_root_marketplace(plugin_entries)
     write_root_codex_marketplace(codex_entries)
-    write_release_manifest()
     print(f"Built {config['name']} v{version()} for {', '.join(locales())}")
 
 
