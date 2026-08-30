@@ -6,7 +6,7 @@
 
 本スキルは、執筆、経営、ソフトウェア開発、法務などの領域固有知識や品質基準を置き換えません。必要に応じて**領域固有スキルと併用**し、本スキルは文化的体系とKJ法から生じる増分を担当します。
 
-> **現在は検証段階です。** 現行版の比較検証はこれから行います。
+> **現在は検証段階です。** v0.4.0開発線では、Webチャット上の実作業を対象とするprospectiveなLiving Lab観測を開始しています。公開観測はまだ限定的であり、現時点で本スキルの有効性が確立したとは扱いません。→ **[Web Chat Living Lab](docs/ja/experiments/web-chat-living-lab.md)** / **[公開観測記録](research/living-lab/observations/)**
 
 ## インストール
 
@@ -40,7 +40,7 @@ codex plugin marketplace add hat47x/cultural-substrate-weaving
 
 ## 対応プラットフォーム
 
-- OpenAI Codex Skill
+- OpenAI Codex Plugin / 直接配置Skill
 - Claude Code Plugin Marketplace
 - ChatGPT custom GPT更新パック
 - Microsoft 365 Copilot declarative agent

@@ -1,0 +1,21 @@
+{
+  "schema_version": "0.1",
+  "event_id": "event-example-001",
+  "round_id": "round-example-001",
+  "event_type": "question_shift",
+  "observation_mode": "prospective",
+  "recorded_at": "2026-08-30T15:35:00+09:00",
+  "summary": "A framework preview changed the next research question without being adopted as a target finding.",
+  "evidence_refs": [
+    "chat:example-source",
+    "artifact:kj-snapshot-003"
+  ],
+  "artifact_refs": [
+    "artifact:draft-v4"
+  ],
+  "framework_refs": [
+    "example-framework"
+  ],
+  "reopening_condition": "Check whether later target-side material independently supports the new question.",
+  "notes": "This event records a meaningful change in the trajectory, not a score or proof of causal effect."
+}

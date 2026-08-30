@@ -2,7 +2,31 @@
 
 ## Unreleased
 
-No unreleased changes are recorded after the v0.3.0 release candidate.
+## 0.4.0 — 2026-08-31
+
+- Separated CSW activation scope from cultural-framework loading depth. A run may use the skill without opening a framework, and framework contact now progresses only as needed through `not_loaded / probe / preview / full / enacted` rather than treating deeper loading as success.
+- Separated exploratory framework use from attribution use. Frameworks may freely generate questions, contrasts, hypotheses, research targets, and compositional resources, while claims about the target require target-side support and the relevant homogeneity, assignment, convention, lineage, and transition checks.
+- Reframed the removal check as de-binding rather than evidence generation, and added explicit provenance states: `target_supported / framework_generated / cross_field_emergent / unresolved`.
+- Clarified that reducing or rejecting CSW or a particular framework does not narrow the task scope entrusted by the caller; work can return to the domain method while preserving residuals and reopening conditions.
+- Added lightweight longitudinal rounds and event vocabulary for delayed change without turning framework count or trajectory length into KPIs.
+- Added the Web Chat Living Lab research layer with `natural_work` and selective `paired_check` modes, round/event schemas, examples, a dependency-free validator, tests, and Japanese/English operating guidance. Living Lab findings remain research evidence and are not automatically promoted into runtime method rules.
+- Began the prospective Living Lab observation cycle with public/private record separation: real records are private-by-default under `.living-lab/` or outside the repository, while publishable or separately anonymized observations may be kept under `research/living-lab/observations/` and are validated as a closed record set.
+- Added a non-scoring Living Lab review inventory to CI reports. It preserves per-round activation, task-domain coverage context, events, artifacts, residuals, and reopening conditions while explicitly treating counts and distributions as review aids rather than KPIs, scores, win/loss labels, or causal evidence.
+- Aligned the dependency-free Living Lab validator with the published round/event JSON Schemas, including nested additional-property, type, comparison, enum, and date-time checks, and added schema-parity regression coverage so the two validation surfaces cannot silently drift apart.
+- Aligned English translation `source_version` with the active `VERSION`, made reviewed-hash updates advance that metadata automatically, and added validation/regression coverage so version drift cannot remain CI-green.
+- Updated GitHub Actions Python setup to `actions/setup-python@v7`, removing the Node 20 deprecation path from validation, release, and Microsoft 365 packaging workflows.
+- Simplified release triggering so tag pushes are the canonical automatic publication path and `workflow_dispatch` is the explicit re-publication path; publishing a GitHub Release no longer recursively starts the release workflow a second time.
+- Made release ZIP metadata reproducible across checkout/file-mtime changes by normalizing archive paths, timestamps, and permission bits, with regression coverage for byte-identical repeated packaging of the same source tree.
+- Made public packaging fail closed on actual `.env` / non-example `.env.*`, `*.local`, `*.secret`, and symlink inputs, with an independent final ZIP check for the same privacy boundary.
+- Kept public Microsoft 365 packages tenant-neutral: normal builds no longer read or copy local deployment env files, SharePoint site URLs require explicit environment injection, deployment env staging is a separate Agents Toolkit step, and final release validation rejects tenant-specific SharePoint URLs.
+- Clarified release-manifest semantics by separating the full build-file inventory from `release_assets`, and added an independent post-package validator for manifest coverage, hashes, required reports, package-set completeness, reproducible ZIP metadata, and unsafe archive paths.
+- Added a validation-stage disclosure to newly created GitHub Releases and require `gh release create --verify-tag`, so a technically green package release does not silently present the method as empirically established or create an unintended tag.
+- Required GitHub Release publication to come from a commit already present in `main` history, preventing a version-correct tag on a development or release branch from bypassing the merge-to-main gate.
+- Added post-publication verification of the remote GitHub Release against the final manifest, rejecting missing or extra assets and checking uploaded state, byte size, and SHA-256 digest after create/upload.
+- Recorded v0.3.0 as a validated intermediate boundary that was never tagged or published, and explicitly superseded it with the v0.4.0 release line instead of backfilling it under the older release workflow.
+- Added a CI branch-version contract: `develop/vX.Y.Z` and `release/vX.Y.Z` must carry the same `VERSION`, preventing a development or release line from silently building packages under a different version.
+- Added runtime-package boundary tests so generated OpenAI and Claude/Codex references must match the canonical manifest exactly, while repository-only research, maintainer, test, and workflow material stays out of runtime output trees.
+- Added generated-skill link integrity tests so local Markdown links stay inside the runtime package, resolve to bundled files, and reference only manifest-declared runtime references.
 
 ## 0.3.0 — 2026-08-30
 

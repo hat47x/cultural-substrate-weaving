@@ -2,9 +2,9 @@
 
 This GitHub repository can be used as a Claude Plugin Marketplace.
 
-The method relies on web search in some cases for fact-checking and gathering context. Confirm that the WebSearch/WebFetch tools are available in Claude Code.
+When a task needs current facts, external context, or additional source discovery, confirm that Claude Code's WebSearch/WebFetch tools are available. They are not required for KJ integration or structural exploration that can be completed from the supplied repository or material alone. If search is unavailable, do not guess missing external facts.
 
-`/plugin` opens an interactive panel that only runs in the terminal CLI. How you install the plugin depends on which environment you're using.
+`/plugin` opens the interactive plugin manager in terminal Claude Code. Installation details vary by surface.
 
 ## Terminal CLI (the standalone `claude` command)
 
@@ -18,7 +18,7 @@ Run this inside an interactive session:
 
 The Japanese plugin is `cultural-substrate-weaving-ja`.
 
-To add it non-interactively (e.g. from a script):
+To add it non-interactively, for example from a script:
 
 ```bash
 claude plugin marketplace add hat47x/cultural-substrate-weaving
@@ -27,10 +27,7 @@ claude plugin install cultural-substrate-weaving-en@cultural-substrate-weaving
 
 ## Claude Desktop (Code tab, local and SSH sessions)
 
-Desktop's own plugin browser only lists marketplaces that are already registered. To use a non-official marketplace like this one, register it first, either by:
-
-- Running the terminal CLI commands above once (Desktop shares the `~/.claude` configuration with the CLI, so the plugin then appears under **+** → **Plugins** → **Manage plugins**), or
-- Adding the following to the repository's `.claude/settings.json` for team-wide setup (teammates are prompted to install it when they trust the folder):
+For a non-official marketplace such as this repository, register the marketplace before expecting its plugin to appear in a plugin browser. One option is to run the terminal CLI commands above once. For a repository-scoped team setup, use `.claude/settings.json`:
 
 ```json
 {
@@ -39,33 +36,35 @@ Desktop's own plugin browser only lists marketplaces that are already registered
       "source": { "source": "github", "repo": "hat47x/cultural-substrate-weaving" }
     }
   },
-  "enabledPlugins": ["cultural-substrate-weaving-en@cultural-substrate-weaving"]
+  "enabledPlugins": {
+    "cultural-substrate-weaving-en@cultural-substrate-weaving": true
+  }
 }
 ```
 
-Once registered, install it from Desktop via **+** → **Plugins** → **Add plugin**.
+After registration, use the plugin UI available on your current Claude surface. Product UI labels can change; the `/plugin` manager in terminal Claude Code is the reference path when available.
 
 ## Cloud sessions (claude.ai web, etc.)
 
-The plugin browser isn't available in cloud sessions. Configure `extraKnownMarketplaces` and `enabledPlugins` in `.claude/settings.json` as shown above so the plugin installs automatically at session start.
+Do not assume that a cloud session exposes the same local plugin manager or filesystem as terminal Claude Code. If you expect repository configuration to load a plugin, confirm how that surface handles project settings and plugin marketplaces.
 
 ## A simpler alternative: upload it as a Skill
 
-If the Plugin Marketplace route is inconvenient, you can instead use Claude's general-purpose Skills feature (Customize → Skills in Claude Desktop or claude.ai). No marketplace registration or terminal use is required.
+If the Plugin Marketplace route is inconvenient, you can use Claude's Skills feature on a surface that supports skill upload. Plan, UI, and administrator availability are controlled by the Claude product rather than this repository.
 
 1. Download the `openai-skill-metered` or `openai-skill-interactive` ZIP from GitHub Releases (the same package used in [Use with Codex](codex.md)).
-2. In Claude Desktop, go to Customize → Skills → Add → Upload a skill, and upload that ZIP as-is.
-3. On claude.ai web, the Skills settings support the same upload.
+2. If your Claude surface provides Skills upload, upload the ZIP as-is.
+3. Test both activation and non-activation behavior after installation.
 
-**Caveat**: this SKILL.md doesn't set the explicit-invocation-only flag (`disable-model-invocation`) that the Plugin package (`cultural-substrate-weaving-en`) does. So unlike the plugin, Claude will invoke it automatically whenever it judges the skill relevant (the same behavior as `openai-skill-interactive`). If you want to minimize token consumption, prefer the Plugin Marketplace route above instead.
+**Caveat**: this SKILL.md does not set the explicit-invocation-only flag (`disable-model-invocation`) used by the Plugin package (`cultural-substrate-weaving-en`). Activation control can therefore differ from the plugin. Prefer the Plugin Marketplace route when explicit invocation must be preserved strictly.
 
-## WSL sessions
+## WSL
 
-Plugins aren't available in WSL sessions.
+Claude Code supports WSL, and plugin marketplace settings are part of the Linux/WSL configuration surface. Do not treat plugins as unavailable merely because the session runs in WSL; use the normal terminal CLI flow. In managed environments, Windows-side managed settings can also be configured to flow into WSL.
 
 ## If you see "/plugin isn't available in this environment"
 
-This appears when a `/plugin` command is run somewhere other than an interactive terminal session (Desktop, cloud, or a non-interactive session). Follow the matching section above instead.
+This can appear when plugin commands are invoked from a surface that does not expose the interactive terminal manager. Check whether that surface provides another plugin UI or reads project settings; otherwise configure the marketplace from terminal Claude Code.
 
 ## Invoke
 

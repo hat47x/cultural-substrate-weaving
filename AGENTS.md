@@ -20,6 +20,19 @@ Before adding anything to `src/<locale>/`, classify it:
 
 A finding from an experiment is not automatically a change to the skill. A finding about how a request was posed, about domain quality, or about the model's default style belongs outside the skill unless it is necessary to execute or validate the two core capabilities.
 
+## Living Lab research workflow
+
+Use the Web Chat Living Lab to observe v0.4.0 in real work without turning ordinary work into an experiment for its own sake.
+
+- Use `natural_work` by default. Use `paired_check` only when a method-change decision, harm check, important regression check, or repeated surprising effect makes a stronger comparison useful.
+- `non_activation` and `useful_nonuse` are valid outcomes. Never force a cultural framework into a task merely to increase framework-use count or observation coverage.
+- Do not fabricate additional cases to fill domain categories. `task.domain` in the summary is coverage context only, not a taxonomy, quota, KPI, score, or release gate.
+- Keep real or private round/event records under `.living-lab/` or outside the repository. Commit only public-safe or separately anonymized/abstracted records under `research/living-lab/observations/`.
+- Prefer opaque references over copying source material into records when the copied material would disclose more than is needed for later review. Do not commit secrets, identifying private data, or confidential source content into public observations.
+- Public observation files must form a valid closed record set. Run `make check` before proposing changes; the Living Lab validator and CI report generation are part of that check.
+- Do not change `src/` from a single positive case. Consider promotion only after the same function recurs across different real tasks, the target/cognitive effect can be described without relying on a framework name, non-use or harm boundaries are visible, and the candidate is not already covered by an existing rule.
+- Prefer changing research records, auxiliary guidance, or tooling over adding static runtime rules when the observation does not meet that promotion threshold.
+
 ## Branch and release workflow
 
 Use a lightweight Git Flow around versioned development lines.
