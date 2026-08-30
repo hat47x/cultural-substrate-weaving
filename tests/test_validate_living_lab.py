@@ -100,6 +100,33 @@ class LivingLabValidationTests(unittest.TestCase):
             set(event_properties["observation_mode"]["enum"]),
         )
 
+        semantic_rules = self.round_schema["allOf"]
+        self.assertTrue(
+            any(
+                rule.get("if", {}).get("properties", {}).get("mode", {}).get("const")
+                == "paired_check"
+                and "comparison" in rule.get("then", {}).get("required", [])
+                for rule in semantic_rules
+            ),
+            "round schema must require comparison for paired_check",
+        )
+        self.assertTrue(
+            any(
+                rule.get("if", {})
+                .get("properties", {})
+                .get("activation_scope", {})
+                .get("const")
+                == "non_activation"
+                and rule.get("then", {})
+                .get("properties", {})
+                .get("framework_contacts", {})
+                .get("maxItems")
+                == 0
+                for rule in semantic_rules
+            ),
+            "round schema must forbid framework contacts for non_activation",
+        )
+
     def test_paired_check_requires_comparison_refs(self) -> None:
         record = copy.deepcopy(self.round_record)
         record["mode"] = "paired_check"
