@@ -205,26 +205,75 @@ def validate_record(data: dict[str, Any]) -> str:
     raise ValidationError("record must contain round_id or event_id")
 
 
-def load_and_validate(path: Path) -> str:
+def load_record(path: Path) -> tuple[str, dict[str, Any]]:
     data = json.loads(path.read_text(encoding="utf-8"))
     if not isinstance(data, dict):
         raise ValidationError(f"{path}: top level must be an object")
-    return validate_record(data)
+    return validate_record(data), data
+
+
+def load_and_validate(path: Path) -> str:
+    kind, _ = load_record(path)
+    return kind
+
+
+def validate_record_set(records: list[dict[str, Any]]) -> None:
+    """Validate identifiers and event-to-round references inside one supplied record set.
+
+    This is intentionally separate from single-record validation: an event file may be
+    checked on its own when its round lives elsewhere, while a declared record set is
+    expected to be internally connected.
+    """
+    round_ids: set[str] = set()
+    event_ids: set[str] = set()
+    events: list[dict[str, Any]] = []
+
+    for data in records:
+        kind = validate_record(data)
+        if kind == "round":
+            identifier = data["round_id"]
+            if identifier in round_ids:
+                raise ValidationError(f"duplicate round_id in record set: {identifier}")
+            round_ids.add(identifier)
+        else:
+            identifier = data["event_id"]
+            if identifier in event_ids:
+                raise ValidationError(f"duplicate event_id in record set: {identifier}")
+            event_ids.add(identifier)
+            events.append(data)
+
+    for event in events:
+        if event["round_id"] not in round_ids:
+            raise ValidationError(
+                f"event {event['event_id']} references missing round_id: {event['round_id']}"
+            )
 
 
 def main() -> int:
     parser = argparse.ArgumentParser(description="Validate Web Chat Living Lab round/event records.")
     parser.add_argument("paths", nargs="*", type=Path, help="JSON records to validate")
+    parser.add_argument(
+        "--record-set",
+        action="store_true",
+        help="Also require unique IDs and event round_id references to resolve within the supplied files.",
+    )
     args = parser.parse_args()
+    use_default_set = not args.paths
     paths = args.paths or [
         ROOT / "evals" / "living-lab-round.example.json",
+        ROOT / "evals" / "living-lab-paired.example.json",
         ROOT / "evals" / "living-lab-event.example.json",
     ]
 
     try:
+        loaded: list[dict[str, Any]] = []
         for path in paths:
-            kind = load_and_validate(path)
+            kind, data = load_record(path)
+            loaded.append(data)
             print(f"OK {kind}: {path}")
+        if args.record_set or use_default_set:
+            validate_record_set(loaded)
+            print(f"OK record-set: {len(loaded)} records")
     except (OSError, json.JSONDecodeError, ValidationError) as exc:
         print(f"Living Lab validation failed: {exc}")
         return 1
