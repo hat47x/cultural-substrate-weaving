@@ -1,8 +1,11 @@
 from __future__ import annotations
 
 import unittest
+from pathlib import Path
 
 from scripts.check_release_changelog import check_release_heading
+
+ROOT = Path(__file__).resolve().parents[1]
 
 
 class ReleaseChangelogTests(unittest.TestCase):
@@ -21,6 +24,11 @@ class ReleaseChangelogTests(unittest.TestCase):
         text = "## 0.4.0 — 2026-08-31\n\n## 0.4.0 — 2026-09-01\n"
         with self.assertRaises(ValueError):
             check_release_heading(text, "0.4.0")
+
+    def test_repository_changelog_is_frozen_for_active_version(self) -> None:
+        version = (ROOT / "VERSION").read_text(encoding="utf-8").strip()
+        changelog = (ROOT / "CHANGELOG.md").read_text(encoding="utf-8")
+        check_release_heading(changelog, version)
 
 
 if __name__ == "__main__":
