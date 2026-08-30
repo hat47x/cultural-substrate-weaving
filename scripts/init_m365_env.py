@@ -48,8 +48,19 @@ def main() -> None:
         "",
     ]
     path.write_text("\n".join(content), encoding="utf-8")
-    print(f"Created {path.relative_to(ROOT)}")
-    print("Run: python scripts/build.py")
+    print(f"Created deployment-only environment file: {path.relative_to(ROOT)}")
+    print("Public builds do not read or copy this file automatically.")
+    if args.sharepoint_url:
+        print(
+            "Inject the SharePoint URL explicitly while building, for example: "
+            f'CSW_M365_SHAREPOINT_SITE_URL="{args.sharepoint_url}" python scripts/build.py'
+        )
+    else:
+        print("Run python scripts/build.py for a tenant-neutral build.")
+    print(
+        "Before atk package/validate, copy the generated environment file into the "
+        "selected dist/<locale>/microsoft-copilot/agent-project/env/ directory."
+    )
 
 
 if __name__ == "__main__":
