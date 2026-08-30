@@ -239,6 +239,25 @@
           "comparison"
         ]
       }
+    },
+    {
+      "if": {
+        "properties": {
+          "activation_scope": {
+            "const": "non_activation"
+          }
+        },
+        "required": [
+          "activation_scope"
+        ]
+      },
+      "then": {
+        "properties": {
+          "framework_contacts": {
+            "maxItems": 0
+          }
+        }
+      }
     }
   ]
 }
