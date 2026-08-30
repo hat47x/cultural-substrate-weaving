@@ -102,6 +102,16 @@ An event is not proof of causal effect. It records what happened and which refer
 
 Use `retrospective` for events assigned after rereading old work and `prospective` for events observed under an already-declared observation plan.
 
+## Separate private records from public observations
+
+Real round/event records are not assumed to belong in the public repository. Records that touch private chats, unpublished drafts, internal material, client information, or similar context should normally stay under `.living-lab/` or outside the repository. Everything under `.living-lab/` except its README is ignored by Git.
+
+Only observations that are suitable for publication belong under `research/living-lab/observations/`. A public record should either rely only on public information or be a separately anonymized/abstracted version of a private original. Prefer opaque references such as `chat:case-a-round-3` or `artifact:draft-7` when copying source content would disclose more than the observation requires.
+
+This separation is not a research-quality ranking. Private and public records can use the same round/event formats. Whether a record is safe to publish is a different question from whether the observation is useful.
+
+The public observation set is validated in CI as a closed record set. This keeps duplicate IDs and event-to-round reference errors from accumulating in published evidence.
+
 ## What not to record
 
 Observation overhead should not become heavier than the real task. Normally do not ledger:
@@ -148,6 +158,9 @@ python scripts/validate_living_lab.py path/to/round.json path/to/event.json
 
 # Validate a closed set, including duplicate IDs and event -> round references.
 python scripts/validate_living_lab.py --record-set path/to/round.json path/to/event.json
+
+# Validate the published observation set as a closed record set.
+python scripts/validate_living_lab.py --record-set research/living-lab/observations/*.json
 ```
 
 Individual validation allows an event's round to live elsewhere. With `--record-set`, the supplied files are treated as one closed record set: `round_id` / `event_id` values must be unique and every event's `round_id` must resolve within the set.
