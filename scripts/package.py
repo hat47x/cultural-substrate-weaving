@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import json
+import stat
 import zipfile
 from pathlib import Path
 
@@ -31,7 +32,7 @@ def zip_tree(source: Path, target: Path, root_name: str | None = None) -> None:
             info = zipfile.ZipInfo(arcname.as_posix(), date_time=ZIP_TIMESTAMP)
             info.compress_type = zipfile.ZIP_DEFLATED
             info.create_system = 3
-            info.external_attr = mode << 16
+            info.external_attr = (stat.S_IFREG | mode) << 16
             archive.writestr(info, path.read_bytes(), compress_type=zipfile.ZIP_DEFLATED, compresslevel=9)
 
 
