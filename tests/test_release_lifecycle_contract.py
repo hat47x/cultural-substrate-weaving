@@ -44,6 +44,16 @@ class ReleaseLifecycleContractTests(unittest.TestCase):
         self.assertIn("Release workflow checks the dated version heading", text)
         self.assertIn("finalize `CHANGELOG.md`", text)
 
+    def test_release_history_distinguishes_validated_from_published(self) -> None:
+        text = (ROOT / "docs" / "maintainers" / "release-history.md").read_text(encoding="utf-8")
+        self.assertIn("validated and merged to `main`, but never published", text)
+        self.assertIn("No `v0.3.0` tag was created", text)
+        self.assertIn("No GitHub Release `v0.3.0` was published", text)
+        self.assertIn("superseded by the v0.4.0 release line", text)
+        self.assertIn("validated version boundary", text)
+        self.assertIn("published release", text)
+        self.assertIn("Do not infer state 3 from state 2", text)
+
 
 if __name__ == "__main__":
     unittest.main()
