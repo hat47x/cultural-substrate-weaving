@@ -46,6 +46,14 @@ class ReleaseWorkflowContractTests(unittest.TestCase):
         self.assertIn('--version "$(cat VERSION)"', workflow)
         self.assertIn("--changelog CHANGELOG.md", workflow)
 
+    def test_publication_verifies_remote_asset_set_and_digests(self) -> None:
+        workflow = RELEASE_WORKFLOW.read_text(encoding="utf-8")
+        self.assertIn("Verify published release assets", workflow)
+        self.assertIn('gh api "repos/${GITHUB_REPOSITORY}/releases/tags/${TAG}"', workflow)
+        self.assertIn("scripts/verify_published_release.py", workflow)
+        self.assertIn("--manifest dist/release-manifest.json", workflow)
+        self.assertIn('--tag "$TAG"', workflow)
+
     def test_release_candidate_validation_persists_final_manifest(self) -> None:
         text = VALIDATE_WORKFLOW.read_text(encoding="utf-8")
         self.assertIn("name: release-candidate-manifest", text)
