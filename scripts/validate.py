@@ -57,6 +57,13 @@ def check_translation_hashes(errors: list[str]) -> None:
     config = manifest()
     canonical = config["canonical_locale"]
     tracking = read_json(ROOT / "i18n/translation-manifest.json")
+    english = tracking.get("locales", {}).get("en-US", {})
+    if english.get("source_version") != version():
+        fail(
+            errors,
+            f"English translation source_version does not match VERSION: "
+            f"{english.get('source_version')} != {version()}",
+        )
     for rel, item in tracking["files"].items():
         source = locale_source(canonical) / rel
         if not source.exists():
