@@ -1,56 +1,59 @@
-# Detailed activation decision
+# Activation, loading depth, and early exit
 
-Read this file when deciding scope, implicit activation, explicit invocation, or early stopping.
+Read this when deciding how much of the skill to use and how deeply to load a cultural framework.
 
-## 0. Decide whether to activate
+## 0. Separate two decisions
 
-Activate according to whether the method can add a **meaningful increment over domain-specific methods**. For implicit activation, prioritize precision so the skill does not intrude on unrelated work.
+1. **Activation scope**: non-activation / limited use / exploratory use.
+2. **Framework loading depth**: `not_loaded / probe / preview / full / enacted`.
 
-When the decision is close and interruption cost is low, try the **cheapest limited application and measure it**. Do not treat an untried move as zero increment.
+Using the skill does not require opening a cultural framework every time. Opening a framework does not require reading it in full or executing a framework-native operation.
 
-Choose one scope:
+## 1. Activation scope
 
-1. **No activation:** Use the domain method.
-2. **Limited application:** Use only a needed check, such as consistency of one target, temporal structure, missing connections, irreversibility, or comparison through a specific cultural framework.
-3. **Full application:** Combine cultural-framework exploration with KJ integration and validate the result against the target.
+For implicit activation, ask whether the skill is likely to add a meaningful increment beyond the domain-specific method.
 
-Use limited application when the main structure is already known and the examined aspect can be isolated. Consider full application when the main structure itself is unsettled, material is numerous and heterogeneous, or several dimensions change one another's state.
+- **Non-activation**: the domain method is enough.
+- **Limited use**: use only what is needed, such as KJ, provenance, a consistency check, temporal structure, or missing connections.
+- **Exploratory use**: the main structure is itself unsettled, so cultural-framework exploration and KJ material integration are used iteratively.
 
-### Conditions for implicit activation
+Exploratory use fits an open problem space in which structure, relations, states, or transitions are central, multiple dimensions interact, and findings can be returned to the target for checking.
 
-All five should hold:
+Prefer ordinary methods for simple proofreading, translation, calculation, format conversion, routine implementation, local fixes, or urgent tasks that should first follow domain procedures.
 
-1. **The problem space is open:** the answer or candidates cannot be exhaustively enumerated in advance, and deciding the destination is part of the work.
-2. **The task centers on exploring or validating structure, relations, states, or transitions.**
-3. **Several dimensions interact.**
-4. **Findings can be checked against the target.**
-5. **There is a plausible chance of producing a question, relation, falsification condition, or research task beyond ordinary analysis.**
+When the choice is close, start with limited use because it has the smaller interruption cost.
 
-The first condition is load-bearing. Closed problems belong to ordinary methods.
+## 2. Explicit invocation
 
-### Prefer ordinary methods when
+When the skill is explicitly requested, do not refuse it merely from a prediction of low value. Explicit invocation still does not force full loading or framework-native operations.
 
-- proofreading, rewriting, shortening, summarization, or translation is straightforward;
-- the task is fact lookup, calculation, or format conversion;
-- implementation or maintenance follows a known procedure;
-- a local defect has bounded cause and scope;
-- evidence needed to validate structural hypotheses is missing; or
-- emergency, safety, or legal deadlines require the domain procedure first.
+When a particular framework is named, open it lightly first and see what survives on the target side. If the fit is weak, record the weak fit and return.
 
-Decide from these conditions, not from trigger words in the request.
+## 3. Loading depth
 
-### Explicit invocation
+- **`not_loaded`**: do not open a cultural framework. This is a normal path when the target and KJ are enough for the current question.
+- **`probe`**: ask whether there is a concrete reason to open another cognitive field. Look for target-side unresolved structure such as cycles, paths, boundaries, center/periphery, multiple timescales, flow, continua, repetition, and offset.
+- **`preview`**: inspect only the framework's main cognitive capabilities and limits—what it treats as positions, paths, cycles, or relations.
+- **`full`**: read primary sources, lineage, symbolism, and compound structure when those are actually needed.
+- **`enacted`**: execute a framework-native operation only when it has concrete meaning for the target-side question.
 
-Explicit invocation replaces the activation decision. Except for safety or authority boundaries, do not refuse activation solely on a prediction that increment will be small. When ordinary methods appear sufficient, perform a limited application against an explicit baseline and report no increment if none appears.
+If the probe produces no concrete question, do not deepen it. If preview is enough, return to KJ. Even after a full read, do not enact an operation that is not needed.
 
-### Stopping
+## 4. Reduce or stop
 
-Reduce scope or stop when:
+Reduce loading depth, and if necessary activation scope, when:
 
-- no new semantic unit, relation, or question emerges;
-- increments repeat existing content;
-- changing frameworks no longer points beyond the baseline;
-- the baseline already achieves the purpose; or
-- unit compatibility or target-side validation material cannot be established.
+- no new semantic unit, relation, or question appears;
+- the increment duplicates existing content;
+- only framework vocabulary increases;
+- an operation starts thinning target facts, boundaries, irreversibility, or evidence state;
+- the baseline already achieves the current purpose;
+- attribution use lacks the homogeneity or target-side validation material it requires.
 
-Cost-based stopping belongs to the human/caller. If an external limit interrupts a run, record that it is not converged.
+Do not deepen merely to feel that the framework was used thoroughly.
+
+Reducing framework use or this skill's activation scope is not permission to narrow the task scope entrusted by the caller. Continue with the domain method when appropriate.
+
+A round may end when the needed artifact, decision, or research direction exists and important residuals and reopening conditions are preserved. Later material may justify reopening at a deeper level.
+
+Follow explicit human resource constraints. If an external limit interrupts the work, preserve what remains unresolved and how to resume it.
