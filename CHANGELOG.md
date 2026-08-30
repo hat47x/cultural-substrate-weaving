@@ -2,7 +2,8 @@
 
 ## Unreleased
 
-No unreleased changes are recorded after the v0.3.0 release candidate.
+- Updated GitHub Actions Python setup to `actions/setup-python@v7`, removing the Node 20 deprecation path from validation, release, and Microsoft 365 packaging workflows.
+- Simplified release triggering so tag pushes are the canonical automatic publication path and `workflow_dispatch` is the explicit re-publication path; publishing a GitHub Release no longer recursively starts the release workflow a second time.
 
 ## 0.3.0 — 2026-08-30
 
