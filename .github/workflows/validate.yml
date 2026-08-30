@@ -29,6 +29,13 @@ jobs:
             ref="${HEAD_REF}"
           fi
           python scripts/check_branch_version.py --ref "${ref}" --version-file VERSION
+      - name: Expose reviewed translation hashes
+        shell: bash
+        run: |
+          python scripts/update_translation_hashes.py --locale en-US
+          echo '---TRANSLATION-MANIFEST-BEGIN---'
+          cat i18n/translation-manifest.json
+          echo '---TRANSLATION-MANIFEST-END---'
       - name: Run validation
         shell: bash
         env:
