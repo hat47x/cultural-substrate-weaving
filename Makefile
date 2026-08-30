@@ -1,4 +1,4 @@
-.PHONY: build validate test tokens package check release-check clean update-en-hashes living-lab-check
+.PHONY: build validate test tokens package check release-check clean update-en-hashes living-lab-check living-lab-summary
 
 build:
 	python scripts/build.py
@@ -18,7 +18,10 @@ package:
 living-lab-check:
 	python scripts/validate_living_lab.py
 
-check: build validate test tokens living-lab-check
+living-lab-summary:
+	python scripts/summarize_living_lab.py
+
+check: build validate test tokens living-lab-check living-lab-summary
 
 release-check: check package
 
