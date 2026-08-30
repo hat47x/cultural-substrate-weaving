@@ -68,7 +68,7 @@ Scales may be used when useful, but averages and win/loss labels are not the val
 
 ## Round records
 
-The machine-readable format is `evals/living-lab-round.schema.json`; see `evals/living-lab-round.example.json`.
+The machine-readable format is `evals/living-lab-round.schema.json`. See `evals/living-lab-round.example.json` for a normal round and `evals/living-lab-paired.example.json` for a positive paired-check example.
 
 The record is intended to preserve only what may matter later:
 
@@ -140,9 +140,17 @@ Do not create a permanent rule from one successful case. Before promotion, ask:
 The included examples and local records can be checked without external dependencies:
 
 ```bash
+# Validate the bundled natural / paired / event examples as one record set.
 python scripts/validate_living_lab.py
+
+# Validate individual record shapes only.
 python scripts/validate_living_lab.py path/to/round.json path/to/event.json
+
+# Validate a closed set, including duplicate IDs and event -> round references.
+python scripts/validate_living_lab.py --record-set path/to/round.json path/to/event.json
 ```
+
+Individual validation allows an event's round to live elsewhere. With `--record-set`, the supplied files are treated as one closed record set: `round_id` / `event_id` values must be unique and every event's `round_id` must resolve within the set.
 
 The validator does not score research quality. It checks record consistency such as required fields, identifiers, enums, paired-check references, and event evidence references.
 
