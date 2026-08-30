@@ -1,0 +1,49 @@
+{
+  "schema_version": "0.1",
+  "round_id": "round-2026-08-30-001",
+  "case_id": "csw-repository-operations",
+  "mode": "natural_work",
+  "observed_at": "2026-08-30T17:27:50+09:00",
+  "environment": {
+    "platform": "web_chat",
+    "model_label": "GPT-5.6 Sol",
+    "product_mode": "interactive chat",
+    "tools": [
+      "GitHub connector"
+    ],
+    "notes": "Only visible or task-relevant environment details are recorded."
+  },
+  "task": {
+    "summary": "Continue repository work after v0.4.0 CI stabilization, preserve release boundaries, and begin the first prospective Living Lab observation cycle.",
+    "domain": "software and research-method repository operations",
+    "source_refs": [
+      "github:develop/v0.4.0@422649825be34c211871451450324e49e75d1910",
+      "github:issue:25",
+      "github:issue:31"
+    ],
+    "preservation_set": [
+      "Do not modify runtime method content merely to create an observed CSW use case.",
+      "Keep release and CI work governed by repository and software-engineering constraints.",
+      "Treat non-activation as a normal outcome when cultural-framework exploration is unnecessary."
+    ]
+  },
+  "material_delta_refs": [
+    "github:issue:31"
+  ],
+  "invocation": "implicit",
+  "activation_scope": "non_activation",
+  "framework_contacts": [],
+  "artifacts": [
+    "github:issue:31",
+    "github:branch:research/living-lab-prospective-round-001"
+  ],
+  "residuals": [
+    "The v0.3.0 publication boundary remains tracked separately in issue #25.",
+    "Further observations are needed in writing, research, design, and KJ-integration work before considering method changes."
+  ],
+  "reopening_conditions": [
+    "Reconsider CSW activation if the repository task changes from operational execution to an ambiguous cross-domain interpretation problem.",
+    "Review the observation set when repeated useful or harmful boundaries emerge across different task types."
+  ],
+  "notes": "The round intentionally records useful non-activation rather than forcing a cultural framework into a GitHub and CI administration task."
+}
