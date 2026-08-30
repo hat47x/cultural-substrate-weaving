@@ -6,6 +6,7 @@
 - Simplified release triggering so tag pushes are the canonical automatic publication path and `workflow_dispatch` is the explicit re-publication path; publishing a GitHub Release no longer recursively starts the release workflow a second time.
 - Added a CI branch-version contract: `develop/vX.Y.Z` and `release/vX.Y.Z` must carry the same `VERSION`, preventing a development or release line from silently building packages under a different version.
 - Added runtime-package boundary tests so generated OpenAI and Claude/Codex references must match the canonical manifest exactly, while repository-only research, maintainer, test, and workflow material stays out of runtime output trees.
+- Added generated-skill link integrity tests so local Markdown links stay inside the runtime package, resolve to bundled files, and reference only manifest-declared runtime references.
 
 ## 0.3.0 — 2026-08-30
 
