@@ -1,0 +1,72 @@
+# Release maintenance
+
+## Validation levels
+
+Use the lightweight development path for ordinary work:
+
+```bash
+make check
+```
+
+It rebuilds runtime outputs, validates source/generated parity, runs tests and token checks, validates Living Lab records, and writes review reports. It does **not** declare a release candidate or leave a release manifest behind.
+
+Use the release path only when checking a release candidate:
+
+```bash
+make release-check
+```
+
+This runs `make check`, creates the locale/platform ZIP packages, writes the final `dist/release-manifest.json`, and independently validates the completed release set.
+
+## Release manifest semantics
+
+The release manifest is a **post-package release contract**, not a build-progress marker.
+
+- `files` inventories all files present under `dist/` before the manifest itself is written. It is build provenance and includes generated trees that are not separately published as GitHub Release assets.
+- `release_assets` lists exactly the files the Release workflow publishes: the manifest itself, package ZIPs, and validation/review reports.
+- `schema_version` versions the manifest structure independently of the CSW method version.
+
+`make build` may internally pass through an older build-script manifest-writing step, but the Makefile removes that intermediate file immediately. Do not consume a release manifest until `make package` or `make release-check` has completed.
+
+## Package reproducibility
+
+Release ZIP creation normalizes:
+
+- member ordering;
+- archive paths to POSIX separators;
+- ZIP timestamps;
+- regular-file type and 0644/0755 permission bits; and
+- the DEFLATE compression level.
+
+This removes checkout/file-mtime and ordinary archive-metadata variance. It is not a claim that different Python or zlib implementations must always emit byte-identical compressed streams.
+
+## Release validation
+
+`python scripts/validate_release.py` runs after packaging and checks, among other things:
+
+- manifest version/locale/schema metadata;
+- exact `dist/` file inventory, sizes, and SHA-256 values;
+- exact locale × platform package set;
+- required validation, token-budget, and Living Lab reports;
+- agreement between `release_assets` and the publication boundary;
+- readable, non-empty ZIPs with safe member paths; and
+- normalized ZIP metadata and permissions.
+
+The GitHub Release workflow reads the already validated `release_assets` list and passes that exact list to `gh release create` or `gh release upload`. Do not duplicate the publication list as workflow globs.
+
+## Tag and publication flow
+
+A `vX.Y.Z` tag push is the canonical automatic publication path. The tag must match the checked-out `VERSION`.
+
+`workflow_dispatch` is only for re-publishing assets for an **existing** tag. It is not a substitute for creating a missing release tag.
+
+Before tagging a new release:
+
+1. reconcile the active `develop/vX.Y.Z` line with `main` if necessary;
+2. run/confirm `make release-check` on the release candidate;
+3. merge the validated release candidate to `main`;
+4. confirm the post-merge Validate workflow succeeds;
+5. create and push `vX.Y.Z` at the intended release commit; and
+6. confirm the Release workflow and published asset set succeed.
+
+Do not move an existing release tag to include later development work.
