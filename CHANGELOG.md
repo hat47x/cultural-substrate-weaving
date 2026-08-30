@@ -2,6 +2,13 @@
 
 ## Unreleased
 
+- Separated CSW activation scope from cultural-framework loading depth. A run may use the skill without opening a framework, and framework contact now progresses only as needed through `not_loaded / probe / preview / full / enacted` rather than treating deeper loading as success.
+- Separated exploratory framework use from attribution use. Frameworks may freely generate questions, contrasts, hypotheses, research targets, and compositional resources, while claims about the target require target-side support and the relevant homogeneity, assignment, convention, lineage, and transition checks.
+- Reframed the removal check as de-binding rather than evidence generation, and added explicit provenance states: `target_supported / framework_generated / cross_field_emergent / unresolved`.
+- Clarified that reducing or rejecting CSW or a particular framework does not narrow the task scope entrusted by the caller; work can return to the domain method while preserving residuals and reopening conditions.
+- Added lightweight longitudinal rounds and event vocabulary for delayed change without turning framework count or trajectory length into KPIs.
+- Added the Web Chat Living Lab research layer with `natural_work` and selective `paired_check` modes, round/event schemas, examples, a dependency-free validator, tests, and Japanese/English operating guidance. Living Lab findings remain research evidence and are not automatically promoted into runtime method rules.
+- Aligned English translation `source_version` with the active `VERSION`, made reviewed-hash updates advance that metadata automatically, and added validation/regression coverage so version drift cannot remain CI-green.
 - Updated GitHub Actions Python setup to `actions/setup-python@v7`, removing the Node 20 deprecation path from validation, release, and Microsoft 365 packaging workflows.
 - Simplified release triggering so tag pushes are the canonical automatic publication path and `workflow_dispatch` is the explicit re-publication path; publishing a GitHub Release no longer recursively starts the release workflow a second time.
 - Added a CI branch-version contract: `develop/vX.Y.Z` and `release/vX.Y.Z` must carry the same `VERSION`, preventing a development or release line from silently building packages under a different version.
