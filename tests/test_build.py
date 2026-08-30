@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import json
+import re
 import unittest
 from pathlib import Path
 
@@ -9,10 +10,34 @@ LOCALES = ("ja-JP", "en-US")
 MANIFEST = json.loads((ROOT / "src/manifest.json").read_text(encoding="utf-8"))
 EXPECTED_REFERENCES = {module["skill_reference"] for module in MANIFEST["modules"]}
 REPOSITORY_ONLY_PARTS = {"docs", "evals", "tests", ".github", "maintainers"}
+MARKDOWN_LINK = re.compile(r"\[[^\]]+\]\(([^)]+)\)")
 
 
 def markdown_filenames(path: Path) -> set[str]:
     return {item.name for item in path.glob("*.md") if item.is_file()}
+
+
+def local_markdown_links(text: str) -> list[str]:
+    links: list[str] = []
+    for match in MARKDOWN_LINK.finditer(text):
+        target = match.group(1).strip().strip("<>")
+        if not target or target.startswith(("#", "http://", "https://", "mailto:")):
+            continue
+        links.append(target)
+    return links
+
+
+def generated_skill_paths() -> list[Path]:
+    paths: list[Path] = []
+    for locale in LOCALES:
+        for profile in ("interactive", "metered"):
+            paths.append(
+                ROOT
+                / f"dist/{locale}/openai-skill/{profile}/cultural-substrate-weaving/SKILL.md"
+            )
+    for plugin_root in sorted((ROOT / "plugins").glob("cultural-substrate-weaving-*")):
+        paths.extend(sorted((plugin_root / "skills").glob("*/SKILL.md")))
+    return paths
 
 
 class MultilingualBuildTests(unittest.TestCase):
@@ -84,6 +109,32 @@ class MultilingualBuildTests(unittest.TestCase):
                 EXPECTED_REFERENCES,
                 f"unexpected plugin reference set in {plugin_root}",
             )
+
+    def test_generated_skill_local_links_resolve_inside_package(self):
+        skill_paths = generated_skill_paths()
+        self.assertEqual(len(skill_paths), 6)
+        for skill_path in skill_paths:
+            package_root = skill_path.parent.resolve()
+            text = skill_path.read_text(encoding="utf-8")
+            for target in local_markdown_links(text):
+                path_part = target.split("#", 1)[0]
+                if not path_part:
+                    continue
+                resolved = (skill_path.parent / path_part).resolve()
+                self.assertTrue(
+                    resolved.is_relative_to(package_root),
+                    f"local link escapes runtime package in {skill_path}: {target}",
+                )
+                self.assertTrue(
+                    resolved.is_file(),
+                    f"broken local link in {skill_path}: {target}",
+                )
+                if Path(path_part).parts and Path(path_part).parts[0] == "references":
+                    self.assertIn(
+                        Path(path_part).name,
+                        EXPECTED_REFERENCES,
+                        f"unmanifested reference link in {skill_path}: {target}",
+                    )
 
     def test_repository_only_material_is_not_emitted_as_runtime_files(self):
         offenders: list[str] = []
