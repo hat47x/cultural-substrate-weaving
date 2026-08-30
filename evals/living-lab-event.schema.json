@@ -1,0 +1,88 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/hat47x/cultural-substrate-weaving/evals/living-lab-event.schema.json",
+  "title": "Cultural Substrate Weaving Web Chat Living Lab Event",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "event_id",
+    "round_id",
+    "event_type",
+    "observation_mode",
+    "recorded_at",
+    "summary",
+    "evidence_refs"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "0.1"
+    },
+    "event_id": {
+      "type": "string",
+      "pattern": "^event-[A-Za-z0-9._-]+$"
+    },
+    "round_id": {
+      "type": "string",
+      "pattern": "^round-[A-Za-z0-9._-]+$"
+    },
+    "event_type": {
+      "enum": [
+        "question_shift",
+        "search_shift",
+        "kj_reconfiguration",
+        "artifact_adoption",
+        "decision_change",
+        "delayed_reactivation",
+        "repeated_transfer",
+        "useful_nonuse",
+        "harm_detected"
+      ]
+    },
+    "observation_mode": {
+      "enum": [
+        "prospective",
+        "retrospective"
+      ]
+    },
+    "recorded_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "summary": {
+      "type": "string",
+      "minLength": 1
+    },
+    "evidence_refs": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      },
+      "minItems": 1,
+      "uniqueItems": true
+    },
+    "artifact_refs": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      },
+      "uniqueItems": true
+    },
+    "framework_refs": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      },
+      "uniqueItems": true
+    },
+    "reopening_condition": {
+      "type": "string"
+    },
+    "notes": {
+      "type": "string"
+    }
+  }
+}

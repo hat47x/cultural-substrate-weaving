@@ -1,0 +1,51 @@
+{
+  "schema_version": "0.1",
+  "round_id": "round-example-001",
+  "case_id": "example-case",
+  "mode": "natural_work",
+  "observed_at": "2026-08-30T15:30:00+09:00",
+  "environment": {
+    "platform": "web_chat",
+    "model_label": "record-visible-label-if-any",
+    "product_mode": "interactive chat",
+    "tools": [],
+    "notes": "Record only environment details that may matter when interpreting the round later."
+  },
+  "task": {
+    "summary": "Continue a real writing or design task and observe whether the method changes the work in a useful way.",
+    "domain": "example",
+    "source_refs": [
+      "chat:example-source"
+    ],
+    "preservation_set": [
+      "Do not flatten target-specific exceptions.",
+      "Keep source and discovery route distinct."
+    ]
+  },
+  "material_delta_refs": [
+    "chat:new-material-001"
+  ],
+  "invocation": "explicit",
+  "activation_scope": "exploratory_use",
+  "framework_contacts": [
+    {
+      "framework": "example-framework",
+      "depth": "preview",
+      "use": "exploration",
+      "notes": "Preview created a concrete question, so the question returned to the material surface."
+    }
+  ],
+  "kj_snapshot_refs": [
+    "artifact:kj-snapshot-003"
+  ],
+  "artifacts": [
+    "artifact:draft-v4"
+  ],
+  "residuals": [
+    "A contradiction remains unresolved and should not be harmonized prematurely."
+  ],
+  "reopening_conditions": [
+    "Reopen if a new source directly addresses the unresolved contradiction."
+  ],
+  "notes": "No score is required. Record what changed in the work and leave interpretation open when evidence is insufficient."
+}
