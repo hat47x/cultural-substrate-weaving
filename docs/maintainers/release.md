@@ -26,7 +26,7 @@ The release manifest is a **post-package release contract**, not a build-progres
 - `release_assets` lists exactly the files the Release workflow publishes: the manifest itself, package ZIPs, and validation/review reports.
 - `schema_version` versions the manifest structure independently of the CSW method version.
 
-`make build` may internally pass through an older build-script manifest-writing step, but the Makefile removes that intermediate file immediately. Do not consume a release manifest until `make package` or `make release-check` has completed.
+`scripts/build.py` never writes a release manifest. `scripts/package.py` is the sole manifest producer, so a manifest exists only after `make package` or `make release-check` reaches the packaging stage. Do not treat ordinary build output as a release contract.
 
 ## Package reproducibility
 
