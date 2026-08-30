@@ -6,6 +6,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 RELEASE_WORKFLOW = ROOT / ".github" / "workflows" / "release.yml"
 VALIDATE_WORKFLOW = ROOT / ".github" / "workflows" / "validate.yml"
+VALIDATION_NOTE = ROOT / ".github" / "release-validation-note.md"
 
 
 class ReleaseWorkflowContractTests(unittest.TestCase):
@@ -14,10 +15,22 @@ class ReleaseWorkflowContractTests(unittest.TestCase):
         self.assertIn("make release-check", text)
         self.assertIn('manifest["release_assets"]', text)
         self.assertIn('gh release upload "$TAG" "${ASSETS[@]}" --clobber', text)
-        self.assertIn('gh release create "$TAG" "${ASSETS[@]}" --generate-notes', text)
+        self.assertIn(
+            'gh release create "$TAG" "${ASSETS[@]}" --verify-tag --generate-notes --notes "$NOTES"',
+            text,
+        )
 
         self.assertNotIn("dist/packages/*", text)
         self.assertNotIn("dist/reports/*", text)
+
+    def test_new_release_prepends_validation_stage_disclosure(self) -> None:
+        workflow = RELEASE_WORKFLOW.read_text(encoding="utf-8")
+        note = VALIDATION_NOTE.read_text(encoding="utf-8")
+        self.assertIn("release-validation-note.md", workflow)
+        self.assertIn("--verify-tag", workflow)
+        self.assertIn("still under validation", note)
+        self.assertIn("有効性が確立したとは扱いません", note)
+        self.assertIn("Technical release checks", note)
 
     def test_release_candidate_validation_persists_final_manifest(self) -> None:
         text = VALIDATE_WORKFLOW.read_text(encoding="utf-8")
