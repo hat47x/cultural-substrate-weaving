@@ -32,6 +32,13 @@ class ReleaseWorkflowContractTests(unittest.TestCase):
         self.assertIn("有効性が確立したとは扱いません", note)
         self.assertIn("Technical release checks", note)
 
+    def test_publication_requires_dated_changelog_boundary(self) -> None:
+        workflow = RELEASE_WORKFLOW.read_text(encoding="utf-8")
+        self.assertIn("Verify changelog release boundary", workflow)
+        self.assertIn("scripts/check_release_changelog.py", workflow)
+        self.assertIn('--version "$(cat VERSION)"', workflow)
+        self.assertIn("--changelog CHANGELOG.md", workflow)
+
     def test_release_candidate_validation_persists_final_manifest(self) -> None:
         text = VALIDATE_WORKFLOW.read_text(encoding="utf-8")
         self.assertIn("name: release-candidate-manifest", text)
