@@ -9,7 +9,9 @@
     ],
     "required_by_file": {
       "ROUTER.md": [
-        "外部体系から得た構造は、対象へ返して検証する。"
+        "外部体系から得た構造は、対象へ返して検証する。",
+        "必要な参照だけを読む",
+        "一括読み込みを避け"
       ],
       "core/iteration.md": [
         "次の周回は直後でなくてよい。",
@@ -34,7 +36,9 @@
     ],
     "required_by_file": {
       "ROUTER.md": [
-        "Return structures obtained from external frameworks to the target for validation."
+        "Return structures obtained from external frameworks to the target for validation.",
+        "Read only needed references.",
+        "Do not fix the number of references or load them all at once."
       ],
       "core/iteration.md": [
         "The next round need not happen immediately.",
