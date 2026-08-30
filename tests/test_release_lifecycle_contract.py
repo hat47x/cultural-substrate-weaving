@@ -37,6 +37,13 @@ class ReleaseLifecycleContractTests(unittest.TestCase):
         self.assertIn("technically green release candidate is not evidence", text)
         self.assertIn("does not rewrite the release notes", text)
 
+    def test_maintainer_guide_requires_changelog_freeze_only_for_publication(self) -> None:
+        text = (ROOT / "docs" / "maintainers" / "release.md").read_text(encoding="utf-8")
+        self.assertIn("release candidate may keep its pending changes under `## Unreleased`", text)
+        self.assertIn("## X.Y.Z — YYYY-MM-DD", text)
+        self.assertIn("Release workflow checks the dated version heading", text)
+        self.assertIn("finalize `CHANGELOG.md`", text)
+
 
 if __name__ == "__main__":
     unittest.main()
