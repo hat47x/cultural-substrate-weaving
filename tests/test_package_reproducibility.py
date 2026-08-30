@@ -67,8 +67,10 @@ class PackageReproducibilityTests(unittest.TestCase):
                 source = root / "source"
                 source.mkdir()
                 (source / filename).write_text("private=value\n", encoding="utf-8")
+                output = root / "output.zip"
                 with self.assertRaisesRegex(RuntimeError, "local/private configuration"):
-                    MODULE.zip_tree(source, root / "output.zip")
+                    MODULE.zip_tree(source, output)
+                self.assertFalse(output.exists(), "failed package preflight must not leave a partial ZIP")
 
     def test_zip_tree_rejects_symlink_sources_when_supported(self) -> None:
         with tempfile.TemporaryDirectory() as temp_dir:
@@ -82,8 +84,10 @@ class PackageReproducibilityTests(unittest.TestCase):
                 link.symlink_to(target)
             except (OSError, NotImplementedError):
                 self.skipTest("symlinks are not available in this test environment")
+            output = root / "output.zip"
             with self.assertRaisesRegex(RuntimeError, "contains a symlink"):
-                MODULE.zip_tree(source, root / "output.zip")
+                MODULE.zip_tree(source, output)
+            self.assertFalse(output.exists(), "failed package preflight must not leave a partial ZIP")
 
 
 if __name__ == "__main__":
