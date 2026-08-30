@@ -6,6 +6,13 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 LOCALES = ("ja-JP", "en-US")
+MANIFEST = json.loads((ROOT / "src/manifest.json").read_text(encoding="utf-8"))
+EXPECTED_REFERENCES = {module["skill_reference"] for module in MANIFEST["modules"]}
+REPOSITORY_ONLY_PARTS = {"docs", "evals", "tests", ".github", "maintainers"}
+
+
+def markdown_filenames(path: Path) -> set[str]:
+    return {item.name for item in path.glob("*.md") if item.is_file()}
 
 
 class MultilingualBuildTests(unittest.TestCase):
@@ -52,6 +59,42 @@ class MultilingualBuildTests(unittest.TestCase):
         self.assertIn("KJ法", ja)
         self.assertIn("cultural frameworks", en)
         self.assertIn("KJ", en)
+
+    def test_openai_reference_sets_match_manifest(self):
+        for locale in LOCALES:
+            for profile in ("interactive", "metered"):
+                references = (
+                    ROOT
+                    / f"dist/{locale}/openai-skill/{profile}/cultural-substrate-weaving/references"
+                )
+                self.assertEqual(
+                    markdown_filenames(references),
+                    EXPECTED_REFERENCES,
+                    f"unexpected OpenAI reference set for {locale}/{profile}",
+                )
+
+    def test_generated_plugin_reference_sets_match_manifest(self):
+        plugin_roots = sorted((ROOT / "plugins").glob("cultural-substrate-weaving-*"))
+        self.assertTrue(plugin_roots)
+        for plugin_root in plugin_roots:
+            skill_roots = [path for path in (plugin_root / "skills").iterdir() if path.is_dir()]
+            self.assertEqual(len(skill_roots), 1, f"unexpected skill count in {plugin_root}")
+            self.assertEqual(
+                markdown_filenames(skill_roots[0] / "references"),
+                EXPECTED_REFERENCES,
+                f"unexpected plugin reference set in {plugin_root}",
+            )
+
+    def test_repository_only_material_is_not_emitted_as_runtime_files(self):
+        offenders: list[str] = []
+        for runtime_root in (ROOT / "dist", ROOT / "plugins"):
+            for path in runtime_root.rglob("*"):
+                if not path.is_file():
+                    continue
+                relative = path.relative_to(runtime_root)
+                if REPOSITORY_ONLY_PARTS.intersection(relative.parts):
+                    offenders.append(f"{runtime_root.name}/{relative}")
+        self.assertEqual(offenders, [])
 
 
 if __name__ == "__main__":
