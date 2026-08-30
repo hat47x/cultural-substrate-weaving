@@ -4,12 +4,13 @@ import unittest
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-WORKFLOW = ROOT / ".github" / "workflows" / "release.yml"
+RELEASE_WORKFLOW = ROOT / ".github" / "workflows" / "release.yml"
+VALIDATE_WORKFLOW = ROOT / ".github" / "workflows" / "validate.yml"
 
 
 class ReleaseWorkflowContractTests(unittest.TestCase):
     def test_publication_uses_validated_manifest_asset_list(self) -> None:
-        text = WORKFLOW.read_text(encoding="utf-8")
+        text = RELEASE_WORKFLOW.read_text(encoding="utf-8")
         self.assertIn("make release-check", text)
         self.assertIn('manifest["release_assets"]', text)
         self.assertIn('gh release upload "$TAG" "${ASSETS[@]}" --clobber', text)
@@ -17,6 +18,12 @@ class ReleaseWorkflowContractTests(unittest.TestCase):
 
         self.assertNotIn("dist/packages/*", text)
         self.assertNotIn("dist/reports/*", text)
+
+    def test_release_candidate_validation_persists_final_manifest(self) -> None:
+        text = VALIDATE_WORKFLOW.read_text(encoding="utf-8")
+        self.assertIn("name: release-candidate-manifest", text)
+        self.assertIn("path: dist/release-manifest.json", text)
+        self.assertIn("if-no-files-found: ignore", text)
 
 
 if __name__ == "__main__":
