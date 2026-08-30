@@ -43,6 +43,7 @@ def zip_tree(source: Path, target: Path, root_name: str | None = None) -> None:
     executable. Local/private configuration and symlinks fail closed before they can
     become release members.
     """
+    publishable_files = list(iter_publishable_files(source))
     target.parent.mkdir(parents=True, exist_ok=True)
     with zipfile.ZipFile(
         target,
@@ -50,7 +51,7 @@ def zip_tree(source: Path, target: Path, root_name: str | None = None) -> None:
         compression=zipfile.ZIP_DEFLATED,
         compresslevel=9,
     ) as archive:
-        for path in iter_publishable_files(source):
+        for path in publishable_files:
             relative = path.relative_to(source)
             arcname = Path(root_name) / relative if root_name else relative
             mode = 0o755 if path.stat().st_mode & 0o111 else 0o644
