@@ -1,33 +1,46 @@
 # Use with Codex
 
-The method relies on web search in some cases for fact-checking and gathering context. Confirm that Codex's network access / web search tool is enabled.
+When a task needs current facts, external context, or additional source discovery, confirm that Codex network access / web search is available. It is not required for KJ integration or structural exploration that can be completed from the supplied repository or material alone. If search is unavailable, do not guess missing external facts.
 
-## Install as a plugin (nothing to download)
+## Recommended: install as a plugin
 
-This repository is also a Codex plugin marketplace. No ZIP, no extraction.
+Plugins are now the primary unit for discovering and distributing workflow capabilities across ChatGPT and Codex. This repository includes a Codex plugin marketplace, so you can install it without manually extracting a ZIP.
 
 ```bash
 codex plugin marketplace add hat47x/cultural-substrate-weaving
+codex plugin add cultural-substrate-weaving-en@cultural-substrate-weaving
 ```
 
-Then install `cultural-substrate-weaving-en` (or `cultural-substrate-weaving-ja`). The plugin directory is shared with the Claude Code plugin and carries both a `.codex-plugin/plugin.json` and a `.claude-plugin/plugin.json`.
+The Japanese plugin is `cultural-substrate-weaving-ja`. Inspect the configured marketplaces and plugins when needed:
 
-Codex moved from standalone skills to plugins in June 2026, and `openai/skills` is deprecated. The skill layout below is kept for existing users; prefer the plugin for new installs.
+```bash
+codex plugin marketplace list
+codex plugin list
+```
 
-## Install as a skill (legacy, Codex CLI and IDE extension)
+The plugin directory is shared with the Claude Code package and carries both `.codex-plugin/plugin.json` and `.claude-plugin/plugin.json`.
 
-The CLI and the IDE extension both run on your local machine and read skills from the same filesystem.
+## Skill format (direct placement)
 
-1. Download an OpenAI Skill ZIP for your locale from GitHub Releases.
-2. Choose `metered` for explicit invocation only, or `interactive` for eligible implicit activation.
-3. Extract the `cultural-substrate-weaving` folder to:
+The standalone Skill format remains useful for direct placement, compatibility with existing setups, and portability across products. Prefer the plugin for the main installation path, but do not treat Skill ZIPs as categorically invalid or deprecated.
+
+For a local Codex CLI or IDE setup that uses directly placed Skills:
+
+1. Download the `openai-skill-metered` or `openai-skill-interactive` ZIP from GitHub Releases.
+2. Extract the `cultural-substrate-weaving` folder to:
    - `~/.agents/skills/` for personal use; or
    - `.agents/skills/` inside a repository for team use.
-4. Restart Codex.
+3. Restart Codex or start a new session so the Skill is reloaded.
 
 ## Using it in Codex Cloud
 
-Codex Cloud tasks run in a sandbox cloned from your repository, so your local `~/.agents/skills/` (personal skills) isn't visible there. To use the method in Codex Cloud, commit the skill folder into the target repository's `.agents/skills/` instead.
+Do not assume that a cloud task can see the local machine's `~/.agents/skills/`. For repository-carried Skills, use `.agents/skills/`. For plugins, follow the plugin configuration, Sources/Plugins UI, and workspace policy exposed by the Codex surface you are using.
+
+## Which form to choose
+
+- **Plugin**: recommended current installation path when you want marketplace-based discovery and updates.
+- **metered Skill**: direct Skill placement with explicit invocation only.
+- **interactive Skill**: direct Skill placement where eligible implicit activation is acceptable.
 
 ## Invoke
 
