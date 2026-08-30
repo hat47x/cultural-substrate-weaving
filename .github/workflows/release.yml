@@ -55,5 +55,6 @@ jobs:
           if gh release view "$TAG" >/dev/null 2>&1; then
             gh release upload "$TAG" "${ASSETS[@]}" --clobber
           else
-            gh release create "$TAG" "${ASSETS[@]}" --generate-notes
+            NOTES="$(cat .github/release-validation-note.md)"
+            gh release create "$TAG" "${ASSETS[@]}" --verify-tag --generate-notes --notes "$NOTES"
           fi
