@@ -49,9 +49,11 @@ Packaging is fail-closed for local configuration that may exist only in a mainta
 - `.env.*.example` templates remain publishable.
 - symlinks are rejected rather than dereferenced into a release package.
 
-This matters especially for Microsoft 365 local configuration: a local build may use environment-specific values, but a release ZIP must never inherit those files merely because they exist in a gitignored working tree. Do not weaken this check to make a local release build pass; remove or relocate the private input instead.
+Microsoft 365 has an additional tenant boundary. The canonical build is tenant-neutral: `scripts/build.py` does not read a local `.env.*` file and does not copy one into `dist/`. A tenant-specific SharePoint capability is added only when `CSW_M365_SHAREPOINT_SITE_URL` (or its locale-specific form) is explicitly present in the build environment.
 
-The independent post-package validator also rejects private/local file names if they are already present inside a ZIP, so package construction and final validation enforce the same publication boundary separately.
+Agents Toolkit deployment uses a separate explicit step. Generate a deployment file with `scripts/init_m365_env.py`, build with an explicitly injected SharePoint URL when needed, and then use `scripts/stage_m365_env.py` to copy that deployment-only file into the selected generated agent project. Public `make package` intentionally rejects the staged environment file, so tenant deployment and public GitHub Release packaging remain different paths.
+
+The independent post-package validator also rejects private/local file names if they are already present inside a ZIP. For public M365 packages it additionally rejects a concrete `OneDriveAndSharePoint` site URL, so an accidentally tenant-specific build cannot pass the public release contract.
 
 ## Release validation
 
@@ -63,7 +65,8 @@ The independent post-package validator also rejects private/local file names if 
 - required validation, token-budget, and Living Lab reports;
 - agreement between `release_assets` and the publication boundary;
 - readable, non-empty ZIPs with safe member paths;
-- absence of local/private configuration members; and
+- absence of local/private configuration members;
+- tenant-neutral public Microsoft 365 packages; and
 - normalized ZIP metadata and permissions.
 
 The GitHub Release workflow reads the already validated `release_assets` list and passes that exact list to `gh release create` or `gh release upload`. Do not duplicate the publication list as workflow globs.
