@@ -28,17 +28,7 @@ jobs:
           if [[ "${GITHUB_EVENT_NAME}" == "pull_request" ]]; then
             ref="${HEAD_REF}"
           fi
-
-          case "${ref}" in
-            develop/v*|release/v*)
-              expected="${ref#*/v}"
-              actual="$(tr -d '\r\n' < VERSION)"
-              if [[ "${actual}" != "${expected}" ]]; then
-                echo "VERSION mismatch: branch ${ref} expects ${expected}, found ${actual}" >&2
-                exit 1
-              fi
-              ;;
-          esac
+          python scripts/check_branch_version.py --ref "${ref}" --version-file VERSION
       - name: Run validation
         shell: bash
         env:
