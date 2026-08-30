@@ -40,7 +40,7 @@ codex plugin marketplace add hat47x/cultural-substrate-weaving
 
 ## 対応プラットフォーム
 
-- OpenAI Codex Skill
+- OpenAI Codex Plugin / 直接配置Skill
 - Claude Code Plugin Marketplace
 - ChatGPT custom GPT更新パック
 - Microsoft 365 Copilot declarative agent
