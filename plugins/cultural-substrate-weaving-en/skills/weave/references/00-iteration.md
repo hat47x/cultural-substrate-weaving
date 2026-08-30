@@ -1,25 +1,55 @@
-# Exploration, validation, transformation, and iteration
+# Iterative exploration, validation, and transformation
 
-Read this when structure does not settle in one pass and the work needs externalization and another round.
+Read this when new material arrives and work moves repeatedly between KJ and cultural frameworks.
 
-## Basic loop
+## The basic unit is a round
 
-Repeat three operations:
+A round normally does the following.
 
-1. **Explore:** obtain positions, relations, states, or transition candidates from cultural frameworks that are difficult to derive from the target alone. When material is numerous or heterogeneous, use KJ integration to let semantic units, relations, and gaps arise from the material side.
-2. **Validate:** check candidates against target facts, purposes, and conditions, retaining only what fits.
-3. **Transform:** externalize retained relations into target-checkable questions, diagrams, descriptions, procedures, or other forms.
+1. **Receive the material delta**: inspect new sources, observations, falsification, or execution results.
+2. **Return to the KJ material surface**: place old residuals and isolated cards touched by the new material back on the same surface.
+3. **See the current question**: do not repeat the previous conclusion; ask what the new material has made questionable now.
+4. **Open a framework only if needed**: use only the depth required by `core/activation.md`.
+5. **Return to KJ**: bring back framework-generated questions, hypotheses, compositional ideas, search targets, and residuals with provenance intact.
+6. **Reflect into real work**: make explicit what is adopted into the domain artifact, decision, or research direction.
+7. **Close the round**: stop when the needed result exists and important residuals and reopening conditions are preserved.
 
-An externalized result can become material for the next round. The domain decides whether the suitable form is prose, diagram, equation, state transition, contract, code, test, or something else.
+Passing through a fixed number of frameworks, loading them in full, or executing native operations is not a completion condition.
 
-The next round need not happen immediately. When new sources, observations, falsifications, or execution results arrive later and touch an earlier unresolved point or gap, reopen the inquiry then. Carry forward not only prior conclusions but also questions that did not resolve, isolated semantic units, and relations that were held in reserve.
+## Do not merge KJ and cultural frameworks
 
-Do not force the previous round directly into existing categories. When useful, return it to ungrouped material at the same level of abstraction, while preserving a path back to source material. On reopening, do not treat the prior grouping as the answer; return new material and unresolved items to the same material plane and see whether the grouping changes.
+KJ protects semantic units, evidence state, contradictions, isolates, and blanks, and allows later material to reorganize them. Cultural frameworks temporarily open different positions, paths, cycles, states, or symbols when useful.
 
-A gap can drive the next exploration or information-gathering question, but producing gaps is not a success criterion.
+Do not use KJ as a framework-reduction device, and do not use a cultural framework as the grouping axis for KJ. Return framework-generated material to KJ with the attribution defined in `core/principles-and-constraints.md`.
 
-For each round, record which new fact, semantic unit, relation, condition, falsification, question, or judgment appeared. Distinguish a changed conclusion from mere reinforcement. Stop when only abstraction or explanation grows and no target-side increment remains.
+## Preserve snapshots and residuals
 
-Across longer spans, look beyond the quality of the immediate answer: did an earlier question change what was later researched, did isolated material later form a different grouping, or did an externalized structure actually enter an artifact or decision? This does not prove a causal effect; it preserves a record of which operations continued to matter.
+Do not freeze a previous grouping as the answer. When a new grouping appears, do not overwrite the source material, earlier KJ snapshots, isolated semantic units, held relations, or unresolved questions.
 
-Problem-solving work may move through questions such as what is happening, what is the problem, why, what is desired, what to do, in what order, and what happened after execution. This is a representative orchestration, not a fixed KJ core. Keep track of the current question and move backward, forward, or deeper as needed.
+Blanks and residuals may become receptors for later material. Background them when they are irrelevant to the current question; foreground them as `reopened` when new material touches them.
+
+Do not reread the whole long history every round. Foreground, by default, only **new material, old residuals touched now, the needed KJ snapshot, and the needed probe or preview**.
+
+## Observe longitudinal change as events
+
+Record these only when useful; the record format is in `08-governance-and-records.md`.
+
+- `question_shift`
+- `search_shift`
+- `kj_reconfiguration`
+- `artifact_adoption`
+- `decision_change`
+- `delayed_reactivation`
+- `repeated_transfer`
+- `useful_nonuse`
+- `harm_detected`
+
+Do not collapse them into one score, and do not use framework count or trajectory length as a KPI. Look at what survived into later work, what changed what later material could be noticed, and when non-use became clearer.
+
+## Convergence and reopening
+
+Close the round when abstraction or explanation volume keeps growing but target-side questions, material arrangement, artifacts, and decisions no longer move. Complete explanation is not required.
+
+Reopening can be triggered by new material, a counterexample, environmental change, contact with an old residual, illumination from another cognitive field, or an explicit revisit. Do not treat earlier convergence as failure; reopen only what is needed.
+
+For problem-solving work, questions such as situation, problem framing, essence, conception, concrete measures, sequencing, and validation may be useful, but they are not fixed stages of the KJ core. Move backward, skip ahead, or deepen locally when needed.
