@@ -37,6 +37,15 @@ class LivingLabValidationTests(unittest.TestCase):
             [self.round_record, self.paired_record, self.event_record]
         )
 
+    def test_public_observations_form_a_valid_closed_record_set(self) -> None:
+        observation_dir = ROOT / "research" / "living-lab" / "observations"
+        records = [
+            json.loads(path.read_text(encoding="utf-8"))
+            for path in sorted(observation_dir.glob("*.json"))
+        ]
+        self.assertTrue(records, "public Living Lab observation set must not be empty")
+        MODULE.validate_record_set(records)
+
     def test_paired_check_requires_comparison_refs(self) -> None:
         record = copy.deepcopy(self.round_record)
         record["mode"] = "paired_check"
