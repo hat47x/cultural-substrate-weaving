@@ -21,6 +21,7 @@ jobs:
       - uses: actions/checkout@v7
         with:
           ref: ${{ inputs.tag || github.ref }}
+          fetch-depth: 0
       - uses: actions/setup-python@v7
         with:
           python-version: "3.11"
@@ -29,6 +30,10 @@ jobs:
         env:
           TAG: ${{ inputs.tag || github.ref_name }}
         run: test "${TAG#v}" = "$(cat VERSION)"
+      - name: Verify release commit is on main
+        run: |
+          git fetch --no-tags origin main
+          git merge-base --is-ancestor HEAD origin/main
       - name: Verify changelog release boundary
         run: python scripts/check_release_changelog.py --version "$(cat VERSION)" --changelog CHANGELOG.md
       - name: Publish release assets
