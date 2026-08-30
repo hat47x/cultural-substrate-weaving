@@ -4,6 +4,7 @@
 
 - Updated GitHub Actions Python setup to `actions/setup-python@v7`, removing the Node 20 deprecation path from validation, release, and Microsoft 365 packaging workflows.
 - Simplified release triggering so tag pushes are the canonical automatic publication path and `workflow_dispatch` is the explicit re-publication path; publishing a GitHub Release no longer recursively starts the release workflow a second time.
+- Added a CI branch-version contract: `develop/vX.Y.Z` and `release/vX.Y.Z` must carry the same `VERSION`, preventing a development or release line from silently building packages under a different version.
 
 ## 0.3.0 — 2026-08-30
 
