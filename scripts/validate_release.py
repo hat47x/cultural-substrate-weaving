@@ -34,6 +34,14 @@ def expected_package_paths(expected_version: str, expected_locales: list[str]) -
     }
 
 
+def is_private_local_name(name: str) -> bool:
+    if name in {".env", ".local", ".secret"}:
+        return True
+    if name.startswith(".env.") and not name.endswith(".example"):
+        return True
+    return name.endswith((".local", ".secret"))
+
+
 def _safe_relative_path(value: Any, label: str, errors: list[str]) -> str | None:
     if not isinstance(value, str) or not value:
         errors.append(f"{label} must be a non-empty string")
@@ -62,6 +70,9 @@ def validate_zip(path: Path, label: str, errors: list[str]) -> None:
                 name = _safe_relative_path(info.filename, f"{label} member", errors)
                 if name is None:
                     continue
+                member = PurePosixPath(name)
+                if is_private_local_name(member.name):
+                    errors.append(f"release ZIP contains local/private configuration: {label} -> {name}")
                 if name.endswith("/"):
                     errors.append(f"release ZIP should contain files, not directory entries: {label} -> {name}")
                 if info.date_time != ZIP_TIMESTAMP:

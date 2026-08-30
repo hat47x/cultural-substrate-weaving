@@ -40,6 +40,19 @@ Release ZIP creation normalizes:
 
 This removes checkout/file-mtime and ordinary archive-metadata variance. It is not a claim that different Python or zlib implementations must always emit byte-identical compressed streams.
 
+## Local/private configuration boundary
+
+Packaging is fail-closed for local configuration that may exist only in a maintainer checkout.
+
+- `.env` and non-example `.env.*` files are rejected.
+- `*.local` and `*.secret` files are rejected.
+- `.env.*.example` templates remain publishable.
+- symlinks are rejected rather than dereferenced into a release package.
+
+This matters especially for Microsoft 365 local configuration: a local build may use environment-specific values, but a release ZIP must never inherit those files merely because they exist in a gitignored working tree. Do not weaken this check to make a local release build pass; remove or relocate the private input instead.
+
+The independent post-package validator also rejects private/local file names if they are already present inside a ZIP, so package construction and final validation enforce the same publication boundary separately.
+
 ## Release validation
 
 `python scripts/validate_release.py` runs after packaging and checks, among other things:
@@ -49,7 +62,8 @@ This removes checkout/file-mtime and ordinary archive-metadata variance. It is n
 - exact locale × platform package set;
 - required validation, token-budget, and Living Lab reports;
 - agreement between `release_assets` and the publication boundary;
-- readable, non-empty ZIPs with safe member paths; and
+- readable, non-empty ZIPs with safe member paths;
+- absence of local/private configuration members; and
 - normalized ZIP metadata and permissions.
 
 The GitHub Release workflow reads the already validated `release_assets` list and passes that exact list to `gh release create` or `gh release upload`. Do not duplicate the publication list as workflow globs.
