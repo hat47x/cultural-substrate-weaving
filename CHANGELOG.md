@@ -3,6 +3,7 @@
 ## Unreleased
 
 - Recorded the completed v0.4.0 publication boundary in maintainer release history after the tag, GitHub Release, and remote asset verification succeeded.
+- Made a separate natural-Japanese rewriting pass mandatory after technical content is settled for Japanese development, maintainer, research, experiment, and operational documents; retroactively reviewed the existing scoped documents and added PR/CI contracts so the review step cannot silently disappear.
 
 ## 0.4.0 — 2026-08-31
 
