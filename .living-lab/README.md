@@ -1,22 +1,22 @@
 # ローカルLiving Lab作業領域 / Local Living Lab workspace
 
-このREADMEを除き、このディレクトリ配下のファイルはGitの追跡対象から外している。公開リポジトリへ含めるべきでない実案件のWeb Chat Living Lab記録は、原則としてここ、またはリポジトリ外へ保存する。
+このREADMEを除き、このディレクトリ以下のファイルはGitの追跡対象外です。公開リポジトリへ含めるべきでない実案件のWeb Chat Living Lab記録は、原則としてここ、またはリポジトリ外へ保存します。
 
 Files under this directory are ignored by Git except for this README. Use it as the default workspace for real Web Chat Living Lab records that should not be published with the repository.
 
 ## この領域を設ける理由
 
-実際のラウンドは、私的なチャット、未公開原稿、顧客資料、内部設計、その他公開研究リポジトリへ置くべきでない文脈を参照しうる。公開側の `evals/` はスキーマと合成例を置く場所であり、実案件記録の既定保存先ではない。
+実際のラウンドでは、私的なチャット、未公開原稿、顧客資料、内部設計など、公開研究リポジトリへ置くべきでない情報を参照することがあります。公開側の`evals/`はスキーマと合成例を置く場所であり、実案件の記録を保存する既定の場所ではありません。
 
 Real rounds may refer to private chats, unpublished drafts, client material, internal design work, or other context that does not belong in a public research repository. The public `evals/` directory contains schemas and synthetic examples; it is not the default destination for real case records.
 
-## 推奨運用 / Recommended practice
+## 推奨する運用 / Recommended practice
 
-- 実際のround/event JSONは、このディレクトリまたはリポジトリ外へ保存する。
-- 元文章を記録へ複製するより、`chat:case-a-round-3` や `artifact:draft-7` のような不透明な参照を優先する。
-- パスワード、アクセストークン、アカウント識別子、私的な連絡先、機密資料の本文その他の秘密情報をLiving Lab記録へ入れない。
-- 権限がある範囲で元資料へ戻れる対応表はローカルに保持してよいが、公開記録側へその対応表を含める必要はない。
-- 後から公開に適した事例になった場合も、私的原本をそのままcommitせず、別の匿名化・公開用記録を作る。
+- 実際のround / event JSONは、このディレクトリまたはリポジトリ外へ保存する。
+- 元の文章を記録へ複製するより、`chat:case-a-round-3`や`artifact:draft-7`のような不透明な参照を優先する。
+- パスワード、アクセストークン、アカウント識別子、私的な連絡先、機密資料の本文など、秘密にすべき情報をLiving Lab記録へ入れない。
+- 権限のある範囲で元資料へ戻れる対応表はローカルに保持してよいが、公開記録へその対応表を含める必要はない。
+- 後から公開に適した事例になった場合も、私的な原本をそのままcommitせず、匿名化した公開用の記録を別に作る。
 - 意図的に公開する前には、JSON本体だけでなく、参照先の成果物にも識別情報や機密情報が残っていないか確認する。
 
 - Keep real round/event JSON files here or outside the repository.
@@ -28,18 +28,18 @@ Real rounds may refer to private chats, unpublished drafts, client material, int
 
 ## ローカル記録の検証 / Validate local records
 
-対応する他の記録が同じ場所に無くても、個別ファイルの形式は検査できる。
+対応する他の記録が同じ場所にそろっていなくても、個別ファイルの形式は検査できます。
 
 ```bash
 python scripts/validate_living_lab.py .living-lab/round-001.json
 ```
 
-ローカルに一式揃っている場合は、ID重複とevent→round参照まで検査できる。
+ローカルに一式そろっている場合は、IDの重複とevent→round参照まで検査できます。
 
 ```bash
 python scripts/validate_living_lab.py --record-set .living-lab/*.json
 ```
 
-validatorが確認するのは形式と内部参照であり、その記録が公開して安全かどうかを保証するものではない。
+validatorが確認するのは、記録形式と内部参照の整合です。その記録を公開して安全かどうかまで保証するものではありません。
 
 Validation checks structure and internal references only. It does not certify that a record is safe to publish.
