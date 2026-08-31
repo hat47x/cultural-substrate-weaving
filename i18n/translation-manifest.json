@@ -41,9 +41,9 @@
       "en_status": "translated"
     },
     "domains/human-and-taiheki.md": {
-      "ja_sha256": "2f15fb3f1e3b627c547bf1006953ee44930e711198047d6bda6ae16977ab2c21",
+      "ja_sha256": "0e236854fac600cbb2e5a491b5a9d2e2713e4f7a211f1f1eec788f931d3dea83",
       "en_present": true,
-      "en_source_ja_sha256": "2f15fb3f1e3b627c547bf1006953ee44930e711198047d6bda6ae16977ab2c21",
+      "en_source_ja_sha256": "0e236854fac600cbb2e5a491b5a9d2e2713e4f7a211f1f1eec788f931d3dea83",
       "en_status": "translated"
     },
     "governance/evaluation.md": {
