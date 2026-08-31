@@ -12,8 +12,6 @@ Its main uses are:
 2. add questions about posture, center of gravity, fatigue, appetite, movement, and reactions under tension or relaxation rather than relying on psychological explanation alone; and
 3. use the first/second component contrast as a provisional comparison axis between more surface/voluntary and more involuntary reactions.
 
-Do not prefer Taiheki when another body-oriented or human-observation framework better fits the purpose.
-
 ### Activation conditions
 
 Do not activate Taiheki merely because a human being appears in the material. Use it only when:
