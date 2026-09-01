@@ -2,7 +2,7 @@
 
 文化的体系による構造候補とKJ法による断片統合を組み合わせ、通常分析にない問い・関係・空白を探索し、対象側で検証する補助スキルです。
 
-Version 0.4.0 · MIT · [リポジトリ](https://github.com/hat47x/cultural-substrate-weaving)
+Version 0.5.0 · MIT · [リポジトリ](https://github.com/hat47x/cultural-substrate-weaving)
 
 ## インストール
 
