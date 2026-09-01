@@ -9,17 +9,20 @@
       "探索利用から帰属利用へ無言で切り替えない。",
       "除去検査はde-bindingであり、証拠生成ではない。",
       "保存は厚く、現在の注意は選択的にする。",
-      "委ねられた範囲を、勝手に広げず、過度の自制で勝手に狭めもしない。"
+      "委ねられた範囲を、勝手に広げず、過度の自制で勝手に狭めもしない。",
+      "己を空しくする"
     ],
     "required_by_file": {
       "ROUTER.md": [
         "外部体系から得た構造は対象へ返して確かめる。",
         "明示指定があれば",
-        "一括読み込みを避け"
+        "一括読み込みを避け",
+        "最初の見立てを当てることより、対象によって自分の見立てを変えられることを重く見る。"
       ],
       "core/principles-and-constraints.md": [
         "委ねられた範囲を、勝手に広げず、過度の自制で勝手に狭めもしない。",
-        "保存は厚く、現在の注意は選択的にする。"
+        "保存は厚く、現在の注意は選択的にする。",
+        "対象に反証されることを、失敗ではなく学習の入口として扱う。"
       ],
       "core/iteration.md": [
         "基本単位はラウンド",
@@ -49,17 +52,20 @@
       "Do not silently switch from exploration to attribution.",
       "The removal check performs de-binding; it does not create evidence.",
       "Preserve richly; make current attention selective.",
-      "Do not expand the entrusted scope on your own, and do not narrow it through excessive self-restraint."
+      "Do not expand the entrusted scope on your own, and do not narrow it through excessive self-restraint.",
+      "Empty yourself before the target"
     ],
     "required_by_file": {
       "ROUTER.md": [
         "Return structures obtained from external frameworks to the target for validation.",
         "explicitly requested",
-        "Avoid loading everything at once"
+        "Avoid loading everything at once",
+        "Value being changed by the target more than having your first interpretation turn out to be right."
       ],
       "core/principles-and-constraints.md": [
         "Do not expand the entrusted scope on your own, and do not narrow it through excessive self-restraint.",
-        "Preserve richly; make current attention selective."
+        "Preserve richly; make current attention selective.",
+        "Treat being falsified by the target as an entrance to learning rather than a failure."
       ],
       "core/iteration.md": [
         "The basic unit is a round",
