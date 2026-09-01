@@ -35,8 +35,8 @@ README、`reference.md`、`run-record-template.md`、`web-chat-run-instructions.
 生成側へ見せてよいのは、原則として次だけである。
 
 1. そのケースの `input.md`。
-2. 条件Aなら、現行のKJ手順。
-3. 条件B以降なら、その条件で追加すると定めたプロンプト断片。
+2. その課題を現在のCSWで通常どおり扱うなら読む文書。
+3. 条件B以降なら、その条件で追加すると定めた試作プロンプトの断片。
 
 ケースの狙い、後から利用者が入れた補正、検証項目は、出力が終わるまで生成側へ伝えない。
 
@@ -71,15 +71,19 @@ README、`reference.md`、`run-record-template.md`、`web-chat-run-instructions.
 
 同じケースを、できれば新しいWebチャットで別々に実行する。
 
-### 条件A――現行KJのみ
+### 条件A――現在のCSWを通常どおり使う
 
-現行 `src/ja-JP/methods/integration.md` を使う。
+その課題を現在のCSWで扱うなら、本来読む文書だけを使う。
 
-「己を空しくする」試作プロンプトは追加しない。
+たとえば、KJのカード化・束ねが中心なら `methods/integration.md`、文化体系の用途判断が中心なら `core/principles-and-constraints.md` や `methods/system-selection.md` など、現行Routerから自然に到達する文書を使う。
+
+**新しい試作プロンプトを有利に見せるため、現在すでに存在する原則を基準線から外してはならない。**
+
+「己を空しくする」試作プロンプトだけは追加しない。
 
 ### 条件B――常時核を追加
 
-条件Aに加え、`research/human-use-gap-kj/2026-09-01-empty-self-prompt-prototype.md` の「常時核――役割と成功条件」だけを与える。
+条件Aと同じ現行文書に加え、`research/human-use-gap-kj/2026-09-01-empty-self-prompt-prototype.md` の「常時核――役割と成功条件」だけを与える。
 
 ここでは、工程ごとの細かな注意はまだ加えない。
 
