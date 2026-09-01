@@ -6,17 +6,22 @@
     "ja-JP": {
       "label": "日本語",
       "status": "canonical",
-      "description": "文化的体系による構造候補の供給とKJ法による断片統合・空白探索を組み合わせ、対象側で成立する増分を検証する補助AIスキル。領域固有の専門知識は併用スキルに委ねる。"
+      "description": "対象から自分の読みを修正され得る認知姿勢を土台に、文化的体系による構造候補の供給とKJ法による断片統合・空白探索を組み合わせ、対象側で成立する増分を検証する補助AIスキル。領域固有の専門知識は併用スキルに委ねる。"
     },
     "en-US": {
       "label": "English",
       "status": "translated",
       "review_note": "Initial English translation is usable, but independent human review is recommended before authoritative publication.",
-      "description": "A complementary AI skill combining cultural-framework structure supply with KJ-method integration and gap discovery, validating only target-side increments while leaving domain expertise to companion skills."
+      "description": "A complementary AI skill that stays revisable by the target while combining cultural-framework structure supply with KJ-method integration and gap discovery, validating only target-side increments and leaving domain expertise to companion skills."
     }
   },
   "router": "ROUTER.md",
   "modules": [
+    {
+      "id": "cognitive-stance",
+      "source": "core/cognitive-stance.md",
+      "skill_reference": "00-cognitive-stance.md"
+    },
     {
       "id": "activation",
       "source": "core/activation.md",
@@ -75,6 +80,7 @@
   ],
   "knowledge_groups": {
     "00-core.md": [
+      "core/cognitive-stance.md",
       "core/activation.md",
       "core/principles-and-constraints.md",
       "core/iteration.md"
