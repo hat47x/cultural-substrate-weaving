@@ -1,5 +1,5 @@
 {
-  "schema_version": "0.1",
+  "schema_version": "0.2",
   "round_id": "round-2026-08-30-001",
   "case_id": "csw-repository-operations",
   "mode": "natural_work",
@@ -21,10 +21,22 @@
       "github:issue:25",
       "github:issue:31"
     ],
-    "preservation_set": [
-      "Do not modify runtime method content merely to create an observed CSW use case.",
-      "Keep release and CI work governed by repository and software-engineering constraints.",
-      "Treat non-activation as a normal outcome when cultural-framework exploration is unnecessary."
+    "constraints": [
+      {
+        "source_type": "ai",
+        "statement": "Do not modify runtime method content merely to create an observed CSW use case.",
+        "source_ref": "github:issue:31"
+      },
+      {
+        "source_type": "ai",
+        "statement": "Keep release and CI work governed by repository and software-engineering constraints.",
+        "source_ref": "github:issue:31"
+      },
+      {
+        "source_type": "ai",
+        "statement": "Treat non-activation as a normal outcome when cultural-framework exploration is unnecessary.",
+        "source_ref": "github:issue:31"
+      }
     ]
   },
   "material_delta_refs": [
@@ -38,12 +50,38 @@
     "github:branch:research/living-lab-prospective-round-001"
   ],
   "residuals": [
-    "The v0.3.0 publication boundary remains tracked separately in issue #25.",
-    "Further observations are needed in writing, research, design, and KJ-integration work before considering method changes."
+    {
+      "source_type": "ai",
+      "statement": "The v0.3.0 publication boundary remained tracked separately in issue #25.",
+      "source_ref": "github:issue:25"
+    },
+    {
+      "source_type": "ai",
+      "statement": "Further observations were considered necessary before method changes were proposed from this round.",
+      "source_ref": "github:issue:31"
+    }
   ],
   "reopening_conditions": [
-    "Reconsider CSW activation if the repository task changes from operational execution to an ambiguous cross-domain interpretation problem.",
-    "Review the observation set when repeated useful or harmful boundaries emerge across different task types."
+    {
+      "source_type": "ai",
+      "statement": "Reconsider CSW activation if the repository task changes from operational execution to an ambiguous cross-domain interpretation problem.",
+      "source_ref": "github:issue:31"
+    },
+    {
+      "source_type": "ai",
+      "statement": "Review the observation set if later rounds change how this activation record should be interpreted.",
+      "source_ref": "github:issue:31"
+    }
   ],
-  "notes": "The round intentionally records useful non-activation rather than forcing a cultural framework into a GitHub and CI administration task."
+  "interpretations": [
+    {
+      "source_type": "ai",
+      "statement": "At the time, the round was interpreted as an example of useful non-activation. This interpretation is preserved only as an attributed historical AI judgment and is not treated as evidence that non-activation was appropriate.",
+      "source_ref": "github:issue:31",
+      "evidence_refs": [
+        "github:branch:research/living-lab-prospective-round-001"
+      ]
+    }
+  ],
+  "notes": "The directly traceable activation state is non_activation: no cultural framework was opened. This record does not by itself establish whether that state was useful or appropriate."
 }

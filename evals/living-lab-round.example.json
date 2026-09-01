@@ -1,5 +1,5 @@
 {
-  "schema_version": "0.1",
+  "schema_version": "0.2",
   "round_id": "round-example-001",
   "case_id": "example-case",
   "mode": "natural_work",
@@ -12,14 +12,22 @@
     "notes": "Record only environment details that may matter when interpreting the round later."
   },
   "task": {
-    "summary": "Continue a real writing or design task and observe whether the method changes the work in a useful way.",
+    "summary": "Continue a real writing or design task and observe whether the work changes while using CSW.",
     "domain": "example",
     "source_refs": [
       "chat:example-source"
     ],
-    "preservation_set": [
-      "Do not flatten target-specific exceptions.",
-      "Keep source and discovery route distinct."
+    "constraints": [
+      {
+        "source_type": "user",
+        "statement": "Do not flatten target-specific exceptions.",
+        "source_ref": "chat:example-source"
+      },
+      {
+        "source_type": "user",
+        "statement": "Keep source and discovery route distinct.",
+        "source_ref": "chat:example-source"
+      }
     ]
   },
   "material_delta_refs": [
@@ -32,7 +40,7 @@
       "framework": "example-framework",
       "depth": "preview",
       "use": "exploration",
-      "notes": "Preview created a concrete question, so the question returned to the material surface."
+      "notes": "A preview was opened during the round."
     }
   ],
   "kj_snapshot_refs": [
@@ -42,10 +50,28 @@
     "artifact:draft-v4"
   ],
   "residuals": [
-    "A contradiction remains unresolved and should not be harmonized prematurely."
+    {
+      "source_type": "ai",
+      "statement": "A contradiction appears unresolved in the current material.",
+      "source_ref": "chat:example-source",
+      "evidence_refs": [
+        "artifact:kj-snapshot-003"
+      ]
+    }
   ],
   "reopening_conditions": [
-    "Reopen if a new source directly addresses the unresolved contradiction."
+    {
+      "source_type": "ai",
+      "statement": "Revisit the unresolved relation if a new source directly addresses it.",
+      "source_ref": "chat:example-source"
+    }
   ],
-  "notes": "No score is required. Record what changed in the work and leave interpretation open when evidence is insufficient."
+  "interpretations": [
+    {
+      "source_type": "ai",
+      "statement": "The round appears to have produced a new research question, but this interpretation is not equivalent to a measured method effect.",
+      "source_ref": "chat:example-source"
+    }
+  ],
+  "notes": "No score is required. Direct observations and attributed interpretations are kept separate."
 }

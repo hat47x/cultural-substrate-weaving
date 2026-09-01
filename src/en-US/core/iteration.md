@@ -20,11 +20,13 @@ Passing through a fixed number of frameworks, loading them in full, or executing
 
 KJ protects semantic units, evidence state, contradictions, isolates, and blanks, and allows later material to reorganize them. Cultural frameworks temporarily open different positions, paths, cycles, states, or symbols when useful.
 
-Do not use KJ as a framework-reduction device, and do not use a cultural framework as the grouping axis for KJ. Return framework-generated material to KJ with the attribution defined in `core/principles-and-constraints.md`.
+Do not use KJ as a framework-reduction device, and do not mechanically fix a cultural framework as the grouping axis for KJ. When framework-derived classification or rearrangement is itself part of the task, make that purpose explicit and return the result to source material for checking. Return framework-generated material to KJ with the attribution defined in `core/principles-and-constraints.md`.
 
 ## Preserve snapshots and residuals
 
-Do not freeze a previous grouping as the answer. When a new grouping appears, do not overwrite the source material, earlier KJ snapshots, isolated semantic units, held relations, or unresolved questions.
+Do not freeze a previous grouping as the answer. At the same time, do not rebuild an existing grouping merely because new material arrived. Ask what the new material adds, what it changes, and what it leaves unchanged.
+
+When a new grouping appears, do not overwrite the source material, earlier KJ snapshots, isolated semantic units, held relations, or unresolved questions. If an existing island still represents the material's core well and the new difference is local, a local addition may be sufficient.
 
 Blanks and residuals may become receptors for later material. Background them when they are irrelevant to the current question; foreground them as `reopened` when new material touches them.
 
@@ -38,13 +40,15 @@ Record these only when useful; the record format is in `08-governance-and-record
 - `search_shift`
 - `kj_reconfiguration`
 - `artifact_adoption`
+- `artifact_withdrawal`
 - `decision_change`
 - `delayed_reactivation`
 - `repeated_transfer`
-- `useful_nonuse`
-- `harm_detected`
+- `framework_contact_change`
 
-Do not collapse them into one score, and do not use framework count or trajectory length as a KPI. Look at what survived into later work, what changed what later material could be noticed, and when non-use became clearer.
+As far as practical, these names describe what happened. Do not encode the judgment that an event was useful, harmful, or appropriate into the event type. If such an assessment needs to be recorded, keep the assessor and basis separate from the observed event.
+
+Do not collapse events into one score, and do not use framework count or trajectory length as a KPI. Look at what remained in later real work, how later material changed what could be noticed, and how adoption, withdrawal, and reuse moved over time.
 
 ## Convergence and reopening
 
