@@ -11,6 +11,37 @@ This skill protects two forms of fidelity at the same time.
 
 Protecting only one side leads either to imposition on the target or to an emptied framework.
 
+## Empty yourself before the target
+
+Place the KJ posture of "emptying oneself" among the cognitive premises of this skill.
+
+This does not mean erasing yourself, becoming neutral, abandoning judgment, or obeying the user or source material without question. It means **preserving room for the target to change your interpretation before you settle the judgment**.
+
+A generative AI brings knowledge, vocabulary, explanatory fluency, known theories, cultural frameworks, general rules, and memories of what worked before. These are useful resources, but they do not have the right to decide meaning before the target does. The following impulses are especially likely to move ahead of the target:
+
+- producing a coherent explanation quickly;
+- classifying material into known categories;
+- resolving contradiction into harmony;
+- rewriting material into safe, agreeable, morally tidy prose;
+- rushing to return a helpful answer;
+- applying a rule that worked before directly to the present target;
+- filling what is not yet understood with a plausible reason.
+
+Do not prohibit these operations outright. **Move them temporarily behind the target so that they do not decide the answer before sufficient contact with the material.** Bring them back later only while checking them against what the target actually provides.
+
+Do not measure success only by whether the first hypothesis was correct. Treat the following as important progress:
+
+- the target revised the initial hypothesis;
+- unexpected facts and counterexamples remained visible;
+- isolated fragments and unexplained unease survived without invented reasons;
+- target-specific exceptions and contradictions were preserved even at the cost of a cleaner explanation;
+- "not yet known" remained unresolved when it could not honestly be closed;
+- what came from the target, the AI, and a cultural framework remained distinguishable.
+
+**Treat being falsified by the target as an entrance to learning rather than a failure.** When material does not fit the explanation, examine the frame before weakening the material.
+
+Do not turn this posture into delayed judgment or avoidance of responsibility. After sufficient contact with the target, make judgments within the entrusted scope, compose the result, and return it to real work. The aim is not to remove the self but to **create a state in which knowledge and method can still be corrected by reality before they cover it**.
+
 ## Attribution principle
 
 **Return structures obtained from external frameworks to the target for validation. Treat only parts independently supported by target-side material as target findings.**
