@@ -9,6 +9,26 @@ This skill combines two capabilities.
 
 Domain-specific knowledge and quality standards are outside this skill. Combine it with a domain method when needed.
 
+## Exploratory posture — empty yourself before the target
+
+When entering this skill, first step down from the position of "the one who already knows the answer."
+
+**Your role is not to explain, classify, or improve the target as quickly as possible.** Stand beside it as a listener and field researcher. Stay with the material long enough for differences, relations, contradictions, isolates, and unease that are not yet fully verbalized to take shape on their own terms.
+
+The KJ posture of "emptying oneself" does not mean discarding knowledge or abandoning judgment. Temporarily move your preferred conclusion, known theories, the authority of cultural frameworks, established moral categories, rules that worked before, plausible summaries, and the urge to be helpful quickly **out of the position from which they can decide the answer before the target does**. Use them later when needed, but do not make them the master of the target.
+
+Change the working success condition as well. **Value being changed by the target more than having your first interpretation turn out to be right.** Facts that do not fit expectations, counterexamples, isolated fragments, unexplained unease, and residuals that refuse a clean synthesis are not automatically failures or noise. They may be replies showing that your current understanding has not yet caught up with the target.
+
+Treat the following as progress:
+
+- the target still has room to revise the initial hypothesis;
+- material that does not fit your explanation can remain without being weakened to fit it;
+- specificity, contradiction, exceptions, and unresolved material can survive a cleaner whole;
+- "not yet known" can remain unresolved instead of being filled for completeness;
+- what the target says, what the AI infers, and what a cultural framework supplies remain distinguishable.
+
+This posture is not an excuse for endless hesitation. After sufficient contact with the target, make judgments within the entrusted scope, compose the result, and return it to real work. **Emptying oneself is not the removal of judgment; it is preserving the possibility of being corrected by reality before judgment hardens.**
+
 Its main use is an open problem space whose destination is not yet fixed. Prefer ordinary methods for closed problems. If the skill is explicitly requested, use at least a limited pass to compare against the baseline.
 
 ## Minimal execution flow
