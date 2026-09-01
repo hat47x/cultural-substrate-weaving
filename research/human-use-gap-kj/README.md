@@ -64,6 +64,15 @@
   - 純化直後のcaller guideには、均衡化、弱め、行為者消去、余計な説明、標準解などを呼ぶ側が補正する案内があったが、v0.3.0以降の簡略化では前景から消えている。
   - 一方、KJで必要になった「流暢さによる材料の上書き」など、CSW固有の必要性が明確なものは現在の本体へ別の形で戻っている。
   - 現在の問いを、「敬意を本体へ戻すか」ではなく、CSW固有の責務、呼ぶ側の責務、静的文書ではなく実行時の注意に属する問題をどう分けるか、と置き直した。
+- `2026-09-01-prompt-techniques-for-empty-self.md`
+  - KJ法の「己を空しくする」を生成AIへ伝えるため、persona prompting、原則提示、メタ認知的prompting、自己修正、検証、few-shot例などの研究を調べた。
+  - 専門家personaだけに頼らず、対象との関係を定める機能的な役割、成功条件、理由、工程別の具体動作、元材料への戻し検査、良い例と悪い例の対比、未解決を正規状態として扱う出力形式を組み合わせる方向を整理した。
+  - 生成AI自身の自己評価だけでは誤りを見つけにくいという研究も踏まえ、「敬意を守れたか」と自己採点させるより、元カード・元資料へ戻る検査を重視する。
+- `2026-09-01-empty-self-prompt-prototype.md`
+  - 上記調査から、正本化前の実験用promptを作成した。
+  - 「己を空しくする」を、常時核、意味の優先順位、カード化、束ね、表札、戻し検査、保留状態、文化体系利用、方法上の補正、対比例へ分解した。
+  - 常時核では、生成AIを「対象へ意味を与える権威」ではなく、「対象が自分の意味を失わずに現れるための聞き手・探索者」と位置づける。
+  - モチベーションは感情ではなく、対象が予測を裏切る余地を守ること、分からないものを埋めないこと、元材料によって自分の読みを直せることを成功条件として与える。
 
 ## 読む順序
 
@@ -81,10 +90,12 @@
 10. `2026-09-01-r2-respect-and-method-control.md`
 11. `2026-09-01-r2-cross-case-respect-map.md`
 12. `2026-09-01-r2-responsibility-boundary-history.md`
+13. `2026-09-01-prompt-techniques-for-empty-self.md`
+14. `2026-09-01-empty-self-prompt-prototype.md`
 
 この順序は、正しい結論へ一直線に進んだ履歴を示すものではない。初回の読み違いを含め、**分析そのものが訂正され、個別事例への戻りと後続実装によって問題設定も更新されていく過程**を追えるようにしている。
 
-現在残っている研究課題だけを確認したい場合は、まず `2026-09-01-post-pr72-residual-map.md` を読む。そのうえで、R2は `2026-09-01-r2-respect-and-method-control.md` → `2026-09-01-r2-cross-case-respect-map.md` → `2026-09-01-r2-responsibility-boundary-history.md`、R3は `2026-09-01-r3-capability-preservation-inventory.md` を続けて参照する。
+現在残っている研究課題だけを確認したい場合は、まず `2026-09-01-post-pr72-residual-map.md` を読む。そのうえで、R2は `2026-09-01-r2-respect-and-method-control.md` → `2026-09-01-r2-cross-case-respect-map.md` → `2026-09-01-r2-responsibility-boundary-history.md` → `2026-09-01-prompt-techniques-for-empty-self.md` → `2026-09-01-empty-self-prompt-prototype.md`、R3は `2026-09-01-r3-capability-preservation-inventory.md` を続けて参照する。
 
 ## Issue
 
