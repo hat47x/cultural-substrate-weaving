@@ -118,6 +118,37 @@
         "exploratory_use"
       ]
     },
+    "unloaded_framework_candidates": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "framework",
+          "reason",
+          "disposition"
+        ],
+        "properties": {
+          "framework": {
+            "type": "string",
+            "minLength": 1
+          },
+          "reason": {
+            "type": "string",
+            "minLength": 1
+          },
+          "disposition": {
+            "enum": [
+              "rejected",
+              "deferred"
+            ]
+          },
+          "stop_reason": {
+            "type": "string"
+          }
+        }
+      }
+    },
     "framework_contacts": {
       "type": "array",
       "items": {
