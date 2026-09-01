@@ -17,9 +17,9 @@
   },
   "files": {
     "ROUTER.md": {
-      "ja_sha256": "7e8cfdd81fc4933d26fabdb3d80ea964c3c79d160e5c4df827c2c65af044c916",
+      "ja_sha256": "aad202b7ce2d980a69bddc149efd787b5c6221d17c0af81e06e46b1398e23517",
       "en_present": true,
-      "en_source_ja_sha256": "7e8cfdd81fc4933d26fabdb3d80ea964c3c79d160e5c4df827c2c65af044c916",
+      "en_source_ja_sha256": "aad202b7ce2d980a69bddc149efd787b5c6221d17c0af81e06e46b1398e23517",
       "en_status": "translated"
     },
     "core/activation.md": {
@@ -35,9 +35,9 @@
       "en_status": "translated"
     },
     "core/principles-and-constraints.md": {
-      "ja_sha256": "abfc0dcffc1a35b830c80f9dc447bfb857c3e3594f32ca0769f372f1368ad448",
+      "ja_sha256": "43b51319d909fb8bed4c7e546c2d009db5bde652e7c19c5c6bdd2fc6252fb29e",
       "en_present": true,
-      "en_source_ja_sha256": "abfc0dcffc1a35b830c80f9dc447bfb857c3e3594f32ca0769f372f1368ad448",
+      "en_source_ja_sha256": "43b51319d909fb8bed4c7e546c2d009db5bde652e7c19c5c6bdd2fc6252fb29e",
       "en_status": "translated"
     },
     "domains/human-and-taiheki.md": {
