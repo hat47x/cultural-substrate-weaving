@@ -1,10 +1,13 @@
-.PHONY: build validate test tokens package release-validate check release-check clean update-en-hashes living-lab-check living-lab-summary
+.PHONY: build validate test tokens package release-validate check release-check clean update-en-hashes living-lab-check living-lab-summary japanese-docs-check
 
 build:
 	python scripts/build.py
 
 validate:
 	python scripts/validate.py
+
+japanese-docs-check:
+	python scripts/check_natural_japanese_review.py
 
 test:
 	python -m unittest discover -s tests
@@ -24,7 +27,7 @@ living-lab-check:
 living-lab-summary:
 	python scripts/summarize_living_lab.py
 
-check: build validate test tokens living-lab-check living-lab-summary
+check: build validate japanese-docs-check test tokens living-lab-check living-lab-summary
 
 release-check: check package release-validate
 
