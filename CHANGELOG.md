@@ -4,6 +4,7 @@
 
 - Recorded the completed v0.4.0 publication boundary in maintainer release history after the tag, GitHub Release, and remote asset verification succeeded.
 - Made a separate natural-Japanese rewriting pass mandatory after technical content is settled for Japanese development, maintainer, research, experiment, and operational documents; retroactively reviewed the existing scoped documents and added PR/CI contracts so the review step cannot silently disappear.
+- Made natural-Japanese development-document review freshness fail closed by recording reviewed Git blob SHAs; new, removed, or changed scoped documents must be reread and re-recorded before `make check` passes.
 - Re-established versioned Git Flow after the post-v0.4.0 maintenance commits on `main` by initializing the next development line at v0.5.0 with version metadata, translation metadata, and generated plugin metadata aligned.
 - Restored CHANGELOG lifecycle separation: active development remains under `Unreleased`, while the dated `X.Y.Z — YYYY-MM-DD` boundary is created only during release finalization and remains fail-closed in the tag publication workflow.
 - Added a CI main-push contract that rejects single-parent direct pushes to `main`; the normal publication and maintenance path is a PR merge commit, including hotfix integration.
