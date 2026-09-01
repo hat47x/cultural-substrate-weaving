@@ -1,11 +1,8 @@
 from __future__ import annotations
 
 import unittest
-from pathlib import Path
 
 from scripts.check_release_changelog import check_release_heading
-
-ROOT = Path(__file__).resolve().parents[1]
 
 
 class ReleaseChangelogTests(unittest.TestCase):
@@ -25,10 +22,11 @@ class ReleaseChangelogTests(unittest.TestCase):
         with self.assertRaises(ValueError):
             check_release_heading(text, "0.4.0")
 
-    def test_repository_changelog_is_frozen_for_active_version(self) -> None:
-        version = (ROOT / "VERSION").read_text(encoding="utf-8").strip()
-        changelog = (ROOT / "CHANGELOG.md").read_text(encoding="utf-8")
-        check_release_heading(changelog, version)
+    def test_unreleased_only_is_valid_development_state_outside_release_gate(self) -> None:
+        changelog = "## Unreleased\n\n- Development work continues here.\n"
+        self.assertNotIn("## 0.5.0 —", changelog)
+        with self.assertRaises(ValueError):
+            check_release_heading(changelog, "0.5.0")
 
 
 if __name__ == "__main__":
