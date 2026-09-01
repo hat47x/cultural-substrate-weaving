@@ -4,13 +4,13 @@
     "name": "hat47x"
   },
   "description": "Localized skills for cultural-framework exploration, KJ integration, and target-side validation.",
-  "version": "0.4.0",
+  "version": "0.5.0",
   "plugins": [
     {
       "name": "cultural-substrate-weaving-ja",
       "source": "./plugins/cultural-substrate-weaving-ja",
       "description": "文化的体系による構造候補とKJ法による断片統合を組み合わせ、通常分析にない問い・関係・空白を探索して対象側で検証します。明示呼び出し専用。",
-      "version": "0.4.0",
+      "version": "0.5.0",
       "category": "productivity",
       "tags": [
         "analysis",
@@ -24,7 +24,7 @@
       "name": "cultural-substrate-weaving-en",
       "source": "./plugins/cultural-substrate-weaving-en",
       "description": "Combines cultural-framework structure candidates with KJ integration to explore questions, relations, and gaps absent from ordinary analysis, then validates them against the target. Explicit invocation only.",
-      "version": "0.4.0",
+      "version": "0.5.0",
       "category": "productivity",
       "tags": [
         "analysis",
