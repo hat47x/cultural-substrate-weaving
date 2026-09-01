@@ -2,8 +2,13 @@
 
 ## Unreleased
 
+No unreleased changes are recorded beyond the active v0.5.0 development line.
+
+## 0.5.0 — 2026-09-01
+
 - Recorded the completed v0.4.0 publication boundary in maintainer release history after the tag, GitHub Release, and remote asset verification succeeded.
 - Made a separate natural-Japanese rewriting pass mandatory after technical content is settled for Japanese development, maintainer, research, experiment, and operational documents; retroactively reviewed the existing scoped documents and added PR/CI contracts so the review step cannot silently disappear.
+- Re-established versioned Git Flow after the post-v0.4.0 maintenance commits on `main` by initializing the next development line at v0.5.0 with version metadata, translation metadata, and generated plugin metadata aligned.
 
 ## 0.4.0 — 2026-08-31
 
@@ -13,7 +18,7 @@
 - Clarified that reducing or rejecting CSW or a particular framework does not narrow the task scope entrusted by the caller; work can return to the domain method while preserving residuals and reopening conditions.
 - Added lightweight longitudinal rounds and event vocabulary for delayed change without turning framework count or trajectory length into KPIs.
 - Added the Web Chat Living Lab research layer with `natural_work` and selective `paired_check` modes, round/event schemas, examples, a dependency-free validator, tests, and Japanese/English operating guidance. Living Lab findings remain research evidence and are not automatically promoted into runtime method rules.
-- Began the prospective Living Lab observation cycle with public/private record separation: real records are private-by-default under `.living-lab/` or outside the repository, while publishable or separately anonymized observations may be kept under `research/living-lab/observations/` and are validated as a closed record set.
+- Began the prospective Living Lab observation cycle with public/private record separation: real records are private-by-default under `.living-lab/` or outside the repository, while publishable or separately anonymized/abstracted observations may be kept under `research/living-lab/observations/` and are validated as a closed record set.
 - Added a non-scoring Living Lab review inventory to CI reports. It preserves per-round activation, task-domain coverage context, events, artifacts, residuals, and reopening conditions while explicitly treating counts and distributions as review aids rather than KPIs, scores, win/loss labels, or causal evidence.
 - Aligned the dependency-free Living Lab validator with the published round/event JSON Schemas, including nested additional-property, type, comparison, enum, and date-time checks, and added schema-parity regression coverage so the two validation surfaces cannot silently drift apart.
 - Aligned English translation `source_version` with the active `VERSION`, made reviewed-hash updates advance that metadata automatically, and added validation/regression coverage so version drift cannot remain CI-green.
