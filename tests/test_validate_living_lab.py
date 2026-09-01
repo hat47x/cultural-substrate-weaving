@@ -79,6 +79,17 @@ class LivingLabValidationTests(unittest.TestCase):
         self.assertEqual(MODULE.COMPARISON_REQUIRED, set(comparison["required"]))
         self.assertEqual(MODULE.COMPARISON_ALLOWED, set(comparison["properties"]))
 
+        round_statement = self.round_schema["$defs"]["sourced_statement"]
+        event_statement = self.event_schema["$defs"]["sourced_statement"]
+        self.assertEqual(MODULE.SOURCED_STATEMENT_REQUIRED, set(round_statement["required"]))
+        self.assertEqual(MODULE.SOURCED_STATEMENT_ALLOWED, set(round_statement["properties"]))
+        self.assertEqual(MODULE.SOURCED_STATEMENT_REQUIRED, set(event_statement["required"]))
+        self.assertEqual(MODULE.SOURCED_STATEMENT_ALLOWED, set(event_statement["properties"]))
+
+        measurement = self.round_schema["$defs"]["measurement"]
+        self.assertEqual(MODULE.MEASUREMENT_REQUIRED, set(measurement["required"]))
+        self.assertEqual(MODULE.MEASUREMENT_ALLOWED, set(measurement["properties"]))
+
         self.assertEqual(MODULE.ROUND_MODES, set(round_properties["mode"]["enum"]))
         self.assertEqual(
             MODULE.ACTIVATION_SCOPES,
@@ -98,6 +109,14 @@ class LivingLabValidationTests(unittest.TestCase):
         self.assertEqual(
             MODULE.OBSERVATION_MODES,
             set(event_properties["observation_mode"]["enum"]),
+        )
+        self.assertEqual(
+            MODULE.SOURCE_TYPES,
+            set(round_statement["properties"]["source_type"]["enum"]),
+        )
+        self.assertEqual(
+            MODULE.SOURCE_TYPES,
+            set(event_statement["properties"]["source_type"]["enum"]),
         )
 
         semantic_rules = self.round_schema["allOf"]
@@ -162,21 +181,23 @@ class LivingLabValidationTests(unittest.TestCase):
         with self.assertRaises(MODULE.ValidationError):
             MODULE.validate_round(record)
 
-    def test_nested_optional_fields_respect_schema_types(self) -> None:
+    def test_sourced_statements_require_valid_source_type(self) -> None:
         record = copy.deepcopy(self.round_record)
-        record["task"]["domain"] = ["not", "a", "string"]
-        with self.assertRaises(MODULE.ValidationError):
-            MODULE.validate_round(record)
-
-        record = copy.deepcopy(self.round_record)
-        record["environment"]["notes"] = {"not": "a string"}
+        record["task"]["constraints"][0]["source_type"] = "model_guess"
         with self.assertRaises(MODULE.ValidationError):
             MODULE.validate_round(record)
 
         event = copy.deepcopy(self.event_record)
-        event["reopening_condition"] = ["not", "a", "string"]
+        event["interpretations"][0]["source_type"] = "model_guess"
         with self.assertRaises(MODULE.ValidationError):
             MODULE.validate_event(event)
+
+    def test_measurements_are_distinct_from_interpretations(self) -> None:
+        record = copy.deepcopy(self.paired_record)
+        measurement = record["comparison"]["measurements"][0]
+        measurement.pop("source_ref")
+        with self.assertRaises(MODULE.ValidationError):
+            MODULE.validate_round(record)
 
     def test_datetime_requires_date_time_and_timezone(self) -> None:
         record = copy.deepcopy(self.round_record)
@@ -201,11 +222,18 @@ class LivingLabValidationTests(unittest.TestCase):
         with self.assertRaises(MODULE.ValidationError):
             MODULE.validate_event(record)
 
-    def test_unknown_event_type_is_rejected(self) -> None:
+    def test_event_requires_observation_not_legacy_summary(self) -> None:
         record = copy.deepcopy(self.event_record)
-        record["event_type"] = "framework_count_increased"
+        record["summary"] = record.pop("observation")
         with self.assertRaises(MODULE.ValidationError):
             MODULE.validate_event(record)
+
+    def test_evaluative_event_types_are_rejected(self) -> None:
+        for event_type in ("useful_nonuse", "harm_detected"):
+            record = copy.deepcopy(self.event_record)
+            record["event_type"] = event_type
+            with self.assertRaises(MODULE.ValidationError):
+                MODULE.validate_event(record)
 
     def test_record_set_rejects_orphan_event(self) -> None:
         event = copy.deepcopy(self.event_record)
