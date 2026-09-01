@@ -1,5 +1,5 @@
 {
-  "schema_version": "0.1",
+  "schema_version": "0.2",
   "round_id": "round-paired-example-001",
   "case_id": "paired-example-case",
   "mode": "paired_check",
@@ -12,14 +12,22 @@
     "notes": "Baseline and treatment use fresh chats and the same supplied task material."
   },
   "task": {
-    "summary": "Compare a domain-method baseline with the same task plus CSW without turning the comparison into a framework-count contest.",
+    "summary": "Compare a domain-method baseline with the same task plus CSW while keeping observations separate from evaluator judgments.",
     "domain": "example",
     "source_refs": [
       "artifact:paired-input-001"
     ],
-    "preservation_set": [
-      "Keep target-specific exceptions visible.",
-      "Do not promote framework-generated questions into target facts without independent support."
+    "constraints": [
+      {
+        "source_type": "user",
+        "statement": "Keep target-specific exceptions visible.",
+        "source_ref": "artifact:paired-input-001"
+      },
+      {
+        "source_type": "user",
+        "statement": "Do not promote framework-generated questions into target facts without independent support.",
+        "source_ref": "artifact:paired-input-001"
+      }
     ]
   },
   "material_delta_refs": [],
@@ -30,7 +38,7 @@
       "framework": "example-framework",
       "depth": "preview",
       "use": "exploration",
-      "notes": "The preview is used only to generate a comparison question."
+      "notes": "The treatment chat opened a preview of the framework."
     }
   ],
   "kj_snapshot_refs": [],
@@ -39,20 +47,47 @@
     "artifact:treatment-output-001"
   ],
   "residuals": [
-    "The observed difference may still reflect ordinary Web-chat variance."
+    {
+      "source_type": "ai",
+      "statement": "The observed difference may also reflect ordinary Web-chat variance.",
+      "source_ref": "chat:evaluator-fresh-001"
+    }
   ],
   "reopening_conditions": [
-    "Repeat only if the difference matters to a method-change decision or appears across another real task."
+    {
+      "source_type": "ai",
+      "statement": "Repeat the comparison only if a later method decision requires another observation of the same difference.",
+      "source_ref": "chat:evaluator-fresh-001"
+    }
   ],
   "comparison": {
     "baseline_chat_ref": "chat:baseline-fresh-001",
     "treatment_chat_ref": "chat:treatment-fresh-001",
     "evaluator_chat_ref": "chat:evaluator-fresh-001",
     "run_order": "baseline_first",
-    "difference_notes": [
-      "Treatment produced a concrete research question absent from the baseline.",
-      "Neither output is treated as better merely because one used a cultural framework."
+    "observed_differences": [
+      "The treatment output contains a concrete research question that is absent from the baseline output."
+    ],
+    "measurements": [
+      {
+        "label": "research-question-count-difference",
+        "value": 1,
+        "unit": "question",
+        "source_ref": "artifact:paired-output-diff-001",
+        "notes": "This value records only the specified count difference and does not state that either output is better."
+      }
+    ],
+    "interpretations": [
+      {
+        "source_type": "ai",
+        "statement": "The additional question may be related to the framework preview, but the comparison does not establish that explanation.",
+        "source_ref": "chat:evaluator-fresh-001",
+        "evidence_refs": [
+          "artifact:baseline-output-001",
+          "artifact:treatment-output-001"
+        ]
+      }
     ]
   },
-  "notes": "A paired check improves comparability but is not treated as strict causal proof."
+  "notes": "A paired check improves comparability but does not turn an AI evaluator's interpretation into a measurement."
 }
