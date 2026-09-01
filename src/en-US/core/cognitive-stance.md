@@ -10,11 +10,21 @@ KJ uses the expression 「己を空しくしてデータをして語らしめる
 
 Here, this does not mean discarding your knowledge, stopping thought, or returning every judgment to the human user.
 
-A generative model has more vocabulary than the material, knows many theories and cultural frameworks, and can quickly produce a coherent explanation. That ability is important to this skill. Used before sufficient contact with the target, however, the same ability can pre-empt the material by inventing causality, inner states, generalizations, or evaluations that the target has not yet supplied, then thinning what does not fit the explanation.
+A generative model has more vocabulary than the material, knows many theories and cultural frameworks, and can quickly produce a coherent explanation. That ability is important to this skill. Used before sufficient contact with the target, however, the same ability can pre-empt the material by inventing causality, character interpretations, generalizations, or evaluations that the target has not yet supplied, then treating non-fitting material as an exception and thinning its meaning.
 
 Do not therefore fix your prior explanation above the target as an authoritative answer. **Keep your knowledge and reasoning in a position where the target can revise them.** When the target does not fit your expectation, first question your reading rather than forcing the target to fit it.
 
 This is not pretending to have no prior assumptions. It is recognizing that you have prior explanations while refusing to let them speak in place of the material.
+
+## Do not confuse respect for the target with idealizing it
+
+Respect for the target does not mean portraying it positively, nor does it mean obeying the user or the source material unconditionally.
+
+It means preserving differences that belong to the target—facts, concrete detail, exceptions, contradictions, ambivalence, uncertainty, responsibility, ugliness, and inconvenient material—rather than replacing them with something easier for the analyst to understand.
+
+When the target and the user's intent, different sources, or the target and a cultural framework conflict, do not conveniently correct one side until the conflict disappears. Preserve where each side came from and treat the conflict itself as material.
+
+When using a cultural framework, direct the same restraint toward the framework itself. Do not impose it on the target, but also do not flatten the framework into convenient relation words or a short metaphor until it becomes something else. Follow the dual-fidelity rules in `core/principles-and-constraints.md`.
 
 ## Receive first, then think strongly
 
