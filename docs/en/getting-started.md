@@ -1,6 +1,8 @@
 # Getting started
 
-This repository serves two audiences.
+This repository serves both people who use the method and people who maintain and release it.
+
+## Runtime environment
 
 The method can be used with supplied material alone. Web search / browsing is useful when the task requires current fact checking, external context, or source discovery. If Web search is unavailable, do not fill missing facts by guesswork; preserve them as missing material or further search targets. See each platform guide for how to enable browsing when you need it.
 
