@@ -28,6 +28,7 @@ ROUND_ALLOWED = ROUND_REQUIRED | {
     "environment",
     "material_delta_refs",
     "invocation",
+    "unloaded_framework_candidates",
     "kj_snapshot_refs",
     "comparison",
     "notes",
@@ -36,6 +37,8 @@ ENVIRONMENT_REQUIRED: set[str] = set()
 ENVIRONMENT_ALLOWED = {"platform", "model_label", "product_mode", "tools", "notes"}
 TASK_REQUIRED = {"summary"}
 TASK_ALLOWED = {"summary", "domain", "source_refs", "preservation_set"}
+CANDIDATE_REQUIRED = {"framework", "reason", "disposition"}
+CANDIDATE_ALLOWED = CANDIDATE_REQUIRED | {"stop_reason"}
 CONTACT_REQUIRED = {"framework", "depth", "use"}
 CONTACT_ALLOWED = CONTACT_REQUIRED | {"notes"}
 COMPARISON_REQUIRED = {"baseline_chat_ref", "treatment_chat_ref"}
@@ -62,6 +65,7 @@ EVENT_ALLOWED = EVENT_REQUIRED | {
     "notes",
 }
 
+CANDIDATE_DISPOSITIONS = {"rejected", "deferred"}
 DEPTHS = {"probe", "preview", "full", "enacted"}
 USES = {"exploration", "attribution"}
 ACTIVATION_SCOPES = {"non_activation", "limited_use", "exploratory_use"}
@@ -205,6 +209,24 @@ def validate_round(data: dict[str, Any]) -> None:
             _check_string_list(data[field], f"round.{field}", unique=True)
     _check_string_list(data["residuals"], "round.residuals")
     _check_string_list(data["reopening_conditions"], "round.reopening_conditions")
+
+    candidates = _require_list(
+        data.get("unloaded_framework_candidates", []),
+        "round.unloaded_framework_candidates",
+    )
+    for index, raw in enumerate(candidates):
+        label = f"round.unloaded_framework_candidates[{index}]"
+        candidate = _require_object(raw, label)
+        _check_keys(candidate, CANDIDATE_REQUIRED, CANDIDATE_ALLOWED, label)
+        _require_nonempty_string(candidate["framework"], f"{label}.framework")
+        _require_nonempty_string(candidate["reason"], f"{label}.reason")
+        _check_enum(
+            candidate["disposition"],
+            CANDIDATE_DISPOSITIONS,
+            f"{label}.disposition",
+        )
+        if "stop_reason" in candidate:
+            _require_string(candidate["stop_reason"], f"{label}.stop_reason")
 
     contacts = _require_list(data["framework_contacts"], "round.framework_contacts")
     for index, raw in enumerate(contacts):
