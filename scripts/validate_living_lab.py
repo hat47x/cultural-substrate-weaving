@@ -9,7 +9,7 @@ from pathlib import Path
 from typing import Any
 
 ROOT = Path(__file__).resolve().parents[1]
-SCHEMA_VERSION = "0.1"
+SCHEMA_VERSION = "0.2"
 
 ROUND_REQUIRED = {
     "schema_version",
@@ -30,20 +30,27 @@ ROUND_ALLOWED = ROUND_REQUIRED | {
     "invocation",
     "kj_snapshot_refs",
     "comparison",
+    "interpretations",
     "notes",
 }
 ENVIRONMENT_REQUIRED: set[str] = set()
 ENVIRONMENT_ALLOWED = {"platform", "model_label", "product_mode", "tools", "notes"}
 TASK_REQUIRED = {"summary"}
-TASK_ALLOWED = {"summary", "domain", "source_refs", "preservation_set"}
+TASK_ALLOWED = {"summary", "domain", "source_refs", "constraints"}
 CONTACT_REQUIRED = {"framework", "depth", "use"}
 CONTACT_ALLOWED = CONTACT_REQUIRED | {"notes"}
 COMPARISON_REQUIRED = {"baseline_chat_ref", "treatment_chat_ref"}
 COMPARISON_ALLOWED = COMPARISON_REQUIRED | {
     "evaluator_chat_ref",
     "run_order",
-    "difference_notes",
+    "observed_differences",
+    "measurements",
+    "interpretations",
 }
+SOURCED_STATEMENT_REQUIRED = {"source_type", "statement"}
+SOURCED_STATEMENT_ALLOWED = SOURCED_STATEMENT_REQUIRED | {"source_ref", "evidence_refs"}
+MEASUREMENT_REQUIRED = {"label", "value", "source_ref"}
+MEASUREMENT_ALLOWED = MEASUREMENT_REQUIRED | {"unit", "notes"}
 
 EVENT_REQUIRED = {
     "schema_version",
@@ -52,10 +59,11 @@ EVENT_REQUIRED = {
     "event_type",
     "observation_mode",
     "recorded_at",
-    "summary",
+    "observation",
     "evidence_refs",
 }
 EVENT_ALLOWED = EVENT_REQUIRED | {
+    "interpretations",
     "artifact_refs",
     "framework_refs",
     "reopening_condition",
@@ -73,13 +81,14 @@ EVENT_TYPES = {
     "search_shift",
     "kj_reconfiguration",
     "artifact_adoption",
+    "artifact_withdrawal",
     "decision_change",
     "delayed_reactivation",
     "repeated_transfer",
-    "useful_nonuse",
-    "harm_detected",
+    "framework_contact_change",
 }
 OBSERVATION_MODES = {"prospective", "retrospective"}
+SOURCE_TYPES = {"user", "ai", "external", "mixed", "unknown"}
 ID_RE = re.compile(r"^(round|event)-[A-Za-z0-9._-]+$")
 
 
@@ -158,6 +167,37 @@ def _check_string_list(
         raise ValidationError(f"{label} must not contain duplicates")
 
 
+def _validate_sourced_statement(value: Any, label: str) -> None:
+    statement = _require_object(value, label)
+    _check_keys(statement, SOURCED_STATEMENT_REQUIRED, SOURCED_STATEMENT_ALLOWED, label)
+    _check_enum(statement["source_type"], SOURCE_TYPES, f"{label}.source_type")
+    _require_nonempty_string(statement["statement"], f"{label}.statement")
+    if "source_ref" in statement:
+        _require_nonempty_string(statement["source_ref"], f"{label}.source_ref")
+    if "evidence_refs" in statement:
+        _check_string_list(
+            statement["evidence_refs"], f"{label}.evidence_refs", unique=True
+        )
+
+
+def _check_sourced_statement_list(value: Any, label: str) -> None:
+    items = _require_list(value, label)
+    for index, item in enumerate(items):
+        _validate_sourced_statement(item, f"{label}[{index}]")
+
+
+def _validate_measurement(value: Any, label: str) -> None:
+    measurement = _require_object(value, label)
+    _check_keys(measurement, MEASUREMENT_REQUIRED, MEASUREMENT_ALLOWED, label)
+    _require_nonempty_string(measurement["label"], f"{label}.label")
+    if not isinstance(measurement["value"], (str, int, float, bool)):
+        raise ValidationError(f"{label}.value must be a string, number, or boolean")
+    _require_nonempty_string(measurement["source_ref"], f"{label}.source_ref")
+    for field in ("unit", "notes"):
+        if field in measurement:
+            _require_string(measurement[field], f"{label}.{field}")
+
+
 def validate_round(data: dict[str, Any]) -> None:
     _check_keys(data, ROUND_REQUIRED, ROUND_ALLOWED, "round")
     if data["schema_version"] != SCHEMA_VERSION:
@@ -197,14 +237,14 @@ def validate_round(data: dict[str, Any]) -> None:
         _require_string(task["domain"], "round.task.domain")
     if "source_refs" in task:
         _check_string_list(task["source_refs"], "round.task.source_refs", unique=True)
-    if "preservation_set" in task:
-        _check_string_list(task["preservation_set"], "round.task.preservation_set")
+    if "constraints" in task:
+        _check_sourced_statement_list(task["constraints"], "round.task.constraints")
 
     for field in ("material_delta_refs", "kj_snapshot_refs", "artifacts"):
         if field in data:
             _check_string_list(data[field], f"round.{field}", unique=True)
-    _check_string_list(data["residuals"], "round.residuals")
-    _check_string_list(data["reopening_conditions"], "round.reopening_conditions")
+    _check_sourced_statement_list(data["residuals"], "round.residuals")
+    _check_sourced_statement_list(data["reopening_conditions"], "round.reopening_conditions")
 
     contacts = _require_list(data["framework_contacts"], "round.framework_contacts")
     for index, raw in enumerate(contacts):
@@ -238,11 +278,25 @@ def validate_round(data: dict[str, Any]) -> None:
             )
         if "run_order" in comparison:
             _check_enum(comparison["run_order"], RUN_ORDERS, "round.comparison.run_order")
-        if "difference_notes" in comparison:
+        if "observed_differences" in comparison:
             _check_string_list(
-                comparison["difference_notes"], "round.comparison.difference_notes"
+                comparison["observed_differences"], "round.comparison.observed_differences"
+            )
+        if "measurements" in comparison:
+            measurements = _require_list(
+                comparison["measurements"], "round.comparison.measurements"
+            )
+            for index, measurement in enumerate(measurements):
+                _validate_measurement(
+                    measurement, f"round.comparison.measurements[{index}]"
+                )
+        if "interpretations" in comparison:
+            _check_sourced_statement_list(
+                comparison["interpretations"], "round.comparison.interpretations"
             )
 
+    if "interpretations" in data:
+        _check_sourced_statement_list(data["interpretations"], "round.interpretations")
     if "notes" in data:
         _require_string(data["notes"], "round.notes")
 
@@ -261,14 +315,17 @@ def validate_event(data: dict[str, Any]) -> None:
     _check_enum(data["event_type"], EVENT_TYPES, "event.event_type")
     _check_enum(data["observation_mode"], OBSERVATION_MODES, "event.observation_mode")
     _check_datetime(data["recorded_at"], "event.recorded_at")
-    _require_nonempty_string(data["summary"], "event.summary")
+    _require_nonempty_string(data["observation"], "event.observation")
     _check_string_list(data["evidence_refs"], "event.evidence_refs", nonempty=True, unique=True)
+    if "interpretations" in data:
+        _check_sourced_statement_list(data["interpretations"], "event.interpretations")
     for field in ("artifact_refs", "framework_refs"):
         if field in data:
             _check_string_list(data[field], f"event.{field}", unique=True)
-    for field in ("reopening_condition", "notes"):
-        if field in data:
-            _require_string(data[field], f"event.{field}")
+    if "reopening_condition" in data:
+        _validate_sourced_statement(data["reopening_condition"], "event.reopening_condition")
+    if "notes" in data:
+        _require_string(data["notes"], "event.notes")
 
 
 def validate_record(data: dict[str, Any]) -> str:
@@ -294,12 +351,7 @@ def load_and_validate(path: Path) -> str:
 
 
 def validate_record_set(records: list[dict[str, Any]]) -> None:
-    """Validate identifiers and event-to-round references inside one supplied record set.
-
-    This is intentionally separate from single-record validation: an event file may be
-    checked on its own when its round lives elsewhere, while a declared record set is
-    expected to be internally connected.
-    """
+    """Validate identifiers and event-to-round references inside one supplied record set."""
     round_ids: set[str] = set()
     event_ids: set[str] = set()
     events: list[dict[str, Any]] = []
