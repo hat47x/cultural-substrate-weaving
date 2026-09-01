@@ -22,16 +22,19 @@ A finding from an experiment is not automatically a change to the skill. A findi
 
 ## Living Lab research workflow
 
-Use the Web Chat Living Lab to observe v0.4.0 in real work without turning ordinary work into an experiment for its own sake.
+Use the Web Chat Living Lab to observe the released method in real work without turning ordinary work into an experiment for its own sake.
 
-- Use `natural_work` by default. Use `paired_check` only when a method-change decision, harm check, important regression check, or repeated surprising effect makes a stronger comparison useful.
-- `non_activation` and `useful_nonuse` are valid outcomes. Never force a cultural framework into a task merely to increase framework-use count or observation coverage.
+- Use `natural_work` by default. Use `paired_check` only when a method-change decision, an important regression question, or a repeated unexplained difference makes a stronger comparison useful.
+- Treat `activation_scope` as a record of what happened in the round. `non_activation` means that no cultural framework was opened; it does not by itself establish that non-activation was useful, harmful, correct, or incorrect.
+- Record events with observation-oriented types. Keep judgments of usefulness, harm, causation, or appropriateness out of the event type itself.
+- Keep directly observable changes, measurements, user judgments, and AI or external interpretations on separate provenance paths. An AI evaluator's conclusion is an attributed interpretation, not a measurement and not a user judgment.
+- Never force a cultural framework into a task merely to increase framework-use count or observation coverage.
 - Do not fabricate additional cases to fill domain categories. `task.domain` in the summary is coverage context only, not a taxonomy, quota, KPI, score, or release gate.
 - Keep real or private round/event records under `.living-lab/` or outside the repository. Commit only public-safe or separately anonymized/abstracted records under `research/living-lab/observations/`.
 - Prefer opaque references over copying source material into records when the copied material would disclose more than is needed for later review. Do not commit secrets, identifying private data, or confidential source content into public observations.
 - Public observation files must form a valid closed record set. Run `make check` before proposing changes; the Living Lab validator and CI report generation are part of that check.
-- Do not change `src/` from a single positive case. Consider promotion only after the same function recurs across different real tasks, the target/cognitive effect can be described without relying on a framework name, non-use or harm boundaries are visible, and the candidate is not already covered by an existing rule.
-- Prefer changing research records, auxiliary guidance, or tooling over adding static runtime rules when the observation does not meet that promotion threshold.
+- Do not change `src/` from one case, one event, one score, or the AI's own evaluation of its output. Return to traceable artifact differences, user corrections, later withdrawals or reuse, and repeated observations across real tasks before considering promotion.
+- Prefer changing research records, auxiliary guidance, or tooling over adding static runtime rules when the available material does not justify a stable method rule.
 
 ## Branch and release workflow
 

@@ -4,6 +4,43 @@
   "title": "Cultural Substrate Weaving Web Chat Living Lab Event",
   "type": "object",
   "additionalProperties": false,
+  "$defs": {
+    "sourced_statement": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "source_type",
+        "statement"
+      ],
+      "properties": {
+        "source_type": {
+          "enum": [
+            "user",
+            "ai",
+            "external",
+            "mixed",
+            "unknown"
+          ]
+        },
+        "statement": {
+          "type": "string",
+          "minLength": 1
+        },
+        "source_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "evidence_refs": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "uniqueItems": true
+        }
+      }
+    }
+  },
   "required": [
     "schema_version",
     "event_id",
@@ -11,12 +48,12 @@
     "event_type",
     "observation_mode",
     "recorded_at",
-    "summary",
+    "observation",
     "evidence_refs"
   ],
   "properties": {
     "schema_version": {
-      "const": "0.1"
+      "const": "0.2"
     },
     "event_id": {
       "type": "string",
@@ -32,11 +69,11 @@
         "search_shift",
         "kj_reconfiguration",
         "artifact_adoption",
+        "artifact_withdrawal",
         "decision_change",
         "delayed_reactivation",
         "repeated_transfer",
-        "useful_nonuse",
-        "harm_detected"
+        "framework_contact_change"
       ]
     },
     "observation_mode": {
@@ -49,7 +86,7 @@
       "type": "string",
       "format": "date-time"
     },
-    "summary": {
+    "observation": {
       "type": "string",
       "minLength": 1
     },
@@ -61,6 +98,12 @@
       },
       "minItems": 1,
       "uniqueItems": true
+    },
+    "interpretations": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/sourced_statement"
+      }
     },
     "artifact_refs": {
       "type": "array",
@@ -79,7 +122,7 @@
       "uniqueItems": true
     },
     "reopening_condition": {
-      "type": "string"
+      "$ref": "#/$defs/sourced_statement"
     },
     "notes": {
       "type": "string"

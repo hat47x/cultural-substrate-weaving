@@ -29,9 +29,9 @@
       "en_status": "translated"
     },
     "core/iteration.md": {
-      "ja_sha256": "fd1ae0d25d11b192605c336e21892ad721151b93a90b4e22024adb1215241ebd",
+      "ja_sha256": "8242a5e061c9ce75eccfab8c798d14e960bb1c0c02b51bd8a3f75cca2abeb1b3",
       "en_present": true,
-      "en_source_ja_sha256": "fd1ae0d25d11b192605c336e21892ad721151b93a90b4e22024adb1215241ebd",
+      "en_source_ja_sha256": "8242a5e061c9ce75eccfab8c798d14e960bb1c0c02b51bd8a3f75cca2abeb1b3",
       "en_status": "translated"
     },
     "core/principles-and-constraints.md": {
@@ -47,15 +47,15 @@
       "en_status": "translated"
     },
     "governance/evaluation.md": {
-      "ja_sha256": "2e104a9987d133d9f1999a7b81bd38cfeb6292722a313726694e6450d9e513f9",
+      "ja_sha256": "1f08ebfd44bac4306604687fea12bd574cc90b1118842933865654afa21fb139",
       "en_present": true,
-      "en_source_ja_sha256": "2e104a9987d133d9f1999a7b81bd38cfeb6292722a313726694e6450d9e513f9",
+      "en_source_ja_sha256": "1f08ebfd44bac4306604687fea12bd574cc90b1118842933865654afa21fb139",
       "en_status": "translated"
     },
     "governance/governance-and-records.md": {
-      "ja_sha256": "223225855ca42e1cb39554a329f1524b2356e2bbbbf6a9e901f0675777d9f00b",
+      "ja_sha256": "5804c58fd3c533b54ad6294e0e2074f4e683cae2d32d7426aac58325a5089327",
       "en_present": true,
-      "en_source_ja_sha256": "223225855ca42e1cb39554a329f1524b2356e2bbbbf6a9e901f0675777d9f00b",
+      "en_source_ja_sha256": "5804c58fd3c533b54ad6294e0e2074f4e683cae2d32d7426aac58325a5089327",
       "en_status": "translated"
     },
     "methods/framework-application.md": {

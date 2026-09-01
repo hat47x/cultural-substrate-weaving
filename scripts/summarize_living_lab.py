@@ -18,7 +18,7 @@ def _counter(values: list[str]) -> dict[str, int]:
 
 
 def summarize(records: list[dict[str, Any]]) -> dict[str, Any]:
-    """Create a review inventory without scoring or declaring causal effects."""
+    """Create a review inventory without scoring or collapsing observations into judgments."""
     validate_record_set(records)
 
     rounds = sorted(
@@ -46,17 +46,20 @@ def summarize(records: list[dict[str, Any]]) -> dict[str, Any]:
                 "activation_scope": round_record["activation_scope"],
                 "task_domain": round_record["task"].get("domain"),
                 "task_summary": round_record["task"]["summary"],
+                "task_constraints": round_record["task"].get("constraints", []),
                 "framework_contacts": round_record["framework_contacts"],
                 "artifacts": round_record["artifacts"],
                 "residuals": round_record["residuals"],
                 "reopening_conditions": round_record["reopening_conditions"],
+                "interpretations": round_record.get("interpretations", []),
                 "events": [
                     {
                         "event_id": event["event_id"],
                         "event_type": event["event_type"],
                         "observation_mode": event["observation_mode"],
                         "recorded_at": event["recorded_at"],
-                        "summary": event["summary"],
+                        "observation": event["observation"],
+                        "interpretations": event.get("interpretations", []),
                         "reopening_condition": event.get("reopening_condition"),
                     }
                     for event in round_events
@@ -70,12 +73,23 @@ def summarize(records: list[dict[str, Any]]) -> dict[str, Any]:
         if isinstance(record["task"].get("domain"), str) and record["task"]["domain"].strip()
     ]
 
+    interpretation_sources = [
+        interpretation["source_type"]
+        for record in rounds
+        for interpretation in record.get("interpretations", [])
+    ] + [
+        interpretation["source_type"]
+        for event in events
+        for interpretation in event.get("interpretations", [])
+    ]
+
     return {
-        "schema_version": "0.1",
+        "schema_version": "0.2",
         "interpretation_note": (
-            "This is an inventory for review. Counts and distributions are not KPIs, scores, "
-            "win/loss labels, or proof of causal effect. Task-domain distribution is coverage "
-            "context only and does not define a required quota or taxonomy."
+            "This is an inventory for review. Counts and distributions are operational context only, "
+            "not KPIs, scores, win/loss labels, judgments of usefulness or harm, or proof of causal effect. "
+            "Activation state does not establish whether that state was appropriate. Interpretations remain "
+            "attributed to their recorded source and are not measurements."
         ),
         "record_ids": {
             "rounds": [record["round_id"] for record in rounds],
@@ -87,6 +101,7 @@ def summarize(records: list[dict[str, Any]]) -> dict[str, Any]:
             "activation_scopes": _counter([record["activation_scope"] for record in rounds]),
             "event_types": _counter([record["event_type"] for record in events]),
             "observation_modes": _counter([record["observation_mode"] for record in events]),
+            "interpretation_source_types": _counter(interpretation_sources),
         },
         "rounds": round_inventory,
     }
