@@ -20,6 +20,13 @@ class ValidationWorkflowContractTests(unittest.TestCase):
         self.assertIn('[[ "${GITHUB_REF_NAME}" == release/* ]]', text)
         self.assertIn('[[ "${GITHUB_REF_NAME}" == "main" ]]', text)
 
+    def test_main_pushes_require_merge_commit_shape(self) -> None:
+        text = WORKFLOW.read_text(encoding="utf-8")
+        self.assertIn("Verify main push entered through a merge commit", text)
+        self.assertIn("github.event_name == 'push' && github.ref_name == 'main'", text)
+        self.assertIn("scripts/check_main_push_contract.py", text)
+        self.assertIn("git show -s --format='%P'", text)
+
 
 if __name__ == "__main__":
     unittest.main()
