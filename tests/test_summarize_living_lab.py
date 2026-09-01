@@ -28,28 +28,36 @@ class LivingLabSummaryTests(unittest.TestCase):
             json.loads(path.read_text(encoding="utf-8"))
             for path in sorted(observation_dir.glob("*.json"))
         ]
+        cls.event_example = json.loads(
+            (ROOT / "evals" / "living-lab-event.example.json").read_text(encoding="utf-8")
+        )
 
     def test_public_observations_summarize_without_scoring(self) -> None:
         summary = MODULE.summarize(self.records)
         self.assertIn("not KPIs", summary["interpretation_note"])
-        self.assertIn("coverage context only", summary["interpretation_note"])
+        self.assertIn("Activation state does not establish", summary["interpretation_note"])
+        self.assertEqual(summary["schema_version"], "0.2")
         self.assertEqual(
             summary["inventory"]["task_domains"],
             {"software and research-method repository operations": 1},
         )
         self.assertEqual(summary["inventory"]["activation_scopes"], {"non_activation": 1})
-        self.assertEqual(summary["inventory"]["event_types"], {"useful_nonuse": 1})
+        self.assertEqual(summary["inventory"]["event_types"], {})
+        self.assertEqual(summary["inventory"]["interpretation_source_types"], {"ai": 1})
         self.assertEqual(summary["rounds"][0]["round_id"], "round-2026-08-30-001")
         self.assertEqual(
             summary["rounds"][0]["task_domain"],
             "software and research-method repository operations",
         )
-        self.assertEqual(summary["rounds"][0]["events"][0]["event_type"], "useful_nonuse")
+        self.assertEqual(summary["rounds"][0]["events"], [])
+        self.assertEqual(
+            summary["rounds"][0]["interpretations"][0]["source_type"],
+            "ai",
+        )
 
-    def test_summary_requires_a_closed_record_set(self) -> None:
-        event_only = [record for record in self.records if "event_id" in record]
+    def test_summary_requires_event_round_references_to_resolve(self) -> None:
         with self.assertRaises(MODULE.ValidationError):
-            MODULE.summarize(event_only)
+            MODULE.summarize([self.event_example])
 
 
 if __name__ == "__main__":

@@ -4,6 +4,75 @@
   "title": "Cultural Substrate Weaving Web Chat Living Lab Round",
   "type": "object",
   "additionalProperties": false,
+  "$defs": {
+    "sourced_statement": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "source_type",
+        "statement"
+      ],
+      "properties": {
+        "source_type": {
+          "enum": [
+            "user",
+            "ai",
+            "external",
+            "mixed",
+            "unknown"
+          ]
+        },
+        "statement": {
+          "type": "string",
+          "minLength": 1
+        },
+        "source_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "evidence_refs": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "uniqueItems": true
+        }
+      }
+    },
+    "measurement": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "label",
+        "value",
+        "source_ref"
+      ],
+      "properties": {
+        "label": {
+          "type": "string",
+          "minLength": 1
+        },
+        "value": {
+          "type": [
+            "string",
+            "number",
+            "boolean"
+          ]
+        },
+        "unit": {
+          "type": "string"
+        },
+        "source_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "notes": {
+          "type": "string"
+        }
+      }
+    }
+  },
   "required": [
     "schema_version",
     "round_id",
@@ -19,7 +88,7 @@
   ],
   "properties": {
     "schema_version": {
-      "const": "0.1"
+      "const": "0.2"
     },
     "round_id": {
       "type": "string",
@@ -87,11 +156,10 @@
           },
           "uniqueItems": true
         },
-        "preservation_set": {
+        "constraints": {
           "type": "array",
           "items": {
-            "type": "string",
-            "minLength": 1
+            "$ref": "#/$defs/sourced_statement"
           }
         }
       }
@@ -172,15 +240,13 @@
     "residuals": {
       "type": "array",
       "items": {
-        "type": "string",
-        "minLength": 1
+        "$ref": "#/$defs/sourced_statement"
       }
     },
     "reopening_conditions": {
       "type": "array",
       "items": {
-        "type": "string",
-        "minLength": 1
+        "$ref": "#/$defs/sourced_statement"
       }
     },
     "comparison": {
@@ -209,13 +275,31 @@
             "parallel_or_unknown"
           ]
         },
-        "difference_notes": {
+        "observed_differences": {
           "type": "array",
           "items": {
             "type": "string",
             "minLength": 1
           }
+        },
+        "measurements": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/measurement"
+          }
+        },
+        "interpretations": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/sourced_statement"
+          }
         }
+      }
+    },
+    "interpretations": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/sourced_statement"
       }
     },
     "notes": {

@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+- Reworked the Web Chat Living Lab record contract so directly observable changes, measurements, user judgments, and AI or external interpretations remain on separate provenance paths. Schema 0.2 replaces evaluative event types such as `useful_nonuse` and `harm_detected` with observation-oriented events, adds sourced statements and explicit interpretation fields, separates paired-check observations from measurements and evaluator interpretations, and migrates the first public round without treating its historical AI evaluation as evidence that non-activation was appropriate.
+- Extended longitudinal KJ guidance so new material does not automatically rebuild an existing island: later rounds now distinguish what changed from what remained stable, and a local addition is allowed when the existing island still represents the material's core.
 - Recorded the completed v0.4.0 publication boundary in maintainer release history after the tag, GitHub Release, and remote asset verification succeeded.
 - Made a separate natural-Japanese rewriting pass mandatory after technical content is settled for Japanese development, maintainer, research, experiment, and operational documents; retroactively reviewed the existing scoped documents and added PR/CI contracts so the review step cannot silently disappear.
 - Made natural-Japanese development-document review freshness fail closed by recording reviewed Git blob SHAs; new, removed, or changed scoped documents must be reread and re-recorded before `make check` passes.

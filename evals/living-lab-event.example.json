@@ -1,14 +1,24 @@
 {
-  "schema_version": "0.1",
+  "schema_version": "0.2",
   "event_id": "event-example-001",
   "round_id": "round-example-001",
   "event_type": "question_shift",
   "observation_mode": "prospective",
   "recorded_at": "2026-08-30T15:35:00+09:00",
-  "summary": "A framework preview changed the next research question without being adopted as a target finding.",
+  "observation": "The next recorded research question differed from the question present before the framework preview.",
   "evidence_refs": [
     "chat:example-source",
     "artifact:kj-snapshot-003"
+  ],
+  "interpretations": [
+    {
+      "source_type": "ai",
+      "statement": "The framework preview may have contributed to the question shift, but this event alone does not establish causation.",
+      "source_ref": "chat:example-source",
+      "evidence_refs": [
+        "artifact:kj-snapshot-003"
+      ]
+    }
   ],
   "artifact_refs": [
     "artifact:draft-v4"
@@ -16,6 +26,10 @@
   "framework_refs": [
     "example-framework"
   ],
-  "reopening_condition": "Check whether later target-side material independently supports the new question.",
-  "notes": "This event records a meaningful change in the trajectory, not a score or proof of causal effect."
+  "reopening_condition": {
+    "source_type": "ai",
+    "statement": "Revisit the interpretation if later target-side material or another round changes the provenance of the question shift.",
+    "source_ref": "chat:example-source"
+  },
+  "notes": "The observation states the traceable change. Interpretations remain attributed to their source."
 }

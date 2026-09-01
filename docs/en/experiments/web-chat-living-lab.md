@@ -2,18 +2,32 @@
 
 ## Purpose
 
-This is not an API benchmark for running large fixed test suites. It is an operating observation system for real writing, research, design, and analysis carried out in Web chat products such as ChatGPT.
+The Web Chat Living Lab is not an API benchmark for running large fixed test suites. It is an operating observation system for real writing, research, design, and analysis carried out in Web chat products such as ChatGPT.
 
-The aim is not to make cultural-substrate-weaving (CSW) look good. The aim is to preserve enough evidence to revisit questions such as:
+Its purpose is not to make cultural-substrate-weaving (CSW) look effective. It preserves enough traceable material to revisit changes such as:
 
-- Did the question itself change?
-- Did the next search or observation target change?
-- Did later material reorganize an earlier KJ grouping or blank?
-- What actually survived into an artifact or decision?
-- When was non-use better?
-- Did a residual that looked unimportant become useful later?
+- the working question changed;
+- a new search or observation target appeared;
+- later material reorganized a KJ grouping, relation, or blank;
+- something was adopted into an artifact and later withdrawn or transformed;
+- an earlier residual became relevant again;
+- the degree of contact with a cultural framework changed.
+
+Record these first as **events or observable states**. Whether a change was useful, harmful, appropriate, or caused by CSW is a separate judgment.
 
 Framework count, full-read count, native-operation count, and event count are not KPIs.
+
+## Separate observation from evaluation
+
+Do not collapse the following into one record:
+
+1. **Direct observation** — a change that can be traced back to artifacts, questions, search targets, KJ arrangements, or activation state.
+2. **User judgment** — an adoption, correction, rejection, withdrawal, or other judgment stated by the user.
+3. **AI interpretation** — an explanation or evaluation added by the model, including claims of usefulness, harm, or causation.
+4. **Measurement** — a value actually recorded in a comparison or measurement procedure.
+5. **Evaluation of the measurement** — a separate judgment about what that value means.
+
+AI judgments may be preserved, but do not merge them into user judgments or measurements. If an AI defines an evaluation axis, scores its own output, and interprets the result, keep the score and the interpretation on separate provenance paths.
 
 ## Two operating modes
 
@@ -23,52 +37,43 @@ Use this by default. Continue the real task without turning it into a laboratory
 
 A round normally needs only this:
 
-1. Notice the material delta: new sources, observation, falsification, or execution results.
+1. Notice the material delta: new sources, observations, falsification, or execution results.
 2. Reopen only old residuals or isolated material touched by that delta.
-3. Use KJ and cultural frameworks only as far as the current question requires.
-4. Observe what survives into the real artifact, decision, or research direction.
-5. Preserve important residuals and reopening conditions, then close the round.
-6. Record an event only when a change occurred that may matter later.
+3. Use KJ and cultural frameworks in the form required by the current work.
+4. Observe what actually changed in the artifact, decision, research direction, or other real work.
+5. Preserve residuals and reopening conditions with enough provenance to identify whose judgment they represent.
+6. Record an event only when a change occurred that may matter to later review.
 
-Do not reread the whole history or fill every record field every round.
+Do not reread the whole history or fill every record field on every round.
 
 ### `paired_check`
 
-Use this only when a stronger comparison is useful, for example:
-
-- before promoting a new operation into a static rule;
-- after `harm_detected`;
-- when an unexpectedly strong result repeats and its conditions need checking;
-- before a release containing an important method change;
-- when it is useful to separate possible CSW contribution from ordinary model variation.
-
-A paired check can be run entirely in Web chat:
+Use this when a method decision needs a somewhat more comparable observation of the same task.
 
 1. Prepare the same task and source material.
 2. In a fresh chat A, use the domain method without CSW as the baseline.
 3. In a fresh chat B, use the same material with CSW.
 4. Keep visible model label, product mode, tool access, and timing as similar as practical.
-5. Across several cases, alternate baseline-first and treatment-first order.
+5. Record run order when several cases are compared.
 6. When useful, give de-labeled outputs to a third fresh chat for comparison.
 
 Web chat is not deterministic. A paired check improves comparability but is not treated as a strict causal experiment.
 
-## What to compare
+A third AI chat is not a neutral measuring instrument. Its conclusions belong under attributed `interpretations`, not under measurements.
 
-Do not collapse the comparison into one score. Preserve a difference map. Useful dimensions include:
+## Paired-check records
 
-- **target fidelity**: target-specific facts, exceptions, asymmetry, and irreversibility remain intact;
-- **question gain**: concrete researchable questions appeared beyond the baseline;
-- **provenance cleanliness**: framework-generated material was not silently converted into target fact;
-- **non-forcing**: the target was not reread merely to fill the framework;
-- **artifact usefulness**: the difference survived into real writing, design, research, or decisions;
-- **residual quality**: unresolved material remained open in a form that later work could receive.
+Schema 0.2 separates comparison material into:
 
-Scales may be used when useful, but averages and win/loss labels are not the value of the method itself.
+- `observed_differences` — differences that can be checked by referring back to the outputs;
+- `measurements` — values actually recorded, together with their source;
+- `interpretations` — judgments about those differences or values, with provenance.
+
+For example, "the treatment output contains one research question absent from the baseline" is an observable difference. "The question was caused by CSW, so the treatment is better" is an interpretation.
 
 ## Round records
 
-The machine-readable format is `evals/living-lab-round.schema.json`. See `evals/living-lab-round.example.json` for a normal round and `evals/living-lab-paired.example.json` for a positive paired-check example.
+The machine-readable format is `evals/living-lab-round.schema.json`. See `evals/living-lab-round.example.json` for a normal round and `evals/living-lab-paired.example.json` for a paired-check example.
 
 The record is intended to preserve only what may matter later:
 
@@ -76,41 +81,54 @@ The record is intended to preserve only what may matter later:
 - `natural_work` or `paired_check` mode;
 - time and, where relevant, visible Web-chat environment;
 - task summary and source references;
-- activation scope;
+- `activation_scope`;
 - actual framework contacts and `probe / preview / full / enacted` depth;
 - KJ snapshot references;
 - artifacts that survived into real work;
-- residuals and reopening conditions.
+- sourced constraints, residuals, and reopening conditions;
+- sourced interpretations when they are worth preserving.
 
-A round in which no cultural framework is opened is a normal outcome. Do not compensate for `non_activation` or equivalent non-use as if it were failure.
+`activation_scope: non_activation` records that no cultural framework was opened during that round. The state alone does not establish that non-activation was useful, harmful, correct, or incorrect.
 
 ## Event ledger
 
-Do not create an event for every round. Record only changes that can matter to later review using `evals/living-lab-event.schema.json`.
+Do not create an event for every round. Record only changes that may matter to later review using `evals/living-lab-event.schema.json`.
 
 - `question_shift`
 - `search_shift`
 - `kj_reconfiguration`
 - `artifact_adoption`
+- `artifact_withdrawal`
 - `decision_change`
 - `delayed_reactivation`
 - `repeated_transfer`
-- `useful_nonuse`
-- `harm_detected`
+- `framework_contact_change`
 
-An event is not proof of causal effect. It records what happened and which references support that observation.
+Schema 0.2 no longer uses `useful_nonuse` or `harm_detected` as event types. The former combined a state with a judgment of usefulness; the latter combined an event with an evaluation of harm.
 
-Use `retrospective` for events assigned after rereading old work and `prospective` for events observed under an already-declared observation plan.
+Write the traceable change itself in `observation`. When an explanation or evaluation is worth preserving, put it under `interpretations` and record its `source_type`.
+
+Use `retrospective` for events assigned after rereading old work and `prospective` for events observed under an already-declared observation plan. This distinction is not a quality ranking.
+
+## `source_type`
+
+Sourced judgments use one of these values:
+
+- `user` — a judgment stated by the user;
+- `ai` — a judgment or interpretation added by a generative-AI system;
+- `external` — a judgment originating in an external source or evaluator;
+- `mixed` — several origins cannot usefully be separated or jointly produced the statement;
+- `unknown` — the available record does not identify the origin.
+
+These values are provenance, not confidence scores. `user` does not mean "fact," and `ai` does not mean "worthless." The purpose is to avoid mistaking one origin for another during later review.
 
 ## Separate private records from public observations
 
 Real round/event records are not assumed to belong in the public repository. Records that touch private chats, unpublished drafts, internal material, client information, or similar context should normally stay under `.living-lab/` or outside the repository. Everything under `.living-lab/` except its README is ignored by Git.
 
-Only observations that are suitable for publication belong under `research/living-lab/observations/`. A public record should either rely only on public information or be a separately anonymized/abstracted version of a private original. Prefer opaque references such as `chat:case-a-round-3` or `artifact:draft-7` when copying source content would disclose more than the observation requires.
+Only observations suitable for publication belong under `research/living-lab/observations/`. A public record should either rely only on public information or be a separately anonymized or abstracted version of a private original. Prefer opaque references such as `chat:case-a-round-3` or `artifact:draft-7` when copying source content would disclose more than the observation requires.
 
-This separation is not a research-quality ranking. Private and public records can use the same round/event formats. Whether a record is safe to publish is a different question from whether the observation is useful.
-
-The public observation set is validated in CI as a closed record set. This keeps duplicate IDs and event-to-round reference errors from accumulating in published evidence.
+Publication safety and research usefulness are separate questions.
 
 ## What not to record
 
@@ -125,17 +143,20 @@ Observation overhead should not become heavier than the real task. Normally do n
 
 Rich preservation of source material does not require copying every item into the observation ledger.
 
-## Promoting findings into the method
+## Before promoting a finding into the method
 
-Do not create a permanent rule from one successful case. Before promotion, ask:
+Do not create a permanent rule from one case or from an AI's evaluation of its own output.
 
-1. Did the same function recur across different real tasks?
-2. Can its benefit be described as an effect on the target or cognitive trajectory rather than by the framework name?
-3. Are conditions for non-use, weakening, or harm becoming visible?
-4. Is it genuinely different from an existing rule?
-5. Would it be better kept as an auxiliary note or dynamic practice rather than static method content?
+Before proposing a method change, return to at least the following:
 
-`repeated_transfer` is not enough by itself. Boundaries revealed by `useful_nonuse` and `harm_detected` matter equally.
+1. What did the user adopt, correct, reject, or later withdraw?
+2. Is there a traceable difference in the artifact, KJ arrangement, search path, or decision?
+3. Did the same function appear in another real task?
+4. Can the difference be explained by returning to source material rather than relying on the evaluator's judgment?
+5. Is the candidate already covered by an existing rule?
+6. Would an example, auxiliary note, or dynamic record preserve the finding better than another static rule?
+
+Measurements do not bypass these questions. Keep the recorded value separate from the meaning an evaluator assigns to it.
 
 ## Web-chat-specific cautions
 
@@ -143,32 +164,17 @@ Do not create a permanent rule from one successful case. Before promotion, ask:
 - Fresh chats improve separation but do not create perfectly independent trials.
 - Do not produce baseline and treatment sequentially in one chat when comparison matters; earlier output contaminates later work.
 - Match Web search and connected-tool access where practical, without distorting the real task merely for experimental control.
-- Long-running work will naturally cross model updates. The Living Lab values what survives into real work more than perfect reproducibility.
+- Long-running work will naturally cross model updates. Do not assume perfect reproducibility.
 
 ## Validation
 
 The included examples and local records can be checked without external dependencies:
 
 ```bash
-# Validate the bundled natural / paired / event examples as one record set.
 python scripts/validate_living_lab.py
-
-# Validate individual record shapes only.
 python scripts/validate_living_lab.py path/to/round.json path/to/event.json
-
-# Validate a closed set, including duplicate IDs and event -> round references.
 python scripts/validate_living_lab.py --record-set path/to/round.json path/to/event.json
-
-# Validate the published observation set as a closed record set.
 python scripts/validate_living_lab.py --record-set research/living-lab/observations/*.json
 ```
 
-Individual validation allows an event's round to live elsewhere. With `--record-set`, the supplied files are treated as one closed record set: `round_id` / `event_id` values must be unique and every event's `round_id` must resolve within the set.
-
-The validator does not score research quality. It checks record consistency such as required fields, identifiers, enums, paired-check references, and event evidence references.
-
-## When to background the Living Lab
-
-The observation system does not need to stay foregrounded permanently. Reduce recording frequency when the method is stable and continued observation produces few new boundaries or recurring patterns.
-
-Bring it forward again when a new framework family, model generation, use domain, or previously harmful operation is introduced.
+The validator checks schema shape, required fields, enum values, and record-set references. **A record passing validation does not establish that an observation or AI interpretation is correct.**
