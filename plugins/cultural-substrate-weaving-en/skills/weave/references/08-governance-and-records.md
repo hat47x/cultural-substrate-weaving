@@ -27,6 +27,8 @@ Record as needed:
 
 Do not fill every field on every round. **Record only enough detail where losing provenance would change the judgment.**
 
+When recording a judgment or interpretation, link it to who made it whenever practical. Do not treat a user's stated judgment, an AI interpretation added during the round, and an assessment written in an external source as if they had the same origin.
+
 For `framework_generated → target_supported`, retain a reference to target-side support independent of the cultural framework. Removal of framework vocabulary alone is not a reason for the transition.
 
 ## 11. Avoid double counting
@@ -42,25 +44,42 @@ Also separate evidence source from discovery route. Additional discovery routes 
 
 ## 12. Longitudinal event ledger
 
-In long-running work, do not turn every message into a record. Keep only events that matter for later review.
+In long-running work, do not turn every message into a record. Keep only events whose course may matter in later review.
 
 - `question_shift`
 - `search_shift`
 - `kj_reconfiguration`
 - `artifact_adoption`
+- `artifact_withdrawal`
 - `decision_change`
 - `delayed_reactivation`
 - `repeated_transfer`
-- `useful_nonuse`
-- `harm_detected`
+- `framework_contact_change`
 
-When useful, attach the round, source material or KJ snapshot, framework loading depth, adopted or rejected content, and reopening condition.
+Event names should describe **what happened** as neutrally as practical. Do not encode judgments such as useful, harmful, or appropriate in the event type itself.
 
-The ledger is not a self-scoring system. **It tracks what survived into real work, what disappeared, what mattered only later, and under what conditions non-use was better.**
+When useful, attach the round, source material or KJ snapshot, framework loading depth, adopted or rejected content, and reopening condition. If an assessment or interpretation also needs to be retained, record it separately with enough provenance to identify who made the judgment and what it relied on.
+
+For example, a round may record that no cultural framework was opened through its `activation_scope`. Whether that state was appropriate, useful, or avoided harm is a separate judgment and must not be inferred from the state alone.
+
+The ledger is not a self-scoring system. **It tracks what changed in real work, what remained, what was withdrawn, and what later material reactivated.**
 
 Events assigned after reading old cases may be marked `retrospective`; events observed under an already declared observation plan may be marked `prospective`. Neither should distort real work merely to improve observation.
 
-## 13. Preservation and working window
+## 13. Separate measurement from assessment
+
+When comparison or measurement is performed, do not collapse the following into one record:
+
+1. a directly observable difference;
+2. a recorded measurement;
+3. the user's judgment about that difference or value;
+4. an interpretation added by an AI or external evaluator.
+
+A measurement does not by itself settle what the value means or what caused it. If an AI defines an evaluation axis, scores its own output, and then interprets the result, keep the measurement and the evaluative judgment on separate provenance paths.
+
+If a judgment is later corrected or withdrawn, prefer a traceable history of the change over silently overwriting the earlier judgment.
+
+## 14. Preservation and working window
 
 Do not make deletion of old material the default way to lighten context. In the current round, foreground new material, old residuals touched now, the needed KJ snapshot, and the needed probe or preview.
 
