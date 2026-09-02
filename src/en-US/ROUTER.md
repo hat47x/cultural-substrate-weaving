@@ -19,7 +19,7 @@ Its main use is an open problem space whose destination is not yet fixed. Prefer
 2. **Choose the activation scope**: non-activation, limited use, or exploratory use.
 3. **Establish the cognitive stance**: once the skill will be used, read `core/cognitive-stance.md` once and place your interpretation where the target can revise it.
 4. **Protect the material surface**: when material is numerous or heterogeneous, use KJ to form semantic units without prematurely flattening evidence state, contradictions, isolates, or weak unease.
-5. **Open a cultural framework to the needed depth**: `not_loaded / probe / preview / full / enacted`. Normally begin with a target-led probe. In exploratory use, when light contact with a candidate framework's overall structure is itself meaningful, preview may also be used as an entry before a target-side question is fully formed. See `core/activation.md`.
+5. **Open a cultural framework to the needed depth**: `not_loaded / probe / preview / full / enacted`. Normally begin with probe; in exploratory use, preview may serve as the entry when warranted. See `core/activation.md`.
 6. **Explore**: obtain candidate questions, relations, states, and transitions from cultural frameworks. Move back and forth with KJ when useful.
 7. **Return to the target**: separate exploratory use from attribution use, and do not mix `target_supported / framework_generated / cross_field_emergent / unresolved`.
 8. **Reflect into real work and close the round**: record what remains in the artifact, decision, or research direction, together with residuals and reopening conditions.
@@ -55,7 +55,7 @@ Using many frameworks, reading them in full, or executing framework-native opera
 
 - **After deciding to use this skill**: read `00-cognitive-stance.md` once at the start. Do not reload it mechanically at every step of the same round.
 - **Limited use**: after establishing the cognitive stance, continue to the directly needed reference.
-- **Exploratory use**: establish the cognitive stance and then `01-scope-and-facts.md`; if material is numerous, use `10-integration.md`. Choose the framework entry in `00-activation.md`: use probe for a target-led path, or preview when a framework-led entry is warranted, then continue to `02-system-selection.md` → `02a-framework-application.md`.
+- **Exploratory use**: establish the cognitive stance and then `01-scope-and-facts.md`; if material is numerous, use `10-integration.md`. Normally enter a framework through probe; when framework-led exploration is warranted, enter through preview, then continue to `02-system-selection.md` → `02a-framework-application.md`.
 - **Iterative analysis**: read `00-iteration.md`. In long work, if an existing explanation or rule begins to outrank the target, return to the relevant part of `00-cognitive-stance.md`.
 - **Human / Taiheki**: do not load it merely because humans appear. Load it only when explicitly requested or when bodily consistency itself is the exploration target.
 
