@@ -2,9 +2,9 @@
 
 Read this when choosing a cultural framework and deciding why and how deeply to use it.
 
-## 3. Start from unresolved target structure
+## 3. Search from the target side or the framework side
 
-Do not begin with a list of framework names or by asking which culture resembles the target. First look for structure the target-side analysis still has trouble holding.
+Normally, search for candidate frameworks from structure the target-side analysis still has trouble holding.
 
 - multiple states or positions
 - paths, intermediate points, branches, return paths
@@ -13,11 +13,13 @@ Do not begin with a list of framework names or by asking which culture resembles
 - multiple timescales
 - flow, connection, bottlenecks
 - continua and partitioning
-- a need for questions outside the current problem framing
+- questions outside the current problem framing
 
-For candidate frameworks, inspect their elements and classification principles, relations, time/cycle/stage structure, original domain of use, historical context, variants, and limits.
+In exploratory use, the conditions in `core/activation.md` may instead justify entering through a framework-led preview. Do not first cut the framework down to what already fits the current question. Before mapping it to the target, inspect the framework's main overall distinctions—what it treats as positions, paths, cycles, relations, transitions, and boundaries.
 
-Do not collapse candidates into one fit score. Ask **what different way of seeing the currently unresolved target structure the framework can supply**.
+Whichever entry is used, inspect the candidate framework's elements and classification principles, relations, time/cycle/stage structure, original domain of use, historical context, variants, and limits.
+
+Do not collapse candidates into one fit score. On the target-led path, ask what different way of seeing the unresolved target structure the framework can supply. On the framework-led path, ask what distinctions or questions appear that the current problem framing does not yet contain. Do not turn this into unlimited enumeration of unrelated frameworks, or discard parts of a framework merely because one use case did not foreground them.
 
 ## 3a. Exploratory use and attribution use
 

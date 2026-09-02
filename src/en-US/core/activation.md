@@ -32,12 +32,14 @@ When a particular framework is named, open it lightly first and see what survive
 ## 3. Loading depth
 
 - **`not_loaded`**: do not open a cultural framework. This is a normal path when the target and KJ are enough for the current question.
-- **`probe`**: ask whether there is a concrete reason to open another cognitive field. Look for target-side unresolved structure such as cycles, paths, boundaries, center/periphery, multiple timescales, flow, continua, repetition, and offset.
-- **`preview`**: inspect only the framework's main cognitive capabilities and limits—what it treats as positions, paths, cycles, or relations.
+- **`probe`**: the target-led entry. Look for a concrete reason to open another cognitive field in unresolved target-side structure such as cycles, paths, boundaries, center/periphery, multiple timescales, flow, continua, repetition, or offset.
+- **`preview`**: make light contact with a candidate framework's main cognitive structure and limits.
 - **`full`**: read primary sources, lineage, symbolism, and compound structure when those are actually needed.
 - **`enacted`**: execute a framework-native operation only when it has concrete meaning for the target-side question.
 
-If the probe produces no concrete question, do not deepen it. If preview is enough, return to KJ. Even after a full read, do not enact an operation that is not needed.
+On the target-led path, if probe produces no concrete question, normally do not deepen it. In exploratory use, however, preview may be used as the entry before a target-side question is fully formed when a candidate framework is already named, arises naturally from context, is being carried forward or compared, or when challenging the current problem framing through another cognitive field is itself meaningful.
+
+A framework-led preview does not mean adoption, full assignment of the target, or progression to `full` or `enacted`. Questions, contrasts, research targets, and candidate material for KJ remain `framework_generated` and are returned to the target. If preview is enough, return to KJ. Even after a full read, do not enact an operation that is not needed.
 
 ## 4. Reduce or stop
 
