@@ -17,15 +17,21 @@
   },
   "files": {
     "ROUTER.md": {
-      "ja_sha256": "7e8cfdd81fc4933d26fabdb3d80ea964c3c79d160e5c4df827c2c65af044c916",
+      "ja_sha256": "f13b1b44619cabedf440f92a9bde9e438997e24a8c5eedb3f48765392901113b",
       "en_present": true,
-      "en_source_ja_sha256": "7e8cfdd81fc4933d26fabdb3d80ea964c3c79d160e5c4df827c2c65af044c916",
+      "en_source_ja_sha256": "f13b1b44619cabedf440f92a9bde9e438997e24a8c5eedb3f48765392901113b",
       "en_status": "translated"
     },
     "core/activation.md": {
       "ja_sha256": "59f70c983ac0a63114fcf78fa38576955658d6f8071b69a0884952b7b365bf50",
       "en_present": true,
       "en_source_ja_sha256": "59f70c983ac0a63114fcf78fa38576955658d6f8071b69a0884952b7b365bf50",
+      "en_status": "translated"
+    },
+    "core/cognitive-stance.md": {
+      "ja_sha256": "925bb61bfde9be03e366550cde056ba6831bed54386f6d5948b4688329efa225",
+      "en_present": true,
+      "en_source_ja_sha256": "925bb61bfde9be03e366550cde056ba6831bed54386f6d5948b4688329efa225",
       "en_status": "translated"
     },
     "core/iteration.md": {
