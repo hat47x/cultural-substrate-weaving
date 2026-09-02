@@ -2,9 +2,15 @@
 
 Read this when choosing a cultural framework and deciding why and how deeply to use it.
 
-## 3. Start from unresolved target structure
+## 3. Use two entry directions into candidate frameworks
 
-Do not begin with a list of framework names or by asking which culture resembles the target. First look for structure the target-side analysis still has trouble holding.
+Do not fix cultural-framework exploration to a target-led entry alone.
+
+Exploratory use can employ at least two paths.
+
+### Target-led entry
+
+Look for structure the target-side analysis still has trouble holding.
 
 - multiple states or positions
 - paths, intermediate points, branches, return paths
@@ -13,11 +19,30 @@ Do not begin with a list of framework names or by asking which culture resembles
 - multiple timescales
 - flow, connection, bottlenecks
 - continua and partitioning
-- a need for questions outside the current problem framing
+- signs that questions outside the current problem framing are needed
 
-For candidate frameworks, inspect their elements and classification principles, relations, time/cycle/stage structure, original domain of use, historical context, variants, and limits.
+On this path, search for candidate frameworks by asking what different way of seeing they can supply for target structure that is not yet being handled.
 
-Do not collapse candidates into one fit score. Ask **what different way of seeing the currently unresolved target structure the framework can supply**.
+### Framework-led entry
+
+In exploratory use, light contact with a candidate framework is also allowed before a concrete target-side question is fully formed when the framework is already named, arises naturally from the target's cultural or historical context, has been carried through the same ongoing case, is deliberately introduced as a contrasting cognitive grammar, or when challenging the current problem framing through another cognitive field is itself meaningful.
+
+Do not first cut the framework down to the part that already fits the current question. At `preview` depth, briefly inspect the framework's own main overall distinctions—what it treats as positions, paths, cycles, relations, transitions, and boundaries—before mapping them to the target.
+
+A framework-led preview is not full assignment, framework adoption, or a full read. Questions, contrasts, hypotheses, research targets, candidate material to return to KJ, and doubts about the current problem framing remain `framework_generated` and are returned to the target.
+
+### Read the candidate framework itself
+
+Whichever entry is used, inspect the candidate framework's elements and classification principles, relations, time/cycle/stage structure, original domain of use, historical context, variants, and limits.
+
+Do not collapse candidates into one fit score.
+
+- On the target-led path, ask what different way of seeing the unresolved target structure the framework can supply.
+- On the framework-led path, ask what distinctions or questions the framework can supply that the current problem framing does not yet contain.
+
+Do not turn this into an obligation to enumerate unrelated frameworks without limit. The point is not to increase framework count, but to avoid closing the exploration space in advance with the current problem framing.
+
+Do not treat positions, paths, cycles, relations, or symbols that were not foregrounded in one use case as unnecessary parts of the framework merely because that case did not use them. Keep the whole framework distinct from the part foregrounded in the current case.
 
 ## 3a. Exploratory use and attribution use
 
@@ -67,6 +92,8 @@ Heterogeneous frameworks can still be used exploratorily to:
 ## 3d. Loading depth
 
 Use `probe / preview / full / enacted` from `core/activation.md`.
+
+The target-led path normally begins with probe. On the framework-led path, preview can serve as the exploration entry when the conditions in `core/activation.md` are met.
 
 Do not set a fixed fit threshold. High apparent fit guarantees neither valid attribution nor usefulness.
 
