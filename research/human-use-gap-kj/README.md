@@ -22,19 +22,19 @@
 
 ## 現在地
 
-PR #84〜#87を経て、R2で前景化していた「方法、文化体系、AIの流暢さ、一般則が対象より前へ出る」という問題は、少なくとも静的な認知原理の欠落としては大きく後退した。
+PR #84〜#88を経て、R2で前景化していた「方法、文化体系、AIの流暢さ、一般則が対象より前へ出る」という問題は、少なくとも静的な認知原理の欠落としては大きく後退した。
 
 現在の正本には `core/cognitive-stance.md` があり、KJ法の「己を空しくしてデータをして語らしめる」を、**自分の知識や推論を対象によって修正され得る位置へ置くこと**としてCSW全体の上位姿勢へ接続している。
 
-したがって、現在前景に置く研究残差は次のように扱う。
+現在前景に置く研究残差は次のように扱う。
 
-- **R1――文化体系側からの予期しない認知供給**：残る。対象側の現在の問題設定そのものが探索を狭める場合に、体系側の主要構造へどの程度先に触れる余地が必要かを見る。
+- **R1――文化体系側からの予期しない認知供給**：静的整理を一段進めた。対象起点の入口だけでなく、候補体系のnativeな全体像へ軽く触れて現在の問題設定からは立たなかった問いを受け取る「体系起点」の入口も、探索利用の正規経路として両立できることを整理した。詳細は `2026-09-03-r1-target-demand-and-field-supply.md`。
 - **R2――対象への敬意が失われる過程**：静的な規則不足としては後退し、挙動上の残差だけを残す。PR #85後にも同型の短絡が再発するか、逆に慎重さが強すぎて委任された判断や仮説形成を弱めるかを見る。
 - **R3――runtime純化後の具体能力**：背景へ置く。具体的な再利用要求または確認可能な実害が現れたときだけ再開する。
 
 境界ケースは `research/empty-self-boundary-cases/` に検査資産として保存されている。現時点では、ケースを回すこと自体を研究成果にしない。自然な実作業で挙動上の残差が現れた場合や、release前に限定的な回帰確認が必要になった場合に使う。
 
-最新の再基準化は `2026-09-03-post-cognitive-stance-rebaseline.md` を参照する。
+全体の再基準化は `2026-09-03-post-cognitive-stance-rebaseline.md`、R1の最新静的整理は `2026-09-03-r1-target-demand-and-field-supply.md` を参照する。
 
 ## 現在の記録
 
@@ -61,7 +61,7 @@ PR #84〜#87を経て、R2で前景化していた「方法、文化体系、AI�
   - この分析は後続のPR #72でschema 0.2とgovernanceの改修へつながった。
 - `2026-09-01-post-pr72-residual-map.md`
   - PR #72とPR #70を取り込んだ当時のsourceへHC-001〜025を戻し、解消済みの論点と、なお残る研究残差を再照合した記録。
-  - R1、R2、R3を前景に残した時点記録であり、現在地は後続文書と `2026-09-03-post-cognitive-stance-rebaseline.md` で更新されている。
+  - R1、R2、R3を前景に残した時点記録であり、現在地は後続文書で更新されている。
 - `2026-09-01-r3-capability-preservation-inventory.md`
   - R3について、v0.2.0で後にruntimeから外れた具体技法を、文書名ではなく「何を可能にしていたか」という機能単位で棚卸しした記録。
   - 一般化できる機能の多くは現在のコアへ吸収され、創作・出力・協働に固有の技法は領域側へ戻すのが自然だと確認した。
@@ -95,9 +95,13 @@ PR #84〜#87を経て、R2で前景化していた「方法、文化体系、AI�
   - 旧featureにだけ残っていた、聞き手・野外研究者という役割や成功条件の設計記録。
   - 現在の正本を置き換えるものではなく、`cognitive-stance` へ至る分析来歴として保存する。
 - `2026-09-03-post-cognitive-stance-rebaseline.md`
-  - PR #84〜#87を取り込んだ現在の `develop/v0.5.0` へ研究残差を戻した時点記録。
+  - PR #84〜#87を取り込んだ `develop/v0.5.0` へ研究残差を戻した時点記録。
   - R1は残し、R2は静的欠落から挙動上の残差へ縮小し、R3を背景化した。
   - Issue #78の境界ケースを、常時実験ではなく必要時の診断・回帰資産として再配置した。
+- `2026-09-03-r1-target-demand-and-field-supply.md`
+  - R1について、現行 `activation` / `system-selection` / `framework-application` と人的直接補正HC-017〜021を静的に読み合わせた。
+  - 現行の対象起点経路を残しつつ、候補体系のnativeな全体像へ軽く触れ、現在の問題設定からは立たなかった問いを受け取る体系起点の入口も正規に両立できることを整理した。
+  - 暫定核を「入口は二方向、帰属は対象へ一方向」と置き、`preview` を対象起点 `probe` の後にだけ許される段階へ固定しない方向をsource反映候補として示した。
 
 ## 読む順序
 
@@ -122,12 +126,13 @@ PR #84〜#87を経て、R2で前景化していた「方法、文化体系、AI�
 17. `2026-09-01-empty-self-source-placement-audit.md`
 18. `2026-09-01-empty-self-role-and-motivation.md`
 19. `2026-09-03-post-cognitive-stance-rebaseline.md`
+20. `2026-09-03-r1-target-demand-and-field-supply.md`
 
 この順序は、正しい結論へ一直線に進んだ履歴を示すものではない。初回の読み違いを含め、**分析そのものが訂正され、個別事例への戻りと後続実装によって問題設定も更新されていく過程**を追えるようにしている。
 
-現在残っている研究課題だけを確認したい場合は、まず `2026-09-03-post-cognitive-stance-rebaseline.md` を読む。
+現在残っている研究課題だけを確認したい場合は、まず `2026-09-03-post-cognitive-stance-rebaseline.md` を読み、R1については続けて `2026-09-03-r1-target-demand-and-field-supply.md` を読む。
 
-- R1の履歴を戻る場合は `2026-09-01-direct-corrections-round2.md` と `2026-09-01-post-pr72-residual-map.md` を参照する。
+- R1の成立過程を戻る場合は `2026-09-01-direct-corrections-round2.md` と `2026-09-01-post-pr72-residual-map.md` を参照する。
 - R2の成立過程を戻る場合は `2026-09-01-r2-respect-and-method-control.md` → `2026-09-01-r2-cross-case-respect-map.md` → `2026-09-01-r2-responsibility-boundary-history.md` → `2026-09-01-holistic-static-balance-review.md` → `2026-09-01-empty-self-cognitive-architecture.md` → `2026-09-01-empty-self-source-placement-audit.md` の順で参照する。
 - R3は `2026-09-01-r3-capability-preservation-inventory.md` を参照する。
 - 旧prompt案と役割設計の来歴が必要な場合だけ `2026-09-01-prompt-techniques-for-empty-self.md`、`2026-09-01-empty-self-prompt-prototype.md`、`2026-09-01-empty-self-role-and-motivation.md` へ戻る。
