@@ -32,14 +32,14 @@ When a particular framework is named, open it lightly first and see what survive
 ## 3. Loading depth
 
 - **`not_loaded`**: do not open a cultural framework. This is a normal path when the target and KJ are enough for the current question.
-- **`probe`**: the target-led entry. Ask whether there is a concrete reason to open another cognitive field. Look for unresolved target-side structure such as cycles, paths, boundaries, center/periphery, multiple timescales, flow, continua, repetition, and offset.
-- **`preview`**: make light contact with a candidate framework's main cognitive structure and limits. On the target-led path, inspect positions, paths, cycles, and relations relevant to the question raised by the probe. In exploratory use, preview can also serve as a separate entry: before mapping anything to the target, briefly inspect the candidate framework's own overall distinctions—what it treats as positions, paths, cycles, relations, transitions, and boundaries—without first cutting it down to the current problem framing.
+- **`probe`**: the target-led entry. Look for a concrete reason to open another cognitive field in unresolved target-side structure such as cycles, paths, boundaries, center/periphery, multiple timescales, flow, continua, repetition, or offset.
+- **`preview`**: make light contact with a candidate framework's main cognitive structure and limits.
 - **`full`**: read primary sources, lineage, symbolism, and compound structure when those are actually needed.
 - **`enacted`**: execute a framework-native operation only when it has concrete meaning for the target-side question.
 
-On the target-led path, if the probe produces no concrete question, normally do not deepen it. In exploratory use, however, preview may be entered before a target-side question is fully formed when a candidate framework is already named, arises naturally from the target's cultural or historical context, or when challenging the current problem framing through another cognitive field is itself meaningful.
+On the target-led path, if probe produces no concrete question, normally do not deepen it. In exploratory use, however, preview may be used as the entry before a target-side question is fully formed when a candidate framework is already named, arises naturally from context, is being carried forward or compared, or when challenging the current problem framing through another cognitive field is itself meaningful.
 
-A framework-led preview does not mean that the framework has been adopted, that the target should be assigned to every position, or that loading should continue to `full` or `enacted`. Questions, contrasts, research targets, and candidate material for KJ that emerge there remain `framework_generated` and are returned to the target. If preview is enough, return to KJ. Even after a full read, do not enact an operation that is not needed.
+A framework-led preview does not mean adoption, full assignment of the target, or progression to `full` or `enacted`. Questions, contrasts, research targets, and candidate material for KJ remain `framework_generated` and are returned to the target. If preview is enough, return to KJ. Even after a full read, do not enact an operation that is not needed.
 
 ## 4. Reduce or stop
 
