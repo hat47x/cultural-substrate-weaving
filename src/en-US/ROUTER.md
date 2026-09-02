@@ -7,6 +7,8 @@ This skill combines two capabilities.
 1. **Exploration through cultural frameworks**: use positions, relations, states, transitions, cycles, and symbols as cognitive resources different from ordinary analysis.
 2. **Integration through KJ**: do not force heterogeneous fragments into prior categories; let semantic units, relations, contradictions, isolates, and blanks arise from the material.
 
+When actually using this skill, begin from the KJ stance expressed as 「己を空しくしてデータをして語らしめる」: make room for the data to speak instead of letting your prior explanation speak in its place. This does not mean discarding knowledge or hypotheses. **Do not fix your explanation above the target as an authoritative answer; keep it revisable by the target. After sufficient contact with the material, think boldly, but do not rewrite newly generated meaning as a fact the source material had already stated.** See `core/cognitive-stance.md`.
+
 Domain-specific knowledge and quality standards are outside this skill. Combine it with a domain method when needed.
 
 Its main use is an open problem space whose destination is not yet fixed. Prefer ordinary methods for closed problems. If the skill is explicitly requested, use at least a limited pass to compare against the baseline.
@@ -15,11 +17,12 @@ Its main use is an open problem space whose destination is not yet fixed. Prefer
 
 1. **Set a baseline and preservation set**: inspect the domain-method-only output and the target-specific facts and exceptions that must not be broken.
 2. **Choose the activation scope**: non-activation, limited use, or exploratory use.
-3. **Protect the material surface**: when material is numerous or heterogeneous, use KJ to form semantic units without prematurely flattening evidence state, contradictions, isolates, or weak unease.
-4. **Open a cultural framework only as deeply as needed**: `not_loaded → probe → preview → full → enacted`. See `core/activation.md`.
-5. **Explore**: obtain candidate questions, relations, states, and transitions from cultural frameworks. Move back and forth with KJ when useful.
-6. **Return to the target**: separate exploratory use from attribution use, and do not mix `target_supported / framework_generated / cross_field_emergent / unresolved`.
-7. **Reflect into real work and close the round**: record what remains in the artifact, decision, or research direction, together with residuals and reopening conditions.
+3. **Establish the cognitive stance**: once the skill will be used, read `core/cognitive-stance.md` once and place your interpretation where the target can revise it.
+4. **Protect the material surface**: when material is numerous or heterogeneous, use KJ to form semantic units without prematurely flattening evidence state, contradictions, isolates, or weak unease.
+5. **Open a cultural framework only as deeply as needed**: `not_loaded → probe → preview → full → enacted`. See `core/activation.md`.
+6. **Explore**: obtain candidate questions, relations, states, and transitions from cultural frameworks. Move back and forth with KJ when useful.
+7. **Return to the target**: separate exploratory use from attribution use, and do not mix `target_supported / framework_generated / cross_field_emergent / unresolved`.
+8. **Reflect into real work and close the round**: record what remains in the artifact, decision, or research direction, together with residuals and reopening conditions.
 
 Using many frameworks, reading them in full, or executing framework-native operations is not a success condition.
 
@@ -35,6 +38,7 @@ Using many frameworks, reading them in full, or executing framework-native opera
 
 | Decision or process | Read |
 |---|---|
+| Cognitive stance toward the target; making room for the data to speak | [00-cognitive-stance.md](core/cognitive-stance.md) |
 | Activation, loading depth, early exit | [00-activation.md](core/activation.md) |
 | Attribution, dual fidelity, preservation | [00-principles-and-constraints.md](core/principles-and-constraints.md) |
 | Rounds, rematerialization, delayed reopening | [00-iteration.md](core/iteration.md) |
@@ -49,9 +53,10 @@ Using many frameworks, reading them in full, or executing framework-native opera
 
 ### Loading order
 
-- **Limited use**: start from the directly needed reference.
-- **Exploratory use**: establish `01-scope-and-facts.md`; if material is numerous, use `10-integration.md`. Probe frameworks first, then move to `02-system-selection.md` → `02a-framework-application.md` only when needed.
-- **Iterative analysis**: read `00-iteration.md`.
+- **After deciding to use this skill**: read `00-cognitive-stance.md` once at the start. Do not reload it mechanically at every step of the same round.
+- **Limited use**: after establishing the cognitive stance, continue to the directly needed reference.
+- **Exploratory use**: establish the cognitive stance and then `01-scope-and-facts.md`; if material is numerous, use `10-integration.md`. Probe frameworks first, then move to `02-system-selection.md` → `02a-framework-application.md` only when needed.
+- **Iterative analysis**: read `00-iteration.md`. In long work, if an existing explanation or rule begins to outrank the target, return to the relevant part of `00-cognitive-stance.md`.
 - **Human / Taiheki**: do not load it merely because humans appear. Load it only when explicitly requested or when bodily consistency itself is the exploration target.
 
 Do not fix the number of references. Avoid loading everything at once, and keep target-specific information in the dynamic layer.
