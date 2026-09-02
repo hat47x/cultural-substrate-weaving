@@ -23,9 +23,9 @@
       "en_status": "translated"
     },
     "core/activation.md": {
-      "ja_sha256": "87ed9ebaf079bcdf534d16f4ff2c36f61bd38fd74cf0673595ff9142e187235c",
+      "ja_sha256": "13bdb029cd18e7b61d1bea64f59d245dc51c9915f4c5e3ff65d2ebd81eb98301",
       "en_present": true,
-      "en_source_ja_sha256": "87ed9ebaf079bcdf534d16f4ff2c36f61bd38fd74cf0673595ff9142e187235c",
+      "en_source_ja_sha256": "13bdb029cd18e7b61d1bea64f59d245dc51c9915f4c5e3ff65d2ebd81eb98301",
       "en_status": "translated"
     },
     "core/cognitive-stance.md": {
@@ -83,9 +83,9 @@
       "en_status": "translated"
     },
     "methods/system-selection.md": {
-      "ja_sha256": "7e84985fb03419b1d694f337a7e6b131358a691a0270366a64d4ad53433c16d5",
+      "ja_sha256": "3ae2d7ff7bdaa1cb32aa3c1241c7346a3723dd6376553c994a740a1f22a0f9d5",
       "en_present": true,
-      "en_source_ja_sha256": "7e84985fb03419b1d694f337a7e6b131358a691a0270366a64d4ad53433c16d5",
+      "en_source_ja_sha256": "3ae2d7ff7bdaa1cb32aa3c1241c7346a3723dd6376553c994a740a1f22a0f9d5",
       "en_status": "translated"
     },
     "methods/transformation.md": {
