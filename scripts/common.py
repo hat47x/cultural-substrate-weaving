@@ -3,6 +3,7 @@ from __future__ import annotations
 import hashlib
 import json
 import shutil
+import subprocess
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -32,6 +33,23 @@ def sha256(path: Path) -> str:
 
 def version() -> str:
     return (ROOT / "VERSION").read_text(encoding="utf-8").strip()
+
+
+def git_head(root: Path = ROOT) -> str:
+    try:
+        result = subprocess.run(
+            ["git", "rev-parse", "HEAD"],
+            cwd=root,
+            check=True,
+            text=True,
+            capture_output=True,
+        )
+    except (OSError, subprocess.CalledProcessError) as exc:
+        raise RuntimeError(f"cannot resolve git HEAD: {exc}") from exc
+    value = result.stdout.strip()
+    if not value:
+        raise RuntimeError("cannot resolve git HEAD: empty result")
+    return value
 
 
 def manifest():
