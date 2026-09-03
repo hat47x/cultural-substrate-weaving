@@ -46,6 +46,19 @@ class ReleaseLifecycleContractTests(unittest.TestCase):
         self.assertIn("exact `main` commit", text)
         self.assertNotIn("Release workflow checks the dated version heading", text)
 
+    def test_localized_release_procedures_keep_the_same_publication_gates(self) -> None:
+        ja = (ROOT / "docs" / "ja" / "maintainers" / "release.md").read_text(encoding="utf-8")
+        en = (ROOT / "docs" / "en" / "maintainers" / "release.md").read_text(encoding="utf-8")
+
+        for text in (ja, en):
+            self.assertIn("scripts/check_release_changelog.py", text)
+            self.assertIn("git merge-base --is-ancestor HEAD origin/main", text)
+            self.assertIn("make release-check", text)
+            self.assertIn("release_assets", text)
+
+        self.assertIn("GitHub Actionsは現在リポジトリで無効化されています", ja)
+        self.assertIn("GitHub Actions are currently disabled", en)
+
     def test_remote_release_verification_remains_a_manual_publication_gate(self) -> None:
         text = (ROOT / "docs" / "maintainers" / "release.md").read_text(encoding="utf-8")
         self.assertIn("scripts/verify_published_release.py", text)
