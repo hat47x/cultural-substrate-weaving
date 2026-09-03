@@ -109,7 +109,7 @@ make release-tag-contract TAG="$TAG"
 四つの検査をそれぞれ確認します。
 
 - `make main-contract`: 現在のブランチが`main`で、HEADがちょうど2つの親を持つマージコミットの形になっていること。
-- `make release-check`: 公開する生成物とリリース契約が、そのコミットの変更のない作業ツリー上で成立し、最終manifestの`source_commit`がそのHEADを記録していること。
+- `make release-check`: 公開する生成物とリリース契約が、作業ツリーに未コミット差分のない状態でそのコミットから生成され、最終manifestの`source_commit`がそのHEADを記録していること。
 - `git merge-base --is-ancestor`: 現在のコミットが実際に`origin/main`の履歴へ入っていること。
 - `make release-tag-contract`: `VERSION`から導出したタグ名、`VERSION`、最終`release-manifest.json`の版が一致していること。
 
