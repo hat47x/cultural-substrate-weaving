@@ -98,6 +98,8 @@ git pull --ff-only origin main
 make main-contract
 make release-check
 git merge-base --is-ancestor HEAD origin/main
+TAG="v$(cat VERSION)"
+make release-tag-contract TAG="$TAG"
 ```
 
 Verify each gate separately:
@@ -105,14 +107,15 @@ Verify each gate separately:
 - `make main-contract`: the current branch is `main` and HEAD has exactly two parents, matching the repository's expected merge-commit shape.
 - `make release-check`: the generated release set and release contract are valid on that commit.
 - `git merge-base --is-ancestor`: the current commit is actually part of `origin/main` history.
+- `make release-tag-contract`: the tag derived from `VERSION`, `VERSION` itself, and the final `release-manifest.json` version agree.
 
 `make main-contract` checks commit shape only. Two parents do not prove that GitHub created the commit from a pull request, and the command does not prevent a direct push at GitHub. If any gate fails, do not create the tag. Fix the cause on the appropriate development line and merge the corrected release candidate again.
 
-After the checks pass, tag the commit with the version from `VERSION`.
+After the checks pass, create the already validated `TAG` on that commit. Do not type the tag version again separately.
 
 ```bash
-git tag vX.Y.Z
-git push origin vX.Y.Z
+git tag "$TAG"
+git push origin "$TAG"
 ```
 
 Do not silently replace files under an existing public tag. Publish a patch version when a released artifact needs correction.
@@ -124,7 +127,8 @@ GitHub Actions do not currently publish releases automatically. After pushing th
 You may upload the files through the GitHub web interface. With GitHub CLI, for example:
 
 ```bash
-TAG=vX.Y.Z
+TAG="v$(cat VERSION)"
+make release-tag-contract TAG="$TAG"
 
 mapfile -t ASSETS < <(
   python - <<'PY'
@@ -150,7 +154,7 @@ Do not use an existing release as a way to silently replace already published ar
 After publication, verify that the GitHub Release matches the final manifest. Example using GitHub CLI:
 
 ```bash
-TAG=vX.Y.Z
+TAG="v$(cat VERSION)"
 mkdir -p .tmp
 
 gh api "repos/hat47x/cultural-substrate-weaving/releases/tags/${TAG}" \
@@ -162,7 +166,7 @@ python scripts/verify_published_release.py \
   --tag "$TAG"
 ```
 
-This checks that the published asset names, sizes, and digests match the assets declared by the final release manifest.
+This first rechecks that the manifest version and tag agree, then verifies that the published asset names, sizes, and digests match the assets declared by the final release manifest.
 
 ## 9. Start the next development line
 
