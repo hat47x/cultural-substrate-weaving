@@ -1,31 +1,33 @@
 # Microsoft 365 Copilot Agentを作る
 
-このリポジトリは、Microsoft 365 Copilot向けの宣言型エージェント素材を日本語版・英語版で生成します。導入方法は、GUIのみで完結する「Agent Builder」経路と、Agents Toolkit CLIを使う経路の二つがあります。迷ったら前者を使ってください。
+このリポジトリでは、Microsoft 365 Copilot向けの宣言型エージェント素材を、日本語版と英語版で生成します。導入方法は、画面操作だけで完結するAgent Builderと、Agents Toolkit CLIを使う方法の二つです。特別な組織展開要件がなければ、Agent Builderから始めるのが簡単です。
 
-対象資料だけで完結するKJ統合や構造探索では、Web検索は必須ではありません。現在の事実、外部文脈、追加の出典探索が必要な課題では、テナントでWeb検索によるグラウンディングが許可されているか確認してください。
+手元の資料だけで完結するKJ統合や構造探索では、Web検索は必須ではありません。現在の事実、外部の文脈、追加の出典探索が必要な課題では、利用するテナントでWeb検索によるグラウンディングが許可されているか確認してください。
 
-## パッケージを取得
+## パッケージを取得する
 
-[GitHub Releases](https://github.com/hat47x/cultural-substrate-weaving/releases)から`cultural-substrate-weaving-m365-copilot-ja-JP-vX.Y.Z.zip`を取得し、展開します。中には`instructions.txt`、`knowledge/`（参照モジュールのMarkdownファイル）、そしてAgents Toolkit CLI向けの`agent-project/`が含まれます。
+[GitHub Releases](https://github.com/hat47x/cultural-substrate-weaving/releases)から`cultural-substrate-weaving-m365-copilot-ja-JP-vX.Y.Z.zip`を取得し、展開します。中には`instructions.txt`、参照モジュールを収めた`knowledge/`、Agents Toolkit CLI向けの`agent-project/`が含まれています。
 
-GitHub Releaseの標準パッケージは**tenant-neutral**です。特定テナントのSharePoint URLや、実際の`.env` / `.env.*`ファイルは含めません。`agent-project/env/`に入るのは安全な`.example`テンプレートだけです。テナント固有設定は、組織展開を行うときに明示的に注入します。
+GitHub Releaseで配布する標準パッケージには、**テナント固有の情報を含めません**。特定テナントのSharePoint URLや、実際の`.env` / `.env.*`ファイルは入れません。`agent-project/env/`に含めるのは、安全な`.example`テンプレートだけです。テナント固有の設定は、組織へ展開するときに明示的に与えます。
 
-## 方法A：Agent Builder（GUIのみ、推奨）
+## 方法A：Agent Builder（画面操作だけで作成）
 
-Microsoft 365 Copilotライセンスがあれば、CLIやコード編集なしでそのまま作成できます。`agent-project/`・Node.js・Visual Studio Codeは不要です。
+Microsoft 365 Copilotライセンスがあれば、CLIやコード編集を使わずに作成できます。この方法では、`agent-project/`、Node.js、Visual Studio Codeは不要です。
+
+このリポジトリでは、用意済みの`instructions.txt`と`knowledge/`をそのまま反映しやすいよう、自然言語による自動生成ではなく手動設定を使います。
 
 1. microsoft365.com/chat、office.com/chat、またはTeamsでMicrosoft 365 Copilotを開き、「新しいエージェント」を選びます。
-2. 「設定にスキップ」を選び、Configureタブを開きます（自然言語での自動生成を使わず、手動で設定します）。
-3. 「Name」「Description」に名前と説明を入力します（Nameは30文字、Descriptionは1,000文字まで）。
-4. 「Instructions」に、展開した`instructions.txt`の内容をそのまま貼り付けます（8,000文字制限内に収まるよう、ビルド時点で検証済みです）。
-5. 「Knowledge」に、`knowledge/`配下の各ファイルをアップロードします。Agent BuilderはMarkdown（`.md`）を受け付けないため、アップロード前に拡張子を`.txt`へリネームしてください（中身はプレーンテキストなのでリネームだけで問題ありません）。ドラッグ＆ドロップ、または矢印アイコンから追加します。SharePointサイトは不要です（最大20件までの知識ソースを追加できます）。
-6. 現在の事実や外部情報を調べる用途がある場合は、「Knowledge」で「すべてのWebサイトを検索します。」を有効にします。手元の資料だけを対象にする場合は、必須ではありません。
-7. 「Try it」タブで、発動する例・発動しない例の両方を試します。
-8. 作成後、「Share」ボタンから特定の人・グループへ直接共有できます。組織全体で使えるようにする場合は、右上の「…」メニューから「Submit to your org catalog」を選び、管理者の承認を経て組織のAgent Storeへ公開します。
+2. 「設定にスキップ」を選び、Configureタブを開きます。
+3. 「Name」と「Description」に名前と説明を入力します。Nameは30文字、Descriptionは1,000文字までです。
+4. 「Instructions」に、展開した`instructions.txt`の内容をそのまま貼り付けます。8,000文字の制限内に収まることは、ビルド時に検証します。
+5. 「Knowledge」に、`knowledge/`配下の各ファイルをアップロードします。Agent BuilderはMarkdown（`.md`）を受け付けないため、アップロード前に拡張子を`.txt`へ変更してください。中身はプレーンテキストなので、内容を書き換える必要はありません。ドラッグ＆ドロップ、または矢印アイコンから追加できます。この方法ではSharePointサイトは不要です。端末から直接アップロードする埋め込みファイルは、知識ソースとして最大20件まで追加できます。
+6. 現在の事実や外部情報を調べる用途がある場合は、「Knowledge」で「すべてのWebサイトを検索します。」を有効にします。手元の資料だけを対象にする場合は必須ではありません。
+7. 「Try it」タブで、発動する例と発動しない例の両方を試します。
+8. 作成後は、「Share」ボタンから特定の人やグループへ直接共有できます。組織全体で使えるようにする場合は、右上の「…」メニューから「Submit to your org catalog」を選び、管理者の承認を経て組織のAgent Storeへ公開します。
 
-## 方法B：Agents Toolkit CLI（上級者・組織展開向け）
+## 方法B：Agents Toolkit CLI（組織展開などの高度な構成向け）
 
-AppSourceへの配布、テナント全体での管理配布、SharePointサイトへのグラウンディングなど、Agent Builderでは対応できない構成が必要な場合に使います。
+AppSourceへの配布、テナント全体での管理配布、SharePointサイトを使ったグラウンディングなど、Agent Builderだけでは対応できない構成が必要な場合に使います。
 
 ### 必要なもの
 
@@ -34,20 +36,20 @@ AppSourceへの配布、テナント全体での管理配布、SharePointサイ�
 
 ### 1. SharePoint Knowledgeを設定する
 
-宣言型エージェントの`instructions`には、発動判断・最小実行手順・常時維持する判断軸までしか含まれません。詳細な文化体系適用、KJ統合、人間／Taiheki特例、統治・評価の参照は`knowledge/`に収録されるため、CLI経路で方法論全体を利用する場合はSharePoint等から参照できるようにする必要があります。
+宣言型エージェントの`instructions`には、発動判断、最小限の実行手順、常に維持する判断軸だけを入れます。文化体系の詳細な適用、KJ統合、人間／Taihekiの特例、統治・評価に関する参照は`knowledge/`に収録されます。そのため、CLI経路で方法論全体を使う場合は、これらをSharePointなどから参照できるようにします。
 
 1. `knowledge/`のファイルを、一つのSharePointサイトまたはドキュメントライブラリへアップロードします。
 2. リポジトリをクローンします。
-3. deployment-onlyのAgents Toolkit環境ファイルを作ります。
+3. 展開時だけ使うAgents Toolkitの環境ファイルを作ります。
 
 ```bash
 python scripts/init_m365_env.py --locale ja-JP --env dev \
   --sharepoint-url "https://contoso.sharepoint.com/sites/csw"
 ```
 
-この`.env.dev`はローカルの展開用設定です。公開ビルドは自動では読み込まず、GitHub Releaseにも含めません。
+ここで作る`.env.dev`は、ローカルでの展開にだけ使う設定です。公開ビルドが自動的に読み込むことはなく、GitHub Releaseにも含めません。
 
-4. SharePoint URLを**明示的に**注入してエージェントをビルドします。Bash等では次のように実行します。
+4. SharePoint URLを**明示的に**与えてエージェントをビルドします。Bashなどでは次のように実行します。
 
 ```bash
 CSW_M365_SHAREPOINT_SITE_URL="https://contoso.sharepoint.com/sites/csw" \
@@ -62,9 +64,9 @@ python scripts/build.py
 Remove-Item Env:CSW_M365_SHAREPOINT_SITE_URL
 ```
 
-ロケールごとに別サイトを使う場合は、`CSW_M365_SHAREPOINT_SITE_URL_ja_JP` / `CSW_M365_SHAREPOINT_SITE_URL_en_US`を使用できます。
+言語ごとに別のサイトを使う場合は、`CSW_M365_SHAREPOINT_SITE_URL_ja_JP` / `CSW_M365_SHAREPOINT_SITE_URL_en_US`を使用できます。
 
-5. Agents Toolkitを実行する直前に、deployment-onlyの環境ファイルを生成済みprojectへ明示的にstageします。
+5. Agents Toolkitを実行する直前に、展開用の環境ファイルを生成済みのプロジェクトへ明示的に配置します。
 
 ```bash
 python scripts/stage_m365_env.py --locale ja-JP --env dev
@@ -74,11 +76,11 @@ python scripts/stage_m365_env.py --locale ja-JP --env dev
 
 ### 2. 環境設定を確認する
 
-`init_m365_env.py`が作った`adapters/microsoft-copilot/ja-JP/env/.env.dev`には、開発者名・WebサイトURL・プライバシーポリシー・利用規約のURL・`M365_APP_ID`・SharePoint URLが入ります。必要に応じてstage前に編集してください。
+`init_m365_env.py`が作る`adapters/microsoft-copilot/ja-JP/env/.env.dev`には、開発者名、WebサイトURL、プライバシーポリシー、利用規約のURL、`M365_APP_ID`、SharePoint URLが入ります。必要に応じて、生成済みプロジェクトへ配置する前に編集してください。
 
-このファイルはdeployment-onlyです。Gitへcommitせず、GitHub Release用の`make package`へ持ち込まないでください。公開package処理は、実際の`.env`、非exampleの`.env.*`、`*.local`、`*.secret`、symlinkをfail-closedで拒否します。
+このファイルは展開時だけ使います。Gitへcommitせず、GitHub Release用の`make package`にも持ち込まないでください。公開パッケージの生成処理は、実際の`.env`、`.example`以外の`.env.*`、`*.local`、`*.secret`、シンボリックリンクを検出すると処理を停止します。
 
-### 3. パッケージと検証
+### 3. パッケージを作成して検証する
 
 ```bash
 cd dist/ja-JP/microsoft-copilot/agent-project
@@ -86,8 +88,10 @@ atk package --env dev
 atk validate --env dev
 ```
 
-テナント固有のAgents Toolkit packageは、このdeployment経路で作成します。公開GitHub Release用の`make package`とは目的が異なります。
+テナント固有のAgents Toolkitパッケージは、この展開経路で作成します。公開GitHub Release用の`make package`とは目的が異なります。
 
-### 4. 試験と公開
+### 4. 試験して公開する
 
-個人試験では`atk provision --env dev`を使用します。stagingで限定共有してから、本番環境で`atk publish --env prod`を実行してください。本番公開にはテナント管理者の承認が必要となる場合があります。staging／prodでは、それぞれ対応する`.env.staging` / `.env.prod`を生成・stageしてください。
+個人で試す場合は`atk provision --env dev`を使用します。限定された環境で検証してから、本番環境で`atk publish --env prod`を実行してください。本番公開には、テナント管理者の承認が必要になる場合があります。
+
+`staging`または`prod`を使う場合は、それぞれ対応する`.env.staging` / `.env.prod`を生成し、同じ手順で生成済みプロジェクトへ配置してください。
