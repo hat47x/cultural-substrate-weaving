@@ -11,7 +11,12 @@ EXTERNAL_PREFIXES = ("http://", "https://", "mailto:", "data:")
 
 
 def repository_docs() -> list[Path]:
-    paths = [ROOT / "README.md", ROOT / "README.en.md", ROOT / "AGENTS.md"]
+    paths = [
+        ROOT / "README.md",
+        ROOT / "README.en.md",
+        ROOT / "AGENTS.md",
+        ROOT / "REPOSITORY_CONTENTS.md",
+    ]
     paths.extend(sorted((ROOT / "docs").rglob("*.md")))
     paths.extend(sorted((ROOT / "research").rglob("*.md")))
     paths.append(ROOT / ".living-lab" / "README.md")
