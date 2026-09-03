@@ -21,11 +21,14 @@ class ReleaseLifecycleContractTests(unittest.TestCase):
         self.assertIn('"schema_version": "1"', package)
         self.assertIn('"release_assets": release_assets', package)
         self.assertIn("release-check: check package release-validate", makefile)
+        self.assertIn("release-tag-contract:", makefile)
+        self.assertIn('python scripts/check_release_tag.py --tag "$(TAG)"', makefile)
 
     def test_release_internals_describe_manifest_as_post_package_contract(self) -> None:
         text = (ROOT / "docs" / "maintainers" / "release.md").read_text(encoding="utf-8")
         self.assertIn("post-package release contract", text)
         self.assertIn("make release-check", text)
+        self.assertIn("make release-tag-contract", text)
         self.assertIn("release_assets", text)
         self.assertIn("GitHub Actions are currently disabled", text)
         self.assertNotIn("The GitHub Release workflow", text)
@@ -38,7 +41,7 @@ class ReleaseLifecycleContractTests(unittest.TestCase):
         self.assertIn("not evidence that the method is empirically effective", text)
         self.assertIn("edit the notes deliberately", text)
 
-    def test_publication_requires_explicit_changelog_and_main_history_gates(self) -> None:
+    def test_publication_requires_explicit_changelog_main_history_and_tag_gates(self) -> None:
         text = (ROOT / "docs" / "maintainers" / "release.md").read_text(encoding="utf-8")
         self.assertIn("## X.Y.Z — YYYY-MM-DD", text)
         self.assertIn("scripts/check_release_changelog.py", text)
@@ -46,6 +49,8 @@ class ReleaseLifecycleContractTests(unittest.TestCase):
         self.assertIn("exactly two parents", text)
         self.assertIn("does not prove pull-request provenance", text)
         self.assertIn("git merge-base --is-ancestor HEAD origin/main", text)
+        self.assertIn('TAG="v$(cat VERSION)"', text)
+        self.assertIn("make release-tag-contract", text)
         self.assertIn("exact `main` commit", text)
         self.assertNotIn("Release workflow checks the dated version heading", text)
 
@@ -58,18 +63,23 @@ class ReleaseLifecycleContractTests(unittest.TestCase):
             self.assertIn("git merge-base --is-ancestor HEAD origin/main", text)
             self.assertIn("make main-contract", text)
             self.assertIn("make release-check", text)
+            self.assertIn("make release-tag-contract", text)
+            self.assertIn('TAG="v$(cat VERSION)"', text)
             self.assertIn("release_assets", text)
 
         self.assertIn("ちょうど2つの親", ja)
         self.assertIn("GitHubのPRから生成されたことまでは証明できません", ja)
+        self.assertIn("タグ名、`VERSION`、最終`release-manifest.json`の版が一致", ja)
         self.assertIn("GitHub Actionsは現在リポジトリで無効化されています", ja)
         self.assertIn("exactly two parents", en)
         self.assertIn("do not prove that GitHub created the commit from a pull request", en)
+        self.assertIn("final `release-manifest.json` version agree", en)
         self.assertIn("GitHub Actions are currently disabled", en)
 
     def test_remote_release_verification_remains_a_manual_publication_gate(self) -> None:
         text = (ROOT / "docs" / "maintainers" / "release.md").read_text(encoding="utf-8")
         self.assertIn("scripts/verify_published_release.py", text)
+        self.assertIn("supplied tag to match the final manifest version", text)
         self.assertIn("published asset-name set", text)
         self.assertIn("sha256:", text)
         self.assertIn("publish exactly the files listed by `release_assets`", text)
