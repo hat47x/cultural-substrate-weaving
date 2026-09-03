@@ -15,11 +15,13 @@ class ManualValidationContractTests(unittest.TestCase):
     def test_make_check_owns_ordinary_local_validation(self) -> None:
         makefile = (ROOT / "Makefile").read_text(encoding="utf-8")
         self.assertIn(
-            "check: repository-contracts build validate japanese-docs-check test tokens living-lab-check living-lab-summary",
+            "check: repository-contracts generated-artifacts-check validate japanese-docs-check test tokens living-lab-check living-lab-summary",
             makefile,
         )
         self.assertIn("repository-contracts:", makefile)
         self.assertIn("scripts/check_branch_version.py", makefile)
+        self.assertIn("generated-artifacts-check: build", makefile)
+        self.assertIn("scripts/check_generated_artifacts.py", makefile)
         self.assertIn("python -m unittest discover -s tests", makefile)
 
     def test_release_validation_is_explicit_and_layered(self) -> None:
