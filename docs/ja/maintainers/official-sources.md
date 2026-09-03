@@ -17,6 +17,7 @@
 ## Microsoft
 
 - Declarative Agents: https://learn.microsoft.com/en-us/microsoft-365/copilot/extensibility/overview-declarative-agent
+- Declarative AgentのInstructions: https://learn.microsoft.com/en-us/microsoft-365/copilot/extensibility/declarative-agent-instructions
 - Agents Toolkit: https://learn.microsoft.com/en-us/microsoft-365/copilot/extensibility/build-declarative-agents
 - Agents Toolkit CLI: https://learn.microsoft.com/en-us/microsoftteams/platform/toolkit/microsoft-365-agents-toolkit-cli
 - Declarative Agent manifest: https://learn.microsoft.com/en-us/microsoft-365/copilot/extensibility/declarative-agent-manifest-1.8
