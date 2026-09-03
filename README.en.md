@@ -23,7 +23,7 @@ claude plugin install cultural-substrate-weaving-en@cultural-substrate-weaving
 codex plugin marketplace add hat47x/cultural-substrate-weaving
 ```
 
-For ChatGPT custom GPT and Microsoft 365 Copilot, use the platform package from GitHub Releases.
+For ChatGPT custom GPT and Microsoft 365 Copilot, use the platform package from GitHub Releases. The current Microsoft 365 distribution is a limited adapter: only the content under `instructions.txt` is treated as agent instructions. See the [Microsoft 365 Copilot guide](docs/en/platforms/microsoft-copilot.md) for the current boundary.
 
 ## What the caller supplies
 
@@ -41,7 +41,7 @@ This skill does not provide domain-specific professional competence. Accuracy st
 - OpenAI Codex Plugin / directly placed Skill
 - Claude Code Plugin Marketplace
 - ChatGPT custom GPT update pack
-- Microsoft 365 Copilot declarative agent
+- Microsoft 365 Copilot declarative agent (currently limited; see the platform guide)
 - References from `AGENTS.md` / `CLAUDE.md`
 
 ## Build
