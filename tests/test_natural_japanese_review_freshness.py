@@ -36,6 +36,11 @@ class NaturalJapaneseReviewFreshnessTests(unittest.TestCase):
         self.assertIn("docs/ja/platforms/microsoft-copilot.md", scoped)
         self.assertIn("docs/ja/platforms/project-instructions.md", scoped)
 
+    def test_m365_japanese_runtime_prose_is_in_scope(self) -> None:
+        scoped = set(review_scope(ROOT))
+        self.assertIn("adapters/microsoft-copilot/ja-JP/instructions.md", scoped)
+        self.assertIn("adapters/microsoft-copilot/ja-JP/package-readme.txt", scoped)
+
     def test_runtime_canonical_source_is_not_in_prose_review_scope(self) -> None:
         self.assertNotIn("src/ja-JP/ROUTER.md", review_scope(ROOT))
 
