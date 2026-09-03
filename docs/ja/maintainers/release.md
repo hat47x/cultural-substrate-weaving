@@ -68,7 +68,9 @@ make release-check
 - `dist/release-manifest.json`
 - `dist/packages/` の言語別ZIP
 
-GitHub Actionsは現在リポジトリで無効化されています。リモートの検査結果が表示されないことを、検査が成功した証拠として扱いません。
+`make release-check`には`make check`が含まれます。`develop/vX.Y.Z`または`release/vX.Y.Z`上では、ブランチ名の版と`VERSION`の一致もこの中で確認されます。
+
+GitHub Actionsは現在リポジトリで無効化されています。また、`main`のbranch protectionとrepository rulesetも現時点では設定されていません。リモートの検査結果が表示されないことや、pushが受理されたことを、ローカル検査が成功した証拠として扱いません。
 
 `make release-check` を実行できない環境からリリース作業を進めないでください。通常のPRでやむを得ずローカル実行できなかった場合とは異なり、公開リリースでは、実際にパッケージを生成して検証できる環境を用意することを必須とします。
 
@@ -83,21 +85,28 @@ PRでは、累積差分、版情報、CHANGELOG、翻訳状態、`make release-c
 
 PRをマージした後は、`main` のマージコミットが公開版の正本になります。
 
+このPR経由の運用は、現在GitHubのbranch protectionやrulesetによって自動強制されているわけではありません。GitHub側の保護設定がないことと、リポジトリとしてPR経由を求めることは分けて扱います。
+
 ## 6. 公開版のコミットをもう一度検査し、タグを付ける
 
-リリース候補で検査済みでも、タグを付けるのは `main` へ統合された後のコミットです。公開物が、実際にタグを付けるコミットと同じ内容から生成されたことを確認するため、`main` の実際の公開コミットでも `make release-check` を再実行します。
+リリース候補で検査済みでも、タグを付けるのは `main` へ統合された後のコミットです。公開物が、実際にタグを付けるコミットと同じ内容から生成されたことを確認するため、`main` の実際の公開コミットでも検査をやり直します。
 
 ```bash
 git fetch origin
 git checkout main
 git pull --ff-only origin main
+make main-contract
 make release-check
 git merge-base --is-ancestor HEAD origin/main
 ```
 
-`make release-check` と `git merge-base --is-ancestor` の両方が成功したことを確認します。後者は、現在のコミットが実際に `origin/main` の履歴へ入っていることを確かめるための検査です。
+三つの検査をそれぞれ確認します。
 
-どちらかが失敗した場合はタグを付けません。原因を修正し、必要な開発線へ戻してから改めて `main` へ統合します。
+- `make main-contract`: 現在のブランチが`main`で、HEADが複数の親を持つmerge commitであること。
+- `make release-check`: 公開する生成物とリリース契約が、そのコミット上で成立すること。
+- `git merge-base --is-ancestor`: 現在のコミットが実際に`origin/main`の履歴へ入っていること。
+
+`make main-contract`はローカル診断であり、direct pushをGitHub側で事前に拒否する仕組みではありません。いずれかの検査が失敗した場合はタグを付けず、原因を修正し、必要な開発線へ戻してから改めて`main`へ統合します。
 
 検査が成功したら、`VERSION` と同じ版のタグを、そのコミットへ付けます。
 
