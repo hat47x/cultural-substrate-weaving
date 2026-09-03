@@ -36,7 +36,22 @@ If commits exist only on `main`, review and integrate them into the release cand
 
 Review `i18n/translation-manifest.json`. A stale translation blocks release by default.
 
-Before publication, turn the relevant `Unreleased` entries in `CHANGELOG.md` into the section for the version being released and make sure the list matches the actual cumulative diff.
+Before publication, move the relevant `Unreleased` changes in `CHANGELOG.md` into exactly one dated release section:
+
+```text
+## X.Y.Z — YYYY-MM-DD
+```
+
+Keep a new `## Unreleased` section for later development, and verify that the dated section matches the changes that will actually be published.
+
+Check the publication boundary explicitly:
+
+```bash
+python scripts/check_release_changelog.py \
+  --version "$(cat VERSION)"
+```
+
+Do not proceed to publication if this check fails. Successful packaging alone must not turn an unfrozen changelog into a public release.
 
 ## 4. Validate the release candidate
 
@@ -77,9 +92,12 @@ git fetch origin
 git checkout main
 git pull --ff-only origin main
 make release-check
+git merge-base --is-ancestor HEAD origin/main
 ```
 
-If this fails, do not create the tag. Fix the cause on the appropriate development line and merge the corrected release candidate again.
+Require both `make release-check` and `git merge-base --is-ancestor` to succeed. The ancestry check confirms that the current commit is actually part of `origin/main` history.
+
+If either check fails, do not create the tag. Fix the cause on the appropriate development line and merge the corrected release candidate again.
 
 After the checks pass, tag the commit with the version from `VERSION`.
 
