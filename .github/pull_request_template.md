@@ -39,7 +39,9 @@ If the runtime method changes, identify the observed problem or increment, why i
 - [ ] `make check` was run when local execution was available; otherwise the PR body states which contracts were checked and which remain unverified
 - [ ] On a versioned develop/release branch, the local repository-contract check was not bypassed
 - [ ] `make main-contract`, when applicable, is treated as a two-parent commit-shape diagnostic rather than proof of pull-request provenance
+- [ ] For a public release, packaging is run from a clean Git worktree with no tracked uncommitted changes or non-ignored untracked files
 - [ ] For a public release, the tag is derived from `VERSION` and `make release-tag-contract TAG="$TAG"` is run against the final release manifest before tagging
+- [ ] For a public release, the final manifest `source_commit` matches the package-producing `HEAD`, and `make release-remote-tag-contract TAG="$TAG"` verifies the pushed remote tag resolves to that commit
 - [ ] Absence of a remote GitHub Actions status or GitHub branch protection is not treated as evidence that local validation ran
 - [ ] Semantic-retention impact reviewed when runtime meaning changed
 - [ ] Changelog updated for user-visible or operational behavior

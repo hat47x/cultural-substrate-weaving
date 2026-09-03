@@ -70,6 +70,10 @@ make release-check
 
 `make release-check`には`make check`が含まれます。`develop/vX.Y.Z`または`release/vX.Y.Z`上では、ブランチ名の版と`VERSION`の一致もこの中で確認されます。
 
+公開パッケージは、Gitの作業ツリーに未コミットの変更がない状態でだけ作成します。追跡中のファイルに未コミットの変更がある場合や、Gitに無視されていない未追跡ファイルがある場合は、パッケージ生成とリリース検証を停止します。`dist/`、`.tmp/`、ローカルLiving Lab領域など、`.gitignore`で明示的に除外している作業用ファイルはこの判定には含まれません。
+
+最終`release-manifest.json`はschema 2で、`source_commit`にパッケージを生成したGitコミットを記録します。`source_commit`が生成物の来歴として意味を持つのは、パッケージ生成時の作業ツリーが上記の状態にある場合だけです。`release-validate`は、作業ツリーに未コミット差分がないことに加え、`source_commit`が検査時の`HEAD`と一致することも確認します。これにより、公開後にタグが指すコミットを、生成物の来歴へ戻して照合できます。
+
 GitHub Actionsは現在リポジトリで無効化されています。また、`main`のbranch protectionとrepository rulesetも現時点では設定されていません。リモートの検査結果が表示されないことや、pushが受理されたことを、ローカル検査が成功した証拠として扱いません。
 
 `make release-check`を実行できない環境からリリース作業を進めないでください。通常のPRでやむを得ずローカル実行できなかった場合とは異なり、公開リリースでは、実際にパッケージを生成して検証できる環境を用意することを必須とします。
@@ -105,7 +109,7 @@ make release-tag-contract TAG="$TAG"
 四つの検査をそれぞれ確認します。
 
 - `make main-contract`: 現在のブランチが`main`で、HEADがちょうど2つの親を持つマージコミットの形になっていること。
-- `make release-check`: 公開する生成物とリリース契約が、そのコミット上で成立すること。
+- `make release-check`: 公開する生成物とリリース契約が、作業ツリーに未コミット差分のない状態でそのコミットから生成され、最終manifestの`source_commit`がそのHEADを記録していること。
 - `git merge-base --is-ancestor`: 現在のコミットが実際に`origin/main`の履歴へ入っていること。
 - `make release-tag-contract`: `VERSION`から導出したタグ名、`VERSION`、最終`release-manifest.json`の版が一致していること。
 
@@ -116,7 +120,10 @@ make release-tag-contract TAG="$TAG"
 ```bash
 git tag "$TAG"
 git push origin "$TAG"
+make release-remote-tag-contract TAG="$TAG"
 ```
+
+`release-remote-tag-contract`は、リモートタグを取得し、そのタグが最終的に指すコミットまで解決したうえで、最終manifestの`source_commit`と一致することを確認します。軽量タグでも注釈付きタグでも、最終的に指すコミットを比較します。
 
 公開済みタグの内容を後から無言で差し替えません。修正が必要な場合はパッチ版を作ります。
 
@@ -129,6 +136,7 @@ GitHubのWeb画面から公開してもかまいません。GitHub CLIを使う�
 ```bash
 TAG="v$(cat VERSION)"
 make release-tag-contract TAG="$TAG"
+make release-remote-tag-contract TAG="$TAG"
 
 mapfile -t ASSETS < <(
   python - <<'PY'
@@ -151,11 +159,13 @@ gh release create "$TAG" "${ASSETS[@]}" \
 
 ## 8. 公開済みReleaseを検証する
 
-公開後は、GitHub上のReleaseが最終manifestと一致していることを確認します。GitHub CLIを使う場合の例です。
+公開後は、GitHub上のReleaseが最終manifestと一致していることに加え、リモートタグが引き続きmanifestの生成元コミットを指していることを確認します。GitHub CLIを使う場合の例です。
 
 ```bash
 TAG="v$(cat VERSION)"
 mkdir -p .tmp
+
+make release-remote-tag-contract TAG="$TAG"
 
 gh api "repos/hat47x/cultural-substrate-weaving/releases/tags/${TAG}" \
   > .tmp/published-release.json
@@ -166,7 +176,7 @@ python scripts/verify_published_release.py \
   --tag "$TAG"
 ```
 
-この検証では、manifestに記載された版とタグ名が一致していることを改めて確認したうえで、成果物名、サイズ、ダイジェストとGitHub Release上の実物が一致していることを確認します。
+ここでは二つの異なる境界を確認します。`release-remote-tag-contract`は、リモートタグが最終的に指すコミットとmanifestの`source_commit`を照合します。`verify_published_release.py`は、manifestに記載された版とタグ名、成果物名、サイズ、ダイジェストをGitHub Release上の実物と照合します。片方の成功を、もう片方の代わりにはしません。
 
 ## 9. 次の開発線を始める
 

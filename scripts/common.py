@@ -3,6 +3,7 @@ from __future__ import annotations
 import hashlib
 import json
 import shutil
+import subprocess
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -32,6 +33,31 @@ def sha256(path: Path) -> str:
 
 def version() -> str:
     return (ROOT / "VERSION").read_text(encoding="utf-8").strip()
+
+
+def _run_git(root: Path, *args: str) -> str:
+    try:
+        result = subprocess.run(
+            ["git", *args],
+            cwd=root,
+            check=True,
+            text=True,
+            capture_output=True,
+        )
+    except (OSError, subprocess.CalledProcessError) as exc:
+        raise RuntimeError(f"git {' '.join(args)} failed: {exc}") from exc
+    return result.stdout.strip()
+
+
+def git_head(root: Path = ROOT) -> str:
+    value = _run_git(root, "rev-parse", "HEAD")
+    if not value:
+        raise RuntimeError("cannot resolve git HEAD: empty result")
+    return value
+
+
+def git_worktree_changes(root: Path = ROOT) -> str:
+    return _run_git(root, "status", "--porcelain")
 
 
 def manifest():
