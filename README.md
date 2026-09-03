@@ -25,7 +25,7 @@ codex plugin marketplace add hat47x/cultural-substrate-weaving
 
 追加後に`cultural-substrate-weaving-ja`（英語版は`cultural-substrate-weaving-en`）をインストールします。
 
-**ChatGPT custom GPT / Microsoft 365 Copilot**はGitHub Releasesから言語とプラットフォームに対応するZIPを取得してください。
+**ChatGPT custom GPT / Microsoft 365 Copilot**はGitHub Releasesから言語とプラットフォームに対応するZIPを取得してください。Microsoft 365版は、現時点では`instructions.txt`に収録された範囲を実行指示として扱う限定的な対応です。詳細は[Microsoft 365 Copilot向けガイド](docs/ja/platforms/microsoft-copilot.md)を参照してください。
 
 ## 呼ぶ側が用意するもの
 
@@ -43,7 +43,7 @@ codex plugin marketplace add hat47x/cultural-substrate-weaving
 - OpenAI Codex Plugin / 直接配置Skill
 - Claude Code Plugin Marketplace
 - ChatGPT custom GPT更新パック
-- Microsoft 365 Copilot declarative agent
+- Microsoft 365 Copilot declarative agent（現行は限定対応。詳細はプラットフォームガイドを参照）
 - `AGENTS.md`／`CLAUDE.md`からの参照
 
 ## ビルド
