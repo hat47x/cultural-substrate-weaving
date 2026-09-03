@@ -35,7 +35,16 @@ make release-check
 
 This runs `make check`, creates locale/platform packages, writes `dist/release-manifest.json`, and validates the completed package set.
 
-Neither command by itself proves that the method is empirically effective.
+Once the final manifest exists and the intended release tag has been derived from `VERSION`, use the tag-version gate separately:
+
+```bash
+TAG="v$(cat VERSION)"
+make release-tag-contract TAG="$TAG"
+```
+
+This checks that the tag, `VERSION`, and the final release-manifest version agree. It is deliberately separate from `make release-check`, because the tag is an explicit publication-time input rather than a package-build input.
+
+None of these commands by itself proves that the method is empirically effective.
 
 ## Release manifest semantics
 
@@ -113,7 +122,7 @@ python scripts/check_release_changelog.py \
 
 Do not treat successful packaging as permission to publish an unfrozen changelog.
 
-### 2. Validate the exact commit that will be tagged
+### 2. Validate the exact commit and tag that will be published
 
 The tag must point to the commit that actually landed on `main`. Merge the release pull request with the normal merge-commit method rather than squash or rebase merging. After it merges:
 
@@ -124,22 +133,26 @@ git pull --ff-only origin main
 make main-contract
 make release-check
 git merge-base --is-ancestor HEAD origin/main
+TAG="v$(cat VERSION)"
+make release-tag-contract TAG="$TAG"
 ```
 
-Require all three checks to succeed. `make main-contract` verifies that the local `main` HEAD has exactly two parents, `make release-check` validates the actual release set, and the ancestry check confirms that the commit is in `origin/main` history.
+Require all four checks to succeed. `make main-contract` verifies that the local `main` HEAD has exactly two parents, `make release-check` validates the actual release set, the ancestry check confirms that the commit is in `origin/main` history, and `make release-tag-contract` binds the intended tag to both `VERSION` and the final manifest version.
 
 These are local/manual gates. The two-parent shape does not prove pull-request provenance, and because GitHub branch protection and repository rulesets are not currently configured, these checks do not imply that an invalid direct push would be rejected remotely.
 
-This ancestry check prevents a version-correct commit that exists only on a development or release branch from becoming the public release commit.
+The ancestry check prevents a version-correct commit that exists only on a development or release branch from becoming the public release commit. The tag-version check prevents a correct package set from being published under a different version tag.
 
 ### 3. Create the tag, then publish the manifest-declared assets
 
-Create and push the version tag only after the exact `main` commit has passed the checks:
+Create and push only the already validated tag:
 
 ```bash
-git tag vX.Y.Z
-git push origin vX.Y.Z
+git tag "$TAG"
+git push origin "$TAG"
 ```
+
+Do not retype a separate version string after the tag-version contract has passed.
 
 GitHub Actions do not publish the Release automatically. Create the GitHub Release explicitly, use `--verify-tag`, and publish exactly the files listed by `release_assets` in the final manifest.
 
@@ -149,13 +162,14 @@ GitHub Actions do not publish the Release automatically. Create the GitHub Relea
 
 After GitHub accepts the upload, fetch the Release object and run `scripts/verify_published_release.py`. The verification requires:
 
-- the published tag to match the intended tag;
+- the supplied tag to match the final manifest version;
+- the published tag to match that validated tag;
 - the published asset-name set to match the manifest-declared set exactly, with no missing or extra/manual assets;
 - every asset to be in the uploaded state;
 - published byte sizes to match the final manifest; and
 - GitHub's published `sha256:` digest for every asset to match the final manifest, including a directly computed digest for `release-manifest.json`.
 
-This post-publication check is intentionally separate from package construction. `gh release upload --clobber` does not remove unrelated pre-existing assets, so an existing Release with stale or manual extras must fail verification instead of being silently treated as an exact manifest publication.
+This post-publication check is intentionally separate from package construction. Rechecking the tag against the manifest prevents the same incorrect tag value from being passed circularly to both Release lookup and verification. `gh release upload --clobber` does not remove unrelated pre-existing assets, so an existing Release with stale or manual extras must fail verification instead of being silently treated as an exact manifest publication.
 
 ## Publication disclosure
 
