@@ -7,7 +7,7 @@ import zipfile
 from pathlib import Path, PurePosixPath
 from typing import Any
 
-from common import DIST, git_head, locales, sha256, version
+from common import DIST, git_head, git_worktree_changes, locales, sha256, version
 
 MANIFEST_SCHEMA_VERSION = "2"
 ZIP_TIMESTAMP = (1980, 1, 1, 0, 0, 0)
@@ -131,14 +131,25 @@ def validate_release(
     expected_locales: list[str],
 ) -> list[str]:
     errors: list[str] = []
+    try:
+        changes = git_worktree_changes()
+    except RuntimeError as exc:
+        errors.append(str(exc))
+    else:
+        if changes:
+            errors.append(
+                "release validation requires a clean Git worktree; commit or discard changes first: "
+                + changes.replace("\n", "; ")
+            )
+
     manifest_path = dist / "release-manifest.json"
     try:
         data = json.loads(manifest_path.read_text(encoding="utf-8"))
     except (OSError, json.JSONDecodeError) as exc:
-        return [f"cannot read release manifest: {exc}"]
+        return errors + [f"cannot read release manifest: {exc}"]
 
     if not isinstance(data, dict):
-        return ["release manifest must be a JSON object"]
+        return errors + ["release manifest must be a JSON object"]
     if data.get("schema_version") != MANIFEST_SCHEMA_VERSION:
         errors.append(
             f"release manifest schema_version mismatch: {data.get('schema_version')} != {MANIFEST_SCHEMA_VERSION}"
