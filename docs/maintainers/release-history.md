@@ -40,6 +40,8 @@ A version may have three distinct states in this repository:
 
 1. **development version** — active work exists under a versioned development line;
 2. **validated version boundary** — a candidate has been technically validated and may have reached `main`;
-3. **published release** — the corresponding Git tag and GitHub Release actually exist and the publication workflow has completed.
+3. **published release** — the corresponding Git tag and GitHub Release actually exist, and the publication has passed the repository's required post-publication verification.
 
 Do not infer state 3 from state 2. Changelog headings, validated commits, or a `VERSION` value alone are not evidence that a GitHub Release was published.
+
+The historical v0.4.0 publication used GitHub Actions, as recorded above. Current and future releases may use explicit local/manual publication gates instead; the general state definition depends on the published artifacts and completed verification, not on one particular automation mechanism.
