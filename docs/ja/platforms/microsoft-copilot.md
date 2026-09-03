@@ -78,7 +78,7 @@ python scripts/stage_m365_env.py --locale ja-JP --env dev
 
 `init_m365_env.py`が作る`adapters/microsoft-copilot/ja-JP/env/.env.dev`には、開発者名、WebサイトURL、プライバシーポリシー、利用規約のURL、`M365_APP_ID`、SharePoint URLが入ります。必要に応じて、生成済みプロジェクトへ配置する前に編集してください。
 
-このファイルは展開時だけ使います。Gitへcommitせず、GitHub Release用の`make package`にも持ち込まないでください。公開パッケージの生成処理は、実際の`.env`、`.example`以外の`.env.*`、`*.local`、`*.secret`、シンボリックリンクを検出すると処理を停止します。
+このファイルは展開時だけ使います。Gitへコミットせず、GitHub Release用の`make package`にも持ち込まないでください。公開パッケージの生成処理は、実際の`.env`、`.example`以外の`.env.*`、`*.local`、`*.secret`、シンボリックリンクを検出すると処理を停止します。
 
 ### 3. パッケージを作成して検証する
 
