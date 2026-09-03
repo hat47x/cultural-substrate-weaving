@@ -7,6 +7,8 @@ import sys
 from pathlib import Path, PurePosixPath
 from typing import Any
 
+from check_release_tag import read_manifest_version, validate_tag_against_version
+
 
 def file_sha256(path: Path) -> str:
     digest = hashlib.sha256()
@@ -108,6 +110,13 @@ def validate_published_release(
     expected_tag: str,
 ) -> list[str]:
     errors: list[str] = []
+    try:
+        manifest_version = read_manifest_version(manifest_path)
+    except (OSError, json.JSONDecodeError, ValueError) as exc:
+        errors.append(f"cannot validate release tag against manifest version: {exc}")
+    else:
+        errors.extend(validate_tag_against_version(expected_tag, manifest_version))
+
     expected = expected_assets(manifest_path, errors)
     release = _read_json(release_json_path, "published release JSON", errors)
     if not isinstance(release, dict):
