@@ -54,15 +54,17 @@ class M365TenantBoundaryTests(unittest.TestCase):
                 f"canonical public build must not contain a tenant SharePoint URL for {locale}",
             )
 
-    def test_m365_validation_workflow_stages_env_only_after_build(self) -> None:
-        workflow = (ROOT / ".github" / "workflows" / "m365-package.yml").read_text(encoding="utf-8")
-        self.assertIn("CSW_M365_SHAREPOINT_SITE_URL", workflow)
-        self.assertIn("scripts/stage_m365_env.py", workflow)
-        self.assertLess(workflow.index("python scripts/build.py"), workflow.index("scripts/stage_m365_env.py"))
+    def test_m365_env_staging_is_explicit_and_outside_public_build(self) -> None:
+        build = (SCRIPTS / "build.py").read_text(encoding="utf-8")
+        package = (SCRIPTS / "package.py").read_text(encoding="utf-8")
+        makefile = (ROOT / "Makefile").read_text(encoding="utf-8")
+        staging = (SCRIPTS / "stage_m365_env.py").read_text(encoding="utf-8")
 
-        release = (ROOT / ".github" / "workflows" / "release.yml").read_text(encoding="utf-8")
-        self.assertNotIn("CSW_M365_SHAREPOINT_SITE_URL", release)
-        self.assertNotIn("stage_m365_env.py", release)
+        self.assertNotIn("stage_m365_env.py", build)
+        self.assertNotIn("stage_m365_env.py", package)
+        self.assertNotIn("stage_m365_env.py", makefile)
+        self.assertIn("stage_environment", staging)
+        self.assertIn("init_m365_env.py", staging)
 
     def test_stage_environment_copies_only_when_source_and_project_exist(self) -> None:
         with tempfile.TemporaryDirectory() as temp_dir:
