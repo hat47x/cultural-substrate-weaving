@@ -5,6 +5,7 @@ build:
 
 validate:
 	python scripts/validate.py
+	python scripts/validate_m365_profile.py
 
 japanese-docs-check:
 	python scripts/check_natural_japanese_review.py
