@@ -5,7 +5,7 @@
 - [ ] Runtime method (`src/<locale>/`)
 - [ ] Translation / documentation / adapter
 - [ ] Research / evaluation only
-- [ ] CI / release maintenance
+- [ ] Repository validation / release maintenance
 - [ ] `feature/*`, `research/*`, or `fix/*` targets the active `develop/vX.Y.Z`; `release/vX.Y.Z` targets `main`
 
 ## Canonical source impact
@@ -36,7 +36,8 @@ If the runtime method changes, identify the observed problem or increment, why i
 ## Checks
 
 - [ ] `make check` was run when local execution was available; otherwise the PR body states which contracts were checked and which remain unverified
-- [ ] Absence of a remote GitHub Actions status is not treated as evidence that validation ran
+- [ ] On a versioned develop/release branch, the local repository-contract check was not bypassed
+- [ ] Absence of a remote GitHub Actions status or GitHub branch protection is not treated as evidence that local validation ran
 - [ ] Semantic-retention impact reviewed when runtime meaning changed
 - [ ] Changelog updated for user-visible or operational behavior
 - [ ] Token-size changes reviewed when runtime/reference content changed
