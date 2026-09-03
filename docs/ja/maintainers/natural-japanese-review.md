@@ -58,9 +58,13 @@
 
 リリース・開発手順をGitHub Actions無効化後の現行運用へ合わせて再度全文推敲した。さらに、公開トップページと利用者向けガイドも鮮度管理の対象へ加え、内容を現在の製品情報と照合したうえで全文を読み直した。
 
-`docs/ja/getting-started.md`、`docs/ja/usage-context.md`、ChatGPT・Claude Code・Codex・Microsoft 365 Copilotの各ガイドは、日本語の流れを整えた。`README.md`と`docs/ja/platforms/project-instructions.md`は通読した結果、意味のある改善差分を作る必要がないと判断し、本文を維持した。
+`docs/ja/getting-started.md`、`docs/ja/usage-context.md`、ChatGPT・Claude Code・Codex・Microsoft 365 Copilotの各ガイドは、日本語の流れを整えた。`README.md`と`docs/ja/platforms/project-instructions.md`も全文を通読し、必要な箇所だけを修正した。
 
-製品仕様に関する実質的な更新は、文体修正とは分けて扱った。CodexにはGitHubマーケットプレイスをワークスペースへインポートする現行経路を日英で補足し、Microsoft 365 Copilotでは「最大20件」が端末から直接アップロードする埋め込みファイルの上限であることを日英で明確にした。
+製品仕様に関する実質的な更新は、文体修正とは分けて扱った。CodexにはGitHubマーケットプレイスをワークスペースへインポートする現行経路を日英で補足した。Microsoft 365 Copilotでは、「最大20件」が端末から直接アップロードする埋め込みファイルの上限であることを明確にしたうえで、公式資料を再確認した。
+
+その再確認により、Microsoft 365 CopilotのKnowledgeは事実のグラウンディングに使うもので、8,000文字のInstructions制限を回避するために方法論の実行指示をKnowledgeへ退避する構成は前提にできないことが分かった。現行パッケージは詳細な方法モジュールを`knowledge/`へ収録しているため、それらがエージェント指示として確実に実行されるとは扱わないことにした。日本語・英語のMicrosoft 365ガイド、README、導入ガイドをこの境界へ合わせ、再設計はIssue #96へ切り分けた。
+
+この修正では、Microsoft 365固有の制約をCSW全体の方法論へ逆流させていない。現行アダプターで実行指示として保証できる範囲を`instructions.txt`へ限定して説明し、対象資料をKnowledgeへ置いて事実のグラウンディングに使うこととは分けて記述した。
 
 ## 対象外として扱うもの
 
