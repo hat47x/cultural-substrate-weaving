@@ -34,15 +34,15 @@ make check
 
 `repository-contracts`では、現在のローカルブランチが`develop/vX.Y.Z`または`release/vX.Y.Z`の場合に、ブランチ名の版と`VERSION`が一致することを確認します。`feature/*`、`fix/*`、`research/*`などの短期ブランチには、この版契約を適用しません。
 
-`main`については、通常のfeature branch上で「mainへどのように統合されるか」を判定できないため、この検査を`make check`へ混ぜていません。PRをマージした後の`main`が、リポジトリ運用で想定する複数親のmerge commitになっているかを確認するときは、`main`上で次を実行します。
+`main`については、通常のfeature branch上で「mainへどのように統合されるか」を判定できないため、この確認は`make check`には組み込んでいません。PRをマージした後の`main`が、リポジトリ運用で想定する複数の親を持つマージコミットになっているかを確認するときは、`main`上で次を実行します。
 
 ```bash
 make main-contract
 ```
 
-このコマンドは、現在のブランチが`main`であることと、HEADが複数の親を持つことを確認する**ローカル診断**です。GitHubへのdirect pushを事前に遮断する仕組みではありません。
+このコマンドは、現在のブランチが`main`であることと、HEADが複数の親を持つことを確認する**ローカル診断**です。GitHubへの直接pushを事前に遮断する仕組みではありません。
 
-GitHub Actionsは現在リポジトリで無効化されています。また、現時点では`main`のbranch protectionとrepository rulesetも設定されていません。そのため、ブランチ契約はGitHub側から自動的には強制されません。`make check`や`make main-contract`が成功したことと、GitHubが不適切なpushを拒否することは別の話として扱います。
+GitHub Actionsは現在リポジトリで無効化されています。また、現時点では`main`のbranch protectionとrepository rulesetも設定されていません。そのため、ブランチ契約はGitHub側から自動的には強制されません。`make check`や`make main-contract`が成功したことと、GitHubが不適切なpushを拒否することは別の保証として扱います。
 
 必要な箇所だけを調べる場合は、各ターゲットを個別に実行してかまいません。ただし、PRへ出す前には、実行可能な環境で原則として`make check`を通します。
 
