@@ -34,7 +34,7 @@ make check
 
 `repository-contracts`では、現在のローカルブランチが`develop/vX.Y.Z`または`release/vX.Y.Z`の場合に、ブランチ名の版と`VERSION`が一致することを確認します。`feature/*`、`fix/*`、`research/*`などの短期ブランチには、この版契約を適用しません。
 
-`main`については、通常のfeature branch上で「mainへどのように統合されるか」を判定できないため、この確認は`make check`には組み込んでいません。PRをマージした後の`main`が、リポジトリ運用で想定する2つの親を持つマージコミットの形になっているかを確認するときは、`main`上で次を実行します。
+`main`については、通常の短期ブランチ上では「mainへどのように統合されるか」を判定できないため、この確認は`make check`には組み込んでいません。PRをマージした後、`main`のHEADが、リポジトリ運用で想定する「2つの親を持つマージコミット」になっているかを確認するときは、`main`上で次を実行します。
 
 ```bash
 make main-contract
