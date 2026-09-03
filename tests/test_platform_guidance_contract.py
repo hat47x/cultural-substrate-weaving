@@ -69,12 +69,12 @@ class PlatformGuidanceContractTests(unittest.TestCase):
         self.assertIn("パソコンからアップロード", ja)
         self.assertIn("Upload from your computer", en)
 
-    def test_m365_knowledge_is_not_treated_as_an_instruction_extension(self) -> None:
+    def test_m365_method_reference_is_not_treated_as_instruction_extension(self) -> None:
         ja = self.read("ja", "microsoft-copilot.md")
         en = self.read("en", "microsoft-copilot.md")
 
         self.assertIn(
-            "パッケージ内の`knowledge/`は、Instructionsの続きを実行させる目的ではアップロードしません",
+            "パッケージ内の`method-reference/`は、Instructionsの続きを実行させる目的ではアップロードしません",
             ja,
         )
         self.assertNotIn(
@@ -82,7 +82,7 @@ class PlatformGuidanceContractTests(unittest.TestCase):
             ja,
         )
         self.assertIn(
-            "Do not upload the package's own `knowledge/` directory in order to extend Instructions.",
+            "Do not upload the package's `method-reference/` directory in order to extend Instructions.",
             en,
         )
         self.assertNotIn("to use the full method through the CLI route", en)
