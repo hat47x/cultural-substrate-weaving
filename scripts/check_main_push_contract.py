@@ -15,9 +15,9 @@ def parent_shas(parent_line: str) -> list[str]:
 
 def check_main_push_parents(parent_line: str) -> None:
     parents = parent_shas(parent_line)
-    if len(parents) < 2:
+    if len(parents) != 2:
         raise MainPushContractError(
-            "main HEAD must be a merge commit produced by a PR; "
+            "main HEAD must have exactly two parents under the repository's merge-commit policy; "
             f"found {len(parents)} parent(s)"
         )
 
@@ -25,8 +25,9 @@ def check_main_push_parents(parent_line: str) -> None:
 def main() -> int:
     parser = argparse.ArgumentParser(
         description=(
-            "Validate a local main HEAD against the repository's PR-merge-commit "
-            "policy. This does not enforce GitHub branch protection."
+            "Validate that a local main HEAD has the two-parent merge-commit shape "
+            "required by the repository policy. This local check does not prove that "
+            "GitHub created the commit from a pull request and does not enforce branch protection."
         )
     )
     parser.add_argument(

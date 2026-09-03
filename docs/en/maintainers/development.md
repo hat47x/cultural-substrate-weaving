@@ -23,13 +23,13 @@ It currently runs the local repository contract check, build, validation, Japane
 
 `make repository-contracts`, which is part of `make check`, compares the current local branch name with `VERSION` when the branch is `develop/vX.Y.Z` or `release/vX.Y.Z`. Short-lived branches such as `feature/*`, `fix/*`, and `research/*` are not subject to that version contract.
 
-The `main` merge-commit policy is deliberately separate from normal feature-branch checks. After a pull request has been merged, run the following on `main` when that contract needs to be verified:
+The `main` merge-commit shape check is deliberately separate from normal feature-branch checks. After a pull request has been merged, run the following on `main` when that local contract needs to be verified:
 
 ```bash
 make main-contract
 ```
 
-This is a local diagnostic. It requires the current branch to be `main` and checks that HEAD has multiple parents. It does not prevent a direct push to GitHub.
+This is a local diagnostic. It requires the current branch to be `main` and checks that HEAD has exactly two parents. That shape does not prove that GitHub created the commit from a pull request, and the command does not prevent a direct push to GitHub.
 
 GitHub Actions are currently disabled. `main` also has no branch protection or repository ruleset configured at present, so these branch contracts are not remotely enforced by GitHub. A successful local check and GitHub rejecting an invalid push are separate guarantees.
 
