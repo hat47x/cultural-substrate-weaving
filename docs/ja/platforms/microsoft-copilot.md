@@ -6,15 +6,24 @@
 
 ## 現在のMicrosoft 365版の位置づけ
 
-Microsoft 365 Copilotでは、Knowledgeは主として事実のグラウンディングに使うものであり、エージェントの実行指示をInstructionsからKnowledgeへ退避する用途は前提にできません。そのため、現行のMicrosoft 365向けパッケージについて、`knowledge/`に収録された詳細な方法モジュールまでエージェントが実行指示として確実に参照し、他の対応プラットフォームと同等に方法論全体を実行できるとは扱いません。
+Microsoft 365 Copilotでは、Knowledgeは主として事実のグラウンディングに使うものであり、エージェントの実行指示をInstructionsからKnowledgeへ退避する用途は前提にできません。
 
-現行パッケージでエージェントの実行指示として扱うのは、`instructions.txt`に収録された範囲です。パッケージ内の`knowledge/`は、当面は方法論を人間が確認するための参照資産として扱ってください。Agent BuilderやSharePointのKnowledgeへアップロードして、Instructionsの続きを実行させる用途には使いません。
+そのため、Microsoft 365向けには、8,000文字以内で自己完結する**限定プロファイル**を用意しています。エージェントの実行指示として扱うのは`instructions.txt`に書かれた範囲だけです。ここには、対象によって自分の読みを修正できる認知姿勢、KJ法の統合核、文化的体系を探索へ使う際の帰属境界、委任範囲、観測とAI解釈を分ける原則など、限定プロファイルで維持する中核を収録しています。
 
-対象となる業務資料、調査資料、組織内文書などをKnowledgeへ追加し、事実のグラウンディングに使うことはできます。この制約を踏まえたMicrosoft 365向けアダプターの再設計は、Issue #96で進めています。方法論全体を確実に実行する必要がある場合は、再設計が完了するまでCodex、Claude Code、ChatGPT向けの対応形態を優先してください。
+一方、CSW全体の詳しい方法モジュールは`method-reference/`へ分けて同梱します。これは情報を捨てず、人間が方法論全体を確認できるように残す参照資産です。Agent BuilderやSharePointのKnowledgeへアップロードして、Instructionsの続きを実行させるためのファイルではありません。
+
+対象となる業務資料、調査資料、組織内文書などをKnowledgeへ追加し、事実のグラウンディングに使うことはできます。
+
+この限定プロファイルは、他の対応プラットフォームと同じ完全なCSW実行を保証しません。詳細な体系固有操作、Taihekiの特例、完全な長期研究プロトコルなど、`instructions.txt`に含まれない手順が必要な場合は、Codex、Claude Code、ChatGPT向けの対応形態を利用してください。設計経緯と境界の整理はIssue #96に残しています。
 
 ## パッケージを取得する
 
-[GitHub Releases](https://github.com/hat47x/cultural-substrate-weaving/releases)から`cultural-substrate-weaving-m365-copilot-ja-JP-vX.Y.Z.zip`を取得し、展開します。中には`instructions.txt`、人間が方法論を確認するための参照モジュールを収めた`knowledge/`、Agents Toolkit CLI向けの`agent-project/`が含まれています。
+[GitHub Releases](https://github.com/hat47x/cultural-substrate-weaving/releases)から`cultural-substrate-weaving-m365-copilot-ja-JP-vX.Y.Z.zip`を取得し、展開します。中には次が含まれています。
+
+- `instructions.txt`: Microsoft 365 Copilotへ設定する自己完結した限定プロファイル
+- `method-reference/`: CSW全体を人間が確認するための参照資料
+- `README.txt`: パッケージ内の役割分担と制約
+- `agent-project/`: Agents Toolkit CLI向けのプロジェクト
 
 GitHub Releaseで配布する標準パッケージには、**テナント固有の情報を含めません**。特定テナントのSharePoint URLや、実際の`.env` / `.env.*`ファイルは入れません。`agent-project/env/`に含めるのは、安全な`.example`テンプレートだけです。テナント固有の設定は、組織へ展開するときに明示的に与えます。
 
@@ -27,10 +36,10 @@ Microsoft 365 Copilotライセンスがあれば、CLIやコード編集を使�
 1. microsoft365.com/chat、office.com/chat、またはTeamsでMicrosoft 365 Copilotを開き、「新しいエージェント」を選びます。
 2. 「設定にスキップ」を選び、Configureタブを開きます。
 3. 「Name」と「Description」に名前と説明を入力します。Nameは30文字、Descriptionは1,000文字までです。
-4. 「Instructions」に、展開した`instructions.txt`の内容をそのまま貼り付けます。8,000文字の制限内に収まることは、ビルド時に検証します。
-5. 対象となる業務資料や調査資料を使う場合は、「Knowledge」へ追加します。端末から直接アップロードする埋め込みファイルは、知識ソースとして最大20件まで追加できます。パッケージ内の`knowledge/`は、Instructionsの続きを実行させる目的ではアップロードしません。
+4. 「Instructions」に、展開した`instructions.txt`の内容をそのまま貼り付けます。8,000文字の制限内に収まることは、ビルドと検証処理で確認します。
+5. 対象となる業務資料や調査資料を使う場合は、「Knowledge」へ追加します。端末から直接アップロードする埋め込みファイルは、知識ソースとして最大20件まで追加できます。パッケージ内の`method-reference/`は、Instructionsの続きを実行させる目的ではアップロードしません。
 6. 現在の事実や外部情報を調べる用途がある場合は、「Knowledge」で「すべてのWebサイトを検索します。」を有効にします。手元の資料だけを対象にする場合は必須ではありません。
-7. 「Try it」タブで、発動する例と発動しない例の両方を試します。加えて、`instructions.txt`だけで必要な方法手順が実際に維持されているかを確認してください。
+7. 「Try it」タブで、発動する例と発動しない例の両方を試します。加えて、必要な作業が限定プロファイルの範囲内に収まっているかを確認してください。
 8. 作成後は、「Share」ボタンから特定の人やグループへ直接共有できます。組織全体で使えるようにする場合は、右上の「…」メニューから「Submit to your org catalog」を選び、管理者の承認を経て組織のAgent Storeへ公開します。
 
 ## 方法B：Agents Toolkit CLI（組織展開などの高度な構成向け）
@@ -44,7 +53,7 @@ AppSourceへの配布、テナント全体での管理配布、SharePointサイ�
 
 ### 1. SharePoint Knowledgeへ対象資料を用意する
 
-SharePointをKnowledgeとして使う場合は、CSWの実行規則ではなく、エージェントが対象について参照する業務資料・調査資料・組織内文書を置きます。パッケージ内の`knowledge/`にある方法モジュールをSharePointへ置き、`instructions`の続きを実行させる構成にはしません。
+SharePointをKnowledgeとして使う場合は、CSWの実行規則ではなく、エージェントが対象について参照する業務資料・調査資料・組織内文書を置きます。パッケージ内の`method-reference/`をSharePointへ置き、`instructions`の続きを実行させる構成にはしません。
 
 1. エージェントが参照する対象資料を、一つのSharePointサイトまたはドキュメントライブラリへ用意します。
 2. リポジトリをクローンします。
