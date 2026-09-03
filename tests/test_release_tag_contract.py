@@ -11,6 +11,7 @@ sys.path.insert(0, str(ROOT / "scripts"))
 
 from check_release_tag import (  # noqa: E402
     read_manifest_version,
+    validate_release_publication,
     validate_release_tag,
     validate_tag_against_version,
 )
@@ -34,6 +35,24 @@ class ReleaseTagContractTests(unittest.TestCase):
 
     def test_correct_tag_version_and_manifest_pass(self) -> None:
         self.assertEqual(validate_release_tag("v0.5.0", "0.5.0", "0.5.0"), [])
+
+    def test_publication_requires_dated_changelog_boundary(self) -> None:
+        errors = validate_release_publication(
+            "v0.5.0",
+            "0.5.0",
+            "0.5.0",
+            "## Unreleased\n\n- Work continues here.\n",
+        )
+        self.assertTrue(any("CHANGELOG release boundary missing" in error for error in errors))
+
+    def test_publication_accepts_frozen_changelog_boundary(self) -> None:
+        errors = validate_release_publication(
+            "v0.5.0",
+            "0.5.0",
+            "0.5.0",
+            "## Unreleased\n\n## 0.5.0 — 2026-09-04\n",
+        )
+        self.assertEqual(errors, [])
 
     def test_reads_manifest_version(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
