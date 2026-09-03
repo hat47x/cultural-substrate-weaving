@@ -69,6 +69,31 @@ class PlatformGuidanceContractTests(unittest.TestCase):
         self.assertIn("パソコンからアップロード", ja)
         self.assertIn("Upload from your computer", en)
 
+    def test_m365_knowledge_is_not_treated_as_an_instruction_extension(self) -> None:
+        ja = self.read("ja", "microsoft-copilot.md")
+        en = self.read("en", "microsoft-copilot.md")
+
+        self.assertIn(
+            "パッケージ内の`knowledge/`は、Instructionsの続きを実行させる目的ではアップロードしません",
+            ja,
+        )
+        self.assertNotIn(
+            "CLI経路で方法論全体を使う場合は、これらをSharePointなどから参照できるようにします",
+            ja,
+        )
+        self.assertIn(
+            "Do not upload the package's own `knowledge/` directory in order to extend Instructions.",
+            en,
+        )
+        self.assertNotIn("to use the full method through the CLI route", en)
+
+    def test_readmes_mark_current_m365_adapter_as_limited(self) -> None:
+        ja = (ROOT / "README.md").read_text(encoding="utf-8")
+        en = (ROOT / "README.en.md").read_text(encoding="utf-8")
+
+        self.assertIn("Microsoft 365版は、現時点では`instructions.txt`に収録された範囲", ja)
+        self.assertIn("The current Microsoft 365 distribution is a limited adapter", en)
+
 
 if __name__ == "__main__":
     unittest.main()

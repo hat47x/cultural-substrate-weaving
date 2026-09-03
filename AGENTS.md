@@ -51,7 +51,7 @@ Use a lightweight Git Flow around versioned development lines.
 
 ## Japanese development-document drafting
 
-For Japanese development, maintainer, research, experiment, and operational documents, completing the technical content is not the final drafting step.
+For Japanese public user guides and Japanese development, maintainer, research, experiment, and operational documents, completing the factual or technical content is not the final drafting step.
 
 1. Draft the facts, structure, constraints, and technical meaning first.
 2. Check that the draft preserves the intended meaning, identifiers, schema field names, commands, and evidence boundaries.
@@ -61,7 +61,7 @@ For Japanese development, maintainer, research, experiment, and operational docu
 
 In short: **自然な日本語であることを最優先し、内容確定後に必ず独立した推敲工程を通す。** A first draft, generated draft, or literal translation is not considered complete until this pass has been performed.
 
-Apply this rule to existing Japanese development documents as well as new ones. When an existing document is reviewed and no wording change is needed, that review may be recorded as completed without forcing a cosmetic diff.
+Apply this rule to the scoped Japanese public guides and development documents, including existing files. When an existing document is reviewed and no wording change is needed, record the review without forcing a cosmetic diff.
 
 ## Working rules
 
