@@ -6,15 +6,24 @@ Web search is not required when the task can be completed from supplied material
 
 ## Current scope of the Microsoft 365 package
 
-In Microsoft 365 Copilot, Knowledge is primarily a source of factual grounding. Do not treat it as a reliable continuation of the agent-level instructions in **Instructions**. For that reason, the current Microsoft 365 package does not claim that the detailed method modules under `knowledge/` are reliably executed as agent instructions or that this package provides full method parity with the other supported platforms.
+In Microsoft 365 Copilot, Knowledge is primarily a source of factual grounding. Do not treat it as a reliable continuation of the agent-level instructions in **Instructions**.
 
-For the current package, treat only the contents of `instructions.txt` as the agent instructions. Treat the bundled `knowledge/` directory as a human-readable method reference for now. Do not upload those method modules to Agent Builder or SharePoint with the expectation that they will extend the agent's Instructions.
+For Microsoft 365, this repository therefore provides a self-contained **limited profile** that stays within the 8,000-character Instructions limit. Only the method written in `instructions.txt` is treated as executable agent instructions. It carries the core retained by this profile: staying revisable by the target, KJ integration around semantic units and epistemic boundaries, provenance controls for cultural-framework exploration, delegated-scope discipline, and separation of observation from AI interpretation.
 
-You can still add business documents, research material, organization documents, and other target-side sources to Knowledge for factual grounding. Redesign of the Microsoft 365 adapter under this platform constraint is tracked in Issue #96. Until that work is complete, prefer the Codex, Claude Code, or ChatGPT distributions when you need reliable execution of the full method.
+The richer CSW method modules are still bundled under `method-reference/` so that people can inspect the full method without discarding that material. They are human-readable reference assets, not files to upload to Agent Builder or SharePoint Knowledge in order to extend Instructions.
+
+You can still add business documents, research material, organization documents, and other target-side sources to Knowledge for factual grounding.
+
+This limited profile does not claim full CSW parity with the other supported platforms. Detailed framework-specific operations, the Taiheki special case, the complete longitudinal research protocol, and other procedures not present in `instructions.txt` remain outside this profile. Use the Codex, Claude Code, or ChatGPT distributions when those capabilities are required. The design history and boundary are tracked in Issue #96.
 
 ## Get the package
 
-Download `cultural-substrate-weaving-m365-copilot-en-US-vX.Y.Z.zip` (or `-ja-JP-` for Japanese) from [GitHub Releases](https://github.com/hat47x/cultural-substrate-weaving/releases) and extract it. It contains `instructions.txt`, `knowledge/` (human-readable method reference modules), and `agent-project/` for the Agents Toolkit CLI.
+Download `cultural-substrate-weaving-m365-copilot-en-US-vX.Y.Z.zip` (or `-ja-JP-` for Japanese) from [GitHub Releases](https://github.com/hat47x/cultural-substrate-weaving/releases) and extract it. It contains:
+
+- `instructions.txt`: the self-contained Microsoft 365 limited profile;
+- `method-reference/`: human-readable reference material for the full CSW method;
+- `README.txt`: the package boundary and usage notes; and
+- `agent-project/`: the Agents Toolkit CLI project.
 
 The standard GitHub Release package is **tenant-neutral**. It does not contain a tenant-specific SharePoint site URL or actual `.env` / `.env.*` files. Only safe `.example` templates are included under `agent-project/env/`. Tenant-specific values are injected explicitly when you prepare an organization deployment.
 
@@ -27,10 +36,10 @@ This repository uses manual configuration so the prepared `instructions.txt` can
 1. Open Microsoft 365 Copilot at microsoft365.com/chat, office.com/chat, or in Teams, and select **New agent**.
 2. Select **Skip to configure** to open the **Configure** tab.
 3. Fill in **Name** and **Description** (30 and 1,000 characters respectively).
-4. Paste the contents of the extracted `instructions.txt` into **Instructions** as-is. It is validated at build time to stay within the 8,000-character limit.
-5. If the agent needs target-side business or research material, add it under **Knowledge**. You can add up to 20 files uploaded directly from the device as embedded knowledge sources. Do not upload the package's own `knowledge/` directory in order to extend Instructions.
+4. Paste the contents of the extracted `instructions.txt` into **Instructions** as-is. Build and validation checks keep it within the 8,000-character limit.
+5. If the agent needs target-side business or research material, add it under **Knowledge**. You can add up to 20 files uploaded directly from the device as embedded knowledge sources. Do not upload the package's `method-reference/` directory in order to extend Instructions.
 6. If the agent needs current facts or external information, enable **Search all websites** under **Knowledge**. It is not required when the agent should stay within supplied material.
-7. Test both activation and non-activation examples on the **Try it** tab. Also verify that the procedure you need is actually preserved by `instructions.txt` alone.
+7. Test both activation and non-activation examples on the **Try it** tab. Also verify that the work you need fits within the limited profile.
 8. After creating the agent, use **Share** for direct sharing. For organization-wide availability, use **…** → **Submit to your org catalog** and follow your administrator's review process.
 
 ## Method B: Agents Toolkit CLI (advanced / org-managed deployment)
@@ -44,7 +53,7 @@ Use this route when you need AppSource distribution, tenant-wide managed deploym
 
 ### 1. Prepare target-side material in SharePoint Knowledge
 
-When SharePoint is used as Knowledge, put the business, research, or organization documents that the agent should use as factual grounding there. Do not place the package's CSW method modules in SharePoint with the expectation that they will act as a continuation of `instructions`.
+When SharePoint is used as Knowledge, put the business, research, or organization documents that the agent should use as factual grounding there. Do not place the package's `method-reference/` material in SharePoint with the expectation that it will act as a continuation of `instructions`.
 
 1. Put the target-side source material in one SharePoint site or document library.
 2. Clone the repository.
