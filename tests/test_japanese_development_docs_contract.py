@@ -23,18 +23,22 @@ class JapaneseDevelopmentDocsContractTest(unittest.TestCase):
         self.assertIn("## Japanese development-document prose", text)
         self.assertIn("separate natural-Japanese rewriting pass", text)
 
-    def test_review_record_covers_current_japanese_development_documents(self) -> None:
+    def test_review_record_covers_current_scoped_japanese_documents(self) -> None:
         review = (ROOT / "docs/ja/maintainers/natural-japanese-review.md").read_text(
             encoding="utf-8"
         )
 
         required_paths = [
+            ROOT / "README.md",
             ROOT / "docs/ja/architecture.md",
+            ROOT / "docs/ja/getting-started.md",
+            ROOT / "docs/ja/usage-context.md",
             ROOT / ".living-lab/README.md",
             ROOT / "research/living-lab/observations/README.md",
         ]
         required_paths.extend(sorted((ROOT / "docs/ja/maintainers").glob("*.md")))
         required_paths.extend(sorted((ROOT / "docs/ja/experiments").glob("*.md")))
+        required_paths.extend(sorted((ROOT / "docs/ja/platforms").glob("*.md")))
 
         for path in required_paths:
             if path.name == "natural-japanese-review.md":
@@ -43,7 +47,7 @@ class JapaneseDevelopmentDocsContractTest(unittest.TestCase):
             self.assertIn(
                 f"`{relative}`",
                 review,
-                msg=f"Japanese development document is not recorded as reviewed: {relative}",
+                msg=f"Scoped Japanese document is not recorded as reviewed: {relative}",
             )
 
 
