@@ -11,10 +11,9 @@ VERSION_PATTERN = re.compile(r"^\d+\.\d+\.\d+$")
 TAG_PATTERN = re.compile(r"^v\d+\.\d+\.\d+$")
 
 
-def validate_release_tag(tag: str, version: str, manifest_version: str) -> list[str]:
+def validate_tag_against_version(tag: str, version: str) -> list[str]:
     errors: list[str] = []
     version = version.strip()
-    manifest_version = manifest_version.strip()
 
     if not VERSION_PATTERN.fullmatch(version):
         errors.append(f"VERSION must be X.Y.Z: {version!r}")
@@ -25,7 +24,19 @@ def validate_release_tag(tag: str, version: str, manifest_version: str) -> list[
         errors.append(f"release tag must be vX.Y.Z: {tag!r}")
     if tag != expected_tag:
         errors.append(f"release tag mismatch: {tag} != {expected_tag}")
-    if manifest_version != version:
+    return errors
+
+
+def validate_release_tag(tag: str, version: str, manifest_version: str) -> list[str]:
+    version = version.strip()
+    manifest_version = manifest_version.strip()
+    errors = validate_tag_against_version(tag, version)
+
+    if not errors and manifest_version != version:
+        errors.append(
+            f"release manifest version mismatch: {manifest_version} != {version}"
+        )
+    elif errors and manifest_version != version:
         errors.append(
             f"release manifest version mismatch: {manifest_version} != {version}"
         )
