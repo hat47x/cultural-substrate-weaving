@@ -33,7 +33,7 @@ Use the packaging path for a release candidate:
 make release-check
 ```
 
-This runs `make check`, creates locale/platform packages, writes `dist/release-manifest.json`, and validates the completed package set.
+This runs `make check`, requires a clean Git worktree, creates locale/platform packages, writes `dist/release-manifest.json`, and validates the completed package set. Tracked uncommitted changes and untracked files that Git does not ignore are release blockers. Files intentionally excluded through `.gitignore`, such as `dist/`, `.tmp/`, and the local Living Lab workspace, do not make the worktree dirty.
 
 Once the final manifest exists and the intended release tag has been derived from `VERSION`, use the tag-version gate separately:
 
@@ -60,7 +60,7 @@ The release manifest is a **post-package release contract**, not a build-progres
 
 - `files` inventories all files present under `dist/` before the manifest itself is written. It is build provenance and includes generated trees that are not separately published as GitHub Release assets.
 - `release_assets` lists exactly the files that must be published for the GitHub Release: the manifest itself, package ZIPs, and validation/review reports.
-- `source_commit` records the Git `HEAD` that produced the final package set. Post-package validation requires it to equal the current `HEAD`, and post-publication tag validation returns to this value.
+- `source_commit` records the Git `HEAD` that produced the final package set. This provenance is accepted only from a clean worktree. Post-package validation requires the worktree to remain clean and `source_commit` to equal the current `HEAD`; post-publication tag validation returns to this value.
 - `schema_version` versions the manifest structure independently of the CSW method version. Schema 2 adds `source_commit` as required release provenance.
 
 `scripts/build.py` never writes a release manifest. `scripts/package.py` is the sole manifest producer, so a manifest exists only after `make package` or `make release-check` reaches the packaging stage. Do not treat ordinary build output as a release contract.
@@ -96,6 +96,7 @@ The independent post-package validator also rejects private/local file names if 
 
 `python scripts/validate_release.py` runs after packaging and checks, among other things:
 
+- clean Git worktree state;
 - manifest version/locale/schema metadata;
 - manifest `source_commit` against the current Git `HEAD`;
 - exact `dist/` file inventory, sizes, and SHA-256 values;
@@ -147,7 +148,7 @@ TAG="v$(cat VERSION)"
 make release-tag-contract TAG="$TAG"
 ```
 
-Require all four checks to succeed. `make main-contract` verifies that the local `main` HEAD has exactly two parents, `make release-check` validates the actual release set and records that HEAD as manifest `source_commit`, the ancestry check confirms that the commit is in `origin/main` history, and `make release-tag-contract` binds the intended tag to both `VERSION` and the final manifest version.
+Require all four checks to succeed. `make main-contract` verifies that the local `main` HEAD has exactly two parents, `make release-check` validates the actual release set from a clean worktree and records that HEAD as manifest `source_commit`, the ancestry check confirms that the commit is in `origin/main` history, and `make release-tag-contract` binds the intended tag to both `VERSION` and the final manifest version.
 
 These are local/manual gates. The two-parent shape does not prove pull-request provenance, and because GitHub branch protection and repository rulesets are not currently configured, these checks do not imply that an invalid direct push would be rejected remotely.
 
