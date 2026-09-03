@@ -14,7 +14,7 @@ class JapaneseDevelopmentDocsContractTest(unittest.TestCase):
 
     def test_japanese_development_guide_defines_the_drafting_stage(self) -> None:
         text = (ROOT / "docs/ja/maintainers/development.md").read_text(encoding="utf-8")
-        self.assertIn("## 日本語の開発文書を作成・更新する場合", text)
+        self.assertIn("## 日本語文書を作成・更新する場合", text)
         self.assertIn("自然な日本語であることを最優先する独立した推敲工程", text)
         self.assertIn("内容が固まった後、文書全体を日本語として読み直す", text)
 
