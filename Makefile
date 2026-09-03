@@ -1,4 +1,4 @@
-.PHONY: build validate test tokens package release-validate check release-check release-tag-contract release-remote-tag-contract clean update-en-hashes living-lab-check living-lab-summary japanese-docs-check repository-contracts main-contract
+.PHONY: build generated-artifacts-check validate test tokens package release-validate check release-check release-tag-contract release-remote-tag-contract clean update-en-hashes living-lab-check living-lab-summary japanese-docs-check repository-contracts main-contract
 
 repository-contracts:
 	python scripts/check_branch_version.py --ref "$$(git branch --show-current)"
@@ -13,6 +13,9 @@ main-contract:
 
 build:
 	python scripts/build.py
+
+generated-artifacts-check: build
+	python scripts/check_generated_artifacts.py
 
 validate:
 	python scripts/validate.py
@@ -39,7 +42,7 @@ living-lab-check:
 living-lab-summary:
 	python scripts/summarize_living_lab.py
 
-check: repository-contracts build validate japanese-docs-check test tokens living-lab-check living-lab-summary
+check: repository-contracts generated-artifacts-check validate japanese-docs-check test tokens living-lab-check living-lab-summary
 
 release-check: check package release-validate
 
