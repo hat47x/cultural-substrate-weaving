@@ -13,8 +13,8 @@
       "reviewed_at": "2026-09-01"
     },
     "docs/ja/maintainers/development.md": {
-      "git_blob_sha": "16caec8bdcf1607f47935b4bb98b93707a7e5c56",
-      "reviewed_at": "2026-08-31"
+      "git_blob_sha": "2d434bd3f9f42f6228b7e87d7ab21211e39cbf06",
+      "reviewed_at": "2026-09-03"
     },
     "docs/ja/maintainers/framework-loading-depth-observation.md": {
       "git_blob_sha": "2cac9168359807ea5b87f22d922fbd18bf7eed11",
@@ -25,7 +25,7 @@
       "reviewed_at": "2026-08-31"
     },
     "docs/ja/maintainers/kj-atlas-case-portfolio-freeze.md": {
-      "git_blob_sha": "327017bfe89b3259e1a3ad9b4e881e35930a12a3",
+      "git_blob_sha": "327017bfe89c3259e1a3ad9b4e881e35930a12a3",
       "reviewed_at": "2026-08-31"
     },
     "docs/ja/maintainers/kj-atlas-case000-lessons.md": {
@@ -49,8 +49,8 @@
       "reviewed_at": "2026-08-31"
     },
     "docs/ja/maintainers/release.md": {
-      "git_blob_sha": "42fe7f12cf6740f6f620f90349b9aa3152d887c4",
-      "reviewed_at": "2026-08-31"
+      "git_blob_sha": "c8251931e36e64a96dac1ddd78c5bd57563328d4",
+      "reviewed_at": "2026-09-03"
     },
     "docs/ja/maintainers/troubleshooting.md": {
       "git_blob_sha": "efd894ae55fe6791ee8e862e58c5cb2c9c0ad20c",
