@@ -28,7 +28,6 @@ class ReleaseLifecycleContractTests(unittest.TestCase):
         self.assertIn("make release-check", text)
         self.assertIn("release_assets", text)
         self.assertIn("GitHub Actions are currently disabled", text)
-        self.assertIn("no branch protection or repository ruleset", text)
         self.assertNotIn("The GitHub Release workflow", text)
 
     def test_release_internals_preserve_validation_disclosure_boundary(self) -> None:
@@ -44,6 +43,8 @@ class ReleaseLifecycleContractTests(unittest.TestCase):
         self.assertIn("## X.Y.Z — YYYY-MM-DD", text)
         self.assertIn("scripts/check_release_changelog.py", text)
         self.assertIn("make main-contract", text)
+        self.assertIn("exactly two parents", text)
+        self.assertIn("does not prove pull-request provenance", text)
         self.assertIn("git merge-base --is-ancestor HEAD origin/main", text)
         self.assertIn("exact `main` commit", text)
         self.assertNotIn("Release workflow checks the dated version heading", text)
@@ -54,15 +55,17 @@ class ReleaseLifecycleContractTests(unittest.TestCase):
 
         for text in (ja, en):
             self.assertIn("scripts/check_release_changelog.py", text)
-            self.assertIn("make main-contract", text)
             self.assertIn("git merge-base --is-ancestor HEAD origin/main", text)
+            self.assertIn("make main-contract", text)
             self.assertIn("make release-check", text)
             self.assertIn("release_assets", text)
 
+        self.assertIn("ちょうど2つの親", ja)
+        self.assertIn("GitHubのPRから生成されたことまでは証明できません", ja)
         self.assertIn("GitHub Actionsは現在リポジトリで無効化されています", ja)
-        self.assertIn("branch protection", ja)
+        self.assertIn("exactly two parents", en)
+        self.assertIn("do not prove that GitHub created the commit from a pull request", en)
         self.assertIn("GitHub Actions are currently disabled", en)
-        self.assertIn("branch protection", en)
 
     def test_remote_release_verification_remains_a_manual_publication_gate(self) -> None:
         text = (ROOT / "docs" / "maintainers" / "release.md").read_text(encoding="utf-8")
