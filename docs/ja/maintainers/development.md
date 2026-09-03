@@ -11,7 +11,7 @@
 - テストケース: `evals/`
 - 生成処理: `scripts/`
 
-`dist/`は直接編集しません。`plugins/`はClaude Marketplaceでの配布に必要な生成物なので、元となるファイルを修正したうえで`build.py`から再生成し、生成結果をコミットします。
+`dist/`は直接編集しません。`.claude-plugin/`、`.agents/`、`plugins/`は、正本やmanifest、adapterなどから生成し、Gitで管理する配布用成果物です。`plugins/`にはClaudeとCodexで共有するスキル本体と、それぞれの配布用メタデータが含まれます。これらを変更する必要がある場合は生成物を直接直すのではなく、元となる正本・manifest・adapterなどを修正し、`make build`で再生成した結果を確認してコミットします。
 
 ## 開発サイクル
 
@@ -24,7 +24,7 @@ make check
 `make check`は、現在次をまとめて実行します。
 
 - `make repository-contracts`
-- `make build`
+- `make generated-artifacts-check`（先に`make build`を実行します）
 - `make validate`
 - `make japanese-docs-check`
 - `make test`
@@ -34,6 +34,10 @@ make check
 
 `repository-contracts`では、現在のローカルブランチが`develop/vX.Y.Z`または`release/vX.Y.Z`の場合に、ブランチ名の版と`VERSION`が一致することを確認します。`feature/*`、`fix/*`、`research/*`などの短期ブランチには、この版契約を適用しません。
 
+`generated-artifacts-check`では、まず現在の入力から配布用成果物を再生成し、その後に`.claude-plugin/`、`.agents/`、`plugins/`のGit状態を確認します。追跡中の生成物に変更や削除が残っている場合だけでなく、新しい未追跡の生成物が生じた場合も検査を失敗させます。これにより、正本やadapterを更新したのに、対応する生成物をコミットし忘れた状態を通常の`make check`で検出できます。
+
+この検査に失敗した場合は、差分を確認して必要な生成結果をコミットします。意図しない生成結果であれば、生成物を手作業で合わせるのではなく、正本・manifest・adapter・生成処理など、差分を生んだ入力側へ戻って修正します。
+
 `main`については、通常の短期ブランチ上では「mainへどのように統合されるか」を判定できないため、この確認は`make check`には組み込んでいません。PRをマージした後、`main`のHEADが、リポジトリ運用で想定する「2つの親を持つマージコミット」になっているかを確認するときは、`main`上で次を実行します。
 
 ```bash
@@ -42,7 +46,7 @@ make main-contract
 
 このコマンドは、現在のブランチが`main`であることと、HEADが**ちょうど2つの親を持つこと**を確認するローカル診断です。この形状だけから、そのコミットが実際にGitHubのPRから生成されたことまでは確認できません。また、GitHubへの直接pushを事前に遮断する仕組みでもありません。
 
-GitHub Actionsは現在リポジトリで無効化されています。また、現時点では`main`のbranch protectionとrepository rulesetも設定されていません。そのため、ブランチ契約はGitHub側から自動的には強制されません。`make check`や`make main-contract`が成功したことと、GitHubが不適切なpushを拒否することは別の保証として扱います。
+GitHub Actionsは現在リポジトリで無効化されています。また、現時点では`main`のbranch protectionとrepository rulesetも設定されていません。そのため、ブランチ契約や生成物の鮮度検査はGitHub側から自動的には強制されません。`make check`や`make main-contract`が成功したことと、GitHubが不適切なpushを拒否することは別の保証として扱います。
 
 必要な箇所だけを調べる場合は、各ターゲットを個別に実行してかまいません。ただし、PRへ出す前には、実行可能な環境で原則として`make check`を通します。
 
