@@ -44,6 +44,14 @@ make release-tag-contract TAG="$TAG"
 
 This checks that the tag, `VERSION`, and the final release-manifest version agree. It is deliberately separate from `make release-check`, because the tag is an explicit publication-time input rather than a package-build input.
 
+After the tag exists remotely, use the remote-tag provenance gate:
+
+```bash
+make release-remote-tag-contract TAG="$TAG"
+```
+
+This fetches the exact remote tag, peels lightweight or annotated tag objects to the commit they ultimately reference, and requires that commit to equal the final manifest `source_commit`.
+
 None of these commands by itself proves that the method is empirically effective.
 
 ## Release manifest semantics
@@ -52,7 +60,8 @@ The release manifest is a **post-package release contract**, not a build-progres
 
 - `files` inventories all files present under `dist/` before the manifest itself is written. It is build provenance and includes generated trees that are not separately published as GitHub Release assets.
 - `release_assets` lists exactly the files that must be published for the GitHub Release: the manifest itself, package ZIPs, and validation/review reports.
-- `schema_version` versions the manifest structure independently of the CSW method version.
+- `source_commit` records the Git `HEAD` that produced the final package set. Post-package validation requires it to equal the current `HEAD`, and post-publication tag validation returns to this value.
+- `schema_version` versions the manifest structure independently of the CSW method version. Schema 2 adds `source_commit` as required release provenance.
 
 `scripts/build.py` never writes a release manifest. `scripts/package.py` is the sole manifest producer, so a manifest exists only after `make package` or `make release-check` reaches the packaging stage. Do not treat ordinary build output as a release contract.
 
@@ -88,6 +97,7 @@ The independent post-package validator also rejects private/local file names if 
 `python scripts/validate_release.py` runs after packaging and checks, among other things:
 
 - manifest version/locale/schema metadata;
+- manifest `source_commit` against the current Git `HEAD`;
 - exact `dist/` file inventory, sizes, and SHA-256 values;
 - exact locale × platform package set;
 - required validation, token-budget, and Living Lab reports;
@@ -137,30 +147,39 @@ TAG="v$(cat VERSION)"
 make release-tag-contract TAG="$TAG"
 ```
 
-Require all four checks to succeed. `make main-contract` verifies that the local `main` HEAD has exactly two parents, `make release-check` validates the actual release set, the ancestry check confirms that the commit is in `origin/main` history, and `make release-tag-contract` binds the intended tag to both `VERSION` and the final manifest version.
+Require all four checks to succeed. `make main-contract` verifies that the local `main` HEAD has exactly two parents, `make release-check` validates the actual release set and records that HEAD as manifest `source_commit`, the ancestry check confirms that the commit is in `origin/main` history, and `make release-tag-contract` binds the intended tag to both `VERSION` and the final manifest version.
 
 These are local/manual gates. The two-parent shape does not prove pull-request provenance, and because GitHub branch protection and repository rulesets are not currently configured, these checks do not imply that an invalid direct push would be rejected remotely.
 
 The ancestry check prevents a version-correct commit that exists only on a development or release branch from becoming the public release commit. The tag-version check prevents a correct package set from being published under a different version tag.
 
-### 3. Create the tag, then publish the manifest-declared assets
+### 3. Create the tag, verify its remote commit, then publish manifest-declared assets
 
 Create and push only the already validated tag:
 
 ```bash
 git tag "$TAG"
 git push origin "$TAG"
+make release-remote-tag-contract TAG="$TAG"
 ```
 
-Do not retype a separate version string after the tag-version contract has passed.
+Do not retype a separate version string after the tag-version contract has passed. The remote-tag contract confirms that the remote tag resolves to the manifest `source_commit`; it does not rely on the GitHub Release `tag_name` or `target_commitish` as commit provenance.
 
 GitHub Actions do not publish the Release automatically. Create the GitHub Release explicitly, use `--verify-tag`, and publish exactly the files listed by `release_assets` in the final manifest.
 
 `.github/release-validation-note.md` remains part of the publication disclosure. Packaging success is not evidence that the method is empirically established.
 
-### 4. Verify the remote Release after upload
+### 4. Verify the remote tag and Release after upload
 
-After GitHub accepts the upload, fetch the Release object and run `scripts/verify_published_release.py`. The verification requires:
+After GitHub accepts the upload, rerun `make release-remote-tag-contract TAG="$TAG"`, fetch the Release object, and run `scripts/verify_published_release.py`. The two checks cover different boundaries.
+
+Remote-tag verification requires:
+
+- the remote tag to exist;
+- lightweight or annotated tag structure to peel successfully to a commit; and
+- that resolved commit to match the final manifest `source_commit`.
+
+Release-object verification requires:
 
 - the supplied tag to match the final manifest version;
 - the published tag to match that validated tag;
@@ -169,7 +188,7 @@ After GitHub accepts the upload, fetch the Release object and run `scripts/verif
 - published byte sizes to match the final manifest; and
 - GitHub's published `sha256:` digest for every asset to match the final manifest, including a directly computed digest for `release-manifest.json`.
 
-This post-publication check is intentionally separate from package construction. Rechecking the tag against the manifest prevents the same incorrect tag value from being passed circularly to both Release lookup and verification. `gh release upload --clobber` does not remove unrelated pre-existing assets, so an existing Release with stale or manual extras must fail verification instead of being silently treated as an exact manifest publication.
+These post-publication checks are intentionally separate from package construction and from each other. Rechecking the tag against the manifest prevents the same incorrect tag value from being passed circularly to both Release lookup and verification; resolving the remote tag back to `source_commit` prevents a moved tag from silently changing the commit associated with the published version. `gh release upload --clobber` does not remove unrelated pre-existing assets, so an existing Release with stale or manual extras must fail verification instead of being silently treated as an exact manifest publication.
 
 ## Publication disclosure
 
