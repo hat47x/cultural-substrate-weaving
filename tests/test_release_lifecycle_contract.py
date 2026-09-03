@@ -90,6 +90,11 @@ class ReleaseLifecycleContractTests(unittest.TestCase):
         self.assertIn("published release", text)
         self.assertIn("Do not infer state 3 from state 2", text)
 
+        interpretation = text.split("## Interpretation", 1)[1]
+        self.assertIn("post-publication verification", interpretation)
+        self.assertIn("not on one particular automation mechanism", interpretation)
+        self.assertNotIn("publication workflow has completed", interpretation)
+
 
 if __name__ == "__main__":
     unittest.main()
