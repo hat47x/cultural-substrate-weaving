@@ -17,19 +17,22 @@ def check_main_push_parents(parent_line: str) -> None:
     parents = parent_shas(parent_line)
     if len(parents) < 2:
         raise MainPushContractError(
-            "main push must point to a merge commit produced by a PR; "
+            "main HEAD must be a merge commit produced by a PR; "
             f"found {len(parents)} parent(s)"
         )
 
 
 def main() -> int:
     parser = argparse.ArgumentParser(
-        description="Reject direct single-parent pushes to main in the Git Flow repository contract."
+        description=(
+            "Validate a local main HEAD against the repository's PR-merge-commit "
+            "policy. This does not enforce GitHub branch protection."
+        )
     )
     parser.add_argument(
         "--parents",
         required=True,
-        help="Whitespace-separated parent commit SHAs for the pushed main HEAD.",
+        help="Whitespace-separated parent commit SHAs for the local main HEAD.",
     )
     args = parser.parse_args()
 
