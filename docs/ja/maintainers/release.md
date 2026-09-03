@@ -85,7 +85,7 @@ PRでは、累積差分、版情報、CHANGELOG、翻訳状態、`make release-c
 
 PRをマージした後は、`main` のマージコミットが公開版の正本になります。
 
-このPR経由の運用は、現在GitHubのbranch protectionやrulesetによって自動強制されているわけではありません。GitHub側の保護設定がないことと、リポジトリとしてPR経由を求めることは分けて扱います。
+このPR経由の運用は、現在GitHubのbranch protectionやrulesetによって自動的に強制されているわけではありません。GitHub側の保護設定がないことと、リポジトリとしてPR経由を求めることは分けて扱います。
 
 ## 6. 公開版のコミットをもう一度検査し、タグを付ける
 
@@ -102,11 +102,11 @@ git merge-base --is-ancestor HEAD origin/main
 
 三つの検査をそれぞれ確認します。
 
-- `make main-contract`: 現在のブランチが`main`で、HEADが複数の親を持つmerge commitであること。
+- `make main-contract`: 現在のブランチが`main`で、HEADが複数の親を持つマージコミットであること。
 - `make release-check`: 公開する生成物とリリース契約が、そのコミット上で成立すること。
 - `git merge-base --is-ancestor`: 現在のコミットが実際に`origin/main`の履歴へ入っていること。
 
-`make main-contract`はローカル診断であり、direct pushをGitHub側で事前に拒否する仕組みではありません。いずれかの検査が失敗した場合はタグを付けず、原因を修正し、必要な開発線へ戻してから改めて`main`へ統合します。
+`make main-contract`はローカル診断であり、GitHubへの直接pushを事前に拒否する仕組みではありません。いずれかの検査が失敗した場合はタグを付けず、原因を修正し、必要な開発線へ戻してから改めて`main`へ統合します。
 
 検査が成功したら、`VERSION` と同じ版のタグを、そのコミットへ付けます。
 
