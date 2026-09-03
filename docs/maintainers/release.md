@@ -19,13 +19,13 @@ make check
 
 It first runs the local repository contract check. On `develop/vX.Y.Z` or `release/vX.Y.Z`, the branch version must agree with `VERSION`. It then rebuilds runtime outputs, validates source/generated parity and platform-specific contracts, checks natural-Japanese review freshness, runs tests and token checks, validates Living Lab records, and writes review reports. It does not create the final release manifest.
 
-The `main` merge-commit policy is a separate local diagnostic:
+The `main` merge-commit shape policy is a separate local diagnostic:
 
 ```bash
 make main-contract
 ```
 
-This target must be run on `main`; it checks that HEAD has multiple parents. It does not prevent a direct push at GitHub and must not be described as remote enforcement.
+This target must be run on `main`; it checks that HEAD has exactly two parents. That shape does not prove that GitHub created the commit from a pull request. The target also does not prevent a direct push at GitHub and must not be described as remote enforcement.
 
 Use the packaging path for a release candidate:
 
@@ -115,7 +115,7 @@ Do not treat successful packaging as permission to publish an unfrozen changelog
 
 ### 2. Validate the exact commit that will be tagged
 
-The tag must point to the commit that actually landed on `main`. After the release pull request merges:
+The tag must point to the commit that actually landed on `main`. Merge the release pull request with the normal merge-commit method rather than squash or rebase merging. After it merges:
 
 ```bash
 git fetch origin
@@ -126,9 +126,9 @@ make release-check
 git merge-base --is-ancestor HEAD origin/main
 ```
 
-Require all three checks to succeed. `make main-contract` verifies the local `main` HEAD against the repository's merge-commit policy, `make release-check` validates the actual release set, and the ancestry check confirms that the commit is in `origin/main` history.
+Require all three checks to succeed. `make main-contract` verifies that the local `main` HEAD has exactly two parents, `make release-check` validates the actual release set, and the ancestry check confirms that the commit is in `origin/main` history.
 
-These are local/manual gates. Because GitHub branch protection and repository rulesets are not currently configured, they do not imply that an invalid direct push would be rejected remotely.
+These are local/manual gates. The two-parent shape does not prove pull-request provenance, and because GitHub branch protection and repository rulesets are not currently configured, these checks do not imply that an invalid direct push would be rejected remotely.
 
 This ancestry check prevents a version-correct commit that exists only on a development or release branch from becoming the public release commit.
 
