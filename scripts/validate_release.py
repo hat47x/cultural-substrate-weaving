@@ -129,18 +129,15 @@ def validate_release(
     dist: Path,
     expected_version: str,
     expected_locales: list[str],
+    expected_source_commit: str,
+    worktree_changes: str = "",
 ) -> list[str]:
     errors: list[str] = []
-    try:
-        changes = git_worktree_changes()
-    except RuntimeError as exc:
-        errors.append(str(exc))
-    else:
-        if changes:
-            errors.append(
-                "release validation requires a clean Git worktree; commit or discard changes first: "
-                + changes.replace("\n", "; ")
-            )
+    if worktree_changes:
+        errors.append(
+            "release validation requires a clean Git worktree; commit or discard changes first: "
+            + worktree_changes.replace("\n", "; ")
+        )
 
     manifest_path = dist / "release-manifest.json"
     try:
@@ -159,16 +156,10 @@ def validate_release(
     source_commit = data.get("source_commit")
     if not isinstance(source_commit, str) or not source_commit:
         errors.append("release manifest source_commit must be a non-empty string")
-    else:
-        try:
-            current_head = git_head()
-        except RuntimeError as exc:
-            errors.append(str(exc))
-        else:
-            if source_commit != current_head:
-                errors.append(
-                    f"release manifest source_commit mismatch: {source_commit} != {current_head}"
-                )
+    elif source_commit != expected_source_commit:
+        errors.append(
+            f"release manifest source_commit mismatch: {source_commit} != {expected_source_commit}"
+        )
     if data.get("locales") != expected_locales:
         errors.append(f"release manifest locales mismatch: {data.get('locales')} != {expected_locales}")
 
@@ -268,7 +259,20 @@ def validate_release(
 
 
 def main() -> int:
-    errors = validate_release(DIST, version(), locales())
+    try:
+        expected_source_commit = git_head()
+        worktree_changes = git_worktree_changes()
+    except RuntimeError as exc:
+        print(f"ERROR: {exc}", file=sys.stderr)
+        return 1
+
+    errors = validate_release(
+        DIST,
+        version(),
+        locales(),
+        expected_source_commit,
+        worktree_changes,
+    )
     if errors:
         for error in errors:
             print(f"ERROR: {error}", file=sys.stderr)
