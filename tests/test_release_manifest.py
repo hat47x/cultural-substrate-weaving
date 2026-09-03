@@ -29,6 +29,7 @@ VALIDATOR = load_script("validate_release")
 class ReleaseManifestTests(unittest.TestCase):
     VERSION = "9.9.9"
     LOCALES = ["ja-JP", "en-US"]
+    SOURCE_COMMIT = "a" * 40
 
     def build_valid_release(self, root: Path) -> Path:
         dist = root / "dist"
@@ -79,6 +80,7 @@ class ReleaseManifestTests(unittest.TestCase):
                 {
                     "schema_version": VALIDATOR.MANIFEST_SCHEMA_VERSION,
                     "version": self.VERSION,
+                    "source_commit": self.SOURCE_COMMIT,
                     "locales": self.LOCALES,
                     "files": files,
                     "release_assets": release_assets,
@@ -90,24 +92,50 @@ class ReleaseManifestTests(unittest.TestCase):
         )
         return dist
 
+    def validate(self, dist: Path, worktree_changes: str = "") -> list[str]:
+        return VALIDATOR.validate_release(
+            dist,
+            self.VERSION,
+            self.LOCALES,
+            self.SOURCE_COMMIT,
+            worktree_changes,
+        )
+
     def test_valid_release_contract_passes(self) -> None:
         with tempfile.TemporaryDirectory() as temp_dir:
             dist = self.build_valid_release(Path(temp_dir))
-            self.assertEqual(
-                VALIDATOR.validate_release(dist, self.VERSION, self.LOCALES),
-                [],
-            )
+            self.assertEqual(self.validate(dist), [])
 
             manifest = json.loads((dist / "release-manifest.json").read_text(encoding="utf-8"))
+            self.assertEqual(manifest["schema_version"], "2")
+            self.assertEqual(manifest["source_commit"], self.SOURCE_COMMIT)
             self.assertNotIn("ja-JP/generated/internal.txt", manifest["release_assets"])
             self.assertIn("ja-JP/generated/internal.txt", {item["path"] for item in manifest["files"]})
+
+    def test_source_commit_mismatch_is_rejected(self) -> None:
+        with tempfile.TemporaryDirectory() as temp_dir:
+            dist = self.build_valid_release(Path(temp_dir))
+            errors = VALIDATOR.validate_release(
+                dist,
+                self.VERSION,
+                self.LOCALES,
+                "b" * 40,
+                "",
+            )
+            self.assertTrue(any("source_commit mismatch" in error for error in errors), errors)
+
+    def test_dirty_worktree_state_is_rejected_without_git_io(self) -> None:
+        with tempfile.TemporaryDirectory() as temp_dir:
+            dist = self.build_valid_release(Path(temp_dir))
+            errors = self.validate(dist, " M README.md\n?? new-file.txt")
+            self.assertTrue(any("clean Git worktree" in error for error in errors), errors)
 
     def test_tampered_file_breaks_manifest_hash(self) -> None:
         with tempfile.TemporaryDirectory() as temp_dir:
             dist = self.build_valid_release(Path(temp_dir))
             target = dist / "reports" / "validation-report.json"
             target.write_text("tampered\n", encoding="utf-8")
-            errors = VALIDATOR.validate_release(dist, self.VERSION, self.LOCALES)
+            errors = self.validate(dist)
             self.assertTrue(any("sha256 mismatch" in error for error in errors), errors)
 
     def test_missing_package_breaks_package_contract(self) -> None:
@@ -115,7 +143,7 @@ class ReleaseManifestTests(unittest.TestCase):
             dist = self.build_valid_release(Path(temp_dir))
             missing = dist / sorted(VALIDATOR.expected_package_paths(self.VERSION, self.LOCALES))[0]
             missing.unlink()
-            errors = VALIDATOR.validate_release(dist, self.VERSION, self.LOCALES)
+            errors = self.validate(dist)
             self.assertTrue(any("package set mismatch" in error for error in errors), errors)
 
     def test_unsafe_zip_member_is_rejected(self) -> None:
