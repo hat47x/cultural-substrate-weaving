@@ -24,6 +24,11 @@ class ReleaseLifecycleContractTests(unittest.TestCase):
         self.assertIn("release-tag-contract:", makefile)
         self.assertIn('python scripts/check_release_tag.py --tag "$(TAG)"', makefile)
 
+    def test_release_validator_uses_publication_boundary_not_removed_workflow(self) -> None:
+        text = (ROOT / "scripts" / "validate_release.py").read_text(encoding="utf-8")
+        self.assertIn("release publication boundary", text)
+        self.assertNotIn("files published by the release workflow", text)
+
     def test_release_internals_describe_manifest_as_post_package_contract(self) -> None:
         text = (ROOT / "docs" / "maintainers" / "release.md").read_text(encoding="utf-8")
         self.assertIn("post-package release contract", text)
