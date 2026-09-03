@@ -121,7 +121,7 @@ git push origin "$TAG"
 make release-remote-tag-contract TAG="$TAG"
 ```
 
-`release-remote-tag-contract`は、リモートタグを取得して実コミットまで解決し、そのコミットが最終manifestの`source_commit`と一致することを確認します。軽量タグでも注釈付きタグでも、最終的に指すコミットを比較します。
+`release-remote-tag-contract`は、リモートタグを取得し、そのタグが最終的に指すコミットまで解決したうえで、最終manifestの`source_commit`と一致することを確認します。軽量タグでも注釈付きタグでも、最終的に指すコミットを比較します。
 
 公開済みタグの内容を後から無言で差し替えません。修正が必要な場合はパッチ版を作ります。
 
@@ -174,7 +174,7 @@ python scripts/verify_published_release.py \
   --tag "$TAG"
 ```
 
-ここでは二つの異なる境界を確認します。`release-remote-tag-contract`はリモートタグが指す実コミットとmanifestの`source_commit`を照合し、`verify_published_release.py`はmanifestに記載された版とタグ名、成果物名、サイズ、ダイジェストをGitHub Release上の実物と照合します。片方の成功を、もう片方の代わりにはしません。
+ここでは二つの異なる境界を確認します。`release-remote-tag-contract`は、リモートタグが最終的に指すコミットとmanifestの`source_commit`を照合します。`verify_published_release.py`は、manifestに記載された版とタグ名、成果物名、サイズ、ダイジェストをGitHub Release上の実物と照合します。片方の成功を、もう片方の代わりにはしません。
 
 ## 9. 次の開発線を始める
 
