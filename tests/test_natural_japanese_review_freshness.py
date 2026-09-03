@@ -25,6 +25,20 @@ class NaturalJapaneseReviewFreshnessTests(unittest.TestCase):
             review_scope(ROOT),
         )
 
+    def test_public_japanese_guides_are_in_scope(self) -> None:
+        scoped = set(review_scope(ROOT))
+        self.assertIn("README.md", scoped)
+        self.assertIn("docs/ja/getting-started.md", scoped)
+        self.assertIn("docs/ja/usage-context.md", scoped)
+        self.assertIn("docs/ja/platforms/chatgpt-gpt.md", scoped)
+        self.assertIn("docs/ja/platforms/claude-code.md", scoped)
+        self.assertIn("docs/ja/platforms/codex.md", scoped)
+        self.assertIn("docs/ja/platforms/microsoft-copilot.md", scoped)
+        self.assertIn("docs/ja/platforms/project-instructions.md", scoped)
+
+    def test_runtime_canonical_source_is_not_in_prose_review_scope(self) -> None:
+        self.assertNotIn("src/ja-JP/ROUTER.md", review_scope(ROOT))
+
     def test_stale_hash_fails_closed(self) -> None:
         manifest = copy.deepcopy(load_manifest())
         path = "docs/ja/architecture.md"
