@@ -1,42 +1,52 @@
 # Create a Microsoft 365 Copilot agent
 
-The repository generates localized declarative-agent material for Microsoft 365 Copilot in Japanese and English. There are two ways to install it: a GUI-only route through Agent Builder, or a route through the Agents Toolkit CLI. If you're unsure which to use, use Agent Builder.
+The repository generates localized declarative-agent material for Microsoft 365 Copilot in Japanese and English. There are two ways to install it: a GUI-only route through Agent Builder, or a route through the Agents Toolkit CLI. If you do not need a special organization-managed deployment, Agent Builder is the simpler place to start.
 
 Web search is not required when the task can be completed from supplied material alone, such as KJ integration over a closed source set. When a task needs current facts, external context, or additional source discovery, confirm that web-search grounding is permitted for your tenant.
 
+## Current scope of the Microsoft 365 package
+
+In Microsoft 365 Copilot, Knowledge is primarily a source of factual grounding. Do not treat it as a reliable continuation of the agent-level instructions in **Instructions**. For that reason, the current Microsoft 365 package does not claim that the detailed method modules under `knowledge/` are reliably executed as agent instructions or that this package provides full method parity with the other supported platforms.
+
+For the current package, treat only the contents of `instructions.txt` as the agent instructions. Treat the bundled `knowledge/` directory as a human-readable method reference for now. Do not upload those method modules to Agent Builder or SharePoint with the expectation that they will extend the agent's Instructions.
+
+You can still add business documents, research material, organization documents, and other target-side sources to Knowledge for factual grounding. Redesign of the Microsoft 365 adapter under this platform constraint is tracked in Issue #96. Until that work is complete, prefer the Codex, Claude Code, or ChatGPT distributions when you need reliable execution of the full method.
+
 ## Get the package
 
-Download `cultural-substrate-weaving-m365-copilot-en-US-vX.Y.Z.zip` (or `-ja-JP-` for Japanese) from [GitHub Releases](https://github.com/hat47x/cultural-substrate-weaving/releases) and extract it. It contains `instructions.txt`, `knowledge/` (the reference modules as Markdown files), and `agent-project/` for the Agents Toolkit CLI.
+Download `cultural-substrate-weaving-m365-copilot-en-US-vX.Y.Z.zip` (or `-ja-JP-` for Japanese) from [GitHub Releases](https://github.com/hat47x/cultural-substrate-weaving/releases) and extract it. It contains `instructions.txt`, `knowledge/` (human-readable method reference modules), and `agent-project/` for the Agents Toolkit CLI.
 
 The standard GitHub Release package is **tenant-neutral**. It does not contain a tenant-specific SharePoint site URL or actual `.env` / `.env.*` files. Only safe `.example` templates are included under `agent-project/env/`. Tenant-specific values are injected explicitly when you prepare an organization deployment.
 
-## Method A: Agent Builder (GUI only, recommended)
+## Method A: Agent Builder (GUI only)
 
 If you have a Microsoft 365 Copilot license, you can create the agent directly with no CLI or code editing. You don't need `agent-project/`, Node.js, or Visual Studio Code.
 
+This repository uses manual configuration so the prepared `instructions.txt` can be applied directly instead of relying on the natural-language auto-generation flow.
+
 1. Open Microsoft 365 Copilot at microsoft365.com/chat, office.com/chat, or in Teams, and select **New agent**.
-2. Select **Skip to configure** to open the **Configure** tab directly instead of the natural-language auto-generation flow.
+2. Select **Skip to configure** to open the **Configure** tab.
 3. Fill in **Name** and **Description** (30 and 1,000 characters respectively).
 4. Paste the contents of the extracted `instructions.txt` into **Instructions** as-is. It is validated at build time to stay within the 8,000-character limit.
-5. Under **Knowledge**, upload each file under `knowledge/`. Agent Builder doesn't accept Markdown (`.md`), so rename each file's extension to `.txt` before uploading; the contents are plain text, so renaming is enough. No SharePoint site is required for this route. You can add up to 20 files uploaded directly from the device as embedded knowledge sources.
+5. If the agent needs target-side business or research material, add it under **Knowledge**. You can add up to 20 files uploaded directly from the device as embedded knowledge sources. Do not upload the package's own `knowledge/` directory in order to extend Instructions.
 6. If the agent needs current facts or external information, enable **Search all websites** under **Knowledge**. It is not required when the agent should stay within supplied material.
-7. Test both activation and non-activation examples on the **Try it** tab.
+7. Test both activation and non-activation examples on the **Try it** tab. Also verify that the procedure you need is actually preserved by `instructions.txt` alone.
 8. After creating the agent, use **Share** for direct sharing. For organization-wide availability, use **…** → **Submit to your org catalog** and follow your administrator's review process.
 
 ## Method B: Agents Toolkit CLI (advanced / org-managed deployment)
 
-Use this route when you need AppSource distribution, tenant-wide managed deployment, SharePoint grounding, or another configuration that Agent Builder does not provide.
+Use this route when you need AppSource distribution, tenant-wide managed deployment, SharePoint grounding for target-side sources, or another configuration that Agent Builder does not provide.
 
 ### Requirements
 
 - Visual Studio Code with Microsoft 365 Agents Toolkit, or the Agents Toolkit CLI.
 - For CLI use: `npm install -g @microsoft/m365agentstoolkit-cli`.
 
-### 1. Add SharePoint knowledge
+### 1. Prepare target-side material in SharePoint Knowledge
 
-The declarative agent's `instructions` field carries only the activation decision, minimal procedure, and persistent judgment axes. Detailed cultural-framework application, KJ integration, the human/Taiheki special case, governance, and evaluation live under `knowledge/`; to use the full method through the CLI route, make those references available through SharePoint or another supported knowledge path.
+When SharePoint is used as Knowledge, put the business, research, or organization documents that the agent should use as factual grounding there. Do not place the package's CSW method modules in SharePoint with the expectation that they will act as a continuation of `instructions`.
 
-1. Upload the files under `knowledge/` to one SharePoint site or document library.
+1. Put the target-side source material in one SharePoint site or document library.
 2. Clone the repository.
 3. Create a deployment-only Agents Toolkit environment file.
 
