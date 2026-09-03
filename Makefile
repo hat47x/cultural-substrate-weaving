@@ -1,4 +1,4 @@
-.PHONY: build validate test tokens package release-validate check release-check release-tag-contract clean update-en-hashes living-lab-check living-lab-summary japanese-docs-check repository-contracts main-contract
+.PHONY: build validate test tokens package release-validate check release-check release-tag-contract release-remote-tag-contract clean update-en-hashes living-lab-check living-lab-summary japanese-docs-check repository-contracts main-contract
 
 repository-contracts:
 	python scripts/check_branch_version.py --ref "$$(git branch --show-current)"
@@ -45,6 +45,9 @@ release-check: check package release-validate
 
 release-tag-contract:
 	python scripts/check_release_tag.py --tag "$(TAG)"
+
+release-remote-tag-contract:
+	python scripts/check_remote_release_tag.py --tag "$(TAG)"
 
 clean:
 	rm -rf dist .tmp
