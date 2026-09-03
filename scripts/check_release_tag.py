@@ -7,6 +7,8 @@ import re
 import sys
 from pathlib import Path
 
+from check_release_changelog import check_release_heading
+
 VERSION_PATTERN = re.compile(r"^\d+\.\d+\.\d+$")
 TAG_PATTERN = re.compile(r"^v\d+\.\d+\.\d+$")
 
@@ -38,6 +40,22 @@ def validate_release_tag(tag: str, version: str, manifest_version: str) -> list[
     return errors
 
 
+def validate_release_publication(
+    tag: str,
+    version: str,
+    manifest_version: str,
+    changelog_text: str,
+) -> list[str]:
+    """Validate the publication-time tag contract, including the frozen changelog."""
+    version = version.strip()
+    errors = validate_release_tag(tag, version, manifest_version)
+    try:
+        check_release_heading(changelog_text, version)
+    except ValueError as exc:
+        errors.append(str(exc))
+    return errors
+
+
 def read_manifest_version(path: Path) -> str:
     data = json.loads(path.read_text(encoding="utf-8"))
     if not isinstance(data, dict):
@@ -51,7 +69,8 @@ def read_manifest_version(path: Path) -> str:
 def main() -> int:
     parser = argparse.ArgumentParser(
         description=(
-            "Verify that a release tag matches VERSION and the final release manifest version."
+            "Verify that a release tag matches VERSION and the final release manifest, "
+            "and that CHANGELOG has a dated boundary for the release version."
         )
     )
     parser.add_argument("--tag", required=True, help="Release tag to validate, for example v0.5.0")
@@ -67,22 +86,37 @@ def main() -> int:
         default=Path("dist/release-manifest.json"),
         help="Path to the final release manifest",
     )
+    parser.add_argument(
+        "--changelog",
+        type=Path,
+        default=Path("CHANGELOG.md"),
+        help="Path to CHANGELOG.md (default: CHANGELOG.md)",
+    )
     args = parser.parse_args()
 
     try:
         version = args.version_file.read_text(encoding="utf-8")
         manifest_version = read_manifest_version(args.manifest)
+        changelog_text = args.changelog.read_text(encoding="utf-8")
     except (OSError, json.JSONDecodeError, ValueError) as exc:
         print(f"ERROR: {exc}", file=sys.stderr)
         return 1
 
-    errors = validate_release_tag(args.tag, version, manifest_version)
+    errors = validate_release_publication(
+        args.tag,
+        version,
+        manifest_version,
+        changelog_text,
+    )
     if errors:
         for error in errors:
             print(f"ERROR: {error}", file=sys.stderr)
         return 1
 
-    print(f"Release tag {args.tag} matches VERSION and the final release manifest.")
+    print(
+        f"Release tag {args.tag} matches VERSION and the final release manifest, "
+        "and the CHANGELOG release boundary is frozen."
+    )
     return 0
 
 
