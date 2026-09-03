@@ -35,21 +35,29 @@ def version() -> str:
     return (ROOT / "VERSION").read_text(encoding="utf-8").strip()
 
 
-def git_head(root: Path = ROOT) -> str:
+def _run_git(root: Path, *args: str) -> str:
     try:
         result = subprocess.run(
-            ["git", "rev-parse", "HEAD"],
+            ["git", *args],
             cwd=root,
             check=True,
             text=True,
             capture_output=True,
         )
     except (OSError, subprocess.CalledProcessError) as exc:
-        raise RuntimeError(f"cannot resolve git HEAD: {exc}") from exc
-    value = result.stdout.strip()
+        raise RuntimeError(f"git {' '.join(args)} failed: {exc}") from exc
+    return result.stdout.strip()
+
+
+def git_head(root: Path = ROOT) -> str:
+    value = _run_git(root, "rev-parse", "HEAD")
     if not value:
         raise RuntimeError("cannot resolve git HEAD: empty result")
     return value
+
+
+def git_worktree_changes(root: Path = ROOT) -> str:
+    return _run_git(root, "status", "--porcelain")
 
 
 def manifest():
