@@ -36,7 +36,22 @@ git log --oneline --left-right origin/main...HEAD
 
 `i18n/translation-manifest.json` を確認します。日本語正本を変更した後、英語版が参照する翻訳元ハッシュが古いままだと、リリース検証は失敗します。
 
-公開前には、`CHANGELOG.md` の `Unreleased` を対象バージョンの節へ整理し、実際に含まれる変更内容と一致させます。
+公開前には、`CHANGELOG.md` の対象となる `Unreleased` の変更を、次の形式の日付付きの節へ移します。
+
+```text
+## X.Y.Z — YYYY-MM-DD
+```
+
+その後の開発に使う新しい `## Unreleased` 節は残します。実際に公開する変更内容と、日付付きの節の記載が一致していることも確認します。
+
+日付付きの公開境界が一つだけ存在することを、明示的に検査します。
+
+```bash
+python scripts/check_release_changelog.py \
+  --version "$(cat VERSION)"
+```
+
+この検査に通らない状態では公開へ進みません。パッケージを正常に作れたとしても、CHANGELOGの公開境界が確定していない状態でリリースしないための確認です。
 
 ## 4. リリース候補を検査する
 
@@ -70,16 +85,19 @@ PRをマージした後は、`main` のマージコミットが公開版の正�
 
 ## 6. 公開版のコミットをもう一度検査し、タグを付ける
 
-リリース候補で検査済みでも、タグを付けるのは `main` へ統合された後のコミットです。公開物とタグを付けるコミットが同じ内容から生成されたことを確認するため、`main` の実際の公開コミットでも `make release-check` を再実行します。
+リリース候補で検査済みでも、タグを付けるのは `main` へ統合された後のコミットです。公開物が、実際にタグを付けるコミットと同じ内容から生成されたことを確認するため、`main` の実際の公開コミットでも `make release-check` を再実行します。
 
 ```bash
 git fetch origin
 git checkout main
 git pull --ff-only origin main
 make release-check
+git merge-base --is-ancestor HEAD origin/main
 ```
 
-ここで失敗した場合はタグを付けません。原因を修正し、必要な開発線へ戻してから改めて `main` へ統合します。
+`make release-check` と `git merge-base --is-ancestor` の両方が成功したことを確認します。後者は、現在のコミットが実際に `origin/main` の履歴へ入っていることを確かめるための検査です。
+
+どちらかが失敗した場合はタグを付けません。原因を修正し、必要な開発線へ戻してから改めて `main` へ統合します。
 
 検査が成功したら、`VERSION` と同じ版のタグを、そのコミットへ付けます。
 

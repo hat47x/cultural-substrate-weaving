@@ -22,27 +22,55 @@ class ReleaseLifecycleContractTests(unittest.TestCase):
         self.assertIn('"release_assets": release_assets', package)
         self.assertIn("release-check: check package release-validate", makefile)
 
-    def test_maintainer_guide_describes_manifest_as_post_package_contract(self) -> None:
+    def test_release_internals_describe_manifest_as_post_package_contract(self) -> None:
         text = (ROOT / "docs" / "maintainers" / "release.md").read_text(encoding="utf-8")
         self.assertIn("post-package release contract", text)
         self.assertIn("make release-check", text)
         self.assertIn("release_assets", text)
-        self.assertNotIn("older build-script manifest-writing step", text)
+        self.assertIn("GitHub Actions are currently disabled", text)
+        self.assertNotIn("The GitHub Release workflow", text)
 
-    def test_maintainer_guide_preserves_validation_disclosure_boundary(self) -> None:
+    def test_release_internals_preserve_validation_disclosure_boundary(self) -> None:
         text = (ROOT / "docs" / "maintainers" / "release.md").read_text(encoding="utf-8")
         self.assertIn("Publication disclosure", text)
         self.assertIn(".github/release-validation-note.md", text)
         self.assertIn("gh release create --verify-tag", text)
-        self.assertIn("technically green release candidate is not evidence", text)
-        self.assertIn("does not rewrite the release notes", text)
+        self.assertIn("not evidence that the method is empirically effective", text)
+        self.assertIn("edit the notes deliberately", text)
 
-    def test_maintainer_guide_requires_changelog_freeze_only_for_publication(self) -> None:
+    def test_publication_requires_explicit_changelog_and_main_history_gates(self) -> None:
         text = (ROOT / "docs" / "maintainers" / "release.md").read_text(encoding="utf-8")
-        self.assertIn("release candidate may keep its pending changes under `## Unreleased`", text)
         self.assertIn("## X.Y.Z — YYYY-MM-DD", text)
-        self.assertIn("Release workflow checks the dated version heading", text)
-        self.assertIn("finalize `CHANGELOG.md`", text)
+        self.assertIn("scripts/check_release_changelog.py", text)
+        self.assertIn("git merge-base --is-ancestor HEAD origin/main", text)
+        self.assertIn("exact `main` commit", text)
+        self.assertNotIn("Release workflow checks the dated version heading", text)
+
+    def test_localized_release_procedures_keep_the_same_publication_gates(self) -> None:
+        ja = (ROOT / "docs" / "ja" / "maintainers" / "release.md").read_text(encoding="utf-8")
+        en = (ROOT / "docs" / "en" / "maintainers" / "release.md").read_text(encoding="utf-8")
+
+        for text in (ja, en):
+            self.assertIn("scripts/check_release_changelog.py", text)
+            self.assertIn("git merge-base --is-ancestor HEAD origin/main", text)
+            self.assertIn("make release-check", text)
+            self.assertIn("release_assets", text)
+
+        self.assertIn("GitHub Actionsは現在リポジトリで無効化されています", ja)
+        self.assertIn("GitHub Actions are currently disabled", en)
+
+    def test_remote_release_verification_remains_a_manual_publication_gate(self) -> None:
+        text = (ROOT / "docs" / "maintainers" / "release.md").read_text(encoding="utf-8")
+        self.assertIn("scripts/verify_published_release.py", text)
+        self.assertIn("published asset-name set", text)
+        self.assertIn("sha256:", text)
+        self.assertIn("publish exactly the files listed by `release_assets`", text)
+
+    def test_docs_index_separates_procedures_from_shared_internals(self) -> None:
+        text = (ROOT / "docs" / "README.md").read_text(encoding="utf-8")
+        self.assertIn("ja/maintainers/release.md", text)
+        self.assertIn("en/maintainers/release.md", text)
+        self.assertIn("Release internals", text)
 
     def test_release_history_distinguishes_validated_from_published(self) -> None:
         text = (ROOT / "docs" / "maintainers" / "release-history.md").read_text(encoding="utf-8")
