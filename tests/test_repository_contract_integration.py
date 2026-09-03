@@ -32,6 +32,18 @@ class RepositoryContractIntegrationTests(unittest.TestCase):
         )
         self.assertNotIn("main-contract", check_line)
 
+    def test_main_contract_description_does_not_claim_pull_request_provenance(self) -> None:
+        script = (ROOT / "scripts" / "check_main_push_contract.py").read_text(
+            encoding="utf-8"
+        )
+
+        self.assertIn("exactly two parents", script)
+        self.assertIn(
+            "does not prove that GitHub created the commit from a pull request",
+            script,
+        )
+        self.assertNotIn("merge commit produced by a PR", script)
+
 
 if __name__ == "__main__":
     unittest.main()
