@@ -15,9 +15,9 @@
 - minor: 後方互換性のある規則、モジュール、言語、アダプターの追加
 - patch: 誤記、明確化、翻訳修正、配布・ビルド修正
 
-安定化のための修正を通常開発から分けたい場合に限り、`develop/vX.Y.Z` から `release/vX.Y.Z` を切ります。release branchでは、リリース成立に必要な修正、文書、版情報の整理に範囲を絞り、新しい方法論機能は原則として追加しません。
+安定化のための修正を通常開発から分けたい場合に限り、`develop/vX.Y.Z` から `release/vX.Y.Z` を切ります。リリース用ブランチでは、リリース成立に必要な修正、文書、版情報の整理に範囲を絞り、新しい方法論機能は原則として追加しません。
 
-release branchを使わない場合は、`develop/vX.Y.Z` をそのまま `main` へのリリース候補にできます。
+リリース用ブランチを使わない場合は、`develop/vX.Y.Z` をそのまま `main` へのリリース候補にできます。
 
 ## 2. `main` との差分を確認する
 
@@ -53,7 +53,7 @@ make release-check
 - `dist/release-manifest.json`
 - `dist/packages/` の言語別ZIP
 
-GitHub Actionsは現在リポジトリで無効化されています。remote statusが表示されないことを、検査が成功した証拠として扱いません。
+GitHub Actionsは現在リポジトリで無効化されています。リモートの検査結果が表示されないことを、検査が成功した証拠として扱いません。
 
 `make release-check` を実行できない環境からリリース作業を進めないでください。通常のPRでやむを得ずローカル実行できなかった場合とは異なり、公開リリースでは、実際にパッケージを生成して検証できる環境を用意することを必須とします。
 
@@ -61,16 +61,16 @@ GitHub Actionsは現在リポジトリで無効化されています。remote st
 
 方法論やリリース内容を `main` へ直接コミットしません。
 
-- release branchを使う場合: `release/vX.Y.Z` → `main`
+- リリース用ブランチを使う場合: `release/vX.Y.Z` → `main`
 - 使わない場合: `develop/vX.Y.Z` → `main`
 
 PRでは、累積差分、版情報、CHANGELOG、翻訳状態、`make release-check` の結果を確認します。修正が必要な場合はリリース候補側へ入れ、検査をやり直します。
 
-PRをmergeした後は、`main` のmerge commitが公開版の正本になります。
+PRをマージした後は、`main` のマージコミットが公開版の正本になります。
 
-## 6. 公開版のcommitをもう一度検査し、タグを付ける
+## 6. 公開版のコミットをもう一度検査し、タグを付ける
 
-リリース候補で検査済みでも、タグを付けるのは `main` へ統合された後のcommitです。公開物とタグcommitが同じ内容から生成されたことを確認するため、`main` の実際の公開commitでも `make release-check` を再実行します。
+リリース候補で検査済みでも、タグを付けるのは `main` へ統合された後のコミットです。公開物とタグを付けるコミットが同じ内容から生成されたことを確認するため、`main` の実際の公開コミットでも `make release-check` を再実行します。
 
 ```bash
 git fetch origin
@@ -81,18 +81,18 @@ make release-check
 
 ここで失敗した場合はタグを付けません。原因を修正し、必要な開発線へ戻してから改めて `main` へ統合します。
 
-検査が成功したら、`VERSION` と同じ版のタグを、そのcommitへ付けます。
+検査が成功したら、`VERSION` と同じ版のタグを、そのコミットへ付けます。
 
 ```bash
 git tag vX.Y.Z
 git push origin vX.Y.Z
 ```
 
-公開済みタグの内容を後から無言で差し替えません。修正が必要な場合はpatch版を作ります。
+公開済みタグの内容を後から無言で差し替えません。修正が必要な場合はパッチ版を作ります。
 
 ## 7. GitHub Releaseへ成果物を公開する
 
-現在はGitHub Actionsによる自動Release公開を行いません。タグをpushした後、直前の `make release-check` が生成した `dist/release-manifest.json` の `release_assets` に列挙されたファイルを、同じタグのGitHub Releaseへ手動で公開します。
+現在はGitHub ActionsによるReleaseの自動公開を行いません。タグをpushした後、直前の `make release-check` が生成した `dist/release-manifest.json` の `release_assets` に列挙されたファイルを、同じタグのGitHub Releaseへ手動で公開します。
 
 GitHubのWeb画面から公開してもかまいません。GitHub CLIを使う場合は、たとえば次のようにmanifestから公開対象を取り出せます。
 
@@ -116,7 +116,7 @@ gh release create "$TAG" "${ASSETS[@]}" \
   --notes "$(cat .github/release-validation-note.md)"
 ```
 
-既存Releaseへ成果物を追加・修正する必要がある場合も、公開済み版を黙って差し替える運用にはしません。原則としてpatch版を作ります。
+既存のReleaseへ成果物を追加・修正する必要がある場合も、公開済み版を黙って差し替える運用にはしません。原則としてパッチ版を作ります。
 
 ## 8. 公開済みReleaseを検証する
 
@@ -135,18 +135,18 @@ python scripts/verify_published_release.py \
   --tag "$TAG"
 ```
 
-この検証では、manifestが宣言するasset名、サイズ、digestと、GitHub Release上の実物が一致していることを確認します。
+この検証では、manifestに記載された成果物名、サイズ、ダイジェストと、GitHub Release上の実物が一致していることを確認します。
 
 ## 9. 次の開発線を始める
 
-リリース後の新しい `develop/vA.B.C` は、タグを付けた最新の `main` から切ります。release branchにだけ入った修正を、後続のdevelopから欠落させないためです。
+リリース後の新しい `develop/vA.B.C` は、タグを付けた最新の `main` から切ります。リリース用ブランチにだけ入った修正を、後続の開発線から欠落させないためです。
 
-緊急修正は `hotfix/vX.Y.Z` を `main` から切り、公開後は必要に応じて進行中のdevelopにも戻します。
+緊急修正は `hotfix/vX.Y.Z` を `main` から切り、公開後は必要に応じて進行中の開発線にも戻します。
 
 ## 10. 各プラットフォームでの公開を確認する
 
 - Claude Code: Marketplaceの版をタグと一致させる。
 - ChatGPT GPTs: 言語別の更新パックをGPTエディターへ手動で反映する。
-- Microsoft 365 Copilot: stagingで検証した後、管理者承認を経て本番公開する。
+- Microsoft 365 Copilot: ステージングで検証した後、管理者承認を経て本番公開する。
 
-公開済みタグの翻訳を後から無言で差し替えません。翻訳修正もpatch版として公開します。
+公開済みタグの翻訳を後から無言で差し替えません。翻訳修正もパッチ版として公開します。
