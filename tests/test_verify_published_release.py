@@ -139,6 +139,17 @@ class PublishedReleaseVerificationTests(unittest.TestCase):
             self.assertTrue(any("tag mismatch" in error for error in errors))
             self.assertTrue(any("missing manifest-declared assets" in error for error in errors))
 
+    def test_same_wrong_tag_cannot_bypass_manifest_version(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            manifest, release_json = self.build_fixture(Path(tmp))
+            wrong_tag = "v9.9.8"
+            data = json.loads(release_json.read_text(encoding="utf-8"))
+            data["tag_name"] = wrong_tag
+            release_json.write_text(json.dumps(data) + "\n", encoding="utf-8")
+
+            errors = VERIFIER.validate_published_release(manifest, release_json, wrong_tag)
+            self.assertTrue(any("release tag mismatch" in error for error in errors))
+
 
 if __name__ == "__main__":
     unittest.main()
