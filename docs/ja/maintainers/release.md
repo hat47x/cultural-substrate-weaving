@@ -70,7 +70,9 @@ make release-check
 
 `make release-check`には`make check`が含まれます。`develop/vX.Y.Z`または`release/vX.Y.Z`上では、ブランチ名の版と`VERSION`の一致もこの中で確認されます。
 
-最終`release-manifest.json`はschema 2で、`source_commit`にパッケージを生成したGitコミットを記録します。`release-validate`は、この`source_commit`が検査時の`HEAD`と一致することも確認します。これにより、公開後にタグが指すコミットを、生成物の来歴へ戻して照合できます。
+公開パッケージは、Gitの作業ツリーに未コミットの変更がない状態でだけ作成します。追跡中のファイルに未コミットの変更がある場合や、Gitに無視されていない未追跡ファイルがある場合は、パッケージ生成とリリース検証を停止します。`dist/`、`.tmp/`、ローカルLiving Lab領域など、`.gitignore`で明示的に除外している作業用ファイルはこの判定には含まれません。
+
+最終`release-manifest.json`はschema 2で、`source_commit`にパッケージを生成したGitコミットを記録します。`source_commit`が生成物の来歴として意味を持つのは、パッケージ生成時の作業ツリーが上記の状態にある場合だけです。`release-validate`は、作業ツリーに未コミット差分がないことに加え、`source_commit`が検査時の`HEAD`と一致することも確認します。これにより、公開後にタグが指すコミットを、生成物の来歴へ戻して照合できます。
 
 GitHub Actionsは現在リポジトリで無効化されています。また、`main`のbranch protectionとrepository rulesetも現時点では設定されていません。リモートの検査結果が表示されないことや、pushが受理されたことを、ローカル検査が成功した証拠として扱いません。
 
@@ -107,7 +109,7 @@ make release-tag-contract TAG="$TAG"
 四つの検査をそれぞれ確認します。
 
 - `make main-contract`: 現在のブランチが`main`で、HEADがちょうど2つの親を持つマージコミットの形になっていること。
-- `make release-check`: 公開する生成物とリリース契約が、そのコミット上で成立し、最終manifestの`source_commit`がそのHEADを記録していること。
+- `make release-check`: 公開する生成物とリリース契約が、そのコミットの変更のない作業ツリー上で成立し、最終manifestの`source_commit`がそのHEADを記録していること。
 - `git merge-base --is-ancestor`: 現在のコミットが実際に`origin/main`の履歴へ入っていること。
 - `make release-tag-contract`: `VERSION`から導出したタグ名、`VERSION`、最終`release-manifest.json`の版が一致していること。
 
