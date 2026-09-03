@@ -4,6 +4,8 @@
 
 `develop/vX.Y.Z`の`X.Y.Z`は、その開発線が目標とする**予定リリース版**です。開発中は`VERSION`、`src/manifest.json`、`pyproject.toml`もその予定版へそろえて構いません。ただし、GitHub上で実際の公開版になるのは、`main`へ統合したcommitに`vX.Y.Z`タグを付けた時点です。
 
+通常の`make check`では、現在のローカルブランチが`develop/vX.Y.Z`または`release/vX.Y.Z`の場合に、ブランチ名の版と`VERSION`が一致することを確認します。これはローカルで行う検査です。現在のGitHubリポジトリにはbranch protectionやrepository rulesetが設定されていないため、同じ不一致がGitHubへpushした時点で自動的に拒否されるとは扱いません。
+
 リリース対象の版を変更する場合は、公開タグを作る前にdevelop / release branch名と版情報をまとめて変更し、どの版を目指しているのか分からない状態を残しません。
 
 翻訳だけを修正した場合でも公開成果物は変わるため、少なくともpatch版を更新します。同じタグの配布物を後から置き換えません。

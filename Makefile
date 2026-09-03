@@ -1,4 +1,15 @@
-.PHONY: build validate test tokens package release-validate check release-check clean update-en-hashes living-lab-check living-lab-summary japanese-docs-check
+.PHONY: build validate test tokens package release-validate check release-check clean update-en-hashes living-lab-check living-lab-summary japanese-docs-check repository-contracts main-contract
+
+repository-contracts:
+	python scripts/check_branch_version.py --ref "$$(git branch --show-current)"
+
+main-contract:
+	@branch="$$(git branch --show-current)"; \
+	if [ "$$branch" != "main" ]; then \
+		echo "main-contract must be run on the main branch (current: $$branch)" >&2; \
+		exit 1; \
+	fi
+	python scripts/check_main_push_contract.py --parents "$$(git show -s --format=%P HEAD)"
 
 build:
 	python scripts/build.py
@@ -28,7 +39,7 @@ living-lab-check:
 living-lab-summary:
 	python scripts/summarize_living_lab.py
 
-check: build validate japanese-docs-check test tokens living-lab-check living-lab-summary
+check: repository-contracts build validate japanese-docs-check test tokens living-lab-check living-lab-summary
 
 release-check: check package release-validate
 

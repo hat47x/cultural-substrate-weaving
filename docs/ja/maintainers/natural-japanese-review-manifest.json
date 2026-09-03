@@ -29,7 +29,7 @@
       "reviewed_at": "2026-09-03"
     },
     "docs/ja/maintainers/development.md": {
-      "git_blob_sha": "0fe5c68ec4c6d80e758a4d797e61c0fe87b8f390",
+      "git_blob_sha": "09547e76e31adb1a1b7b0a52b20b9392ff3d4071",
       "reviewed_at": "2026-09-03"
     },
     "docs/ja/maintainers/framework-loading-depth-observation.md": {
@@ -65,7 +65,7 @@
       "reviewed_at": "2026-09-03"
     },
     "docs/ja/maintainers/release.md": {
-      "git_blob_sha": "bf2ee6200dce6f54ab7a23a4fd430b67a906e12f",
+      "git_blob_sha": "ead15c9bbf049d17f8f1d210a61473765f43d1f1",
       "reviewed_at": "2026-09-03"
     },
     "docs/ja/maintainers/troubleshooting.md": {
@@ -77,8 +77,8 @@
       "reviewed_at": "2026-08-31"
     },
     "docs/ja/maintainers/versioning.md": {
-      "git_blob_sha": "63bf5fc9e3fcd2af393660214866ab9a6ca74058",
-      "reviewed_at": "2026-08-31"
+      "git_blob_sha": "65a673e998f3730ec0bc2c293651d3b091d6ac96",
+      "reviewed_at": "2026-09-03"
     },
     "docs/ja/platforms/chatgpt-gpt.md": {
       "git_blob_sha": "8373e5168d15b8c397d4e19a587fd80d40200347",

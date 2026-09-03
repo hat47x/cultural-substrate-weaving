@@ -68,7 +68,9 @@ Review at least:
 - `dist/release-manifest.json`
 - locale-specific ZIP packages under `dist/packages/`
 
-GitHub Actions are currently disabled in this repository. The absence of a remote status is not evidence that validation ran successfully.
+`make release-check` includes `make check`. On `develop/vX.Y.Z` or `release/vX.Y.Z`, that check also verifies that the branch version agrees with `VERSION`.
+
+GitHub Actions are currently disabled. `main` also has no branch protection or repository ruleset configured at present. Neither an absent remote status nor an accepted push is evidence that the local validation gates succeeded.
 
 Do not proceed with a public release from an environment where `make release-check` cannot be run. Unlike an ordinary pull request where local execution may occasionally be unavailable, publication requires an environment that can generate and validate the actual release packages.
 
@@ -83,21 +85,28 @@ Review the cumulative diff, version metadata, changelog, translation status, and
 
 After the pull request merges, the merge commit on `main` is the canonical public release commit.
 
+This pull-request policy is not currently enforced by GitHub branch protection or a repository ruleset. Keep the repository policy distinct from the protections that GitHub is actually configured to enforce.
+
 ## 6. Revalidate the public commit and tag it
 
-Even when the release candidate was already checked, the tag is placed on the commit that actually landed on `main`. Run `make release-check` again on that exact commit so the published artifacts are known to come from the tagged content.
+Even when the release candidate was already checked, the tag is placed on the commit that actually landed on `main`. Run the release gates again on that exact commit so the published artifacts are known to come from the tagged content.
 
 ```bash
 git fetch origin
 git checkout main
 git pull --ff-only origin main
+make main-contract
 make release-check
 git merge-base --is-ancestor HEAD origin/main
 ```
 
-Require both `make release-check` and `git merge-base --is-ancestor` to succeed. The ancestry check confirms that the current commit is actually part of `origin/main` history.
+Verify each gate separately:
 
-If either check fails, do not create the tag. Fix the cause on the appropriate development line and merge the corrected release candidate again.
+- `make main-contract`: the current branch is `main` and HEAD has multiple parents, matching the repository's PR-merge policy.
+- `make release-check`: the generated release set and release contract are valid on that commit.
+- `git merge-base --is-ancestor`: the current commit is actually part of `origin/main` history.
+
+`make main-contract` is a local diagnostic; it does not prevent a direct push at GitHub. If any gate fails, do not create the tag. Fix the cause on the appropriate development line and merge the corrected release candidate again.
 
 After the checks pass, tag the commit with the version from `VERSION`.
 

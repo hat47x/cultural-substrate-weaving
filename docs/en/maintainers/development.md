@@ -19,11 +19,23 @@ Use the integrated check for normal pre-PR validation:
 make check
 ```
 
-It currently runs build, validation, Japanese-document review checks, unit tests, token-budget checks, Living Lab validation, and Living Lab summary generation. Individual Make targets may be used while diagnosing a narrower problem.
+It currently runs the local repository contract check, build, validation, Japanese-document review checks, unit tests, token-budget checks, Living Lab validation, and Living Lab summary generation. Individual Make targets may be used while diagnosing a narrower problem.
 
-GitHub Actions are currently disabled in this repository. The absence of a remote status is not evidence that validation ran. If the current environment cannot run `make check`, state in the pull request which contracts were checked and which remain unverified.
+`make repository-contracts`, which is part of `make check`, compares the current local branch name with `VERSION` when the branch is `develop/vX.Y.Z` or `release/vX.Y.Z`. Short-lived branches such as `feature/*`, `fix/*`, and `research/*` are not subject to that version contract.
 
-A public release is stricter: use an environment that can run `make release-check` on both the release candidate and the exact `main` commit that will be tagged. See `release.md`.
+The `main` merge-commit policy is deliberately separate from normal feature-branch checks. After a pull request has been merged, run the following on `main` when that contract needs to be verified:
+
+```bash
+make main-contract
+```
+
+This is a local diagnostic. It requires the current branch to be `main` and checks that HEAD has multiple parents. It does not prevent a direct push to GitHub.
+
+GitHub Actions are currently disabled. `main` also has no branch protection or repository ruleset configured at present, so these branch contracts are not remotely enforced by GitHub. A successful local check and GitHub rejecting an invalid push are separate guarantees.
+
+Run `make check` before proposing changes when local execution is available. If the current environment cannot run it, state in the pull request which contracts were checked and which remain unverified. The absence of a remote status is not evidence that validation ran.
+
+A public release is stricter: use an environment that can run `make release-check` on both the release candidate and the exact `main` commit that will be tagged, and run `make main-contract` on that `main` commit. See `release.md`.
 
 When the canonical source changes, update translations and run:
 
