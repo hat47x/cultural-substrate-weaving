@@ -1,11 +1,15 @@
 from __future__ import annotations
 
 import json
+import sys
 import tempfile
 import unittest
 from pathlib import Path
 
-from scripts.check_release_tag import (
+ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(ROOT / "scripts"))
+
+from check_release_tag import (  # noqa: E402
     read_manifest_version,
     validate_release_tag,
     validate_tag_against_version,
