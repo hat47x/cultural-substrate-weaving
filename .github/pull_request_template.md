@@ -7,6 +7,7 @@
 - [ ] Research / evaluation only
 - [ ] Repository validation / release maintenance
 - [ ] `feature/*`, `research/*`, or `fix/*` targets the active `develop/vX.Y.Z`; `release/vX.Y.Z` targets `main`
+- [ ] If this PR targets `main`, it will be merged with the normal merge-commit method rather than squash or rebase merging
 
 ## Canonical source impact
 
@@ -37,6 +38,7 @@ If the runtime method changes, identify the observed problem or increment, why i
 
 - [ ] `make check` was run when local execution was available; otherwise the PR body states which contracts were checked and which remain unverified
 - [ ] On a versioned develop/release branch, the local repository-contract check was not bypassed
+- [ ] `make main-contract`, when applicable, is treated as a two-parent commit-shape diagnostic rather than proof of pull-request provenance
 - [ ] Absence of a remote GitHub Actions status or GitHub branch protection is not treated as evidence that local validation ran
 - [ ] Semantic-retention impact reviewed when runtime meaning changed
 - [ ] Changelog updated for user-visible or operational behavior
