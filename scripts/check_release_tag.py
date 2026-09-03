@@ -31,12 +31,7 @@ def validate_release_tag(tag: str, version: str, manifest_version: str) -> list[
     version = version.strip()
     manifest_version = manifest_version.strip()
     errors = validate_tag_against_version(tag, version)
-
-    if not errors and manifest_version != version:
-        errors.append(
-            f"release manifest version mismatch: {manifest_version} != {version}"
-        )
-    elif errors and manifest_version != version:
+    if manifest_version != version:
         errors.append(
             f"release manifest version mismatch: {manifest_version} != {version}"
         )
