@@ -72,7 +72,7 @@ make release-check
 
 GitHub Actionsは現在リポジトリで無効化されています。また、`main`のbranch protectionとrepository rulesetも現時点では設定されていません。リモートの検査結果が表示されないことや、pushが受理されたことを、ローカル検査が成功した証拠として扱いません。
 
-`make release-check` を実行できない環境からリリース作業を進めないでください。通常のPRでやむを得ずローカル実行できなかった場合とは異なり、公開リリースでは、実際にパッケージを生成して検証できる環境を用意することを必須とします。
+`make release-check`を実行できない環境からリリース作業を進めないでください。通常のPRでやむを得ずローカル実行できなかった場合とは異なり、公開リリースでは、実際にパッケージを生成して検証できる環境を用意することを必須とします。
 
 ## 5. PRで `main` へ統合する
 
@@ -98,21 +98,24 @@ git pull --ff-only origin main
 make main-contract
 make release-check
 git merge-base --is-ancestor HEAD origin/main
+TAG="v$(cat VERSION)"
+make release-tag-contract TAG="$TAG"
 ```
 
-三つの検査をそれぞれ確認します。
+四つの検査をそれぞれ確認します。
 
 - `make main-contract`: 現在のブランチが`main`で、HEADがちょうど2つの親を持つマージコミットの形になっていること。
 - `make release-check`: 公開する生成物とリリース契約が、そのコミット上で成立すること。
 - `git merge-base --is-ancestor`: 現在のコミットが実際に`origin/main`の履歴へ入っていること。
+- `make release-tag-contract`: `VERSION`から導出したタグ名、`VERSION`、最終`release-manifest.json`の版が一致していること。
 
 `make main-contract`が確認できるのはコミットの形状までです。2つの親を持つことだけから、そのコミットが実際にGitHubのPRから生成されたことまでは証明できません。また、このコマンドはGitHubへの直接pushを事前に拒否する仕組みでもありません。いずれかの検査が失敗した場合はタグを付けず、原因を修正し、必要な開発線へ戻してから改めて`main`へ統合します。
 
-検査が成功したら、`VERSION` と同じ版のタグを、そのコミットへ付けます。
+検査が成功したら、検査済みの`TAG`をそのコミットへ付けます。タグ名を別途入力し直しません。
 
 ```bash
-git tag vX.Y.Z
-git push origin vX.Y.Z
+git tag "$TAG"
+git push origin "$TAG"
 ```
 
 公開済みタグの内容を後から無言で差し替えません。修正が必要な場合はパッチ版を作ります。
@@ -124,7 +127,8 @@ git push origin vX.Y.Z
 GitHubのWeb画面から公開してもかまいません。GitHub CLIを使う場合は、たとえば次のようにmanifestから公開対象を取り出せます。
 
 ```bash
-TAG=vX.Y.Z
+TAG="v$(cat VERSION)"
+make release-tag-contract TAG="$TAG"
 
 mapfile -t ASSETS < <(
   python - <<'PY'
@@ -150,7 +154,7 @@ gh release create "$TAG" "${ASSETS[@]}" \
 公開後は、GitHub上のReleaseが最終manifestと一致していることを確認します。GitHub CLIを使う場合の例です。
 
 ```bash
-TAG=vX.Y.Z
+TAG="v$(cat VERSION)"
 mkdir -p .tmp
 
 gh api "repos/hat47x/cultural-substrate-weaving/releases/tags/${TAG}" \
@@ -162,7 +166,7 @@ python scripts/verify_published_release.py \
   --tag "$TAG"
 ```
 
-この検証では、manifestに記載された成果物名、サイズ、ダイジェストと、GitHub Release上の実物が一致していることを確認します。
+この検証では、manifestに記載された版とタグ名が一致していることを改めて確認したうえで、成果物名、サイズ、ダイジェストとGitHub Release上の実物が一致していることを確認します。
 
 ## 9. 次の開発線を始める
 
