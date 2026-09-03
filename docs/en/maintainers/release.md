@@ -70,7 +70,9 @@ Review at least:
 
 `make release-check` includes `make check`. On `develop/vX.Y.Z` or `release/vX.Y.Z`, that check also verifies that the branch version agrees with `VERSION`.
 
-The final `release-manifest.json` uses schema 2 and records the Git commit that produced the package set in `source_commit`. `release-validate` also requires that `source_commit` to equal the current `HEAD`, so later remote-tag checks can return to the exact package provenance.
+Public release packaging requires a clean Git worktree. Packaging and release validation fail when tracked files have uncommitted changes or when untracked files are present unless Git explicitly ignores them. Working files already excluded by `.gitignore`, such as `dist/`, `.tmp/`, and the local Living Lab workspace, do not make the release worktree dirty.
+
+The final `release-manifest.json` uses schema 2 and records the Git commit that produced the package set in `source_commit`. That value identifies package provenance only when the worktree is clean. `release-validate` therefore requires both a clean worktree and `source_commit` equal to the current `HEAD`, so later remote-tag checks can return to the exact package provenance.
 
 GitHub Actions are currently disabled. `main` also has no branch protection or repository ruleset configured at present. Neither an absent remote status nor an accepted push is evidence that the local validation gates succeeded.
 
@@ -107,7 +109,7 @@ make release-tag-contract TAG="$TAG"
 Verify each gate separately:
 
 - `make main-contract`: the current branch is `main` and HEAD has exactly two parents, matching the repository's expected merge-commit shape.
-- `make release-check`: the generated release set and release contract are valid on that commit, and the final manifest `source_commit` records that HEAD.
+- `make release-check`: the generated release set and release contract are valid from a clean worktree on that commit, and the final manifest `source_commit` records that HEAD.
 - `git merge-base --is-ancestor`: the current commit is actually part of `origin/main` history.
 - `make release-tag-contract`: the tag derived from `VERSION`, `VERSION` itself, and the final `release-manifest.json` version agree.
 
