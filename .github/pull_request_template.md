@@ -29,7 +29,7 @@ If the runtime method changes, identify the observed problem or increment, why i
 
 ## Japanese development-document prose
 
-- [ ] If Japanese development, maintainer, research, experiment, or operational prose changed, the technical content was settled first and then the whole document received a separate natural-Japanese rewriting pass
+- [ ] If scoped Japanese public-guide, development, maintainer, research, experiment, or operational prose changed, the factual/technical content was settled first and then the whole document received a separate natural-Japanese rewriting pass
 - [ ] Required identifiers, schema fields, commands, numeric results, and evidence boundaries were preserved while awkward literal translation, noun stacking, particles, and sentence flow were reviewed
 - [ ] Each changed scoped Japanese document was recorded in `natural-japanese-review-manifest.json` only after that full-document pass
 
