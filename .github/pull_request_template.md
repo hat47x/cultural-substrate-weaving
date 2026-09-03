@@ -35,7 +35,8 @@ If the runtime method changes, identify the observed problem or increment, why i
 
 ## Checks
 
-- [ ] `make check`
+- [ ] `make check` was run when local execution was available; otherwise the PR body states which contracts were checked and which remain unverified
+- [ ] Absence of a remote GitHub Actions status is not treated as evidence that validation ran
 - [ ] Semantic-retention impact reviewed when runtime meaning changed
 - [ ] Changelog updated for user-visible or operational behavior
 - [ ] Token-size changes reviewed when runtime/reference content changed
