@@ -70,6 +70,10 @@ Review at least:
 
 `make release-check` includes `make check`. On `develop/vX.Y.Z` or `release/vX.Y.Z`, that check also verifies that the branch version agrees with `VERSION`.
 
+Public release packaging requires a clean Git worktree. Packaging and release validation fail when tracked files have uncommitted changes or when untracked files are present unless Git explicitly ignores them. Working files already excluded by `.gitignore`, such as `dist/`, `.tmp/`, and the local Living Lab workspace, do not make the release worktree dirty.
+
+The final `release-manifest.json` uses schema 2 and records the Git commit that produced the package set in `source_commit`. That value identifies package provenance only when the worktree is clean. `release-validate` therefore requires both a clean worktree and `source_commit` equal to the current `HEAD`, so later remote-tag checks can return to the exact package provenance.
+
 GitHub Actions are currently disabled. `main` also has no branch protection or repository ruleset configured at present. Neither an absent remote status nor an accepted push is evidence that the local validation gates succeeded.
 
 Do not proceed with a public release from an environment where `make release-check` cannot be run. Unlike an ordinary pull request where local execution may occasionally be unavailable, publication requires an environment that can generate and validate the actual release packages.
@@ -105,7 +109,7 @@ make release-tag-contract TAG="$TAG"
 Verify each gate separately:
 
 - `make main-contract`: the current branch is `main` and HEAD has exactly two parents, matching the repository's expected merge-commit shape.
-- `make release-check`: the generated release set and release contract are valid on that commit.
+- `make release-check`: the generated release set and release contract are valid from a clean worktree on that commit, and the final manifest `source_commit` records that HEAD.
 - `git merge-base --is-ancestor`: the current commit is actually part of `origin/main` history.
 - `make release-tag-contract`: the tag derived from `VERSION`, `VERSION` itself, and the final `release-manifest.json` version agree.
 
@@ -116,7 +120,10 @@ After the checks pass, create the already validated `TAG` on that commit. Do not
 ```bash
 git tag "$TAG"
 git push origin "$TAG"
+make release-remote-tag-contract TAG="$TAG"
 ```
+
+`release-remote-tag-contract` fetches the remote tag, peels either a lightweight or annotated tag to its commit, and requires that commit to equal the final manifest `source_commit`.
 
 Do not silently replace files under an existing public tag. Publish a patch version when a released artifact needs correction.
 
@@ -129,6 +136,7 @@ You may upload the files through the GitHub web interface. With GitHub CLI, for 
 ```bash
 TAG="v$(cat VERSION)"
 make release-tag-contract TAG="$TAG"
+make release-remote-tag-contract TAG="$TAG"
 
 mapfile -t ASSETS < <(
   python - <<'PY'
@@ -151,11 +159,13 @@ Do not use an existing release as a way to silently replace already published ar
 
 ## 8. Verify the published Release
 
-After publication, verify that the GitHub Release matches the final manifest. Example using GitHub CLI:
+After publication, verify both that the remote tag still resolves to the manifest `source_commit` and that the GitHub Release matches the final manifest. Example using GitHub CLI:
 
 ```bash
 TAG="v$(cat VERSION)"
 mkdir -p .tmp
+
+make release-remote-tag-contract TAG="$TAG"
 
 gh api "repos/hat47x/cultural-substrate-weaving/releases/tags/${TAG}" \
   > .tmp/published-release.json
@@ -166,7 +176,7 @@ python scripts/verify_published_release.py \
   --tag "$TAG"
 ```
 
-This first rechecks that the manifest version and tag agree, then verifies that the published asset names, sizes, and digests match the assets declared by the final release manifest.
+These are separate boundaries. `release-remote-tag-contract` verifies that the remote tag resolves to the manifest `source_commit`; `verify_published_release.py` rechecks the manifest version and tag, then verifies the published asset names, sizes, and digests. Neither check substitutes for the other.
 
 ## 9. Start the next development line
 

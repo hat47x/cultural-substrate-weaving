@@ -46,6 +46,9 @@ Use a lightweight Git Flow around versioned development lines.
 - Small repository-maintenance changes may be committed directly to the active `develop/vX.Y.Z` branch.
 - Substantial method changes, experiments, or isolated implementation work should use a short-lived branch such as `feature/<topic>`, `research/<topic>`, or `fix/<topic>` from the active develop branch and target that develop branch with a pull request.
 - Finalize a release by bringing the active develop branch back to `main` through a pull request using the normal merge-commit method, running the full release checks on both the release candidate and the exact `main` commit, running `make main-contract` on `main`, deriving `TAG="v$(cat VERSION)"`, and running `make release-tag-contract TAG="$TAG"` before creating the tag.
+- Public release packaging requires a clean Git worktree. Tracked uncommitted changes and non-ignored untracked files invalidate package provenance and must be committed, removed, or intentionally ignored before `make release-check` can complete.
+- The final release manifest uses schema 2 and records the package-producing Git commit as `source_commit`; `release-validate` requires both a clean worktree and `source_commit` equal to the current `HEAD`.
+- After pushing the tag, run `make release-remote-tag-contract TAG="$TAG"`. It resolves the remote tag to the commit it ultimately references and requires that commit to match the manifest `source_commit`.
 - `make main-contract` checks only that the local `main` HEAD has exactly two parents. That shape does not prove that GitHub created the commit from a pull request.
 - The release-tag contract checks that the intended tag, `VERSION`, and the final release-manifest version agree. Do not retype a separate tag version after that check passes.
 - Urgent released-version fixes may use `hotfix/vX.Y.Z` from `main`; merge the fix back into both `main` and any active develop line when applicable.

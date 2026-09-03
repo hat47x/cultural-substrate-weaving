@@ -43,8 +43,9 @@ class PublishedReleaseVerificationTests(unittest.TestCase):
         manifest.write_text(
             json.dumps(
                 {
-                    "schema_version": "1",
+                    "schema_version": "2",
                     "version": "9.9.9",
+                    "source_commit": "1" * 40,
                     "locales": ["ja-JP", "en-US"],
                     "files": [
                         {
