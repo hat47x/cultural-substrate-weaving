@@ -83,7 +83,7 @@ Do not commit method or release content directly to `main`.
 
 Review the cumulative diff, version metadata, changelog, translation status, and `make release-check` result in the pull request. Put any necessary fixes back on the release candidate and rerun the checks.
 
-After the pull request merges, the merge commit on `main` is the canonical public release commit.
+When merging to `main`, choose the normal merge-commit method rather than squash or rebase merging, so the resulting commit has exactly two parents. After the pull request merges, that merge commit on `main` is the canonical public release commit.
 
 This pull-request policy is not currently enforced by GitHub branch protection or a repository ruleset. Keep the repository policy distinct from the protections that GitHub is actually configured to enforce.
 
@@ -102,11 +102,11 @@ git merge-base --is-ancestor HEAD origin/main
 
 Verify each gate separately:
 
-- `make main-contract`: the current branch is `main` and HEAD has multiple parents, matching the repository's PR-merge policy.
+- `make main-contract`: the current branch is `main` and HEAD has exactly two parents, matching the repository's expected merge-commit shape.
 - `make release-check`: the generated release set and release contract are valid on that commit.
 - `git merge-base --is-ancestor`: the current commit is actually part of `origin/main` history.
 
-`make main-contract` is a local diagnostic; it does not prevent a direct push at GitHub. If any gate fails, do not create the tag. Fix the cause on the appropriate development line and merge the corrected release candidate again.
+`make main-contract` checks commit shape only. Two parents do not prove that GitHub created the commit from a pull request, and the command does not prevent a direct push at GitHub. If any gate fails, do not create the tag. Fix the cause on the appropriate development line and merge the corrected release candidate again.
 
 After the checks pass, tag the commit with the version from `VERSION`.
 
