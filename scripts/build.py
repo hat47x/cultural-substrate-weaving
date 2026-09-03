@@ -6,7 +6,7 @@ import shutil
 from pathlib import Path
 
 from common import (
-    ADAPTERS, DIST, PLUGINS, ROOT, clean_generated, copy_file, locale_heading,
+    ADAPTERS, DIST, PLUGINS, ROOT, clean_generated, copy_file,
     locale_short, locale_source, locales, manifest,
     replace_router_links, version, write_text
 )
@@ -188,19 +188,18 @@ def explicit_m365_sharepoint_url(locale: str) -> str:
     )
 
 
-def build_m365(locale: str, config: dict, router: str) -> None:
+def build_m365(locale: str, config: dict) -> None:
     target = DIST / locale / "microsoft-copilot"
     project = target / "agent-project"
     app_package = project / "appPackage"
+    adapter_root = ADAPTERS / "microsoft-copilot" / locale
 
-    prefix = (ADAPTERS / "microsoft-copilot" / locale / "instructions-prefix.md").read_text(encoding="utf-8").rstrip()
-    compact_router = router.split(locale_heading(locale), 1)[0].rstrip()
-    instructions = prefix + "\n\n" + compact_router
+    instructions = (adapter_root / "instructions.md").read_text(encoding="utf-8").rstrip()
     if len(instructions) > 8000:
         raise RuntimeError(f"{locale} Microsoft instructions exceed 8000 characters: {len(instructions)}")
 
     starters = json.loads(
-        (ADAPTERS / "microsoft-copilot" / locale / "conversation-starters.json").read_text(encoding="utf-8")
+        (adapter_root / "conversation-starters.json").read_text(encoding="utf-8")
     )
     names = {
         "ja-JP": ("Cultural Substrate Weaving — 日本語", "文化的体系とKJ法で構造候補と空白を探索し、対象側で検証します。"),
@@ -223,7 +222,7 @@ def build_m365(locale: str, config: dict, router: str) -> None:
         }]
 
     template = json.loads(
-        (ADAPTERS / "microsoft-copilot" / locale / "manifest.template.json").read_text(encoding="utf-8")
+        (adapter_root / "manifest.template.json").read_text(encoding="utf-8")
     )
     write_text(
         app_package / "manifest.json",
@@ -243,10 +242,12 @@ def build_m365(locale: str, config: dict, router: str) -> None:
         copy_file(example, project / "env" / example.name)
 
     for filename, modules in config["knowledge_groups"].items():
-        write_text(target / "knowledge" / filename, concatenate_modules(locale, config, modules))
+        write_text(
+            target / "method-reference" / filename,
+            concatenate_modules(locale, config, modules),
+        )
     write_text(target / "instructions.txt", instructions + "\n")
-    guide = "See docs/ja/platforms/microsoft-copilot.md\n" if locale == "ja-JP" else "See docs/en/platforms/microsoft-copilot.md\n"
-    write_text(target / "README.txt", guide)
+    copy_file(adapter_root / "package-readme.txt", target / "README.txt")
 
 
 def build_canonical(locale: str) -> None:
@@ -280,7 +281,7 @@ def main() -> None:
         plugin_entries.append(build_claude(locale, config, router, claude_config))
         codex_entries.append(build_codex_plugin(locale, claude_config))
         build_gpt(locale, config, router)
-        build_m365(locale, config, router)
+        build_m365(locale, config)
         build_canonical(locale)
 
     write_root_marketplace(plugin_entries)
