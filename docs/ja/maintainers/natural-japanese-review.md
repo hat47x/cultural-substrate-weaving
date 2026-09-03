@@ -45,6 +45,7 @@ Microsoft 365向けのこの2ファイルは、生成物そのものではなく
 - `docs/ja/maintainers/kj-atlas-case000-lessons.md`
 - `docs/ja/maintainers/kj-atlas-case001-longitudinal-companion.md`
 - `docs/ja/maintainers/kj-atlas-cognitive-coevolution.md`
+- `docs/ja/maintainers/kj-atlas-merge-semantics-boundary.md`
 - `docs/ja/maintainers/natural-japanese-review.md`
 - `docs/ja/maintainers/official-sources.md`
 - `docs/ja/maintainers/release.md`
@@ -81,7 +82,9 @@ Issue #96の再設計では、Microsoft 365版を無理に完全対応とせず�
 
 GitHub Actions無効化後のローカル検査を再点検し、旧workflowにだけ残っていたGit管理生成物の鮮度検査を`make check`へ戻した。この変更に合わせて`docs/ja/maintainers/development.md`を全文で読み直し、`.claude-plugin/`、`.agents/`、`plugins/`が生成・Git管理する配布成果物であること、再生成後に変更・削除・未追跡の差分が残れば検査が失敗すること、意図しない差分は生成物を直接直さず入力側へ戻って修正することを、前後の流れを含めて自然な日本語へ整えた。
 
-方法論正本の意味には触れておらず、今回の見直しは開発・配布成果物の保守境界に限っている。
+また、`docs/ja/maintainers/kj-atlas-merge-semantics-boundary.md`を全文で読み直した。KJ Atlas固有の実装語彙とCSWの方法論正本を分ける技術的な意味を確認したうえで、日本語本文はそのままで自然に読めると判断し、記録のためだけの本文変更は行わなかった。鮮度管理対象への登録だけを追加した。
+
+方法論正本の意味には触れておらず、今回の見直しは開発・配布成果物の保守境界と研究・保守文書の推敲記録に限っている。
 
 ## 対象外として扱うもの
 

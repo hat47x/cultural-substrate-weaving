@@ -56,8 +56,12 @@
       "git_blob_sha": "5ef61a99e76d5cefd71958d7e467e31d005576f3",
       "reviewed_at": "2026-08-31"
     },
+    "docs/ja/maintainers/kj-atlas-merge-semantics-boundary.md": {
+      "git_blob_sha": "9d2a36a5f8ad809542dd51d0ec6217b8d6d10f2f",
+      "reviewed_at": "2026-09-04"
+    },
     "docs/ja/maintainers/natural-japanese-review.md": {
-      "git_blob_sha": "ba451ebb5177ba48e56273d3a5ad2969090ffa79",
+      "git_blob_sha": "c32dea10e86b8a7c223f4817b06863444a1bce86",
       "reviewed_at": "2026-09-04"
     },
     "docs/ja/maintainers/official-sources.md": {
