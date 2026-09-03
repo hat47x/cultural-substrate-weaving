@@ -17,6 +17,8 @@ GitHub Releasesから、自分が使う言語とプラットフォームに対�
 
 同じ環境に両言語版を同時に入れると、似たスキルが競合する可能性があります。通常は、利用する言語を一つ選びます。
 
+Microsoft 365 Copilot版は、現時点では`instructions.txt`に収録された範囲を実行指示として扱う限定的な対応です。方法論全体を確実に実行する必要がある場合は、[Microsoft 365 Copilot向けガイド](platforms/microsoft-copilot.md)の制約を確認したうえで環境を選んでください。
+
 ## 方法論を保守・配布する方
 
 - 意味上の正本: `src/ja-JP/`
@@ -29,5 +31,5 @@ GitHub Releasesから、自分が使う言語とプラットフォームに対�
 
 - ChatGPT上で対話を中心に幅広く使う: ChatGPT custom GPT
 - コーディングやリポジトリ分析と組み合わせる: CodexまたはClaude Code
-- Microsoft 365内の文書やSharePointと組み合わせる: Microsoft 365 Copilot Agent
+- Microsoft 365内の文書やSharePointと組み合わせる: Microsoft 365 Copilot Agent。ただし、現行アダプターの実行指示は`instructions.txt`の範囲に限られるため、方法論全体が必要な場合は他の対応環境も検討する
 - 複数のAI環境で同じ方法論を使う: このGitリポジトリを正本として維持する
