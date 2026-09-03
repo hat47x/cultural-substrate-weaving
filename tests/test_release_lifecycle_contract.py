@@ -18,11 +18,14 @@ class ReleaseLifecycleContractTests(unittest.TestCase):
         self.assertNotIn("write_release_manifest", build)
 
         self.assertIn('DIST / "release-manifest.json"', package)
-        self.assertIn('"schema_version": "1"', package)
+        self.assertIn('"schema_version": "2"', package)
+        self.assertIn('"source_commit": source_commit', package)
         self.assertIn('"release_assets": release_assets', package)
         self.assertIn("release-check: check package release-validate", makefile)
         self.assertIn("release-tag-contract:", makefile)
         self.assertIn('python scripts/check_release_tag.py --tag "$(TAG)"', makefile)
+        self.assertIn("release-remote-tag-contract:", makefile)
+        self.assertIn('python scripts/check_remote_release_tag.py --tag "$(TAG)"', makefile)
 
     def test_release_validator_uses_publication_boundary_not_removed_workflow(self) -> None:
         text = (ROOT / "scripts" / "validate_release.py").read_text(encoding="utf-8")
@@ -56,6 +59,8 @@ class ReleaseLifecycleContractTests(unittest.TestCase):
         self.assertIn("git merge-base --is-ancestor HEAD origin/main", text)
         self.assertIn('TAG="v$(cat VERSION)"', text)
         self.assertIn("make release-tag-contract", text)
+        self.assertIn("make release-remote-tag-contract", text)
+        self.assertIn("source_commit", text)
         self.assertIn("exact `main` commit", text)
         self.assertNotIn("Release workflow checks the dated version heading", text)
 
@@ -69,22 +74,28 @@ class ReleaseLifecycleContractTests(unittest.TestCase):
             self.assertIn("make main-contract", text)
             self.assertIn("make release-check", text)
             self.assertIn("make release-tag-contract", text)
+            self.assertIn("make release-remote-tag-contract", text)
             self.assertIn('TAG="v$(cat VERSION)"', text)
+            self.assertIn("source_commit", text)
             self.assertIn("release_assets", text)
 
         self.assertIn("ちょうど2つの親", ja)
         self.assertIn("GitHubのPRから生成されたことまでは証明できません", ja)
         self.assertIn("タグ名、`VERSION`、最終`release-manifest.json`の版が一致", ja)
+        self.assertIn("リモートタグが指す実コミット", ja)
         self.assertIn("GitHub Actionsは現在リポジトリで無効化されています", ja)
         self.assertIn("exactly two parents", en)
         self.assertIn("do not prove that GitHub created the commit from a pull request", en)
         self.assertIn("final `release-manifest.json` version agree", en)
+        self.assertIn("remote tag resolves to the manifest `source_commit`", en)
         self.assertIn("GitHub Actions are currently disabled", en)
 
     def test_remote_release_verification_remains_a_manual_publication_gate(self) -> None:
         text = (ROOT / "docs" / "maintainers" / "release.md").read_text(encoding="utf-8")
         self.assertIn("scripts/verify_published_release.py", text)
         self.assertIn("supplied tag to match the final manifest version", text)
+        self.assertIn("remote tag", text)
+        self.assertIn("source_commit", text)
         self.assertIn("published asset-name set", text)
         self.assertIn("sha256:", text)
         self.assertIn("publish exactly the files listed by `release_assets`", text)
