@@ -15,16 +15,27 @@
 
 ## 開発サイクル
 
-通常の検査は次のコマンドで実行します。
+通常の統合検査には、次を使います。
 
 ```bash
-make build
-make validate
-make test
-make tokens
+make check
 ```
 
-まとめて確認する場合は`make check`を使います。
+`make check` は、現在次をまとめて実行します。
+
+- `make build`
+- `make validate`
+- `make japanese-docs-check`
+- `make test`
+- `make tokens`
+- `make living-lab-check`
+- `make living-lab-summary`
+
+必要な箇所だけを調べる場合は、各targetを個別に実行してかまいません。ただしPRへ出す前には、実行可能な環境で原則として`make check`を通します。
+
+GitHub Actionsは現在リポジトリで無効化されています。remote statusが表示されないことを、検査が成功した証拠として扱いません。接続環境などの制約で`make check`を実行できない場合は、PR本文に、実際に確認した契約と未検証の部分を明記します。
+
+公開リリースでは、この例外を使いません。リリース候補と、タグを付ける`main`の公開commitで`make release-check`を実行できる環境を用意します。詳細は`release.md`を参照してください。
 
 ## 日本語の開発文書を作成・更新する場合
 
@@ -78,6 +89,6 @@ make check
 - `kj-atlas-case000-lessons.md`: 比較プロトコル以前の既存dogfoodを遡及的に読み直して得た初期教訓。
 - `framework-loading-depth-observation.md`: 文化体系をどこまで作業コンテキストへ読み込んだかと、有用な増分、anchoring、early stopとの関係を長期的に観察する補助プロトコル。
 - `framework-use-lifecycle-trace.md`: 文化体系が候補に上がった段階、実際に読んだ範囲、体系固有の操作、対象側への採用を分けて追跡する研究用の来歴記録。
-- `kj-atlas-case001-longitudinal-companion.md`: 独立4-arm比較を汚さず、継続チャットの中で問いの遅延効果、再活性化、KJ再編、実際の採用を追うprospectiveな観察線。
+- `kj-atlas-case001-longitudinal-companion.md`: 独立4-arm比較を汚さず、継続チャットの中で問いの遅延効果、再活性化、KJ再編、実際の採用を追う前向き（prospective）な観察線。
 
 これらの研究文書は、現行方法論の根拠と限界を後から追えるようにするための履歴です。方法論の正本と同じ規範力は持ちません。
