@@ -58,7 +58,7 @@
 
 リリース・開発手順をGitHub Actions無効化後の現行運用へ合わせて再度全文推敲した。さらに、公開トップページと利用者向けガイドも鮮度管理の対象へ加え、内容を現在の製品情報と照合したうえで全文を読み直した。
 
-`docs/ja/getting-started.md`、`docs/ja/usage-context.md`、ChatGPT・Claude Code・Codex・Microsoft 365 Copilotの各ガイドは、日本語の流れを整えた。`README.md`と`docs/ja/platforms/project-instructions.md`も全文を通読し、必要な箇所だけを修正した。
+`docs/ja/getting-started.md`、`docs/ja/usage-context.md`、ChatGPT・Claude Code・Codex・Microsoft 365 Copilotの各ガイドは、日本語の流れを整えた。`README.md`はMicrosoft 365版の現行制約を明示するために更新した。`docs/ja/platforms/project-instructions.md`は全文を通読したが、意味のある改善差分は不要と判断して本文を維持した。
 
 製品仕様に関する実質的な更新は、文体修正とは分けて扱った。CodexにはGitHubマーケットプレイスをワークスペースへインポートする現行経路を日英で補足した。Microsoft 365 Copilotでは、「最大20件」が端末から直接アップロードする埋め込みファイルの上限であることを明確にしたうえで、公式資料を再確認した。
 
