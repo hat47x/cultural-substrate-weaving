@@ -5,7 +5,7 @@ import stat
 import zipfile
 from pathlib import Path
 
-from common import DIST, ROOT, locale_short, locales, manifest, sha256, version, write_text
+from common import DIST, git_head, locale_short, locales, manifest, sha256, version, write_text
 
 ZIP_TIMESTAMP = (1980, 1, 1, 0, 0, 0)
 
@@ -67,6 +67,7 @@ def main() -> None:
     packages = DIST / "packages"
     packages.mkdir(parents=True, exist_ok=True)
     v = version()
+    source_commit = git_head()
 
     for locale in locales():
         suffix = locale
@@ -111,8 +112,9 @@ def main() -> None:
         DIST / "release-manifest.json",
         json.dumps(
             {
-                "schema_version": "1",
+                "schema_version": "2",
                 "version": v,
+                "source_commit": source_commit,
                 "locales": locales(),
                 "files": files,
                 "release_assets": release_assets,
