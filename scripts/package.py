@@ -5,7 +5,7 @@ import stat
 import zipfile
 from pathlib import Path
 
-from common import DIST, git_head, locale_short, locales, manifest, sha256, version, write_text
+from common import DIST, git_head, git_worktree_changes, locale_short, locales, manifest, sha256, version, write_text
 
 ZIP_TIMESTAMP = (1980, 1, 1, 0, 0, 0)
 
@@ -67,6 +67,12 @@ def main() -> None:
     packages = DIST / "packages"
     packages.mkdir(parents=True, exist_ok=True)
     v = version()
+    changes = git_worktree_changes()
+    if changes:
+        raise RuntimeError(
+            "release packaging requires a clean Git worktree; commit or discard changes first:\n"
+            + changes
+        )
     source_commit = git_head()
 
     for locale in locales():
