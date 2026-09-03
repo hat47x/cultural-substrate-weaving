@@ -40,7 +40,7 @@ def main() -> int:
 
     if changes:
         print(
-            "ERROR: generated Git-tracked artifacts are not current after build. "
+            "ERROR: generated distribution artifacts are not synchronized with Git after build. "
             "Regenerate them, review the changes, and commit the resulting .claude-plugin, .agents, and plugins files.",
             file=sys.stderr,
         )
@@ -48,7 +48,7 @@ def main() -> int:
             print(f"  {change}", file=sys.stderr)
         return 1
 
-    print("Generated Git-tracked artifacts are current")
+    print("Generated distribution artifacts are synchronized with Git")
     return 0
 
 
