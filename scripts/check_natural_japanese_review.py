@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Track freshness of the natural-Japanese review for scoped development docs."""
+"""Track freshness of the natural-Japanese review for scoped Japanese prose."""
 
 from __future__ import annotations
 
@@ -18,7 +18,10 @@ SHA_RE = re.compile(r"^[0-9a-f]{40}$")
 
 def review_scope(root: Path = ROOT) -> list[str]:
     paths = {
+        "README.md",
         "docs/ja/architecture.md",
+        "docs/ja/getting-started.md",
+        "docs/ja/usage-context.md",
         ".living-lab/README.md",
         "research/living-lab/observations/README.md",
     }
@@ -29,6 +32,10 @@ def review_scope(root: Path = ROOT) -> list[str]:
     paths.update(
         path.relative_to(root).as_posix()
         for path in (root / "docs/ja/experiments").glob("*.md")
+    )
+    paths.update(
+        path.relative_to(root).as_posix()
+        for path in (root / "docs/ja/platforms").glob("*.md")
     )
     return sorted(paths)
 
