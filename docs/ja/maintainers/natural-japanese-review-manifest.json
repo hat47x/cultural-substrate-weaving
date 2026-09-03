@@ -8,6 +8,14 @@
       "git_blob_sha": "b1cc8f6c2f763ae2e9110af2e96308802a9ff755",
       "reviewed_at": "2026-09-03"
     },
+    "adapters/microsoft-copilot/ja-JP/instructions.md": {
+      "git_blob_sha": "9015b362593eb6454100311a2a3525cfaed1687a",
+      "reviewed_at": "2026-09-03"
+    },
+    "adapters/microsoft-copilot/ja-JP/package-readme.txt": {
+      "git_blob_sha": "9ecea841b62e26e472986576be6c1e4dc0e70ae4",
+      "reviewed_at": "2026-09-03"
+    },
     "docs/ja/architecture.md": {
       "git_blob_sha": "986b6d8255680dc2d57ef608ed8b8b54e4fde3aa",
       "reviewed_at": "2026-08-31"
@@ -49,7 +57,7 @@
       "reviewed_at": "2026-08-31"
     },
     "docs/ja/maintainers/natural-japanese-review.md": {
-      "git_blob_sha": "b71f206ae9c82e7059f7ba1d41d26c9a903a18a5",
+      "git_blob_sha": "bedec1ad6b238eb489a71d24f25bf0eb1d168047",
       "reviewed_at": "2026-09-03"
     },
     "docs/ja/maintainers/official-sources.md": {
@@ -85,7 +93,7 @@
       "reviewed_at": "2026-09-03"
     },
     "docs/ja/platforms/microsoft-copilot.md": {
-      "git_blob_sha": "d8daaacf0306d1e4c3dcdfa744f94e3d6432fb28",
+      "git_blob_sha": "fb25c947ff385b73c79198e19eaef46b122fe075",
       "reviewed_at": "2026-09-03"
     },
     "docs/ja/platforms/project-instructions.md": {
