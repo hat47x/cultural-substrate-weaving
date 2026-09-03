@@ -214,7 +214,7 @@ def validate_release(
             )
     if set(release_assets) != actual_release_assets:
         errors.append(
-            "release_assets do not match the files published by the release workflow: "
+            "release_assets do not match the release publication boundary: "
             f"manifest={sorted(set(release_assets))}, actual={sorted(actual_release_assets)}"
         )
 
