@@ -24,6 +24,8 @@ def review_scope(root: Path = ROOT) -> list[str]:
         "docs/ja/usage-context.md",
         ".living-lab/README.md",
         "research/living-lab/observations/README.md",
+        "adapters/microsoft-copilot/ja-JP/instructions.md",
+        "adapters/microsoft-copilot/ja-JP/package-readme.txt",
     }
     paths.update(
         path.relative_to(root).as_posix()
