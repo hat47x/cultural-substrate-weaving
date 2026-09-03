@@ -30,7 +30,7 @@
     },
     "docs/ja/maintainers/development.md": {
       "git_blob_sha": "fdaa791a1089ae7ce0e9c716b258b066397b4f08",
-      "reviewed_at": "2026-09-03"
+      "reviewed_at": "2026-09-04"
     },
     "docs/ja/maintainers/framework-loading-depth-observation.md": {
       "git_blob_sha": "2cac9168359807ea5b87f22d922fbd18bf7eed11",
@@ -57,8 +57,8 @@
       "reviewed_at": "2026-08-31"
     },
     "docs/ja/maintainers/natural-japanese-review.md": {
-      "git_blob_sha": "bedec1ad6b238eb489a71d24f25bf0eb1d168047",
-      "reviewed_at": "2026-09-03"
+      "git_blob_sha": "ba451ebb5177ba48e56273d3a5ad2969090ffa79",
+      "reviewed_at": "2026-09-04"
     },
     "docs/ja/maintainers/official-sources.md": {
       "git_blob_sha": "bb03e5be067398061cba8f2a328f3ff682ccc123",
