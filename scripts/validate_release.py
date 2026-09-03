@@ -7,9 +7,9 @@ import zipfile
 from pathlib import Path, PurePosixPath
 from typing import Any
 
-from common import DIST, locales, sha256, version
+from common import DIST, git_head, locales, sha256, version
 
-MANIFEST_SCHEMA_VERSION = "1"
+MANIFEST_SCHEMA_VERSION = "2"
 ZIP_TIMESTAMP = (1980, 1, 1, 0, 0, 0)
 PACKAGE_KINDS = (
     "openai-interactive",
@@ -145,6 +145,19 @@ def validate_release(
         )
     if data.get("version") != expected_version:
         errors.append(f"release manifest version mismatch: {data.get('version')} != {expected_version}")
+    source_commit = data.get("source_commit")
+    if not isinstance(source_commit, str) or not source_commit:
+        errors.append("release manifest source_commit must be a non-empty string")
+    else:
+        try:
+            current_head = git_head()
+        except RuntimeError as exc:
+            errors.append(str(exc))
+        else:
+            if source_commit != current_head:
+                errors.append(
+                    f"release manifest source_commit mismatch: {source_commit} != {current_head}"
+                )
     if data.get("locales") != expected_locales:
         errors.append(f"release manifest locales mismatch: {data.get('locales')} != {expected_locales}")
 
