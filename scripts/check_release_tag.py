@@ -8,6 +8,7 @@ import sys
 from pathlib import Path
 
 from check_release_changelog import check_release_heading
+from common import git_head
 
 VERSION_PATTERN = re.compile(r"^\d+\.\d+\.\d+$")
 TAG_PATTERN = re.compile(r"^v\d+\.\d+\.\d+$")
@@ -44,11 +45,18 @@ def validate_release_publication(
     tag: str,
     version: str,
     manifest_version: str,
+    manifest_source_commit: str,
+    current_head: str,
     changelog_text: str,
 ) -> list[str]:
-    """Validate the publication-time tag contract, including the frozen changelog."""
+    """Validate the publication-time tag contract against the exact local release commit."""
     version = version.strip()
     errors = validate_release_tag(tag, version, manifest_version)
+    if manifest_source_commit != current_head:
+        errors.append(
+            "release manifest source_commit mismatch at tag gate: "
+            f"{manifest_source_commit} != {current_head}"
+        )
     try:
         check_release_heading(changelog_text, version)
     except ValueError as exc:
@@ -66,11 +74,22 @@ def read_manifest_version(path: Path) -> str:
     return value
 
 
+def read_manifest_source_commit(path: Path) -> str:
+    data = json.loads(path.read_text(encoding="utf-8"))
+    if not isinstance(data, dict):
+        raise ValueError("release manifest must be a JSON object")
+    value = data.get("source_commit")
+    if not isinstance(value, str) or not value:
+        raise ValueError("release manifest source_commit must be a non-empty string")
+    return value
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(
         description=(
             "Verify that a release tag matches VERSION and the final release manifest, "
-            "and that CHANGELOG has a dated boundary for the release version."
+            "that the manifest was produced from the current HEAD, and that CHANGELOG "
+            "has a dated boundary for the release version."
         )
     )
     parser.add_argument("--tag", required=True, help="Release tag to validate, for example v0.5.0")
@@ -97,8 +116,10 @@ def main() -> int:
     try:
         version = args.version_file.read_text(encoding="utf-8")
         manifest_version = read_manifest_version(args.manifest)
+        manifest_source_commit = read_manifest_source_commit(args.manifest)
+        current_head = git_head()
         changelog_text = args.changelog.read_text(encoding="utf-8")
-    except (OSError, json.JSONDecodeError, ValueError) as exc:
+    except (OSError, json.JSONDecodeError, RuntimeError, ValueError) as exc:
         print(f"ERROR: {exc}", file=sys.stderr)
         return 1
 
@@ -106,6 +127,8 @@ def main() -> int:
         args.tag,
         version,
         manifest_version,
+        manifest_source_commit,
+        current_head,
         changelog_text,
     )
     if errors:
@@ -115,7 +138,8 @@ def main() -> int:
 
     print(
         f"Release tag {args.tag} matches VERSION and the final release manifest, "
-        "and the CHANGELOG release boundary is frozen."
+        "the manifest source_commit matches the current HEAD, and the CHANGELOG "
+        "release boundary is frozen."
     )
     return 0
 
