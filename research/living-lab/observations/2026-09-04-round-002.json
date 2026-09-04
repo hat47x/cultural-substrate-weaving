@@ -1,0 +1,70 @@
+{
+  "schema_version": "0.2",
+  "round_id": "round-2026-09-04-002",
+  "case_id": "writing-kj-revision",
+  "mode": "natural_work",
+  "observed_at": "2026-09-04T11:19:24+09:00",
+  "environment": {
+    "platform": "web_chat",
+    "model_label": "GPT-5.6 Sol",
+    "product_mode": "interactive chat",
+    "notes": "The public record retains only task-relevant environment details."
+  },
+  "task": {
+    "summary": "Revise an existing creative-writing draft by first allowing an intentionally overfull version, then retaining or withdrawing additions through KJ-based review of what the draft itself could carry.",
+    "domain": "creative writing revision and KJ integration",
+    "source_refs": [
+      "private:creative-writing-session:2026-09-04",
+      "private:creative-writing-kj-audit:v115-v116"
+    ]
+  },
+  "material_delta_refs": [
+    "private:creative-writing-draft:v115",
+    "private:creative-writing-draft:v116"
+  ],
+  "invocation": "implicit",
+  "activation_scope": "limited_use",
+  "framework_contacts": [],
+  "kj_snapshot_refs": [
+    "private:creative-writing-kj-audit:v115-v116"
+  ],
+  "artifacts": [
+    "private:creative-writing-draft:v115",
+    "private:creative-writing-draft:v116"
+  ],
+  "residuals": [
+    {
+      "source_type": "ai",
+      "statement": "The evidence used for this public abstraction does not establish that any cultural framework was opened during the round.",
+      "source_ref": "private:creative-writing-kj-audit:v115-v116"
+    },
+    {
+      "source_type": "ai",
+      "statement": "Directly attributable user judgment about each retained or withdrawn addition was not available in the evidence used for this public abstraction.",
+      "source_ref": "private:creative-writing-session:2026-09-04"
+    }
+  ],
+  "reopening_conditions": [
+    {
+      "source_type": "ai",
+      "statement": "If directly attributable user correction or framework-contact evidence for this round becomes available, record it with its own provenance instead of inferring it from the artifact delta.",
+      "source_ref": "github:issue:129"
+    },
+    {
+      "source_type": "ai",
+      "statement": "Compare this KJ reconfiguration with later natural work only if a similar function recurs; do not use event counts as a method score.",
+      "source_ref": "github:issue:31"
+    }
+  ],
+  "interpretations": [
+    {
+      "source_type": "ai",
+      "statement": "The round is recorded as limited use because KJ was visibly used in the revision process. This does not establish that CSW caused, improved, or validated the resulting revision.",
+      "source_ref": "github:issue:129",
+      "evidence_refs": [
+        "private:creative-writing-kj-audit:v115-v116"
+      ]
+    }
+  ],
+  "notes": "This is an anonymized retrospective abstraction of natural work. The work title, prose, private conversation, and identifying details are intentionally omitted."
+}
