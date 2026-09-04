@@ -59,11 +59,25 @@ def check_release_heading(text: str, version: str) -> None:
             "move release contents into the dated release section before publication"
         )
 
+    next_section_index = next(
+        (
+            index
+            for index in range(release_index + 1, len(lines))
+            if lines[index].startswith("## ")
+        ),
+        len(lines),
+    )
+    release_body = lines[release_index + 1 : next_section_index]
+    if not any(line.strip() for line in release_body):
+        raise ValueError(
+            "CHANGELOG dated release section must contain release contents before publication"
+        )
+
 
 def main() -> int:
     parser = argparse.ArgumentParser(
         description=(
-            "Require one valid dated CHANGELOG heading for a release version, "
+            "Require one valid non-empty dated CHANGELOG section for a release version, "
             "with exactly one empty Unreleased section reserved for subsequent development."
         )
     )
