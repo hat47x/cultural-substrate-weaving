@@ -39,7 +39,7 @@ class ManualValidationContractTests(unittest.TestCase):
         self.assertIn("release-check: check package release-validate", makefile)
         self.assertIn("release-tag-contract: release-validate", makefile)
         self.assertIn("scripts/check_release_tag.py", makefile)
-        self.assertIn("release-remote-tag-contract:", makefile)
+        self.assertIn("release-remote-tag-contract: release-validate", makefile)
         self.assertIn("scripts/check_remote_release_tag.py", makefile)
 
     def test_main_shape_diagnostic_remains_local(self) -> None:
