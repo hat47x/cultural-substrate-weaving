@@ -112,7 +112,7 @@ Verify each gate separately:
 - `make main-contract`: the current branch is `main` and HEAD has exactly two parents, matching the repository's expected merge-commit shape.
 - `make release-check`: the generated release set and release contract are valid from a clean worktree on that commit, and the final manifest `source_commit` records that HEAD.
 - `git merge-base --is-ancestor`: the current commit is actually part of `origin/main` history.
-- `make release-tag-contract`: the tag derived from `VERSION`, `VERSION` itself, and the final `release-manifest.json` version agree.
+- `make release-tag-contract`: reruns `release-validate` before the tag-specific check to confirm that the complete final release set is still valid, then checks the tag derived from `VERSION`, `VERSION` itself, the final manifest version, the clean worktree, `source_commit == HEAD`, and the dated CHANGELOG boundary.
 
 `make main-contract` checks commit shape only. Two parents do not prove that GitHub created the commit from a pull request, and the command does not prevent a direct push at GitHub. If any gate fails, do not create the tag. Fix the cause on the appropriate development line and merge the corrected release candidate again.
 
@@ -124,7 +124,7 @@ git push origin "$TAG"
 make release-remote-tag-contract TAG="$TAG"
 ```
 
-`release-remote-tag-contract` fetches the remote tag, peels either a lightweight or annotated tag to its commit, and requires that commit to equal the final manifest `source_commit`.
+`release-remote-tag-contract` reruns `release-validate` before checking the remote tag, so the current manifest, packages, reports, hashes, and clean worktree must still form a valid final release set. It then fetches the remote tag, peels either a lightweight or annotated tag to its commit, and requires that commit to equal the final manifest `source_commit`.
 
 Do not silently replace files under an existing public tag. Publish a patch version when a released artifact needs correction.
 
@@ -177,7 +177,7 @@ python scripts/verify_published_release.py \
   --tag "$TAG"
 ```
 
-These are separate boundaries. `release-remote-tag-contract` verifies that the remote tag resolves to the manifest `source_commit`; `verify_published_release.py` rechecks the manifest version and tag, then verifies the published asset names, sizes, and digests. Neither check substitutes for the other.
+These are separate boundaries. `release-remote-tag-contract` revalidates the full release set and then verifies that the remote tag resolves to the manifest `source_commit`; `verify_published_release.py` rechecks the manifest version and tag, then verifies the published asset names, sizes, and digests. Neither check substitutes for the other.
 
 ## 9. Start the next development line
 
