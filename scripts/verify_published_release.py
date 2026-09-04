@@ -26,6 +26,10 @@ def _read_json(path: Path, label: str, errors: list[str]) -> Any | None:
         return None
 
 
+def _normalize_markdown(text: str) -> str:
+    return text.replace("\r\n", "\n").replace("\r", "\n").strip()
+
+
 def expected_assets(manifest_path: Path, errors: list[str]) -> dict[str, dict[str, Any]]:
     data = _read_json(manifest_path, "release manifest", errors)
     if not isinstance(data, dict):
@@ -108,6 +112,7 @@ def validate_published_release(
     manifest_path: Path,
     release_json_path: Path,
     expected_tag: str,
+    expected_validation_note: str,
 ) -> list[str]:
     errors: list[str] = []
     try:
@@ -128,6 +133,21 @@ def validate_published_release(
         errors.append(
             f"published release tag mismatch: {release.get('tag_name')} != {expected_tag}"
         )
+
+    if release.get("draft") is not False:
+        errors.append(f"published release must not be a draft: {release.get('draft')}")
+    if release.get("prerelease") is not False:
+        errors.append(f"published release must not be a prerelease: {release.get('prerelease')}")
+
+    validation_note = _normalize_markdown(expected_validation_note)
+    if not validation_note:
+        errors.append("expected release validation note must not be empty")
+    else:
+        body = release.get("body")
+        if not isinstance(body, str):
+            errors.append("published release body must be a string")
+        elif validation_note not in _normalize_markdown(body):
+            errors.append("published release is missing the required validation disclosure note")
 
     raw_assets = release.get("assets")
     if not isinstance(raw_assets, list):
@@ -175,18 +195,39 @@ def validate_published_release(
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(description="Verify a published GitHub Release against the final release manifest.")
+    parser = argparse.ArgumentParser(
+        description="Verify a published GitHub Release against the final release manifest and disclosure contract."
+    )
     parser.add_argument("--manifest", type=Path, required=True)
     parser.add_argument("--release-json", type=Path, required=True)
     parser.add_argument("--tag", required=True)
+    parser.add_argument(
+        "--validation-note",
+        type=Path,
+        default=Path(".github/release-validation-note.md"),
+        help="Required release disclosure note (default: .github/release-validation-note.md)",
+    )
     args = parser.parse_args()
 
-    errors = validate_published_release(args.manifest, args.release_json, args.tag)
+    try:
+        validation_note = args.validation_note.read_text(encoding="utf-8")
+    except OSError as exc:
+        print(f"ERROR: cannot read release validation note: {exc}", file=sys.stderr)
+        return 1
+
+    errors = validate_published_release(
+        args.manifest,
+        args.release_json,
+        args.tag,
+        validation_note,
+    )
     if errors:
         for error in errors:
             print(f"ERROR: {error}", file=sys.stderr)
         return 1
-    print(f"Published release {args.tag} matches the final release manifest.")
+    print(
+        f"Published release {args.tag} matches the final release manifest and disclosure contract."
+    )
     return 0
 
 
