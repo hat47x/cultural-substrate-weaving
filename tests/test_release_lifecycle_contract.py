@@ -68,6 +68,12 @@ class ReleaseLifecycleContractTests(unittest.TestCase):
         self.assertIn("exact `main` commit", text)
         self.assertNotIn("Release workflow checks the dated version heading", text)
 
+    def test_release_pr_template_keeps_changelog_publication_boundary_explicit(self) -> None:
+        text = (ROOT / ".github" / "pull_request_template.md").read_text(encoding="utf-8")
+        self.assertIn("## X.Y.Z — YYYY-MM-DD", text)
+        self.assertIn("scripts/check_release_changelog.py", text)
+        self.assertIn("before the final candidate `make release-check`", text)
+
     def test_localized_release_procedures_keep_the_same_publication_gates(self) -> None:
         ja = (ROOT / "docs" / "ja" / "maintainers" / "release.md").read_text(encoding="utf-8")
         en = (ROOT / "docs" / "en" / "maintainers" / "release.md").read_text(encoding="utf-8")
