@@ -4,7 +4,7 @@
 
 この文書は、`research/empty-self-boundary-cases/` の既存ケースや、自然な実作業から生じた限定的な回帰確認を、OpenRouterの無料枠で実行するときの補助手順である。
 
-新しいベンチマーク体系を作るための文書ではない。Web Chatで行ってきた検査と同じく、元材料、生成時の条件、raw output、後からの解釈を分け、必要な問いだけを確かめるために使う。
+新しいベンチマーク体系を作るための文書ではない。Web Chatで行う検査と同じく、元材料、生成時の条件、raw output、後からの解釈を分け、必要な問いだけを確かめる。
 
 無料枠を温存すること自体を目的にはしない。一方で、無料枠があるからという理由だけでケースを増やしたり、API呼び出し回数を成果指標にしたりもしない。
 
@@ -39,23 +39,23 @@ OPENROUTER_API_KEY
 - commit
 - デバッグログ
 
-APIキーの値そのものを、生成AIへ入力しない。
+APIキーの値そのものを生成AIへ入力しない。
 
-## paid fallbackを使わない
+## free-onlyをfail-closedにする
 
 この研究では、**有料モデルや有料fallbackへ自動的に移らないこと**を前提にする。
 
 モデルを固定して比較する場合は、その時点で無料提供されていることを公式のモデル一覧で確認し、明示的なfree model slugを指定する。
 
-`openrouter/free` は、利用可能なfreeモデルからルーティングする用途には便利だが、実際に選ばれるモデルが変わり得る。そのため、同一モデルを固定した比較条件には使わない。
+`openrouter/free` は、利用可能なfreeモデルからルーティングする探索用途には使える。ただし、実際に選ばれるモデルが変わり得るため、同一モデルを固定した比較には使わない。
 
-探索的に `openrouter/free` を使った場合は、応答に記録された実際のモデル名をrun recordへ残す。
+複数モデルを比べたい場合はfallback配列を使わず、**同じrequestをモデルごとに別々に実行する**。この方が、どのモデルが実際に応答したかを条件として保ちやすい。
 
-複数モデルfallbackを指定する場合も、**指定候補がすべてfreeであると確認できる場合に限る**。条件比較では、fallback自体が解釈を難しくするため、原則として一つの明示モデルを使う。
+研究用runnerは、この境界をfail-closedにするため、`models`によるfallback配列を拒否する。
 
 ## 追加課金を伴う機能を既定で使わない
 
-OpenRouterでは、free modelを使っていても、Web検索などの追加機能に別料金が発生する場合がある。
+free modelを使っていても、Web検索などの追加機能に別料金が発生する場合がある。
 
 境界ケース検査では、必要性が確認できない限り、次のような追加機能を付けない。
 
@@ -63,6 +63,8 @@ OpenRouterでは、free modelを使っていても、Web検索などの追加機
 - `:online` などWeb検索を有効にする指定
 - 有料providerへのfallback
 - 課金を伴う追加tool / plugin
+
+研究用runnerは、`plugins` と `web_search_options` を拒否する。また、明示モデルは `openrouter/free` または末尾が `:free` のslugだけを受理するため、`:free:online` のような指定も通らない。
 
 外部検索が課題そのものに必要な場合は、API比較と検索条件を同時に変えず、何を比較したいのかを先に分ける。
 
@@ -72,7 +74,7 @@ OpenRouterでは、free modelを使っていても、Web検索などの追加機
 
 一つの明示的なfree model slugを固定する。
 
-モデル名だけでなく、実行日時も記録する。free modelは提供終了、provider変更、rate limit変更などがあり得るためである。
+モデル名だけでなく実行日時も記録する。free modelは提供終了、provider変更、rate limit変更などがあり得るためである。
 
 ### 複数モデルを見る場合
 
@@ -90,22 +92,29 @@ OpenRouterでは、free modelを使っていても、Web検索などの追加機
 
 「Aモデルは3勝、Bモデルは2勝」のような総合順位にはしない。
 
-## API requestの基本形
+## 推奨する実行方法
 
-OpenRouterのChat Completions APIを使う場合の最小形は、概ね次のようになる。
+通常は `run_openrouter_free.py` を使う。
 
-```bash
-curl https://openrouter.ai/api/v1/chat/completions \
-  -H "Authorization: Bearer $OPENROUTER_API_KEY" \
-  -H "Content-Type: application/json" \
-  -d @request.json
-```
+このrunnerは、
 
-`request.json` には、その実行条件で必要な情報だけを置く。
+- APIキーを環境変数からだけ読む。
+- free model slug以外を拒否する。
+- fallback配列を拒否する。
+- plugin / Web検索指定を拒否する。
+- API error時に別モデルへ再試行しない。
+- raw responseをそのまま指定ファイルへ保存する。
+
+という小さなガードだけを持つ。
+
+モデル選定や評価を自動化するものではない。
+
+### 1. request JSONを作る
+
+`request.json` には `model` とAPIキーを書かない。
 
 ```json
 {
-  "model": "<verified-free-model-slug>",
   "messages": [
     {
       "role": "user",
@@ -115,9 +124,59 @@ curl https://openrouter.ai/api/v1/chat/completions \
 }
 ```
 
-APIキーを `request.json` に入れない。
+system message、temperatureなどを追加した場合は、比較条件としてrun recordへ残す。
 
-モデル名、parameter、system message、tool指定などを変更した場合は、条件差としてrun recordへ残す。
+### 2. まずdry-runする
+
+```bash
+python research/empty-self-boundary-cases/run_openrouter_free.py \
+  --model "<verified-free-model-slug>" \
+  --request request.json \
+  --dry-run
+```
+
+dry-runはAPIキーを読まず、ネットワークも使わない。
+
+ここで、
+
+- free modelか。
+- fallback配列がないか。
+- plugin / Web検索指定がないか。
+- `messages` が存在するか。
+
+を確認する。
+
+### 3. 実送信する
+
+環境変数へAPIキーを設定したうえで、raw outputの保存先を指定する。
+
+```bash
+python research/empty-self-boundary-cases/run_openrouter_free.py \
+  --model "<verified-free-model-slug>" \
+  --request request.json \
+  --output raw-response.json
+```
+
+runnerはraw responseを要約せず、そのまま保存する。
+
+APIキーをcommand argumentやrequest JSONへ入れない。
+
+## 低レベルで直接APIを呼ぶ場合
+
+runnerでは扱えない具体的な研究上の必要がある場合だけ、OpenRouterのChat Completions APIを直接使う。
+
+基本形は次のようになる。
+
+```bash
+curl https://openrouter.ai/api/v1/chat/completions \
+  -H "Authorization: Bearer $OPENROUTER_API_KEY" \
+  -H "Content-Type: application/json" \
+  -d @request.json
+```
+
+直接呼ぶ場合も、paid fallbackなし、追加課金pluginなしという境界は変えない。
+
+runnerを迂回した理由と、追加した条件をrun recordへ残す。
 
 ## 生成側へ見せるもの
 
@@ -145,7 +204,7 @@ Web Chatと同じ境界を使う。
 
 比較するときは、意味のある差だけを変える。
 
-たとえばprompt差を見たい場合は、
+prompt差を見たい場合は、
 
 - 同じmodel slug
 - 同じinput
@@ -156,13 +215,13 @@ Web Chatと同じ境界を使う。
 
 モデル差を見たい場合は、inputと指示を保ち、model slugだけを変える。
 
-完全な再現性を主張しない。provider側の更新、sampling、routing、rate limitなど、こちらで固定できない要素がある。
+完全な再現性は主張しない。provider側の更新、sampling、routing、rate limitなど、こちらで固定できない要素がある。
 
 ## raw outputを先に保存する
 
-API応答を得たら、解釈や要約を始める前にraw responseまたは少なくとも生成本文を保存する。
+API応答を得たら、解釈や要約を始める前にraw responseを保存する。
 
-run recordには、raw outputへの参照と、次を残す。
+run recordには、raw outputへの参照と、少なくとも次を残す。
 
 - 実行日時
 - requestしたmodel slug
@@ -174,9 +233,9 @@ run recordには、raw outputへの参照と、次を残す。
 - 主要parameter
 - request inputへの参照
 
-rate limit、model unavailable、provider error、network errorなどで応答を得られなかった場合は、**生成結果の失敗として扱わない**。
+rate limit、model unavailable、provider error、network errorなどで応答を得られなかった場合は、**生成内容の失敗として扱わない**。
 
-たとえばDNS失敗でAPIへ到達しなかったなら、記録できるのは「API到達前に終了した」という実行環境上の事実までである。
+たとえばDNS失敗でAPIへ到達しなかった場合、記録できるのは「API到達前に終了した」という実行環境上の事実までである。
 
 ## 出力後の検証
 
@@ -196,7 +255,7 @@ rate limit、model unavailable、provider error、network errorなどで応答�
 routing確認ではさらに、
 
 - どのreferenceを使ったか。
-- 使わなかったreferenceが、課題上ほんとうに必要だったか。
+- 使わなかったreferenceが課題上ほんとうに必要だったか。
 - referenceへ到達しなかったことがsource不足なのか、routingなのか、モデル差なのか。
 
 を分ける。
