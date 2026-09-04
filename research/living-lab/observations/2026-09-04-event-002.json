@@ -1,0 +1,34 @@
+{
+  "schema_version": "0.2",
+  "event_id": "event-2026-09-04-002",
+  "round_id": "round-2026-09-04-002",
+  "event_type": "kj_reconfiguration",
+  "observation_mode": "retrospective",
+  "recorded_at": "2026-09-04T12:07:12+09:00",
+  "observation": "The working material was reorganized into concrete character, relationship, and bodily-detail additions versus authorial-explanatory additions. The subsequent baseline revision retained a smaller set of concrete additions and withdrew multiple explanatory additions from the intentionally overfull draft.",
+  "evidence_refs": [
+    "private:creative-writing-draft:v115",
+    "private:creative-writing-draft:v116",
+    "private:creative-writing-kj-audit:v115-v116"
+  ],
+  "artifact_refs": [
+    "private:creative-writing-draft:v115",
+    "private:creative-writing-draft:v116"
+  ],
+  "interpretations": [
+    {
+      "source_type": "ai",
+      "statement": "This record captures a KJ reconfiguration and an artifact difference. It is not evidence that KJ or CSW was beneficial, necessary, or causal.",
+      "source_ref": "github:issue:129",
+      "evidence_refs": [
+        "private:creative-writing-kj-audit:v115-v116"
+      ]
+    }
+  ],
+  "reopening_condition": {
+    "source_type": "ai",
+    "statement": "If directly attributable user judgment or framework-contact evidence becomes available, add it with separate provenance rather than rewriting the observed artifact delta as a causal claim.",
+    "source_ref": "github:issue:129"
+  },
+  "notes": "The public event is deliberately abstracted. It does not expose the work title, prose, or private conversation."
+}
