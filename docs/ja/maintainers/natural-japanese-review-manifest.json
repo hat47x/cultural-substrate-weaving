@@ -65,7 +65,7 @@
       "reviewed_at": "2026-09-04"
     },
     "docs/ja/maintainers/natural-japanese-review.md": {
-      "git_blob_sha": "6e0de30facc08cd0cfee7a78a2565c53631c990f",
+      "git_blob_sha": "534765aace4c6685f63729418798fe89fa95f6e9",
       "reviewed_at": "2026-09-04"
     },
     "docs/ja/maintainers/official-sources.md": {
@@ -111,6 +111,10 @@
     "docs/ja/usage-context.md": {
       "git_blob_sha": "36a48f06cb69ec5f283492aaeabb41cdb107838e",
       "reviewed_at": "2026-09-03"
+    },
+    "research/human-use-gap-kj/README.md": {
+      "git_blob_sha": "d273529385bd073ee51ca60c120d7841c876f24f",
+      "reviewed_at": "2026-09-04"
     },
     "research/living-lab/observations/README.md": {
       "git_blob_sha": "96645fcf07563eb30c2c7613c2c544168b1b174e",
