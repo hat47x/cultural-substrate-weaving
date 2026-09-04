@@ -6,93 +6,22 @@
   ],
   "policy": "Canonical Japanese changes require translation-status review before release.",
   "locales": {
-    "ja-JP": {
-      "status": "canonical"
-    },
-    "en-US": {
-      "status": "translated",
-      "human_review": "recommended",
-      "source_version": "0.5.0"
-    }
+    "ja-JP": {"status": "canonical"},
+    "en-US": {"status": "translated", "human_review": "recommended", "source_version": "0.5.0"}
   },
   "files": {
-    "ROUTER.md": {
-      "ja_sha256": "f6f0463b727d790adc2b5fecd9d9b4dc74e251c13df08313279c25cf185b4f7a",
-      "en_present": true,
-      "en_source_ja_sha256": "f6f0463b727d790adc2b5fecd9d9b4dc74e251c13df08313279c25cf185b4f7a",
-      "en_status": "translated"
-    },
-    "core/activation.md": {
-      "ja_sha256": "fee9accb9a116208fc182df8ffad33e7165b1ddf188796482c74bfb4791c84dc",
-      "en_present": true,
-      "en_source_ja_sha256": "fee9accb9a116208fc182df8ffad33e7165b1ddf188796482c74bfb4791c84dc",
-      "en_status": "translated"
-    },
-    "core/cognitive-stance.md": {
-      "ja_sha256": "925bb61bfde9be03e366550cde056ba6831bed54386f6d5948b4688329efa225",
-      "en_present": true,
-      "en_source_ja_sha256": "925bb61bfde9be03e366550cde056ba6831bed54386f6d5948b4688329efa225",
-      "en_status": "translated"
-    },
-    "core/iteration.md": {
-      "ja_sha256": "8242a5e061c9ce75eccfab8c798d14e960bb1c0c02b51bd8a3f75cca2abeb1b3",
-      "en_present": true,
-      "en_source_ja_sha256": "8242a5e061c9ce75eccfab8c798d14e960bb1c0c02b51bd8a3f75cca2abeb1b3",
-      "en_status": "translated"
-    },
-    "core/principles-and-constraints.md": {
-      "ja_sha256": "abfc0dcffc1a35b830c80f9dc447bfb857c3e3594f32ca0769f372f1368ad448",
-      "en_present": true,
-      "en_source_ja_sha256": "abfc0dcffc1a35b830c80f9dc447bfb857c3e3594f32ca0769f372f1368ad448",
-      "en_status": "translated"
-    },
-    "domains/human-and-taiheki.md": {
-      "ja_sha256": "0e236854fac600cbb2e5a491b5a9d2e2713e4f7a211f1f1eec788f931d3dea83",
-      "en_present": true,
-      "en_source_ja_sha256": "0e236854fac600cbb2e5a491b5a9d2e2713e4f7a211f1f1eec788f931d3dea83",
-      "en_status": "translated"
-    },
-    "governance/evaluation.md": {
-      "ja_sha256": "1f08ebfd44bac4306604687fea12bd574cc90b1118842933865654afa21fb139",
-      "en_present": true,
-      "en_source_ja_sha256": "1f08ebfd44bac4306604687fea12bd574cc90b1118842933865654afa21fb139",
-      "en_status": "translated"
-    },
-    "governance/governance-and-records.md": {
-      "ja_sha256": "5804c58fd3c533b54ad6294e0e2074f4e683cae2d32d7426aac58325a5089327",
-      "en_present": true,
-      "en_source_ja_sha256": "5804c58fd3c533b54ad6294e0e2074f4e683cae2d32d7426aac58325a5089327",
-      "en_status": "translated"
-    },
-    "methods/framework-application.md": {
-      "ja_sha256": "94ae7c1b844031f03463ca7c9cd3e181c1c545d6fe05bffa87667ec701b0dfa0",
-      "en_present": true,
-      "en_source_ja_sha256": "94ae7c1b844031f03463ca7c9cd3e181c1c545d6fe05bffa87667ec701b0dfa0",
-      "en_status": "translated"
-    },
-    "methods/integration.md": {
-      "ja_sha256": "0dcd7479a470d92eff0b604497a88eab96a83bb5ba2ab054b642e64ee76a6d1e",
-      "en_present": true,
-      "en_source_ja_sha256": "0dcd7479a470d92eff0b604497a88eab96a83bb5ba2ab054b642e64ee76a6d1e",
-      "en_status": "translated"
-    },
-    "methods/scope-and-facts.md": {
-      "ja_sha256": "6be9a64203bd8275a50d85c851c2b5c7ddda48dcdc6a37a9f213d0dcd5275679",
-      "en_present": true,
-      "en_source_ja_sha256": "6be9a64203bd8275a50d85c851c2b5c7ddda48dcdc6a37a9f213d0dcd5275679",
-      "en_status": "translated"
-    },
-    "methods/system-selection.md": {
-      "ja_sha256": "48a99aa2d05244dfb9c5201a12648855c80c34cf71cec8b1227f4ff3c41bf1f4",
-      "en_present": true,
-      "en_source_ja_sha256": "48a99aa2d05244dfb9c5201a12648855c80c34cf71cec8b1227f4ff3c41bf1f4",
-      "en_status": "translated"
-    },
-    "methods/transformation.md": {
-      "ja_sha256": "94452c8fc6093d20c4da1f73bb6265ff5d141f97537659a55721043b2fb0cf5c",
-      "en_present": true,
-      "en_source_ja_sha256": "94452c8fc6093d20c4da1f73bb6265ff5d141f97537659a55721043b2fb0cf5c",
-      "en_status": "translated"
-    }
+    "ROUTER.md": {"ja_sha256": "e84c1dcd2c292f374a7c3230e58ddbaf7443c06bf215ba9bc5eb7a221a0a4a37", "en_present": true, "en_source_ja_sha256": "e84c1dcd2c292f374a7c3230e58ddbaf7443c06bf215ba9bc5eb7a221a0a4a37", "en_status": "translated"},
+    "core/activation.md": {"ja_sha256": "fee9accb9a116208fc182df8ffad33e7165b1ddf188796482c74bfb4791c84dc", "en_present": true, "en_source_ja_sha256": "fee9accb9a116208fc182df8ffad33e7165b1ddf188796482c74bfb4791c84dc", "en_status": "translated"},
+    "core/cognitive-stance.md": {"ja_sha256": "925bb61bfde9be03e366550cde056ba6831bed54386f6d5948b4688329efa225", "en_present": true, "en_source_ja_sha256": "925bb61bfde9be03e366550cde056ba6831bed54386f6d5948b4688329efa225", "en_status": "translated"},
+    "core/iteration.md": {"ja_sha256": "8242a5e061c9ce75eccfab8c798d14e960bb1c0c02b51bd8a3f75cca2abeb1b3", "en_present": true, "en_source_ja_sha256": "8242a5e061c9ce75eccfab8c798d14e960bb1c0c02b51bd8a3f75cca2abeb1b3", "en_status": "translated"},
+    "core/principles-and-constraints.md": {"ja_sha256": "abfc0dcffc1a35b830c80f9dc447bfb857c3e3594f32ca0769f372f1368ad448", "en_present": true, "en_source_ja_sha256": "abfc0dcffc1a35b830c80f9dc447bfb857c3e3594f32ca0769f372f1368ad448", "en_status": "translated"},
+    "domains/human-and-taiheki.md": {"ja_sha256": "0e236854fac600cbb2e5a491b5a9d2e2713e4f7a211f1f1eec788f931d3dea83", "en_present": true, "en_source_ja_sha256": "0e236854fac600cbb2e5a491b5a9d2e2713e4f7a211f1f1eec788f931d3dea83", "en_status": "translated"},
+    "governance/evaluation.md": {"ja_sha256": "1f08ebfd44bac4306604687fea12bd574cc90b1118842933865654afa21fb139", "en_present": true, "en_source_ja_sha256": "1f08ebfd44bac4306604687fea12bd574cc90b1118842933865654afa21fb139", "en_status": "translated"},
+    "governance/governance-and-records.md": {"ja_sha256": "5804c58fd3c533b54ad6294e0e2074f4e683cae2d32d7426aac58325a5089327", "en_present": true, "en_source_ja_sha256": "5804c58fd3c533b54ad6294e0e2074f4e683cae2d32d7426aac58325a5089327", "en_status": "translated"},
+    "methods/framework-application.md": {"ja_sha256": "94ae7c1b844031f03463ca7c9cd3e181c1c545d6fe05bffa87667ec701b0dfa0", "en_present": true, "en_source_ja_sha256": "94ae7c1b844031f03463ca7c9cd3e181c1c545d6fe05bffa87667ec701b0dfa0", "en_status": "translated"},
+    "methods/integration.md": {"ja_sha256": "0dcd7479a470d92eff0b604497a88eab96a83bb5ba2ab054b642e64ee76a6d1e", "en_present": true, "en_source_ja_sha256": "0dcd7479a470d92eff0b604497a88eab96a83bb5ba2ab054b642e64ee76a6d1e", "en_status": "translated"},
+    "methods/scope-and-facts.md": {"ja_sha256": "6be9a64203bd8275a50d85c851c2b5c7ddda48dcdc6a37a9f213d0dcd5275679", "en_present": true, "en_source_ja_sha256": "6be9a64203bd8275a50d85c851c2b5c7ddda48dcdc6a37a9f213d0dcd5275679", "en_status": "translated"},
+    "methods/system-selection.md": {"ja_sha256": "48a99aa2d05244dfb9c5201a12648855c80c34cf71cec8b1227f4ff3c41bf1f4", "en_present": true, "en_source_ja_sha256": "48a99aa2d05244dfb9c5201a12648855c80c34cf71cec8b1227f4ff3c41bf1f4", "en_status": "translated"},
+    "methods/transformation.md": {"ja_sha256": "94452c8fc6093d20c4da1f73bb6265ff5d141f97537659a55721043b2fb0cf5c", "en_present": true, "en_source_ja_sha256": "94452c8fc6093d20c4da1f73bb6265ff5d141f97537659a55721043b2fb0cf5c", "en_status": "translated"}
   }
 }
