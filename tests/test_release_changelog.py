@@ -46,6 +46,20 @@ class ReleaseChangelogTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, "exactly one '## Unreleased'"):
             check_release_heading(text, "0.4.0")
 
+    def test_rejects_release_heading_before_unreleased(self) -> None:
+        text = "## 0.4.0 — 2026-08-31\n\n## Unreleased\n"
+        with self.assertRaisesRegex(ValueError, "must precede"):
+            check_release_heading(text, "0.4.0")
+
+    def test_rejects_stale_unreleased_contents_after_freeze(self) -> None:
+        text = (
+            "## Unreleased\n\n"
+            "- Change that was not moved into the release section.\n\n"
+            "## 0.4.0 — 2026-08-31\n"
+        )
+        with self.assertRaisesRegex(ValueError, "must be empty"):
+            check_release_heading(text, "0.4.0")
+
     def test_unreleased_only_is_valid_development_state_outside_release_gate(self) -> None:
         changelog = "## Unreleased\n\n- Development work continues here.\n"
         self.assertNotIn("## 0.5.0 —", changelog)
