@@ -6,7 +6,7 @@ import sys
 import tempfile
 import unittest
 import zipfile
-from pathlib import Path
+from pathlib import Path, PureWindowsPath
 
 ROOT = Path(__file__).resolve().parents[1]
 SCRIPTS = ROOT / "scripts"
@@ -111,6 +111,14 @@ class ReleaseManifestTests(unittest.TestCase):
             self.assertEqual(manifest["source_commit"], self.SOURCE_COMMIT)
             self.assertNotIn("ja-JP/generated/internal.txt", manifest["release_assets"])
             self.assertIn("ja-JP/generated/internal.txt", {item["path"] for item in manifest["files"]})
+
+    def test_release_relative_path_uses_posix_separators_for_windows_paths(self) -> None:
+        dist = PureWindowsPath(r"C:\repo\dist")
+        report = dist / "reports" / "validation-report.json"
+        self.assertEqual(
+            PACKAGE.release_relative_path(report, dist),
+            "reports/validation-report.json",
+        )
 
     def test_source_commit_mismatch_is_rejected(self) -> None:
         with tempfile.TemporaryDirectory() as temp_dir:
