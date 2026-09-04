@@ -15,7 +15,11 @@ class RepositoryContractIntegrationTests(unittest.TestCase):
             'python scripts/check_branch_version.py --ref "$$(git branch --show-current)"',
             makefile,
         )
-        self.assertIn("check: repository-contracts build validate", makefile)
+        self.assertIn(
+            "check: repository-contracts generated-artifacts-check validate",
+            makefile,
+        )
+        self.assertIn("generated-artifacts-check: build", makefile)
 
     def test_main_contract_is_explicit_and_not_part_of_normal_feature_checks(self) -> None:
         makefile = (ROOT / "Makefile").read_text(encoding="utf-8")
@@ -38,10 +42,8 @@ class RepositoryContractIntegrationTests(unittest.TestCase):
         )
 
         self.assertIn("exactly two parents", script)
-        self.assertIn(
-            "does not prove that GitHub created the commit from a pull request",
-            script,
-        )
+        self.assertIn("does not prove that", script)
+        self.assertIn("GitHub created the commit from a pull request", script)
         self.assertNotIn("merge commit produced by a PR", script)
 
 
