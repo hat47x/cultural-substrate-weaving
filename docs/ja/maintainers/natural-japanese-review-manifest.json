@@ -1,5 +1,9 @@
 {
   "documents": {
+    ".github/release-validation-note.md": {
+      "git_blob_sha": "e555b9ac69e62f7cd6fb30a0b83bd87cf8ab48ec",
+      "reviewed_at": "2026-09-04"
+    },
     ".living-lab/README.md": {
       "git_blob_sha": "ad108a21aa12f928d07a5c7bda28e0bceebbd2d6",
       "reviewed_at": "2026-09-01"
@@ -61,7 +65,7 @@
       "reviewed_at": "2026-09-04"
     },
     "docs/ja/maintainers/natural-japanese-review.md": {
-      "git_blob_sha": "c32dea10e86b8a7c223f4817b06863444a1bce86",
+      "git_blob_sha": "6e0de30facc08cd0cfee7a78a2565c53631c990f",
       "reviewed_at": "2026-09-04"
     },
     "docs/ja/maintainers/official-sources.md": {

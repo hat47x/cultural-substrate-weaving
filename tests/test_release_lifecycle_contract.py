@@ -53,6 +53,15 @@ class ReleaseLifecycleContractTests(unittest.TestCase):
         self.assertIn("not evidence that the method is empirically effective", text)
         self.assertIn("edit the notes deliberately", text)
 
+    def test_release_validation_note_distinguishes_observation_modes(self) -> None:
+        text = (ROOT / ".github" / "release-validation-note.md").read_text(encoding="utf-8")
+        self.assertIn("prospective observations", text)
+        self.assertIn("retrospective records", text)
+        self.assertIn("prospectiveな観測", text)
+        self.assertIn("retrospectiveな記録", text)
+        self.assertIn("effectiveness of cultural-substrate-weaving is not treated as established", text)
+        self.assertIn("cultural-substrate-weavingの有効性が確立したとは扱いません", text)
+
     def test_publication_requires_explicit_changelog_main_history_and_tag_gates(self) -> None:
         text = (ROOT / "docs" / "maintainers" / "release.md").read_text(encoding="utf-8")
         self.assertIn("## X.Y.Z — YYYY-MM-DD", text)
