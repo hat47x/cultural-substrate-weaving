@@ -39,6 +39,9 @@ class NaturalJapaneseReviewFreshnessTests(unittest.TestCase):
     def test_release_validation_note_japanese_prose_is_in_scope(self) -> None:
         self.assertIn(".github/release-validation-note.md", review_scope(ROOT))
 
+    def test_current_human_use_research_index_is_in_scope(self) -> None:
+        self.assertIn("research/human-use-gap-kj/README.md", review_scope(ROOT))
+
     def test_m365_japanese_runtime_prose_is_in_scope(self) -> None:
         scoped = set(review_scope(ROOT))
         self.assertIn("adapters/microsoft-copilot/ja-JP/instructions.md", scoped)
