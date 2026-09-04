@@ -103,3 +103,14 @@ def load_env_file(path: Path) -> dict[str, str]:
         key, value = line.split("=", 1)
         values[key.strip()] = value.strip()
     return values
+
+
+def locale_heading(locale: str) -> str:
+    return {
+        "ja-JP": "## 参照ファイルを選ぶ",
+        "en-US": "## Select reference files",
+    }[locale]
+
+
+def locale_short(locale: str) -> str:
+    return {"ja-JP": "ja", "en-US": "en"}[locale]
