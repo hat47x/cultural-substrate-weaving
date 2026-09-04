@@ -23,6 +23,7 @@ def load_script(name: str):
 
 
 VERIFIER = load_script("verify_published_release")
+VALIDATION_NOTE = "**Validation status / 検証状況**\n\nRequired disclosure."
 
 
 def sha256_bytes(data: bytes) -> str:
@@ -71,6 +72,9 @@ class PublishedReleaseVerificationTests(unittest.TestCase):
             json.dumps(
                 {
                     "tag_name": self.TAG,
+                    "draft": False,
+                    "prerelease": False,
+                    "body": VALIDATION_NOTE + "\n\n## What's Changed\n\n- Example change.",
                     "assets": [
                         {
                             "name": "release-manifest.json",
@@ -86,6 +90,7 @@ class PublishedReleaseVerificationTests(unittest.TestCase):
                         },
                     ],
                 },
+                ensure_ascii=False,
                 indent=2,
             )
             + "\n",
@@ -93,13 +98,18 @@ class PublishedReleaseVerificationTests(unittest.TestCase):
         )
         return manifest, release_json
 
-    def test_exact_published_asset_set_and_digests_pass(self) -> None:
+    def validate(self, manifest: Path, release_json: Path, tag: str | None = None) -> list[str]:
+        return VERIFIER.validate_published_release(
+            manifest,
+            release_json,
+            tag or self.TAG,
+            VALIDATION_NOTE,
+        )
+
+    def test_exact_published_asset_set_digests_and_disclosure_pass(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
             manifest, release_json = self.build_fixture(Path(tmp))
-            self.assertEqual(
-                VERIFIER.validate_published_release(manifest, release_json, self.TAG),
-                [],
-            )
+            self.assertEqual(self.validate(manifest, release_json), [])
 
     def test_extra_published_asset_is_rejected(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
@@ -115,7 +125,7 @@ class PublishedReleaseVerificationTests(unittest.TestCase):
             )
             release_json.write_text(json.dumps(data) + "\n", encoding="utf-8")
 
-            errors = VERIFIER.validate_published_release(manifest, release_json, self.TAG)
+            errors = self.validate(manifest, release_json)
             self.assertTrue(any("undeclared assets" in error for error in errors))
 
     def test_digest_mismatch_is_rejected(self) -> None:
@@ -125,7 +135,7 @@ class PublishedReleaseVerificationTests(unittest.TestCase):
             data["assets"][1]["digest"] = f"sha256:{'f' * 64}"
             release_json.write_text(json.dumps(data) + "\n", encoding="utf-8")
 
-            errors = VERIFIER.validate_published_release(manifest, release_json, self.TAG)
+            errors = self.validate(manifest, release_json)
             self.assertTrue(any("digest mismatch" in error for error in errors))
 
     def test_missing_asset_and_wrong_tag_are_rejected(self) -> None:
@@ -136,7 +146,7 @@ class PublishedReleaseVerificationTests(unittest.TestCase):
             data["assets"] = data["assets"][:1]
             release_json.write_text(json.dumps(data) + "\n", encoding="utf-8")
 
-            errors = VERIFIER.validate_published_release(manifest, release_json, self.TAG)
+            errors = self.validate(manifest, release_json)
             self.assertTrue(any("tag mismatch" in error for error in errors))
             self.assertTrue(any("missing manifest-declared assets" in error for error in errors))
 
@@ -148,8 +158,47 @@ class PublishedReleaseVerificationTests(unittest.TestCase):
             data["tag_name"] = wrong_tag
             release_json.write_text(json.dumps(data) + "\n", encoding="utf-8")
 
-            errors = VERIFIER.validate_published_release(manifest, release_json, wrong_tag)
+            errors = self.validate(manifest, release_json, wrong_tag)
             self.assertTrue(any("release tag mismatch" in error for error in errors))
+
+    def test_missing_validation_disclosure_is_rejected(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            manifest, release_json = self.build_fixture(Path(tmp))
+            data = json.loads(release_json.read_text(encoding="utf-8"))
+            data["body"] = "## What's Changed\n\n- Example change."
+            release_json.write_text(json.dumps(data) + "\n", encoding="utf-8")
+
+            errors = self.validate(manifest, release_json)
+            self.assertTrue(any("missing the required validation disclosure" in error for error in errors))
+
+    def test_draft_release_is_rejected(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            manifest, release_json = self.build_fixture(Path(tmp))
+            data = json.loads(release_json.read_text(encoding="utf-8"))
+            data["draft"] = True
+            release_json.write_text(json.dumps(data) + "\n", encoding="utf-8")
+
+            errors = self.validate(manifest, release_json)
+            self.assertTrue(any("must not be a draft" in error for error in errors))
+
+    def test_prerelease_is_rejected(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            manifest, release_json = self.build_fixture(Path(tmp))
+            data = json.loads(release_json.read_text(encoding="utf-8"))
+            data["prerelease"] = True
+            release_json.write_text(json.dumps(data) + "\n", encoding="utf-8")
+
+            errors = self.validate(manifest, release_json)
+            self.assertTrue(any("must not be a prerelease" in error for error in errors))
+
+    def test_validation_note_line_endings_are_normalized(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            manifest, release_json = self.build_fixture(Path(tmp))
+            data = json.loads(release_json.read_text(encoding="utf-8"))
+            data["body"] = data["body"].replace("\n", "\r\n")
+            release_json.write_text(json.dumps(data) + "\n", encoding="utf-8")
+
+            self.assertEqual(self.validate(manifest, release_json), [])
 
 
 if __name__ == "__main__":
