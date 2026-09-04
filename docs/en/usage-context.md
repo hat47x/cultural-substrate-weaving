@@ -16,10 +16,10 @@ Provide the target, sources, and constraints.
 First analyze with the domain skill or ordinary domain method.
 
 [Role of cultural-substrate-weaving]
-Use cultural frameworks and KJ integration to search for questions, relations, states, transitions, and gaps absent from the baseline.
+Use cultural frameworks and KJ integration to search for questions, relations, states, transitions, gaps, and compositional candidates absent from the baseline.
 
-[Final domain validation]
-Validate added findings against professional knowledge, sources, standards, and operating conditions.
+[Purpose-specific exit]
+For research and diagnosis, validate candidates against professional knowledge, sources, standards, and operating conditions before treating them as findings about the target. For generation and composition, framework-generated structure may be adopted as a compositional resource, but it remains distinct from facts about the target.
 ```
 
 Where multiple skills can be used, prefer **domain skill + cultural-substrate-weaving**, not replacement of the domain skill.
@@ -29,14 +29,14 @@ Where multiple skills can be used, prefer **domain skill + cultural-substrate-we
 - open problem spaces whose destination is itself unsettled;
 - heterogeneous material, actors, time scales, and relations;
 - situations where ordinary analysis has converged on one path and another search direction may matter; and
-- targets where candidates can be validated against evidence or conditions.
+- tasks where candidates can be validated against target-side evidence or conditions for research and diagnosis, or retained with provenance as compositional resources for generation and composition.
 
 ## Unsuitable problems
 
 - closed problems whose candidates can be enumerated;
 - simple proofreading, translation, calculation, or format conversion;
 - bounded local bugs and known procedures; and
-- tasks without material capable of validating structural hypotheses.
+- research or diagnostic tasks that require findings about the target but provide no material capable of validating structural hypotheses.
 
 ## Taiheki
 
