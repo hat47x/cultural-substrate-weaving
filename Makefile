@@ -1,5 +1,7 @@
 .PHONY: build generated-artifacts-check validate test tokens package release-validate check release-check release-tag-contract release-remote-tag-contract clean update-en-hashes living-lab-check living-lab-summary japanese-docs-check repository-contracts main-contract
 
+.NOTPARALLEL: check release-check
+
 repository-contracts:
 	python scripts/check_branch_version.py --ref "$$(git branch --show-current)"
 
