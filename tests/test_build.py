@@ -11,6 +11,7 @@ MANIFEST = json.loads((ROOT / "src/manifest.json").read_text(encoding="utf-8"))
 EXPECTED_REFERENCES = {module["skill_reference"] for module in MANIFEST["modules"]}
 REPOSITORY_ONLY_PARTS = {"docs", "evals", "tests", ".github", "maintainers", "research"}
 MARKDOWN_LINK = re.compile(r"\[[^\]]+\]\(([^)]+)\)")
+INLINE_MD_REFERENCE = re.compile(r"`([^`\n]+\.md(?:#[^`\n]*)?)`")
 
 
 def markdown_filenames(path: Path) -> set[str]:
@@ -25,6 +26,10 @@ def local_markdown_links(text: str) -> list[str]:
             continue
         links.append(target)
     return links
+
+
+def inline_markdown_file_references(text: str) -> list[str]:
+    return [match.group(1).strip() for match in INLINE_MD_REFERENCE.finditer(text)]
 
 
 def generated_skill_paths() -> list[Path]:
@@ -135,6 +140,24 @@ class MultilingualBuildTests(unittest.TestCase):
                         EXPECTED_REFERENCES,
                         f"unmanifested reference link in {skill_path}: {target}",
                     )
+
+    def test_generated_skill_inline_file_references_resolve_inside_package(self):
+        skill_paths = generated_skill_paths()
+        self.assertEqual(len(skill_paths), 6)
+        for skill_path in skill_paths:
+            package_root = skill_path.parent.resolve()
+            text = skill_path.read_text(encoding="utf-8")
+            for target in inline_markdown_file_references(text):
+                path_part = target.split("#", 1)[0]
+                resolved = (skill_path.parent / path_part).resolve()
+                self.assertTrue(
+                    resolved.is_relative_to(package_root),
+                    f"inline file reference escapes runtime package in {skill_path}: {target}",
+                )
+                self.assertTrue(
+                    resolved.is_file(),
+                    f"broken inline file reference in {skill_path}: {target}",
+                )
 
     def test_repository_only_material_is_not_emitted_as_runtime_files(self):
         offenders: list[str] = []
