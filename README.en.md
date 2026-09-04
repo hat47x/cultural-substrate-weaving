@@ -57,7 +57,7 @@ make package
 
 ## Core principle
 
-> **Return structures obtained from external frameworks to the target for validation. What remains belongs to the target, not to the framework.**
+> **Return structures obtained from external frameworks to the target for validation. Treat only the parts independently supported by target-side material as findings about the target.**
 
 In KJ integration, do not force material into prior card types. Preserve semantic unity and epistemic boundaries while integrating it.
 
@@ -67,7 +67,9 @@ In KJ integration, do not force material into prior card types. Preserve semanti
 
 The method does not claim that cultural frameworks are true. It treats their pre-existing positions, relations, and transitions as prior structure that may open search directions ordinary analysis does not produce.
 
-At the end, framework names and correspondence tables are removed. Only findings that still stand as statements about the target remain. If surviving findings do not exceed a no-framework baseline, no skill-specific increment has been demonstrated.
+Questions, hypotheses, or descriptions may remain meaningful after framework names and correspondence tables are removed. That only shows that they have been de-bound from the framework's authority; it does not create additional target-side evidence. In research and diagnosis, only parts independently supported by target-side sources, observations, or falsification are treated as findings. In generation and composition, framework-generated structure may be adopted as a compositional resource, but it remains distinct from facts about the target.
+
+A no-framework baseline can help show what changed in questions, search directions, artifacts, or decisions, but counts alone do not establish the effectiveness of this skill.
 
 ## License
 
