@@ -26,11 +26,13 @@ PR #84〜#90で、R1とR2に関する大きな静的欠落の多くが正本へ�
 
 その後、2026-09-04の再基準化で、状態格子、周期・暦、経路・流れ、方向、層・パスなどの体系を**具体的な候補として想起・検索する経路**が、抽象的な`probe`と`preview`の間で暗黙のままだったことを残差として確認した。PR #127では、この候補想起をモデルの自然連想だけに委ねず、構造型の異なる少数候補を検索アンカーから上げて`preview`できるよう正本化した。四季、五行、五大、八卦、方位、虹の七色、チャクラ、十干、十二支、ツォルキン、経絡、セフィロトとパスなどの具体名は、採用推奨や埋め込み知識ではなく検索アンカーとして扱う。
 
-PR #127後に文化体系側から方法自身をもう一度見直すと、**複数候補を思い出すことと、複数の独立軸・周期を一つの探索場として交差させることは別の認知操作ではないか**という残差が現れた。`framework-application.md`は複数体系から生じた第三構造を`cross_field_emergent`として保持できる一方、`system-selection.md`では複数軸のcompositionを探索候補へ上げる入口が明示されていない。この残差は`2026-09-04-composite-framework-fields.md`でKJ分析した。ただし、現行正本には複数時間尺度、複数体系の接触、探索利用、過剰適用防止がすでにあるため、現時点では大きなruntime欠落とは判定せず、自然な実作業での再出現を待つ。
+PR #127後に文化体系側から方法自身をもう一度見直すと、**複数候補を思い出すことと、複数の独立軸・周期を一つの探索場として交差させることは別の認知操作ではないか**という残差が現れた。`2026-09-04-composite-framework-fields.md`では、直積、周期結合、制約付き組合せなどを区別し、複合場の前にcomposition ruleを確認する必要をKJで整理した。
+
+さらに過去の自然な実作業へ戻ると、複数体系は状態空間として掛け合わせるだけでなく、**異なる認知役割を保ったまま同じ対象へ重ねる**形でも実際に使われていた。ある体系は全体の運動、別の体系は身体・感覚、別の体系は問い・検査、別の体系は構造を見るレイヤーというように役割を分け、体系同士を先に一対一対応させず、対象へ返した材料を後から統合する構成である。この自然利用は私的成果物に由来するため、公開研究には作品名や本文を持ち込まず、確認できた構造だけを匿名化して `2026-09-04-composite-framework-layering-rebaseline.md` へ残した。これはCSWの因果効果や利用者による成功評価の証拠ではなく、役割分離された重層構成が実成果物に存在したという材料として扱う。
 
 現在は新しい規則を急いで増やす段階ではない。残差は次のように扱う。
 
-- **R1――文化体系側からの予期しない認知供給**：候補想起経路を含む大きな静的欠落はPR #127までで後退した。今後は、現在の対象語彙に近い体系だけでなく構造型の異なる候補が実際に認知場へ上がるか、`preview`から新しい問い・対比・調査先が生じるか、それらを`framework_generated`のままKJと対象へ戻せるか、全面対応や機械的な総当たりへ滑らないかという挙動上の残差を見る。複数の独立軸・周期を交差させるcompositionについては、単体系を順番に見るだけでは立たなかった問いが自然な実作業で生じるかをIssue #144で観察する。
+- **R1――文化体系側からの予期しない認知供給**：候補想起経路を含む大きな静的欠落はPR #127までで後退した。今後は、現在の対象語彙に近い体系だけでなく構造型の異なる候補が実際に認知場へ上がるか、`preview`から新しい問い・対比・調査先が生じるか、それらを`framework_generated`のままKJと対象へ戻せるか、全面対応や機械的な総当たりへ滑らないかという挙動上の残差を見る。複数体系compositionについては、直積・周期結合・制約付き組合せだけでなく、異なる認知役割で同じ対象へ重ねる役割分離型も含めてIssue #144で観察する。体系同士の整合を先に作るのではなく、各体系から対象へ返した問いや構造が後からKJ上で接触できるかを見る。
 - **R2――対象への敬意が失われる過程**：静的な規則不足としては後退し、挙動上の残差だけを残す。方法や既存説明が対象より前へ出る再発と、逆に慎重さが強すぎて委任された判断や仮説形成を弱める歪みの双方を見る。
 - **R3――runtime純化後の具体能力**：背景へ置く。具体的な再利用要求または確認可能な実害が現れたときだけ再開する。
 
@@ -38,7 +40,7 @@ R1とR2は、探索を開く力と対象へ戻る力が実作業で両立する�
 
 境界ケースは `research/empty-self-boundary-cases/` に検査資産として保存されている。現時点では、ケースを回すこと自体を研究成果にしない。自然な実作業で挙動上の残差が現れた場合や、release前に限定的な回帰確認が具体的に必要になった場合に使う。
 
-candidate recallの静的再基準化は `2026-09-04-framework-recall-path-rebaseline.md` を参照する。これはPR #127前に候補想起の残差を特定した時点の研究記録であり、その後PR #127で正本へ反映された。PR #127後に新しく前景化した複数軸compositionの研究残差は `2026-09-04-composite-framework-fields.md` を参照する。現在の運用状態は、このREADMEとIssue #69、Issue #144で追う。`2026-09-03-post-r1-runtime-rebaseline.md`以前の文書は、それぞれの時点の問題設定を残す研究履歴として読む。
+candidate recallの静的再基準化は `2026-09-04-framework-recall-path-rebaseline.md` を参照する。これはPR #127前に候補想起の残差を特定した時点の研究記録であり、その後PR #127で正本へ反映された。複数軸を状態空間として構成する残差は `2026-09-04-composite-framework-fields.md`、自然利用から役割分離された重層まで広げた補正は `2026-09-04-composite-framework-layering-rebaseline.md` を参照する。現在の運用状態は、このREADMEとIssue #69、Issue #144で追う。`2026-09-03-post-r1-runtime-rebaseline.md`以前の文書は、それぞれの時点の問題設定を残す研究履歴として読む。
 
 ## 現在の記録
 
@@ -117,9 +119,14 @@ candidate recallの静的再基準化は `2026-09-04-framework-recall-path-rebas
   - この静的残差は後続のPR #127で正本へ反映された。現在は再び自然な実作業での挙動観察へ戻っている。
 - `2026-09-04-composite-framework-fields.md`
   - PR #127後の正本を、複数の独立軸・周期を交差させるcompositionという観点からKJで読み直した記録。
-  - Tzolk’inの周期組合せや『易』の構成単位の組合せを外部資料へ戻って確認し、伝統内部の組合せ構造と、CSWが探索用に作る体系間の交差を分離した。
-  - 暫定核を「候補を複数思い出すことと、複数軸を同時に交差させることは別の認知操作」と置いた。
-  - 現行正本には`cross_field_emergent`など重要な出口がすでにあるため、直ちにruntimeへ昇格させず、Issue #144で自然利用上の残差として保持する。
+  - Tzolk’in、Calendar Round、十干十二支、『易』へ外部資料から戻り、直積、周期結合、制約付き組合せを同一視しないことを整理した。
+  - 暫定核を「候補を複数思い出すことと、複数軸を同時に交差させることは別の認知操作」と置き、複合場の前にcomposition ruleを確認する必要を明確にした。
+  - 現行正本には`cross_field_emergent`や外部規約、空位置の慎重な扱いなど重要な出口・境界がすでにあるため、直ちにruntimeへ昇格させず、Issue #144で自然利用上の残差として保持する。
+- `2026-09-04-composite-framework-layering-rebaseline.md`
+  - 過去の自然な実作業へ戻り、複数体系を同一格子へ掛け合わせず、異なる認知役割を保ったまま同じ対象へ重ねる構成が実成果物に存在したことを匿名化して記録した。
+  - 状態空間型のcompositionを捨てず、直積型、周期結合型、制約付き組合せ型に、役割分離型と混合型を加えた暫定操作分類へ広げた。
+  - 役割分離型では、各体系を先に相互対応させるのでなく、それぞれを対象へ触れさせ、そこで生じた問い・構造をKJ上で後から接触させる。
+  - この成果物上の差はCSWの因果効果や利用者の成功判断を示さない。既存正本でも実行可能だった可能性があるため、runtime昇格ではなくIssue #144の研究残差を補正する材料として扱う。
 
 ## 読む順序
 
@@ -148,12 +155,13 @@ candidate recallの静的再基準化は `2026-09-04-framework-recall-path-rebas
 21. `2026-09-03-post-r1-runtime-rebaseline.md`
 22. `2026-09-04-framework-recall-path-rebaseline.md`
 23. `2026-09-04-composite-framework-fields.md`
+24. `2026-09-04-composite-framework-layering-rebaseline.md`
 
 この順序は、正しい結論へ一直線に進んだ履歴を示すものではない。初回の読み違いを含め、**分析そのものが訂正され、個別事例への戻りと後続実装によって問題設定も更新されていく過程**を追えるようにしている。
 
-現在残っている研究課題だけを確認したい場合は、candidate recallの現行基準線として `2026-09-04-framework-recall-path-rebaseline.md` を読み、さらに最新のcomposition残差として `2026-09-04-composite-framework-fields.md` を読む。その後の実装反映と自然利用上の残差はIssue #69とIssue #144で確認する。
+現在残っている研究課題だけを確認したい場合は、candidate recallの現行基準線として `2026-09-04-framework-recall-path-rebaseline.md` を読み、状態空間型のcomposition残差として `2026-09-04-composite-framework-fields.md`、自然利用による補正として `2026-09-04-composite-framework-layering-rebaseline.md` を続けて読む。その後の実装反映と自然利用上の残差はIssue #69とIssue #144で確認する。
 
-- R1の成立過程を戻る場合は `2026-09-01-direct-corrections-round2.md` → `2026-09-01-post-pr72-residual-map.md` → `2026-09-03-r1-target-demand-and-field-supply.md` → `2026-09-03-post-r1-runtime-rebaseline.md` → `2026-09-04-framework-recall-path-rebaseline.md` → `2026-09-04-composite-framework-fields.md` の順で参照する。
+- R1の成立過程を戻る場合は `2026-09-01-direct-corrections-round2.md` → `2026-09-01-post-pr72-residual-map.md` → `2026-09-03-r1-target-demand-and-field-supply.md` → `2026-09-03-post-r1-runtime-rebaseline.md` → `2026-09-04-framework-recall-path-rebaseline.md` → `2026-09-04-composite-framework-fields.md` → `2026-09-04-composite-framework-layering-rebaseline.md` の順で参照する。
 - R2の成立過程を戻る場合は `2026-09-01-r2-respect-and-method-control.md` → `2026-09-01-r2-cross-case-respect-map.md` → `2026-09-01-r2-responsibility-boundary-history.md` → `2026-09-01-holistic-static-balance-review.md` → `2026-09-01-empty-self-cognitive-architecture.md` → `2026-09-01-empty-self-source-placement-audit.md` の順で参照する。
 - R3は `2026-09-01-r3-capability-preservation-inventory.md` を参照する。
 - 旧prompt案と役割設計の来歴が必要な場合だけ `2026-09-01-prompt-techniques-for-empty-self.md`、`2026-09-01-empty-self-prompt-prototype.md`、`2026-09-01-empty-self-role-and-motivation.md` へ戻る。
@@ -162,7 +170,7 @@ candidate recallの静的再基準化は `2026-09-04-framework-recall-path-rebas
 
 継続する人的利用ギャップ研究はIssue #69で追跡する。
 
-複数体系・複数周期を交差させる探索場の研究残差はIssue #144で追跡する。現時点では固定runtime規則へ昇格させず、自然な実作業で単体系の順次previewだけでは出にくい問いが実際に生じるかを見る。
+複数体系compositionの研究残差はIssue #144で追跡する。状態空間を交差させる直積・周期結合・制約付き組合せだけでなく、異なる認知役割を持たせて同じ対象へ重ねる役割分離型も含める。現時点では固定runtime規則へ昇格させず、体系同士の対応を先に作る歪み、役割分離が崩れて一体系が支配する歪み、単体系の順次previewだけでは出にくい問いが重層や交差によって実際に生じるかを自然な実作業で見る。
 
 「己を空しくする」に関する境界ケース資産はIssue #78で追跡するが、現時点では実験の常時実行を目的にしない。
 
