@@ -7,7 +7,7 @@ import zipfile
 from pathlib import Path, PurePosixPath
 from typing import Any
 
-from common import DIST, git_head, git_worktree_changes, locales, sha256, version
+from common import DIST, RELEASE_REPORT_PATHS, git_head, git_worktree_changes, locales, sha256, version
 
 MANIFEST_SCHEMA_VERSION = "2"
 ZIP_TIMESTAMP = (1980, 1, 1, 0, 0, 0)
@@ -19,11 +19,7 @@ PACKAGE_KINDS = (
     "m365-copilot",
     "canonical-docs",
 )
-REQUIRED_REPORTS = {
-    "reports/validation-report.json",
-    "reports/token-budget.json",
-    "reports/living-lab-observation-summary.json",
-}
+REQUIRED_REPORTS = set(RELEASE_REPORT_PATHS)
 
 
 def expected_package_paths(expected_version: str, expected_locales: list[str]) -> set[str]:
@@ -218,38 +214,37 @@ def validate_release(
     if len(release_assets) != len(set(release_assets)):
         errors.append("release_assets must not contain duplicates")
 
-    actual_release_assets = {"release-manifest.json"}
-    for root_name in ("packages", "reports"):
-        root = dist / root_name
-        if root.exists():
-            actual_release_assets.update(
-                path.relative_to(dist).as_posix()
-                for path in root.glob("*")
-                if path.is_file()
-            )
-    if set(release_assets) != actual_release_assets:
+    expected_packages = expected_package_paths(expected_version, expected_locales)
+    package_root = dist / "packages"
+    actual_package_files = {
+        path.relative_to(dist).as_posix()
+        for path in package_root.glob("*")
+        if path.is_file()
+    } if package_root.exists() else set()
+    if actual_package_files != expected_packages:
+        errors.append(
+            f"release package set mismatch: expected={sorted(expected_packages)}, actual={sorted(actual_package_files)}"
+        )
+
+    report_root = dist / "reports"
+    actual_reports = {
+        path.relative_to(dist).as_posix()
+        for path in report_root.glob("*")
+        if path.is_file()
+    } if report_root.exists() else set()
+    if actual_reports != REQUIRED_REPORTS:
+        errors.append(
+            f"release report set mismatch: expected={sorted(REQUIRED_REPORTS)}, actual={sorted(actual_reports)}"
+        )
+
+    expected_release_assets = {"release-manifest.json"} | expected_packages | REQUIRED_REPORTS
+    if set(release_assets) != expected_release_assets:
         errors.append(
             "release_assets do not match the release publication boundary: "
-            f"manifest={sorted(set(release_assets))}, actual={sorted(actual_release_assets)}"
+            f"manifest={sorted(set(release_assets))}, expected={sorted(expected_release_assets)}"
         )
 
-    expected_packages = expected_package_paths(expected_version, expected_locales)
-    actual_packages = {
-        path.relative_to(dist).as_posix()
-        for path in (dist / "packages").glob("*.zip")
-        if path.is_file()
-    } if (dist / "packages").exists() else set()
-    if actual_packages != expected_packages:
-        errors.append(
-            f"release package set mismatch: expected={sorted(expected_packages)}, actual={sorted(actual_packages)}"
-        )
-
-    if not REQUIRED_REPORTS.issubset(actual_release_assets):
-        errors.append(
-            f"required release reports missing: {sorted(REQUIRED_REPORTS - actual_release_assets)}"
-        )
-
-    for relative in sorted(actual_packages):
+    for relative in sorted(expected_packages & actual_package_files):
         path = dist / relative
         validate_zip(path, relative, errors)
         if "-m365-copilot-" in relative:
