@@ -36,7 +36,7 @@ class ManualValidationContractTests(unittest.TestCase):
     def test_release_validation_is_explicit_and_layered(self) -> None:
         makefile = (ROOT / "Makefile").read_text(encoding="utf-8")
         self.assertIn("release-check: check package release-validate", makefile)
-        self.assertIn("release-tag-contract:", makefile)
+        self.assertIn("release-tag-contract: release-validate", makefile)
         self.assertIn("scripts/check_release_tag.py", makefile)
         self.assertIn("release-remote-tag-contract:", makefile)
         self.assertIn("scripts/check_remote_release_tag.py", makefile)
