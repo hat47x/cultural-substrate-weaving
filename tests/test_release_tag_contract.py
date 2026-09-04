@@ -10,6 +10,7 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "scripts"))
 
 from check_release_tag import (  # noqa: E402
+    read_manifest_source_commit,
     read_manifest_version,
     validate_release_publication,
     validate_release_tag,
@@ -37,19 +38,36 @@ class ReleaseTagContractTests(unittest.TestCase):
         self.assertEqual(validate_release_tag("v0.5.0", "0.5.0", "0.5.0"), [])
 
     def test_publication_requires_dated_changelog_boundary(self) -> None:
+        head = "a" * 40
         errors = validate_release_publication(
             "v0.5.0",
             "0.5.0",
             "0.5.0",
+            head,
+            head,
             "## Unreleased\n\n- Work continues here.\n",
         )
         self.assertTrue(any("CHANGELOG release boundary missing" in error for error in errors))
 
-    def test_publication_accepts_frozen_changelog_boundary(self) -> None:
+    def test_publication_rejects_stale_manifest_source_commit(self) -> None:
         errors = validate_release_publication(
             "v0.5.0",
             "0.5.0",
             "0.5.0",
+            "a" * 40,
+            "b" * 40,
+            "## Unreleased\n\n## 0.5.0 — 2026-09-04\n",
+        )
+        self.assertTrue(any("source_commit mismatch at tag gate" in error for error in errors))
+
+    def test_publication_accepts_frozen_changelog_and_exact_source_commit(self) -> None:
+        head = "a" * 40
+        errors = validate_release_publication(
+            "v0.5.0",
+            "0.5.0",
+            "0.5.0",
+            head,
+            head,
             "## Unreleased\n\n## 0.5.0 — 2026-09-04\n",
         )
         self.assertEqual(errors, [])
@@ -66,6 +84,23 @@ class ReleaseTagContractTests(unittest.TestCase):
             path.write_text("{}\n", encoding="utf-8")
             with self.assertRaises(ValueError):
                 read_manifest_version(path)
+
+    def test_reads_manifest_source_commit(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            path = Path(tmp) / "release-manifest.json"
+            source_commit = "a" * 40
+            path.write_text(
+                json.dumps({"source_commit": source_commit}) + "\n",
+                encoding="utf-8",
+            )
+            self.assertEqual(read_manifest_source_commit(path), source_commit)
+
+    def test_missing_manifest_source_commit_is_rejected(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            path = Path(tmp) / "release-manifest.json"
+            path.write_text("{}\n", encoding="utf-8")
+            with self.assertRaises(ValueError):
+                read_manifest_source_commit(path)
 
 
 if __name__ == "__main__":
