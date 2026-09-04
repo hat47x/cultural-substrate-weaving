@@ -24,6 +24,15 @@ class ManualValidationContractTests(unittest.TestCase):
         self.assertIn("scripts/check_generated_artifacts.py", makefile)
         self.assertIn("python -m unittest discover -s tests", makefile)
 
+    def test_living_lab_check_validates_examples_and_public_record_set(self) -> None:
+        makefile = (ROOT / "Makefile").read_text(encoding="utf-8")
+        self.assertIn("living-lab-check:", makefile)
+        self.assertIn("python scripts/validate_living_lab.py\n", makefile)
+        self.assertIn(
+            "python scripts/validate_living_lab.py --record-set research/living-lab/observations/*.json",
+            makefile,
+        )
+
     def test_release_validation_is_explicit_and_layered(self) -> None:
         makefile = (ROOT / "Makefile").read_text(encoding="utf-8")
         self.assertIn("release-check: check package release-validate", makefile)
