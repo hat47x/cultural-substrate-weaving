@@ -32,6 +32,8 @@ PR #127後に文化体系側から方法自身をもう一度見直すと、**�
 
 その後、現行正本全体とR3棚卸しへ戻ると、**役割分離や直交重層そのものは現行`methods/transformation.md`にすでに明示され、旧版の同能力もR3で「現コアへ吸収済み」と確認されていた**。PR #145/#146で「静的なcomposition能力が不足している」と読んだ部分は強すぎたため、`2026-09-04-composite-framework-route-correction.md`で訂正した。自然利用で見つかった構成は、新しい静的規則の要求ではなく、既存能力が異なる実作業で再出現したartifact evidenceとして読み直す。残る問いは、candidate recallで複数候補が立った実行時に、Routerがすでに案内している`transformation.md`が必要に応じて前景化されるかという到達性であり、現時点ではこれも静的欠落とは断定しない。
 
+2026-09-04の最近の自然利用再走査では、長期調査、私的な創作作業、KJ Atlas、SOZA、TEIへ戻った。長期調査で再確認された「新資料だけで既存島を壊さない」「04ステップと核融合法を意味保存側から選ぶ」は、HC-001〜003とG1の再出現であり、新カードを増やさずØとして記録した。一方、私的創作では、元の具体を薄めずに別の役割を重ねる操作が複数局面で現れたため、HC-022〜024とG6候補「役割を保った重層化」を起こした。KJ AtlasとSOZAでは、AI候補を受理・適用・検証・決定へ自動昇格させない状態遷移が公開実装に残っており、HC-025〜026をG2とG5の橋として置いた。これらも現時点では新しい静的runtime不足とは扱わない。詳細は `2026-09-04-recent-natural-use-cards-round3.md` を参照する。
+
 現在は新しい規則を急いで増やす段階ではない。残差は次のように扱う。
 
 - **R1――文化体系側からの予期しない認知供給**：候補想起経路を含む大きな静的欠落はPR #127までで後退した。今後は、現在の対象語彙に近い体系だけでなく構造型の異なる候補が実際に認知場へ上がるか、`preview`から新しい問い・対比・調査先が生じるか、それらを`framework_generated`のままKJと対象へ戻せるか、全面対応や機械的な総当たりへ滑らないかという挙動上の残差を見る。複数体系compositionは現行`transformation.md`に役割分離、直交重層、軸の独立性、異なる情報種別の担当まで明示済みである。Issue #144では、candidate recallで複数候補が自然に立ったとき、この既存能力が実行時に必要な深さで前景化されるかだけを観察する。
@@ -42,7 +44,7 @@ R1とR2は、探索を開く力と対象へ戻る力が実作業で両立する�
 
 境界ケースは `research/empty-self-boundary-cases/` に検査資産として保存されている。ケースを回すこと自体を研究成果にしない。自然な実作業で挙動上の残差が現れた場合や、release前に限定的な回帰確認が具体的に必要になった場合に使う。OpenRouterの日次・週次・月次の無料枠は、研究・比較・回帰確認に意味があるときは積極的に利用してよい。ただし、無料枠の存在だけを理由に人工的なケースを作らず、API出力やLLM自己評価を人間判断や測定真実へ昇格させない。
 
-candidate recallの静的再基準化は `2026-09-04-framework-recall-path-rebaseline.md` を参照する。これはPR #127前に候補想起の残差を特定した時点の研究記録であり、その後PR #127で正本へ反映された。複数軸を状態空間として構成する研究は `2026-09-04-composite-framework-fields.md`、自然利用から役割分離された重層まで広げた時点記録は `2026-09-04-composite-framework-layering-rebaseline.md`、現行`transformation.md`へ戻って静的欠落判定を訂正した最新記録は `2026-09-04-composite-framework-route-correction.md` を参照する。現在の運用状態は、このREADMEとIssue #69、Issue #144で追う。`2026-09-03-post-r1-runtime-rebaseline.md`以前の文書は、それぞれの時点の問題設定を残す研究履歴として読む。
+candidate recallの静的再基準化は `2026-09-04-framework-recall-path-rebaseline.md` を参照する。これはPR #127前に候補想起の残差を特定した時点の研究記録であり、その後PR #127で正本へ反映された。複数軸を状態空間として構成する研究は `2026-09-04-composite-framework-fields.md`、自然利用から役割分離された重層まで広げた時点記録は `2026-09-04-composite-framework-layering-rebaseline.md`、現行`transformation.md`へ戻って静的欠落判定を訂正した最新記録は `2026-09-04-composite-framework-route-correction.md` を参照する。最近の自然利用で追加したHC-022〜026、G6候補、G2/G5の橋は `2026-09-04-recent-natural-use-cards-round3.md` を参照する。現在の運用状態は、このREADMEとIssue #69、Issue #144で追う。`2026-09-03-post-r1-runtime-rebaseline.md`以前の文書は、それぞれの時点の問題設定を残す研究履歴として読む。
 
 ## 現在の記録
 
@@ -134,6 +136,10 @@ candidate recallの静的再基準化は `2026-09-04-framework-recall-path-rebas
   - 自然利用の二つの異なるドメインで見つかった役割分離型は、CSWの因果効果や利用者評価ではなく、既存能力のartifact-levelな再出現として扱う。
   - 残差を、静的能力不足から「candidate recall後に必要な`transformation`操作へ実行時に到達するか」という自然利用上のrouting reachabilityへ縮小した。
   - OpenRouter free-tierで小規模回帰確認を試みたが、DNS名前解決失敗でAPI到達前に終了したため、モデル挙動の証拠には数えていない。
+- `2026-09-04-recent-natural-use-cards-round3.md`
+  - 2026-08-30〜09-04の最近の自然利用を再走査し、意味差のない反復をØとして既存島へ戻しつつ、HC-022〜026を追加した。
+  - 私的創作からG6候補「役割を保った重層化」、KJ Atlas/SOZAからG2とG5をつなぐ状態遷移の橋を起こした。
+  - TEIは今回の探索では利用者の直接補正との対応が十分に取れなかったため、AI側の作業記録だけで人的利用カードへ昇格させず保留した。
 
 ## 読む順序
 
@@ -164,14 +170,15 @@ candidate recallの静的再基準化は `2026-09-04-framework-recall-path-rebas
 23. `2026-09-04-composite-framework-fields.md`
 24. `2026-09-04-composite-framework-layering-rebaseline.md`
 25. `2026-09-04-composite-framework-route-correction.md`
+26. `2026-09-04-recent-natural-use-cards-round3.md`
 
 この順序は、正しい結論へ一直線に進んだ履歴を示すものではない。初回の読み違いを含め、**分析そのものが訂正され、個別事例への戻りと後続実装によって問題設定も更新されていく過程**を追えるようにしている。
 
-現在残っている研究課題だけを確認したい場合は、candidate recallの現行基準線として `2026-09-04-framework-recall-path-rebaseline.md` を読み、compositionについては `2026-09-04-composite-framework-route-correction.md` を現在判定として読む。PR #145/#146時点の問題設定を追う必要がある場合だけ、その前の二文書へ戻る。その後の自然利用上の残差はIssue #69とIssue #144で確認する。
+現在残っている研究課題だけを確認したい場合は、candidate recallの現行基準線として `2026-09-04-framework-recall-path-rebaseline.md` を読み、compositionについては `2026-09-04-composite-framework-route-correction.md` を現在判定として読む。最近の自然利用で既存島がどう再出現し、どこに新しい島候補や橋が生じたかを見る場合は `2026-09-04-recent-natural-use-cards-round3.md` を読む。その後の自然利用上の残差はIssue #69とIssue #144で確認する。
 
-- R1の成立過程を戻る場合は `2026-09-01-direct-corrections-round2.md` → `2026-09-01-post-pr72-residual-map.md` → `2026-09-03-r1-target-demand-and-field-supply.md` → `2026-09-03-post-r1-runtime-rebaseline.md` → `2026-09-04-framework-recall-path-rebaseline.md` → `2026-09-04-composite-framework-fields.md` → `2026-09-04-composite-framework-layering-rebaseline.md` → `2026-09-04-composite-framework-route-correction.md` の順で参照する。
+- R1の成立過程を戻る場合は `2026-09-01-direct-corrections-round2.md` → `2026-09-01-post-pr72-residual-map.md` → `2026-09-03-r1-target-demand-and-field-supply.md` → `2026-09-03-post-r1-runtime-rebaseline.md` → `2026-09-04-framework-recall-path-rebaseline.md` → `2026-09-04-composite-framework-fields.md` → `2026-09-04-composite-framework-layering-rebaseline.md` → `2026-09-04-composite-framework-route-correction.md` → `2026-09-04-recent-natural-use-cards-round3.md` の順で参照する。
 - R2の成立過程を戻る場合は `2026-09-01-r2-respect-and-method-control.md` → `2026-09-01-r2-cross-case-respect-map.md` → `2026-09-01-r2-responsibility-boundary-history.md` → `2026-09-01-holistic-static-balance-review.md` → `2026-09-01-empty-self-cognitive-architecture.md` → `2026-09-01-empty-self-source-placement-audit.md` の順で参照する。
-- R3は `2026-09-01-r3-capability-preservation-inventory.md` を参照する。compositionについては、今回の訂正でR3 2.2の「現コアへ吸収済み」を再確認した。
+- R3は `2026-09-01-r3-capability-preservation-inventory.md` を参照する。compositionについては、今回の訂正でR3 2.2の「現コアへ吸収済み」を再確認した。最近のG6候補はR3再開条件に近いが、CSW固有の横断能力だと断定できる材料はまだないため、`2026-09-04-recent-natural-use-cards-round3.md`で保留している。
 - 旧prompt案と役割設計の来歴が必要な場合だけ `2026-09-01-prompt-techniques-for-empty-self.md`、`2026-09-01-empty-self-prompt-prototype.md`、`2026-09-01-empty-self-role-and-motivation.md` へ戻る。
 
 ## Issue
