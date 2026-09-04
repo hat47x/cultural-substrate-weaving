@@ -6,7 +6,7 @@ A complementary AI skill that combines **structure candidates from cultural, phi
 
 The skill does **not** replace domain expertise or quality criteria in writing, management, software engineering, law, or other fields. Use it alongside a **domain-specific skill** when appropriate; cultural-substrate-weaving is responsible only for the increment produced by its cultural-framework and KJ capabilities.
 
-> **The project is still under validation.** The Web Chat Living Lab was introduced in v0.4.0, and the published v0.4.0 method is now being observed prospectively in real work. Public observations are still limited, and the effectiveness of the skill is not treated as established at this stage. See **[Web Chat Living Lab](docs/en/experiments/web-chat-living-lab.md)** / **[public observations](research/living-lab/observations/)**.
+> **The project is still under validation.** The Web Chat Living Lab was introduced in v0.4.0, and the published v0.4.0 method is being observed in real work. Public records distinguish prospective observations made under an already-declared observation plan from retrospective records anonymized or abstracted from natural work after the fact. Public observations are still limited, and the effectiveness of the skill is not treated as established at this stage. See **[Web Chat Living Lab](docs/en/experiments/web-chat-living-lab.md)** / **[public observations](research/living-lab/observations/)**.
 
 ## Install
 

@@ -6,7 +6,7 @@
 
 本スキルは、執筆、経営、ソフトウェア開発、法務などの領域固有知識や品質基準を置き換えません。必要に応じて**領域固有スキルと併用**し、本スキルは文化的体系とKJ法から生じる増分を担当します。
 
-> **現在は検証段階です。** v0.4.0でWeb Chat Living Labを導入し、公開済みのv0.4.0方法論を、実作業の中で前向き（prospective）に観測しています。公開観測はまだ限定的であり、現時点で本スキルの有効性が確立したとは扱いません。→ **[Web Chat Living Lab](docs/ja/experiments/web-chat-living-lab.md)** / **[公開観測記録](research/living-lab/observations/)**
+> **現在は検証段階です。** v0.4.0でWeb Chat Living Labを導入し、公開済みのv0.4.0方法論を実作業の中で観測しています。公開記録には、あらかじめ観測系を置いたprospectiveな記録と、自然な作業を後から匿名化・抽象化したretrospectiveな記録を区別して含めています。公開観測はまだ限定的であり、現時点で本スキルの有効性が確立したとは扱いません。→ **[Web Chat Living Lab](docs/ja/experiments/web-chat-living-lab.md)** / **[公開観測記録](research/living-lab/observations/)**
 
 ## インストール
 
