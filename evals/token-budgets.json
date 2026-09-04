@@ -11,7 +11,8 @@
     "Content growth, deliberate, developed in parallel on origin/main from the pre-excision 78233/78261 baseline and reconciled here: bought two things the text carried procedurally but never told anyone to reach for. Layering orthogonal frameworks was written entirely as risk, and a second framework was gated as an exception admitted only when the first could not handle an information type; it now names the intersections of two grids as a source of structure no single framework yields, with orthogonality kept as the condition rather than the gate. The temporal and transition models sat as two uses among four with no reason to prefer them; they now say what placement cannot show. The transition procedure gained a fifth step keeping each factor's trajectory separate, because collapsing the factors averages away that different ones took different routes at different times. Paid for in part by removing the instruction to open without framework names when the audience's interest is unknown, which withheld the value source before it had been tried.",
     "Merge of the two lines above: this branch's excision (down to 71939/72211) combined with origin's parallel growth from the pre-excision baseline. Measured after merging both sets of source changes: ja-JP 72902, en-US 73106. reference_max_bytes carried over unchanged at 14857/14566 (framework-application.md, already the largest reference on both sides).",
     "Content growth, deliberate: ja-JP 72902 -> 75356, en-US 73106 -> 75900 (+2454 / +2794). Bought an explicit candidate-recall path between abstract probe and framework preview, plus structurally diverse search anchors for state grids, cycles/calendars, paths/flows, directions, and layers. The named cultural systems are retrieval anchors rather than embedded framework knowledge or adoption recommendations; detailed structure remains dynamically sourced and checked when used.",
-    "Build-link normalization: ja-JP 75356 -> 75366, en-US 75900 -> 75910 (+10 / +10). Router references now use source module paths so build-time link rewriting produces valid references/ paths in generated skills."
+    "Build-link normalization: ja-JP 75356 -> 75366, en-US 75900 -> 75910 (+10 / +10). Router references now use source module paths so build-time link rewriting produces valid references/ paths in generated skills.",
+    "Build-link normalization, completed across Router loading-order references: ja-JP 75366 -> 75386, en-US 75910 -> 75930 (+20 / +20). Pre-existing bare module filenames in loading-order prose were normalized to source module paths so replace_router_links() can rewrite every generated skill reference into references/."
   ],
   "router_max_bytes": {
     "ja-JP": 10000,
@@ -30,8 +31,8 @@
     "en-US": 14566
   },
   "corpus_max_bytes": {
-    "ja-JP": 75366,
-    "en-US": 75910
+    "ja-JP": 75386,
+    "en-US": 75930
   },
   "m365_instructions_max_chars": 8000,
   "gpt_knowledge_max_files": 10
