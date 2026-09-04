@@ -24,6 +24,7 @@ def review_scope(root: Path = ROOT) -> list[str]:
         "docs/ja/getting-started.md",
         "docs/ja/usage-context.md",
         ".living-lab/README.md",
+        "research/human-use-gap-kj/README.md",
         "research/living-lab/observations/README.md",
         "adapters/microsoft-copilot/ja-JP/instructions.md",
         "adapters/microsoft-copilot/ja-JP/package-readme.txt",
