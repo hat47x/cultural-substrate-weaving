@@ -15,6 +15,22 @@ Normally, search for candidate frameworks from structure the target-side analysi
 - continua and partitioning
 - questions outside the current problem framing
 
+### Do not leave candidate recall to the model's spontaneous associations
+
+In exploratory use, do not end candidate search with frameworks already close to the target's current vocabulary. Give **high recall/search priority** to frameworks that offer structures different from the target's present partitioning, such as state grids, cycles and calendars, paths and flows, directions, layers, and paths between layers.
+
+The following names are search anchors for reaching different structural families, not adoption recommendations or a complete candidate list.
+
+- **Anchors for states, positions, and partitioning**: the four seasons, Wuxing (Five Phases), Godai (Five Great Elements), Bagua (Eight Trigrams), directional schemes such as east/west/north/south or five-direction schemes including a center, the seven colors of the rainbow, and chakras.
+- **Anchors for cycles, calendars, and multiple timescales**: the four seasons, the Heavenly Stems, the Earthly Branches, and the Tzolk'in.
+- **Anchors for paths, flows, layers, and paths between positions**: meridian networks, chakras, sefirot and paths, Bagua, and other frameworks that structure relation or change.
+
+One framework may appear under more than one exploration family. Do not treat these groupings as traditional classifications or claims that the frameworks are equivalent. Prefer raising a small number of candidates from structurally different families rather than accumulating many near-duplicates from one family.
+
+These names are not substitutes for framework knowledge. When a framework is actually used, return to sources to confirm its element count, correspondences, transition rules, historical meaning, lineage differences, variants, and limits. Do not fill missing details from model memory alone.
+
+Do not rush adoption or rejection during candidate recall. A local mismatch or a probe that initially produces no question does not by itself negate the framework's broader exploratory value. Preview its main cognitive structure and limits, then ask whether it generates questions, contrasts, or research targets worth returning to the target.
+
 In exploratory use, the conditions in `core/activation.md` may instead justify entering through a framework-led preview. Do not first cut the framework down to what already fits the current question. Before mapping it to the target, inspect the framework's main overall distinctions—what it treats as positions, paths, cycles, relations, transitions, and boundaries.
 
 Whichever entry is used, inspect the candidate framework's elements and classification principles, relations, time/cycle/stage structure, original domain of use, historical context, variants, and limits.
