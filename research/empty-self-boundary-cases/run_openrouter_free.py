@@ -14,6 +14,8 @@ from typing import Any
 
 API_URL = "https://openrouter.ai/api/v1/chat/completions"
 API_KEY_ENV = "OPENROUTER_API_KEY"
+REPO_ROOT = Path(__file__).resolve().parents[2]
+PRIVATE_REPO_DIRS = (REPO_ROOT / ".tmp", REPO_ROOT / ".living-lab")
 
 
 def is_free_model(model: str) -> bool:
@@ -63,6 +65,29 @@ def build_request_body(model: str, payload: dict[str, Any]) -> bytes:
     return json.dumps(body, ensure_ascii=False).encode("utf-8")
 
 
+def resolve_output_path(path: Path) -> Path:
+    """Resolve output and reject repository paths that are not private-by-default."""
+    resolved = path.resolve() if path.is_absolute() else (Path.cwd() / path).resolve()
+
+    try:
+        resolved.relative_to(REPO_ROOT)
+    except ValueError:
+        # A path outside this checkout may be an intentionally private working directory.
+        return resolved
+
+    for private_dir in PRIVATE_REPO_DIRS:
+        try:
+            resolved.relative_to(private_dir.resolve())
+            return resolved
+        except ValueError:
+            continue
+
+    raise ValueError(
+        "raw response output inside this repository must be under .tmp/ or .living-lab/; "
+        "publish only a separately reviewed anonymized/abstracted record"
+    )
+
+
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(
         description=(
@@ -70,9 +95,28 @@ def parse_args() -> argparse.Namespace:
             "is explicitly free and that no fallback or paid plugin fields are present."
         )
     )
-    parser.add_argument("--model", required=True, help="openrouter/free or a :free model slug")
-    parser.add_argument("--request", type=Path, required=True, help="request JSON without model/key")
-    parser.add_argument("--output", type=Path, help="path for the raw API response JSON")
+    parser.add_argument(
+        "--model",
+        required=True,
+        help="openrouter/free or a :free model slug",
+    )
+    parser.add_argument(
+        "--request",
+        type=Path,
+        required=True,
+        help=(
+            "request JSON without model/key; keep private natural-work requests in an "
+            "untracked/private location such as .tmp/openrouter/"
+        ),
+    )
+    parser.add_argument(
+        "--output",
+        type=Path,
+        help=(
+            "path for the raw API response JSON; repository-local output is allowed only "
+            "under .tmp/ or .living-lab/"
+        ),
+    )
     parser.add_argument(
         "--timeout",
         type=float,
@@ -103,6 +147,12 @@ def main() -> int:
 
     if args.output is None:
         print("OpenRouter free-tier request rejected: --output is required", file=sys.stderr)
+        return 2
+
+    try:
+        output_path = resolve_output_path(args.output)
+    except ValueError as exc:
+        print(f"OpenRouter free-tier request rejected: {exc}", file=sys.stderr)
         return 2
 
     api_key = os.environ.get(API_KEY_ENV)
@@ -139,9 +189,9 @@ def main() -> int:
         print("OpenRouter request timed out before a usable response", file=sys.stderr)
         return 4
 
-    args.output.parent.mkdir(parents=True, exist_ok=True)
-    args.output.write_bytes(response_body)
-    print(f"ok: HTTP {status}; raw response saved to {args.output}")
+    output_path.parent.mkdir(parents=True, exist_ok=True)
+    output_path.write_bytes(response_body)
+    print(f"ok: HTTP {status}; raw response saved to {output_path}")
     return 0
 
 
