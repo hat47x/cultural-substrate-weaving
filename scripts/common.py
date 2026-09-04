@@ -11,6 +11,11 @@ SRC = ROOT / "src"
 ADAPTERS = ROOT / "adapters"
 DIST = ROOT / "dist"
 PLUGINS = ROOT / "plugins"
+RELEASE_REPORT_PATHS = (
+    "reports/validation-report.json",
+    "reports/token-budget.json",
+    "reports/living-lab-observation-summary.json",
+)
 
 
 def read_json(path: Path):

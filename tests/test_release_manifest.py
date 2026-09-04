@@ -54,7 +54,8 @@ class ReleaseManifestTests(unittest.TestCase):
             path.parent.mkdir(parents=True, exist_ok=True)
             path.write_text("{}\n", encoding="utf-8")
 
-        for relative in VALIDATOR.expected_package_paths(self.VERSION, self.LOCALES):
+        expected_packages = VALIDATOR.expected_package_paths(self.VERSION, self.LOCALES)
+        for relative in expected_packages:
             package_source = m365_source if "-m365-copilot-" in relative else source
             PACKAGE.zip_tree(package_source, dist / relative)
 
@@ -70,10 +71,7 @@ class ReleaseManifestTests(unittest.TestCase):
             )
 
         release_assets = ["release-manifest.json"] + sorted(
-            path.relative_to(dist).as_posix()
-            for root_name in ("packages", "reports")
-            for path in (dist / root_name).glob("*")
-            if path.is_file()
+            expected_packages | VALIDATOR.REQUIRED_REPORTS
         )
         manifest_path.write_text(
             json.dumps(
@@ -91,6 +89,22 @@ class ReleaseManifestTests(unittest.TestCase):
             encoding="utf-8",
         )
         return dist
+
+    def add_manifested_asset(self, dist: Path, relative: str, content: str = "extra\n") -> None:
+        path = dist / relative
+        path.parent.mkdir(parents=True, exist_ok=True)
+        path.write_text(content, encoding="utf-8")
+        manifest_path = dist / "release-manifest.json"
+        manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+        manifest["files"].append(
+            {
+                "path": relative,
+                "bytes": path.stat().st_size,
+                "sha256": VALIDATOR.sha256(path),
+            }
+        )
+        manifest["release_assets"].append(relative)
+        manifest_path.write_text(json.dumps(manifest, indent=2) + "\n", encoding="utf-8")
 
     def validate(self, dist: Path, worktree_changes: str = "") -> list[str]:
         return VALIDATOR.validate_release(
@@ -111,6 +125,12 @@ class ReleaseManifestTests(unittest.TestCase):
             self.assertEqual(manifest["source_commit"], self.SOURCE_COMMIT)
             self.assertNotIn("ja-JP/generated/internal.txt", manifest["release_assets"])
             self.assertIn("ja-JP/generated/internal.txt", {item["path"] for item in manifest["files"]})
+            self.assertEqual(
+                set(manifest["release_assets"]),
+                {"release-manifest.json"}
+                | VALIDATOR.expected_package_paths(self.VERSION, self.LOCALES)
+                | VALIDATOR.REQUIRED_REPORTS,
+            )
 
     def test_release_relative_path_uses_posix_separators_for_windows_paths(self) -> None:
         dist = PureWindowsPath(r"C:\repo\dist")
@@ -153,6 +173,22 @@ class ReleaseManifestTests(unittest.TestCase):
             missing.unlink()
             errors = self.validate(dist)
             self.assertTrue(any("package set mismatch" in error for error in errors), errors)
+
+    def test_extra_report_is_not_a_publishable_release_asset(self) -> None:
+        with tempfile.TemporaryDirectory() as temp_dir:
+            dist = self.build_valid_release(Path(temp_dir))
+            self.add_manifested_asset(dist, "reports/debug.json")
+            errors = self.validate(dist)
+            self.assertTrue(any("release report set mismatch" in error for error in errors), errors)
+            self.assertTrue(any("release_assets do not match" in error for error in errors), errors)
+
+    def test_extra_package_directory_file_is_not_publishable(self) -> None:
+        with tempfile.TemporaryDirectory() as temp_dir:
+            dist = self.build_valid_release(Path(temp_dir))
+            self.add_manifested_asset(dist, "packages/debug.txt")
+            errors = self.validate(dist)
+            self.assertTrue(any("release package set mismatch" in error for error in errors), errors)
+            self.assertTrue(any("release_assets do not match" in error for error in errors), errors)
 
     def test_unsafe_zip_member_is_rejected(self) -> None:
         with tempfile.TemporaryDirectory() as temp_dir:
