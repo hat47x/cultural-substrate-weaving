@@ -41,10 +41,11 @@ If the runtime method changes, identify the observed problem or increment, why i
 - [ ] On a versioned develop/release branch, the local repository-contract check was not bypassed
 - [ ] Generated-artifact freshness was not bypassed; when build inputs changed, the generated Git-tracked distribution artifacts were rebuilt and committed
 - [ ] `make main-contract`, when applicable, is treated as a two-parent commit-shape diagnostic rather than proof of pull-request provenance
-- [ ] For a public release, `CHANGELOG.md` contains the dated `## X.Y.Z — YYYY-MM-DD` boundary and `python scripts/check_release_changelog.py --version "$(cat VERSION)"` was run before the final candidate `make release-check`
+- [ ] For a public release, `CHANGELOG.md` has exactly one empty `## Unreleased` section before a non-empty dated `## X.Y.Z — YYYY-MM-DD` section, and `python scripts/check_release_changelog.py --version "$(cat VERSION)"` was run before the final candidate `make release-check`
 - [ ] For a public release, packaging is run from a clean Git worktree with no tracked uncommitted changes or non-ignored untracked files
-- [ ] For a public release, the tag is derived from `VERSION` and `make release-tag-contract TAG="$TAG"` is run against the final release manifest before tagging
-- [ ] For a public release, the final manifest `source_commit` matches the package-producing `HEAD`, and `make release-remote-tag-contract TAG="$TAG"` verifies the pushed remote tag resolves to that commit
+- [ ] For a public release, the tag is derived from `VERSION` and `make release-tag-contract TAG="$TAG"` reruns the full `release-validate` contract before the tag-specific checks
+- [ ] For a public release, the final manifest `source_commit` matches the package-producing `HEAD`, and `make release-remote-tag-contract TAG="$TAG"` revalidates the release set before verifying that the pushed remote tag resolves to that commit
+- [ ] After upload, `scripts/verify_published_release.py` confirms a non-draft, non-prerelease Release containing `.github/release-validation-note.md` and the exact manifest-declared asset names, sizes, and digests
 - [ ] Absence of a remote GitHub Actions status or GitHub branch protection is not treated as evidence that local validation ran
 - [ ] Semantic-retention impact reviewed when runtime meaning changed
 - [ ] Changelog updated for user-visible or operational behavior
