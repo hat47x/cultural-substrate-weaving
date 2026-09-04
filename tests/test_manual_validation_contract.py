@@ -42,6 +42,18 @@ class ManualValidationContractTests(unittest.TestCase):
         self.assertIn("release-remote-tag-contract: release-validate", makefile)
         self.assertIn("scripts/check_remote_release_tag.py", makefile)
 
+    def test_release_docs_explain_revalidation_before_tag_specific_checks(self) -> None:
+        ja_release = (ROOT / "docs" / "ja" / "maintainers" / "release.md").read_text(
+            encoding="utf-8"
+        )
+        en_release = (ROOT / "docs" / "en" / "maintainers" / "release.md").read_text(
+            encoding="utf-8"
+        )
+        self.assertIn("タグ固有の検査に入る前に`release-validate`を再実行", ja_release)
+        self.assertIn("リモートタグ固有の検査に入る前にも`release-validate`を再実行", ja_release)
+        self.assertIn("reruns `release-validate` before the tag-specific check", en_release)
+        self.assertIn("reruns `release-validate` before checking the remote tag", en_release)
+
     def test_release_docs_list_all_required_reports(self) -> None:
         ja_release = (ROOT / "docs" / "ja" / "maintainers" / "release.md").read_text(
             encoding="utf-8"
