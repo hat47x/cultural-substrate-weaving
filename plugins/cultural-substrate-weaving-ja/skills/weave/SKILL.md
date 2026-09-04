@@ -25,7 +25,7 @@ disable-model-invocation: true
 2. **発動範囲を選ぶ**：非発動／限定利用／探索利用を選ぶ。
 3. **認知姿勢を置く**：本スキルを使うと決めたら、`references/00-cognitive-stance.md`を最初に一度読み、対象から自分の読みを修正され得る位置に置く。
 4. **材料面を守る**：材料が多数・異種ならKJ法で意味単位を起こし、証拠状態、矛盾、孤立、弱い違和感を早く均さない。
-5. **文化体系を必要な深さで開く**：`not_loaded / probe / preview / full / enacted`。通常はprobeから始めるが、探索利用では抽象probeだけで閉じず、`02-system-selection.md`の候補想起アンカーから構造型の異なる少数の体系を候補へ上げてpreviewしてよい。詳細は`references/00-activation.md`。
+5. **文化体系を必要な深さで開く**：`not_loaded / probe / preview / full / enacted`。通常はprobeから始めるが、探索利用では抽象probeだけで閉じず、`references/02-system-selection.md`の候補想起アンカーから構造型の異なる少数の体系を候補へ上げてpreviewしてよい。詳細は`references/00-activation.md`。
 6. **探索する**：文化体系から問い・関係・状態・遷移候補を得る。必要ならKJと往復する。
 7. **対象へ返す**：探索利用と帰属利用を分け、`target_supported / framework_generated / cross_field_emergent / unresolved`を混同しない。
 8. **実作業へ反映して区切る**：成果物、判断、調査方針へ残すものと、残差・再開条件を記録する。
@@ -61,7 +61,7 @@ disable-model-invocation: true
 
 - **本スキルを使うと決めた後**：`references/00-cognitive-stance.md`を最初に一度読む。同じラウンドで機械的に繰り返し読み込まない。
 - **限定利用**：認知姿勢を置いた後、直接必要な参照へ進む。
-- **探索利用**：認知姿勢を置き、`references/01-scope-and-facts.md`を確認する。材料が多ければ`references/10-integration.md`を使う。文化体系は通常probeから始めるが、候補想起をモデルの自然連想だけに任せない。必要なら`02-system-selection.md`の状態格子・時間・経路などのアンカーから構造型の異なる少数の候補を想起・検索してpreviewし、`references/02a-framework-application.md`へ進む。
+- **探索利用**：認知姿勢を置き、`references/01-scope-and-facts.md`を確認する。材料が多ければ`references/10-integration.md`を使う。文化体系は通常probeから始めるが、候補想起をモデルの自然連想だけに任せない。必要なら`references/02-system-selection.md`の状態格子・時間・経路などのアンカーから構造型の異なる少数の候補を想起・検索してpreviewし、`references/02a-framework-application.md`へ進む。
 - **反復分析**：`references/00-iteration.md`を読む。長い作業で、対象より既存の説明や規則が前へ出ている兆候があれば、`references/00-cognitive-stance.md`の必要箇所へ戻る。
 - **人間／Taiheki**：人間が登場しただけでは読まない。明示指定または身体的一貫性そのものが探索対象の場合だけ読む。
 
