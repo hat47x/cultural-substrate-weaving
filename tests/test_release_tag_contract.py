@@ -45,6 +45,7 @@ class ReleaseTagContractTests(unittest.TestCase):
             "0.5.0",
             head,
             head,
+            "",
             "## Unreleased\n\n- Work continues here.\n",
         )
         self.assertTrue(any("CHANGELOG release boundary missing" in error for error in errors))
@@ -56,11 +57,12 @@ class ReleaseTagContractTests(unittest.TestCase):
             "0.5.0",
             "a" * 40,
             "b" * 40,
+            "",
             "## Unreleased\n\n## 0.5.0 — 2026-09-04\n",
         )
         self.assertTrue(any("source_commit mismatch at tag gate" in error for error in errors))
 
-    def test_publication_accepts_frozen_changelog_and_exact_source_commit(self) -> None:
+    def test_publication_rejects_dirty_worktree(self) -> None:
         head = "a" * 40
         errors = validate_release_publication(
             "v0.5.0",
@@ -68,6 +70,20 @@ class ReleaseTagContractTests(unittest.TestCase):
             "0.5.0",
             head,
             head,
+            " M CHANGELOG.md",
+            "## Unreleased\n\n## 0.5.0 — 2026-09-04\n",
+        )
+        self.assertTrue(any("clean Git worktree" in error for error in errors))
+
+    def test_publication_accepts_clean_frozen_exact_release_commit(self) -> None:
+        head = "a" * 40
+        errors = validate_release_publication(
+            "v0.5.0",
+            "0.5.0",
+            "0.5.0",
+            head,
+            head,
+            "",
             "## Unreleased\n\n## 0.5.0 — 2026-09-04\n",
         )
         self.assertEqual(errors, [])
