@@ -3,7 +3,7 @@ from __future__ import annotations
 import json
 import stat
 import zipfile
-from pathlib import Path
+from pathlib import Path, PurePath
 
 from common import DIST, git_head, git_worktree_changes, locale_short, locales, manifest, sha256, version, write_text
 
@@ -21,6 +21,11 @@ def is_private_local_name(name: str) -> bool:
     if name.startswith(".env.") and not name.endswith(".example"):
         return True
     return name.endswith((".local", ".secret"))
+
+
+def release_relative_path(path: PurePath, root: PurePath) -> str:
+    """Return a release-manifest path with stable POSIX separators on every OS."""
+    return path.relative_to(root).as_posix()
 
 
 def iter_publishable_files(source: Path):
@@ -101,7 +106,7 @@ def main() -> None:
     files = []
     for path in sorted(p for p in DIST.rglob("*") if p.is_file() and p.name != "release-manifest.json"):
         files.append({
-            "path": str(path.relative_to(DIST)),
+            "path": release_relative_path(path, DIST),
             "bytes": path.stat().st_size,
             "sha256": sha256(path),
         })
@@ -109,7 +114,7 @@ def main() -> None:
     release_assets = ["release-manifest.json"]
     for root in (DIST / "packages", DIST / "reports"):
         release_assets.extend(
-            str(path.relative_to(DIST))
+            release_relative_path(path, DIST)
             for path in sorted(root.glob("*"))
             if path.is_file()
         )
