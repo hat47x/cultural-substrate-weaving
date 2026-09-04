@@ -6,7 +6,7 @@
 - [ ] Translation / documentation / adapter
 - [ ] Research / evaluation only
 - [ ] Repository validation / release maintenance
-- [ ] `feature/*`, `research/*`, or `fix/*` targets the active `develop/vX.Y.Z`; `release/vX.Y.Z` targets `main`
+- [ ] `feature/*`, `research/*`, or `fix/*` targets the active `develop/vX.Y.Z`; a public release targets `main` from `develop/vX.Y.Z` or, when intentionally used, `release/vX.Y.Z`
 - [ ] If this PR targets `main`, it will be merged with the normal merge-commit method rather than squash or rebase merging
 
 ## Canonical source impact
