@@ -7,7 +7,10 @@ from scripts.check_release_changelog import check_release_heading
 
 class ReleaseChangelogTests(unittest.TestCase):
     def test_accepts_exact_dated_release_heading(self) -> None:
-        check_release_heading("## Unreleased\n\n## 0.4.0 — 2026-08-31\n", "0.4.0")
+        check_release_heading(
+            "## Unreleased\n\n## 0.4.0 — 2026-08-31\n\n- Released change.\n",
+            "0.4.0",
+        )
 
     def test_rejects_missing_release_heading(self) -> None:
         with self.assertRaises(ValueError):
@@ -55,9 +58,20 @@ class ReleaseChangelogTests(unittest.TestCase):
         text = (
             "## Unreleased\n\n"
             "- Change that was not moved into the release section.\n\n"
-            "## 0.4.0 — 2026-08-31\n"
+            "## 0.4.0 — 2026-08-31\n\n"
+            "- Released change.\n"
         )
         with self.assertRaisesRegex(ValueError, "must be empty"):
+            check_release_heading(text, "0.4.0")
+
+    def test_rejects_empty_dated_release_section(self) -> None:
+        text = (
+            "## Unreleased\n\n"
+            "## 0.4.0 — 2026-08-31\n\n"
+            "## 0.3.0 — 2026-08-30\n\n"
+            "- Earlier change.\n"
+        )
+        with self.assertRaisesRegex(ValueError, "must contain release contents"):
             check_release_heading(text, "0.4.0")
 
     def test_unreleased_only_is_valid_development_state_outside_release_gate(self) -> None:
