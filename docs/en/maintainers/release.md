@@ -42,7 +42,7 @@ Before publication, move the relevant `Unreleased` changes in `CHANGELOG.md` int
 ## X.Y.Z — YYYY-MM-DD
 ```
 
-Keep a new `## Unreleased` section for later development, and verify that the dated section matches the changes that will actually be published. Keep that new `## Unreleased` section empty until publication is complete; any release-bound changes must be moved into the dated section before this gate passes.
+Keep a new `## Unreleased` section for later development, and verify that the dated section matches the changes that will actually be published. Keep that new `## Unreleased` section empty until publication is complete; any release-bound changes must be moved into the dated section before this gate passes. The dated release section itself must contain release content rather than being an empty marker.
 
 Check the publication boundary explicitly:
 
@@ -156,11 +156,13 @@ gh release create "$TAG" "${ASSETS[@]}" \
   --notes "$(cat .github/release-validation-note.md)"
 ```
 
+The validation note supplied with `--notes` is part of the publication contract and is checked again after publication. If you publish through the GitHub web interface instead, include the same `.github/release-validation-note.md` text in the Release body.
+
 Do not use an existing release as a way to silently replace already published artifacts. Ship a patch release when published contents need correction.
 
 ## 8. Verify the published Release
 
-After publication, verify both that the remote tag still resolves to the manifest `source_commit` and that the GitHub Release matches the final manifest. Example using GitHub CLI:
+After publication, verify both that the remote tag still resolves to the manifest `source_commit` and that the GitHub Release satisfies the final publication contract. Example using GitHub CLI:
 
 ```bash
 TAG="v$(cat VERSION)"
@@ -177,7 +179,7 @@ python scripts/verify_published_release.py \
   --tag "$TAG"
 ```
 
-These are separate boundaries. `release-remote-tag-contract` revalidates the full release set and then verifies that the remote tag resolves to the manifest `source_commit`; `verify_published_release.py` rechecks the manifest version and tag, then verifies the published asset names, sizes, and digests. Neither check substitutes for the other.
+These are separate boundaries. `release-remote-tag-contract` revalidates the full release set and then verifies that the remote tag resolves to the manifest `source_commit`. `verify_published_release.py` independently rechecks the manifest version and tag, requires a non-draft, non-prerelease Release whose body contains `.github/release-validation-note.md`, and then verifies the published asset names, sizes, and digests. Neither check substitutes for the other.
 
 ## 9. Start the next development line
 
