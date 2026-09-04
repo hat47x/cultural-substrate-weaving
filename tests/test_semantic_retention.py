@@ -38,6 +38,20 @@ class SemanticRetentionTests(unittest.TestCase):
                         f"{locale}/{relative_path} lost required semantic: {phrase}",
                     )
 
+    def test_readmes_do_not_treat_debinding_as_target_evidence(self):
+        ja = (ROOT / "README.md").read_text(encoding="utf-8")
+        en = (ROOT / "README.en.md").read_text(encoding="utf-8")
+
+        self.assertIn("対象側の材料によって独立に支えられた部分だけ", ja)
+        self.assertIn("体系の権威から切り離せたことを示すだけ", ja)
+        self.assertNotIn("残った構造は、体系ではなく対象に属する", ja)
+        self.assertNotIn("生存所見", ja)
+
+        self.assertIn("independently supported by target-side material", en)
+        self.assertIn("de-bound from the framework's authority", en)
+        self.assertNotIn("What remains belongs to the target", en)
+        self.assertNotIn("surviving findings", en)
+
 
 if __name__ == "__main__":
     unittest.main()
