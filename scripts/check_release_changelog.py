@@ -4,9 +4,11 @@ from __future__ import annotations
 import argparse
 import re
 import sys
+from datetime import date
 from pathlib import Path
 
 DATE = r"\d{4}-\d{2}-\d{2}"
+UNRELEASED_HEADING = "## Unreleased"
 
 
 def release_headings(text: str, version: str) -> list[str]:
@@ -25,10 +27,30 @@ def check_release_heading(text: str, version: str) -> None:
             f"CHANGELOG release boundary duplicated for version {version}: {len(matches)} headings"
         )
 
+    release_date = matches[0].rsplit(" — ", 1)[1]
+    try:
+        date.fromisoformat(release_date)
+    except ValueError as exc:
+        raise ValueError(
+            f"CHANGELOG release boundary has an invalid calendar date: {release_date}"
+        ) from exc
+
+    unreleased_count = sum(
+        1 for line in text.splitlines() if line == UNRELEASED_HEADING
+    )
+    if unreleased_count != 1:
+        raise ValueError(
+            "CHANGELOG must keep exactly one '## Unreleased' heading after freezing the release boundary; "
+            f"found {unreleased_count}"
+        )
+
 
 def main() -> int:
     parser = argparse.ArgumentParser(
-        description="Require an explicit dated CHANGELOG heading for a release version."
+        description=(
+            "Require one valid dated CHANGELOG heading for a release version and "
+            "exactly one Unreleased heading for subsequent development."
+        )
     )
     parser.add_argument("--version", required=True, help="Release version without the v prefix")
     parser.add_argument(
