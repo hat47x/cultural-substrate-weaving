@@ -42,7 +42,7 @@ git log --oneline --left-right origin/main...HEAD
 ## X.Y.Z — YYYY-MM-DD
 ```
 
-その後の開発に使う新しい `## Unreleased` 節は残します。実際に公開する変更内容と、日付付きの節の記載が一致していることも確認します。新しい `## Unreleased` 節は公開が完了するまで空のままにし、公開対象の変更が残っている場合は、日付付きの節へ移してからこの検査を通します。
+その後の開発に使う新しい `## Unreleased` 節は残します。実際に公開する変更内容と、日付付きの節の記載が一致していることも確認します。新しい `## Unreleased` 節は公開が完了するまで空のままにし、公開対象の変更が残っている場合は、日付付きの節へ移してからこの検査を通します。日付付きの節そのものも空にはせず、公開する内容を記載します。
 
 日付付きの公開境界が一つだけ存在することを、明示的に検査します。
 
@@ -156,11 +156,13 @@ gh release create "$TAG" "${ASSETS[@]}" \
   --notes "$(cat .github/release-validation-note.md)"
 ```
 
+`--notes`で追加する検証状況の注記も公開契約の一部であり、公開後にもう一度確認します。GitHubのWeb画面から公開する場合も、Release本文に`.github/release-validation-note.md`と同じ内容を含めます。
+
 既存のReleaseへ成果物を追加・修正する必要がある場合も、公開済み版を黙って差し替える運用にはしません。原則としてパッチ版を作ります。
 
 ## 8. 公開済みReleaseを検証する
 
-公開後は、GitHub上のReleaseが最終manifestと一致していることに加え、リモートタグが引き続きmanifestの生成元コミットを指していることを確認します。GitHub CLIを使う場合の例です。
+公開後は、リモートタグが引き続きmanifestの生成元コミットを指していることと、GitHub上のReleaseが最終的な公開契約を満たしていることの両方を確認します。GitHub CLIを使う場合の例です。
 
 ```bash
 TAG="v$(cat VERSION)"
@@ -177,7 +179,7 @@ python scripts/verify_published_release.py \
   --tag "$TAG"
 ```
 
-ここでは二つの異なる境界を確認します。`release-remote-tag-contract`はrelease set全体を再検証したうえで、リモートタグが最終的に指すコミットとmanifestの`source_commit`を照合します。`verify_published_release.py`は、manifestに記載された版とタグ名、成果物名、サイズ、ダイジェストをGitHub Release上の実物と照合します。片方の成功を、もう片方の代わりにはしません。
+ここでは二つの異なる境界を確認します。`release-remote-tag-contract`はrelease set全体を再検証したうえで、リモートタグが最終的に指すコミットとmanifestの`source_commit`を照合します。`verify_published_release.py`は独立してmanifestの版とタグ名を再確認し、Releaseがdraftやprereleaseではなく、本文に`.github/release-validation-note.md`の開示文が含まれていることを確かめたうえで、成果物名、サイズ、ダイジェストをGitHub Release上の実物と照合します。片方の成功を、もう片方の代わりにはしません。
 
 ## 9. 次の開発線を始める
 
