@@ -52,6 +52,20 @@ class SemanticRetentionTests(unittest.TestCase):
         self.assertNotIn("What remains belongs to the target", en)
         self.assertNotIn("surviving findings", en)
 
+    def test_usage_context_keeps_research_and_generation_exits_distinct(self):
+        ja = (ROOT / "docs" / "ja" / "usage-context.md").read_text(encoding="utf-8")
+        en = (ROOT / "docs" / "en" / "usage-context.md").read_text(encoding="utf-8")
+
+        self.assertIn("調査・診断では", ja)
+        self.assertIn("生成・構成では", ja)
+        self.assertIn("来歴を保った構成資源", ja)
+        self.assertNotIn("対象側で仮説を検証する材料がない問題", ja)
+
+        self.assertIn("For research and diagnosis", en)
+        self.assertIn("For generation and composition", en)
+        self.assertIn("retained with provenance as compositional resources", en)
+        self.assertNotIn("tasks without material capable of validating structural hypotheses", en)
+
 
 if __name__ == "__main__":
     unittest.main()
