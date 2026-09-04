@@ -18,6 +18,13 @@ from check_release_tag import (  # noqa: E402
 )
 
 
+FROZEN_CHANGELOG = (
+    "## Unreleased\n\n"
+    "## 0.5.0 — 2026-09-04\n\n"
+    "- Released change.\n"
+)
+
+
 class ReleaseTagContractTests(unittest.TestCase):
     def test_tag_matches_version(self) -> None:
         self.assertEqual(validate_tag_against_version("v0.5.0", "0.5.0"), [])
@@ -50,6 +57,19 @@ class ReleaseTagContractTests(unittest.TestCase):
         )
         self.assertTrue(any("CHANGELOG release boundary missing" in error for error in errors))
 
+    def test_publication_rejects_empty_dated_release_section(self) -> None:
+        head = "a" * 40
+        errors = validate_release_publication(
+            "v0.5.0",
+            "0.5.0",
+            "0.5.0",
+            head,
+            head,
+            "",
+            "## Unreleased\n\n## 0.5.0 — 2026-09-04\n",
+        )
+        self.assertTrue(any("must contain release contents" in error for error in errors))
+
     def test_publication_rejects_stale_manifest_source_commit(self) -> None:
         errors = validate_release_publication(
             "v0.5.0",
@@ -58,7 +78,7 @@ class ReleaseTagContractTests(unittest.TestCase):
             "a" * 40,
             "b" * 40,
             "",
-            "## Unreleased\n\n## 0.5.0 — 2026-09-04\n",
+            FROZEN_CHANGELOG,
         )
         self.assertTrue(any("source_commit mismatch at tag gate" in error for error in errors))
 
@@ -71,7 +91,7 @@ class ReleaseTagContractTests(unittest.TestCase):
             head,
             head,
             " M CHANGELOG.md",
-            "## Unreleased\n\n## 0.5.0 — 2026-09-04\n",
+            FROZEN_CHANGELOG,
         )
         self.assertTrue(any("clean Git worktree" in error for error in errors))
 
@@ -84,7 +104,7 @@ class ReleaseTagContractTests(unittest.TestCase):
             head,
             head,
             "",
-            "## Unreleased\n\n## 0.5.0 — 2026-09-04\n",
+            FROZEN_CHANGELOG,
         )
         self.assertEqual(errors, [])
 
