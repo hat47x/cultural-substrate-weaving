@@ -53,10 +53,10 @@
 
 ### 読み込み順
 
-- **本スキルを使うと決めた後**：`00-cognitive-stance.md`を最初に一度読む。同じラウンドで機械的に繰り返し読み込まない。
+- **本スキルを使うと決めた後**：`core/cognitive-stance.md`を最初に一度読む。同じラウンドで機械的に繰り返し読み込まない。
 - **限定利用**：認知姿勢を置いた後、直接必要な参照へ進む。
-- **探索利用**：認知姿勢を置き、`01-scope-and-facts.md`を確認する。材料が多ければ`10-integration.md`を使う。文化体系は通常probeから始めるが、候補想起をモデルの自然連想だけに任せない。必要なら`methods/system-selection.md`の状態格子・時間・経路などのアンカーから構造型の異なる少数の候補を想起・検索してpreviewし、`02a-framework-application.md`へ進む。
-- **反復分析**：`00-iteration.md`を読む。長い作業で、対象より既存の説明や規則が前へ出ている兆候があれば、`00-cognitive-stance.md`の必要箇所へ戻る。
+- **探索利用**：認知姿勢を置き、`methods/scope-and-facts.md`を確認する。材料が多ければ`methods/integration.md`を使う。文化体系は通常probeから始めるが、候補想起をモデルの自然連想だけに任せない。必要なら`methods/system-selection.md`の状態格子・時間・経路などのアンカーから構造型の異なる少数の候補を想起・検索してpreviewし、`methods/framework-application.md`へ進む。
+- **反復分析**：`core/iteration.md`を読む。長い作業で、対象より既存の説明や規則が前へ出ている兆候があれば、`core/cognitive-stance.md`の必要箇所へ戻る。
 - **人間／Taiheki**：人間が登場しただけでは読まない。明示指定または身体的一貫性そのものが探索対象の場合だけ読む。
 
 参照数は固定しない。一括読み込みを避け、対象固有の情報は動的層に置く。
