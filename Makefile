@@ -38,6 +38,7 @@ release-validate:
 
 living-lab-check:
 	python scripts/validate_living_lab.py
+	python scripts/validate_living_lab.py --record-set research/living-lab/observations/*.json
 
 living-lab-summary:
 	python scripts/summarize_living_lab.py
