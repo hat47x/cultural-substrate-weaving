@@ -42,7 +42,7 @@ Before publication, move the relevant `Unreleased` changes in `CHANGELOG.md` int
 ## X.Y.Z — YYYY-MM-DD
 ```
 
-Keep a new `## Unreleased` section for later development, and verify that the dated section matches the changes that will actually be published.
+Keep a new `## Unreleased` section for later development, and verify that the dated section matches the changes that will actually be published. Keep that new `## Unreleased` section empty until publication is complete; any release-bound changes must be moved into the dated section before this gate passes.
 
 Check the publication boundary explicitly:
 
