@@ -65,6 +65,7 @@ Review at least:
 
 - `dist/reports/validation-report.json`
 - `dist/reports/token-budget.json`
+- `dist/reports/living-lab-observation-summary.json`
 - `dist/release-manifest.json`
 - locale-specific ZIP packages under `dist/packages/`
 
