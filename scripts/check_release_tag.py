@@ -8,7 +8,7 @@ import sys
 from pathlib import Path
 
 from check_release_changelog import check_release_heading
-from common import git_head
+from common import git_head, git_worktree_changes
 
 VERSION_PATTERN = re.compile(r"^\d+\.\d+\.\d+$")
 TAG_PATTERN = re.compile(r"^v\d+\.\d+\.\d+$")
@@ -47,11 +47,17 @@ def validate_release_publication(
     manifest_version: str,
     manifest_source_commit: str,
     current_head: str,
+    worktree_changes: str,
     changelog_text: str,
 ) -> list[str]:
-    """Validate the publication-time tag contract against the exact local release commit."""
+    """Validate the publication-time tag contract against the exact clean local release commit."""
     version = version.strip()
     errors = validate_release_tag(tag, version, manifest_version)
+    if worktree_changes:
+        errors.append(
+            "release tag gate requires a clean Git worktree; commit or discard changes first: "
+            + worktree_changes.replace("\n", "; ")
+        )
     if manifest_source_commit != current_head:
         errors.append(
             "release manifest source_commit mismatch at tag gate: "
@@ -88,7 +94,7 @@ def main() -> int:
     parser = argparse.ArgumentParser(
         description=(
             "Verify that a release tag matches VERSION and the final release manifest, "
-            "that the manifest was produced from the current HEAD, and that CHANGELOG "
+            "that the manifest was produced from the current clean HEAD, and that CHANGELOG "
             "has a dated boundary for the release version."
         )
     )
@@ -118,6 +124,7 @@ def main() -> int:
         manifest_version = read_manifest_version(args.manifest)
         manifest_source_commit = read_manifest_source_commit(args.manifest)
         current_head = git_head()
+        worktree_changes = git_worktree_changes()
         changelog_text = args.changelog.read_text(encoding="utf-8")
     except (OSError, json.JSONDecodeError, RuntimeError, ValueError) as exc:
         print(f"ERROR: {exc}", file=sys.stderr)
@@ -129,6 +136,7 @@ def main() -> int:
         manifest_version,
         manifest_source_commit,
         current_head,
+        worktree_changes,
         changelog_text,
     )
     if errors:
@@ -138,8 +146,8 @@ def main() -> int:
 
     print(
         f"Release tag {args.tag} matches VERSION and the final release manifest, "
-        "the manifest source_commit matches the current HEAD, and the CHANGELOG "
-        "release boundary is frozen."
+        "the worktree is clean, the manifest source_commit matches the current HEAD, "
+        "and the CHANGELOG release boundary is frozen."
     )
     return 0
 
