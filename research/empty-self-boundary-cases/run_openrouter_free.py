@@ -16,6 +16,7 @@ API_URL = "https://openrouter.ai/api/v1/chat/completions"
 API_KEY_ENV = "OPENROUTER_API_KEY"
 REPO_ROOT = Path(__file__).resolve().parents[2]
 PRIVATE_REPO_DIRS = (REPO_ROOT / ".tmp", REPO_ROOT / ".living-lab")
+TRACKED_PRIVATE_PATHS = {(REPO_ROOT / ".living-lab" / "README.md").resolve()}
 
 
 def is_free_model(model: str) -> bool:
@@ -72,8 +73,12 @@ def resolve_output_path(path: Path) -> Path:
     try:
         resolved.relative_to(REPO_ROOT)
     except ValueError:
-        # A path outside this checkout may be an intentionally private working directory.
         return resolved
+
+    if resolved in TRACKED_PRIVATE_PATHS:
+        raise ValueError(
+            "raw response output must not overwrite a tracked file inside a private workspace"
+        )
 
     for private_dir in PRIVATE_REPO_DIRS:
         try:
@@ -95,11 +100,7 @@ def parse_args() -> argparse.Namespace:
             "is explicitly free and that no fallback or paid plugin fields are present."
         )
     )
-    parser.add_argument(
-        "--model",
-        required=True,
-        help="openrouter/free or a :free model slug",
-    )
+    parser.add_argument("--model", required=True, help="openrouter/free or a :free model slug")
     parser.add_argument(
         "--request",
         type=Path,
@@ -114,7 +115,7 @@ def parse_args() -> argparse.Namespace:
         type=Path,
         help=(
             "path for the raw API response JSON; repository-local output is allowed only "
-            "under .tmp/ or .living-lab/"
+            "under .tmp/ or ignored .living-lab/ paths"
         ),
     )
     parser.add_argument(
@@ -178,8 +179,6 @@ def main() -> int:
             response_body = response.read()
             status = getattr(response, "status", 200)
     except urllib.error.HTTPError as exc:
-        # Do not retry with another model or provider. HTTP errors are execution events,
-        # not evidence that the generated content failed.
         print(f"OpenRouter request returned HTTP {exc.code}; no fallback attempted", file=sys.stderr)
         return 3
     except urllib.error.URLError as exc:
