@@ -2,7 +2,7 @@
 
 - 最新の全体見直し: 2026-09-04
 - 初回の開発文書一括見直し: 2026-09-01
-- 対象: 公開トップページ、利用者向けガイド、日本語で記述する利用者向け実行文、開発・保守・研究・実験・運用文書
+- 対象: 公開トップページ、利用者向けガイド、公開リリース文、日本語で記述する利用者向け実行文、開発・保守・研究・実験・運用文書
 - 原則: 内容と技術的な意味を確定した後、自然な日本語であることを最優先して文書全体を読み直す
 
 ## この記録の目的
@@ -17,9 +17,10 @@
 
 次の文書は、全文を日本語として読み直した状態を`natural-japanese-review-manifest.json`で管理する。すでに十分自然な文書は、記録のためだけに書き換えない。
 
-### 公開トップページと利用者向けガイド
+### 公開トップページ、利用者向けガイド、公開リリース文
 
 - `README.md`
+- `.github/release-validation-note.md`の日本語部分
 - `docs/ja/getting-started.md`
 - `docs/ja/usage-context.md`
 - `docs/ja/platforms/chatgpt-gpt.md`
@@ -27,6 +28,8 @@
 - `docs/ja/platforms/codex.md`
 - `docs/ja/platforms/microsoft-copilot.md`
 - `docs/ja/platforms/project-instructions.md`
+
+Release validation noteはGitHub Releaseへ利用者向けの検証状況としてそのまま掲載される。日本語を含む公開文であるため、技術的な公開契約とは分けたまま、日本語部分の鮮度を管理する。
 
 ### 利用者向け実行文
 
@@ -84,7 +87,9 @@ GitHub Actions無効化後のローカル検査を再点検し、旧workflowに�
 
 また、`docs/ja/maintainers/kj-atlas-merge-semantics-boundary.md`を全文で読み直した。KJ Atlas固有の実装語彙とCSWの方法論正本を分ける技術的な意味を確認したうえで、日本語本文はそのままで自然に読めると判断し、記録のためだけの本文変更は行わなかった。鮮度管理対象への登録だけを追加した。
 
-方法論正本の意味には触れておらず、今回の見直しは開発・配布成果物の保守境界と研究・保守文書の推敲記録に限っている。
+Living Labの公開記録がprospectiveな観測だけでなく、自然な実作業を後から匿名化・抽象化したretrospectiveな記録も含むようになったことに合わせ、`.github/release-validation-note.md`も全文を読み直した。公開時の検証状況説明が両者を区別し、技術的なrelease checkやpackage検証を方法論の有効性証拠へ読み替えないことを確認したうえで、同ファイルを鮮度管理対象へ追加した。
+
+方法論正本の意味には触れておらず、今回の見直しは開発・配布成果物の保守境界と研究・保守・公開文書の推敲記録に限っている。
 
 ## 対象外として扱うもの
 
