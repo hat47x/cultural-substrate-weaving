@@ -49,7 +49,11 @@ check: repository-contracts generated-artifacts-check validate japanese-docs-che
 
 release-check: check package release-validate
 
-release-tag-contract: release-validate
+release-tag-contract: main-contract release-validate
+	@git merge-base --is-ancestor HEAD origin/main || { \
+		echo "release-tag-contract requires HEAD to be present in origin/main history; fetch origin and verify the public main commit first" >&2; \
+		exit 1; \
+	}
 	python scripts/check_release_tag.py --tag "$(TAG)"
 
 release-remote-tag-contract: release-validate
