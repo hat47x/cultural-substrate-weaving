@@ -65,6 +65,7 @@ make release-check
 
 - `dist/reports/validation-report.json`
 - `dist/reports/token-budget.json`
+- `dist/reports/living-lab-observation-summary.json`
 - `dist/release-manifest.json`
 - `dist/packages/` の言語別ZIP
 
