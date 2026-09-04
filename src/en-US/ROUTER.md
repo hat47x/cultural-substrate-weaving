@@ -53,10 +53,10 @@ Using many frameworks, reading them in full, or executing framework-native opera
 
 ### Loading order
 
-- **After deciding to use this skill**: read `00-cognitive-stance.md` once at the start. Do not reload it mechanically at every step of the same round.
+- **After deciding to use this skill**: read `core/cognitive-stance.md` once at the start. Do not reload it mechanically at every step of the same round.
 - **Limited use**: after establishing the cognitive stance, continue to the directly needed reference.
-- **Exploratory use**: establish the cognitive stance and then `01-scope-and-facts.md`; if material is numerous, use `10-integration.md`. Normally enter a framework through probe, but do not leave candidate recall to spontaneous model association. When useful, use the state-grid, temporal, path, and related anchors in `methods/system-selection.md` to recall or search a small set of structurally different candidates, preview them, and then continue to `02a-framework-application.md`.
-- **Iterative analysis**: read `00-iteration.md`. In long work, if an existing explanation or rule begins to outrank the target, return to the relevant part of `00-cognitive-stance.md`.
+- **Exploratory use**: establish the cognitive stance and then `methods/scope-and-facts.md`; if material is numerous, use `methods/integration.md`. Normally enter a framework through probe, but do not leave candidate recall to spontaneous model association. When useful, use the state-grid, temporal, path, and related anchors in `methods/system-selection.md` to recall or search a small set of structurally different candidates, preview them, and then continue to `methods/framework-application.md`.
+- **Iterative analysis**: read `core/iteration.md`. In long work, if an existing explanation or rule begins to outrank the target, return to the relevant part of `core/cognitive-stance.md`.
 - **Human / Taiheki**: do not load it merely because humans appear. Load it only when explicitly requested or when bodily consistency itself is the exploration target.
 
 Do not fix the number of references. Avoid loading everything at once, and keep target-specific information in the dynamic layer.
