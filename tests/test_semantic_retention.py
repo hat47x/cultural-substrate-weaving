@@ -66,6 +66,18 @@ class SemanticRetentionTests(unittest.TestCase):
         self.assertIn("retained with provenance as compositional resources", en)
         self.assertNotIn("tasks without material capable of validating structural hypotheses", en)
 
+    def test_usage_context_distinguishes_prospective_and_retrospective_records(self):
+        ja = (ROOT / "docs" / "ja" / "usage-context.md").read_text(encoding="utf-8")
+        en = (ROOT / "docs" / "en" / "usage-context.md").read_text(encoding="utf-8")
+
+        self.assertIn("prospective", ja)
+        self.assertIn("retrospective", ja)
+        self.assertNotIn("実作業を前向き（prospective）に観測しています", ja)
+
+        self.assertIn("prospective observations", en)
+        self.assertIn("retrospective records", en)
+        self.assertNotIn("being observed prospectively in real work", en)
+
 
 if __name__ == "__main__":
     unittest.main()
