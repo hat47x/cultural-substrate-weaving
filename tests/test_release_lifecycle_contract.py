@@ -40,6 +40,7 @@ class ReleaseLifecycleContractTests(unittest.TestCase):
         self.assertIn("post-package release contract", text)
         self.assertIn("make release-check", text)
         self.assertIn("make release-tag-contract", text)
+        self.assertIn("reruns the full `release-validate` contract", text)
         self.assertIn("clean Git worktree", text)
         self.assertIn("release_assets", text)
         self.assertIn("GitHub Actions are currently disabled", text)
@@ -49,6 +50,7 @@ class ReleaseLifecycleContractTests(unittest.TestCase):
         text = (ROOT / "docs" / "maintainers" / "release.md").read_text(encoding="utf-8")
         self.assertIn("Publication disclosure", text)
         self.assertIn(".github/release-validation-note.md", text)
+        self.assertIn("verified again from the published Release object", text)
         self.assertIn("gh release create --verify-tag", text)
         self.assertIn("not evidence that the method is empirically effective", text)
         self.assertIn("edit the notes deliberately", text)
@@ -65,6 +67,8 @@ class ReleaseLifecycleContractTests(unittest.TestCase):
     def test_publication_requires_explicit_changelog_main_history_and_tag_gates(self) -> None:
         text = (ROOT / "docs" / "maintainers" / "release.md").read_text(encoding="utf-8")
         self.assertIn("## X.Y.Z — YYYY-MM-DD", text)
+        self.assertIn("leave it empty until publication is complete", text)
+        self.assertIn("dated release section itself must contain release contents", text)
         self.assertIn("scripts/check_release_changelog.py", text)
         self.assertIn("make main-contract", text)
         self.assertIn("exactly two parents", text)
@@ -79,7 +83,8 @@ class ReleaseLifecycleContractTests(unittest.TestCase):
 
     def test_release_pr_template_keeps_changelog_publication_boundary_explicit(self) -> None:
         text = (ROOT / ".github" / "pull_request_template.md").read_text(encoding="utf-8")
-        self.assertIn("## X.Y.Z — YYYY-MM-DD", text)
+        self.assertIn("exactly one empty `## Unreleased` section", text)
+        self.assertIn("non-empty dated `## X.Y.Z — YYYY-MM-DD` section", text)
         self.assertIn("scripts/check_release_changelog.py", text)
         self.assertIn("before the final candidate `make release-check`", text)
 
@@ -87,6 +92,15 @@ class ReleaseLifecycleContractTests(unittest.TestCase):
         text = (ROOT / ".github" / "pull_request_template.md").read_text(encoding="utf-8")
         self.assertIn("a public release targets `main` from `develop/vX.Y.Z`", text)
         self.assertIn("when intentionally used, `release/vX.Y.Z`", text)
+
+    def test_release_pr_template_keeps_post_publication_verification_explicit(self) -> None:
+        text = (ROOT / ".github" / "pull_request_template.md").read_text(encoding="utf-8")
+        self.assertIn("reruns the full `release-validate` contract", text)
+        self.assertIn("revalidates the release set", text)
+        self.assertIn("scripts/verify_published_release.py", text)
+        self.assertIn("non-draft, non-prerelease Release", text)
+        self.assertIn(".github/release-validation-note.md", text)
+        self.assertIn("exact manifest-declared asset names, sizes, and digests", text)
 
     def test_localized_release_procedures_keep_the_same_publication_gates(self) -> None:
         ja = (ROOT / "docs" / "ja" / "maintainers" / "release.md").read_text(encoding="utf-8")
@@ -122,6 +136,8 @@ class ReleaseLifecycleContractTests(unittest.TestCase):
         text = (ROOT / "docs" / "maintainers" / "release.md").read_text(encoding="utf-8")
         self.assertIn("scripts/verify_published_release.py", text)
         self.assertIn("supplied tag to match the final manifest version", text)
+        self.assertIn("neither a draft nor a prerelease", text)
+        self.assertIn("required `.github/release-validation-note.md` disclosure", text)
         self.assertIn("remote tag", text)
         self.assertIn("source_commit", text)
         self.assertIn("published asset-name set", text)
