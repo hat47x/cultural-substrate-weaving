@@ -5,7 +5,7 @@ import stat
 import zipfile
 from pathlib import Path, PurePath
 
-from common import DIST, git_head, git_worktree_changes, locale_short, locales, manifest, sha256, version, write_text
+from common import DIST, RELEASE_REPORT_PATHS, git_head, git_worktree_changes, locale_short, locales, manifest, sha256, version, write_text
 
 ZIP_TIMESTAMP = (1980, 1, 1, 0, 0, 0)
 
@@ -79,6 +79,7 @@ def main() -> None:
             + changes
         )
     source_commit = git_head()
+    built_packages: list[Path] = []
 
     for locale in locales():
         suffix = locale
@@ -101,6 +102,7 @@ def main() -> None:
         ]
         for source, target, root_name in targets:
             zip_tree(source, target, root_name)
+            built_packages.append(target)
             print(target)
 
     files = []
@@ -112,12 +114,14 @@ def main() -> None:
         })
 
     release_assets = ["release-manifest.json"]
-    for root in (DIST / "packages", DIST / "reports"):
-        release_assets.extend(
-            release_relative_path(path, DIST)
-            for path in sorted(root.glob("*"))
-            if path.is_file()
-        )
+    release_assets.extend(
+        sorted(release_relative_path(path, DIST) for path in built_packages)
+    )
+    for relative in RELEASE_REPORT_PATHS:
+        report = DIST / relative
+        if not report.is_file():
+            raise RuntimeError(f"required release report is missing: {relative}")
+        release_assets.append(relative)
 
     write_text(
         DIST / "release-manifest.json",
