@@ -52,7 +52,7 @@ release-check: check package release-validate
 release-tag-contract: release-validate
 	python scripts/check_release_tag.py --tag "$(TAG)"
 
-release-remote-tag-contract:
+release-remote-tag-contract: release-validate
 	python scripts/check_remote_release_tag.py --tag "$(TAG)"
 
 clean:
