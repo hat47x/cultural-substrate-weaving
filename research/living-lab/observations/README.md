@@ -38,7 +38,7 @@ python scripts/validate_living_lab.py --record-set research/living-lab/observati
 python scripts/summarize_living_lab.py
 ```
 
-既定では`dist/reports/living-lab-observation-summary.json`へ出力され、通常の`make check`とCIでも生成される。このsummaryは評価スコアではない。roundごとの課題、発動状態、event、残差、再開条件、出所付きの解釈を後から読み返すための一覧である。
+既定では`dist/reports/living-lab-observation-summary.json`へ出力され、通常の`make check`でも生成される。GitHub Actionsは現在無効化されているため、GitHub上で自動生成されることは前提にしない。このsummaryは評価スコアではない。roundごとの課題、発動状態、event、残差、再開条件、出所付きの解釈を後から読み返すための一覧である。
 
 summaryに含まれる件数や分布は、観測集合の構成を確認するための補助情報にすぎない。KPI、勝敗、有用性、害、因果効果として解釈しない。
 
