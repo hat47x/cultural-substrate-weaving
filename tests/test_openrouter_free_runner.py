@@ -132,6 +132,28 @@ class OpenRouterFreeRunnerTests(unittest.TestCase):
         self.assertIn("OPENROUTER_API_KEY is not set", result.stderr)
         self.assertNotIn("must be under .tmp/ or .living-lab/", result.stderr)
 
+    def test_rejects_tracked_living_lab_readme(self):
+        result = self.run_runner(
+            "example/model:free",
+            {"messages": [{"role": "user", "content": "test"}]},
+            "--output",
+            str(ROOT / ".living-lab" / "README.md"),
+        )
+        self.assertEqual(result.returncode, 2)
+        self.assertIn("must not overwrite a tracked file", result.stderr)
+        self.assertNotIn("OPENROUTER_API_KEY is not set", result.stderr)
+
+    def test_private_living_lab_output_passes_guard_then_requires_key(self):
+        result = self.run_runner(
+            "example/model:free",
+            {"messages": [{"role": "user", "content": "test"}]},
+            "--output",
+            str(ROOT / ".living-lab" / "openrouter-run.json"),
+        )
+        self.assertEqual(result.returncode, 2)
+        self.assertIn("OPENROUTER_API_KEY is not set", result.stderr)
+        self.assertNotIn("must not overwrite a tracked file", result.stderr)
+
 
 if __name__ == "__main__":
     unittest.main()
