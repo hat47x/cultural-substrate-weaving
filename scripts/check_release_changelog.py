@@ -17,6 +17,7 @@ def release_headings(text: str, version: str) -> list[str]:
 
 
 def check_release_heading(text: str, version: str) -> None:
+    lines = text.splitlines()
     matches = release_headings(text, version)
     if not matches:
         raise ValueError(
@@ -35,21 +36,35 @@ def check_release_heading(text: str, version: str) -> None:
             f"CHANGELOG release boundary has an invalid calendar date: {release_date}"
         ) from exc
 
-    unreleased_count = sum(
-        1 for line in text.splitlines() if line == UNRELEASED_HEADING
-    )
-    if unreleased_count != 1:
+    unreleased_indexes = [
+        index for index, line in enumerate(lines) if line == UNRELEASED_HEADING
+    ]
+    if len(unreleased_indexes) != 1:
         raise ValueError(
             "CHANGELOG must keep exactly one '## Unreleased' heading after freezing the release boundary; "
-            f"found {unreleased_count}"
+            f"found {len(unreleased_indexes)}"
+        )
+
+    unreleased_index = unreleased_indexes[0]
+    release_index = lines.index(matches[0])
+    if unreleased_index > release_index:
+        raise ValueError(
+            "CHANGELOG '## Unreleased' must precede the frozen release boundary"
+        )
+
+    unreleased_body = lines[unreleased_index + 1 : release_index]
+    if any(line.strip() for line in unreleased_body):
+        raise ValueError(
+            "CHANGELOG '## Unreleased' must be empty after freezing the release boundary; "
+            "move release contents into the dated release section before publication"
         )
 
 
 def main() -> int:
     parser = argparse.ArgumentParser(
         description=(
-            "Require one valid dated CHANGELOG heading for a release version and "
-            "exactly one Unreleased heading for subsequent development."
+            "Require one valid dated CHANGELOG heading for a release version, "
+            "with exactly one empty Unreleased section reserved for subsequent development."
         )
     )
     parser.add_argument("--version", required=True, help="Release version without the v prefix")
