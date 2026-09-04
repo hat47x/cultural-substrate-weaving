@@ -74,6 +74,11 @@ class ReleaseLifecycleContractTests(unittest.TestCase):
         self.assertIn("scripts/check_release_changelog.py", text)
         self.assertIn("before the final candidate `make release-check`", text)
 
+    def test_release_pr_template_allows_develop_or_optional_release_branch_to_main(self) -> None:
+        text = (ROOT / ".github" / "pull_request_template.md").read_text(encoding="utf-8")
+        self.assertIn("a public release targets `main` from `develop/vX.Y.Z`", text)
+        self.assertIn("when intentionally used, `release/vX.Y.Z`", text)
+
     def test_localized_release_procedures_keep_the_same_publication_gates(self) -> None:
         ja = (ROOT / "docs" / "ja" / "maintainers" / "release.md").read_text(encoding="utf-8")
         en = (ROOT / "docs" / "en" / "maintainers" / "release.md").read_text(encoding="utf-8")
