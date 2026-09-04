@@ -42,6 +42,22 @@ class ManualValidationContractTests(unittest.TestCase):
         self.assertIn("release-remote-tag-contract: release-validate", makefile)
         self.assertIn("scripts/check_remote_release_tag.py", makefile)
 
+    def test_release_docs_list_all_required_reports(self) -> None:
+        ja_release = (ROOT / "docs" / "ja" / "maintainers" / "release.md").read_text(
+            encoding="utf-8"
+        )
+        en_release = (ROOT / "docs" / "en" / "maintainers" / "release.md").read_text(
+            encoding="utf-8"
+        )
+        for relative in (
+            "reports/validation-report.json",
+            "reports/token-budget.json",
+            "reports/living-lab-observation-summary.json",
+        ):
+            expected = f"`dist/{relative}`"
+            self.assertIn(expected, ja_release)
+            self.assertIn(expected, en_release)
+
     def test_main_shape_diagnostic_remains_local(self) -> None:
         makefile = (ROOT / "Makefile").read_text(encoding="utf-8")
         development = (ROOT / "docs" / "en" / "maintainers" / "development.md").read_text(
