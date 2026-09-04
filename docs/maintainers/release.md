@@ -42,7 +42,7 @@ TAG="v$(cat VERSION)"
 make release-tag-contract TAG="$TAG"
 ```
 
-This checks that the tag, `VERSION`, and the final release-manifest version agree. It is deliberately separate from `make release-check`, because the tag is an explicit publication-time input rather than a package-build input.
+This reruns the full `release-validate` contract immediately before the tag-specific checks, so the current manifest, packages, reports, hashes, clean worktree, and `source_commit == HEAD` relationship must still be valid. It then checks the intended tag against `VERSION` and the final manifest version and requires the dated CHANGELOG boundary to be frozen. The target remains separate from `make release-check` because the tag is an explicit publication-time input rather than a package-build input.
 
 After the tag exists remotely, use the remote-tag provenance gate:
 
@@ -50,7 +50,7 @@ After the tag exists remotely, use the remote-tag provenance gate:
 make release-remote-tag-contract TAG="$TAG"
 ```
 
-This fetches the exact remote tag, peels lightweight or annotated tag objects to the commit they ultimately reference, and requires that commit to equal the final manifest `source_commit`.
+This again reruns `release-validate` before the remote-tag-specific check. It then fetches the exact remote tag, peels lightweight or annotated tag objects to the commit they ultimately reference, and requires that commit to equal the final manifest `source_commit`.
 
 None of these commands by itself proves that the method is empirically effective.
 
@@ -116,13 +116,13 @@ The following checks used to be performed around the automated publication path.
 
 ### 1. Freeze the changelog boundary
 
-A development line may keep work under `## Unreleased`. Before public publication, freeze the release under exactly one dated heading:
+A development line may keep work under `## Unreleased`. Before public publication, move the release-bound contents under exactly one dated heading:
 
 ```text
 ## X.Y.Z — YYYY-MM-DD
 ```
 
-Then restore an `## Unreleased` section for later work.
+Keep exactly one new `## Unreleased` section before that dated section for later work, but leave it empty until publication is complete. The dated release section itself must contain release contents rather than serving as an empty marker.
 
 Validate the boundary explicitly:
 
@@ -148,7 +148,7 @@ TAG="v$(cat VERSION)"
 make release-tag-contract TAG="$TAG"
 ```
 
-Require all four checks to succeed. `make main-contract` verifies that the local `main` HEAD has exactly two parents, `make release-check` validates the actual release set from a clean worktree and records that HEAD as manifest `source_commit`, the ancestry check confirms that the commit is in `origin/main` history, and `make release-tag-contract` binds the intended tag to both `VERSION` and the final manifest version.
+Require all four checks to succeed. `make main-contract` verifies that the local `main` HEAD has exactly two parents, `make release-check` validates the actual release set from a clean worktree and records that HEAD as manifest `source_commit`, the ancestry check confirms that the commit is in `origin/main` history, and `make release-tag-contract` first revalidates the full release set and then binds the intended tag to `VERSION`, the final manifest version, the exact clean `HEAD`, and the frozen dated CHANGELOG boundary.
 
 These are local/manual gates. The two-parent shape does not prove pull-request provenance, and because GitHub branch protection and repository rulesets are not currently configured, these checks do not imply that an invalid direct push would be rejected remotely.
 
@@ -164,7 +164,7 @@ git push origin "$TAG"
 make release-remote-tag-contract TAG="$TAG"
 ```
 
-Do not retype a separate version string after the tag-version contract has passed. The remote-tag contract confirms that the remote tag resolves to the manifest `source_commit`; it does not rely on the GitHub Release `tag_name` or `target_commitish` as commit provenance.
+Do not retype a separate version string after the tag-version contract has passed. The remote-tag contract revalidates the full local release set again, then confirms that the remote tag resolves to the manifest `source_commit`; it does not rely on the GitHub Release `tag_name` or `target_commitish` as commit provenance.
 
 GitHub Actions do not publish the Release automatically. Create the GitHub Release explicitly, use `--verify-tag`, and publish exactly the files listed by `release_assets` in the final manifest.
 
@@ -176,6 +176,7 @@ After GitHub accepts the upload, rerun `make release-remote-tag-contract TAG="$T
 
 Remote-tag verification requires:
 
+- the full local release set to remain valid immediately before the tag-specific check;
 - the remote tag to exist;
 - lightweight or annotated tag structure to peel successfully to a commit; and
 - that resolved commit to match the final manifest `source_commit`.
@@ -184,21 +185,23 @@ Release-object verification requires:
 
 - the supplied tag to match the final manifest version;
 - the published tag to match that validated tag;
+- the Release to be neither a draft nor a prerelease;
+- the Release body to contain the required `.github/release-validation-note.md` disclosure, while allowing generated notes or other additional text;
 - the published asset-name set to match the manifest-declared set exactly, with no missing or extra/manual assets;
 - every asset to be in the uploaded state;
 - published byte sizes to match the final manifest; and
 - GitHub's published `sha256:` digest for every asset to match the final manifest, including a directly computed digest for `release-manifest.json`.
 
-These post-publication checks are intentionally separate from package construction and from each other. Rechecking the tag against the manifest prevents the same incorrect tag value from being passed circularly to both Release lookup and verification; resolving the remote tag back to `source_commit` prevents a moved tag from silently changing the commit associated with the published version. `gh release upload --clobber` does not remove unrelated pre-existing assets, so an existing Release with stale or manual extras must fail verification instead of being silently treated as an exact manifest publication.
+These post-publication checks are intentionally separate from package construction and from each other. Rechecking the tag against the manifest prevents the same incorrect tag value from being passed circularly to both Release lookup and verification; resolving the remote tag back to `source_commit` prevents a moved tag from silently changing the commit associated with the published version. The Release-object verifier independently checks publication state, disclosure text, and manifest-declared assets. `gh release upload --clobber` does not remove unrelated pre-existing assets, so an existing Release with stale or manual extras must fail verification instead of being silently treated as an exact manifest publication.
 
 ## Publication disclosure
 
 A technically valid release candidate is not evidence that the method is empirically effective. While the project remains under validation, newly created GitHub Releases must keep that distinction visible to readers who arrive directly at the Release page.
 
-- `.github/release-validation-note.md` is included in the notes for a newly created Release.
+- `.github/release-validation-note.md` is included in the notes for a newly created Release and is verified again from the published Release object.
 - Keep that note semantically aligned with the validation-stage wording in the top-level README.
 - Use `gh release create --verify-tag`; publication must refer to a tag that already exists remotely rather than allowing the CLI to synthesize one.
-- Re-uploading assets for an existing tag does not automatically correct the release notes. If the disclosure itself needs correction, edit the notes deliberately.
+- Re-uploading assets for an existing tag does not automatically correct the release notes. If the disclosure itself needs correction, edit the notes deliberately and rerun published-release verification.
 
 ## Relationship to release history
 
