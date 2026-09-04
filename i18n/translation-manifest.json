@@ -17,9 +17,9 @@
   },
   "files": {
     "ROUTER.md": {
-      "ja_sha256": "40a0da738e63ec697f8a77861079320e38b5dea765cc21f650c60ecbd9b4be58",
+      "ja_sha256": "f6f0463b727d790adc2b5fecd9d9b4dc74e251c13df08313279c25cf185b4f7a",
       "en_present": true,
-      "en_source_ja_sha256": "40a0da738e63ec697f8a77861079320e38b5dea765cc21f650c60ecbd9b4be58",
+      "en_source_ja_sha256": "f6f0463b727d790adc2b5fecd9d9b4dc74e251c13df08313279c25cf185b4f7a",
       "en_status": "translated"
     },
     "core/activation.md": {
