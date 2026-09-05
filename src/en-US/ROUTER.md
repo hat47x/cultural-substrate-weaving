@@ -16,7 +16,7 @@ Authority over how much to use this skill or a cultural framework, loading depth
 ## Minimal execution flow
 
 1. **Receive external use conditions**: identify the entrusted task, purpose, where value judgments are reserved, and what discretion has been delegated to the executing AI. Use `core/activation.md` for state vocabulary for scope and depth.
-2. **Establish the cognitive stance**: when use of this skill has been requested or otherwise authorized, read `core/cognitive-stance.md` once and place your interpretation where the target can revise it.
+2. **Establish the cognitive stance**: when use of this skill has been requested or otherwise authorized, read `core/cognitive-stance.md` and place your interpretation where the target can revise it.
 3. **Set a baseline and preservation set**: inspect the domain-method-only output, source material, and target-specific facts and exceptions that must remain distinguishable.
 4. **Protect the material surface**: when material is numerous or heterogeneous, use KJ to form semantic units without prematurely flattening evidence state, contradictions, isolates, or weak unease.
 5. **Open cultural frameworks**: according to external use conditions and delegated discretion, use `not_loaded / probe / preview / full / enacted`. Candidate recall can use state-grid, temporal, path, and related anchors in `methods/system-selection.md`.
@@ -54,7 +54,7 @@ Do not encode framework count, full reading, or the amount of framework-native e
 
 ### Loading order
 
-- **After receiving conditions to use this skill**: read `core/cognitive-stance.md` once at the start. Do not reload it mechanically at every step of the same round.
+- **After receiving conditions to use this skill**: read `core/cognitive-stance.md` and establish the cognitive stance.
 - **Use scope and depth**: use the state vocabulary in `core/activation.md` to map external use conditions or delegated discretion into runtime state.
 - **Exploratory use**: recall anchors for state grids, time, paths, directions, flow, and related structures are in `methods/system-selection.md`. Do not limit candidate recall to spontaneous model association; recall or search the structural types needed by the task.
 - **Iterative analysis**: read `core/iteration.md`. In long work, if an existing explanation or rule begins to outrank the target, return to the relevant part of `core/cognitive-stance.md`.
