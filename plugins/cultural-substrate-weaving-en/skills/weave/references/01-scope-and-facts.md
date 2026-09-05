@@ -26,7 +26,7 @@ Record skill-specific increment as a **new question, semantic unit, relation, st
 - Preserve contradiction and multiple plausible readings before integration.
 - When calling something sparse, missing, excessive, or biased, state the comparison set. Without one, report the measured value and defer normality judgment.
 
-**Do not use the same threshold for collection and externalization.** Low-confidence testimony, unexplained salience, and multiple plausible explanations may remain in research/KJ material when provenance and uncertainty are explicit. Apply a separate responsibility check before publication or execution.
+**Do not use the same threshold for collection and externalization.** Low-confidence testimony, unexplained salience, and multiple plausible explanations may remain in research/KJ material when provenance and uncertainty are explicit. Publication or execution thresholds follow domain criteria, external conditions, or delegated discretion.
 
 ## 2b. Coverage and recurrence
 
