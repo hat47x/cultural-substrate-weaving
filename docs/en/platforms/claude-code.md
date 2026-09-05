@@ -2,7 +2,7 @@
 
 This GitHub repository can be used as a Claude Plugin Marketplace.
 
-When a task needs current facts, external context, or additional source discovery, confirm that Claude Code's WebSearch/WebFetch tools are available. They are not required for KJ integration or structural exploration that can be completed from the supplied repository or material alone. If search is unavailable, do not guess missing external facts.
+When a task needs current facts, external context, or additional source discovery, confirm that Claude Code's WebSearch/WebFetch tools are available. They are not required for KJ integration or structural exploration that can be completed from the supplied repository or material alone. Treat search availability as part of the available information surface; whether unsupported areas may be handled as inference, hypothesis, or assertion follows the evidence standard and delegation supplied by the requester.
 
 `/plugin` opens the interactive plugin manager in terminal Claude Code. Installation details vary by surface.
 
@@ -54,9 +54,9 @@ If the Plugin Marketplace route is inconvenient, you can use Claude's Skills fea
 
 1. Download the `openai-skill-metered` or `openai-skill-interactive` ZIP from GitHub Releases (the same package used in [Use with Codex](codex.md)).
 2. If your Claude surface provides Skills upload, upload the ZIP as-is.
-3. Test both activation and non-activation behavior after installation.
+3. After installation, check invocation behavior under that surface's workspace and project settings.
 
-**Caveat**: this SKILL.md does not set the explicit-invocation-only flag (`disable-model-invocation`) used by the Plugin package (`cultural-substrate-weaving-en`). Activation control can therefore differ from the plugin. Prefer the Plugin Marketplace route when explicit invocation must be preserved strictly.
+Neither the Plugin package nor the uploaded Skill package uses a repository-level setting that forces explicit-only invocation. If you want explicit-only invocation, or want to allow implicit invocation, configure that through Claude-side settings, project instructions, or the author's operating policy.
 
 ## WSL
 
@@ -68,11 +68,13 @@ This can appear when plugin commands are invoked from a surface that does not ex
 
 ## Invoke
 
+For explicit invocation, for example:
+
 ```text
 /cultural-substrate-weaving-en:weave Review the responsibility boundaries and time-lag effects in this architecture.
 ```
 
-The plugins use explicit invocation by default to reduce unnecessary context and token consumption.
+This is one invocation route, not a requirement imposed by the skill. Actual activation scope follows Claude product settings, workspace/project settings, and the instructions or delegation supplied by the author.
 
 ## Update
 
@@ -81,4 +83,4 @@ The plugins use explicit invocation by default to reduce unnecessary context and
 /reload-plugins
 ```
 
-Install one locale unless you have a clear reason to keep both.
+Install one locale or both according to your workspace or author-defined configuration.
