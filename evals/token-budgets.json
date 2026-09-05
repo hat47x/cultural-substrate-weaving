@@ -16,7 +16,8 @@
     "Author-authority runtime rebaseline: measured current source ja-JP 75217 -> 77571, en-US 74114 -> 76461 (+2354 / +2347). Bought an explicit separation between recording/state semantics and decision authority, moved use scope/loading depth/stopping/adoption back to requester or delegated execution context, and converted former autonomous stop/applicability rules into observable signals.",
     "Delegated method-boundary rebaseline: ja-JP 77571 -> 79916, en-US 76461 -> 78790 (+2345 / +2329). Bought the same decision-authority boundary at method level: framework rejection and Taiheki activation gates became observable/delegated states; intent inference is preserved with explicit evidence-state separation instead of a blanket ban; orthogonal multi-framework composition is reopened while attribution safeguards remain; fixed enumeration and stop prerequisites return to external use conditions or delegated judgment.",
     "Framework-attribution rebaseline: ja-JP 79916 -> 80844, en-US 78790 -> 79875 (+928 / +1085). Bought framework-application semantics that admit discrete and continuous position structures, replace a fixed two-pass assignment rule with reproducibility testing appropriate to the convention, preserve failed derivations as unresolved/exploratory material instead of discarding them wholesale, and keep unfalsifiable attribution claims from becoming target-supported without making framework rejection an automatic skill decision.",
-    "KJ return-check reproducibility rebaseline: ja-JP 80844 -> 81121, en-US 79875 -> 80147 (+277 / +272). Traced the fixed two-pass return-check rule to an AI-evaluation experiment (e5443f5), not the KJ primary-source lineage; kept return-to-material and label-vs-group diagnosis while replacing the borrowed fixed repetition count with independence-increasing reruns appropriate to the case, and marked the rerun method explicitly as a generative-AI-era adaptation."
+    "KJ return-check reproducibility rebaseline: ja-JP 80844 -> 81121, en-US 79875 -> 80147 (+277 / +272). Traced the fixed two-pass return-check rule to an AI-evaluation experiment (e5443f5), not the KJ primary-source lineage; kept return-to-material and label-vs-group diagnosis while replacing the borrowed fixed repetition count with independence-increasing reruns appropriate to the case, and marked the rerun method explicitly as a generative-AI-era adaptation.",
+    "KJ gap-check count reduction: ja-JP 81121 -> 81112, en-US 80147 -> 80142 (-9 / -5). Traced the fixed one-pass oversight check to the 2026-08-23 relaxation (3988e12), not to the KJ primary-source lineage; removed only the arbitrary repetition count while preserving both gap-seeking and the prohibition on inventing gaps. Corpus tripwires ratcheted down by the same reductions."
   ],
   "router_max_bytes": {
     "ja-JP": 10000,
@@ -35,8 +36,8 @@
     "en-US": 14566
   },
   "corpus_max_bytes": {
-    "ja-JP": 81500,
-    "en-US": 80500
+    "ja-JP": 81491,
+    "en-US": 80495
   },
   "m365_instructions_max_chars": 8000,
   "gpt_knowledge_max_files": 10
