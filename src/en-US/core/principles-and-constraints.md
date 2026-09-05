@@ -1,19 +1,34 @@
 # Principles and constraints
 
-Read this when separating what belongs to a cultural framework, what belongs to the target, and what emerged from their contact.
+Read this when separating what belongs to a cultural framework, what belongs to the target, what emerged from their contact, and what belongs to decision authority outside the skill.
+
+## Location of decision authority
+
+This skill provides cognitive operations and recording forms: generating questions, integrating material, opening cultural frameworks, transforming relations, and preserving distinctions in provenance and evidence state.
+
+**Static rules inside this skill do not independently decide value judgments, how much to use the skill, how much to use a framework, loading depth, adoption, stopping, publication, or transition into action.** Those decisions belong to the requester or author, the calling context, higher-level settings or instructions, or explicit delegation to the executing AI.
+
+When judgment is delegated to the executing AI, act within that delegation. Keep this distinct from adding value criteria specific to this skill.
+
+Also separate:
+
+1. **Operations that preserve distinctions in information**: keep target-derived, framework-derived, and contact-derived material, evidence state, provenance, and decision actor distinguishable.
+2. **Operations that decide action from those distinctions**: decide what to adopt, say, publish, deepen, or stop.
+
+Do not treat the recording form in the first category as if it automatically owned authority in the second.
 
 ## Dual fidelity
 
-This skill protects two forms of fidelity at the same time.
+As an exploration and recording method, this skill keeps two forms of fidelity distinguishable.
 
-1. **Fidelity to the target**: do not force the target to conform to a cultural framework.
-2. **Fidelity to the framework**: do not prematurely thin a cultural framework into generic operators or a short relation grammar.
+1. **Fidelity to the target**: preserve differences between target and framework, exceptions, and target specificity.
+2. **Fidelity to the framework**: preserve primary sources, lineage, positions, paths, cycles, symbols, and native operations rather than prematurely thinning them into generic operators.
 
-Protecting only one side leads either to imposition on the target or to an emptied framework.
+This distinction is an information structure that lets the requester or executing AI later examine correspondences.
 
 ## Attribution principle
 
-**Return structures obtained from external frameworks to the target for validation. Treat only parts independently supported by target-side material as target findings.**
+**Return structures obtained from external frameworks to the target for validation. Treat only parts independently supported by target-side material as findings that have been confirmed on the target side.**
 
 A statement remaining natural after framework vocabulary is removed shows that it has been de-bound from the framework's authority; it does not create new target-side evidence.
 
@@ -22,43 +37,41 @@ Distinguish when needed:
 - `target_supported`: independently supported by target-side sources, observation, or falsification.
 - `framework_generated`: a question, hypothesis, contrast, mapping candidate, or compositional resource generated from a cultural framework.
 - `cross_field_emergent`: a third structure arising from contact among frameworks, or between a framework and KJ.
-- `unresolved`: a residual whose usefulness, attribution, or confidence is not yet decided.
+- `unresolved`: a residual on which usefulness, attribution, or confidence has not yet been decided.
+
+These labels preserve provenance and evidence state. They do not automatically decide adoption, publication, or stopping.
 
 ## Target specificity
 
-State the range explained by existing categories and **preserve what exceeds them as target-specific information.** Prefer concreteness and exceptions to a complete explanation.
+State the range explained by existing categories and **preserve what exceeds them as target-specific information.** Keep concreteness and exceptions before compressing toward a complete explanation.
 
-Do not rewrite target-specific purpose, properties, or exceptions for convenience. Otherwise later mappings measure the task framing rather than the target.
+If target-specific purposes, properties, or exceptions are rewritten, preserve that transformation in provenance. This helps later mappings distinguish the original target from a working reconstruction.
 
 ## Entrusted scope
 
-**Do not expand the entrusted scope on your own, and do not narrow it through excessive self-restraint.** Failing to return a judgment where judgment was entrusted departs from the request just as much as making a judgment that was never entrusted.
+**Do not expand the entrusted scope on your own, and do not narrow it through excessive self-restraint.** Whether a judgment remains reserved to the requester or is delegated to the executing AI is itself part of the external use conditions.
 
-Distinguish stopping a particular framework at preview, rejecting it after distortion is detected, or reducing this skill's activation scope from withdrawing from the entrusted task itself. **A specialist domain, a move into implementation or operational work, or rising cost is not by itself a reason for this method to narrow the entrusted task.** Return to the domain method when appropriate; resource-based stopping belongs to the caller.
+Record separately the use state of each framework, the use state of this skill, and the scope of the entrusted task. Do not automatically derive a change in one scope from a change in another.
 
 ## Separate preservation from attention
 
-Do not delete source material, KJ snapshots, framework sources and lineages, positions, paths, cycles, symbols, rejected options, or unresolved residuals without an explicit reason.
-
-Preservation and what must be read in the current round are different things.
+Separate the layer that preserves source material, KJ snapshots, framework sources and lineages, positions, paths, cycles, symbols, rejected options, and unresolved residuals from the layer foregrounded in the current round.
 
 > **Preserve richly; make current attention selective.**
 
-Indexes, summaries, and previews do not replace the canonical material. If compression is needed, try splitting, delayed loading, and references before deletion.
+Keep indexes, summaries, and previews distinguishable from canonical material. Whether to delete, compress, split, delay-load, or reference material follows external use conditions and delegated discretion.
 
 ## Delay irreversible meaning fixation
 
-Do not prohibit an obvious association, the first KJ label, or the first framework that appears to fit. But do not promote it into an explanation that governs the whole before returning it to other material or KJ regrouping.
+Preserve intermediate states so that an obvious association, first KJ label, or first apparently fitting framework can be distinguished from structures that remain after contact with other material or regrouping.
 
-What is delayed is not the speed of thinking but **fixing meaning into a form that is hard to reverse**.
+Do not turn delay itself into a value objective. Emphasize **being able to trace when and where meaning became fixed**.
 
 ## Separate possibility from adoption
 
-When a framework is opened, explore what becomes newly visible for the reason it was opened. Do not make early risk checking so dominant that nothing can be generated.
+Treat possibilities generated by opening a framework as a different state from the decision to adopt, publish, or act on those possibilities.
 
-At the same time, keeping possibilities open does not require forcing use. Return after preview when that is enough. Stop an operation when it distorts the target. Misfit may itself reveal a boundary.
-
-Fit is not proof of truth, and misfit is not necessarily failure.
+Fit, misfit, stopping at preview, full, enacted, and similar states can be recorded as exploration history. What to adopt returns to external use conditions or delegated judgment.
 
 ## Separate cognition, value, and fact
 
@@ -68,10 +81,14 @@ Do not collapse the cognitive style, value criteria, and target-fact candidates 
 - A value criterion is a candidate axis for what to protect, promote, or avoid.
 - Neither by itself proves a fact about the target.
 
-## Justify rules by effects
+Whether a value criterion is used for adoption or action also belongs to external use conditions or delegated judgment.
 
-A new rule must be justified by an effect observable on the target or in the cognitive trajectory. Do not add rules whose effect cannot be shown.
+## Justifying rules
 
-Do not promote an operation that worked in one case into a permanent rule automatically. Treat it as a candidate only after repeated adoption across different tasks and clearer knowledge of when not to use it.
+For new rules about cognitive operations or recording forms, show effects observable on the target or in the cognitive trajectory and examine them across multiple cases. Do not automatically promote an operation that worked once into a permanent rule.
 
-Domain-specific quality standards, expert procedures, and presentation requirements belong to the caller's context or a paired domain skill.
+In particular, when **value or restraint rules that weaken, stop, avoid, or reject use** are embedded as static rules specific to this skill, require a higher justification threshold than for ordinary method rules. At minimum, the value and necessity being protected must be clearly explainable in external documentation and validity must be supported by sufficient statistical validation.
+
+Do not justify an existing rule merely because it already exists, appears safe, or sounds epistemically reasonable when this basis is absent. Treat it as subject to re-review.
+
+Receive domain-specific quality standards, expert procedures, and presentation requirements from the calling context, available material, or companion domain skills.
