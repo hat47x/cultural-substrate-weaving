@@ -103,6 +103,7 @@ class ReleaseLifecycleContractTests(unittest.TestCase):
         text = (ROOT / ".github" / "pull_request_template.md").read_text(encoding="utf-8")
         self.assertIn("reruns the full `release-validate` contract", text)
         self.assertIn("revalidates the release set", text)
+        self.assertIn('After upload, rerun `make release-remote-tag-contract TAG="$TAG"`', text)
         self.assertIn("scripts/verify_published_release.py", text)
         self.assertIn("non-draft, non-prerelease Release", text)
         self.assertIn(".github/release-validation-note.md", text)
