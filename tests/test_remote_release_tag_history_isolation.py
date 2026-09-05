@@ -74,6 +74,9 @@ class RemoteReleaseTagHistoryIsolationTests(unittest.TestCase):
 
             actual = resolve_remote_tag_commit("v1.0.0", str(remote), work)
             remote_main = resolve_remote_main_commit(str(remote), work)
+            self.assertEqual(actual, expected)
+            self.assertNotEqual(remote_main, expected)
+
             errors = validate_remote_release_boundary(
                 "v1.0.0",
                 "1.0.0",
@@ -84,12 +87,10 @@ class RemoteReleaseTagHistoryIsolationTests(unittest.TestCase):
                 work,
             )
 
-            self.assertTrue(
-                any("not present in remote main history" in error for error in errors)
-            )
-            self.assertFalse(
-                any("merge-commit shape" in error or "exactly two parents" in error for error in errors)
-            )
+            self.assertEqual(len(errors), 1)
+            self.assertIn("not present in remote main history", errors[0])
+            self.assertNotIn("merge-commit shape", errors[0])
+            self.assertNotIn("exactly two parents", errors[0])
 
 
 if __name__ == "__main__":
