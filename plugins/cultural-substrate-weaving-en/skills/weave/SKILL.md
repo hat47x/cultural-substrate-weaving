@@ -1,6 +1,6 @@
 ---
 name: weave
-description: A complementary AI skill that stays revisable by the target while combining cultural-framework structure supply with KJ-method integration and gap discovery, validating only target-side increments and leaving domain expertise to companion skills.
+description: A complementary AI skill that stays revisable by the target while combining cultural-framework structure supply with KJ-method integration and gap discovery, validating only target-side increments. Domain expertise comes from the calling context, available materials, or companion skills.
 disable-model-invocation: true
 ---
 
