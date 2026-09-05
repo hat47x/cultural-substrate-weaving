@@ -47,9 +47,9 @@
       "en_status": "translated"
     },
     "domains/human-and-taiheki.md": {
-      "ja_sha256": "0e236854fac600cbb2e5a491b5a9d2e2713e4f7a211f1f1eec788f931d3dea83",
+      "ja_sha256": "279aac7470d514a1ef6d6ea81cdcfed411d2693c30683de8520accfecefe3bef",
       "en_present": true,
-      "en_source_ja_sha256": "0e236854fac600cbb2e5a491b5a9d2e2713e4f7a211f1f1eec788f931d3dea83",
+      "en_source_ja_sha256": "279aac7470d514a1ef6d6ea81cdcfed411d2693c30683de8520accfecefe3bef",
       "en_status": "translated"
     },
     "governance/evaluation.md": {
@@ -83,15 +83,15 @@
       "en_status": "translated"
     },
     "methods/system-selection.md": {
-      "ja_sha256": "48a99aa2d05244dfb9c5201a12648855c80c34cf71cec8b1227f4ff3c41bf1f4",
+      "ja_sha256": "ab76e168c109db6d6446e90adc64dd464dc5f97b8cf1b0ec6f71b188233edbdd",
       "en_present": true,
-      "en_source_ja_sha256": "48a99aa2d05244dfb9c5201a12648855c80c34cf71cec8b1227f4ff3c41bf1f4",
+      "en_source_ja_sha256": "ab76e168c109db6d6446e90adc64dd464dc5f97b8cf1b0ec6f71b188233edbdd",
       "en_status": "translated"
     },
     "methods/transformation.md": {
-      "ja_sha256": "94452c8fc6093d20c4da1f73bb6265ff5d141f97537659a55721043b2fb0cf5c",
+      "ja_sha256": "42353b508fa1fe14b2f993cb60c80c661ac4e8802340eb16ec797f83c1d4ff7a",
       "en_present": true,
-      "en_source_ja_sha256": "94452c8fc6093d20c4da1f73bb6265ff5d141f97537659a55721043b2fb0cf5c",
+      "en_source_ja_sha256": "42353b508fa1fe14b2f993cb60c80c661ac4e8802340eb16ec797f83c1d4ff7a",
       "en_status": "translated"
     }
   }
