@@ -83,4 +83,4 @@ If a judgment is later corrected or withdrawn, prefer a traceable history of the
 
 Do not make deletion of old material the default way to lighten context. In the current round, foreground new material, old residuals touched now, the needed KJ snapshot, and the needed probe or preview.
 
-When rules become overactive, narrow their conditions, lower their priority, move them to auxiliary status, then remove them if their function cannot be shown. Do not use deletion of dynamic material as a substitute for rule maintenance.
+When rules become overactive, choose among narrower conditions, lower priority, auxiliary status, or removal according to the cause; before removal, identify the rule's function. Do not delete dynamic material instead of maintaining the rule.
