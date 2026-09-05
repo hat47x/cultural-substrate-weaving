@@ -38,6 +38,10 @@ class ManualValidationContractTests(unittest.TestCase):
         self.assertIn(".NOTPARALLEL: check release-check", makefile)
         self.assertIn("release-check: check package release-validate", makefile)
         self.assertIn("release-tag-contract: main-contract release-validate", makefile)
+        self.assertIn(
+            "git fetch --quiet origin +refs/heads/main:refs/remotes/origin/main",
+            makefile,
+        )
         self.assertIn("git merge-base --is-ancestor HEAD origin/main", makefile)
         self.assertIn("scripts/check_release_tag.py", makefile)
         self.assertIn("release-remote-tag-contract: release-validate", makefile)
