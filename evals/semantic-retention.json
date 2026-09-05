@@ -1,25 +1,31 @@
 {
   "ja-JP": {
     "required_phrases": [
-      "外部体系から得た構造は対象へ返して確かめる。",
-      "対象固有性",
+      "本スキルは、価値判断、利用範囲、読み込み深度、停止、採否、公開・行動への反映を独立に決定しない。",
+      "来歴ラベルは、採用・発話・外部化・停止の許可を自動的に決めない。",
+      "この文書は、利用範囲や深度を決める決定器ではない。",
+      "対象固有性と体系固有性",
       "要素自体の欠落と、接続の欠落を区別する",
       "静的層・資料層・動的層を分ける",
       "体系を採用しても、全要素・全解釈語・全遷移を使い切る義務はない。",
       "探索利用から帰属利用へ無言で切り替えない。",
-      "除去検査はde-bindingであり、証拠生成ではない。",
-      "保存は厚く、現在の注意は選択的にする。",
-      "委ねられた範囲を、勝手に広げず、過度の自制で勝手に狭めもしない。"
+      "除去検査はde-bindingであり、証拠生成ではない。"
     ],
     "required_by_file": {
       "ROUTER.md": [
-        "外部体系から得た構造は対象へ返して確かめる。",
-        "明示指定があれば",
-        "一括読み込みを避け"
+        "決定権は、著者の意思決定、またはスキル外で著者が生成AIへ与えた設定・指示・委任に属する。",
+        "課題種別そのものを、本スキル側の自動的な発動・抑制条件にはしない。",
+        "来歴 ≠ 行動許可"
+      ],
+      "core/activation.md": [
+        "この文書は、利用範囲や深度を決める決定器ではない。",
+        "本スキル固有の自動的な発動・抑制条件にはしない。",
+        "自動トリガーにはしない"
       ],
       "core/principles-and-constraints.md": [
-        "委ねられた範囲を、勝手に広げず、過度の自制で勝手に狭めもしない。",
-        "保存は厚く、現在の注意は選択的にする。"
+        "本スキルは、価値判断、利用範囲、読み込み深度、停止、採否、公開・行動への反映を独立に決定しない。",
+        "来歴ラベルは、採用・発話・外部化・停止の許可を自動的に決めない。",
+        "既存規則も同じ基準で再審査する。"
       ],
       "core/iteration.md": [
         "基本単位はラウンド",
@@ -36,30 +42,38 @@
       ]
     },
     "forbidden_in_router": [
-      "相互作用する次元が三つ以上"
+      "相互作用する次元が三つ以上",
+      "閉じた問題では通常手法を優先する",
+      "人間が登場しただけでは読まない"
     ]
   },
   "en-US": {
     "required_phrases": [
-      "Return structures obtained from external frameworks to the target for validation.",
-      "Target specificity",
+      "This skill does not independently decide values, usage scope, loading depth, stopping, adoption, publication, or action.",
+      "Provenance labels do not automatically decide permission to adopt, state, externalize, or stop.",
+      "This document is not a decision engine for scope or depth.",
+      "Target-specific and framework-specific information",
       "Distinguish a missing element from a missing connection.",
       "Separate static, framework-resource, and dynamic layers",
       "Adopting a framework does not require exhausting all of its elements, interpretive vocabulary, or transitions.",
       "Do not silently switch from exploration to attribution.",
-      "The removal check performs de-binding; it does not create evidence.",
-      "Preserve richly; make current attention selective.",
-      "Do not expand the entrusted scope on your own, and do not narrow it through excessive self-restraint."
+      "The removal check performs de-binding; it does not create evidence."
     ],
     "required_by_file": {
       "ROUTER.md": [
-        "Return structures obtained from external frameworks to the target for validation.",
-        "explicitly requested",
-        "Avoid loading everything at once"
+        "Those decisions belong to the author, or to settings, instructions, and delegations that the author gives to the generative AI outside this skill.",
+        "task category is not by itself an automatic activation or suppression condition owned by this skill.",
+        "Provenance ≠ action permission"
+      ],
+      "core/activation.md": [
+        "This document is not a decision engine for scope or depth.",
+        "task category is not an automatic activation or suppression rule owned by this skill.",
+        "not automatic triggers to deepen, return, or stop"
       ],
       "core/principles-and-constraints.md": [
-        "Do not expand the entrusted scope on your own, and do not narrow it through excessive self-restraint.",
-        "Preserve richly; make current attention selective."
+        "This skill does not independently decide values, usage scope, loading depth, stopping, adoption, publication, or action.",
+        "Provenance labels do not automatically decide permission to adopt, state, externalize, or stop.",
+        "Existing rules are subject to the same re-audit."
       ],
       "core/iteration.md": [
         "The basic unit is a round",
@@ -76,7 +90,9 @@
       ]
     },
     "forbidden_in_router": [
-      "three or more interacting dimensions"
+      "three or more interacting dimensions",
+      "Prefer ordinary methods for closed problems",
+      "do not load it merely because humans appear"
     ]
   }
 }
