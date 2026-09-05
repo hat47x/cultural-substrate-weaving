@@ -12,7 +12,8 @@
     "Merge of the two lines above: this branch's excision (down to 71939/72211) combined with origin's parallel growth from the pre-excision baseline. Measured after merging both sets of source changes: ja-JP 72902, en-US 73106. reference_max_bytes carried over unchanged at 14857/14566 (framework-application.md, already the largest reference on both sides).",
     "Content growth, deliberate: ja-JP 72902 -> 75356, en-US 73106 -> 75900 (+2454 / +2794). Bought an explicit candidate-recall path between abstract probe and framework preview, plus structurally diverse search anchors for state grids, cycles/calendars, paths/flows, directions, and layers. The named cultural systems are retrieval anchors rather than embedded framework knowledge or adoption recommendations; detailed structure remains dynamically sourced and checked when used.",
     "Build-link normalization: ja-JP 75356 -> 75366, en-US 75900 -> 75910 (+10 / +10). Router references now use source module paths so build-time link rewriting produces valid references/ paths in generated skills.",
-    "Build-link normalization, completed across Router loading-order references: ja-JP 75366 -> 75386, en-US 75910 -> 75930 (+20 / +20). Pre-existing bare module filenames in loading-order prose were normalized to source module paths so replace_router_links() can rewrite every generated skill reference into references/."
+    "Build-link normalization, completed across Router loading-order references: ja-JP 75366 -> 75386, en-US 75910 -> 75930 (+20 / +20). Pre-existing bare module filenames in loading-order prose were normalized to source module paths so replace_router_links() can rewrite every generated skill reference into references/.",
+    "Author-authority runtime rebaseline: measured current source ja-JP 75217 -> 77571, en-US 74114 -> 76461 (+2354 / +2347). Bought an explicit separation between recording/state semantics and decision authority, moved use scope/loading depth/stopping/adoption back to requester or delegated execution context, and converted former autonomous stop/applicability rules into observable signals."
   ],
   "router_max_bytes": {
     "ja-JP": 10000,
@@ -31,8 +32,8 @@
     "en-US": 14566
   },
   "corpus_max_bytes": {
-    "ja-JP": 75386,
-    "en-US": 75930
+    "ja-JP": 78000,
+    "en-US": 77000
   },
   "m365_instructions_max_chars": 8000,
   "gpt_knowledge_max_files": 10
