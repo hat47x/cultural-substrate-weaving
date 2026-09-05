@@ -44,7 +44,7 @@ Also separate evidence source from discovery route. Additional discovery routes 
 
 ## 12. Longitudinal event ledger
 
-In long-running work, do not turn every message into a record. Keep only events whose course may matter in later review.
+In long-running work, do not turn every message into a record. Keep only events whose course may matter in later review. Representative event types include:
 
 - `question_shift`
 - `search_shift`
