@@ -58,7 +58,7 @@ Follow five steps. The operation above is called when cutting cards out of the m
 2. **Group:** collect fragments whose appeals are close. Starting with small groups can be a useful heuristic, but card counts and final group counts are not success conditions. Let semantic boundaries in the material govern; do not split or merge to hit a number. **Leave fragments that fit no group where they are** (a single isolated card is sometimes the most important). **Do not group by source, speaker, position, or card type.** Use those after grouping, to audit bias and independence. **Do not count a repost of the same event, or two cards derived from one, as two independent appeals.**
 3. **Label:** run the operation above on the group. State in one sentence what the group wants to say. A label is not a category name.
 4. **Place:** draw relationships, distinguishing causal, mutual, opposing, and temporal order. Draw opposition as opposition. **Record relations or blanks that were not explicit before when the placement makes them visible.** Do not impose a fixed whole-first drawing order; build the whole from the groups and relations raised from the material.
-5. **Narrate:** read the diagram aloud. Do not narrate in an order absent from the diagram.
+5. **Narrate:** put the diagram into words. If narration introduces an ordering or relation not in the diagram, return it to the diagram and source material before treating it as grounded. If supported, update the diagram; otherwise keep it distinct as a hypothesis, unresolved relation, or narrative convenience.
 
 Apply four checks.
 
