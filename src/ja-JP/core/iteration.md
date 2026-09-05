@@ -34,7 +34,7 @@ KJを文化体系の候補を絞り込むためだけの道具にせず、文化
 
 ## 長期的な変化を出来事として見る
 
-必要に応じて、次のeventを記録する。記録形式は`08-governance-and-records.md`に従う。
+必要に応じて、次のようなeventを記録する。記録形式は`08-governance-and-records.md`に従う。
 
 - `question_shift`
 - `search_shift`
