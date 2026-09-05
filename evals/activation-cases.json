@@ -1,36 +1,60 @@
 {
   "ja-JP": [
     {
-      "id": "ja-ordinary-proofreading",
+      "id": "ja-unspecified-proofreading",
       "request": "この文章の誤字を直してください。",
+      "expected": "external_or_delegated",
+      "reason": "課題種別だけではCSWの利用可否を決めない。上位の利用条件または委任を参照する。"
+    },
+    {
+      "id": "ja-explicit-no-use",
+      "request": "CSWは使わず、この文章の誤字だけを直してください。",
       "expected": "no_activation"
     },
     {
-      "id": "ja-limited-consistency",
-      "request": "この対象について、緊張時と弛緩時に観察された身体反応の一貫性だけを外部類型で確認してください。",
+      "id": "ja-explicit-limited",
+      "request": "CSWを使い、KJによる材料統合と来歴保持だけを行ってください。文化体系は開かないでください。",
       "expected": "limited"
     },
     {
-      "id": "ja-full-open-structure",
+      "id": "ja-explicit-exploratory",
+      "request": "CSWを使って、複数の文化体系とKJを往復しながら、この制度構想の構造候補を探索してください。",
+      "expected": "exploratory"
+    },
+    {
+      "id": "ja-unspecified-open-structure",
       "request": "複数主体、責任、時間差、不可逆性を含み、到達点自体が未定の制度構想について、材料を統合しながら構造候補を探索してください。",
-      "expected": "full"
+      "expected": "external_or_delegated",
+      "reason": "問題が開いていること自体をCSWの自動発動条件にしない。"
     }
   ],
   "en-US": [
     {
-      "id": "en-ordinary-proofreading",
+      "id": "en-unspecified-proofreading",
       "request": "Correct the typos in this paragraph.",
+      "expected": "external_or_delegated",
+      "reason": "Task type alone does not decide whether CSW is used; consult higher-level use conditions or delegation."
+    },
+    {
+      "id": "en-explicit-no-use",
+      "request": "Do not use CSW; only correct the typos in this paragraph.",
       "expected": "no_activation"
     },
     {
-      "id": "en-limited-consistency",
-      "request": "For this person, use an external type only to check consistency in observed bodily reactions under tension and relaxation.",
+      "id": "en-explicit-limited",
+      "request": "Use CSW only for KJ material integration and provenance preservation. Do not open a cultural framework.",
       "expected": "limited"
     },
     {
-      "id": "en-full-open-structure",
+      "id": "en-explicit-exploratory",
+      "request": "Use CSW to explore structural candidates for this institutional concept by moving between multiple cultural frameworks and KJ.",
+      "expected": "exploratory"
+    },
+    {
+      "id": "en-unspecified-open-structure",
       "request": "Explore structural candidates for an unsettled policy concept involving multiple actors, responsibility, time lags, and irreversible choices while integrating heterogeneous material.",
-      "expected": "full"
+      "expected": "external_or_delegated",
+      "reason": "An open problem is not by itself an automatic CSW activation condition."
     }
   ]
 }

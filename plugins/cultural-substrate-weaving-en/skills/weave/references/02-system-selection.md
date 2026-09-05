@@ -31,7 +31,7 @@ These names are not substitutes for framework knowledge. When a framework is act
 
 Do not rush adoption or rejection during candidate recall. A local mismatch or a probe that initially produces no question does not by itself negate the framework's broader exploratory value. Preview its main cognitive structure and limits, then ask whether it generates questions, contrasts, or research targets worth returning to the target.
 
-In exploratory use, the conditions in `core/activation.md` may instead justify entering through a framework-led preview. Do not first cut the framework down to what already fits the current question. Before mapping it to the target, inspect the framework's main overall distinctions—what it treats as positions, paths, cycles, relations, transitions, and boundaries.
+In exploratory use, external use conditions and delegated discretion may instead lead into a framework-led preview. Do not first cut the framework down to what already fits the current question. Before mapping it to the target, inspect the framework's main overall distinctions—what it treats as positions, paths, cycles, relations, transitions, and boundaries.
 
 Whichever entry is used, inspect the candidate framework's elements and classification principles, relations, time/cycle/stage structure, original domain of use, historical context, variants, and limits.
 
@@ -88,15 +88,19 @@ Use `probe / preview / full / enacted` from `core/activation.md`.
 
 Do not set a fixed fit threshold. High apparent fit guarantees neither valid attribution nor usefulness.
 
-## 3e. Conditions for rejection or reduction
+## 3e. Observation signals and use state
 
-Do not deepen when:
+During contact with a framework, the following states can be observed and recorded.
 
-- every outcome can be made to fit, so no falsifiable difference appears;
-- target-side questions do not increase and only framework vocabulary grows;
-- gaps or causes are being attributed without homogeneity or an assignment procedure;
-- irreversibility, asymmetry, locality, or evidence state is being thinned;
+- every outcome can be made to fit, so a falsifiable difference is hard to establish;
+- target-side questions are not increasing while only framework vocabulary grows;
+- gaps or causes are about to be attributed without homogeneity or an assignment procedure;
+- irreversibility, asymmetry, locality, or evidence state is becoming thinner;
 - target material is being reread merely to complete the framework.
+
+These are not automatic stopping conditions that decide continuation, loading-depth changes, or rejection. If external use conditions reserve judgment to the requester, return them as decision material. If judgment is delegated to the executing AI, use them within that delegation.
+
+Keep exploratory use state separate from whether a claim can be attributed to the target. A candidate that does not satisfy homogeneity, assignment, or other attribution requirements is not promoted directly to target fact, but may remain `framework_generated` or `unresolved`.
 
 Rejecting a framework does not require deleting every question it generated. Keep what survives return to the target with provenance intact.
 
