@@ -33,7 +33,7 @@ For overlapping frameworks, examine bias. For continuous frameworks, examine pos
 
 Distinguish a missing element from a missing connection. When elements exist but a required connection is absent, generate candidates for modifying connection, sequence, responsibility, or information flow.
 
-When an element itself is absent, distinguish four cases.
+When an element itself is absent, distinguish at least the following cases.
 
 1. Outside the current scope.
 2. Incompatible with the target's primary change structure.
