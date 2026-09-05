@@ -15,29 +15,30 @@ This skill combines two capabilities.
 
 When actually using this skill, begin from the KJ stance expressed as 「己を空しくしてデータをして語らしめる」: make room for the data to speak instead of letting your prior explanation speak in its place. This does not mean discarding knowledge or hypotheses. **Do not fix your explanation above the target as an authoritative answer; keep it revisable by the target. After sufficient contact with the material, think boldly, but do not rewrite newly generated meaning as a fact the source material had already stated.** See `references/00-cognitive-stance.md`.
 
-Domain-specific knowledge and quality standards are outside this skill. Combine it with a domain method when needed.
+This skill itself does not contain domain-specific knowledge. Receive necessary domain knowledge, quality standards, and expert procedures from the calling context, available materials, or companion domain skills.
 
-Its main use is an open problem space whose destination is not yet fixed. Prefer ordinary methods for closed problems. If the skill is explicitly requested, use at least a limited pass to compare against the baseline.
+Authority over how much to use this skill or a cultural framework, loading depth, stopping, adoption, publication, and related choices is not placed in the skill's static rules. Follow requester or author instructions, higher-level settings or instructions, or delegation given to the executing AI. If the skill is explicitly requested, receive that request as a use condition.
 
 ## Minimal execution flow
 
-1. **Set a baseline and preservation set**: inspect the domain-method-only output and the target-specific facts and exceptions that must not be broken.
-2. **Choose the activation scope**: non-activation, limited use, or exploratory use.
-3. **Establish the cognitive stance**: once the skill will be used, read `references/00-cognitive-stance.md` once and place your interpretation where the target can revise it.
+1. **Receive external use conditions**: identify the entrusted task, purpose, where value judgments are reserved, and what discretion has been delegated to the executing AI. Use `references/00-activation.md` for state vocabulary for scope and depth.
+2. **Establish the cognitive stance**: when use of this skill has been requested or otherwise authorized, read `references/00-cognitive-stance.md` once and place your interpretation where the target can revise it.
+3. **Set a baseline and preservation set**: inspect the domain-method-only output, source material, and target-specific facts and exceptions that must remain distinguishable.
 4. **Protect the material surface**: when material is numerous or heterogeneous, use KJ to form semantic units without prematurely flattening evidence state, contradictions, isolates, or weak unease.
-5. **Open a cultural framework to the needed depth**: `not_loaded / probe / preview / full / enacted`. Normally begin with probe, but in exploratory use do not stop at an abstract probe alone; use the recall anchors in `references/02-system-selection.md` to raise a small set of structurally different candidates and preview them when useful. See `references/00-activation.md`.
-6. **Explore**: obtain candidate questions, relations, states, and transitions from cultural frameworks. Move back and forth with KJ when useful.
-7. **Return to the target**: separate exploratory use from attribution use, and do not mix `target_supported / framework_generated / cross_field_emergent / unresolved`.
-8. **Reflect into real work and close the round**: record what remains in the artifact, decision, or research direction, together with residuals and reopening conditions.
+5. **Open cultural frameworks**: according to external use conditions and delegated discretion, use `not_loaded / probe / preview / full / enacted`. Candidate recall can use state-grid, temporal, path, and related anchors in `references/02-system-selection.md`.
+6. **Explore**: obtain candidate questions, relations, states, and transitions from cultural frameworks. Move back and forth with KJ as appropriate.
+7. **Return to the target**: separate exploration from attribution and preserve distinctions among `target_supported / framework_generated / cross_field_emergent / unresolved`.
+8. **Reflect into real work**: carry results into artifacts, decision material, research directions, residuals, and reopening conditions. Boundaries and adoption follow external use conditions.
 
-Using many frameworks, reading them in full, or executing framework-native operations is not a success condition.
+Do not encode framework count, full reading, or the amount of framework-native enactment as a success measure in itself. What counts as an outcome comes from the external use conditions.
 
 ## Important distinctions
 
-- **Preservation ≠ current attention**: keep the canonical material rich while foregrounding only what the present round needs.
+- **State recording ≠ decision authority**: distinguish preserving provenance, evidence state, and loading depth from deciding adoption, stopping, or publication based on those distinctions.
+- **Preservation ≠ current attention**: keep canonical material rich; foregrounding in the current round follows external use conditions and working needs.
 - **Exploration ≠ attribution**: distinguish getting a question from a framework from claiming that the target has that structure.
 - **De-binding ≠ evidence**: a statement surviving removal of framework vocabulary does not create independent target-side support.
-- **Non-use ≠ failure**: `not_loaded`, stopping at preview, rejection, and detected distortion are valid outcomes.
+- **Use state ≠ success judgment**: `not_loaded`, preview, full, enacted, rejection, and similar states can be recorded; evaluation returns to external use conditions.
 - **KJ ≠ a classifier for frameworks**: use KJ as the integration core that returns work to the source material.
 
 ## Choose reference files
@@ -45,24 +46,24 @@ Using many frameworks, reading them in full, or executing framework-native opera
 | Decision or process | Read |
 |---|---|
 | Cognitive stance toward the target; making room for the data to speak | [00-cognitive-stance.md](references/00-cognitive-stance.md) |
-| Activation, loading depth, early exit | [00-activation.md](references/00-activation.md) |
-| Attribution, dual fidelity, preservation | [00-principles-and-constraints.md](references/00-principles-and-constraints.md) |
+| Use scope, loading depth, and round-boundary states | [00-activation.md](references/00-activation.md) |
+| Decision authority, attribution, dual fidelity, preservation | [00-principles-and-constraints.md](references/00-principles-and-constraints.md) |
 | Rounds, rematerialization, delayed reopening | [00-iteration.md](references/00-iteration.md) |
 | Target scope, baseline, preserved facts | [01-scope-and-facts.md](references/01-scope-and-facts.md) |
 | Framework selection, exploration / attribution use | [02-system-selection.md](references/02-system-selection.md) |
 | Assignment, transitions, post-use checks, exits | [02a-framework-application.md](references/02a-framework-application.md) |
 | Relation types, missing connections, multiple frameworks | [03-transformation.md](references/03-transformation.md) |
-| Limited Taiheki exploration of human bodily responses | [05-human-and-taiheki.md](references/05-human-and-taiheki.md) |
+| Taiheki exploration of human bodily responses | [05-human-and-taiheki.md](references/05-human-and-taiheki.md) |
 | Decision provenance and longitudinal events | [08-governance-and-records.md](references/08-governance-and-records.md) |
 | Final evaluation | [09-evaluation.md](references/09-evaluation.md) |
 | Many fragments, carding, grouping, A/B, blanks | [10-integration.md](references/10-integration.md) |
 
 ### Loading order
 
-- **After deciding to use this skill**: read `references/00-cognitive-stance.md` once at the start. Do not reload it mechanically at every step of the same round.
-- **Limited use**: after establishing the cognitive stance, continue to the directly needed reference.
-- **Exploratory use**: establish the cognitive stance and then `references/01-scope-and-facts.md`; if material is numerous, use `references/10-integration.md`. Normally enter a framework through probe, but do not leave candidate recall to spontaneous model association. When useful, use the state-grid, temporal, path, and related anchors in `references/02-system-selection.md` to recall or search a small set of structurally different candidates, preview them, and then continue to `references/02a-framework-application.md`.
+- **After receiving conditions to use this skill**: read `references/00-cognitive-stance.md` once at the start. Do not reload it mechanically at every step of the same round.
+- **Use scope and depth**: use the state vocabulary in `references/00-activation.md` to map external use conditions or delegated discretion into runtime state.
+- **Exploratory use**: recall anchors for state grids, time, paths, directions, flow, and related structures are in `references/02-system-selection.md`. Do not limit candidate recall to spontaneous model association; recall or search the structural types needed by the task.
 - **Iterative analysis**: read `references/00-iteration.md`. In long work, if an existing explanation or rule begins to outrank the target, return to the relevant part of `references/00-cognitive-stance.md`.
-- **Human / Taiheki**: do not load it merely because humans appear. Load it only when explicitly requested or when bodily consistency itself is the exploration target.
+- **Human / Taiheki**: whether to use it follows external use conditions and delegated discretion. When used, read `references/05-human-and-taiheki.md`.
 
 Do not fix the number of references. Avoid loading everything at once, and keep target-specific information in the dynamic layer.
