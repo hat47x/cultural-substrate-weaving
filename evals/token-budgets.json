@@ -14,7 +14,8 @@
     "Build-link normalization: ja-JP 75356 -> 75366, en-US 75900 -> 75910 (+10 / +10). Router references now use source module paths so build-time link rewriting produces valid references/ paths in generated skills.",
     "Build-link normalization, completed across Router loading-order references: ja-JP 75366 -> 75386, en-US 75910 -> 75930 (+20 / +20). Pre-existing bare module filenames in loading-order prose were normalized to source module paths so replace_router_links() can rewrite every generated skill reference into references/.",
     "Author-authority runtime rebaseline: measured current source ja-JP 75217 -> 77571, en-US 74114 -> 76461 (+2354 / +2347). Bought an explicit separation between recording/state semantics and decision authority, moved use scope/loading depth/stopping/adoption back to requester or delegated execution context, and converted former autonomous stop/applicability rules into observable signals.",
-    "Delegated method-boundary rebaseline: ja-JP 77571 -> 79916, en-US 76461 -> 78790 (+2345 / +2329). Bought the same decision-authority boundary at method level: framework rejection and Taiheki activation gates became observable/delegated states; intent inference is preserved with explicit evidence-state separation instead of a blanket ban; orthogonal multi-framework composition is reopened while attribution safeguards remain; fixed enumeration and stop prerequisites return to external use conditions or delegated judgment."
+    "Delegated method-boundary rebaseline: ja-JP 77571 -> 79916, en-US 76461 -> 78790 (+2345 / +2329). Bought the same decision-authority boundary at method level: framework rejection and Taiheki activation gates became observable/delegated states; intent inference is preserved with explicit evidence-state separation instead of a blanket ban; orthogonal multi-framework composition is reopened while attribution safeguards remain; fixed enumeration and stop prerequisites return to external use conditions or delegated judgment.",
+    "Framework-attribution rebaseline: ja-JP 79916 -> 80844, en-US 78790 -> 79875 (+928 / +1085). Bought framework-application semantics that admit discrete and continuous position structures, replace a fixed two-pass assignment rule with reproducibility testing appropriate to the convention, preserve failed derivations as unresolved/exploratory material instead of discarding them wholesale, and keep unfalsifiable attribution claims from becoming target-supported without making framework rejection an automatic skill decision."
   ],
   "router_max_bytes": {
     "ja-JP": 10000,
@@ -33,8 +34,8 @@
     "en-US": 14566
   },
   "corpus_max_bytes": {
-    "ja-JP": 80500,
-    "en-US": 79500
+    "ja-JP": 81500,
+    "en-US": 80500
   },
   "m365_instructions_max_chars": 8000,
   "gpt_knowledge_max_files": 10
