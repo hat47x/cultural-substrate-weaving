@@ -30,7 +30,7 @@ When a new grouping appears, do not overwrite the source material, earlier KJ sn
 
 Blanks and residuals may become receptors for later material. Background them when they are irrelevant to the current question; foreground them as `reopened` when new material touches them.
 
-Do not reread the whole long history every round. Foreground, by default, only **new material, old residuals touched now, the needed KJ snapshot, and the needed probe or preview**.
+Do not reread the whole history every round. Use **new material, touched residuals, KJ snapshots, probes, and previews** as foregrounding examples, not a closed list.
 
 ## Observe longitudinal change as events
 
