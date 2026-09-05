@@ -22,7 +22,7 @@ disable-model-invocation: true
 ## 最小実行手順
 
 1. **外部利用条件を受け取る**：依頼範囲、目的、価値判断の留保先、実行AIへ委ねられた裁量を確認する。利用範囲・深度の状態語彙は`references/00-activation.md`を使う。
-2. **認知姿勢を置く**：本スキルを使う条件が与えられている場合、`references/00-cognitive-stance.md`を最初に一度読み、対象から自分の読みを修正され得る位置に置く。
+2. **認知姿勢を置く**：本スキルを使う条件が与えられている場合、`references/00-cognitive-stance.md`を読み、対象から自分の読みを修正され得る位置に置く。
 3. **基準線と保持事項を置く**：領域固有手法だけの出力、元材料、壊してはならない対象固有の事実・例外を確認する。
 4. **材料面を保つ**：材料が多数・異種ならKJ法で意味単位を起こし、証拠状態、矛盾、孤立、弱い違和感を早く均さない。
 5. **文化体系を開く**：外部利用条件と委任範囲に応じて`not_loaded / probe / preview / full / enacted`を使い分ける。候補想起には`references/02-system-selection.md`の状態格子・時間・経路などのアンカーを利用できる。
@@ -60,7 +60,7 @@ disable-model-invocation: true
 
 ### 読み込み順
 
-- **本スキルを使う条件を受け取った後**：`references/00-cognitive-stance.md`を最初に一度読む。同じラウンドで機械的に繰り返し読み込まない。
+- **本スキルを使う条件を受け取った後**：`references/00-cognitive-stance.md`を読み、認知姿勢を置く。
 - **利用範囲・深度**：`references/00-activation.md`の状態語彙を使い、外部利用条件または委任された裁量を実行状態へ写す。
 - **探索利用**：状態格子・時間・経路・方向・流れなどを含む候補想起アンカーは`references/02-system-selection.md`にある。モデルの自然連想だけに候補を限定せず、必要な構造型を想起・検索できる。
 - **反復分析**：`references/00-iteration.md`を読む。長い作業で、対象より既存の説明や規則が前へ出ている兆候があれば、`references/00-cognitive-stance.md`の必要箇所へ戻る。
