@@ -1,77 +1,88 @@
-# Principles and constraints
+# Decision authority, provenance, and information surfaces
 
-Read this when separating what belongs to a cultural framework, what belongs to the target, and what emerged from their contact.
+Read this when separating cultural-framework material, target material, structures that emerged from their contact, and the subject who makes a decision.
 
-## Dual fidelity
+## Decision authority
 
-This skill protects two forms of fidelity at the same time.
+**This skill does not independently decide values, usage scope, loading depth, stopping, adoption, publication, or action.** Those decisions belong to the author or to settings, instructions, and delegations that the author gives to the generative AI outside this skill.
 
-1. **Fidelity to the target**: do not force the target to conform to a cultural framework.
-2. **Fidelity to the framework**: do not prematurely thin a cultural framework into generic operators or a short relation grammar.
+When the author has delegated candidate selection, comparison, adoption, depth, stopping, or related judgments to the generative AI, the AI may decide within that delegation. Do not replace that delegated authority with values or self-restraint intrinsic to this skill.
 
-Protecting only one side leads either to imposition on the target or to an emptied framework.
+Internal state names, provenance labels, check results, and heuristics are decision material. **Provenance labels do not automatically decide permission to adopt, state, externalize, or stop.**
 
-## Attribution principle
+## Record distinct information surfaces
 
-**Return structures obtained from external frameworks to the target for validation. Treat only parts independently supported by target-side material as target findings.**
+When useful, keep at least the following surfaces distinguishable:
 
-A statement remaining natural after framework vocabulary is removed shows that it has been de-bound from the framework's authority; it does not create new target-side evidence.
+1. **Target-side material**: sources, observations, records, execution results, and other material obtained from the target side.
+2. **Framework-side material**: primary sources, lineage, positions, relations, cycles, symbols, and framework-native operations.
+3. **Material generated through contact**: questions, hypotheses, contrasts, mapping candidates, compositional resources, and intersections across fields.
+4. **Judgments**: who made an adoption or interpretation decision, under which evidence, evaluation axis, and delegation.
 
-Distinguish when needed:
+The purpose of separating these surfaces is to leave later judgments possible, not to force a particular conclusion or action.
 
-- `target_supported`: independently supported by target-side sources, observation, or falsification.
-- `framework_generated`: a question, hypothesis, contrast, mapping candidate, or compositional resource generated from a cultural framework.
-- `cross_field_emergent`: a third structure arising from contact among frameworks, or between a framework and KJ.
-- `unresolved`: a residual whose usefulness, attribution, or confidence is not yet decided.
+## Provenance labels
 
-## Target specificity
+The following labels may be used to describe provenance or state:
 
-State the range explained by existing categories and **preserve what exceeds them as target-specific information.** Prefer concreteness and exceptions to a complete explanation.
+- `target_supported`: a state in which references to target-side sources, observations, execution results, or other support have been recorded.
+- `framework_generated`: questions, hypotheses, contrasts, mapping candidates, compositional resources, and related material generated through contact with a cultural framework.
+- `cross_field_emergent`: a third structure arising from contact among frameworks or between a framework and KJ or another field.
+- `unresolved`: a state in which attribution, confidence, usefulness, adoption, or related decisions have not yet been recorded.
 
-Do not rewrite target-specific purpose, properties, or exceptions for convenience. Otherwise later mappings measure the task framing rather than the target.
+The label `target_supported` does not mean that this skill has made a final judgment of sufficiency or truth. What material counts as evidence, and how much is sufficient, follows the author's decision or evidence standards and delegation supplied outside the skill.
+
+Transitions among provenance labels likewise do not automatically authorize adoption, speech, externalization, or publication.
+
+## Keep de-binding as a separate observation
+
+A statement or structure continuing to work after framework vocabulary is removed can be recorded as an observation about dependence on framework vocabulary.
+
+That is different information from having separate target-side sources, observations, or execution results. How much either counts as evidence, and whether something is called a target finding, follows the external evidence standard and decision authority.
+
+## Target-specific and framework-specific information
+
+Record, when useful, what matches an existing category, what exceeds it, exceptions, and the framework's own source-defined content as distinguishable material.
+
+Whether to emphasize fit or exceptions, simplify or load a framework richly, or generalize across cases is not fixed as a value intrinsic to this skill. Select according to the external objective and delegation.
 
 ## Entrusted scope
 
-**Do not expand the entrusted scope on your own, and do not narrow it through excessive self-restraint.** Failing to return a judgment where judgment was entrusted departs from the request just as much as making a judgment that was never entrusted.
+Do not expand or narrow the scope entrusted by the author or by settings and instructions outside the skill for reasons invented by this skill itself.
 
-Distinguish stopping a particular framework at preview, rejecting it after distortion is detected, or reducing this skill's activation scope from withdrawing from the entrusted task itself. **A specialist domain, a move into implementation or operational work, or rising cost is not by itself a reason for this method to narrow the entrusted task.** Return to the domain method when appropriate; resource-based stopping belongs to the caller.
+A specialist domain, a move into implementation or operational work, rising work volume or cost, or weak framework fit may all be reported as decision material. They are not automatic withdrawal or reduction conditions.
 
-## Separate preservation from attention
+## Preservation and attention
 
-Do not delete source material, KJ snapshots, framework sources and lineages, positions, paths, cycles, symbols, rejected options, or unresolved residuals without an explicit reason.
+This skill provides operations for retaining and referencing source locations, KJ snapshots, framework resources, candidates, residuals, indexes, summaries, and related material at whatever granularity is useful.
 
-Preservation and what must be read in the current round are different things.
+What to preserve, compress, delete, or foreground follows the external objective, privacy constraints, resource constraints, and the author's decision. This skill does not fix preservation volume or deletion order as intrinsic values.
 
-> **Preserve richly; make current attention selective.**
+## Record tentative, fixed, and adopted states separately
 
-Indexes, summaries, and previews do not replace the canonical material. If compression is needed, try splitting, delayed loading, and references before deletion.
+Associations, KJ labels, framework mappings, hypotheses, and compositional proposals can be recorded separately as tentative, adopted, withdrawn, or open to reconsideration.
 
-## Delay irreversible meaning fixation
+When to fix meaning, which candidate to adopt, and how much reversibility to preserve are external decisions. This skill does not uniformly require either delaying or accelerating fixation.
 
-Do not prohibit an obvious association, the first KJ label, or the first framework that appears to fit. But do not promote it into an explanation that governs the whole before returning it to other material or KJ regrouping.
+## Separate cognition, value, and fact candidates
 
-What is delayed is not the speed of thinking but **fixing meaning into a form that is hard to reverse**.
+Cognitive styles, value criteria, and target-fact candidates supplied by a cultural framework can be recorded as different kinds of material.
 
-## Separate possibility from adoption
+- A **cognitive style** affects what is noticed as a question, relation, or change.
+- A **value criterion** supplies a candidate axis for what to protect, promote, or avoid.
+- A **fact candidate** is material that may be considered as a claim about the target.
 
-When a framework is opened, explore what becomes newly visible for the reason it was opened. Do not make early risk checking so dominant that nothing can be generated.
+A framework supplying a value criterion does not mean that the author or target has adopted that value. Record the subject and basis of any adoption decision separately.
 
-At the same time, keeping possibilities open does not require forcing use. Return after preview when that is enough. Stop an operation when it distorts the target. Misfit may itself reveal a boundary.
+## Conditions for intrinsic value or restraint rules
 
-Fit is not proof of truth, and misfit is not necessarily failure.
+Do not lightly infer a need to encode values, usage suppression, scope, depth, stopping, or adoption as **commands intrinsic to this skill** and independent of the author or external delegation.
 
-## Separate cognition, value, and fact
+By the author's direct instruction, retaining such a rule requires at least:
 
-Do not collapse the cognitive style, value criteria, and target-fact candidates supplied by a cultural framework into the same kind of claim.
+- an external document that clearly explains the value the rule is intended to protect; and
+- sufficiently statistically valid validation results supporting the rule's validity.
 
-- A cognitive style changes what is noticed as a question, relation, or change.
-- A value criterion is a candidate axis for what to protect, promote, or avoid.
-- Neither by itself proves a fact about the target.
+Being an existing rule, appearing to be common sense, or feeling safe or reasonable to a generative AI is not justification. Existing rules are subject to the same re-audit.
 
-## Justify rules by effects
-
-A new rule must be justified by an effect observable on the target or in the cognitive trajectory. Do not add rules whose effect cannot be shown.
-
-Do not promote an operation that worked in one case into a permanent rule automatically. Treat it as a candidate only after repeated adoption across different tasks and clearer knowledge of when not to use it.
-
-Domain-specific quality standards, expert procedures, and presentation requirements belong to the caller's context or a paired domain skill.
+Domain-specific quality standards, expert procedures, presentation requirements, and evidence standards are supplied from outside this skill.
