@@ -10,7 +10,7 @@ This procedure derives from the KJ method. The lineage adopted is Kawakita Jiro,
 
 **Circulation and original run opposite here.** The most read are the two simplified paperbacks; the most complete is the least read — the 1986 summation. Filling gaps from memory drifts toward the simplified form.
 
-Attested KJ practice emphasizes cards readable by a third party, labels that are not category names, covering the material before raising a label, and the A-type diagram / B-type narration distinction. **Card boundaries, the handling of provenance, discovery path, stage, and collector, and the rerun method for return checks include modern adaptations for generative-AI use.** Do not use card counts or character counts as rules for semantic boundaries.
+Attested KJ practice emphasizes cards readable by a third party, labels that are not category names, covering the material before raising a label, and the A-type diagram / B-type narration distinction. **Card boundaries, provenance-metadata design, and the rerun method for return checks include modern adaptations for generative-AI use.** Do not use card counts or character counts as rules for semantic boundaries.
 
 When a judgment is unsettled, do not derive it from this document: go to the primary sources above and to related KJ techniques. **When those sources cannot be reached, record the judgment as self-reported and proceed.** Do not declare a lineage from memory alone.
 
@@ -49,7 +49,9 @@ Follow five steps. The operation above is called when cutting cards out of the m
 
 1. **Card:** run the operation above on the material. Write natural language that can be understood on its own as a claim or experience. Do not replace it with a category label, but do not impose mechanical bans on noun endings, length, or one-clause form. **Do not split semantic unity; do not merge different epistemic states.**
 
-   A card carries four fields and no more: **source** (the position it can be taken back to), **path** (for material embedded in a post, the material is the source and the post is the path), **stage** (raised straight from the material, raised from a group, or derived from another card), and **who collected it, and when**. **There is no field for confidence, role, importance, feeling, or type.** Those belong in the card's own sentence. A type assigned up front means every later look at the fragment goes through that tag.
+   Standard provenance metadata may include **source** (the position it can be taken back to), **path** (for material embedded in a post, the material is the source and the post is the path), **stage** (raised straight from the material, raised from a group, or derived from another card), and **who collected it, and when**. These are not fixed KJ source fields; they are modern research-hygiene aids for returning to the material.
+
+   If the calling context needs identifiers, exact source locations, hashes, source language, or other provenance/administrative metadata, preserve them as needed. But **do not add fields that pre-classify semantic content and then let that classification determine later reading or grouping.** If confidence, role, importance, feeling, type, or a similar distinction is indispensable to the material's meaning, keep it in the card sentence rather than as an a priori classification tag.
 
    **A field whose value repeats may be written once on the set and left off the individual cards.** When cards of different origin come into one space, write the omitted fields back in.
    **A question obtained from an external framework does not sit at the same level as observed fact until it is returned to the target and yields a new observation or a refutation.**
