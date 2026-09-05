@@ -42,7 +42,7 @@ TAG="v$(cat VERSION)"
 make release-tag-contract TAG="$TAG"
 ```
 
-This target is itself bound to the public `main` commit. It reruns `main-contract`, requires the current HEAD to be present in `origin/main` history, and reruns the full `release-validate` contract immediately before the tag-specific checks. The current manifest, packages, reports, hashes, clean worktree, and `source_commit == HEAD` relationship must therefore still be valid on the two-parent `main` commit that is actually present remotely. It then checks the intended tag against `VERSION` and the final manifest version and requires the dated CHANGELOG boundary to be frozen. The target remains separate from `make release-check` because the tag is an explicit publication-time input rather than a package-build input.
+This target is itself bound to the public `main` commit. It reruns `main-contract`, refreshes `origin/main` from the remote, requires the current HEAD to be present in that current remote history, and reruns the full `release-validate` contract immediately before the tag-specific checks. The current manifest, packages, reports, hashes, clean worktree, and `source_commit == HEAD` relationship must therefore still be valid on the two-parent `main` commit that is actually present remotely. It then checks the intended tag against `VERSION` and the final manifest version and requires the dated CHANGELOG boundary to be frozen. The target remains separate from `make release-check` because the tag is an explicit publication-time input rather than a package-build input.
 
 After the tag exists remotely, use the remote-tag provenance gate:
 
@@ -50,7 +50,7 @@ After the tag exists remotely, use the remote-tag provenance gate:
 make release-remote-tag-contract TAG="$TAG"
 ```
 
-This again reruns `release-validate` before the remote-tag-specific check. It then fetches the exact remote tag, peels lightweight or annotated tag objects to the commit they ultimately reference, and requires that commit to equal the final manifest `source_commit`. Unlike the tag-creation gate, this post-tag check is not restricted to the `main` branch so it can also be rerun from another clean checkout of the exact release commit.
+This again reruns `release-validate` before the remote-tag-specific check. It then requires the supplied tag name to match the final manifest version, fetches the exact remote tag, peels lightweight or annotated tag objects to the commit they ultimately reference, and requires that commit to equal the final manifest `source_commit`. Unlike the tag-creation gate, this post-tag check is not restricted to the `main` branch so it can also be rerun from another clean checkout of the exact release commit.
 
 None of these commands by itself proves that the method is empirically effective.
 
@@ -148,7 +148,7 @@ TAG="v$(cat VERSION)"
 make release-tag-contract TAG="$TAG"
 ```
 
-Require all four checks to succeed. `make main-contract` verifies that the local `main` HEAD has exactly two parents, `make release-check` validates the actual release set from a clean worktree and records that HEAD as manifest `source_commit`, and the explicit ancestry check confirms early that the commit is in `origin/main` history. `make release-tag-contract` then fails closed on those publication prerequisites itself: it reruns `main-contract`, rechecks that HEAD is in `origin/main`, revalidates the full release set, and finally binds the intended tag to `VERSION`, the final manifest version, the exact clean `HEAD`, and the frozen dated CHANGELOG boundary.
+Require all four checks to succeed. `make main-contract` verifies that the local `main` HEAD has exactly two parents, `make release-check` validates the actual release set from a clean worktree and records that HEAD as manifest `source_commit`, and the explicit ancestry check confirms early that the commit is in `origin/main` history. `make release-tag-contract` then fails closed on those publication prerequisites itself: it reruns `main-contract`, refreshes `origin/main` from the remote, rechecks that HEAD is in that current remote history, revalidates the full release set, and finally binds the intended tag to `VERSION`, the final manifest version, the exact clean `HEAD`, and the frozen dated CHANGELOG boundary.
 
 The explicit `make main-contract` and ancestry commands remain useful as separate diagnostics before invoking the tag gate; their repetition inside `release-tag-contract` prevents accidentally skipping them at publication time.
 
@@ -166,7 +166,7 @@ git push origin "$TAG"
 make release-remote-tag-contract TAG="$TAG"
 ```
 
-Do not retype a separate version string after the tag-version contract has passed. The remote-tag contract revalidates the full local release set again, then confirms that the remote tag resolves to the manifest `source_commit`; it does not rely on the GitHub Release `tag_name` or `target_commitish` as commit provenance.
+Do not retype a separate version string after the tag-version contract has passed. The remote-tag contract revalidates the full local release set again, requires the remote tag name to match the final manifest version, and then confirms that the tag resolves to the manifest `source_commit`; it does not rely on the GitHub Release `tag_name` or `target_commitish` as commit provenance.
 
 GitHub Actions do not publish the Release automatically. Create the GitHub Release explicitly, use `--verify-tag`, and publish exactly the files listed by `release_assets` in the final manifest.
 
@@ -179,6 +179,7 @@ After GitHub accepts the upload, rerun `make release-remote-tag-contract TAG="$T
 Remote-tag verification requires:
 
 - the full local release set to remain valid immediately before the tag-specific check;
+- the supplied remote tag name to match the final manifest version;
 - the remote tag to exist;
 - lightweight or annotated tag structure to peel successfully to a commit; and
 - that resolved commit to match the final manifest `source_commit`.
