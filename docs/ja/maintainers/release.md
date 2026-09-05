@@ -112,7 +112,7 @@ make release-tag-contract TAG="$TAG"
 - `make main-contract`: 現在のブランチが`main`で、HEADがちょうど2つの親を持つマージコミットの形になっていること。
 - `make release-check`: 公開する生成物とリリース契約が、作業ツリーに未コミット差分のない状態でそのコミットから生成され、最終manifestの`source_commit`がそのHEADを記録していること。
 - `git merge-base --is-ancestor`: 現在のコミットが実際に`origin/main`の履歴へ入っていること。
-- `make release-tag-contract`: タグ固有の検査に入る前に`release-validate`を再実行して最終release set全体がなお有効であることを確認し、そのうえで`VERSION`から導出したタグ名、`VERSION`、最終`release-manifest.json`の版、clean worktree、`source_commit == HEAD`、日付付きCHANGELOG境界を確認すること。
+- `make release-tag-contract`: `origin/main`をリモートから更新して、現在のHEADが最新の`origin/main`履歴に含まれることをtarget自身でも再確認します。そのうえで、タグ固有の検査に入る前に`release-validate`を再実行して最終release set全体がなお有効であることを確かめ、`VERSION`から導出したタグ名、`VERSION`、最終`release-manifest.json`の版、clean worktree、`source_commit == HEAD`、日付付きCHANGELOG境界を確認します。
 
 `make main-contract`が確認できるのはコミットの形状までです。2つの親を持つことだけから、そのコミットが実際にGitHubのPRから生成されたことまでは証明できません。また、このコマンドはGitHubへの直接pushを事前に拒否する仕組みでもありません。いずれかの検査が失敗した場合はタグを付けず、原因を修正し、必要な開発線へ戻してから改めて`main`へ統合します。
 
@@ -124,7 +124,7 @@ git push origin "$TAG"
 make release-remote-tag-contract TAG="$TAG"
 ```
 
-`release-remote-tag-contract`は、リモートタグ固有の検査に入る前にも`release-validate`を再実行し、現在のmanifest・package・report・hash・clean worktreeが最終release setとしてなお有効であることを確認します。その後、リモートタグを取得して、そのタグが最終的に指すコミットまで解決し、最終manifestの`source_commit`との一致を確認します。軽量タグでも注釈付きタグでも、最終的に指すコミットを比較します。
+`release-remote-tag-contract`は、リモートタグ固有の検査に入る前にも`release-validate`を再実行し、現在のmanifest・package・report・hash・clean worktreeが最終release setとしてなお有効であることを確認します。その後、指定したタグ名が最終manifestの版と一致することを確認し、リモートタグを取得して、そのタグが最終的に指すコミットまで解決し、最終manifestの`source_commit`との一致を確認します。軽量タグでも注釈付きタグでも、最終的に指すコミットを比較します。
 
 公開済みタグの内容を後から無言で差し替えません。修正が必要な場合はパッチ版を作ります。
 
@@ -162,7 +162,7 @@ gh release create "$TAG" "${ASSETS[@]}" \
 
 ## 8. 公開済みReleaseを検証する
 
-公開後は、リモートタグが引き続きmanifestの生成元コミットを指していることと、GitHub上のReleaseが最終的な公開契約を満たしていることの両方を確認します。GitHub CLIを使う場合の例です。
+公開後は、リモートタグの版が最終manifestと一致し、引き続きmanifestの生成元コミットを指していることと、GitHub上のReleaseが最終的な公開契約を満たしていることの両方を確認します。GitHub CLIを使う場合の例です。
 
 ```bash
 TAG="v$(cat VERSION)"
@@ -179,7 +179,7 @@ python scripts/verify_published_release.py \
   --tag "$TAG"
 ```
 
-ここでは二つの異なる境界を確認します。`release-remote-tag-contract`はrelease set全体を再検証したうえで、リモートタグが最終的に指すコミットとmanifestの`source_commit`を照合します。`verify_published_release.py`は独立してmanifestの版とタグ名を再確認し、Releaseがdraftやprereleaseではなく、本文に`.github/release-validation-note.md`の開示文が含まれていることを確かめたうえで、成果物名、サイズ、ダイジェストをGitHub Release上の実物と照合します。片方の成功を、もう片方の代わりにはしません。
+ここでは二つの異なる境界を確認します。`release-remote-tag-contract`はrelease set全体を再検証したうえで、リモートタグ名と最終manifestの版が一致することを確認し、そのタグが最終的に指すコミットとmanifestの`source_commit`を照合します。`verify_published_release.py`は独立してmanifestの版とタグ名を再確認し、Releaseがdraftやprereleaseではなく、本文に`.github/release-validation-note.md`の開示文が含まれていることを確かめたうえで、成果物名、サイズ、ダイジェストをGitHub Release上の実物と照合します。片方の成功を、もう片方の代わりにはしません。
 
 ## 9. 次の開発線を始める
 
