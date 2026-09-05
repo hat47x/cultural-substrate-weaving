@@ -16,7 +16,7 @@ When useful, state a provisional primary change structure: what changes into wha
 
 At the same time, record target-specific strengths, facts, causal relations, exceptions, and deliberately preserved variation that must not be destroyed by later integration. Do not generalize a local repair across the whole target automatically.
 
-Record skill-specific increment as a **new question, semantic unit, relation, state, transition candidate, falsification condition, or research task** absent from the baseline. If the caller or analyst changed the problem definition itself, do not count that change as a discovery by the skill.
+Record skill-specific increment such as a **new question, semantic unit, relation, state, transition candidate, falsification condition, or research task** absent from the baseline. If the caller or analyst changed the problem definition itself, do not count that change as a discovery by the skill.
 
 ## 2a. Separate fact, inference, and provenance
 
