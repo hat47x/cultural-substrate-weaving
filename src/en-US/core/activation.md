@@ -1,63 +1,76 @@
-# Activation, loading depth, and early exit
+# Use scope, loading depth, and execution state
 
-Read this when deciding how much of the skill to use and how deeply to load a cultural framework.
+Read this module when representing how broadly the skill is being used, how deeply a cultural framework is being read, and what is currently being executed.
 
-## 0. Separate two decisions
+## 0. Keep decision authority outside this skill
 
-1. **Activation scope**: non-activation / limited use / exploratory use.
-2. **Framework loading depth**: `not_loaded / probe / preview / full / enacted`.
+**This skill is not an independent authority over whether it should be used, how far it should be used, or when its use should be reduced or stopped.**
 
-Using the skill does not require opening a cultural framework every time. Opening a framework does not require reading it in full or executing a framework-native operation.
+Use scope, loading depth, stopping, reopening, and priority come from the author's decisions or from settings, instructions, and delegation given to the model outside this skill.
 
-## 1. Activation scope
+When external instructions delegate discretion to the model, operational choices may be made within that delegated scope. Do not turn classifications such as simple, closed, specialized, practical, or urgent into this skill's own value judgments and then automatically narrow its use.
 
-For implicit activation, ask whether the skill is likely to add a meaningful increment beyond the domain-specific method.
+When no explicit use scope is stated, do not invent prohibitions or suppression rules from static preferences inside this skill. If the basis for a decision exists outside the skill, use that basis and keep the decision-maker and rationale traceable.
 
-- **Non-activation**: the domain method is enough.
-- **Limited use**: use only what is needed, such as KJ, provenance, a consistency check, temporal structure, or missing connections.
-- **Exploratory use**: the main structure is itself unsettled, so cultural-framework exploration and KJ material integration are used iteratively.
+## 1. Use scope labels describe state, not permission
 
-Exploratory use fits an open problem space in which structure, relations, states, or transitions are central, multiple dimensions interact, and findings can be returned to the target for checking.
+When useful, record current use with labels such as:
 
-Prefer ordinary methods for simple proofreading, translation, calculation, format conversion, routine implementation, local fixes, or urgent tasks that should first follow domain procedures.
+- **`non_activation`**: no operation from this skill is being executed in this round.
+- **`limited_use`**: only specified operations, such as KJ integration, provenance tracking, candidate recall, or transformation, are being executed.
+- **`exploratory_use`**: broader exploration is being executed, including cultural-framework candidate supply and KJ integration.
 
-When the choice is close, start with limited use because it has the smaller interruption cost.
+These labels do not express superiority, recommendation, or danger. Do not infer them automatically from task type; treat them as descriptions of a scope established by instructions or delegation outside the skill.
 
-## 2. Explicit invocation
+The same task can use a different scope when the author's or caller's purpose changes. A local proofreading task may be given exploratory use, while an open-ended institutional-design task may be given limited use.
 
-When the skill is explicitly requested, do not refuse it merely from a prediction of low value. Explicit invocation still does not force full loading or framework-native operations.
+## 2. Loading-depth labels describe what has been opened
 
-When a particular framework is named, open it lightly first and see what survives on the target side. If the fit is weak, record the weak fit and return.
+When useful, represent cultural-framework loading with these labels:
 
-## 3. Loading depth
+- **`not_loaded`**: no cultural framework has been opened yet.
+- **`probe`**: possible entry questions are being explored through cycles, paths, boundaries, center/periphery, multiple timescales, flows, continua, recurrence, and displacement.
+- **`preview`**: the candidate framework's major cognitive structures, positions, paths, cycles, relations, transitions, and boundaries are being viewed lightly.
+- **`full`**: sources, lineage, symbolism, and composite structure are being read in depth.
+- **`enacted`**: framework-specific operations are actually being applied to the target.
 
-- **`not_loaded`**: do not open a cultural framework. This is a normal path when the target and KJ are enough for the current question.
-- **`probe`**: the target-led entry. Look for a concrete reason to open another cognitive field in unresolved target-side structure such as cycles, paths, boundaries, center/periphery, multiple timescales, flow, continua, repetition, or offset.
-- **`preview`**: make light contact with a candidate framework's main cognitive structure and limits.
-- **`full`**: read primary sources, lineage, symbolism, and compound structure when those are actually needed.
-- **`enacted`**: execute a framework-native operation only when it has concrete meaning for the target-side question.
+These labels are not a permission ladder. They do not mean that `preview` requires a successful `probe`, or that reading `full` creates an obligation to move to `enacted`.
 
-On the target-led path, if probe produces no concrete question, normally do not deepen it. In exploratory use, however, do not close candidate search from an abstract probe alone. When the problem space remains open and states, transitions, cycles, paths, directions, or flows may be productively unsettled through another cognitive field, raise a small set of structurally different candidates from the recall anchors in `methods/system-selection.md` and preview their main structure.
+If a particular framework or depth is specified outside the skill, reflect that instruction in execution state. If depth selection itself has been delegated to the model, select within the delegated purpose and keep the chosen depth and rationale traceable.
 
-Exploratory use may also begin from preview before a target-side question is fully formed when a candidate framework is already named, arises naturally from context, is being carried forward or compared, or when challenging the current problem framing through another cognitive field is itself meaningful.
+## 3. Return information produced at each depth
 
-A framework-led preview does not mean adoption, full assignment of the target, or progression to `full` or `enacted`. Questions, contrasts, research targets, and candidate material for KJ remain `framework_generated` and are returned to the target. If preview is enough, return to KJ. Even after a full read, do not enact an operation that is not needed.
+When depth changes, the skill can return differences such as:
 
-## 4. Reduce or stop
+- newly raised semantic units, relations, questions, contrasts, and research targets;
+- overlap with existing material;
+- places where framework vocabulary is increasing without other changes;
+- differences from target facts, boundaries, irreversibility, or evidence state;
+- information that deeper reading could add and the material or work it would require;
+- parts still unprocessed at the current depth.
 
-Reduce loading depth, and if necessary activation scope, when:
+These are **decision inputs, not automatic commands to stop or reduce use**. Which differences matter, and whether to continue, return, or move to another framework, is governed by values, goals, and delegation outside the skill.
 
-- no new semantic unit, relation, or question appears;
-- the increment duplicates existing content;
-- only framework vocabulary increases;
-- an operation starts thinning target facts, boundaries, irreversibility, or evidence state;
-- the baseline already achieves the current purpose;
-- attribution use lacks the homogeneity or target-side validation material it requires.
+For broad framework candidate recall, see `methods/system-selection.md`. For operations that bring a framework into contact with the target, see `methods/framework-application.md`. Here, referring to those methods means using their cognitive operations; it does not give this module authority to create additional permission conditions.
 
-Do not deepen merely to feel that the framework was used thoroughly.
+## 4. Record stopping, reduction, and reopening as state changes
 
-Reducing framework use or this skill's activation scope is not permission to narrow the task scope entrusted by the caller. Continue with the domain method when appropriate.
+When use is stopped, reduced, or moved to another method under external instruction or delegated judgment, the skill can preserve:
 
-A round may end when the needed artifact, decision, or research direction exists and important residuals and reopening conditions are preserved. Later material may justify reopening at a deeper level.
+- the current use scope and loading depth;
+- who decided the stop, reduction, or transition;
+- the criteria used and where those criteria came from;
+- unresolved questions, residuals, and material needed for reopening.
 
-Follow explicit human resource constraints. If an external limit interrupts the work, preserve what remains unresolved and how to resume it.
+If an external factor interrupts the work, record the interruption separately from any value judgment about the method.
+
+## 5. Report the execution state when it matters
+
+When use scope or depth is relevant to the result, report:
+
+1. which operations and frameworks were used and to what depth;
+2. which instruction, external setting, or delegated authority established that scope;
+3. what changed and what did not at each depth;
+4. residuals and available next operations.
+
+The purpose of this module is not to suppress use. It is to **make execution state and available choices visible while keeping decision authority outside the skill**.
