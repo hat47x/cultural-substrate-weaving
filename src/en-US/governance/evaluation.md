@@ -9,7 +9,7 @@ Read this before finalizing an application result to check skill-specific increm
 3. When a cultural framework was used, target-side unresolved structure and the questions or relations actually supplied by the framework remained distinguishable.
 4. `not_loaded / probe / preview / full / enacted` were distinguished, and depth itself was not treated as success.
 5. **Exploratory use and attribution use** were not mixed. Attribution use applied the needed homogeneity, assignment, lineage, convention, and transition checks.
-6. Misfit was rejected, backgrounded, or held instead of rereading the target merely to complete the framework.
+6. Misfit stayed visible without rereading the target to complete the framework; adoption states retained actor and basis.
 7. **The removal check was not mistaken for evidence generation.** Surviving removal of framework vocabulary did not by itself move an item to `target_supported`.
 8. `target_supported / framework_generated / cross_field_emergent / unresolved` were separated when needed, and target findings had independent target-side support.
 9. The exit matched the purpose: research/diagnosis returned questions, hypotheses, and falsification conditions; generation/composition treated framework structure as compositional material rather than empirical fact.
