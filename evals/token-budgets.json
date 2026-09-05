@@ -24,7 +24,8 @@
     "KJ primary-product scope rebaseline: ja-JP 81519 -> 81567, en-US 80543 -> 80577 (+48 / +34). Traced the statement that blank discovery is the procedure's primary product to the initial no-technique comparison (0c19f04), where synthesis quality did not separate the arms but blank detection did. Kept blank discovery as a useful emergent capability while restoring the broader KJ purpose of raising a whole picture from fragments; blanks are no longer a mandatory or privileged product. Existing corpus tripwires still contain the documented growth.",
     "KJ placement-order rebaseline: ja-JP 81567 -> 81691, en-US 80577 -> 80688 (+124 / +111). The placement audit found primary-source support for whole-picture emergence and for noticing missing material during placement, while the same source explicitly frames synthesis as bottom-up rather than top-down. Replaced the opaque 'draw relationships not drawn' wording with recording relations or blanks that become visible in placement, and removed the universal whole-first / reverse-grouping drawing order. No new fixed sequence, count, stop, or success criterion was introduced; existing corpus tripwires still contain the growth.",
     "KJ narration-order rebaseline: ja-JP 81691 -> 81895, en-US 80688 -> 80910 (+204 / +222). Traced the absolute ban on narration order absent from the diagram to the initial AI adaptation (0c19f04), where the same file already carried two-way diagram/narration cross-checking. Kept A-type diagram as the grounding source for B-type narration, but let newly noticed ordering or relations return to the diagram and source material for validation rather than suppressing them at generation time. Supported additions can update the diagram; unsupported ones remain explicitly hypothetical, unresolved, or narrative convenience. Existing corpus tripwires still contain the growth.",
-    "KJ single-resistance diagnosis rebaseline: ja-JP 81895 -> 81940, en-US 80910 -> 80949 (+45 / +39). Traced the immediate 'one resisting fragment means the label or grouping is wrong' rule to the initial AI adaptation (0c19f04). Primary-source and 1997-based practice support returning to data and checking interpretive deviation, but not that binary fixed threshold. Kept every resistance as a mandatory recheck signal while widening diagnosis to label, grouping, card boundary, or source reading and avoiding cause assignment from resistance alone. Existing corpus tripwires still contain the growth."
+    "KJ single-resistance diagnosis rebaseline: ja-JP 81895 -> 81940, en-US 80910 -> 80949 (+45 / +39). Traced the immediate 'one resisting fragment means the label or grouping is wrong' rule to the initial AI adaptation (0c19f04). Primary-source and 1997-based practice support returning to data and checking interpretive deviation, but not that binary fixed threshold. Kept every resistance as a mandatory recheck signal while widening diagnosis to label, grouping, card boundary, or source reading and avoiding cause assignment from resistance alone. Existing corpus tripwires still contain the growth.",
+    "Iteration stop-authority rebaseline: ja-JP 81940 -> 82015, en-US 80949 -> 80997 (+75 / +48). Traced the autonomous stop rule to delayed-round orchestration (4771053) and its later conclusion-movement measurement (f888f9b). Kept stalled target-side movement as an observable stop signal and kept residual/reopening preservation, but removed the static rule's authority to close a round. Closing now follows external use conditions or discretion delegated to the executing AI, completing the decision-authority boundary established in PR #193. Corpus tripwires raised only enough to account for this documented boundary change."
   ],
   "router_max_bytes": {
     "ja-JP": 10000,
@@ -43,8 +44,8 @@
     "en-US": 14566
   },
   "corpus_max_bytes": {
-    "ja-JP": 82000,
-    "en-US": 80971
+    "ja-JP": 82100,
+    "en-US": 81050
   },
   "m365_instructions_max_chars": 8000,
   "gpt_knowledge_max_files": 10
