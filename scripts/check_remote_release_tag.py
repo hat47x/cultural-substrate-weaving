@@ -8,6 +8,7 @@ import subprocess
 import sys
 from pathlib import Path
 
+from check_release_tag import read_manifest_version, validate_tag_against_version
 from common import ROOT
 
 TAG_PATTERN = re.compile(r"^v\d+\.\d+\.\d+$")
@@ -62,10 +63,21 @@ def validate_remote_tag_commit(expected_commit: str, actual_commit: str) -> list
     ]
 
 
+def validate_remote_release_tag(
+    tag: str,
+    manifest_version: str,
+    expected_commit: str,
+    actual_commit: str,
+) -> list[str]:
+    errors = validate_tag_against_version(tag, manifest_version)
+    errors.extend(validate_remote_tag_commit(expected_commit, actual_commit))
+    return errors
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(
         description=(
-            "Resolve a remote release tag to its commit and compare it with the final release manifest source commit."
+            "Resolve a remote release tag and compare both its version and commit with the final release manifest."
         )
     )
     parser.add_argument("--tag", required=True)
@@ -78,20 +90,27 @@ def main() -> int:
     args = parser.parse_args()
 
     try:
+        manifest_version = read_manifest_version(args.manifest)
         expected_commit = read_source_commit(args.manifest)
         actual_commit = resolve_remote_tag_commit(args.tag, args.remote)
     except (OSError, json.JSONDecodeError, ValueError, RuntimeError) as exc:
         print(f"ERROR: {exc}", file=sys.stderr)
         return 1
 
-    errors = validate_remote_tag_commit(expected_commit, actual_commit)
+    errors = validate_remote_release_tag(
+        args.tag,
+        manifest_version,
+        expected_commit,
+        actual_commit,
+    )
     if errors:
         for error in errors:
             print(f"ERROR: {error}", file=sys.stderr)
         return 1
 
     print(
-        f"Remote release tag {args.tag} resolves to manifest source commit {expected_commit}."
+        f"Remote release tag {args.tag} matches manifest version {manifest_version} "
+        f"and resolves to manifest source commit {expected_commit}."
     )
     return 0
 
