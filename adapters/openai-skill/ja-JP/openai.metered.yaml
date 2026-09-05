@@ -1,6 +1,6 @@
 interface:
   display_name: "Cultural Substrate Weaving — 日本語"
-  short_description: "文化的体系とKJ法で構造候補・関係・空白を探索し、対象側で検証する"
-  default_prompt: "領域固有手法の基準線を置き、文化的体系とKJ法による増分だけを対象側で検証してください。"
+  short_description: "文化的体系とKJ法で問い・関係・状態・空白・来歴を探索・統合する"
+  default_prompt: "著者またはスキル外の委任範囲を確認し、文化的体系とKJ法を使って問い・関係・状態・空白・来歴を探索・統合してください。採否や価値判断はその委任に従ってください。"
 policy:
-  allow_implicit_invocation: false
+  allow_implicit_invocation: true
