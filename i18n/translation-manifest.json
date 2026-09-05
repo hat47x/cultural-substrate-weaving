@@ -35,9 +35,9 @@
       "en_status": "translated"
     },
     "core/iteration.md": {
-      "ja_sha256": "bf4aeedfaae51d1af2441750ff727066f2a49fe03013b78a6186742cfe7ddf03",
+      "ja_sha256": "31daba472df1be42c15a64b6ba38351a3144197417a3626a72fa705db61d9070",
       "en_present": true,
-      "en_source_ja_sha256": "bf4aeedfaae51d1af2441750ff727066f2a49fe03013b78a6186742cfe7ddf03",
+      "en_source_ja_sha256": "31daba472df1be42c15a64b6ba38351a3144197417a3626a72fa705db61d9070",
       "en_status": "translated"
     },
     "core/principles-and-constraints.md": {
@@ -59,9 +59,9 @@
       "en_status": "translated"
     },
     "governance/governance-and-records.md": {
-      "ja_sha256": "1a2e490d31c2bed8f894ed4c4297e9de89cd91b77aee31dc799272866d0d6d92",
+      "ja_sha256": "4838d7db2df44a55cceaf7a0212a7ed7f28ce4129c2a0818dc1dec06560b5723",
       "en_present": true,
-      "en_source_ja_sha256": "1a2e490d31c2bed8f894ed4c4297e9de89cd91b77aee31dc799272866d0d6d92",
+      "en_source_ja_sha256": "4838d7db2df44a55cceaf7a0212a7ed7f28ce4129c2a0818dc1dec06560b5723",
       "en_status": "translated"
     },
     "methods/framework-application.md": {
