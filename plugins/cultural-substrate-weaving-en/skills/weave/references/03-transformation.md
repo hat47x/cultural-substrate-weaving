@@ -57,7 +57,7 @@ When combining multiple frameworks, verify axis independence. Each axis needs a 
 
 When crossing continuous frameworks, preserve them as continuous quantities. If a sparse matrix fits the target, keep it sparse.
 
-When using multiple frameworks, the following states can be observed.
+When using multiple frameworks, observable states include:
 
 1. A framework without rejection conditions is increasing confirmation while weakening target-side validation.
 2. Agreement among frameworks may originate in the interpreter's conversion rules rather than the target.
