@@ -16,7 +16,7 @@ When a judgment is unsettled, do not derive it from this document: go to the pri
 
 ## 13. Raise a whole picture out of fragments
 
-**The primary product of this procedure is not an organized conclusion but the discovery of what is absent.**
+**This procedure raises a whole picture out of fragments. In that process, voices, relations, or blanks not yet expressed may become visible.**
 
 Treat each fragment as a speaker rather than an object of classification. Listen the way a mother listens to a small child: for what the fragment is reaching toward.
 
