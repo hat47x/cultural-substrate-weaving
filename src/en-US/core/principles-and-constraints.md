@@ -1,77 +1,90 @@
-# Principles and constraints
+# Provenance, differences, and decision authority
 
-Read this when separating what belongs to a cultural framework, what belongs to the target, and what emerged from their contact.
+Read this module when separating what came from the target, what came from a cultural framework, what emerged through contact, and who decided adoption or use scope.
 
-## Dual fidelity
+## Where decision authority belongs
 
-This skill protects two forms of fidelity at the same time.
+**This skill is not an independent final authority over values, adoption, use scope, loading depth, stopping, publication, or transition into action.**
 
-1. **Fidelity to the target**: do not force the target to conform to a cultural framework.
-2. **Fidelity to the framework**: do not prematurely thin a cultural framework into generic operators or a short relation grammar.
+Those decisions come from the author or from settings, instructions, and delegation given to the model outside this skill. When external instructions delegate judgment to the model, the model may exercise that judgment within the delegated scope, but must not expand or narrow it on the basis of static values embedded in this skill.
 
-Protecting only one side leads either to imposition on the target or to an emptied framework.
+Classifications, checks, and provenance labels inside this skill are meant to enrich decision inputs and keep the origin of judgments traceable. **A label does not automatically imply a prohibition on use, adoption, speech, publication, or action.**
 
-## Attribution principle
+## Observe target-side and framework-side differences separately
 
-**Return structures obtained from external frameworks to the target for validation. Treat only parts independently supported by target-side material as target findings.**
+When a cultural framework is brought into contact with a target, at least two kinds of difference can be observed separately.
 
-A statement remaining natural after framework vocabulary is removed shows that it has been de-bound from the framework's authority; it does not create new target-side evidence.
+1. **Target-side difference**: how the transformed reading differs from source material, observations, concrete details, exceptions, contradictions, and uncertainty in the target.
+2. **Framework-side difference**: how the current use differs from the framework's sources, lineage, positions, paths, cycles, symbolism, or other documented structure.
 
-Distinguish when needed:
+Keeping both visible makes it easier to distinguish whether the target was reshaped toward the framework, the framework was adapted for the current use, or a third structure emerged through contact.
 
-- `target_supported`: independently supported by target-side sources, observation, or falsification.
+This distinction does not decide which difference is acceptable, which side has priority, or which transformation should be adopted. Those judgments return to goals, values, domain methods, and delegation outside the skill.
+
+## Provenance and support state
+
+When useful, record states such as:
+
+- `target_supported`: support can be identified in target-side material, observation, or refutation.
 - `framework_generated`: a question, hypothesis, contrast, mapping candidate, or compositional resource generated from a cultural framework.
-- `cross_field_emergent`: a third structure arising from contact among frameworks, or between a framework and KJ.
-- `unresolved`: a residual whose usefulness, attribution, or confidence is not yet decided.
+- `cross_field_emergent`: a third structure emerging from multiple frameworks or from contact between a framework and KJ.
+- `unresolved`: support state, adoption, or role has not yet been settled.
 
-## Target specificity
+These are **descriptions of provenance and support state**, not permission grades. Whether a `framework_generated` structure may be adopted in a work or design, whether only `target_supported` material should appear in a report, or what support level a decision requires depends on criteria outside this skill.
 
-State the range explained by existing categories and **preserve what exceeds them as target-specific information.** Prefer concreteness and exceptions to a complete explanation.
+If a statement remains natural after framework vocabulary is removed, that can be recorded as reduced explicit dependence on the framework. How much evidential or quality weight that observation deserves is not decided by this label system alone.
 
-Do not rewrite target-specific purpose, properties, or exceptions for convenience. Otherwise later mappings measure the task framing rather than the target.
+## Keep source material and transformed readings distinct
 
-## Entrusted scope
+Keep it possible to distinguish what was already explained by existing categories, what exceeded them, and what was added by later transformation.
 
-**Do not expand the entrusted scope on your own, and do not narrow it through excessive self-restraint.** Failing to return a judgment where judgment was entrusted departs from the request just as much as making a judgment that was never entrusted.
+When a target-specific purpose, property, or exception is changed for analysis, keep the original material and the transformation traceable so the result can later be re-evaluated under another value system or domain method.
 
-Distinguish stopping a particular framework at preview, rejecting it after distortion is detected, or reducing this skill's activation scope from withdrawing from the entrusted task itself. **A specialist domain, a move into implementation or operational work, or rising cost is not by itself a reason for this method to narrow the entrusted task.** Return to the domain method when appropriate; resource-based stopping belongs to the caller.
+Policies for retention volume, compression, deletion, and reference-based storage follow instructions outside the skill. The skill provides structures that let source material, summaries, indexes, and transformed artifacts remain connected.
 
-## Separate preservation from attention
+## Possibility, support, adoption, and decision can be separate states
 
-Do not delete source material, KJ snapshots, framework sources and lineages, positions, paths, cycles, symbols, rejected options, or unresolved residuals without an explicit reason.
+Generating a question or hypothesis, finding target-side support, adopting it into an artifact, and making it a final decision are not the same event.
 
-Preservation and what must be read in the current round are different things.
+When useful, record a sequence such as:
 
-> **Preserve richly; make current attention selective.**
+```text
+candidate generation -> added support or refutation -> adoption judgment -> decision -> later revision or withdrawal
+```
 
-Indexes, summaries, and previews do not replace the canonical material. If compression is needed, try splitting, delayed loading, and references before deletion.
+This is not a fixed rule that unsupported material may never be adopted. Its purpose is to make visible what conditions were used to move from one state to another and who set those conditions.
 
-## Delay irreversible meaning fixation
+## Separate cognitive mode, value criterion, and fact candidate
 
-Do not prohibit an obvious association, the first KJ label, or the first framework that appears to fit. But do not promote it into an explanation that governs the whole before returning it to other material or KJ regrouping.
+A cultural framework may contribute different kinds of material:
 
-What is delayed is not the speed of thinking but **fixing meaning into a form that is hard to reverse**.
+- **cognitive mode**: what is noticed as a question, relation, transition, cycle, or boundary;
+- **value criterion**: what is treated as something to protect, promote, avoid, or prioritize;
+- **fact candidate**: a statement that may hold about the target.
 
-## Separate possibility from adoption
+Do not collapse these into a single kind of claim. In particular, a value criterion does not become the author's value merely because it came from a framework or from this skill.
 
-When a framework is opened, explore what becomes newly visible for the reason it was opened. Do not make early risk checking so dominant that nothing can be generated.
+## Track delegated discretion
 
-At the same time, keeping possibilities open does not require forcing use. Return after preview when that is enough. Stop an operation when it distorts the target. Misfit may itself reveal a boundary.
+When judgment has been delegated to the model, keep it possible to record what was delegated, for example:
 
-Fit is not proof of truth, and misfit is not necessarily failure.
+- discretion to expand candidates;
+- discretion to choose comparison axes;
+- discretion to choose loading depth;
+- discretion to decide adoption;
+- discretion to externalize, publish, or move toward action.
 
-## Separate cognition, value, and fact
+The delegated range may differ from task to task. When the model makes a judgment, keep it traceable to the external instruction or delegation that authorized the judgment, rather than treating the skill itself as the source of permission.
 
-Do not collapse the cognitive style, value criteria, and target-fact candidates supplied by a cultural framework into the same kind of claim.
+## Justifying value or restraint rules embedded in the skill
 
-- A cognitive style changes what is noticed as a question, relation, or change.
-- A value criterion is a candidate axis for what to protect, promote, or avoid.
-- Neither by itself proves a fact about the target.
+Do not add rules lightly when they make this skill itself prefer a particular value, prohibit or suppress use, or restrict adoption, publication, or speech.
 
-## Justify rules by effects
+In addition to explicit adoption by the author, if such a rule is claimed to require embodiment inside the skill, keep at least the following externally verifiable:
 
-A new rule must be justified by an effect observable on the target or in the cognitive trajectory. Do not add rules whose effect cannot be shown.
+1. an external document that clearly explains the value the rule protects and why that value must be enforced inside the skill;
+2. sufficiently meaningful statistical validation supporting the rule's appropriateness.
 
-Do not promote an operation that worked in one case into a permanent rule automatically. Treat it as a candidate only after repeated adoption across different tasks and clearer knowledge of when not to use it.
+Existing rules are not grandfathered. Being present in the canonical text, sounding conventionally prudent, or being judged cautious by a model is not sufficient justification.
 
-Domain-specific quality standards, expert procedures, and presentation requirements belong to the caller's context or a paired domain skill.
+For method operations and recording structures as well, keep their origin and role traceable. If a method operation contains a value judgment or restraint rule, separate that part for re-examination.
