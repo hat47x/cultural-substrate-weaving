@@ -124,7 +124,7 @@ git push origin "$TAG"
 make release-remote-tag-contract TAG="$TAG"
 ```
 
-`release-remote-tag-contract`は、リモートタグ固有の検査に入る前にも`release-validate`を再実行し、現在のmanifest・package・report・hash・clean worktreeが最終release setとしてなお有効であることを確認します。その後、指定したタグ名が最終manifestの版と一致することを確認し、リモートタグを取得して、そのタグが最終的に指すコミットまで解決し、最終manifestの`source_commit`との一致を確認します。軽量タグでも注釈付きタグでも、最終的に指すコミットを比較します。
+`release-remote-tag-contract`は、リモートタグ固有の検査に入る前にも`release-validate`を再実行し、現在のmanifest・package・report・hash・clean worktreeが最終release setとしてなお有効であることを確認します。その後、指定したタグ名が最終manifestの版と一致すること、最終manifestの`source_commit`が現在のリモート`main`履歴に含まれていること、対象版のCHANGELOG公開境界が凍結済みであることを確認します。さらにリモートタグを取得し、軽量タグでも注釈付きタグでも最終的に指すコミットまで解決して、`source_commit`との一致を照合します。現在のブランチ自体が`main`であることは要求しないため、同じrelease commitの別のclean checkoutからも再検証できます。
 
 公開済みタグの内容を後から無言で差し替えません。修正が必要な場合はパッチ版を作ります。
 
@@ -162,7 +162,7 @@ gh release create "$TAG" "${ASSETS[@]}" \
 
 ## 8. 公開済みReleaseを検証する
 
-公開後は、リモートタグの版が最終manifestと一致し、引き続きmanifestの生成元コミットを指していることと、GitHub上のReleaseが最終的な公開契約を満たしていることの両方を確認します。GitHub CLIを使う場合の例です。
+公開後は、リモートタグの版が最終manifestと一致し、そのタグが引き続きmanifestの`source_commit`を指していることに加え、`source_commit`が現在のリモート`main`履歴に残っていることと、対象版のCHANGELOG公開境界が凍結されたままであることを確認します。そのうえで、GitHub上のReleaseが最終的な公開契約を満たしていることも検証します。GitHub CLIを使う場合の例です。
 
 ```bash
 TAG="v$(cat VERSION)"
@@ -179,7 +179,7 @@ python scripts/verify_published_release.py \
   --tag "$TAG"
 ```
 
-ここでは二つの異なる境界を確認します。`release-remote-tag-contract`はrelease set全体を再検証したうえで、リモートタグ名と最終manifestの版が一致することを確認し、そのタグが最終的に指すコミットとmanifestの`source_commit`を照合します。`verify_published_release.py`は独立してmanifestの版とタグ名を再確認し、Releaseがdraftやprereleaseではなく、本文に`.github/release-validation-note.md`の開示文が含まれていることを確かめたうえで、成果物名、サイズ、ダイジェストをGitHub Release上の実物と照合します。片方の成功を、もう片方の代わりにはしません。
+ここでは二つの異なる境界を確認します。`release-remote-tag-contract`はrelease set全体を再検証したうえで、リモートタグ名と最終manifestの版、`source_commit`と現在のリモート`main`履歴、対象版のCHANGELOG公開境界、リモートタグが最終的に指すコミットと`source_commit`をそれぞれ照合します。`verify_published_release.py`は独立してmanifestの版とタグ名を再確認し、Releaseがdraftやprereleaseではなく、本文に`.github/release-validation-note.md`の開示文が含まれていることを確かめたうえで、成果物名、サイズ、ダイジェストをGitHub Release上の実物と照合します。片方の成功を、もう片方の代わりにはしません。
 
 ## 9. 次の開発線を始める
 
