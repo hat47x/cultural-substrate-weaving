@@ -12,9 +12,9 @@ Do not silently switch from exploration to attribution.
 
 ## 3a. Fix the assignment
 
-A framework has at least two layers.
+When attribution use involves assigning positions, distinguish at least two functions.
 
-- **Position layer**: a fixed set of positions defined before seeing the target. This layer can be used for classification.
+- **Position layer**: a structure of positions or states defined before seeing the target. A discrete framework may define a position set or count; a continuous framework may instead define axes, order, ranges, or related positional structure. This layer can be used for assignment.
 - **Interpretive-language layer**: judgments, imagery, correspondences, and character descriptions that can be broadly applied through analyst similarity judgments. Do not use this layer as the classifier.
 
 Distinguish predicates that decide assignment.
@@ -49,7 +49,7 @@ Distinguish at least three kinds of empty position.
 
 The third is not a target gap.
 
-For important assignments, apply the rule **independently twice**. Do not build a target finding on positions that do not reproduce.
+For important assignments, **test the reproducibility of the assignment convention.** Depending on the convention, reapply it in a separate pass, give the same convention to an independent reviewer or model, or recompute it when it is computational. Do not make a fixed number of repetitions a universal success condition. Do not turn an unreproduced position into a target finding until the discrepancy is resolved or its evidence state is made explicit.
 
 ### Separate derivation from convention
 
@@ -58,7 +58,7 @@ A position system may contain parts regenerable from rules and parts preserved o
 - Mechanically validate derivable parts: element counts, transitions, inverse operations, impossible connections, and similar properties.
 - For conventional parts, identify the lineage and source; where material, compare at least one relevant alternative lineage.
 
-Do not use a derivable component that fails validation. Do not invent analyst-defined transitions and then attribute them to a framework that has no transition rule.
+When a derivable component does not match validation, do not use it unchanged **as a correct framework derivation in attribution use.** Investigate whether the mismatch lies in calculation, implementation, source material, or lineage; if unresolved, it may remain `unresolved`. If the mismatch itself generates an exploratory question, preserve its provenance and keep it distinct from the framework's canonical structure. Do not invent analyst-defined transitions and then attribute them to a framework that has no transition rule.
 
 ### Keep interpretive language available
 
@@ -84,7 +84,7 @@ Do not use a framework without transition rules for transition-model attribution
 
 For attribution use, perform these checks. For exploration-only use, apply the portions needed to prevent over-importing framework structure.
 
-- **Reversal check**: try to falsify the claim produced by the framework. Do not absorb counterexamples back into support. If every counterexample can be explained away, remove that framework from attribution use for this target.
+- **Reversal check**: try to falsify the claim produced by the framework. Do not absorb counterexamples back into support. If a claim has been shaped so that every counterexample can be explained away, do not move that claim unchanged to `target_supported`. Whether to revise the claim's scope, assignment, interpretive convention, or attribution use itself returns to external use conditions or delegated judgment.
 - **Alternative check**: if another framework yields the same candidate finding, do not treat it as framework-specific contribution. Distinguish a framework that could not be assigned from one that was assigned and did not yield the finding.
 - **Misfit record**: preserve where the framework does not fit. Separate gaps known from the framework's coverage before application from misfits discovered only after contact with the target.
 - **Removal check**: remove framework names, correspondence tables, and interpretive vocabulary, then ask whether each candidate still reads as a meaningful target-side question, hypothesis, or description.
