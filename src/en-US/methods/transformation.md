@@ -6,7 +6,7 @@ Read this file when converting relationships inside a framework into target-spec
 
 Convert framework relationships into verbs, questions, and checks usable on the target.
 
-Before transferring a relationship, state its type:
+Before transferring a relationship, state its type. At minimum, distinguish the following relationship types:
 
 - classificatory correspondence;
 - causal relationship;
