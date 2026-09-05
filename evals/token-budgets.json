@@ -19,7 +19,8 @@
     "KJ return-check reproducibility rebaseline: ja-JP 80844 -> 81121, en-US 79875 -> 80147 (+277 / +272). Traced the fixed two-pass return-check rule to an AI-evaluation experiment (e5443f5), not the KJ primary-source lineage; kept return-to-material and label-vs-group diagnosis while replacing the borrowed fixed repetition count with independence-increasing reruns appropriate to the case, and marked the rerun method explicitly as a generative-AI-era adaptation.",
     "KJ gap-check count reduction: ja-JP 81121 -> 81112, en-US 80147 -> 80142 (-9 / -5). Traced the fixed one-pass oversight check to the 2026-08-23 relaxation (3988e12), not to the KJ primary-source lineage; removed only the arbitrary repetition count while preserving both gap-seeking and the prohibition on inventing gaps. Corpus tripwires ratcheted down by the same reductions.",
     "KJ card-metadata boundary rebaseline: ja-JP 81112 -> 81441, en-US 80142 -> 80499 (+329 / +357). Traced the fixed four-field schema to modern research-hygiene work (fe49a56), not KJ primary-source requirements; kept source/path/stage/collector-time as standard provenance metadata, allowed additional nonsemantic provenance/admin fields when needed, and preserved the prohibition on preclassification fields that steer later reading or grouping. EN corpus tripwire raised to accommodate the documented growth; JA remains within its existing tripwire.",
-    "KJ return-addition list openness rebaseline: ja-JP 81441 -> 81519, en-US 80499 -> 80572 (+78 / +73). Traced the return-check list to modern handoff/AI-evaluation work (0499918, e5443f5, 1f36b8e), where four addition patterns later became five; kept the recurring patterns as useful checks while making explicit that they are not exhaustive, and marked the list itself as a generative-AI-era adaptation. JA corpus tripwire raised to accommodate the documented growth; EN remains within its existing tripwire."
+    "KJ return-addition list openness rebaseline: ja-JP 81441 -> 81519, en-US 80499 -> 80572 (+78 / +73). Traced the return-check list to modern handoff/AI-evaluation work (0499918, e5443f5, 1f36b8e), where four addition patterns later became five; kept the recurring patterns as useful checks while making explicit that they are not exhaustive, and marked the list itself as a generative-AI-era adaptation. JA corpus tripwire raised to accommodate the documented growth; EN remains within its existing tripwire.",
+    "KJ cover-and-raise lineage correction: ja-JP 81519 -> 81519, en-US 80572 -> 80543 (+0 / -29). The lineage audit showed that cover-and-raise entered as an unverified modern adaptation (0499918), while later evaluation measured both benefit and cost without establishing KJ-primary-source lineage. Reattributed the procedure from attested KJ practice to the generative-AI-era adaptation list without changing runtime behavior or inventing a selection criterion. EN corpus tripwire ratcheted down by the 29-byte reduction; JA remains unchanged."
   ],
   "router_max_bytes": {
     "ja-JP": 10000,
@@ -39,7 +40,7 @@
   },
   "corpus_max_bytes": {
     "ja-JP": 82000,
-    "en-US": 81000
+    "en-US": 80971
   },
   "m365_instructions_max_chars": 8000,
   "gpt_knowledge_max_files": 10
