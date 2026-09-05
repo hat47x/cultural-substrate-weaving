@@ -34,7 +34,7 @@ Do not reread the whole history every round. Use **new material, touched residua
 
 ## Observe longitudinal change as events
 
-Record these only when useful; the record format is in `08-governance-and-records.md`.
+When useful, record events such as the following; the record format is in `08-governance-and-records.md`.
 
 - `question_shift`
 - `search_shift`
