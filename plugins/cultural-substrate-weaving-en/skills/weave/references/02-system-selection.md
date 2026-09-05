@@ -55,7 +55,7 @@ Then inspect homogeneity between framework and target units, the assignment proc
 
 ## 3b. Model use
 
-Choose as needed.
+Examples include:
 
 1. **Structural model**: inspect relation and placement.
 2. **Consistency model**: compare the behavior of one target with an externally derived pattern.
