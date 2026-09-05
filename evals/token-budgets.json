@@ -32,7 +32,8 @@
     "Working-window foreground-set rebaseline: ja-JP 82051 -> 82003, en-US 81048 -> 81028 (-48 / -20). Traced the four-item foreground list to the v40 integration (3dc8777), where it was introduced with preservation-vs-attention separation but not tested as a closed set; delayed-round work (4771053) strengthened reopening and residual retention without validating the limit. Kept selective foregrounding and the four recurring examples while reopening the working set to whatever current work requires. Corpus tripwires ratcheted down by the same reductions.",
     "Cognitive-stance read-cadence rebaseline: ja-JP 82003 -> 81961, en-US 81028 -> 80975 (-42 / -53). Traced the fixed once-per-round load and same-round reload ban to the unmeasured cognitive-stance rollout (e2688b8, 88265fe); PR #84 explicitly did not measure prompt wording effects. Kept the cognitive stance as a cross-cutting capability and retained need-based return when existing explanations or rules outrank the target, while removing the arbitrary read count. Corpus tripwires ratcheted down by the same reductions.",
     "Transformation missing-element list openness restoration: ja-JP 81961 -> 81967, en-US 80975 -> 80993 (+6 / +18). Restored the v0.1.0 non-exhaustive semantics that were originally stated at file level and later lost when the general preamble was removed in 3988e12. Kept the four recurring distinctions unchanged while allowing target-specific additional cases; no new fixed category was introduced. The existing JA tripwire contains the growth; the EN tripwire was raised by the same 18-byte growth.",
-    "Transformation relationship-type list openness restoration: ja-JP 81967 -> 82003, en-US 80993 -> 81051 (+36 / +58). Restored the v0.1.0 non-exhaustive semantics for relationship types after the file-level openness preamble was lost in 3988e12. Kept the requirement to state each transferred relationship's type and retained the five recurring distinctions while allowing target-specific additional relation types; no new fixed category was introduced. The existing JA tripwire contains the growth; the EN tripwire was raised by the same 58-byte growth."
+    "Transformation relationship-type list openness restoration: ja-JP 81967 -> 82003, en-US 80993 -> 81051 (+36 / +58). Restored the v0.1.0 non-exhaustive semantics for relationship types after the file-level openness preamble was lost in 3988e12. Kept the requirement to state each transferred relationship's type and retained the five recurring distinctions while allowing target-specific additional relation types; no new fixed category was introduced. The existing JA tripwire contains the growth; the EN tripwire was raised by the same 58-byte growth.",
+    "Transformation multi-framework observation-state openness restoration: ja-JP 82003 -> 82012, en-US 81051 -> 81040 (+9 / -11). Restored the v0.1.0 non-exhaustive semantics for the three multi-framework observation signals after the file-level openness preamble was lost in 3988e12. Kept all three signals and the 5867d9f authority boundary that they do not automatically command reduction; only the example-set closure was removed. JA tripwire raised by the same 9-byte growth; EN tripwire ratcheted down by the 11-byte reduction."
   ],
   "router_max_bytes": {
     "ja-JP": 10000,
@@ -51,8 +52,8 @@
     "en-US": 14566
   },
   "corpus_max_bytes": {
-    "ja-JP": 82010,
-    "en-US": 81053
+    "ja-JP": 82019,
+    "en-US": 81042
   },
   "m365_instructions_max_chars": 8000,
   "gpt_knowledge_max_files": 10
