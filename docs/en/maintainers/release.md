@@ -124,7 +124,7 @@ git push origin "$TAG"
 make release-remote-tag-contract TAG="$TAG"
 ```
 
-`release-remote-tag-contract` reruns `release-validate` before checking the remote tag, so the current manifest, packages, reports, hashes, and clean worktree must still form a valid final release set. It then requires the remote tag name to match the final manifest version, fetches the current remote `main` and requires the manifest `source_commit` to be present in that history, rechecks the frozen CHANGELOG boundary for the manifest version, fetches the remote tag, peels either a lightweight or annotated tag to its commit, and requires that commit to equal the final manifest `source_commit`. The check remains usable from another clean checkout of the exact release commit; it does not require the current branch itself to be `main`.
+`release-remote-tag-contract` reruns `release-validate` before checking the remote tag, so the current manifest, packages, reports, hashes, and clean worktree must still form a valid final release set. It then requires the remote tag name to match the final manifest version, requires the manifest `source_commit` to retain the repository's expected two-parent merge-commit shape, fetches the current remote `main` and requires that commit to be present in its history, rechecks the frozen CHANGELOG boundary for the manifest version, fetches the remote tag, peels either a lightweight or annotated tag to its commit, and requires that commit to equal the final manifest `source_commit`. The check remains usable from another clean checkout of the exact release commit; it does not require the current branch itself to be `main`. As with `main-contract`, two parents are a repository shape policy and do not by themselves prove pull-request provenance.
 
 Do not silently replace files under an existing public tag. Publish a patch version when a released artifact needs correction.
 
@@ -162,7 +162,7 @@ Do not use an existing release as a way to silently replace already published ar
 
 ## 8. Verify the published Release
 
-After publication, verify that the remote tag still matches the final manifest version and resolves to its `source_commit`, that this commit remains in current remote `main` history, that the CHANGELOG boundary remains frozen, and that the GitHub Release satisfies the final publication contract. Example using GitHub CLI:
+After publication, verify that the remote tag still matches the final manifest version and resolves to its `source_commit`, that the source commit still has the expected two-parent merge-commit shape and remains in current remote `main` history, that the CHANGELOG boundary remains frozen, and that the GitHub Release satisfies the final publication contract. Example using GitHub CLI:
 
 ```bash
 TAG="v$(cat VERSION)"
@@ -179,7 +179,7 @@ python scripts/verify_published_release.py \
   --tag "$TAG"
 ```
 
-These are separate boundaries. `release-remote-tag-contract` revalidates the full release set, verifies the remote tag name against the final manifest version, verifies the manifest `source_commit` against current remote `main` history and the frozen CHANGELOG boundary, and verifies that the remote tag resolves to that same commit. `verify_published_release.py` independently rechecks the manifest version and tag, requires a non-draft, non-prerelease Release whose body contains `.github/release-validation-note.md`, and then verifies the published asset names, sizes, and digests. Neither check substitutes for the other.
+These are separate boundaries. `release-remote-tag-contract` revalidates the full release set, verifies the remote tag name against the final manifest version, verifies that the manifest `source_commit` has the expected two-parent merge-commit shape, verifies that commit against current remote `main` history and the frozen CHANGELOG boundary, and verifies that the remote tag resolves to that same commit. `verify_published_release.py` independently rechecks the manifest version and tag, requires a non-draft, non-prerelease Release whose body contains `.github/release-validation-note.md`, and then verifies the published asset names, sizes, and digests. Neither check substitutes for the other.
 
 ## 9. Start the next development line
 
