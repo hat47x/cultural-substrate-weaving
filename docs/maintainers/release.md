@@ -50,7 +50,7 @@ After the tag exists remotely, use the remote-tag provenance gate:
 make release-remote-tag-contract TAG="$TAG"
 ```
 
-This again reruns `release-validate` before the remote-tag-specific check. It then requires the supplied tag name to match the final manifest version, fetches the current remote `main` and requires the final manifest `source_commit` to be present in that history, rechecks the frozen CHANGELOG boundary for the manifest version, fetches the exact remote tag, peels lightweight or annotated tag objects to the commit they ultimately reference, and requires that commit to equal the same `source_commit`. Unlike the tag-creation gate, this post-tag check is not restricted to the `main` branch, so it can also be rerun from another clean checkout of the exact release commit while independently reasserting the public-history and changelog boundaries.
+This again reruns `release-validate` before the remote-tag-specific check. It then requires the supplied tag name to match the final manifest version, requires the final manifest `source_commit` to have the same two-parent merge-commit shape required by `main-contract`, fetches the current remote `main` and requires that commit to be present in its history, rechecks the frozen CHANGELOG boundary for the manifest version, fetches the exact remote tag, peels lightweight or annotated tag objects to the commit they ultimately reference, and requires that commit to equal the same `source_commit`. Unlike the tag-creation gate, this post-tag check is not restricted to the `main` branch, so it can also be rerun from another clean checkout of the exact release commit while independently reasserting the commit-shape, public-history, and changelog boundaries. The two-parent shape remains a repository policy check; it does not by itself prove pull-request provenance.
 
 None of these commands by itself proves that the method is empirically effective.
 
@@ -166,7 +166,7 @@ git push origin "$TAG"
 make release-remote-tag-contract TAG="$TAG"
 ```
 
-Do not retype a separate version string after the tag-version contract has passed. The remote-tag contract revalidates the full local release set again, requires the remote tag name to match the final manifest version, fetches current remote `main` and requires the manifest `source_commit` to be present in that history, rechecks the frozen CHANGELOG boundary for that manifest version, and then confirms that the remote tag resolves to the same `source_commit`; it does not rely on the GitHub Release `tag_name` or `target_commitish` as commit provenance.
+Do not retype a separate version string after the tag-version contract has passed. The remote-tag contract revalidates the full local release set again, requires the remote tag name to match the final manifest version, requires the manifest `source_commit` to have the expected two-parent merge-commit shape, fetches current remote `main` and requires that commit to be present in its history, rechecks the frozen CHANGELOG boundary for that manifest version, and then confirms that the remote tag resolves to the same `source_commit`; it does not rely on the GitHub Release `tag_name` or `target_commitish` as commit provenance.
 
 GitHub Actions do not publish the Release automatically. Create the GitHub Release explicitly, use `--verify-tag`, and publish exactly the files listed by `release_assets` in the final manifest.
 
@@ -180,6 +180,7 @@ Remote-tag verification requires:
 
 - the full local release set to remain valid immediately before the tag-specific check;
 - the supplied remote tag name to match the final manifest version;
+- the final manifest `source_commit` to have exactly two parents under the repository's merge-commit policy;
 - the final manifest `source_commit` to be present in current remote `main` history;
 - the CHANGELOG boundary for the manifest version to remain frozen;
 - the remote tag to exist;
@@ -197,7 +198,7 @@ Release-object verification requires:
 - published byte sizes to match the final manifest; and
 - GitHub's published `sha256:` digest for every asset to match the final manifest, including a directly computed digest for `release-manifest.json`.
 
-These post-publication checks are intentionally separate from package construction and from each other. The remote-tag gate independently reasserts the manifest version, current remote-main history, frozen CHANGELOG boundary, and tag-to-`source_commit` relationship, so accidentally skipping the tag-creation gate cannot turn a branch-only or unfrozen candidate into a verified remote tag. The Release-object verifier independently checks publication state, disclosure text, and manifest-declared assets. `gh release upload --clobber` does not remove unrelated pre-existing assets, so an existing Release with stale or manual extras must fail verification instead of being silently treated as an exact manifest publication.
+These post-publication checks are intentionally separate from package construction and from each other. The remote-tag gate independently reasserts the manifest version, two-parent release-commit shape, current remote-main history, frozen CHANGELOG boundary, and tag-to-`source_commit` relationship, so accidentally skipping the tag-creation gate cannot turn a direct-pushed, branch-only, or unfrozen candidate into a verified remote tag. The two-parent shape still does not prove pull-request provenance. The Release-object verifier independently checks publication state, disclosure text, and manifest-declared assets. `gh release upload --clobber` does not remove unrelated pre-existing assets, so an existing Release with stale or manual extras must fail verification instead of being silently treated as an exact manifest publication.
 
 ## Publication disclosure
 
