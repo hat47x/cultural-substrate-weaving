@@ -10,7 +10,7 @@ This procedure derives from the KJ method. The lineage adopted is Kawakita Jiro,
 
 **Circulation and original run opposite here.** The most read are the two simplified paperbacks; the most complete is the least read — the 1986 summation. Filling gaps from memory drifts toward the simplified form.
 
-Attested KJ practice emphasizes cards readable by a third party, labels that are not category names, covering the material before raising a label, and the A-type diagram / B-type narration distinction. **Card boundaries, provenance-metadata design, the addition patterns used in return checks, and the rerun method for return checks include modern adaptations for generative-AI use.** Do not use card counts or character counts as rules for semantic boundaries.
+Attested KJ practice emphasizes cards readable by a third party, labels that are not category names, and the A-type diagram / B-type narration distinction. **Cover-and-raise, card boundaries, provenance-metadata design, the addition patterns used in return checks, and the rerun method for return checks include modern adaptations for generative-AI use.** Do not use card counts or character counts as rules for semantic boundaries.
 
 When a judgment is unsettled, do not derive it from this document: go to the primary sources above and to related KJ techniques. **When those sources cannot be reached, record the judgment as self-reported and proceed.** Do not declare a lineage from memory alone.
 
