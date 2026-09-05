@@ -8,6 +8,7 @@ import subprocess
 import sys
 from pathlib import Path
 
+from check_main_push_contract import MainPushContractError, check_main_push_parents
 from check_release_changelog import check_release_heading
 from check_release_tag import read_manifest_version, validate_tag_against_version
 from common import ROOT
@@ -79,6 +80,28 @@ def resolve_remote_main_commit(
     return _resolve_fetched_commit(repo, "remote main")
 
 
+def read_commit_parents(commit: str, repo: Path = ROOT) -> str:
+    try:
+        result = subprocess.run(
+            ["git", "show", "-s", "--format=%P", commit],
+            cwd=repo,
+            check=True,
+            text=True,
+            capture_output=True,
+        )
+    except (OSError, subprocess.CalledProcessError) as exc:
+        raise RuntimeError(f"cannot read release commit parents for {commit}: {exc}") from exc
+    return result.stdout.strip()
+
+
+def validate_release_commit_shape(parent_line: str) -> list[str]:
+    try:
+        check_main_push_parents(parent_line)
+    except MainPushContractError as exc:
+        return [f"manifest source_commit violates main merge-commit shape: {exc}"]
+    return []
+
+
 def validate_remote_tag_commit(expected_commit: str, actual_commit: str) -> list[str]:
     if expected_commit == actual_commit:
         return []
@@ -140,6 +163,7 @@ def validate_remote_release_boundary(
         expected_commit,
         actual_commit,
     )
+    errors.extend(validate_release_commit_shape(read_commit_parents(expected_commit, repo)))
     errors.extend(validate_remote_main_history(expected_commit, remote_main_commit, repo))
     try:
         check_release_heading(changelog_text, manifest_version)
@@ -151,8 +175,9 @@ def validate_remote_release_boundary(
 def main() -> int:
     parser = argparse.ArgumentParser(
         description=(
-            "Resolve a remote release tag and verify its version, commit provenance, "
-            "remote-main history, and frozen CHANGELOG boundary against the final release manifest."
+            "Resolve a remote release tag and verify its version, release-commit shape, "
+            "commit provenance, remote-main history, and frozen CHANGELOG boundary "
+            "against the final release manifest."
         )
     )
     parser.add_argument("--tag", required=True)
@@ -194,8 +219,8 @@ def main() -> int:
 
     print(
         f"Remote release tag {args.tag} matches manifest version {manifest_version}, "
-        f"resolves to manifest source commit {expected_commit}, that commit is present "
-        "in remote main history, and the CHANGELOG release boundary is frozen."
+        f"resolves to two-parent manifest source commit {expected_commit}, that commit "
+        "is present in remote main history, and the CHANGELOG release boundary is frozen."
     )
     return 0
 
