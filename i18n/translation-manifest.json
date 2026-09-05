@@ -17,15 +17,15 @@
   },
   "files": {
     "ROUTER.md": {
-      "ja_sha256": "e84c1dcd2c292f374a7c3230e58ddbaf7443c06bf215ba9bc5eb7a221a0a4a37",
+      "ja_sha256": "c1067ff2a228f2856b057bcba1e6b104e7a2084cae6aab2590aa11b0804fa1b9",
       "en_present": true,
-      "en_source_ja_sha256": "e84c1dcd2c292f374a7c3230e58ddbaf7443c06bf215ba9bc5eb7a221a0a4a37",
+      "en_source_ja_sha256": "c1067ff2a228f2856b057bcba1e6b104e7a2084cae6aab2590aa11b0804fa1b9",
       "en_status": "translated"
     },
     "core/activation.md": {
-      "ja_sha256": "fee9accb9a116208fc182df8ffad33e7165b1ddf188796482c74bfb4791c84dc",
+      "ja_sha256": "5a089b7c5823fa2eea7a0ee74265d8b42c6801c4a12c27a5720a0c0747c7c48b",
       "en_present": true,
-      "en_source_ja_sha256": "fee9accb9a116208fc182df8ffad33e7165b1ddf188796482c74bfb4791c84dc",
+      "en_source_ja_sha256": "5a089b7c5823fa2eea7a0ee74265d8b42c6801c4a12c27a5720a0c0747c7c48b",
       "en_status": "translated"
     },
     "core/cognitive-stance.md": {
@@ -41,9 +41,9 @@
       "en_status": "translated"
     },
     "core/principles-and-constraints.md": {
-      "ja_sha256": "abfc0dcffc1a35b830c80f9dc447bfb857c3e3594f32ca0769f372f1368ad448",
+      "ja_sha256": "4849ffbcb2ec82e57f4db550fd79a279890ab8df9eb56dc20001640011dfbe8e",
       "en_present": true,
-      "en_source_ja_sha256": "abfc0dcffc1a35b830c80f9dc447bfb857c3e3594f32ca0769f372f1368ad448",
+      "en_source_ja_sha256": "4849ffbcb2ec82e57f4db550fd79a279890ab8df9eb56dc20001640011dfbe8e",
       "en_status": "translated"
     },
     "domains/human-and-taiheki.md": {
