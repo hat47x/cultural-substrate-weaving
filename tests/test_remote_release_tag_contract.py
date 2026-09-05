@@ -54,9 +54,22 @@ class RemoteReleaseTagContractTests(unittest.TestCase):
         self.git(root, "init", "-b", "main", str(work))
         self.git(work, "config", "user.email", "test@example.invalid")
         self.git(work, "config", "user.name", "test")
-        (work / "file.txt").write_text("one\n", encoding="utf-8")
+
+        (work / "file.txt").write_text("base\n", encoding="utf-8")
         self.git(work, "add", "file.txt")
-        self.git(work, "commit", "-m", "first")
+        self.git(work, "commit", "-m", "base")
+        self.git(work, "branch", "topic")
+
+        (work / "file.txt").write_text("main\n", encoding="utf-8")
+        self.git(work, "commit", "-am", "main change")
+
+        self.git(work, "checkout", "topic")
+        (work / "topic.txt").write_text("topic\n", encoding="utf-8")
+        self.git(work, "add", "topic.txt")
+        self.git(work, "commit", "-m", "topic change")
+
+        self.git(work, "checkout", "main")
+        self.git(work, "merge", "--no-ff", "topic", "-m", "release merge")
         self.git(work, "push", str(remote), "refs/heads/main")
         return remote, work
 
@@ -106,6 +119,30 @@ class RemoteReleaseTagContractTests(unittest.TestCase):
             actual = resolve_remote_tag_commit("v1.0.1", str(remote), work)
             errors = validate_remote_release_tag("v1.0.1", "1.0.0", expected, actual)
             self.assertTrue(any("release tag mismatch" in error for error in errors))
+
+    def test_single_parent_source_commit_on_remote_main_is_rejected(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            remote, work = self.make_repositories(Path(tmp))
+            (work / "direct.txt").write_text("direct\n", encoding="utf-8")
+            self.git(work, "add", "direct.txt")
+            self.git(work, "commit", "-m", "direct main commit")
+            expected = self.git(work, "rev-parse", "HEAD")
+            self.git(work, "push", str(remote), "refs/heads/main")
+            self.git(work, "tag", "v1.0.0")
+            self.git(work, "push", str(remote), "refs/tags/v1.0.0")
+
+            actual = resolve_remote_tag_commit("v1.0.0", str(remote), work)
+            remote_main = resolve_remote_main_commit(str(remote), work)
+            errors = validate_remote_release_boundary(
+                "v1.0.0",
+                "1.0.0",
+                expected,
+                actual,
+                remote_main,
+                FROZEN_CHANGELOG,
+                work,
+            )
+            self.assertTrue(any("exactly two parents" in error for error in errors))
 
     def test_source_commit_not_in_remote_main_is_rejected(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
