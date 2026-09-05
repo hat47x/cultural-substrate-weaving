@@ -81,6 +81,6 @@ If a judgment is later corrected or withdrawn, prefer a traceable history of the
 
 ## 14. Preservation and working window
 
-Do not make deletion of old material the default way to lighten context. In the current round, foreground new material, old residuals touched now, the needed KJ snapshot, and the needed probe or preview.
+Do not make deletion of old material the default way to lighten context. New material, touched residuals, KJ snapshots, and probe/preview are foregrounding examples; choose what current work needs.
 
 When rules become overactive, choose among narrower conditions, lower priority, auxiliary status, or removal according to the cause; before removal, identify the rule's function. Do not delete dynamic material instead of maintaining the rule.
