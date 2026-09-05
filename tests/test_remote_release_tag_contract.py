@@ -12,10 +12,28 @@ if str(SCRIPTS) not in sys.path:
     sys.path.insert(0, str(SCRIPTS))
 
 from check_remote_release_tag import (  # noqa: E402
+    resolve_remote_main_commit,
     resolve_remote_tag_commit,
+    validate_remote_main_history,
+    validate_remote_release_boundary,
     validate_remote_release_tag,
     validate_remote_tag_commit,
 )
+
+FROZEN_CHANGELOG = """# Changelog
+
+## Unreleased
+
+## 1.0.0 — 2026-09-05
+
+- Example release content.
+"""
+UNFROZEN_CHANGELOG = """# Changelog
+
+## Unreleased
+
+- Example release content.
+"""
 
 
 class RemoteReleaseTagContractTests(unittest.TestCase):
@@ -39,6 +57,7 @@ class RemoteReleaseTagContractTests(unittest.TestCase):
         (work / "file.txt").write_text("one\n", encoding="utf-8")
         self.git(work, "add", "file.txt")
         self.git(work, "commit", "-m", "first")
+        self.git(work, "push", str(remote), "refs/heads/main")
         return remote, work
 
     def test_lightweight_remote_tag_resolves_to_commit(self) -> None:
@@ -49,10 +68,21 @@ class RemoteReleaseTagContractTests(unittest.TestCase):
             self.git(work, "push", str(remote), "refs/tags/v1.0.0")
 
             actual = resolve_remote_tag_commit("v1.0.0", str(remote), work)
+            remote_main = resolve_remote_main_commit(str(remote), work)
             self.assertEqual(actual, expected)
+            self.assertEqual(remote_main, expected)
             self.assertEqual(validate_remote_tag_commit(expected, actual), [])
+            self.assertEqual(validate_remote_main_history(expected, remote_main, work), [])
             self.assertEqual(
-                validate_remote_release_tag("v1.0.0", "1.0.0", expected, actual),
+                validate_remote_release_boundary(
+                    "v1.0.0",
+                    "1.0.0",
+                    expected,
+                    actual,
+                    remote_main,
+                    FROZEN_CHANGELOG,
+                    work,
+                ),
                 [],
             )
 
@@ -76,6 +106,52 @@ class RemoteReleaseTagContractTests(unittest.TestCase):
             actual = resolve_remote_tag_commit("v1.0.1", str(remote), work)
             errors = validate_remote_release_tag("v1.0.1", "1.0.0", expected, actual)
             self.assertTrue(any("release tag mismatch" in error for error in errors))
+
+    def test_source_commit_not_in_remote_main_is_rejected(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            remote, work = self.make_repositories(Path(tmp))
+            (work / "file.txt").write_text("two\n", encoding="utf-8")
+            self.git(work, "commit", "-am", "second")
+            expected = self.git(work, "rev-parse", "HEAD")
+            self.git(work, "tag", "v1.0.0")
+            self.git(work, "push", str(remote), "refs/tags/v1.0.0")
+
+            actual = resolve_remote_tag_commit("v1.0.0", str(remote), work)
+            remote_main = resolve_remote_main_commit(str(remote), work)
+            errors = validate_remote_release_boundary(
+                "v1.0.0",
+                "1.0.0",
+                expected,
+                actual,
+                remote_main,
+                FROZEN_CHANGELOG,
+                work,
+            )
+            self.assertTrue(
+                any("not present in remote main history" in error for error in errors)
+            )
+
+    def test_unfrozen_changelog_is_rejected(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            remote, work = self.make_repositories(Path(tmp))
+            expected = self.git(work, "rev-parse", "HEAD")
+            self.git(work, "tag", "v1.0.0")
+            self.git(work, "push", str(remote), "refs/tags/v1.0.0")
+
+            actual = resolve_remote_tag_commit("v1.0.0", str(remote), work)
+            remote_main = resolve_remote_main_commit(str(remote), work)
+            errors = validate_remote_release_boundary(
+                "v1.0.0",
+                "1.0.0",
+                expected,
+                actual,
+                remote_main,
+                UNFROZEN_CHANGELOG,
+                work,
+            )
+            self.assertTrue(
+                any("CHANGELOG release boundary missing" in error for error in errors)
+            )
 
     def test_moved_remote_tag_is_rejected(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
