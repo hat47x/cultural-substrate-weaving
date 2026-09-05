@@ -1,10 +1,10 @@
 # 05-human-and-taiheki
 
-Read this only for limited exploration of human bodily behavior, reactions under tension and relaxation, and consistency through Taiheki as a cultural/body-oriented external framework.
+Read this when exploring human bodily behavior, reactions under tension and relaxation, and consistency through Taiheki as a cultural/body-oriented external framework.
 
 ## 6. Explore bodily consistency in a person
 
-Do not treat Taiheki as an empirically validated personality diagnosis or medical classification. Use it as an **external framework that expands dimensions of human observation**, and validate every candidate against observable bodily reactions and target-specific exceptions.
+Do not treat Taiheki as an empirically validated personality diagnosis or medical classification. Use it as an **external framework that expands dimensions of human observation**, and validate candidates against observable bodily reactions and target-specific exceptions.
 
 Its main uses are:
 
@@ -12,13 +12,12 @@ Its main uses are:
 2. add questions about posture, center of gravity, fatigue, appetite, movement, and reactions under tension or relaxation rather than relying on psychological explanation alone; and
 3. use the first/second component contrast as a provisional comparison axis between more surface/voluntary and more involuntary reactions.
 
-### Activation conditions
+### Use conditions and state
 
-Do not activate Taiheki merely because a human being appears in the material. Use it only when:
+This file does not independently decide whether Taiheki is used. Follow the user's explicit request, higher-level use conditions, or discretion delegated to the executing AI.
 
-- the user explicitly requests Taiheki; or
-- bodily consistency, tension/relaxation response, or bodily behavior itself is the object of inquiry and a limited external-type comparison may add useful questions.
+The presence of a human being is not by itself an instruction to use Taiheki. When bodily consistency, tension/relaxation responses, or bodily behavior becomes an exploratory focus, however, Taiheki may be opened as one candidate cognitive field. Treat being recalled as a candidate, being used for exploration, and attributing a type as a target finding as distinct states.
 
-If material is insufficient, defer classification. Preserve what the type cannot explain as target-specific information. Do not fix a type before observation or select only evidence that fits it.
+When material is insufficient, attribution of a type may remain `unresolved`. Do not erase exploratory questions merely because attribution lacks enough material. Preserve what the type cannot explain as target-specific information; do not fix a type before observation or select only evidence that fits it.
 
-For real people, stay within observable information and distinguish the comparison from diagnosis, facts about personality, or assertions about inner states.
+For real people, distinguish observable information, inferences from bodily reactions, claims about personality or inner states, and diagnosis. How far inference or externalization proceeds follows external use conditions, and Taiheki itself is not evidence for a medical diagnosis or empirically validated personality classification.
