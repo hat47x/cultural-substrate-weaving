@@ -29,7 +29,8 @@
     "Externalization-authority rebaseline: ja-JP 82015 -> 82048, en-US 80997 -> 81032 (+33 / +35). Traced collection-vs-publishing threshold separation to the suppression-loosening change in 10205bb, where the purpose was to keep weak signals from being discarded at collection time, not to define a universal CSW responsibility gate. Kept distinct collection and externalization thresholds while returning publication/execution thresholds to domain criteria, external use conditions, or delegated discretion, consistent with PR #193. Existing corpus tripwires still contain the growth.",
     "Evaluation misfit-authority rebaseline: ja-JP 82048 -> 82048, en-US 81032 -> 81043 (+0 / +11). Traced reject/background/hold handling to modern runtime design (278fd36, 3dc8777), where the invariant was to keep framework completion from rewriting the target and adoption states were introduced as decision-provenance vocabulary. Kept misfit visible and target material unchanged while returning the choice of adoption state to its recorded actor and basis, consistent with PR #193. Existing corpus tripwires still contain the change.",
     "Governance rule-remediation order rebaseline: ja-JP 82048 -> 82051, en-US 81043 -> 81048 (+3 / +5). Traced the narrow-condition -> lower-priority -> auxiliary -> removal sequence to the unmeasured v0.1.0 initial design (cd58044); later work preserved or compressed it without comparing that order. Kept all four remediation options, the requirement to identify a rule's function before removal, and the prohibition on deleting dynamic material as a substitute for rule maintenance, while removing the unsupported fixed ordering. Existing corpus tripwires still contain the change.",
-    "Working-window foreground-set rebaseline: ja-JP 82051 -> 82003, en-US 81048 -> 81028 (-48 / -20). Traced the four-item foreground list to the v40 integration (3dc8777), where it was introduced with preservation-vs-attention separation but not tested as a closed set; delayed-round work (4771053) strengthened reopening and residual retention without validating the limit. Kept selective foregrounding and the four recurring examples while reopening the working set to whatever current work requires. Corpus tripwires ratcheted down by the same reductions."
+    "Working-window foreground-set rebaseline: ja-JP 82051 -> 82003, en-US 81048 -> 81028 (-48 / -20). Traced the four-item foreground list to the v40 integration (3dc8777), where it was introduced with preservation-vs-attention separation but not tested as a closed set; delayed-round work (4771053) strengthened reopening and residual retention without validating the limit. Kept selective foregrounding and the four recurring examples while reopening the working set to whatever current work requires. Corpus tripwires ratcheted down by the same reductions.",
+    "Cognitive-stance read-cadence rebaseline: ja-JP 82003 -> 81961, en-US 81028 -> 80975 (-42 / -53). Traced the fixed once-per-round load and same-round reload ban to the unmeasured cognitive-stance rollout (e2688b8, 88265fe); PR #84 explicitly did not measure prompt wording effects. Kept the cognitive stance as a cross-cutting capability and retained need-based return when existing explanations or rules outrank the target, while removing the arbitrary read count. Corpus tripwires ratcheted down by the same reductions."
   ],
   "router_max_bytes": {
     "ja-JP": 10000,
@@ -48,8 +49,8 @@
     "en-US": 14566
   },
   "corpus_max_bytes": {
-    "ja-JP": 82052,
-    "en-US": 81030
+    "ja-JP": 82010,
+    "en-US": 80977
   },
   "m365_instructions_max_chars": 8000,
   "gpt_knowledge_max_files": 10
