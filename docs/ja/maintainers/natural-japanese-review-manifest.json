@@ -64,9 +64,13 @@
       "git_blob_sha": "9d2a36a5f8ad809542dd51d0ec6217b8d6d10f2f",
       "reviewed_at": "2026-09-04"
     },
+    "docs/ja/maintainers/longitudinal-cognitive-functions.md": {
+      "git_blob_sha": "6a102b229c41c21e84339836ac71d4e6c04e7c61",
+      "reviewed_at": "2026-09-05"
+    },
     "docs/ja/maintainers/natural-japanese-review.md": {
-      "git_blob_sha": "534765aace4c6685f63729418798fe89fa95f6e9",
-      "reviewed_at": "2026-09-04"
+      "git_blob_sha": "0a4d5fecaf7b85de060bb2c59680c0721d592bf4",
+      "reviewed_at": "2026-09-05"
     },
     "docs/ja/maintainers/official-sources.md": {
       "git_blob_sha": "bb03e5be067398061cba8f2a328f3ff682ccc123",
@@ -74,6 +78,10 @@
     },
     "docs/ja/maintainers/release.md": {
       "git_blob_sha": "da1fac4a48be0c477dfedf92b03a26a839e77653",
+      "reviewed_at": "2026-09-05"
+    },
+    "docs/ja/maintainers/skill-improvement-direction.md": {
+      "git_blob_sha": "18920649ee682a515dd23ffd8c312f2df70b7eb4",
       "reviewed_at": "2026-09-05"
     },
     "docs/ja/maintainers/troubleshooting.md": {

@@ -5,6 +5,8 @@
 
 ## Research and evaluation / 研究・評価
 
+- [スキルの全体理解と改善方針](ja/maintainers/skill-improvement-direction.md)
+- [文化体系とKJ法による認知機能の定性的解析と再現設計](ja/maintainers/longitudinal-cognitive-functions.md)
 - [Web Chat Living Lab — 日本語](ja/experiments/web-chat-living-lab.md)
 - [Web Chat Living Lab — English](en/experiments/web-chat-living-lab.md)
 
