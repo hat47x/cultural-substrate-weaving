@@ -15,29 +15,30 @@ disable-model-invocation: true
 
 本スキルを実際に使うときは、KJ法の「己を空しくしてデータをして語らしめる」という姿勢を、最初の認知姿勢として置く。これは知識や仮説を捨てることではない。**自分の説明を対象より上位に固定せず、対象によって修正され得る位置へ置く。十分に材料へ触れた後は大胆に考えてよいが、新しく生じた意味を元材料が最初から語っていた事実へ書き換えない。** 詳細は`references/00-cognitive-stance.md`。
 
-領域固有知識や品質基準は扱わない。必要なら領域固有スキルと併用する。
+本スキル自体は領域固有知識を収録しない。必要な領域知識・品質基準・専門手順は、呼び出し側のコンテキスト、利用可能な資料、または併用する領域スキルから受け取る。
 
-主な適用先は、探索空間が開いていて到達点が未定の対象である。閉じた問題では通常手法を優先する。ただし明示指定があれば、少なくとも限定利用して基準線との差分を確かめる。
+本スキルを使う範囲、文化体系の利用量、読み込み深度、停止・採否・公開などの決定権は、本スキルの静的規則には置かない。依頼者・著者の指定、上位の設定・指示、または実行AIへ与えられた委任に従う。明示指定があれば、その指定を利用条件として受け取る。
 
 ## 最小実行手順
 
-1. **基準線と保持事項を置く**：領域固有手法だけの出力と、壊してはならない対象固有の事実・例外を確認する。
-2. **発動範囲を選ぶ**：非発動／限定利用／探索利用を選ぶ。
-3. **認知姿勢を置く**：本スキルを使うと決めたら、`references/00-cognitive-stance.md`を最初に一度読み、対象から自分の読みを修正され得る位置に置く。
-4. **材料面を守る**：材料が多数・異種ならKJ法で意味単位を起こし、証拠状態、矛盾、孤立、弱い違和感を早く均さない。
-5. **文化体系を必要な深さで開く**：`not_loaded / probe / preview / full / enacted`。通常はprobeから始めるが、探索利用では抽象probeだけで閉じず、`references/02-system-selection.md`の候補想起アンカーから構造型の異なる少数の体系を候補へ上げてpreviewしてよい。詳細は`references/00-activation.md`。
-6. **探索する**：文化体系から問い・関係・状態・遷移候補を得る。必要ならKJと往復する。
-7. **対象へ返す**：探索利用と帰属利用を分け、`target_supported / framework_generated / cross_field_emergent / unresolved`を混同しない。
-8. **実作業へ反映して区切る**：成果物、判断、調査方針へ残すものと、残差・再開条件を記録する。
+1. **外部利用条件を受け取る**：依頼範囲、目的、価値判断の留保先、実行AIへ委ねられた裁量を確認する。利用範囲・深度の状態語彙は`references/00-activation.md`を使う。
+2. **認知姿勢を置く**：本スキルを使う条件が与えられている場合、`references/00-cognitive-stance.md`を最初に一度読み、対象から自分の読みを修正され得る位置に置く。
+3. **基準線と保持事項を置く**：領域固有手法だけの出力、元材料、壊してはならない対象固有の事実・例外を確認する。
+4. **材料面を保つ**：材料が多数・異種ならKJ法で意味単位を起こし、証拠状態、矛盾、孤立、弱い違和感を早く均さない。
+5. **文化体系を開く**：外部利用条件と委任範囲に応じて`not_loaded / probe / preview / full / enacted`を使い分ける。候補想起には`references/02-system-selection.md`の状態格子・時間・経路などのアンカーを利用できる。
+6. **探索する**：文化体系から問い・関係・状態・遷移候補を得る。必要に応じてKJと往復する。
+7. **対象へ返す**：探索利用と帰属利用を分け、`target_supported / framework_generated / cross_field_emergent / unresolved`を混同せず保持する。
+8. **実作業へ反映する**：成果物、判断材料、調査方針、残差、再開条件へ反映する。区切りや採否は外部利用条件に従う。
 
-文化体系を多く使うこと、全文を読むこと、体系固有操作を実行することは成功条件ではない。
+文化体系の利用数、全文読解、体系固有操作の実行量を、それ自体で成功度とする規則は置かない。何を成果とするかは外部利用条件から受け取る。
 
 ## 重要な区別
 
-- **保存 ≠ 現在の注意**：正本は厚く残し、今回必要な部分だけ前景化する。
+- **状態記録 ≠ 決定権**：来歴、証拠状態、利用深度を区別して残すことと、その区別から採否・停止・公開を決めることを分ける。
+- **保存 ≠ 現在の注意**：正本は厚く残し、今回前景化する範囲は外部利用条件と作業上の必要に応じて扱う。
 - **探索 ≠ 帰属**：体系から問いを得ることと、対象にその構造があると主張することを分ける。
 - **de-binding ≠ 証拠**：体系語彙を外して文が成立しても、対象側の独立した支持が増えたことにはならない。
-- **不使用 ≠ 失敗**：`not_loaded`、preview止まり、不採用、歪み検出も正規の結果である。
+- **利用状態 ≠ 成否評価**：`not_loaded`、preview、full、enacted、不採用などは状態として記録でき、成否の評価は外部利用条件へ戻す。
 - **KJ ≠ 文化体系の分類器**：KJは元材料へ戻る統合核として使う。
 
 ## 参照ファイルを選ぶ
@@ -45,24 +46,24 @@ disable-model-invocation: true
 | 判断・処理 | 読むファイル |
 |---|---|
 | 対象へ入る認知姿勢、己を空しくする | [00-cognitive-stance.md](references/00-cognitive-stance.md) |
-| 発動、読み込み深度、途中終了 | [00-activation.md](references/00-activation.md) |
-| 帰属、二重の忠実性、保存原則 | [00-principles-and-constraints.md](references/00-principles-and-constraints.md) |
+| 利用範囲、読み込み深度、区切りの状態 | [00-activation.md](references/00-activation.md) |
+| 決定権、帰属、二重の忠実性、保存原則 | [00-principles-and-constraints.md](references/00-principles-and-constraints.md) |
 | 周回、再材料化、長期的再開 | [00-iteration.md](references/00-iteration.md) |
 | 対象範囲、基準線、事実整理 | [01-scope-and-facts.md](references/01-scope-and-facts.md) |
 | 体系の選定、探索／帰属利用 | [02-system-selection.md](references/02-system-selection.md) |
 | 割当、遷移、採用後検査、出口 | [02a-framework-application.md](references/02a-framework-application.md) |
 | 関係種別、欠落と接続、複数体系 | [03-transformation.md](references/03-transformation.md) |
-| 人間の身体反応をTaihekiで限定探索 | [05-human-and-taiheki.md](references/05-human-and-taiheki.md) |
+| 人間の身体反応をTaihekiで探索 | [05-human-and-taiheki.md](references/05-human-and-taiheki.md) |
 | 判断来歴、長期event | [08-governance-and-records.md](references/08-governance-and-records.md) |
 | 最終評価 | [09-evaluation.md](references/09-evaluation.md) |
 | 多数の断片、カード化、束ね、A/B、空白 | [10-integration.md](references/10-integration.md) |
 
 ### 読み込み順
 
-- **本スキルを使うと決めた後**：`references/00-cognitive-stance.md`を最初に一度読む。同じラウンドで機械的に繰り返し読み込まない。
-- **限定利用**：認知姿勢を置いた後、直接必要な参照へ進む。
-- **探索利用**：認知姿勢を置き、`references/01-scope-and-facts.md`を確認する。材料が多ければ`references/10-integration.md`を使う。文化体系は通常probeから始めるが、候補想起をモデルの自然連想だけに任せない。必要なら`references/02-system-selection.md`の状態格子・時間・経路などのアンカーから構造型の異なる少数の候補を想起・検索してpreviewし、`references/02a-framework-application.md`へ進む。
+- **本スキルを使う条件を受け取った後**：`references/00-cognitive-stance.md`を最初に一度読む。同じラウンドで機械的に繰り返し読み込まない。
+- **利用範囲・深度**：`references/00-activation.md`の状態語彙を使い、外部利用条件または委任された裁量を実行状態へ写す。
+- **探索利用**：状態格子・時間・経路・方向・流れなどを含む候補想起アンカーは`references/02-system-selection.md`にある。モデルの自然連想だけに候補を限定せず、必要な構造型を想起・検索できる。
 - **反復分析**：`references/00-iteration.md`を読む。長い作業で、対象より既存の説明や規則が前へ出ている兆候があれば、`references/00-cognitive-stance.md`の必要箇所へ戻る。
-- **人間／Taiheki**：人間が登場しただけでは読まない。明示指定または身体的一貫性そのものが探索対象の場合だけ読む。
+- **人間／Taiheki**：利用するかどうかは外部利用条件と委任範囲に従う。参照する場合は`references/05-human-and-taiheki.md`を読む。
 
 参照数は固定しない。一括読み込みを避け、対象固有の情報は動的層に置く。
