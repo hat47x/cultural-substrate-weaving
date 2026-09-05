@@ -34,7 +34,8 @@
     "Transformation missing-element list openness restoration: ja-JP 81961 -> 81967, en-US 80975 -> 80993 (+6 / +18). Restored the v0.1.0 non-exhaustive semantics that were originally stated at file level and later lost when the general preamble was removed in 3988e12. Kept the four recurring distinctions unchanged while allowing target-specific additional cases; no new fixed category was introduced. The existing JA tripwire contains the growth; the EN tripwire was raised by the same 18-byte growth.",
     "Transformation relationship-type list openness restoration: ja-JP 81967 -> 82003, en-US 80993 -> 81051 (+36 / +58). Restored the v0.1.0 non-exhaustive semantics for relationship types after the file-level openness preamble was lost in 3988e12. Kept the requirement to state each transferred relationship's type and retained the five recurring distinctions while allowing target-specific additional relation types; no new fixed category was introduced. The existing JA tripwire contains the growth; the EN tripwire was raised by the same 58-byte growth.",
     "Transformation multi-framework observation-state openness restoration: ja-JP 82003 -> 82012, en-US 81051 -> 81040 (+9 / -11). Restored the v0.1.0 non-exhaustive semantics for the three multi-framework observation signals after the file-level openness preamble was lost in 3988e12. Kept all three signals and the 5867d9f authority boundary that they do not automatically command reduction; only the example-set closure was removed. JA tripwire raised by the same 9-byte growth; EN tripwire ratcheted down by the 11-byte reduction.",
-    "Longitudinal event-vocabulary openness restoration: ja-JP 82012 -> 82065, en-US 81040 -> 81095 (+53 / +55). The audit found the event vocabulary had already been added, removed, and replaced during observation-first governance work (e713de3, 189ea0b), while delayed-round lineage (4771053) originally described longitudinal effects in open natural language. Kept the nine recurring event names, neutral event naming, assessment provenance, and retrospective/prospective distinction while making the list explicitly representative rather than exhaustive. Corpus tripwires raised by the documented growth."
+    "Longitudinal event-vocabulary openness restoration: ja-JP 82012 -> 82065, en-US 81040 -> 81095 (+53 / +55). The audit found the event vocabulary had already been added, removed, and replaced during observation-first governance work (e713de3, 189ea0b), while delayed-round lineage (4771053) originally described longitudinal effects in open natural language. Kept the nine recurring event names, neutral event naming, assessment provenance, and retrospective/prospective distinction while making the list explicitly representative rather than exhaustive. Corpus tripwires raised by the documented growth.",
+    "KJ placement relation-type list openness restoration: ja-JP 82065 -> 82071, en-US 81095 -> 81112 (+6 / +17). The audit found the four placement relation types entered under the initial integration file's non-exhaustive list semantics (0c19f04), while public KJ A-type diagram guidance presents relationship symbols as examples rather than a complete taxonomy. Kept causal, mutual, opposing, and temporal distinctions while allowing other relations raised by the material; no new fixed taxonomy, order, count, stop, or success criterion was introduced. Corpus tripwires raised by the documented growth."
   ],
   "router_max_bytes": {
     "ja-JP": 10000,
@@ -53,8 +54,8 @@
     "en-US": 14566
   },
   "corpus_max_bytes": {
-    "ja-JP": 82072,
-    "en-US": 81097
+    "ja-JP": 82078,
+    "en-US": 81114
   },
   "m365_instructions_max_chars": 8000,
   "gpt_knowledge_max_files": 10
