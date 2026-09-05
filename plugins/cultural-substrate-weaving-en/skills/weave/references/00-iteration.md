@@ -12,7 +12,7 @@ A round normally does the following.
 4. **Open a framework only if needed**: use only the depth required by `core/activation.md`.
 5. **Return to KJ**: bring back framework-generated questions, hypotheses, compositional ideas, search targets, and residuals with provenance intact.
 6. **Reflect into real work**: make explicit what is adopted into the domain artifact, decision, or research direction.
-7. **Close the round**: stop when the needed result exists and important residuals and reopening conditions are preserved.
+7. **Record the boundary**: record results, residuals, and reopening conditions; closing follows external conditions or delegated discretion.
 
 Passing through a fixed number of frameworks, loading them in full, or executing native operations is not a completion condition.
 
@@ -52,7 +52,7 @@ Do not collapse events into one score, and do not use framework count or traject
 
 ## Convergence and reopening
 
-Close the round when abstraction or explanation volume keeps growing but target-side questions, material arrangement, artifacts, and decisions no longer move. Complete explanation is not required.
+Record stalled movement in questions, material arrangement, artifacts, or decisions as a stop signal, not a stopping decision. Closing follows external conditions or delegated discretion. Complete explanation is not required.
 
 Reopening can be triggered by new material, a counterexample, environmental change, contact with an old residual, illumination from another cognitive field, or an explicit revisit. Do not treat earlier convergence as failure; reopen only what is needed.
 
