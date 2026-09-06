@@ -33,6 +33,8 @@ Use the packaging path for a release candidate:
 make release-check
 ```
 
+Run this check on both the release candidate and the exact `main` commit that will be tagged; candidate validation does not replace validation of the merged release commit.
+
 This runs `make check`, requires a clean Git worktree, creates locale/platform packages, writes `dist/release-manifest.json`, and validates the completed package set. Tracked uncommitted changes and untracked files that Git does not ignore are release blockers. Files intentionally excluded through `.gitignore`, such as `dist/`, `.tmp/`, and the local Living Lab workspace, do not make the worktree dirty.
 
 Once the final manifest exists and the intended release tag has been derived from `VERSION`, use the tag-version gate separately:
