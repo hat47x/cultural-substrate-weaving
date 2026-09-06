@@ -1,9 +1,10 @@
 #!/usr/bin/env python3
 """Plan research skill-suite distribution buildability without generating packages.
 
-The planner answers only whether the currently declared locale realizations are
-sufficient for each research distribution shape. It does not claim method
-parity, routing support, package validity, or release readiness.
+The planner answers only whether the currently declared locale realizations and
+package-source descriptors are sufficient for each research distribution shape.
+It does not claim method parity, routing support, package validity, or release
+readiness.
 """
 
 from __future__ import annotations
@@ -29,21 +30,26 @@ def _realization(skill: dict | None, locale: str) -> dict:
             "status": "unknown-skill",
             "realized": False,
             "runtime_entry": None,
+            "package_source": None,
         }
 
     realization = skill.get("locale_realizations", {}).get(locale, {})
     status = realization.get("status")
     runtime_entry = realization.get("runtime_entry")
+    package_source = realization.get("package_source")
     realized = (
         isinstance(status, str)
         and status != "planned"
         and isinstance(runtime_entry, str)
         and bool(runtime_entry)
+        and isinstance(package_source, dict)
+        and bool(package_source)
     )
     return {
         "status": status,
         "realized": realized,
         "runtime_entry": runtime_entry if isinstance(runtime_entry, str) else None,
+        "package_source": package_source if isinstance(package_source, dict) else None,
     }
 
 
@@ -76,8 +82,8 @@ def plan_suite(manifest: dict) -> dict:
         "schema": PLAN_SCHEMA,
         "suite_id": manifest.get("suite_id"),
         "note": (
-            "Buildability reflects declared research locale realizations only; "
-            "it is not promotion or release readiness."
+            "Buildability reflects declared research locale realizations and package-source "
+            "descriptors only; it is not promotion or release readiness."
         ),
         "locales": {},
     }
@@ -108,6 +114,7 @@ def plan_suite(manifest: dict) -> dict:
                             "state": item_state,
                             "status": realization["status"],
                             "runtime_entry": realization["runtime_entry"],
+                            "package_source": realization["package_source"],
                         }
                     )
 
@@ -115,7 +122,7 @@ def plan_suite(manifest: dict) -> dict:
                     "mode": mode,
                     "state": _aggregate_state(realized_count, len(skill_order)),
                     "items": items,
-                    "scope": "per-skill realization availability only",
+                    "scope": "per-skill realization and package-source availability only",
                 }
                 continue
 
@@ -136,7 +143,10 @@ def plan_suite(manifest: dict) -> dict:
                     "target_skills": target_skills,
                     "realized_skills": realized_skills,
                     "missing_skills": missing_skills,
-                    "scope": "declared bundle composition and realization availability only",
+                    "scope": (
+                        "declared bundle composition, realization availability, and package-source "
+                        "descriptors only"
+                    ),
                 }
                 continue
 
@@ -149,9 +159,10 @@ def plan_suite(manifest: dict) -> dict:
                     "primary": primary,
                     "primary_status": realization["status"],
                     "primary_runtime_entry": realization["runtime_entry"],
+                    "primary_package_source": realization["package_source"],
                     "scope": (
-                        "primary realization availability only; internal method-composition "
-                        "parity is not asserted"
+                        "primary realization and package-source availability only; internal "
+                        "method-composition parity is not asserted"
                     ),
                 }
                 continue
