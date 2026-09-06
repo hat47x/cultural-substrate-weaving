@@ -1,6 +1,6 @@
 interface:
   display_name: "Cultural Substrate Weaving — English"
-  short_description: "Explore structure candidates, relations, and gaps with cultural frameworks and KJ, then validate them on the target"
-  default_prompt: "Establish the domain-method baseline and validate only the increment produced by cultural frameworks and KJ integration."
+  short_description: "Open cultural frameworks as cognitive fields, preserve attribution, and validate resulting structure candidates against the target"
+  default_prompt: "Establish the domain-method baseline, open only the cultural-framework structure needed for the task, and return framework-generated questions or correspondence candidates to target-side material for validation."
 policy:
   allow_implicit_invocation: false
