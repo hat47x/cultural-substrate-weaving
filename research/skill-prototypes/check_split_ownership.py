@@ -50,7 +50,7 @@ def main() -> None:
         (
             "接続契約",
             "compatible realization",
-            "CSWは材料統合の内部アルゴリズムを再実装しない",
+            "CSWはこれらの内部アルゴリズムを独自に再実装しない",
         ),
         errors,
     )
