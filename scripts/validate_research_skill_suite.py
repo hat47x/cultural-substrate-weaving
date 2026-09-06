@@ -1,13 +1,15 @@
 #!/usr/bin/env python3
 """Validate internal consistency of the research skill-suite prototype manifest.
 
-This checker does not decide whether a research skill is ready for promotion.
-It only keeps declared research metadata synchronized with the repository tree.
+This checker validates repository-shape and realization contracts only. It does
+not decide whether a research skill is methodologically validated, independently
+reviewed, or ready for public promotion.
 """
 
 from __future__ import annotations
 
 import json
+import re
 import sys
 from pathlib import Path
 
@@ -31,6 +33,36 @@ def _repo_path(root: Path, relative: object, field: str, errors: list[str]) -> P
         errors.append(f"{field} escapes repository root: {relative}")
         return None
     return resolved
+
+
+def _frontmatter_name(path: Path) -> str | None:
+    if not path.is_file():
+        return None
+    text = path.read_text(encoding="utf-8")
+    match = re.match(r"\A---\s*\n(.*?)\n---\s*\n", text, flags=re.DOTALL)
+    if not match:
+        return None
+    for line in match.group(1).splitlines():
+        key, sep, value = line.partition(":")
+        if sep and key.strip() == "name":
+            return value.strip().strip("\"'")
+    return None
+
+
+def _validate_runtime_name(
+    path: Path | None,
+    installable_name: object,
+    field: str,
+    errors: list[str],
+) -> None:
+    if path is None or not path.is_file() or not isinstance(installable_name, str):
+        return
+    frontmatter_name = _frontmatter_name(path)
+    if frontmatter_name is not None and frontmatter_name != installable_name:
+        errors.append(
+            f"{field} frontmatter name must match installable_name: "
+            f"{frontmatter_name!r} != {installable_name!r}"
+        )
 
 
 def _declared_paths(
@@ -61,11 +93,34 @@ def _declared_paths(
     return value
 
 
+def _validate_method_definition(
+    root: Path,
+    source_root: Path,
+    skill_id: str,
+    field: str,
+    value: object,
+    errors: list[str],
+) -> Path | None:
+    if value is None:
+        return None
+    path = _repo_path(root, value, f"skill {skill_id} {field}", errors)
+    if path is None:
+        return None
+    if not path.is_relative_to(source_root):
+        errors.append(f"skill {skill_id}: {field} is outside source_root: {value}")
+    if not path.is_file():
+        errors.append(f"skill {skill_id}: {field} is missing: {value}")
+    return path
+
+
 def _validate_locale_realizations(
     root: Path,
     source_root: Path,
     skill_id: str,
+    installable_name: object,
     skill_runtime_entry: object,
+    skill_method_definition: object,
+    declared_references: list[str],
     canonical_locale: object,
     suite_locales: set[str],
     value: object,
@@ -98,20 +153,16 @@ def _validate_locale_realizations(
             continue
 
         runtime_relative = realization.get("runtime_entry")
+        method_relative = realization.get("method_definition")
+
         if locale == canonical_locale and status == "planned":
-            errors.append(
-                f"skill {skill_id}: canonical locale {locale} cannot be planned-only"
-            )
+            errors.append(f"skill {skill_id}: canonical locale {locale} cannot be planned-only")
 
         if status != "planned" and (
             not isinstance(runtime_relative, str) or not runtime_relative
         ):
-            errors.append(
-                f"skill {skill_id}: realized locale {locale} must declare runtime_entry"
-            )
-            continue
-
-        if runtime_relative is not None:
+            errors.append(f"skill {skill_id}: realized locale {locale} must declare runtime_entry")
+        elif runtime_relative is not None:
             runtime_entry = _repo_path(
                 root,
                 runtime_relative,
@@ -129,16 +180,43 @@ def _validate_locale_realizations(
                         f"skill {skill_id}: locale realization {locale} runtime_entry "
                         f"is missing: {runtime_relative}"
                     )
+                _validate_runtime_name(
+                    runtime_entry,
+                    installable_name,
+                    f"skill {skill_id} locale realization {locale} runtime_entry",
+                    errors,
+                )
 
-        if (
-            locale == canonical_locale
-            and status != "planned"
-            and runtime_relative != skill_runtime_entry
-        ):
+        if status != "planned" and skill_method_definition is not None and method_relative is None:
             errors.append(
-                f"skill {skill_id}: canonical locale realization runtime_entry must match "
-                f"skill runtime_entry: {runtime_relative!r} != {skill_runtime_entry!r}"
+                f"skill {skill_id}: realized locale {locale} must declare method_definition"
             )
+        if method_relative is not None:
+            _validate_method_definition(
+                root,
+                source_root,
+                skill_id,
+                f"locale realization {locale} method_definition",
+                method_relative,
+                errors,
+            )
+            if isinstance(method_relative, str) and method_relative not in declared_references:
+                errors.append(
+                    f"skill {skill_id}: locale realization {locale} method_definition "
+                    f"must also be declared in references: {method_relative}"
+                )
+
+        if locale == canonical_locale and status != "planned":
+            if runtime_relative != skill_runtime_entry:
+                errors.append(
+                    f"skill {skill_id}: canonical locale realization runtime_entry must match "
+                    f"skill runtime_entry: {runtime_relative!r} != {skill_runtime_entry!r}"
+                )
+            if method_relative != skill_method_definition:
+                errors.append(
+                    f"skill {skill_id}: canonical locale realization method_definition must match "
+                    f"skill method_definition: {method_relative!r} != {skill_method_definition!r}"
+                )
 
 
 def validate_suite(root: Path, manifest: dict) -> list[str]:
@@ -148,6 +226,8 @@ def validate_suite(root: Path, manifest: dict) -> list[str]:
         errors.append(
             f"research skill suite schema must be {EXPECTED_SCHEMA}: {manifest.get('schema')!r}"
         )
+    if manifest.get("status") != "research-only":
+        errors.append("research skill suite must remain marked research-only before promotion")
 
     locales = manifest.get("locales")
     canonical_locale = manifest.get("canonical_locale")
@@ -197,35 +277,27 @@ def validate_suite(root: Path, manifest: dict) -> list[str]:
         runtime_entry = _repo_path(root, runtime_relative, f"skill {skill_id} runtime_entry", errors)
         if runtime_entry is not None:
             if not runtime_entry.is_relative_to(source_root):
-                errors.append(
-                    f"skill {skill_id}: runtime_entry is outside source_root: {runtime_relative}"
-                )
+                errors.append(f"skill {skill_id}: runtime_entry is outside source_root: {runtime_relative}")
             if not runtime_entry.is_file():
                 errors.append(f"skill {skill_id}: runtime_entry is missing: {runtime_relative}")
-
-        _validate_locale_realizations(
-            root,
-            source_root,
-            skill_id,
-            runtime_relative,
-            canonical_locale,
-            suite_locales,
-            skill.get("locale_realizations"),
-            errors,
-        )
+            _validate_runtime_name(
+                runtime_entry,
+                installable_name,
+                f"skill {skill_id} runtime_entry",
+                errors,
+            )
 
         references = _declared_paths(
-            root,
-            source_root,
-            skill_id,
-            "references",
-            skill.get("references"),
-            errors,
+            root, source_root, skill_id, "references", skill.get("references"), errors
         )
         _declared_paths(root, source_root, skill_id, "evidence", skill.get("evidence"), errors)
         _declared_paths(root, source_root, skill_id, "evals", skill.get("evals"), errors)
+        _declared_paths(root, source_root, skill_id, "checks", skill.get("checks", []), errors)
 
         method_relative = skill.get("method_definition")
+        _validate_method_definition(
+            root, source_root, skill_id, "method_definition", method_relative, errors
+        )
         conventional_method = source_root / "references" / "METHOD.md"
         conventional_method_relative = (
             conventional_method.relative_to(root.resolve()).as_posix()
@@ -240,39 +312,50 @@ def validate_suite(root: Path, manifest: dict) -> list[str]:
                     f"{conventional_method_relative}"
                 )
         else:
-            method_path = _repo_path(
-                root,
-                method_relative,
-                f"skill {skill_id} method_definition",
-                errors,
-            )
-            if method_path is not None:
-                if not method_path.is_relative_to(source_root):
-                    errors.append(
-                        f"skill {skill_id}: method_definition is outside source_root: {method_relative}"
-                    )
-                if not method_path.is_file():
-                    errors.append(
-                        f"skill {skill_id}: method_definition is missing: {method_relative}"
-                    )
             if isinstance(method_relative, str) and method_relative not in references:
                 errors.append(
                     f"skill {skill_id}: method_definition must also be declared in references: "
                     f"{method_relative}"
                 )
-            if (
-                conventional_method_relative is not None
-                and method_relative != conventional_method_relative
-            ):
+            if conventional_method_relative is not None and method_relative != conventional_method_relative:
                 errors.append(
                     f"skill {skill_id}: method_definition does not match source_root/references/METHOD.md: "
                     f"{method_relative!r} != {conventional_method_relative!r}"
                 )
 
+        _validate_locale_realizations(
+            root,
+            source_root,
+            skill_id,
+            installable_name,
+            runtime_relative,
+            method_relative,
+            references,
+            canonical_locale,
+            suite_locales,
+            skill.get("locale_realizations"),
+            errors,
+        )
+
+        delegation = skill.get("delegation")
+        if isinstance(delegation, dict) and delegation.get("hard_dependency") is True:
+            errors.append(f"skill {skill_id}: public research contract must not assume hard dependency")
+
     if len(skill_ids) != len(set(skill_ids)):
         errors.append("research skill suite skill ids must be unique")
     if len(installable_names) != len(set(installable_names)):
         errors.append("research skill suite installable_name values must be unique")
+
+    research_assets = manifest.get("suite_research_assets", [])
+    if not isinstance(research_assets, list) or not all(isinstance(item, str) for item in research_assets):
+        errors.append("research skill suite suite_research_assets must be a string list")
+    else:
+        if len(research_assets) != len(set(research_assets)):
+            errors.append("research skill suite suite_research_assets contains duplicate paths")
+        for relative in research_assets:
+            path = _repo_path(root, relative, "suite_research_assets", errors)
+            if path is not None and not path.is_file():
+                errors.append(f"suite_research_assets file is missing: {relative}")
 
     known_skill_ids = set(skill_ids)
     distributions = manifest.get("distribution_prototypes")
@@ -281,16 +364,12 @@ def validate_suite(root: Path, manifest: dict) -> list[str]:
     else:
         for distribution_name, config in distributions.items():
             if not isinstance(config, dict):
-                errors.append(
-                    f"distribution prototype {distribution_name} must be an object"
-                )
+                errors.append(f"distribution prototype {distribution_name} must be an object")
                 continue
 
             contains = config.get("contains")
             if contains is not None:
-                if not isinstance(contains, list) or not all(
-                    isinstance(skill_id, str) for skill_id in contains
-                ):
+                if not isinstance(contains, list) or not all(isinstance(item, str) for item in contains):
                     errors.append(
                         f"distribution prototype {distribution_name} contains must be a string list"
                     )
@@ -308,9 +387,12 @@ def validate_suite(root: Path, manifest: dict) -> list[str]:
             primary = config.get("primary")
             if primary is not None and primary not in known_skill_ids:
                 errors.append(
-                    f"distribution prototype {distribution_name} primary references unknown skill: "
-                    f"{primary!r}"
+                    f"distribution prototype {distribution_name} primary references unknown skill: {primary!r}"
                 )
+
+    promotion_gates = manifest.get("promotion_gates")
+    if not isinstance(promotion_gates, list) or not promotion_gates:
+        errors.append("research skill suite promotion_gates must be a non-empty list")
 
     return errors
 
