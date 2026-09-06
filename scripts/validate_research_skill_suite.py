@@ -14,6 +14,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 MANIFEST_PATH = ROOT / "research/skill-prototypes/suite-manifest.json"
 EXPECTED_SCHEMA = "csw.research-skill-suite/v1"
+PACKAGE_SOURCE_MODES = {"explicit_files", "canonical_manifest"}
 
 
 def load_manifest(path: Path = MANIFEST_PATH) -> dict:
@@ -61,6 +62,215 @@ def _declared_paths(
     return value
 
 
+def _package_relative_file(
+    package_root: Path,
+    relative: object,
+    field: str,
+    errors: list[str],
+) -> Path | None:
+    if not isinstance(relative, str) or not relative:
+        errors.append(f"{field} must be a non-empty path relative to package root")
+        return None
+    path = Path(relative)
+    if path.is_absolute():
+        errors.append(f"{field} must be relative to package root: {relative}")
+        return None
+
+    resolved_root = package_root.resolve()
+    resolved = (package_root / path).resolve()
+    if not resolved.is_relative_to(resolved_root):
+        errors.append(f"{field} escapes package root: {relative}")
+        return None
+    return resolved
+
+
+def _validate_package_source(
+    root: Path,
+    source_root: Path,
+    skill_id: str,
+    locale: str,
+    runtime_relative: str,
+    value: object,
+    errors: list[str],
+) -> None:
+    if not isinstance(value, dict):
+        errors.append(
+            f"skill {skill_id}: realized locale {locale} must declare package_source"
+        )
+        return
+
+    mode = value.get("mode")
+    if mode not in PACKAGE_SOURCE_MODES:
+        errors.append(
+            f"skill {skill_id}: locale realization {locale} package_source mode "
+            f"must be one of {sorted(PACKAGE_SOURCE_MODES)}: {mode!r}"
+        )
+        return
+
+    runtime_path = _repo_path(
+        root,
+        runtime_relative,
+        f"skill {skill_id} locale realization {locale} runtime_entry",
+        errors,
+    )
+
+    if mode == "explicit_files":
+        package_root_relative = value.get("root")
+        package_root = _repo_path(
+            root,
+            package_root_relative,
+            f"skill {skill_id} locale realization {locale} package_source root",
+            errors,
+        )
+        if package_root is None:
+            return
+        if not package_root.is_relative_to(source_root):
+            errors.append(
+                f"skill {skill_id}: locale realization {locale} package_source root "
+                f"is outside source_root: {package_root_relative}"
+            )
+        if not package_root.is_dir():
+            errors.append(
+                f"skill {skill_id}: locale realization {locale} package_source root "
+                f"is missing or not a directory: {package_root_relative}"
+            )
+
+        files = value.get("files")
+        if (
+            not isinstance(files, list)
+            or not files
+            or not all(isinstance(item, str) for item in files)
+        ):
+            errors.append(
+                f"skill {skill_id}: locale realization {locale} explicit_files "
+                "must declare a non-empty string list"
+            )
+            return
+        if len(files) != len(set(files)):
+            errors.append(
+                f"skill {skill_id}: locale realization {locale} explicit_files "
+                "contains duplicate paths"
+            )
+
+        resolved_files: list[Path] = []
+        for relative in files:
+            resolved = _package_relative_file(
+                package_root,
+                relative,
+                f"skill {skill_id} locale realization {locale} package file",
+                errors,
+            )
+            if resolved is None:
+                continue
+            resolved_files.append(resolved)
+            if not resolved.is_file():
+                errors.append(
+                    f"skill {skill_id}: locale realization {locale} package file "
+                    f"is missing: {relative}"
+                )
+
+        if runtime_path is not None and runtime_path not in resolved_files:
+            errors.append(
+                f"skill {skill_id}: locale realization {locale} package_source "
+                "must include runtime_entry"
+            )
+        return
+
+    manifest_relative = value.get("manifest")
+    locale_root_relative = value.get("locale_root")
+    source_manifest = _repo_path(
+        root,
+        manifest_relative,
+        f"skill {skill_id} locale realization {locale} package manifest",
+        errors,
+    )
+    locale_root = _repo_path(
+        root,
+        locale_root_relative,
+        f"skill {skill_id} locale realization {locale} locale_root",
+        errors,
+    )
+    if source_manifest is None or locale_root is None:
+        return
+    if not source_manifest.is_relative_to(source_root):
+        errors.append(
+            f"skill {skill_id}: locale realization {locale} package manifest "
+            f"is outside source_root: {manifest_relative}"
+        )
+    if not locale_root.is_relative_to(source_root):
+        errors.append(
+            f"skill {skill_id}: locale realization {locale} locale_root "
+            f"is outside source_root: {locale_root_relative}"
+        )
+    if not source_manifest.is_file():
+        errors.append(
+            f"skill {skill_id}: locale realization {locale} package manifest "
+            f"is missing: {manifest_relative}"
+        )
+        return
+    if not locale_root.is_dir():
+        errors.append(
+            f"skill {skill_id}: locale realization {locale} locale_root "
+            f"is missing or not a directory: {locale_root_relative}"
+        )
+        return
+
+    try:
+        config = json.loads(source_manifest.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError) as exc:
+        errors.append(
+            f"skill {skill_id}: locale realization {locale} package manifest "
+            f"cannot be read as JSON: {exc}"
+        )
+        return
+
+    declared_locales = config.get("locales")
+    if not isinstance(declared_locales, dict) or locale not in declared_locales:
+        errors.append(
+            f"skill {skill_id}: locale realization {locale} package manifest "
+            "does not declare this locale"
+        )
+
+    router = config.get("router")
+    if not isinstance(router, str) or not router:
+        errors.append(
+            f"skill {skill_id}: locale realization {locale} package manifest "
+            "must declare a router"
+        )
+    elif runtime_path is not None and (locale_root / router).resolve() != runtime_path:
+        errors.append(
+            f"skill {skill_id}: locale realization {locale} canonical_manifest "
+            "router does not match runtime_entry"
+        )
+
+    modules = config.get("modules")
+    if not isinstance(modules, list) or not modules:
+        errors.append(
+            f"skill {skill_id}: locale realization {locale} package manifest "
+            "must declare modules"
+        )
+        return
+    for index, module in enumerate(modules):
+        if not isinstance(module, dict):
+            errors.append(
+                f"skill {skill_id}: locale realization {locale} package manifest "
+                f"module[{index}] must be an object"
+            )
+            continue
+        module_source = module.get("source")
+        module_path = _package_relative_file(
+            locale_root,
+            module_source,
+            f"skill {skill_id} locale realization {locale} manifest module[{index}] source",
+            errors,
+        )
+        if module_path is not None and not module_path.is_file():
+            errors.append(
+                f"skill {skill_id}: locale realization {locale} manifest module "
+                f"is missing: {module_source}"
+            )
+
+
 def _validate_locale_realizations(
     root: Path,
     source_root: Path,
@@ -98,43 +308,54 @@ def _validate_locale_realizations(
             continue
 
         runtime_relative = realization.get("runtime_entry")
+        package_source = realization.get("package_source")
         if locale == canonical_locale and status == "planned":
             errors.append(
                 f"skill {skill_id}: canonical locale {locale} cannot be planned-only"
             )
 
-        if status != "planned" and (
-            not isinstance(runtime_relative, str) or not runtime_relative
-        ):
+        if status == "planned":
+            if package_source is not None:
+                errors.append(
+                    f"skill {skill_id}: planned locale {locale} must not declare package_source"
+                )
+            continue
+
+        if not isinstance(runtime_relative, str) or not runtime_relative:
             errors.append(
                 f"skill {skill_id}: realized locale {locale} must declare runtime_entry"
             )
             continue
 
-        if runtime_relative is not None:
-            runtime_entry = _repo_path(
-                root,
-                runtime_relative,
-                f"skill {skill_id} locale realization {locale} runtime_entry",
-                errors,
-            )
-            if runtime_entry is not None:
-                if not runtime_entry.is_relative_to(source_root):
-                    errors.append(
-                        f"skill {skill_id}: locale realization {locale} runtime_entry "
-                        f"is outside source_root: {runtime_relative}"
-                    )
-                if not runtime_entry.is_file():
-                    errors.append(
-                        f"skill {skill_id}: locale realization {locale} runtime_entry "
-                        f"is missing: {runtime_relative}"
-                    )
+        runtime_entry = _repo_path(
+            root,
+            runtime_relative,
+            f"skill {skill_id} locale realization {locale} runtime_entry",
+            errors,
+        )
+        if runtime_entry is not None:
+            if not runtime_entry.is_relative_to(source_root):
+                errors.append(
+                    f"skill {skill_id}: locale realization {locale} runtime_entry "
+                    f"is outside source_root: {runtime_relative}"
+                )
+            if not runtime_entry.is_file():
+                errors.append(
+                    f"skill {skill_id}: locale realization {locale} runtime_entry "
+                    f"is missing: {runtime_relative}"
+                )
 
-        if (
-            locale == canonical_locale
-            and status != "planned"
-            and runtime_relative != skill_runtime_entry
-        ):
+        _validate_package_source(
+            root,
+            source_root,
+            skill_id,
+            locale,
+            runtime_relative,
+            package_source,
+            errors,
+        )
+
+        if locale == canonical_locale and runtime_relative != skill_runtime_entry:
             errors.append(
                 f"skill {skill_id}: canonical locale realization runtime_entry must match "
                 f"skill runtime_entry: {runtime_relative!r} != {skill_runtime_entry!r}"
@@ -191,17 +412,23 @@ def validate_suite(root: Path, manifest: dict) -> list[str]:
         if source_root is None:
             continue
         if not source_root.is_dir():
-            errors.append(f"skill {skill_id}: source_root is missing or not a directory: {source_relative}")
+            errors.append(
+                f"skill {skill_id}: source_root is missing or not a directory: {source_relative}"
+            )
 
         runtime_relative = skill.get("runtime_entry")
-        runtime_entry = _repo_path(root, runtime_relative, f"skill {skill_id} runtime_entry", errors)
+        runtime_entry = _repo_path(
+            root, runtime_relative, f"skill {skill_id} runtime_entry", errors
+        )
         if runtime_entry is not None:
             if not runtime_entry.is_relative_to(source_root):
                 errors.append(
                     f"skill {skill_id}: runtime_entry is outside source_root: {runtime_relative}"
                 )
             if not runtime_entry.is_file():
-                errors.append(f"skill {skill_id}: runtime_entry is missing: {runtime_relative}")
+                errors.append(
+                    f"skill {skill_id}: runtime_entry is missing: {runtime_relative}"
+                )
 
         _validate_locale_realizations(
             root,
@@ -222,22 +449,27 @@ def validate_suite(root: Path, manifest: dict) -> list[str]:
             skill.get("references"),
             errors,
         )
-        _declared_paths(root, source_root, skill_id, "evidence", skill.get("evidence"), errors)
-        _declared_paths(root, source_root, skill_id, "evals", skill.get("evals"), errors)
+        _declared_paths(
+            root, source_root, skill_id, "evidence", skill.get("evidence"), errors
+        )
+        _declared_paths(
+            root, source_root, skill_id, "evals", skill.get("evals"), errors
+        )
 
         method_relative = skill.get("method_definition")
         conventional_method = source_root / "references" / "METHOD.md"
         conventional_method_relative = (
             conventional_method.relative_to(root.resolve()).as_posix()
-            if conventional_method.exists() and conventional_method.is_relative_to(root.resolve())
+            if conventional_method.exists()
+            and conventional_method.is_relative_to(root.resolve())
             else None
         )
 
         if method_relative is None:
             if conventional_method_relative is not None:
                 errors.append(
-                    f"skill {skill_id}: references/METHOD.md exists but method_definition is not registered: "
-                    f"{conventional_method_relative}"
+                    f"skill {skill_id}: references/METHOD.md exists but method_definition "
+                    f"is not registered: {conventional_method_relative}"
                 )
         else:
             method_path = _repo_path(
@@ -249,7 +481,8 @@ def validate_suite(root: Path, manifest: dict) -> list[str]:
             if method_path is not None:
                 if not method_path.is_relative_to(source_root):
                     errors.append(
-                        f"skill {skill_id}: method_definition is outside source_root: {method_relative}"
+                        f"skill {skill_id}: method_definition is outside source_root: "
+                        f"{method_relative}"
                     )
                 if not method_path.is_file():
                     errors.append(
@@ -265,8 +498,9 @@ def validate_suite(root: Path, manifest: dict) -> list[str]:
                 and method_relative != conventional_method_relative
             ):
                 errors.append(
-                    f"skill {skill_id}: method_definition does not match source_root/references/METHOD.md: "
-                    f"{method_relative!r} != {conventional_method_relative!r}"
+                    f"skill {skill_id}: method_definition does not match "
+                    f"source_root/references/METHOD.md: {method_relative!r} != "
+                    f"{conventional_method_relative!r}"
                 )
 
     if len(skill_ids) != len(set(skill_ids)):
@@ -292,24 +526,27 @@ def validate_suite(root: Path, manifest: dict) -> list[str]:
                     isinstance(skill_id, str) for skill_id in contains
                 ):
                     errors.append(
-                        f"distribution prototype {distribution_name} contains must be a string list"
+                        f"distribution prototype {distribution_name} contains "
+                        "must be a string list"
                     )
                 else:
                     if len(contains) != len(set(contains)):
                         errors.append(
-                            f"distribution prototype {distribution_name} contains duplicate skill ids"
+                            f"distribution prototype {distribution_name} contains "
+                            "duplicate skill ids"
                         )
                     unknown = sorted(set(contains) - known_skill_ids)
                     if unknown:
                         errors.append(
-                            f"distribution prototype {distribution_name} references unknown skills: {unknown}"
+                            f"distribution prototype {distribution_name} references "
+                            f"unknown skills: {unknown}"
                         )
 
             primary = config.get("primary")
             if primary is not None and primary not in known_skill_ids:
                 errors.append(
-                    f"distribution prototype {distribution_name} primary references unknown skill: "
-                    f"{primary!r}"
+                    f"distribution prototype {distribution_name} primary references "
+                    f"unknown skill: {primary!r}"
                 )
 
     return errors
