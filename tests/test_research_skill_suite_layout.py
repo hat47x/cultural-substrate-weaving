@@ -22,7 +22,7 @@ class ResearchSkillSuiteLayoutTests(unittest.TestCase):
     def skill(self, manifest: dict, skill_id: str) -> dict:
         return next(skill for skill in manifest["skills"] if skill["id"] == skill_id)
 
-    def test_current_artifact_layout_is_buildable_in_both_locales(self) -> None:
+    def test_current_package_source_layout_is_buildable_in_both_locales(self) -> None:
         plan = plan_suite(self.manifest)
 
         for locale in ("ja-JP", "en-US"):
@@ -34,9 +34,12 @@ class ResearchSkillSuiteLayoutTests(unittest.TestCase):
             self.assertEqual(distributions["microsoft_copilot"]["state"], "buildable")
 
         en = plan["locales"]["en-US"]["distributions"]
-        self.assertIn("primary realization availability only", en["chatgpt_gpt"]["scope"])
+        self.assertIn(
+            "primary realization and package-source availability only",
+            en["chatgpt_gpt"]["scope"],
+        )
 
-    def test_english_draft_realizations_are_artifact_buildable_not_promotion_ready(self) -> None:
+    def test_english_draft_realizations_are_package_inputs_not_promotion_ready(self) -> None:
         plan = plan_suite(self.manifest)
         en_items = {
             item["skill_id"]: item
@@ -46,10 +49,22 @@ class ResearchSkillSuiteLayoutTests(unittest.TestCase):
         self.assertEqual(en_items["cultural-substrate-weaving"]["state"], "buildable")
         self.assertEqual(en_items["affinity-synthesis"]["state"], "buildable")
         self.assertEqual(en_items["affinity-synthesis"]["status"], "translated-draft")
+        self.assertEqual(en_items["affinity-synthesis"]["package_source"]["mode"], "explicit_files")
         self.assertEqual(en_items["iterative-inquiry-synthesis"]["state"], "buildable")
         self.assertEqual(en_items["iterative-inquiry-synthesis"]["status"], "translated-draft")
         self.assertEqual(self.manifest["locales"]["en-US"]["status"], "translated-draft")
         self.assertIn("independent review", self.manifest["locales"]["en-US"]["note"].lower())
+
+    def test_runtime_without_package_source_is_not_layout_buildable(self) -> None:
+        manifest = copy.deepcopy(self.manifest)
+        affinity = self.skill(manifest, "affinity-synthesis")
+        affinity["locale_realizations"]["en-US"].pop("package_source")
+
+        plan = plan_suite(manifest)
+        en = plan["locales"]["en-US"]["distributions"]
+        self.assertEqual(en["openai_skill"]["state"], "partial")
+        self.assertEqual(en["claude_plugin"]["state"], "blocked")
+        self.assertIn("affinity-synthesis", en["claude_plugin"]["missing_skills"])
 
     def test_locale_bundle_blocks_when_any_target_skill_becomes_planned(self) -> None:
         manifest = copy.deepcopy(self.manifest)
