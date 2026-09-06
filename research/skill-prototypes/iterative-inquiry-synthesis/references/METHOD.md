@@ -195,6 +195,18 @@ IDの継続は「意味が変わっていない」という保証ではない。
 
 representation changeがsemantic interpretationへ影響した可能性がある場合は、projectionからsemantic recordへ戻って再検査する。
 
+### I15. Missing synthesis realization stays explicit
+
+one-round synthesisが必要なroundでcompatible realizationを利用できない場合、Layer 2自身が別のgrouping / labeling / return-check手順を即興して「統合済み」とは扱わない。
+
+そのroundでは少なくとも次を区別する。
+
+- synthesisが不要で、差分管理・履歴更新だけを行った。
+- synthesisが必要だがcompatible realizationが利用できず、未実行のままstop / handoffした。
+- caller等が別realizationを明示的に指定し、そのrealizationを記録して実行した。
+
+利用不能を自動的な失敗や永続停止とは扱わない。後からcompatible realizationが利用可能になれば、未実行のinput deltaとreopen対象へ戻れる。
+
 ## Round Kernel
 
 ```text
@@ -206,9 +218,13 @@ state current inquiry
   ↓
 reopen locally or globally with reason
   ↓
-run one compatible synthesis realization
+if synthesis is required:
+    run one explicitly bound compatible synthesis realization
+    or record synthesis unavailable and stop / handoff without pretending it ran
+else:
+    continue with delta/history management only
   ↓
-compare with prior semantic structure
+compare with prior semantic structure when synthesis produced a comparable result
   ↓
 separate semantic delta from representation-only delta
   ↓
@@ -242,6 +258,8 @@ append round snapshot
 
 Layer 2が独自のgrouping / labeling algorithmを再実装しない。
 
+compatible one-round synthesis realizationが利用できない場合も、この所有境界は変えない。必要な統合を実行済みと称さず、未実行のinput / reopen refs / handoff reasonを残す。
+
 `affinity-map` 等のmachine-readable semantic recordがある場合は、そのstable IDsとrelation / resonance distinctionをround deltaで再利用できる。
 
 ## Relationship to Cultural Substrate Weaving
@@ -261,6 +279,7 @@ Layer 2はその由来を保ったまま次round materialへ接続する。
 - unresolvedを埋めるため推測を事実化する。
 - stopを「諦め」とみなし無限に探索する。
 - synthesis realization変更の影響をmaterial changeと混同する。
+- compatible synthesis realizationが無いのに、Layer 2独自の即興統合をcompatible methodの実行結果として扱う。
 - 外部探索routeの仮説をsource factへ昇格させる。
 - wording / renderer / layout changeをsemantic discoveryとして数える。
 - 既存IDを毎round振り直し、局所reopenやhistory comparisonを不可能にする。
