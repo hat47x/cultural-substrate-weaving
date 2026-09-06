@@ -108,6 +108,14 @@ clusterの大きさや同じ表現の反復は、それ自体ではtruth、impor
 
 この一覧は閉じた分類表ではない。戻したときに材料側から「違う」と返るものを探す。
 
+変換後は必要に応じて、意味を次のように監査する。
+
+- **inherited**: 入力材料から直接保持された意味。
+- **emergent**: 複数材料の接触で新しく立った意味。創発は許容するが、元材料が最初から述べていたことへ遡及させない。
+- **residual**: 統合へ入れなかった差、矛盾、温度、未解決。
+
+これは入力カードを先に三分類する規則ではなく、**統合した後に変換で何が起きたかを見る検査**である。
+
 ### 7. Build relational structure after grouping
 
 安定した束・表札を、関係のある位置へ置く。
@@ -134,7 +142,7 @@ clusterの大きさや同じ表現の反復は、それ自体ではtruth、impor
 - **synthesis → source**: 統合側が元材料にない意味を発明していないか。
 - **map ↔ narrative**: 図解にある関係が文章で落ちていないか、文章だけに新しい関係が増えていないか。
 
-差分がゼロであることを成功条件にしない。差分があれば理由を明示し、支持された修正か、残差か、未解決かを区別する。
+差分がゼロであることを成功条件にしない。差分があれば理由を明示し、支持された修正か、emergent meaningか、residual / unresolvedかを区別する。
 
 ## Output Contract
 
@@ -148,7 +156,8 @@ clusterの大きさや同じ表現の反復は、それ自体ではtruth、impor
 6. relational structure
 7. narrative synthesis
 8. source ↔ synthesis ↔ narrative cross-check
-9. intentionally omitted differences or unresolved residuals
+9. inherited / emergent / residual meaning when transformation provenance matters
+10. intentionally omitted differences or unresolved residuals
 
 特定の表形式やcanvas geometryを必須にはしない。標準形が必要な場合は `references/TEMPLATE.md` を使う。
 
@@ -168,6 +177,7 @@ clusterの大きさや同じ表現の反復は、それ自体ではtruth、impor
 - [ ] 強い表札名が弱い束のまとまりを隠していない。
 - [ ] 元材料にない因果・内面・一般化・評価方向・確度変更を点検した。
 - [ ] 材料の弱化、ぼかし、行為者脱落を点検した。
+- [ ] emergent meaningを、元材料に最初からあった意味へ遡及させていない。
 - [ ] 強い関係線は、その意味を後から読み返して検査できる。
 - [ ] 図解と叙述を相互に戻して確認した。
 - [ ] 直接引用が必要な場合、実在する原文だけを引用し、モデルが引用文を創作していない。
