@@ -50,13 +50,16 @@
       "working_display_ja": "反復探索統合",
       "role": "multi_round_inquiry_orchestration",
       "source_root": "research/skill-prototypes/iterative-inquiry-synthesis",
-      "method_definition": null,
+      "method_definition": "research/skill-prototypes/iterative-inquiry-synthesis/references/METHOD.md",
       "runtime_entry": "research/skill-prototypes/iterative-inquiry-synthesis/SKILL.md",
       "references": [
+        "research/skill-prototypes/iterative-inquiry-synthesis/references/METHOD.md",
         "research/skill-prototypes/iterative-inquiry-synthesis/references/ROUND-TEMPLATE.md"
       ],
       "evidence": [],
-      "evals": [],
+      "evals": [
+        "research/skill-prototypes/iterative-inquiry-synthesis/evals/CASES.md"
+      ],
       "method_version": "0.1-research",
       "realization_version": "0.1-research",
       "delegation": {
