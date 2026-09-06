@@ -16,6 +16,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 MANIFEST_PATH = ROOT / "research/skill-prototypes/suite-manifest.json"
 EXPECTED_SCHEMA = "csw.research-skill-suite/v1"
+ASSEMBLY_MODES = {"direct_skill", "router_modules"}
 
 
 def load_manifest(path: Path = MANIFEST_PATH) -> dict:
@@ -111,6 +112,48 @@ def _validate_method_definition(
     if not path.is_file():
         errors.append(f"skill {skill_id}: {field} is missing: {value}")
     return path
+
+
+def _validate_assembly(
+    root: Path,
+    source_root: Path,
+    skill_id: str,
+    value: object,
+    errors: list[str],
+) -> None:
+    if not isinstance(value, dict):
+        errors.append(f"skill {skill_id}: assembly must be an object")
+        return
+
+    mode = value.get("mode")
+    if mode not in ASSEMBLY_MODES:
+        errors.append(
+            f"skill {skill_id}: assembly mode must be one of {sorted(ASSEMBLY_MODES)}: {mode!r}"
+        )
+        return
+
+    source_manifest = value.get("source_manifest")
+    if mode == "router_modules":
+        path = _repo_path(
+            root,
+            source_manifest,
+            f"skill {skill_id} assembly source_manifest",
+            errors,
+        )
+        if path is None:
+            return
+        if not path.is_relative_to(source_root):
+            errors.append(
+                f"skill {skill_id}: assembly source_manifest is outside source_root: {source_manifest}"
+            )
+        if not path.is_file():
+            errors.append(
+                f"skill {skill_id}: assembly source_manifest is missing: {source_manifest}"
+            )
+    elif source_manifest is not None:
+        errors.append(
+            f"skill {skill_id}: direct_skill assembly must not declare source_manifest"
+        )
 
 
 def _validate_package_references(
@@ -344,6 +387,8 @@ def validate_suite(root: Path, manifest: dict) -> list[str]:
             continue
         if not source_root.is_dir():
             errors.append(f"skill {skill_id}: source_root is missing or not a directory: {source_relative}")
+
+        _validate_assembly(root, source_root, skill_id, skill.get("assembly"), errors)
 
         runtime_relative = skill.get("runtime_entry")
         runtime_entry = _repo_path(root, runtime_relative, f"skill {skill_id} runtime_entry", errors)
