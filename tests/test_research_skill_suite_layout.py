@@ -22,29 +22,21 @@ class ResearchSkillSuiteLayoutTests(unittest.TestCase):
     def skill(self, manifest: dict, skill_id: str) -> dict:
         return next(skill for skill in manifest["skills"] if skill["id"] == skill_id)
 
-    def test_current_locale_buildability_is_explicit(self) -> None:
+    def test_current_artifact_layout_is_buildable_in_both_locales(self) -> None:
         plan = plan_suite(self.manifest)
 
-        ja = plan["locales"]["ja-JP"]["distributions"]
+        for locale in ("ja-JP", "en-US"):
+            distributions = plan["locales"][locale]["distributions"]
+            self.assertEqual(distributions["openai_skill"]["state"], "buildable")
+            self.assertEqual(distributions["claude_plugin"]["state"], "buildable")
+            self.assertEqual(distributions["codex_plugin"]["state"], "buildable")
+            self.assertEqual(distributions["chatgpt_gpt"]["state"], "buildable")
+            self.assertEqual(distributions["microsoft_copilot"]["state"], "buildable")
+
         en = plan["locales"]["en-US"]["distributions"]
-
-        self.assertEqual(ja["openai_skill"]["state"], "buildable")
-        self.assertEqual(ja["claude_plugin"]["state"], "buildable")
-        self.assertEqual(ja["codex_plugin"]["state"], "buildable")
-
-        self.assertEqual(en["openai_skill"]["state"], "partial")
-        self.assertEqual(en["claude_plugin"]["state"], "blocked")
-        self.assertEqual(en["codex_plugin"]["state"], "blocked")
-        self.assertEqual(
-            en["claude_plugin"]["missing_skills"],
-            ["affinity-synthesis", "iterative-inquiry-synthesis"],
-        )
-
-        self.assertEqual(en["chatgpt_gpt"]["state"], "buildable")
-        self.assertEqual(en["microsoft_copilot"]["state"], "buildable")
         self.assertIn("primary realization availability only", en["chatgpt_gpt"]["scope"])
 
-    def test_openai_standalones_are_planned_per_skill(self) -> None:
+    def test_english_draft_realizations_are_artifact_buildable_not_promotion_ready(self) -> None:
         plan = plan_suite(self.manifest)
         en_items = {
             item["skill_id"]: item
@@ -52,25 +44,25 @@ class ResearchSkillSuiteLayoutTests(unittest.TestCase):
         }
 
         self.assertEqual(en_items["cultural-substrate-weaving"]["state"], "buildable")
-        self.assertEqual(en_items["affinity-synthesis"]["state"], "blocked")
-        self.assertEqual(en_items["affinity-synthesis"]["status"], "planned")
-        self.assertEqual(en_items["iterative-inquiry-synthesis"]["state"], "blocked")
+        self.assertEqual(en_items["affinity-synthesis"]["state"], "buildable")
+        self.assertEqual(en_items["affinity-synthesis"]["status"], "translated-draft")
+        self.assertEqual(en_items["iterative-inquiry-synthesis"]["state"], "buildable")
+        self.assertEqual(en_items["iterative-inquiry-synthesis"]["status"], "translated-draft")
+        self.assertEqual(self.manifest["locales"]["en-US"]["status"], "translated-draft")
+        self.assertIn("independent review", self.manifest["locales"]["en-US"]["note"].lower())
 
-    def test_locale_bundle_unblocks_only_when_all_target_skills_are_realized(self) -> None:
+    def test_locale_bundle_blocks_when_any_target_skill_becomes_planned(self) -> None:
         manifest = copy.deepcopy(self.manifest)
-        for skill_id in ("affinity-synthesis", "iterative-inquiry-synthesis"):
-            skill = self.skill(manifest, skill_id)
-            skill["locale_realizations"]["en-US"] = {
-                "status": "prototype",
-                "runtime_entry": skill["runtime_entry"],
-            }
+        affinity = self.skill(manifest, "affinity-synthesis")
+        affinity["locale_realizations"]["en-US"] = {"status": "planned"}
 
         plan = plan_suite(manifest)
         en = plan["locales"]["en-US"]["distributions"]
 
-        self.assertEqual(en["claude_plugin"]["state"], "buildable")
-        self.assertEqual(en["claude_plugin"]["missing_skills"], [])
-        self.assertEqual(en["codex_plugin"]["state"], "buildable")
+        self.assertEqual(en["openai_skill"]["state"], "partial")
+        self.assertEqual(en["claude_plugin"]["state"], "blocked")
+        self.assertEqual(en["claude_plugin"]["missing_skills"], ["affinity-synthesis"])
+        self.assertEqual(en["codex_plugin"]["state"], "blocked")
 
     def test_bundle_reports_unknown_target_skill_as_missing(self) -> None:
         manifest = copy.deepcopy(self.manifest)
