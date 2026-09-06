@@ -1,4 +1,4 @@
-.PHONY: build generated-artifacts-check validate test tokens package release-validate check release-check release-tag-contract release-remote-tag-contract clean update-en-hashes living-lab-check living-lab-summary japanese-docs-check repository-contracts main-contract
+.PHONY: build generated-artifacts-check validate test tokens package release-validate check release-check release-tag-contract release-remote-tag-contract clean update-en-hashes living-lab-check living-lab-summary japanese-docs-check repository-contracts main-contract research-skill-check
 
 .NOTPARALLEL: check release-check
 
@@ -44,6 +44,10 @@ living-lab-check:
 
 living-lab-summary:
 	python scripts/summarize_living_lab.py
+
+research-skill-check:
+	python research/skill-prototypes/validate_suite.py
+	python research/skill-prototypes/affinity-synthesis/scripts/check_representation.py
 
 check: repository-contracts generated-artifacts-check validate japanese-docs-check test tokens living-lab-check living-lab-summary
 
