@@ -20,7 +20,7 @@ Record as needed:
 - framework loading depth: `not_loaded / probe / preview / full / enacted`;
 - use: exploration / attribution;
 - attribution: `target_supported / framework_generated / cross_field_emergent / unresolved`;
-- disposition: `adopted / backgrounded / rejected / distorting / reopened`;
+- disposition (representative record terms): `adopted / backgrounded / rejected / distorting / reopened`; when another state is actually observed, record it without forcing it into these labels, and do not derive attribution state from disposition.
 - constraints at the time;
 - falsification condition;
 - unresolved items and reopening conditions.
