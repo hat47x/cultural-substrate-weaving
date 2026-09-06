@@ -59,7 +59,8 @@
       "evidence": [],
       "evals": [
         "research/skill-prototypes/iterative-inquiry-synthesis/evals/CASES.md",
-        "research/skill-prototypes/iterative-inquiry-synthesis/evals/DRY-RUN-2026-09-06.md"
+        "research/skill-prototypes/iterative-inquiry-synthesis/evals/DRY-RUN-2026-09-06.md",
+        "research/skill-prototypes/iterative-inquiry-synthesis/evals/FALLBACK-BOUNDARY-RECHECK-2026-09-06.md"
       ],
       "method_version": "0.1-research",
       "realization_version": "0.1-research",

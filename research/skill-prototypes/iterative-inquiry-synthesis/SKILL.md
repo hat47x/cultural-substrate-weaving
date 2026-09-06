@@ -9,6 +9,8 @@ description: Orchestrates repeated inquiry rounds in which new material is synth
 
 このSkillは**統合アルゴリズムそのものを所有しない**。各ラウンドの材料統合には、利用可能なら `affinity-synthesis` または同じMethod Definitionを満たす別realizationを使う。
 
+one-round synthesisが必要なのにcompatible realizationを利用できない場合、別のgrouping / labeling手順を即興して統合済みとは扱わない。synthesis未実行としてstop / handoffし、後で戻れるinput deltaとreopen対象を残す。今回のroundでone-round synthesis自体が不要なら、その状態を明示したうえで差分・履歴管理だけを進められる。
+
 ## When to Use
 
 - 調査・設計・創作・分析が複数回の資料追加を前提としている。
@@ -37,9 +39,11 @@ description: Orchestrates repeated inquiry rounds in which new material is synth
 3. **State the current inquiry**
    - 今回何を確かめるroundかを一文で置く。
    - 前回の問いがそのまま妥当とは限らない。
-4. **Run one synthesis realization**
+4. **Bind one synthesis realization when synthesis is needed**
    - 新材料と必要な旧材料を、一回の統合方法へ渡す。
    - 複数の統合方法を無自覚に混ぜない。使用realizationを記録する。
+   - one-round synthesisが不要なら、その状態を明示して次へ進む。
+   - synthesisが必要だがcompatible realizationを利用できないなら、未実行としてstop / handoffする。Layer 2独自の即興統合をcompatible methodの実行結果として扱わない。
 5. **Inspect structural delta**
    - 何が新しく生じたか。
    - 何が変わったか。
@@ -165,6 +169,7 @@ IDは意味分類ではなく、局所reopenとhistory comparisonのhandleであ
 - 次に必要なのがdomain decision / human value judgment / external actionである。
 - 追加探索の費用が、期待される認知上の改善を上回る。
 - 外部利用条件が終了を要求する。
+- 必要なone-round synthesisを実行できるcompatible realizationが現在利用できず、callerや後続roundへhandoffする。
 
 ## Restart Conditions
 
@@ -174,6 +179,7 @@ IDは意味分類ではなく、局所reopenとhistory comparisonのhandleであ
 - contact with an old residual
 - explicit revisit
 - a different cognitive field or framework exposes a new question
+- previously unavailable compatible synthesis realization becomes available
 
 過去の停止を失敗扱いせず、触れた箇所だけを再開する。
 
@@ -191,7 +197,7 @@ IDは意味分類ではなく、局所reopenとhistory comparisonのhandleであ
 - [ ] 前roundを上書きせず、差分として追跡できる。
 - [ ] 新材料が触れない部分まで無理由に再構成していない。
 - [ ] stable IDがある場合、意味上同一なものを無理由に振り直していない。
-- [ ] 使用したsynthesis realizationを追跡できる。
+- [ ] 使用したsynthesis realizationを追跡できる。必要なのに利用できなかった場合は未実行として区別している。
 - [ ] semantic deltaとwording / renderer / layoutだけの差を区別した。
 - [ ] diagram proximity / hierarchyをsemantic relationへ自動変換していない。
 - [ ] gap / conflict / singleton / unresolvedを次の観察事実と混同していない。
