@@ -12,17 +12,30 @@ LOCAL_MARKDOWN_LINK = re.compile(r"\[[^\]]+\]\((?!https?://|mailto:|#)[^)]+\)")
 REQUIRED_INSTRUCTION_MARKERS = {
     "ja-JP": (
         "Microsoft 365限定プロファイル",
+        "親和統合コアの最小互換手順を埋め込んでいます",
         "意味の一体性を守る必要があるときは結合",
         "委ねられた範囲を、勝手に広げず",
         "target_supported",
         "観測、測定、利用者判断、AI解釈を混ぜない",
+        "完全なmulti-round orchestrationではありません",
     ),
     "en-US": (
         "Microsoft 365 limited profile",
+        "This limited profile embeds a minimal compatible material-synthesis fallback",
         "Join material when semantic unity must be preserved",
         "Do not expand the scope entrusted by the user",
         "target_supported",
         "Separate observation, measurement, user judgment, and AI interpretation",
+        "This is not complete multi-round orchestration",
+    ),
+}
+
+FORBIDDEN_OWNERSHIP_MARKERS = {
+    "ja-JP": (
+        "文化的体系による構造探索とKJ法による統合の中核だけを扱います",
+    ),
+    "en-US": (
+        "It keeps the core of cultural-framework exploration and KJ integration",
     ),
 }
 
@@ -31,12 +44,14 @@ README_MARKERS = {
         "instructions.txt",
         "method-reference/",
         "Knowledge",
+        "composite adapter",
         "続きを実行させるためのファイルではありません",
     ),
     "en-US": (
         "instructions.txt",
         "method-reference/",
         "Knowledge",
+        "composite adapter",
         "Do not upload these files",
     ),
 }
@@ -75,6 +90,9 @@ def validate_m365_profile(root: Path = ROOT) -> list[str]:
         for marker in REQUIRED_INSTRUCTION_MARKERS[locale]:
             if marker not in instructions:
                 errors.append(f"{locale}: Microsoft instructions missing required marker: {marker}")
+        for marker in FORBIDDEN_OWNERSHIP_MARKERS[locale]:
+            if marker in instructions:
+                errors.append(f"{locale}: Microsoft instructions retain stale monolithic ownership wording: {marker}")
 
         if not package_readme_source.is_file():
             errors.append(f"{locale}: Microsoft package-readme.txt is missing")
