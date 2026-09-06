@@ -28,6 +28,7 @@ class NaturalJapaneseReviewFreshnessTests(unittest.TestCase):
     def test_public_japanese_guides_are_in_scope(self) -> None:
         scoped = set(review_scope(ROOT))
         self.assertIn("README.md", scoped)
+        self.assertIn("docs/README.md", scoped)
         self.assertIn("docs/ja/getting-started.md", scoped)
         self.assertIn("docs/ja/usage-context.md", scoped)
         self.assertIn("docs/ja/platforms/chatgpt-gpt.md", scoped)
