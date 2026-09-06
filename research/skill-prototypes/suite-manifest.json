@@ -10,7 +10,7 @@
     },
     "en-US": {
       "status": "planned",
-      "note": "Do not promote prototype skills until English realization parity is explicitly reviewed."
+      "note": "Do not promote prototype skills until English runtime and prototype realization parity are explicitly reviewed."
     }
   },
   "skills": [
@@ -98,7 +98,9 @@
         "research/skill-prototypes/evals/CSW-HANDOFF-CASES.md",
         "research/skill-prototypes/evals/THREE-LAYER-PAIRED-RUN-2026-09-06.md"
       ],
-      "checks": [],
+      "checks": [
+        "research/skill-prototypes/check_split_ownership.py"
+      ],
       "method_version": "0.5-research-line",
       "realization_version": "0.5-thin-ja-research",
       "delegation": {
@@ -118,31 +120,43 @@
   ],
   "distribution_prototypes": {
     "openai_skill": {
-      "mode": "standalone_per_skill"
+      "mode": "planned_standalone_per_skill",
+      "note": "Current repository build is still single-skill; multi-skill build generalization remains a promotion gate."
     },
     "claude_plugin": {
-      "mode": "locale_bundle",
+      "mode": "planned_locale_bundle",
       "contains": [
         "cultural-substrate-weaving",
         "affinity-synthesis",
         "iterative-inquiry-synthesis"
-      ]
+      ],
+      "note": "Plugin format can bundle sibling Skills, but the current build has not yet been generalized to emit all three."
     },
     "codex_plugin": {
-      "mode": "locale_bundle",
+      "mode": "planned_locale_bundle",
       "contains": [
         "cultural-substrate-weaving",
         "affinity-synthesis",
         "iterative-inquiry-synthesis"
-      ]
+      ],
+      "note": "Plugin format can bundle sibling Skills, but the current build has not yet been generalized to emit all three."
     },
     "chatgpt_gpt": {
-      "mode": "composite_agent_realization",
-      "primary": "cultural-substrate-weaving"
+      "mode": "planned_composite_agent_realization",
+      "primary": "cultural-substrate-weaving",
+      "note": "Current generated GPT follows the runtime source and does not yet embed the two research sibling realizations after the thin split."
     },
     "microsoft_copilot": {
-      "mode": "composite_agent_realization",
-      "primary": "cultural-substrate-weaving"
+      "mode": "implemented_limited_composite_adapter",
+      "primary": "cultural-substrate-weaving",
+      "embedded_subset_of": [
+        "affinity-synthesis"
+      ],
+      "does_not_claim": [
+        "full affinity-synthesis representation / lineage",
+        "full iterative-inquiry-synthesis round governance"
+      ],
+      "note": "The self-contained Instructions embed a minimal compatible material-synthesis fallback because sibling Skill invocation cannot be assumed."
     }
   },
   "promotion_gates": [
@@ -156,8 +170,10 @@
     "cross-layer CSW handoff cases remain acceptable",
     "three-layer paired regression shows no material semantic regression",
     "Japanese thin-CSW canonical source retains attribution and delegation boundaries",
+    "split ownership regression check passes",
+    "Microsoft 365 composite adapter preserves its embedded-fallback boundary without claiming full sibling-method parity",
     "generated artifacts are rebuilt and repository validation passes after thin-CSW migration",
-    "English realization parity is reviewed",
+    "English runtime and prototype realization parity are reviewed",
     "runtime build and validator are generalized before canonical source migration beyond the Japanese research line"
   ]
 }
