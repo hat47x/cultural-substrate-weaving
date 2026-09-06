@@ -14,6 +14,7 @@ Status: research candidate
 4. 束を関係構造へ配置し、そこから叙述する。
 5. 変換後は元材料へ戻し、意味の欠落・発明・確度変化を点検する。
 6. singleton、conflict、gap、unresolvedを消さず、次に再検査できる形で残す。
+7. membership / relation / secondary resonance / layout を分離し、同じ構造をtext、machine-readable record、diagramへ投影できるようにする。
 
 ## 2. Historical and methodological lineage
 
@@ -96,6 +97,90 @@ Not adopted as-is:
 - automatic progression from synthesis to actionable recommendation
 - product-research-specific prioritization and impact/effort scoring
 
+### `Research Synthesis` style skills
+
+Reviewed example:
+https://github.com/SkillMedev/skills/blob/main/skills/research-synthesis/SKILL.md
+
+Useful representation observation:
+
+- cluster output is written as `Theme: "<insight sentence>"`, not merely a noun category;
+- tension / disagreement / gap sections are explicit rather than hidden inside a polished summary;
+- the output schema is readable without a dedicated UI.
+
+This supports representing a KJ-like label as a meaning-bearing sentence rather than a taxonomy key.
+
+Not adopted as-is:
+
+- mandatory atomic-note extraction;
+- topic tagging before grouping;
+- automatic `so what / now what` recommendation progression.
+
+### Concept-map style skills
+
+Reviewed example:
+https://github.com/bajpainaman/solve/blob/main/frameworks/concept-map.md
+
+Useful representation / packaging observations:
+
+- Markdown report and raw Mermaid `.mmd` are emitted as separate artifacts;
+- node inventory and edge inventory tables make the graph auditable without reading the rendered figure;
+- edges carry visible labels rather than generic unlabeled lines.
+
+Not adopted as-is:
+
+- controlled edge vocabulary as the only legal semantic grammar;
+- forcing every node into exactly one cluster;
+- cluster-count and graph-density targets;
+- assuming that a relation map is best modeled as a concept graph before affinity integration has stabilized.
+
+Local consequence:
+
+- keep an **edge inventory**, but make the relation `predicate` open natural language;
+- represent direction separately from relation meaning;
+- do not infer `causes` merely because an arrow is directed.
+
+### Mermaid diagram skills
+
+Reviewed example:
+https://github.com/mgranberry/mermaid-diagram-skill
+
+Useful mechanisms / packaging:
+
+- diagram source is kept as `.mmd` or fenced Mermaid rather than only an image;
+- diagram type should follow the conceptual structure rather than decorating text;
+- large diagrams should be split into views rather than forced into one unreadable canvas;
+- render-and-validate loop checks both syntax and resulting layout.
+
+Critical limitation for KJ-like spatial diagrams:
+
+- Mermaid uses automatic layout and does not preserve arbitrary pixel positioning.
+
+Local consequence:
+
+- use Mermaid as a **topology projection**, not as the sole authority for A-type spatial arrangement when proximity / void / peripheral placement itself matters;
+- run a projection-integrity check so automatic layout does not become new analysis.
+
+### Excalidraw-style diagram skills
+
+Reviewed example:
+https://github.com/diegosouzapw/awesome-omni-skills/blob/main/skills/excalidraw-studio/SKILL.md
+
+Useful representation observation:
+
+- `.excalidraw` is JSON and stores explicit element coordinates and bindings;
+- this makes it suitable as one possible projection when free spatial placement matters.
+
+Not adopted as the canonical format:
+
+- Excalidraw element schema, styling and coordinate conventions are renderer-specific;
+- method semantics should not depend on one canvas product.
+
+Local consequence:
+
+- store optional normalized positions or layout hints in the interchange layer when spatial placement itself must survive;
+- allow Excalidraw / SVG / canvas as render targets without making them method authority.
+
 ### Interview synthesis variants
 
 Useful observations:
@@ -125,7 +210,13 @@ These ideas support the local derivation/double-counting safeguards, but partici
 - generated-language audits for invented causality, interior state, generalization, polarity, certainty changes, and dropped agency
 - explicit map ↔ narrative delta audit
 - preserving inexplicable discomfort as a residual without forcing a hypothesis
-- separation of Method Definition from Agent Skill realization
+- `primary placement / secondary resonance` without duplicating a card as independent support
+- separating membership / explicit relation / secondary resonance / layout in the representation grammar
+- relation predicates kept as natural-language meaning rather than a mandatory closed edge taxonomy
+- machine-readable `affinity-map` interchange candidate
+- diagram projection integrity checks
+- Mermaid topology projection separated from free-position spatial projection
+- separation of Method Definition from Agent Skill realization and from Representation Grammar
 - explicit delegation boundary to narrower installed skills
 - machine-usable negative eval cases
 
@@ -145,6 +236,9 @@ Direct evidence for this exact AI realization is currently limited. Evaluation s
 - preservation of singleton/conflict/residual
 - ability to round-trip from synthesis to source
 - consistency between relational map and narrative
+- membership / relation / resonance separation
+- diagram projection fidelity
+- no semantic inference from renderer-created proximity
 
 ## 6. Agent Skill packaging basis
 
@@ -153,7 +247,7 @@ The Agent Skills specification defines a Skill as a directory containing `SKILL.
 Reference:
 https://agentskills.io/specification
 
-The prototype follows that pattern by keeping the activation contract and runtime procedure in `SKILL.md`, while moving method definition, output template, evidence discussion, and eval cases into separate files.
+The prototype follows that pattern by keeping the activation contract and runtime procedure in `SKILL.md`, while moving method definition, representation grammar, output template, machine-readable schema, evidence discussion, examples, and eval cases into separate files.
 
 ## 7. Current evidence posture
 
@@ -165,7 +259,8 @@ Do not claim:
 - that it reproduces every KJ procedure;
 - that it is empirically superior to affinity mapping, thematic analysis, expert reading, or another synthesis method;
 - that outputs are unbiased or objectively true;
-- that repeated cards imply independent corroboration without lineage inspection.
+- that repeated cards imply independent corroboration without lineage inspection;
+- that a rendered diagram is more authoritative than the semantic record it projects.
 
 ## 8. Promotion requirements
 
@@ -174,7 +269,9 @@ Before this prototype becomes a public independent Skill:
 1. run the local eval cases across at least two capable model realizations or prompt variants;
 2. compare against current CSW `integration.md` on real, nontrivial tasks;
 3. compare against an installed/public Affinity Mapping Skill on tasks inside and outside the narrower affinity-mapping boundary;
-4. verify that splitting Layer 1 from iterative inquiry does not lose useful round handoff information;
-5. re-check naming collisions and trademark presentation;
-6. verify primary-source attribution for public lineage claims;
-7. validate the directory with the current Agent Skills reference validator where practical.
+4. test the representation grammar on both small and 100+ card cases;
+5. validate at least one Mermaid topology projection and one free-position spatial projection against the same semantic record;
+6. verify that splitting Layer 1 from iterative inquiry does not lose useful round handoff information;
+7. re-check naming collisions and trademark presentation;
+8. verify primary-source attribution for public lineage claims;
+9. validate the directory with the current Agent Skills reference validator where practical.
