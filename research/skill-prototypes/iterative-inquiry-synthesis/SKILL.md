@@ -1,91 +1,88 @@
 ---
 name: iterative-inquiry-synthesis
-description: Orchestrates repeated inquiry rounds in which new material is synthesized, residual gaps and conflicts become explicit next questions, and later evidence is returned to the prior material state without overwriting history. Use for long-running research, analysis, or creative inquiry that needs repeated collect → synthesize → inspect residuals → recollect cycles. Do not use for a single synthesis round or as a domain-specific research method.
+description: 材料が複数roundで増える調査・分析・設計・創作で、一回の統合結果を固定せず、新材料が触れた意味構造だけを再開し、問い・残差・履歴・停止／再開条件を追跡する。単発の親和統合、固定taxonomy分類、domain固有の調査法そのものには使わない。
 ---
 
 # Iterative Inquiry Synthesis
 
-一回の統合結果を結論として固定せず、そこから現れた空白、対立、孤立、未解決、新しい材料を次の問いへ返す。
+Status: research candidate Agent Skill realization
 
-このSkillは**統合アルゴリズムそのものを所有しない**。各ラウンドの材料統合には、利用可能なら `affinity-synthesis` または同じMethod Definitionを満たす別realizationを使う。
+一回の統合を最終結論として固定せず、後から来た材料が**どこを変え、どこを変えず、何を未解決として残したか**を追跡する。
 
-one-round synthesisが必要なのにcompatible realizationを利用できない場合、別のgrouping / labeling手順を即興して統合済みとは扱わない。synthesis未実行としてstop / handoffし、後で戻れるinput deltaとreopen対象を残す。今回のroundでone-round synthesis自体が不要なら、その状態を明示したうえで差分・履歴管理だけを進められる。
+このSkillは**one-round synthesisの内部手順を所有しない**。利用できる場合は `affinity-synthesis` または同じMethod Definitionを満たすcompatible realizationを各roundの統合に使う。
 
-## When to Use
+## When to use
 
-- 調査・設計・創作・分析が複数回の資料追加を前提としている。
-- 前回の統合から、次に確認すべきgap / conflict / singleton / unresolved questionが生じている。
-- 新しい資料が届くたびに、既存構造を全部捨てず差分として再評価したい。
-- 問いそのものが材料によって変化し得る。
-- 長期作業で、何が変わり何が残ったかを追跡したい。
+次のような仕事で使う。
 
-## When NOT to Use
+- 調査・分析・設計・創作が複数roundにわたり、後から材料が増える。
+- 前roundの結果にgap / conflict / singleton / unresolvedが残り、それが後の材料で意味を持つ可能性がある。
+- 新材料が来るたびに全体を再構成するのではなく、既存構造との差分を追いたい。
+- 問いそのものが材料によって変化する可能性がある。
+- 長期作業で、何が変わり何が残ったかを外部成果物として追跡したい。
 
-- 一組の材料を一度だけ統合すれば足りる。
-- 決められたデータセットへ同じ処理を再実行するだけで、問いや材料状態が変わらない。
-- domain-specificな検索戦略、法的判断、医療判断、製品優先度等そのものが必要である。
-- 「必ずNラウンド回す」こと自体が目的になっている。
+## When not to use
+
+次では優先しない。
+
+- 一回のsynthesisで十分。
+- 同じ固定datasetを、問いも材料も変わらないまま再実行するだけ。
+- domain固有のsearch strategy、法務・医療判断、product prioritization等が中心。
+- predeterminedなround数を回すこと自体が目的になっている。
 
 ## Core Round
 
-各ラウンドでは次の外部成果物だけを扱う。private chain-of-thoughtを保存しない。
+private chain-of-thoughtではなく、外部から検査できるartifactを残す。
 
 1. **Receive delta**
-   - 新しい資料、観察、反証、実行結果、依頼条件の変更を受け取る。
-   - 外部探索routeから来た問い・仮説・correspondence等には、origin / operation / incoming status or roleを必要な範囲で残す。
+   - 新しいsource、observation、counterexample、execution result、constraint change等を受け取る。
 2. **Locate touched semantic artifacts**
-   - 関係する旧カード、旧group、relation、secondary resonance、residual、questionを前景へ戻す。
-   - stable semantic IDがある場合は、そのhandleを利用する。
-   - 長期履歴を毎回すべて再要約しない。
+   - 新材料が実際に触れるcard / group / relation / resonance / residual / questionだけを前roundから持ち込む。
+   - stable semantic handleがあれば再利用する。
 3. **State the current inquiry**
-   - 今回何を確かめるroundかを一文で置く。
-   - 前回の問いがそのまま妥当とは限らない。
-4. **Bind one synthesis realization when synthesis is needed**
-   - 新材料と必要な旧材料を、一回の統合方法へ渡す。
-   - 複数の統合方法を無自覚に混ぜない。使用realizationを記録する。
-   - 外部探索由来のquestion / hypothesis / correspondenceは、target-side source materialと同じ認識状態へ潰さず渡す。
-   - one-round synthesisが不要なら、その状態を明示して次へ進む。
-   - synthesisが必要だがcompatible realizationを利用できないなら、未実行としてstop / handoffする。Layer 2独自の即興統合をcompatible methodの実行結果として扱わない。
+   - 今roundで何を見分けたいか、何を理解したいかを一文で置く。
+   - 前roundの問いが今も正しいとは仮定しない。
+4. **Run one synthesis realization**
+   - 新材料と必要なprior materialだけを、compatible one-round synthesisへ渡す。
+   - どのrealizationを使ったか記録する。
 5. **Inspect structural delta**
-   - 何が新しく生じたか。
+   - 何が新しく立ったか。
    - 何が変わったか。
-   - 今回のdeltaが触れたが何が変わらなかったか。
-   - 何がwithdrawされたか。理由は何か。
-6. **Separate semantic delta from representation-only delta**
-   - membership / label / relation / resonance / residual / questionが変わったのか。
-   - それとも表現、改行、renderer、diagram layoutだけが変わったのか。
+   - 何を実際に再検査し、意味上は変わらなかったか。
+   - 何が弱まり、撤回されたか。
+6. **Separate semantic and representation delta**
+   - card meaning / membership / label / relation / resonance / residual / questionの変化と、wording / renderer / line wrapping / layoutだけの変化を分ける。
 7. **Externalize residuals**
-   - gap / conflict / singleton / unresolved / weakly-supported relationを明示する。
+   - gap / conflict / singleton / unresolved / weak relation等を残す。
 8. **Decide continuation boundary**
-   - 次に確かめられる材料があるか。
-   - 現在の目的に追加roundが必要か。
-   - 人間の価値判断・domain decision・外部actionへ渡す段階か。
+   - 残った問いを実際に判別できる材料があるか。
+   - 今の目的にもう一roundが有効か。
+   - 次はdomain判断・人間の価値判断・外部actionなのか。
 9. **Freeze a round snapshot**
-   - 前roundを上書きせず、今回の差分と戻り先を残す。
+   - 前roundを上書きせず、今回のdeltaとreturn pointを追加する。
 
 ## Round Contract
 
-各roundで最低限追跡できるようにする。
+必要に応じて次を外部化する。
 
 - round id
 - current inquiry / purpose
 - input delta
-- external exploration input status / provenance when relevant
 - reopened prior artifact refs / touched semantic IDs
-- synthesis realization id or name
-- representation / schema ref when available
+- synthesis realization id / name
+- representation / schema ref if available
 - output artifact refs
 - residual refs
 - semantic structural delta
-- representation-only delta when relevant
+- representation-only delta if relevant
 - possible next inquiry / verification target
-- stop / continue reason
+- stop / continue / handoff reason
 
-形式は固定しない。必要なら `references/ROUND-TEMPLATE.md` を使う。
+保存形式は固定しない。
 
 ### Compact delta notation
 
-stable IDを持つ成果物では、次を**変更操作**として使える。
+stable IDがある場合、次の記号で**change operation**を表せる。
 
 ```text
 +  newly emerged
@@ -99,82 +96,85 @@ stable IDを持つ成果物では、次を**変更操作**として使える。
 
 ```text
 + C115 := "新材料から立った意味単位"
-~ G03 := members + {C115}; label "旧表札" -> "新表札"
-= G04 :: "今回の材料を戻したが、核とmembershipはなお成立する"
-- R02 :: "旧方向は材料から支持できなくなった"
-+ R05: G03 -- G07 :: "新しく見えた関係predicate"
-? Q08 :: "現材料ではまだ区別できない"
+~ G03 := members + {C115}; label "旧表札" -> "改訂表札"
+= G04 :: "新材料を照合したが意味核は維持"
+- R02 :: "以前の向きは現在の材料では支持されない"
++ R05: G03 -- G07 :: "新しく立った関係predicate"
+? Q08 :: "現在の材料ではまだ判別できない"
 ```
 
-これはカードや島をtaxonomyへ分類する記法ではない。
+この記号は変化を表す。card / groupの意味分類ではない。
 
 ## Stable Semantic Handles
 
-one-round synthesis側に `C / G / R / X / U / Q` 等のstable IDがある場合、意味上の同一性が続く限りroundを跨いで再利用する。
+one-round synthesis側に `C / G / R / X / U / Q` 等のstable IDがある場合、意味上の同一性が保たれる間はroundを跨いで再利用する。
 
-- 表札の文言を少し直しただけで全IDを振り直さない。
-- 同じIDでも `~ G03` のように意味・membershipの変更を記録できる。
-- split / mergeで同一性が保てなくなった場合は、新IDとderivationを残す。
+- 文言を整えただけで新IDへ振り直さない。
+- 同じIDでも意味のある変更は `~` として記録できる。
+- split / mergeで同一性が失われる場合は新IDを立て、旧IDからのderivationを残す。
 
-IDは意味分類ではなく、局所reopenとhistory comparisonのhandleである。
+ID prefixは分類体系ではなく参照handleである。
 
-## Semantic Delta != Diagram Delta
+## Semantic Delta Is Not Diagram Delta
 
-図の位置、線の曲がり、Mermaidのautomatic layout、改行、色、shapeが変わっただけなら、それを新しい発見として数えない。
+node位置、edge routing、automatic layout、折返し、色、shape等の変更を新しい意味発見と数えない。
 
-図を再生成した結果、以前は見えなかった関係候補が気づきとして立つことはあり得る。その場合は、rendererがrelationを作ったとは扱わず、**新しいrelation candidateとして元semantic recordと材料へ戻す**。
+representation変更によって新relation candidateに気づくことはある。その場合も、candidateとしてsemantic recordとsource materialへ戻して確認してから昇格する。
 
-特に、近く描かれたことをrelationへ、上下に並んだことを因果や階層へ自動変換しない。
+視覚的近接をrelationへ、上下配置をhierarchy / causalityへ自動変換しない。
 
 ## Do Not Rebuild Without Cause
 
-新材料が来ただけで、既存の島・表札・関係を全面再構成しない。
+新材料が来たこと自体を、全group / relation再構築の理由にしない。
 
-まず問う。
+まず確認する。
 
-- 新材料は既存の核を本当に変えるか。
-- 既存groupへ局所追補できるか。
-- 新しい独立した訴えが立ったか。
-- 既存の対立を解いたか、むしろ深めたか。
+- 新材料は既存の意味核を変えるか。
+- 局所追加で足りるか。
+- 独立した新しい訴えを立てるか。
+- 既存conflictを解く、または深めるか。
 
-既存構造がなお材料をよく表しているなら、その構造を保ったまま差分だけを追加できる。
+旧構造が材料をなお十分に表すなら、それを保ち、意味のあるdeltaだけを記録する。
 
 ## Residuals Are Reopenable Anchors
 
-残差は未完成だから消すものではない。
+未解決だからという理由でresidualを削除しない。
 
-- gap: 次に何を確かめればよいかを示す空所。
-- conflict: 両立しない材料が残っていること。
-- singleton: まだ他と結ばれない独立した訴え。
-- unresolved: 現材料では判別できない問い。
+例:
 
-これらは代表例であり、閉じた分類表ではない。
+- gap: 後で確認する価値のある空白・関係不足。
+- conflict: 現材料では整合しない差。
+- singleton: まだ他と組にならない訴え。
+- unresolved: 現材料では判別できない区別。
 
-現在の問いと関係しなければ背景へ置く。後の材料が触れたときにreopenする。
+閉じたtaxonomyではない。
+
+今の問いに無関係なら背景化し、後の材料が実際に触れたときだけ再開する。
 
 ## Question Shift
 
-問題解決型では、現状把握、問題提起、本質追及、構想、具体策、手順化、検証などの問いを使える。
+問いは前後左右へ動いてよい。
 
-ただし固定stage-gateにはしない。必要に応じて戻り、飛び、局所的に深掘りする。
+問題解決では、状況把握、問題設定、本質追求、構想、具体化、手順化、検証等の動きが現れることがあるが、固定stage gateにはしない。
 
-問いが変わった場合は、以前のroundが誤りだったと自動判定しない。新材料によってinquiry frameが変わった出来事として記録する。
+問いが変わった場合、過去roundの問いを後から書き換えない。何が問いを動かしたか、旧構造のどこが今も使えるかを残す。
 
 ## Stop Conditions
 
-完全な説明やgapゼロを完了条件にしない。
+complete explanationやresidual zeroを成功条件にしない。
 
-次のいずれかで停止できる。
+停止してよい例:
 
-- 追加roundが現在の問いに実質的な構造変化を生まなくなった。
-- 残差はあるが、現在取得できる材料では解けない。
-- 利用目的に必要な粒度へ到達した。
-- 次に必要なのがdomain decision / human value judgment / external actionである。
-- 追加探索の費用が、期待される認知上の改善を上回る。
-- 外部利用条件が終了を要求する。
-- 必要なone-round synthesisを実行できるcompatible realizationが現在利用できず、callerや後続roundへhandoffする。
+- 今の問いに対し、追加roundが意味のある構造変化を生まなくなった。
+- 未解決は残るが、現時点で判別可能な新証拠がない。
+- 目的に必要な理解粒度へ達した。
+- 次がdomain decision / human value judgment / external actionである。
+- 追加探索costが期待される認知gainを上回る。
+- 外部条件で一度閉じる必要がある。
 
 ## Restart Conditions
+
+次のような理由があれば再開する。
 
 - new source / observation
 - counterexample
@@ -215,7 +215,7 @@ IDは意味分類ではなく、局所reopenとhistory comparisonのhandleであ
 
 - 方法の不変条件: `references/METHOD.md`
 - 標準round記録とdelta notation: `references/ROUND-TEMPLATE.md`
-- Layer 1との境界とsemantic representation: sibling prototype `../affinity-synthesis/`
+- Layer 1との境界とsemantic representation: 利用可能な場合はcompanion Skill `affinity-synthesis` のMethod Definition / representation contractを参照する。sibling filesystem pathの存在は前提にしない。
 
 ## Boundary
 
