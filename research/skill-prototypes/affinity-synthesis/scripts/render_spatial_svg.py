@@ -48,6 +48,11 @@ def lines(text: str, width: int = 22, max_lines: int = 4) -> list[str]:
     return clipped
 
 
+def display_text(item: dict[str, Any], canonical_key: str) -> str:
+    compact = str(item.get("display_label", "")).strip()
+    return compact or str(item.get(canonical_key, ""))
+
+
 def position(ref: str, positions: dict[str, Any]) -> tuple[float, float]:
     raw = positions.get(ref)
     if not isinstance(raw, dict):
@@ -108,6 +113,7 @@ def render(data: dict[str, Any]) -> str:
     ]
 
     # Explicit relations are drawn before nodes so labels and nodes stay readable.
+    # The diagram may use display_label; predicate remains canonical in the semantic record.
     for relation in data.get("relations", []):
         source = str(relation.get("from", ""))
         target = str(relation.get("to", ""))
@@ -125,17 +131,17 @@ def render(data: dict[str, Any]) -> str:
         )
         mx = (start[0] + end[0]) / 2
         my = (start[1] + end[1]) / 2
-        predicate = f'{relation.get("id", "R?")}｜{relation.get("predicate", "")}'
-        predicate_lines = lines(predicate, width=26, max_lines=3)
-        box_w = 340
-        box_h = 18 * len(predicate_lines) + 16
+        label = f'{relation.get("id", "R?")}｜{display_text(relation, "predicate")}'
+        label_lines = lines(label, width=18, max_lines=2)
+        box_w = 230
+        box_h = 18 * len(label_lines) + 14
         out.append(
             f'  <rect x="{mx - box_w/2:.1f}" y="{my - box_h/2:.1f}" width="{box_w}" height="{box_h}" rx="8" fill="white" stroke="#777" stroke-width="1"/>'
         )
-        for i, line in enumerate(predicate_lines):
-            y = my - (len(predicate_lines) - 1) * 9 + i * 18 + 5
+        for i, line in enumerate(label_lines):
+            y = my - (len(label_lines) - 1) * 9 + i * 18 + 5
             out.append(
-                f'  <text x="{mx:.1f}" y="{y:.1f}" text-anchor="middle" font-family="{FONT_FAMILY}" font-size="13" fill="#222">{svg_text(line)}</text>'
+                f'  <text x="{mx:.1f}" y="{y:.1f}" text-anchor="middle" font-family="{FONT_FAMILY}" font-size="12" fill="#222">{svg_text(line)}</text>'
             )
 
     # Question-origin links are explicitly labelled as non-asserted semantic relations.
@@ -190,12 +196,12 @@ def render(data: dict[str, Any]) -> str:
         out.append(
             f'  <text x="{cx:.1f}" y="{y + 25:.1f}" text-anchor="middle" font-family="{FONT_FAMILY}" font-size="14" font-weight="700" fill="#333">{svg_text(qid)}?</text>'
         )
-        for i, line in enumerate(lines(str(question.get("text", "")), width=19, max_lines=3)):
+        for i, line in enumerate(lines(display_text(question, "text"), width=19, max_lines=3)):
             out.append(
                 f'  <text x="{cx:.1f}" y="{y + 49 + i*18:.1f}" text-anchor="middle" font-family="{FONT_FAMILY}" font-size="13" fill="#333">{svg_text(line)}</text>'
             )
 
-    out.append('  <text x="40" y="770" font-family="sans-serif" font-size="13" fill="#555">Dashed Q-links are labelled because line style alone must not carry semantic status.</text>')
+    out.append('  <text x="40" y="770" font-family="sans-serif" font-size="13" fill="#555">Edge display labels are projections; canonical predicates remain in the semantic record.</text>')
     out.append("</svg>")
     return "\n".join(out) + "\n"
 
