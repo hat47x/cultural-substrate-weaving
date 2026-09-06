@@ -78,6 +78,15 @@ KJ法、親和図法、質的統合法の系譜を参照しつつ、生成AIで�
 
 clusterの大きさや同じ表現の反復は、それ自体ではtruth、importance、independent supportを意味しない。必要ならlineageと独立性を確認する。
 
+一枚のカードが複数の束へ意味上響く場合、実装上必要なら次を区別してよい。
+
+- **primary placement**: 現在のworking geometryで最も強く寄る主配置。
+- **secondary resonance**: カードを複製せず、別の束・関係にも響くことを示すcross-link。
+
+secondary resonanceは新しいカードでも独立supportでもない。cluster sizeやsupport countを増やさない。主配置を必ず一つ持つこと自体もMethod Definitionの絶対条件にはしない。
+
+全カードが綺麗に既存groupへ入った場合ほど、borderline memberが分類名の力で押し込まれていないかを戻し検査する。
+
 ### 5. Form labels by integration, not categorization
 
 表札はカテゴリ名ではなく、その束が共同して言おうとしていることの代弁とする。
@@ -173,6 +182,8 @@ clusterの大きさや同じ表現の反復は、それ自体ではtruth、impor
 - [ ] cluster sizeや反復数をtruth / importance / independent supportへ自動変換していない。
 - [ ] singleton、対立、理由のまだ分からない違和感を消していない。
 - [ ] 現在の表札・構造に合わない入力済みcardを見直した。
+- [ ] 全カードが綺麗に収まった場合、borderline memberやsecondary resonanceを再確認した。
+- [ ] secondary resonanceをカード複製・独立supportとして数えていない。
 - [ ] 表札が他の束にも載る一般カテゴリ名へ逃げていない。
 - [ ] 強い表札名が弱い束のまとまりを隠していない。
 - [ ] 元材料にない因果・内面・一般化・評価方向・確度変更を点検した。
