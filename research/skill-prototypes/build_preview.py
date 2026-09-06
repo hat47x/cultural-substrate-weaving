@@ -39,24 +39,12 @@ def frontmatter_name(text: str) -> str | None:
 
 def selected_reference_paths(skill: dict[str, Any], locale: str) -> list[Path]:
     realization = skill["locale_realizations"][locale]
-    selected_method = realization.get("method_definition")
-    locale_methods = {
-        str(item.get("method_definition"))
-        for item in skill.get("locale_realizations", {}).values()
-        if isinstance(item, dict) and item.get("method_definition")
-    }
-
-    selected: list[Path] = []
-    if selected_method:
-        selected.append(ROOT / str(selected_method))
-
-    for relative in skill.get("references", []):
-        relative = str(relative)
-        if relative in locale_methods:
-            continue
-        selected.append(ROOT / relative)
-
-    return selected
+    declared = realization.get("package_references")
+    if not isinstance(declared, list) or not all(isinstance(item, str) for item in declared):
+        raise ValueError(
+            f"{skill['id']} {locale} must declare package_references before preview assembly"
+        )
+    return [ROOT / relative for relative in declared]
 
 
 def write_origin(
@@ -75,6 +63,7 @@ def write_origin(
         "realization_status": realization.get("status"),
         "runtime_source": realization["runtime_entry"],
         "method_source": realization.get("method_definition"),
+        "package_reference_sources": realization.get("package_references", []),
         "packaging_mode": packaging_mode,
         "research_only": True,
     }
@@ -219,6 +208,13 @@ def validate_preview(output_root: Path, built: list[Path]) -> list[str]:
             if not (target / "references" / expected_method_name).is_file():
                 errors.append(
                     f"{target.relative_to(output_root)}: selected locale Method Definition missing"
+                )
+
+        for source in origin.get("package_reference_sources", []):
+            expected = target / "references" / Path(str(source)).name
+            if not expected.is_file():
+                errors.append(
+                    f"{target.relative_to(output_root)}: declared package reference missing: {source}"
                 )
 
         errors.extend(validate_local_links(output_root, target))
