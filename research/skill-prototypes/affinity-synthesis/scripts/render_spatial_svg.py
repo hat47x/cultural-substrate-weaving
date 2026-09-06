@@ -16,6 +16,7 @@ QUESTION_W = 300
 QUESTION_H = 96
 MARGIN_X = 70
 MARGIN_Y = 60
+FONT_FAMILY = "'Noto Sans CJK JP','Noto Sans JP','Yu Gothic',sans-serif"
 
 
 def load_map(path: Path) -> dict[str, Any]:
@@ -103,7 +104,7 @@ def render(data: dict[str, Any]) -> str:
         "    </marker>",
         "  </defs>",
         '  <rect x="0" y="0" width="100%" height="100%" fill="white"/>',
-        '  <text x="40" y="38" font-family="sans-serif" font-size="16" fill="#333">Spatial projection — positions are layout data, not semantic relations</text>',
+        f'  <text x="40" y="38" font-family="{FONT_FAMILY}" font-size="16" fill="#333">Spatial projection — positions are layout data, not semantic relations</text>',
     ]
 
     # Explicit relations are drawn before nodes so labels and nodes stay readable.
@@ -134,10 +135,10 @@ def render(data: dict[str, Any]) -> str:
         for i, line in enumerate(predicate_lines):
             y = my - (len(predicate_lines) - 1) * 9 + i * 18 + 5
             out.append(
-                f'  <text x="{mx:.1f}" y="{y:.1f}" text-anchor="middle" font-family="sans-serif" font-size="13" fill="#222">{svg_text(line)}</text>'
+                f'  <text x="{mx:.1f}" y="{y:.1f}" text-anchor="middle" font-family="{FONT_FAMILY}" font-size="13" fill="#222">{svg_text(line)}</text>'
             )
 
-    # Question-origin links are intentionally not rendered as asserted semantic relations.
+    # Question-origin links are explicitly labelled as non-asserted semantic relations.
     for question in questions.values():
         qid = str(question.get("id", ""))
         if qid not in centers:
@@ -153,6 +154,16 @@ def render(data: dict[str, Any]) -> str:
             out.append(
                 f'  <line x1="{start[0]:.1f}" y1="{start[1]:.1f}" x2="{end[0]:.1f}" y2="{end[1]:.1f}" stroke="#777" stroke-width="1.5" stroke-dasharray="7 6"/>'
             )
+            mx = (start[0] + end[0]) / 2
+            my = (start[1] + end[1]) / 2
+            label = "question provenance / not asserted relation"
+            label_w = 270
+            out.append(
+                f'  <rect x="{mx - label_w/2:.1f}" y="{my - 11:.1f}" width="{label_w}" height="22" rx="5" fill="white"/>'
+            )
+            out.append(
+                f'  <text x="{mx:.1f}" y="{my + 4:.1f}" text-anchor="middle" font-family="{FONT_FAMILY}" font-size="11" fill="#555">{label}</text>'
+            )
 
     for gid, group in groups.items():
         cx, cy = centers[gid]
@@ -162,11 +173,11 @@ def render(data: dict[str, Any]) -> str:
             f'  <rect x="{x:.1f}" y="{y:.1f}" width="{NODE_W}" height="{NODE_H}" rx="18" fill="white" stroke="#222" stroke-width="2"/>'
         )
         out.append(
-            f'  <text x="{cx:.1f}" y="{y + 25:.1f}" text-anchor="middle" font-family="sans-serif" font-size="15" font-weight="700" fill="#111">{svg_text(gid)}</text>'
+            f'  <text x="{cx:.1f}" y="{y + 25:.1f}" text-anchor="middle" font-family="{FONT_FAMILY}" font-size="15" font-weight="700" fill="#111">{svg_text(gid)}</text>'
         )
         for i, line in enumerate(lines(str(group.get("label", "")), width=20, max_lines=4)):
             out.append(
-                f'  <text x="{cx:.1f}" y="{y + 50 + i*18:.1f}" text-anchor="middle" font-family="sans-serif" font-size="14" fill="#222">{svg_text(line)}</text>'
+                f'  <text x="{cx:.1f}" y="{y + 50 + i*18:.1f}" text-anchor="middle" font-family="{FONT_FAMILY}" font-size="14" fill="#222">{svg_text(line)}</text>'
             )
 
     for qid, question in questions.items():
@@ -177,14 +188,14 @@ def render(data: dict[str, Any]) -> str:
             f'  <rect x="{x:.1f}" y="{y:.1f}" width="{QUESTION_W}" height="{QUESTION_H}" rx="18" fill="white" stroke="#666" stroke-width="1.5" stroke-dasharray="8 6"/>'
         )
         out.append(
-            f'  <text x="{cx:.1f}" y="{y + 25:.1f}" text-anchor="middle" font-family="sans-serif" font-size="14" font-weight="700" fill="#333">{svg_text(qid)}?</text>'
+            f'  <text x="{cx:.1f}" y="{y + 25:.1f}" text-anchor="middle" font-family="{FONT_FAMILY}" font-size="14" font-weight="700" fill="#333">{svg_text(qid)}?</text>'
         )
         for i, line in enumerate(lines(str(question.get("text", "")), width=19, max_lines=3)):
             out.append(
-                f'  <text x="{cx:.1f}" y="{y + 49 + i*18:.1f}" text-anchor="middle" font-family="sans-serif" font-size="13" fill="#333">{svg_text(line)}</text>'
+                f'  <text x="{cx:.1f}" y="{y + 49 + i*18:.1f}" text-anchor="middle" font-family="{FONT_FAMILY}" font-size="13" fill="#333">{svg_text(line)}</text>'
             )
 
-    out.append('  <text x="40" y="770" font-family="sans-serif" font-size="13" fill="#555">Dashed links to Q-nodes mean question provenance, not asserted semantic relation.</text>')
+    out.append('  <text x="40" y="770" font-family="sans-serif" font-size="13" fill="#555">Dashed Q-links are labelled because line style alone must not carry semantic status.</text>')
     out.append("</svg>")
     return "\n".join(out) + "\n"
 
