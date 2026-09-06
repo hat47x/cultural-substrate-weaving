@@ -24,7 +24,10 @@
       "runtime_entry": "research/skill-prototypes/affinity-synthesis/SKILL.md",
       "references": [
         "research/skill-prototypes/affinity-synthesis/references/METHOD.md",
-        "research/skill-prototypes/affinity-synthesis/references/TEMPLATE.md"
+        "research/skill-prototypes/affinity-synthesis/references/TEMPLATE.md",
+        "research/skill-prototypes/affinity-synthesis/references/REPRESENTATION.md",
+        "research/skill-prototypes/affinity-synthesis/references/HIERARCHY-AND-LINEAGE.md",
+        "research/skill-prototypes/affinity-synthesis/references/affinity-map.schema.json"
       ],
       "evidence": [
         "research/skill-prototypes/affinity-synthesis/evidence/dossier.md"
@@ -33,7 +36,12 @@
         "research/skill-prototypes/affinity-synthesis/evals/CASES.md",
         "research/skill-prototypes/affinity-synthesis/evals/DRY-RUN-2026-09-06.md",
         "research/skill-prototypes/affinity-synthesis/evals/PAIRED-REAL-TASK-2026-09-06.md",
-        "research/skill-prototypes/affinity-synthesis/evals/LARGE-SET-RETROSPECTIVE-2026-09-06.md"
+        "research/skill-prototypes/affinity-synthesis/evals/LARGE-SET-RETROSPECTIVE-2026-09-06.md",
+        "research/skill-prototypes/affinity-synthesis/evals/REPRESENTATION-DRY-RUN-2026-09-06.md",
+        "research/skill-prototypes/affinity-synthesis/evals/REPRESENTATION-SCALE-114-2026-09-06.md"
+      ],
+      "checks": [
+        "research/skill-prototypes/affinity-synthesis/scripts/check_representation.py"
       ],
       "method_version": "0.1-research",
       "realization_version": "0.1-research",
@@ -50,13 +58,17 @@
       "working_display_ja": "反復探索統合",
       "role": "multi_round_inquiry_orchestration",
       "source_root": "research/skill-prototypes/iterative-inquiry-synthesis",
-      "method_definition": null,
+      "method_definition": "research/skill-prototypes/iterative-inquiry-synthesis/references/METHOD.md",
       "runtime_entry": "research/skill-prototypes/iterative-inquiry-synthesis/SKILL.md",
       "references": [
+        "research/skill-prototypes/iterative-inquiry-synthesis/references/METHOD.md",
         "research/skill-prototypes/iterative-inquiry-synthesis/references/ROUND-TEMPLATE.md"
       ],
       "evidence": [],
-      "evals": [],
+      "evals": [
+        "research/skill-prototypes/iterative-inquiry-synthesis/evals/CASES.md"
+      ],
+      "checks": [],
       "method_version": "0.1-research",
       "realization_version": "0.1-research",
       "delegation": {
@@ -77,6 +89,7 @@
       "references": [],
       "evidence": [],
       "evals": [],
+      "checks": [],
       "method_version": "0.5-research-line",
       "realization_version": "0.5-research-line",
       "delegation": {
@@ -124,11 +137,12 @@
   },
   "promotion_gates": [
     "all canonical runtime entries exist",
-    "all declared references/evidence/evals exist",
+    "all declared references/evidence/evals/checks exist",
     "skill installable names are unique",
     "no hard dependency is assumed by the public method contract",
     "affinity-synthesis larger-set regression remains acceptable",
-    "iterative-inquiry-synthesis receives its own method definition and eval cases",
+    "affinity-synthesis representation regression passes with recursive grouping and narrative lineage intact",
+    "iterative-inquiry-synthesis method definition and eval cases remain aligned with delta-reopen behavior",
     "English realization parity is reviewed",
     "runtime build and validator are generalized before canonical source migration"
   ]
