@@ -27,13 +27,25 @@
         "ja-JP": {
           "status": "prototype",
           "runtime_entry": "research/skill-prototypes/affinity-synthesis/SKILL.md",
-          "method_definition": "research/skill-prototypes/affinity-synthesis/references/METHOD.md"
+          "method_definition": "research/skill-prototypes/affinity-synthesis/references/METHOD.md",
+          "package_references": [
+            "research/skill-prototypes/affinity-synthesis/references/METHOD.md",
+            "research/skill-prototypes/affinity-synthesis/references/TEMPLATE.md",
+            "research/skill-prototypes/affinity-synthesis/references/REPRESENTATION.md",
+            "research/skill-prototypes/affinity-synthesis/references/HIERARCHY-AND-LINEAGE.md",
+            "research/skill-prototypes/affinity-synthesis/references/affinity-map.schema.json"
+          ]
         },
         "en-US": {
           "status": "translated-draft",
           "human_review": "recommended",
           "runtime_entry": "research/skill-prototypes/affinity-synthesis/SKILL.en.md",
-          "method_definition": "research/skill-prototypes/affinity-synthesis/references/METHOD.en.md"
+          "method_definition": "research/skill-prototypes/affinity-synthesis/references/METHOD.en.md",
+          "package_references": [
+            "research/skill-prototypes/affinity-synthesis/references/METHOD.en.md",
+            "research/skill-prototypes/affinity-synthesis/references/REPRESENTATION.md",
+            "research/skill-prototypes/affinity-synthesis/references/affinity-map.schema.json"
+          ]
         }
       },
       "references": [
@@ -81,13 +93,21 @@
         "ja-JP": {
           "status": "prototype",
           "runtime_entry": "research/skill-prototypes/iterative-inquiry-synthesis/SKILL.md",
-          "method_definition": "research/skill-prototypes/iterative-inquiry-synthesis/references/METHOD.md"
+          "method_definition": "research/skill-prototypes/iterative-inquiry-synthesis/references/METHOD.md",
+          "package_references": [
+            "research/skill-prototypes/iterative-inquiry-synthesis/references/METHOD.md",
+            "research/skill-prototypes/iterative-inquiry-synthesis/references/ROUND-TEMPLATE.md"
+          ]
         },
         "en-US": {
           "status": "translated-draft",
           "human_review": "recommended",
           "runtime_entry": "research/skill-prototypes/iterative-inquiry-synthesis/SKILL.en.md",
-          "method_definition": "research/skill-prototypes/iterative-inquiry-synthesis/references/METHOD.en.md"
+          "method_definition": "research/skill-prototypes/iterative-inquiry-synthesis/references/METHOD.en.md",
+          "package_references": [
+            "research/skill-prototypes/iterative-inquiry-synthesis/references/METHOD.en.md",
+            "research/skill-prototypes/iterative-inquiry-synthesis/references/ROUND-TEMPLATE.md"
+          ]
         }
       },
       "references": [
@@ -214,6 +234,7 @@
   "promotion_gates": [
     "research skill suite manifest and locale realizations pass repository validation",
     "skill installable names remain unique and locale runtime frontmatter matches the intended installable name",
+    "locale package references are explicit and do not silently import research-only or wrong-locale instructions",
     "no hard dependency is assumed by the public method contract",
     "affinity-synthesis larger-set and representation regressions remain acceptable",
     "iterative-inquiry-synthesis contract cases and paired runs remain aligned with delta-reopen behavior",
