@@ -164,6 +164,50 @@ Map上ではG1とG2の間に直接リンクを置いていなかったが、叙�
 
 - 自分の方法を使うこと自体を目的化し、不要な工程を強制する。
 
+## Case 9 — 一枚が複数groupへ響いても複製しない
+
+### Existing groups
+
+G1:
+> 身体が今受け取れる量を知る。
+
+G2:
+> 言葉や待つことが、切れた関係をもう一度通す。
+
+### Input card
+
+C1:
+> 相手が長く話し終えるまで待ち、話し終わった後に温かい飲み物を運んだ。
+
+### Expected handling
+
+C1は、身体・生活量へ配慮するG1にも、話し終えるまで待つG2にも自然に響き得る。
+
+必要なら、たとえば次のように扱う。
+
+```text
+C1
+  primary placement → G2
+  secondary resonance → G1
+```
+
+または材料全体のgeometryによって逆でもよい。
+
+重要なのは、C1をC1a/C1bとして複製し、二つの独立supportにしないことである。
+
+### Expected preservation
+
+- 最も強い主配置を選べる。
+- 別groupへの意味上の響きをcross-linkとして残せる。
+- secondary resonanceがgroup size / frequency / corroboration countを増やさない。
+- 一つの主配置へ決めきれない場合、その不確定性を残せる。
+
+### Fail if
+
+- 一枚を複製して独立した二カードとして数える。
+- 一つのgroupへ置いた瞬間に、他groupとの関係を消す。
+- 全カードを一意分類できたこと自体を成功基準にする。
+
 ## Cross-realization comparison
 
 realization A/Bを比較する場合は、少なくとも次を記録する。
@@ -177,6 +221,7 @@ realization A/Bを比較する場合は、少なくとも次を記録する。
 | epistemic seam preservation | | | |
 | derivation double-counting | | | |
 | singleton / conflict preservation | | | |
+| multi-affinity without duplication | | | |
 | invented causality / interior state | | | |
 | provenance round-trip | | | |
 | map ↔ narrative consistency | | | |
