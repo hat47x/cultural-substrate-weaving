@@ -30,8 +30,9 @@ description: Orchestrates repeated inquiry rounds in which new material is synth
 
 1. **Receive delta**
    - 新しい資料、観察、反証、実行結果、依頼条件の変更を受け取る。
-2. **Reopen only what the delta touches**
-   - 関係する旧カード、旧group、residual、unresolvedを前景へ戻す。
+2. **Locate touched semantic artifacts**
+   - 関係する旧カード、旧group、relation、secondary resonance、residual、questionを前景へ戻す。
+   - stable semantic IDがある場合は、そのhandleを利用する。
    - 長期履歴を毎回すべて再要約しない。
 3. **State the current inquiry**
    - 今回何を確かめるroundかを一文で置く。
@@ -42,15 +43,18 @@ description: Orchestrates repeated inquiry rounds in which new material is synth
 5. **Inspect structural delta**
    - 何が新しく生じたか。
    - 何が変わったか。
-   - 何が変わらなかったか。
-   - 何が消えたか。消えた理由は何か。
-6. **Externalize residuals**
+   - 今回のdeltaが触れたが何が変わらなかったか。
+   - 何がwithdrawされたか。理由は何か。
+6. **Separate semantic delta from representation-only delta**
+   - membership / label / relation / resonance / residual / questionが変わったのか。
+   - それとも表現、改行、renderer、diagram layoutだけが変わったのか。
+7. **Externalize residuals**
    - gap / conflict / singleton / unresolved / weakly-supported relationを明示する。
-7. **Decide continuation boundary**
+8. **Decide continuation boundary**
    - 次に確かめられる材料があるか。
    - 現在の目的に追加roundが必要か。
    - 人間の価値判断・domain decision・外部actionへ渡す段階か。
-8. **Freeze a round snapshot**
+9. **Freeze a round snapshot**
    - 前roundを上書きせず、今回の差分と戻り先を残す。
 
 ## Round Contract
@@ -60,15 +64,60 @@ description: Orchestrates repeated inquiry rounds in which new material is synth
 - round id
 - current inquiry / purpose
 - input delta
-- reopened prior artifact refs
+- reopened prior artifact refs / touched semantic IDs
 - synthesis realization id or name
+- representation / schema ref when available
 - output artifact refs
 - residual refs
-- structural delta
+- semantic structural delta
+- representation-only delta when relevant
 - possible next inquiry / verification target
 - stop / continue reason
 
 形式は固定しない。必要なら `references/ROUND-TEMPLATE.md` を使う。
+
+### Compact delta notation
+
+stable IDを持つ成果物では、次を**変更操作**として使える。
+
+```text
++  newly emerged
+~  changed
+=  touched and explicitly checked, but semantically unchanged
+-  withdrawn / no longer supported
+?  unresolved / residual remains
+```
+
+例:
+
+```text
++ C115 := "新材料から立った意味単位"
+~ G03 := members + {C115}; label "旧表札" -> "新表札"
+= G04 :: "今回の材料を戻したが、核とmembershipはなお成立する"
+- R02 :: "旧方向は材料から支持できなくなった"
++ R05: G03 -- G07 :: "新しく見えた関係predicate"
+? Q08 :: "現材料ではまだ区別できない"
+```
+
+これはカードや島をtaxonomyへ分類する記法ではない。
+
+## Stable Semantic Handles
+
+one-round synthesis側に `C / G / R / X / U / Q` 等のstable IDがある場合、意味上の同一性が続く限りroundを跨いで再利用する。
+
+- 表札の文言を少し直しただけで全IDを振り直さない。
+- 同じIDでも `~ G03` のように意味・membershipの変更を記録できる。
+- split / mergeで同一性が保てなくなった場合は、新IDとderivationを残す。
+
+IDは意味分類ではなく、局所reopenとhistory comparisonのhandleである。
+
+## Semantic Delta != Diagram Delta
+
+図の位置、線の曲がり、Mermaidのautomatic layout、改行、色、shapeが変わっただけなら、それを新しい発見として数えない。
+
+図を再生成した結果、以前は見えなかった関係候補が気づきとして立つことはあり得る。その場合は、rendererがrelationを作ったとは扱わず、**新しいrelation candidateとして元semantic recordと材料へ戻す**。
+
+特に、近く描かれたことをrelationへ、上下に並んだことを因果や階層へ自動変換しない。
 
 ## Do Not Rebuild Without Cause
 
@@ -91,6 +140,8 @@ description: Orchestrates repeated inquiry rounds in which new material is synth
 - conflict: 両立しない材料が残っていること。
 - singleton: まだ他と結ばれない独立した訴え。
 - unresolved: 現材料では判別できない問い。
+
+これらは代表例であり、閉じた分類表ではない。
 
 現在の問いと関係しなければ背景へ置く。後の材料が触れたときにreopenする。
 
@@ -139,7 +190,10 @@ description: Orchestrates repeated inquiry rounds in which new material is synth
 - [ ] round数を目的化していない。
 - [ ] 前roundを上書きせず、差分として追跡できる。
 - [ ] 新材料が触れない部分まで無理由に再構成していない。
+- [ ] stable IDがある場合、意味上同一なものを無理由に振り直していない。
 - [ ] 使用したsynthesis realizationを追跡できる。
+- [ ] semantic deltaとwording / renderer / layoutだけの差を区別した。
+- [ ] diagram proximity / hierarchyをsemantic relationへ自動変換していない。
 - [ ] gap / conflict / singleton / unresolvedを次の観察事実と混同していない。
 - [ ] question shiftを失敗または進捗点数へ単純変換していない。
 - [ ] stop理由が外部から説明可能である。
@@ -147,8 +201,9 @@ description: Orchestrates repeated inquiry rounds in which new material is synth
 
 ## Progressive References
 
-- 標準round記録: `references/ROUND-TEMPLATE.md`
-- Layer 1との境界: sibling prototype `../affinity-synthesis/`
+- 方法の不変条件: `references/METHOD.md`
+- 標準round記録とdelta notation: `references/ROUND-TEMPLATE.md`
+- Layer 1との境界とsemantic representation: sibling prototype `../affinity-synthesis/`
 
 ## Boundary
 
