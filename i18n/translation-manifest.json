@@ -65,9 +65,9 @@
       "en_status": "translated"
     },
     "methods/framework-application.md": {
-      "ja_sha256": "0915adb2a0fe67e1d0191e179fa260f82c6df9c4a079c782ecf849348b69025c",
+      "ja_sha256": "f6b83389ee5c4f2dad87b3afe03652752f2b133e233e7a7e694969ae4ff11075",
       "en_present": true,
-      "en_source_ja_sha256": "0915adb2a0fe67e1d0191e179fa260f82c6df9c4a079c782ecf849348b69025c",
+      "en_source_ja_sha256": "f6b83389ee5c4f2dad87b3afe03652752f2b133e233e7a7e694969ae4ff11075",
       "en_status": "translated"
     },
     "methods/integration.md": {
