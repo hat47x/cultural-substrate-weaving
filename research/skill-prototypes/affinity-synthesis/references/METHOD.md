@@ -29,6 +29,7 @@ Status: research candidate
 - derivation lineage による二重計上防止。
 - 流暢な補完で入りやすい因果、人物内面、一般化、評価方向、確度変更等の戻し検査。
 - 図解と叙述の双方向差分検査。
+- 変換後の意味を `inherited / emergent / residual` として監査し、新しい意味を元材料へ遡及させない。
 - private chain-of-thoughtではなく、外部から再検査できる成果物・来歴・残差を残す。
 
 ## Applicability
@@ -119,9 +120,17 @@ I2とI3が衝突する場合は、意味の一体性と証拠状態の双方を�
 
 ただし「別束にも載れば即失格」のような機械判定にしない。可搬性は分類名へ退行していないかを見る警告である。
 
-### I7. Return to source
+### I7. Return to source and audit transformation
 
 各変換は元材料へ戻せる。戻したときに違和感があれば、その違和感を修正対象または残差として扱う。
+
+変換後の意味は、必要に応じて次の三つを区別する。
+
+- **inherited**: 入力材料から直接保持された意味。
+- **emergent**: 複数材料の接触・配置・叙述によって新しく立った意味。創発そのものは許容するが、元材料が最初から述べていたことへ書き換えない。
+- **residual**: 統合へ入れなかった差、矛盾、温度、未解決、または意図して落とした具体。
+
+これはカードを先験的な三分類へ分ける規則ではない。**変換後に、何がどこから生じたかを監査するための区別**である。
 
 ### I8. Provenance is audit, not geometry
 
@@ -157,6 +166,7 @@ source provenance、discovery route、derivation、必要に応じた採取時�
 - 大きいclusterを重要・真実と同一視する。
 - 表札の巧さで弱いgroup coherenceを覆う。
 - 文章を整える過程で、図解にない論理を足す。
+- 後のroundで生じた洞察を、最初のカードがすでに語っていた意味へ遡及させる。
 
 ## Relationship to external methods and skills
 
