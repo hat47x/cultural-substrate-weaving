@@ -4,7 +4,7 @@
 
 A complementary AI skill that **opens cultural, philosophical, and traditional frameworks as temporary cognitive fields, then returns the questions, relations, states, and transition candidates they produce to the target for validation**. Cultural frameworks are not treated as answers or classifiers. Only portions independently supported by target-side material are treated as findings about the target.
 
-> **This research branch is testing a method split.** In the Japanese canonical source, one-round material synthesis rooted in KJ-method / affinity-diagram / qualitative-synthesis lineage has been separated into the `affinity-synthesis` research prototype, while multi-round delta/reopen orchestration has been separated into `iterative-inquiry-synthesis`. CSW itself owns cultural-framework exploration, attribution, and return to the target. This does not mean that a three-Skill distribution has already been publicly released. Generated distributions have not yet been rebuilt for the split, and the English runtime remains a parity backlog.
+> **This research branch is testing a method split.** Both the Japanese canonical source and the English CSW runtime now use the thin-CSW boundary: one-round material synthesis is delegated to `affinity-synthesis`, while multi-round delta/reopen orchestration is delegated to `iterative-inquiry-synthesis`. The two sibling prototypes now also have initial English `SKILL.en.md` and `METHOD.en.md` drafts alongside their Japanese research realizations. This does not mean that a three-Skill distribution has already been publicly released. Multi-skill distribution generation/rebuild, independent review of the English prototype realizations, and classification or translation of ancillary research references/evals remain incomplete.
 
 These methods do **not** replace domain expertise or quality criteria in writing, management, software engineering, law, or other fields. Domain capability comes from the caller's context or another domain-specific skill used alongside them.
 
@@ -62,8 +62,8 @@ These methods do not provide domain-specific professional competence. Accuracy s
 
 | Locale | Status | Note |
 |---|---|---|
-| Japanese (`ja-JP`) | Semantic canonical source | Thin-CSW split applied on this research branch |
-| English (`en-US`) | Parity backlog | Runtime remains pre-split until translation and review are completed |
+| Japanese (`ja-JP`) | Semantic canonical source | Thin CSW plus the canonical research realizations for both sibling methods |
+| English (`en-US`) | Translated draft | Thin CSW runtime is translated; initial English runtime / Method Definition drafts now exist for both sibling Skills. Independent review and ancillary research-material parity remain incomplete |
 
 ## Platforms
 
@@ -91,7 +91,7 @@ GitHub Actions are currently disabled. Validation is performed in a local or equ
 
 - `src/ja-JP/`: semantic canonical source for the CSW runtime
 - `src/en-US/`: English CSW runtime translation
-- `research/skill-prototypes/`: Method Definitions, Skill realizations, evals, and representation prototypes for the split methods
+- `research/skill-prototypes/`: split Method Definitions, Skill realizations, evals, and representation research, including Japanese research canon and English realization drafts
 - `i18n/`: terminology, source hashes, translation-review policy
 - `adapters/`: platform- and locale-specific templates
 - `scripts/`: multilingual build and validation tooling
