@@ -1,48 +1,62 @@
-# 文化的体系とKJ法で、対象の構造を探索・統合する
+# 文化的体系を認知場として開き、対象へ戻して確かめる
 
 **外部体系から得た構造は対象へ返して確かめる。対象側の材料で独立に支えられた部分だけを対象所見とし、体系から生じた問い・仮説・構成資源は由来を保つ。**
 
-本スキルは二つの能力を組み合わせる。
+本スキルは、文化的体系を答えや分類器として使うのではなく、対象を見るための一時的な認知場として開く。
 
-1. **文化的体系による探索**：位置、関係、状態、遷移、周期、象徴を、通常分析とは異なる認知資源として使う。
-2. **KJ法による統合**：異種の断片を先験分類へ押し込めず、意味単位、関係、矛盾、孤立、空白を材料側から立ち上げる。
+位置、関係、状態、遷移、周期、象徴、境界、経路など、通常分析とは異なる構造候補を得たら、対象材料へ戻して、何が支えられ、何が支えられず、何が新しい問いとして残るかを確かめる。
 
-本スキルを実際に使うときは、KJ法の「己を空しくしてデータをして語らしめる」という姿勢を、最初の認知姿勢として置く。これは知識や仮説を捨てることではない。**自分の説明を対象より上位に固定せず、対象によって修正され得る位置へ置く。十分に材料へ触れた後は大胆に考えてよいが、新しく生じた意味を元材料が最初から語っていた事実へ書き換えない。** 詳細は`core/cognitive-stance.md`。
+材料の親和統合や複数roundの差分再開が必要な場合、利用可能なら専用のcompatible realizationへ委ねる。CSWはそれらの内部アルゴリズムを所有しない。
+
+- one-round material synthesis: `affinity-synthesis` またはcompatible Method realization
+- multi-round delta / reopen orchestration: `iterative-inquiry-synthesis` またはcompatible Method realization
+
+compatible realizationがない環境でも、CSW自体の文化体系探索、帰属保持、対象側へのverification handoffは行える。ただし、実行していない親和統合やmulti-round orchestrationを実行済みとは称しない。
 
 本スキル自体は領域固有知識を収録しない。必要な領域知識・品質基準・専門手順は、呼び出し側のコンテキスト、利用可能な資料、または併用する領域スキルから受け取る。
 
-本スキルを使う範囲、文化体系の利用量、読み込み深度、停止・採否・公開などの決定権は、本スキルの静的規則には置かない。依頼者・著者の指定、上位の設定・指示、または実行AIへ与えられた委任に従う。明示指定があれば、その指定を利用条件として受け取る。
+本スキルを使う範囲、文化体系の利用量、読み込み深度、停止・採否・公開などの決定権は、本スキルの静的規則には置かない。依頼者・著者の指定、上位の設定・指示、または実行AIへ与えられた委任に従う。
+
+## 認知姿勢
+
+対象から自分の読みを修正され得る位置に置く。
+
+これは知識や仮説を捨てることではない。十分に材料へ触れた後は大胆に考えてよいが、新しく生じた意味を元材料が最初から語っていた事実へ書き換えない。
+
+詳細は `core/cognitive-stance.md` を読む。
 
 ## 最小実行手順
 
-1. **外部利用条件を受け取る**：依頼範囲、目的、価値判断の留保先、実行AIへ委ねられた裁量を確認する。利用範囲・深度の状態語彙は`core/activation.md`を使う。
-2. **認知姿勢を置く**：本スキルを使う条件が与えられている場合、`core/cognitive-stance.md`を読み、対象から自分の読みを修正され得る位置に置く。
-3. **基準線と保持事項を置く**：領域固有手法だけの出力、元材料、壊してはならない対象固有の事実・例外を確認する。
-4. **材料面を保つ**：材料が多数・異種ならKJ法で意味単位を起こし、証拠状態、矛盾、孤立、弱い違和感を早く均さない。
-5. **文化体系を開く**：外部利用条件と委任範囲に応じて`not_loaded / probe / preview / full / enacted`を使い分ける。候補想起には`methods/system-selection.md`の状態格子・時間・経路などのアンカーを利用できる。
-6. **探索する**：文化体系から問い・関係・状態・遷移候補を得る。必要に応じてKJと往復する。
-7. **対象へ返す**：探索利用と帰属利用を分け、`target_supported / framework_generated / cross_field_emergent / unresolved`を混同せず保持する。
-8. **実作業へ反映する**：成果物、判断材料、調査方針、残差、再開条件へ反映する。区切りや採否は外部利用条件に従う。
+1. **外部利用条件を受け取る**：依頼範囲、目的、判断の留保先、実行AIへ委ねられた裁量を確認する。
+2. **認知姿勢を置く**：`core/cognitive-stance.md` に従い、自分の説明を対象より上位へ固定しない。
+3. **基準線と保持事項を置く**：元材料、対象固有の事実・例外、領域固有手法だけの出力を確認する。
+4. **必要なら材料統合へ委ねる**：多数・異種の材料から構造を立ち上げる必要があれば、`methods/integration.md` の接続契約からcompatible synthesis realizationへ渡す。
+5. **文化体系を開く**：外部利用条件と委任範囲に応じて `not_loaded / probe / preview / full / enacted` 等を使い分ける。
+6. **探索する**：文化体系から問い・関係・状態・遷移・対応候補を得る。体系固有構造を汎用語へ早く薄めない。
+7. **対象へ返す**：`target_supported / framework_generated / cross_field_emergent / unresolved` を混同せず保持する。
+8. **必要ならround deltaへ渡す**：新しいframework contactが旧artifactや残差へ触れるなら、`core/iteration.md` の接続契約からcompatible iterative realizationへ渡す。
+9. **実作業へ反映する**：成果物、判断材料、調査方針、残差、再開条件へ反映する。区切りや採否は外部利用条件に従う。
 
-文化体系の利用数、全文読解、体系固有操作の実行量を、それ自体で成功度とする規則は置かない。何を成果とするかは外部利用条件から受け取る。
+文化体系の利用数、全文読解、体系固有操作の実行量を、それ自体で成功度とする規則は置かない。
 
 ## 重要な区別
 
 - **状態記録 ≠ 決定権**：来歴、証拠状態、利用深度を区別して残すことと、その区別から採否・停止・公開を決めることを分ける。
-- **保存 ≠ 現在の注意**：正本は厚く残し、今回前景化する範囲は外部利用条件と作業上の必要に応じて扱う。
+- **保存 ≠ 現在の注意**：正本は厚く残し、今回前景化する範囲は必要に応じて選ぶ。
 - **探索 ≠ 帰属**：体系から問いを得ることと、対象にその構造があると主張することを分ける。
-- **de-binding ≠ 証拠**：体系語彙を外して文が成立しても、対象側の独立した支持が増えたことにはならない。
-- **利用状態 ≠ 成否評価**：`not_loaded`、preview、full、enacted、不採用などは状態として記録でき、成否の評価は外部利用条件へ戻す。
-- **KJ ≠ 文化体系の分類器**：KJは元材料へ戻る統合核として使う。
+- **de-binding ≠ 証拠**：体系語彙を外して文が成立しても、対象側の独立supportが増えたことにはならない。
+- **利用状態 ≠ 成否評価**：読み込み状態や不採用は探索状態であり、それ自体を成否評価にしない。
+- **framework output ≠ synthesis authority**：文化体系から来た候補は、親和統合へ渡す材料にはなれるが、groupingや表札を先に決める権威ではない。
+- **synthesis result ≠ framework verification**：同島、近接、relation、resonanceが生じても、それ自体では文化体系の妥当性を独立検証しない。
 
 ## 参照ファイルを選ぶ
 
 | 判断・処理 | 読むファイル |
 |---|---|
-| 対象へ入る認知姿勢、己を空しくする | [00-cognitive-stance.md](core/cognitive-stance.md) |
-| 利用範囲、読み込み深度、区切りの状態 | [00-activation.md](core/activation.md) |
+| 対象へ入る認知姿勢 | [00-cognitive-stance.md](core/cognitive-stance.md) |
+| 利用範囲、読み込み深度 | [00-activation.md](core/activation.md) |
 | 決定権、帰属、二重の忠実性、保存原則 | [00-principles-and-constraints.md](core/principles-and-constraints.md) |
-| 周回、再材料化、長期的再開 | [00-iteration.md](core/iteration.md) |
+| 新framework contactをround deltaへ渡す | [00-iteration.md](core/iteration.md) |
 | 対象範囲、基準線、事実整理 | [01-scope-and-facts.md](methods/scope-and-facts.md) |
 | 体系の選定、探索／帰属利用 | [02-system-selection.md](methods/system-selection.md) |
 | 割当、遷移、採用後検査、出口 | [02a-framework-application.md](methods/framework-application.md) |
@@ -50,14 +64,16 @@
 | 人間の身体反応をTaihekiで探索 | [05-human-and-taiheki.md](domains/human-and-taiheki.md) |
 | 判断来歴、長期event | [08-governance-and-records.md](governance/governance-and-records.md) |
 | 最終評価 | [09-evaluation.md](governance/evaluation.md) |
-| 多数の断片、カード化、束ね、A/B、空白 | [10-integration.md](methods/integration.md) |
+| 多数・異種材料の親和統合への接続 | [10-integration.md](methods/integration.md) |
 
-### 読み込み順
+## 読み込み方
 
-- **本スキルを使う条件を受け取った後**：`core/cognitive-stance.md`を読み、認知姿勢を置く。
-- **利用範囲・深度**：`core/activation.md`の状態語彙を使い、外部利用条件または委任された裁量を実行状態へ写す。
-- **探索利用**：状態格子・時間・経路・方向・流れなどを含む候補想起アンカーは`methods/system-selection.md`にある。モデルの自然連想だけに候補を限定せず、必要な構造型を想起・検索できる。
-- **反復分析**：`core/iteration.md`を読む。長い作業で、対象より既存の説明や規則が前へ出ている兆候があれば、`core/cognitive-stance.md`の必要箇所へ戻る。
-- **人間／Taiheki**：利用するかどうかは外部利用条件と委任範囲に従う。参照する場合は`domains/human-and-taiheki.md`を読む。
+一括読み込みを前提にしない。
 
-参照数は固定しない。一括読み込みを避け、対象固有の情報は動的層に置く。
+- 認知姿勢が必要なら `core/cognitive-stance.md`。
+- 利用深度を扱うなら `core/activation.md`。
+- cultural frameworkの候補選択・native operationが必要なら該当methodを読む。
+- one-round synthesisが必要なら接続契約からcompatible realizationへ委ねる。
+- multi-round再開が必要なら接続契約からcompatible iterative realizationへ委ねる。
+
+対象固有の情報は静的Skillへ吸収せず、動的材料として扱う。
