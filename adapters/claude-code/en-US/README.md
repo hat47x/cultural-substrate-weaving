@@ -1,6 +1,6 @@
 # Cultural Substrate Weaving — English
 
-A complementary skill that combines cultural-framework structure candidates with KJ integration to explore questions, relations, and gaps absent from ordinary analysis, then validates them against the target.
+A complementary skill that opens cultural frameworks as temporary cognitive fields, preserves the provenance of the questions and structure candidates they generate, and returns those candidates to target-side material for validation. When one-round material synthesis or multi-round delta/reopen work is needed, it delegates to a compatible realization when available.
 
 Version {{VERSION}} · MIT · [Repository](https://github.com/hat47x/cultural-substrate-weaving)
 
@@ -22,10 +22,10 @@ The skill is **explicit-invocation only**.
 The skill does not replace domain expertise. Where appropriate, establish a baseline with a domain skill first and use this skill alongside it.
 
 Examples:
-- `Integrate this material with the KJ method and look for relations and gaps hidden by prior categories.`
 - `Use ordinary analysis as the baseline, then apply a cultural framework narrowly and check for new questions.`
+- `Return the correspondence candidate produced by the framework to target-side material and separate support from counterevidence.`
 
-Cultural frameworks are structure sources, not truths for prediction or diagnosis. Taiheki is used only on explicit request or when bodily consistency itself is the inquiry.
+Cultural frameworks are sources of structure candidates, not truths for prediction or diagnosis. On this research branch, material-synthesis capabilities derived from KJ-method, affinity-diagram, and qualitative-synthesis lineage are being separated into sibling Method prototypes. Taiheki is used only on explicit request or when bodily consistency itself is the inquiry.
 
 ## Documentation
 
