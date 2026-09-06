@@ -37,14 +37,17 @@
 
 **Differences that must remain visible:**
 
-**Return-to-source check:**
+**Transformation audit:**
 
-- Supported meaning:
-- Meaning at risk of being lost:
-- Meaning newly introduced by synthesis:
-- Correction / residual:
+- **Inherited meaning:** 入力材料から直接保持した意味。
+- **Emergent meaning:** 複数材料の接触によって新しく立った意味。元材料へ遡及させない。
+- **Residual meaning:** 融合へ入れなかった差・矛盾・温度・未解決。
+- **Meaning at risk of being lost:**
+- **Correction needed after return-to-source:**
 
 同じ形式を必要な群について繰り返す。
+
+`Inherited / Emergent / Residual` は入力カードを先に分類する欄ではない。表札・統合文を立てた**後**に、変換で何が起きたかを監査するために使う。
 
 ## 5. Singletons / Tensions / Unresolved
 
@@ -100,6 +103,7 @@
 - 評価方向の変化:
 - 確度の変化:
 - 行為者・責任方向の脱落:
+- emergent meaningをsource由来へ遡及させた箇所:
 - その他の違和感:
 
 ### Map ↔ Narrative
