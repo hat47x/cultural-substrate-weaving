@@ -4,6 +4,7 @@ import argparse
 import json
 import re
 import shutil
+import sys
 import tempfile
 from pathlib import Path
 from typing import Any
@@ -11,7 +12,12 @@ from typing import Any
 ROOT = Path(__file__).resolve().parents[2]
 SUITE_ROOT = Path(__file__).resolve().parent
 MANIFEST_PATH = SUITE_ROOT / "suite-manifest.json"
-SOURCE_MANIFEST_PATH = ROOT / "src" / "manifest.json"
+PLANNER_DIR = SUITE_ROOT / "scripts"
+if str(PLANNER_DIR) not in sys.path:
+    sys.path.insert(0, str(PLANNER_DIR))
+
+from plan_build_descriptors import plan_build_descriptors  # noqa: E402
+
 FRONTMATTER_NAME = re.compile(
     r"\A---\s*\n.*?^name:\s*([^\n]+)$.*?\n---\s*\n",
     re.MULTILINE | re.DOTALL,
@@ -37,33 +43,23 @@ def frontmatter_name(text: str) -> str | None:
     return match.group(1).strip().strip('"\'')
 
 
-def selected_reference_paths(skill: dict[str, Any], locale: str) -> list[Path]:
-    realization = skill["locale_realizations"][locale]
-    declared = realization.get("package_references")
-    if not isinstance(declared, list) or not all(isinstance(item, str) for item in declared):
-        raise ValueError(
-            f"{skill['id']} {locale} must declare package_references before preview assembly"
-        )
-    return [ROOT / relative for relative in declared]
-
-
 def write_origin(
     target: Path,
     manifest: dict[str, Any],
-    skill: dict[str, Any],
-    locale: str,
+    descriptor: dict[str, Any],
     packaging_mode: str,
 ) -> None:
-    realization = skill["locale_realizations"][locale]
     origin = {
         "suite": manifest["suite_id"],
-        "skill_id": skill["id"],
-        "installable_name": skill["installable_name"],
-        "locale": locale,
-        "realization_status": realization.get("status"),
-        "runtime_source": realization["runtime_entry"],
-        "method_source": realization.get("method_definition"),
-        "package_reference_sources": realization.get("package_references", []),
+        "skill_id": descriptor["skill_id"],
+        "installable_name": descriptor["installable_name"],
+        "locale": descriptor["locale"],
+        "realization_status": descriptor.get("realization_status"),
+        "runtime_source": descriptor.get("runtime_source"),
+        "method_source": descriptor.get("method_source"),
+        "package_reference_sources": descriptor.get("package_reference_sources", []),
+        "assembly_mode": descriptor.get("assembly_mode"),
+        "source_manifest": descriptor.get("source_manifest"),
         "packaging_mode": packaging_mode,
         "research_only": True,
     }
@@ -73,16 +69,24 @@ def write_origin(
     )
 
 
-def build_csw_preview(
+def build_router_modules_preview(
     output_root: Path,
     manifest: dict[str, Any],
-    skill: dict[str, Any],
-    locale: str,
+    descriptor: dict[str, Any],
 ) -> Path:
-    source_manifest = load_json(SOURCE_MANIFEST_PATH)
-    realization = skill["locale_realizations"][locale]
-    runtime = ROOT / realization["runtime_entry"]
-    target = output_root / locale / skill["installable_name"]
+    locale = descriptor["locale"]
+    source_manifest_value = descriptor.get("source_manifest")
+    if not isinstance(source_manifest_value, str):
+        raise ValueError(f"{descriptor['skill_id']} {locale} has no source_manifest")
+    source_manifest_path = ROOT / source_manifest_value
+    source_manifest = load_json(source_manifest_path)
+
+    runtime_value = descriptor.get("runtime_source")
+    if not isinstance(runtime_value, str):
+        raise ValueError(f"{descriptor['skill_id']} {locale} has no runtime_source")
+    runtime = ROOT / runtime_value
+
+    target = output_root / locale / descriptor["installable_name"]
     references = target / "references"
     references.mkdir(parents=True, exist_ok=True)
 
@@ -96,57 +100,73 @@ def build_csw_preview(
     description = source_manifest["locales"][locale]["description"].replace("\n", " ").strip()
     skill_text = (
         "---\n"
-        f"name: {skill['installable_name']}\n"
+        f"name: {descriptor['installable_name']}\n"
         f"description: {description}\n"
         "---\n\n"
         + router
     )
     (target / "SKILL.md").write_text(skill_text, encoding="utf-8")
 
-    locale_root = ROOT / "src" / locale
+    source_root = ROOT / descriptor["source_root"] / locale
     for module in source_manifest["modules"]:
-        source = locale_root / module["source"]
+        source = source_root / module["source"]
         if not source.is_file():
             raise FileNotFoundError(source)
         shutil.copyfile(source, references / module["skill_reference"])
 
-    write_origin(target, manifest, skill, locale, "existing-csw-runtime-shape")
+    write_origin(target, manifest, descriptor, "router-modules-research-preview")
     return target
 
 
-def build_sibling_preview(
+def build_direct_skill_preview(
     output_root: Path,
     manifest: dict[str, Any],
-    skill: dict[str, Any],
-    locale: str,
+    descriptor: dict[str, Any],
 ) -> Path:
-    realization = skill["locale_realizations"][locale]
-    runtime = ROOT / realization["runtime_entry"]
-    target = output_root / locale / skill["installable_name"]
+    locale = descriptor["locale"]
+    runtime_value = descriptor.get("runtime_source")
+    if not isinstance(runtime_value, str):
+        raise ValueError(f"{descriptor['skill_id']} {locale} has no runtime_source")
+    runtime = ROOT / runtime_value
+
+    target = output_root / locale / descriptor["installable_name"]
     references = target / "references"
     references.mkdir(parents=True, exist_ok=True)
 
     shutil.copyfile(runtime, target / "SKILL.md")
 
-    for source in selected_reference_paths(skill, locale):
+    for relative in descriptor.get("package_reference_sources", []):
+        source = ROOT / relative
         if not source.is_file():
             raise FileNotFoundError(source)
         shutil.copyfile(source, references / source.name)
 
-    write_origin(target, manifest, skill, locale, "sibling-research-realization")
+    write_origin(target, manifest, descriptor, "direct-skill-research-preview")
     return target
 
 
 def build_preview(output_root: Path) -> list[Path]:
     manifest = load_manifest()
+    descriptor_plan = plan_build_descriptors(manifest)
     built: list[Path] = []
 
-    for locale in manifest["locales"]:
-        for skill in manifest["skills"]:
-            if skill["id"] == "cultural-substrate-weaving":
-                target = build_csw_preview(output_root, manifest, skill, locale)
+    for locale, locale_plan in descriptor_plan["locales"].items():
+        for descriptor in locale_plan["skills"]:
+            if descriptor["state"] != "buildable-input":
+                raise ValueError(
+                    f"cannot preview blocked descriptor: {descriptor['skill_id']} {locale}"
+                )
+
+            mode = descriptor.get("assembly_mode")
+            if mode == "router_modules":
+                target = build_router_modules_preview(output_root, manifest, descriptor)
+            elif mode == "direct_skill":
+                target = build_direct_skill_preview(output_root, manifest, descriptor)
             else:
-                target = build_sibling_preview(output_root, manifest, skill, locale)
+                raise ValueError(
+                    f"unsupported preview assembly mode {mode!r} for "
+                    f"{descriptor['skill_id']} {locale}"
+                )
             built.append(target)
 
     return built
