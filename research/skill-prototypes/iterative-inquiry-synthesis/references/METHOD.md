@@ -170,6 +170,10 @@ web research、interview、experiment、cultural framework等から得たもの�
 
 探索経路は材料を供給する。truth statusを自動決定しない。
 
+外部探索出力をone-round synthesisへ渡す場合は、少なくともその**origin / operation / incoming status or role**を、target側のsource materialと区別できる形でhandoffする。question / hypothesis / correspondence / unresolved等として渡したものを、synthesis realizationが独立した観察事実や独立supportとして数えないようにする。
+
+このstatus / provenanceは監査情報であり、grouping geometryにはしない。後のtarget-side materialが外部探索候補を独立に支持した場合は、その変化を新しいsupportとして記録し、最初の探索由来を履歴から消さない。
+
 ### I12. No private chain-of-thought as history
 
 保存するのは、問い、材料、成果物、差分、残差、判断理由等の外部から意味のあるartifactである。
