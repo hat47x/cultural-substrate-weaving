@@ -4,7 +4,7 @@
 
 **文化的・思想的・伝統的体系を一時的な認知場として開き、そこから得た問い・関係・状態・遷移候補を対象へ戻して確かめる**補助AIスキルです。文化体系を答えや分類器として固定せず、対象側の材料で独立に支えられた部分だけを対象所見として扱います。
 
-> **このresearch branchでは方法分離を試験中です。** 日本語canonical sourceでは、KJ法・親和図法・質的統合法の系譜を受ける一回の材料統合を `affinity-synthesis`、複数roundの差分再開を `iterative-inquiry-synthesis` という独立Method prototypeへ分離しました。CSW本体は文化体系探索・帰属保持・対象へのreturnを担当します。これはまだ公開済みの三Skill構成を意味しません。生成distributionの再buildと英語runtimeのparity確認は未完です。
+> **このresearch branchでは方法分離を試験中です。** 日本語canonical sourceと英語CSW runtimeでは、一回の材料統合を `affinity-synthesis`、複数roundの差分再開を `iterative-inquiry-synthesis` という独立Methodへ委ねるthin-CSW構造を適用しました。2つのsibling prototypeには、日本語research realizationに加えて英語の `SKILL.en.md` と `METHOD.en.md` の初期版も置いています。これはまだ公開済みの三Skill構成を意味しません。生成distributionのmulti-skill化・再build、英語prototypeの独立査読、補助的なresearch reference / evalの言語整理は未完です。
 
 本リポジトリの方法群は、執筆、経営、ソフトウェア開発、法務などの領域固有知識や品質基準を置き換えません。必要な領域能力は、依頼側のコンテキストまたは併用する領域スキルから受け取ります。
 
@@ -64,8 +64,8 @@ codex plugin marketplace add hat47x/cultural-substrate-weaving
 
 | 言語 | 状態 | 備考 |
 |---|---|---|
-| 日本語 (`ja-JP`) | 意味上の正本 | このresearch branchではthin-CSWへの分離を適用済み |
-| English (`en-US`) | parity backlog | 現在は分離前runtime。thin版への翻訳・査読後にparityを再宣言する |
+| 日本語 (`ja-JP`) | 意味上の正本 | thin-CSWと2つのresearch sibling realizationの正本 |
+| English (`en-US`) | translated draft | thin-CSW runtimeは翻訳済み。2 sibling Skillのruntime / Method Definition初期英訳も追加済み。独立査読と補助research資料の整理は未完 |
 
 ## 対応プラットフォーム
 
@@ -93,7 +93,7 @@ GitHub Actionsは現在使用していません。ローカルまたは同等の
 
 - `src/ja-JP/`: CSW runtimeの意味上の正本
 - `src/en-US/`: CSW runtimeの英語翻訳
-- `research/skill-prototypes/`: 分離中のMethod Definition / Skill realization / eval / representation
+- `research/skill-prototypes/`: 分離中のMethod Definition / Skill realization / eval / representation。日本語research正本と英語realization draftを含む
 - `i18n/`: 用語集、翻訳元ハッシュ、査読方針
 - `adapters/`: プラットフォームと言語ごとのテンプレート
 - `scripts/`: 多言語成果物の生成・検証
