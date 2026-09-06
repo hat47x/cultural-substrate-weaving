@@ -12,6 +12,18 @@
 
 - 
 
+### External exploration / epistemic handoff — when relevant
+
+外部探索経路から来た問い、仮説、対応候補、実験結果等を次のsynthesisへ渡す場合に使う。
+
+| Ref | Incoming status / role | Origin / operation | Target-side support | Handoff use |
+|---|---|---|---|---|
+| | | | | question / hypothesis / source material / context / other |
+
+`Incoming status / role` は閉じたtaxonomyを要求しない。呼出側が `framework_generated`、`target_supported`、`cross_field_emergent`、`unresolved` 等の語彙を持つ場合は、その語彙を変換せず保持できる。web research、interview、experiment等では各経路の認識状態をそのまま記録してよい。
+
+この欄のstatus / provenanceは**監査とhandoffのための情報**であり、one-round synthesisのgrouping geometryや独立support数へ自動変換しない。外部探索から来た仮説・correspondenceをtarget側の観察事実として渡さない。後にtarget側で独立に支持された場合は、元のoriginを消さず、何が新しく支持したかを別に記録する。
+
 ### Reopened prior artifacts
 
 - 
@@ -37,6 +49,7 @@ stable IDを持つone-round synthesis artifact（例: `affinity-map`）がある
 - **Input artifact refs:**
 - **Output artifact refs:**
 - **Representation / schema ref if available:**
+- **External-status handoff preserved?:** yes / no / not applicable
 
 ## Structural Delta
 
@@ -134,4 +147,5 @@ compact notationを使う場合、次を変更操作として使える。
 
 - Return to:
 - Reopen when:
+- Preserve incoming status / provenance for:
 - Do not silently assume:
