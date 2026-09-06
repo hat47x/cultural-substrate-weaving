@@ -208,6 +208,119 @@ C1
 - 一つのgroupへ置いた瞬間に、他groupとの関係を消す。
 - 全カードを一意分類できたこと自体を成功基準にする。
 
+## Case 10 — relation predicateを固定edge taxonomyへ縮めない
+
+### Input groups
+
+- G1: 「相手を人格として断罪せず、具体的な行為へ話を戻す」
+- G2: 「その場での改心を迫らず、反応に時間差を残す」
+
+材料を合わせると、両者は「自己防御を強めず、あとから具体的責任へ戻れる通路を残す」という関係を持つ。
+
+### Tempting representation
+
+```text
+G1 --depends-on--> G2
+```
+
+または
+
+```text
+G1 --causes--> G2
+```
+
+### Expected representation
+
+関係の意味を自然言語predicateで保つ。
+
+```text
+R01: G1 -- G2 :: "両者は別の仕方で、自己防御を強めず具体的責任へ戻れる通路を残す"
+```
+
+向きが材料から支持される場合だけ `->` 等を使う。
+
+### Fail if
+
+- rendererが扱いやすいという理由だけで `depends-on` 等へ意味を縮約する。
+- `->` を描いたことから因果を自動推論する。
+
+## Case 11 — proximityをsemantic relationへ変換しない
+
+### Input spatial arrangement
+
+A型図解でG1とG2を近く置き、G3を少し離して置いた。しかしG1-G2間に明示したrelation predicateはまだない。
+
+### Expected handling
+
+- `layout` と `relation` を別に保持する。
+- Mermaid等の自動layoutでG1とG2がさらに近く配置されても、新しいR edgeを作らない。
+- 近接から問いが生じるなら、`Q` / unresolved candidateとして扱える。
+
+### Fail if
+
+- 「近い = 関係あり」と自動変換する。
+- 図を説明する文章で「G1がG2を引き起こす」等を補う。
+
+## Case 12 — secondary resonanceをdiagram上の二重membershipにしない
+
+### Semantic record
+
+```text
+G1["身体が受け取れる量"] := {C1, C2}
+G2["待つことが関係を通す"] := {C3, C4}
+X1: C2 ~> G2 :: "身体への配慮が、待つ時間の意味にも響く"
+```
+
+### Expected diagram
+
+- C2はG1のmemberとして一度だけ表示する。
+- G2への響きはdashed cross-link等で表し、`resonance / not membership` と読めるようにする。
+- group size、support count、independent corroborationは増えない。
+
+### Fail if
+
+- C2をG1とG2の両subgraph内へ複製する。
+- dashed lineだけを出し、何の線か説明しない。
+
+## Case 13 — Mermaidの自動layoutでA型図解の空白を正本化しない
+
+### Input
+
+元のspatial mapでは、G1とG2の間の大きな空白そのものが「まだ接続の仕方が分からない」ことを表している。
+
+### Expected handling
+
+- topology overviewとしてMermaidを作ることはできる。
+- ただしMermaidの自動layoutで空白が消えた場合、それを「接続が解決した」と解釈しない。
+- 空間配置が重要ならnormalized coordinates等を別記録に残し、自由配置可能なprojectionへ出せる。
+
+### Fail if
+
+- Mermaidだけを唯一の正本にして元の空白情報を失う。
+- layout engineが作った距離を分析結果としてNarrativeへ書く。
+
+## Case 14 — diagramがsemantic recordへない線を足さない
+
+### Semantic record
+
+- R1: G1 -> G2 :: 「G1がG2の選択余地を狭める」
+- G2とG3には明示relationなし。
+- Q1: 「G2とG3の間には何があるのか」
+
+### Tempting visual cleanup
+
+見栄えを整えるため、G2からG3にも矢印を追加して左右対称のflowchartにする。
+
+### Expected handling
+
+- G2-G3間にはsemantic edgeを作らない。
+- 必要ならQ1をquestion nodeとして表示する。
+- 図の対称性よりsemantic fidelityを優先する。
+
+### Fail if
+
+- 視覚的に流れを完成させるため、元にないedgeを追加する。
+
 ## Cross-realization comparison
 
 realization A/Bを比較する場合は、少なくとも次を記録する。
@@ -222,6 +335,10 @@ realization A/Bを比較する場合は、少なくとも次を記録する。
 | derivation double-counting | | | |
 | singleton / conflict preservation | | | |
 | multi-affinity without duplication | | | |
+| relation predicate preservation | | | |
+| membership / relation / resonance separation | | | |
+| layout / semantics separation | | | |
+| diagram projection fidelity | | | |
 | invented causality / interior state | | | |
 | provenance round-trip | | | |
 | map ↔ narrative consistency | | | |
