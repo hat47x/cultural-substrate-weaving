@@ -38,6 +38,66 @@ def check_versions(errors: list[str]) -> None:
         fail(errors, "pyproject.toml version does not match VERSION")
 
 
+def check_manifest_structure(errors: list[str]) -> None:
+    config = manifest()
+    canonical_root = locale_source(config["canonical_locale"])
+    canonical_files = {
+        str(path.relative_to(canonical_root))
+        for path in canonical_root.rglob("*.md")
+    }
+    router = config.get("router")
+    if router not in canonical_files:
+        fail(errors, f"Runtime manifest router is missing from canonical Markdown: {router}")
+        return
+
+    modules = config.get("modules")
+    if not isinstance(modules, list):
+        fail(errors, "Runtime manifest modules must be a list")
+        return
+    module_sources = [
+        module.get("source")
+        for module in modules
+        if isinstance(module, dict) and isinstance(module.get("source"), str)
+    ]
+    if len(module_sources) != len(modules):
+        fail(errors, "Runtime manifest modules contain an invalid or missing source")
+        return
+    expected_modules = canonical_files - {router}
+    module_source_set = set(module_sources)
+    if len(module_sources) != len(module_source_set):
+        fail(errors, "Runtime manifest module sources must be unique")
+    if module_source_set != expected_modules:
+        missing = sorted(expected_modules - module_source_set)
+        extra = sorted(module_source_set - expected_modules)
+        fail(
+            errors,
+            f"Runtime manifest module set mismatch; missing={missing}, extra={extra}",
+        )
+
+    knowledge_groups = config.get("knowledge_groups")
+    if not isinstance(knowledge_groups, dict):
+        fail(errors, "Runtime manifest knowledge_groups must be an object")
+        return
+    grouped_sources: list[str] = []
+    for group_name, group_sources in knowledge_groups.items():
+        if not isinstance(group_sources, list) or not all(
+            isinstance(source, str) for source in group_sources
+        ):
+            fail(errors, f"Runtime manifest knowledge group must be a string list: {group_name}")
+            continue
+        grouped_sources.extend(group_sources)
+    if len(grouped_sources) != len(set(grouped_sources)):
+        fail(errors, "Runtime manifest knowledge_groups must not duplicate module sources")
+    grouped_source_set = set(grouped_sources)
+    if grouped_source_set != module_source_set:
+        missing = sorted(module_source_set - grouped_source_set)
+        extra = sorted(grouped_source_set - module_source_set)
+        fail(
+            errors,
+            f"Runtime manifest knowledge-group coverage mismatch; missing={missing}, extra={extra}",
+        )
+
+
 def check_locale_parity(errors: list[str]) -> None:
     config = manifest()
     canonical = config["canonical_locale"]
@@ -248,6 +308,7 @@ def main() -> None:
     errors: list[str] = []
     check_json_files(errors)
     check_versions(errors)
+    check_manifest_structure(errors)
     check_locale_parity(errors)
     check_translation_hashes(errors)
     check_semantics(errors)
