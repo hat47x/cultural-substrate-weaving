@@ -38,6 +38,17 @@
               "evals/CASES.md",
               "evidence/dossier.md"
             ]
+          },
+          "package_targets": {
+            "openai_skill": {
+              "skill_name": "affinity-synthesis"
+            },
+            "claude_plugin": {
+              "skill_name": "affinity-synthesis"
+            },
+            "codex_plugin": {
+              "skill_name": "affinity-synthesis"
+            }
           }
         },
         "en-US": {
@@ -88,6 +99,17 @@
               "references/METHOD.md",
               "references/ROUND-TEMPLATE.md"
             ]
+          },
+          "package_targets": {
+            "openai_skill": {
+              "skill_name": "iterative-inquiry-synthesis"
+            },
+            "claude_plugin": {
+              "skill_name": "iterative-inquiry-synthesis"
+            },
+            "codex_plugin": {
+              "skill_name": "iterative-inquiry-synthesis"
+            }
           }
         },
         "en-US": {
@@ -131,6 +153,17 @@
             "mode": "canonical_manifest",
             "manifest": "src/manifest.json",
             "locale_root": "src/ja-JP"
+          },
+          "package_targets": {
+            "openai_skill": {
+              "skill_name": "cultural-substrate-weaving"
+            },
+            "claude_plugin": {
+              "skill_name": "weave"
+            },
+            "codex_plugin": {
+              "skill_name": "weave"
+            }
           }
         },
         "en-US": {
@@ -140,6 +173,17 @@
             "mode": "canonical_manifest",
             "manifest": "src/manifest.json",
             "locale_root": "src/en-US"
+          },
+          "package_targets": {
+            "openai_skill": {
+              "skill_name": "cultural-substrate-weaving"
+            },
+            "claude_plugin": {
+              "skill_name": "weave"
+            },
+            "codex_plugin": {
+              "skill_name": "weave"
+            }
           }
         }
       },

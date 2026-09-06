@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
 """Plan research skill-suite distribution buildability without generating packages.
 
-The planner answers only whether the currently declared locale realizations and
-package-source descriptors are sufficient for each research distribution shape.
-It does not claim method parity, routing support, package validity, or release
-readiness.
+The planner answers only whether the currently declared locale realizations,
+package-source descriptors, and distribution target names are sufficient for
+each research distribution shape. It does not claim method parity, routing
+support, package validity, or release readiness.
 """
 
 from __future__ import annotations
@@ -19,6 +19,7 @@ VALIDATOR_DIR = ROOT / "scripts"
 if str(VALIDATOR_DIR) not in sys.path:
     sys.path.insert(0, str(VALIDATOR_DIR))
 
+from validate_research_package_targets import validate_package_targets  # noqa: E402
 from validate_research_skill_suite import validate_suite  # noqa: E402
 
 PLAN_SCHEMA = "csw.research-skill-suite-layout-plan/v1"
@@ -31,12 +32,14 @@ def _realization(skill: dict | None, locale: str) -> dict:
             "realized": False,
             "runtime_entry": None,
             "package_source": None,
+            "package_targets": None,
         }
 
     realization = skill.get("locale_realizations", {}).get(locale, {})
     status = realization.get("status")
     runtime_entry = realization.get("runtime_entry")
     package_source = realization.get("package_source")
+    package_targets = realization.get("package_targets")
     realized = (
         isinstance(status, str)
         and status != "planned"
@@ -50,7 +53,21 @@ def _realization(skill: dict | None, locale: str) -> dict:
         "realized": realized,
         "runtime_entry": runtime_entry if isinstance(runtime_entry, str) else None,
         "package_source": package_source if isinstance(package_source, dict) else None,
+        "package_targets": package_targets if isinstance(package_targets, dict) else None,
     }
+
+
+def _distribution_target(realization: dict, distribution_name: str) -> dict | None:
+    targets = realization.get("package_targets")
+    if not isinstance(targets, dict):
+        return None
+    target = targets.get(distribution_name)
+    if not isinstance(target, dict):
+        return None
+    skill_name = target.get("skill_name")
+    if not isinstance(skill_name, str) or not skill_name:
+        return None
+    return target
 
 
 def _aggregate_state(realized_count: int, target_count: int) -> str:
@@ -82,8 +99,9 @@ def plan_suite(manifest: dict) -> dict:
         "schema": PLAN_SCHEMA,
         "suite_id": manifest.get("suite_id"),
         "note": (
-            "Buildability reflects declared research locale realizations and package-source "
-            "descriptors only; it is not promotion or release readiness."
+            "Buildability reflects declared research locale realizations, package-source "
+            "descriptors, and distribution target names only; it is not promotion or "
+            "release readiness."
         ),
         "locales": {},
     }
@@ -102,12 +120,14 @@ def plan_suite(manifest: dict) -> dict:
 
             if mode == "standalone_per_skill":
                 items = []
-                realized_count = 0
+                buildable_count = 0
                 for skill_id in skill_order:
                     realization = availability[skill_id]
-                    item_state = "buildable" if realization["realized"] else "blocked"
-                    if realization["realized"]:
-                        realized_count += 1
+                    target = _distribution_target(realization, distribution_name)
+                    item_buildable = realization["realized"] and target is not None
+                    item_state = "buildable" if item_buildable else "blocked"
+                    if item_buildable:
+                        buildable_count += 1
                     items.append(
                         {
                             "skill_id": skill_id,
@@ -115,14 +135,17 @@ def plan_suite(manifest: dict) -> dict:
                             "status": realization["status"],
                             "runtime_entry": realization["runtime_entry"],
                             "package_source": realization["package_source"],
+                            "package_target": target,
                         }
                     )
 
                 distributions[distribution_name] = {
                     "mode": mode,
-                    "state": _aggregate_state(realized_count, len(skill_order)),
+                    "state": _aggregate_state(buildable_count, len(skill_order)),
                     "items": items,
-                    "scope": "per-skill realization and package-source availability only",
+                    "scope": (
+                        "per-skill realization, package-source, and target-name availability only"
+                    ),
                 }
                 continue
 
@@ -130,10 +153,13 @@ def plan_suite(manifest: dict) -> dict:
                 target_skills = config.get("contains", [])
                 missing_skills = []
                 realized_skills = []
+                target_skill_names: dict[str, str] = {}
                 for skill_id in target_skills:
                     realization = _realization(skills_by_id.get(skill_id), locale)
-                    if realization["realized"]:
+                    target = _distribution_target(realization, distribution_name)
+                    if realization["realized"] and target is not None:
                         realized_skills.append(skill_id)
+                        target_skill_names[skill_id] = target["skill_name"]
                     else:
                         missing_skills.append(skill_id)
 
@@ -143,9 +169,10 @@ def plan_suite(manifest: dict) -> dict:
                     "target_skills": target_skills,
                     "realized_skills": realized_skills,
                     "missing_skills": missing_skills,
+                    "target_skill_names": target_skill_names,
                     "scope": (
-                        "declared bundle composition, realization availability, and package-source "
-                        "descriptors only"
+                        "declared bundle composition, realization availability, package-source "
+                        "descriptors, and target names only"
                     ),
                 }
                 continue
@@ -162,7 +189,8 @@ def plan_suite(manifest: dict) -> dict:
                     "primary_package_source": realization["package_source"],
                     "scope": (
                         "primary realization and package-source availability only; internal "
-                        "method-composition parity is not asserted"
+                        "method-composition parity is not asserted and no sibling Skill-tree "
+                        "target name is required here"
                     ),
                 }
                 continue
@@ -192,6 +220,7 @@ def main() -> int:
         return 1
 
     errors = validate_suite(ROOT, manifest)
+    errors.extend(validate_package_targets(manifest))
     if errors:
         for error in errors:
             print(f"ERROR: {error}", file=sys.stderr)
