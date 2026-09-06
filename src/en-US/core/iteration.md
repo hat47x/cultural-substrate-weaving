@@ -4,15 +4,15 @@ Read this when new material arrives and work moves repeatedly between KJ and cul
 
 ## The basic unit is a round
 
-A round normally does the following.
+Representative operations available within a round include the following. A round need not perform all of them, and neither their order nor the number of passes is fixed. Select, revisit, or repeat operations according to the target, purpose, external conditions, and delegated scope.
 
-1. **Receive the material delta**: inspect new sources, observations, falsification, or execution results.
-2. **Return to the KJ material surface**: place old residuals and isolated cards touched by the new material back on the same surface.
-3. **See the current question**: do not repeat the previous conclusion; ask what the new material has made questionable now.
-4. **Open a framework only if needed**: use only the depth required by `core/activation.md`.
-5. **Return to KJ**: bring back framework-generated questions, hypotheses, compositional ideas, search targets, and residuals with provenance intact.
-6. **Reflect into real work**: make explicit what is adopted into the domain artifact, decision, or research direction.
-7. **Record the boundary**: record results, residuals, and reopening conditions; closing follows external conditions or delegated discretion.
+- **Receive the material delta**: inspect new sources, observations, falsification, or execution results.
+- **Return to the KJ material surface**: when using KJ, place old residuals and isolated cards touched by the new material back on the same surface.
+- **See the current question**: do not repeat the previous conclusion; ask what the new material has made questionable now.
+- **Open a framework only if needed**: use only the depth required by `core/activation.md`.
+- **Return to KJ**: when both a cultural framework and KJ are in use, bring back framework-generated questions, hypotheses, compositional ideas, search targets, and residuals with provenance intact.
+- **Reflect into real work**: make explicit what is adopted into the domain artifact, decision, or research direction.
+- **Record the boundary**: record results, residuals, and reopening conditions; closing follows external conditions or delegated discretion.
 
 Passing through a fixed number of frameworks, loading them in full, or executing native operations is not a completion condition.
 
