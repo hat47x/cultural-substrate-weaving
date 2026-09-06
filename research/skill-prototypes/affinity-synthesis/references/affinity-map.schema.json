@@ -1,0 +1,170 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.invalid/affinity-map.schema.json",
+  "title": "Affinity Synthesis Map",
+  "type": "object",
+  "required": ["format", "version", "cards", "groups"],
+  "properties": {
+    "format": {"const": "affinity-map"},
+    "version": {"type": "string"},
+    "subject": {
+      "type": "object",
+      "properties": {
+        "question": {"type": "string"},
+        "scope": {"type": "string"}
+      },
+      "additionalProperties": true
+    },
+    "sources": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id"],
+        "properties": {
+          "id": {"type": "string"},
+          "ref": {"type": "string"},
+          "provenance": {"type": "string"},
+          "discovery_route": {"type": "string"},
+          "independence_note": {"type": "string"}
+        },
+        "additionalProperties": true
+      }
+    },
+    "cards": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "text"],
+        "properties": {
+          "id": {"type": "string"},
+          "text": {"type": "string"},
+          "source_refs": {
+            "type": "array",
+            "items": {"type": "string"}
+          },
+          "preservation_note": {"type": "string"},
+          "derivation_refs": {
+            "type": "array",
+            "items": {"type": "string"}
+          }
+        },
+        "additionalProperties": true
+      }
+    },
+    "groups": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "label", "members"],
+        "properties": {
+          "id": {"type": "string"},
+          "label": {"type": "string"},
+          "members": {
+            "type": "array",
+            "items": {"type": "string"}
+          },
+          "preserved_differences": {
+            "type": "array",
+            "items": {"type": "string"}
+          },
+          "transformation_audit": {
+            "type": "object",
+            "properties": {
+              "inherited": {"type": "array", "items": {"type": "string"}},
+              "emergent": {"type": "array", "items": {"type": "string"}},
+              "residual": {"type": "array", "items": {"type": "string"}}
+            },
+            "additionalProperties": true
+          }
+        },
+        "additionalProperties": true
+      }
+    },
+    "resonances": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "from", "to", "note"],
+        "properties": {
+          "id": {"type": "string"},
+          "from": {"type": "string"},
+          "to": {"type": "string"},
+          "note": {"type": "string"}
+        },
+        "additionalProperties": true
+      }
+    },
+    "relations": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "from", "to", "direction", "predicate"],
+        "properties": {
+          "id": {"type": "string"},
+          "from": {"type": "string"},
+          "to": {"type": "string"},
+          "direction": {
+            "type": "string",
+            "enum": ["directed", "reciprocal", "unspecified"]
+          },
+          "predicate": {"type": "string"},
+          "state": {"type": "string"},
+          "basis": {
+            "type": "array",
+            "items": {"type": "string"}
+          },
+          "note": {"type": "string"}
+        },
+        "additionalProperties": true
+      }
+    },
+    "residuals": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "text"],
+        "properties": {
+          "id": {"type": "string"},
+          "text": {"type": "string"},
+          "refs": {"type": "array", "items": {"type": "string"}},
+          "handling": {"type": "string"}
+        },
+        "additionalProperties": true
+      }
+    },
+    "questions": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "text"],
+        "properties": {
+          "id": {"type": "string"},
+          "text": {"type": "string"},
+          "arises_from": {"type": "array", "items": {"type": "string"}},
+          "state": {"type": "string"}
+        },
+        "additionalProperties": true
+      }
+    },
+    "layout": {
+      "type": "object",
+      "properties": {
+        "projection": {"type": "string"},
+        "positions": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "object",
+            "required": ["x", "y"],
+            "properties": {
+              "x": {"type": "number", "minimum": 0, "maximum": 1},
+              "y": {"type": "number", "minimum": 0, "maximum": 1}
+            },
+            "additionalProperties": true
+          }
+        }
+      },
+      "additionalProperties": true
+    }
+  },
+  "additionalProperties": true
+}
