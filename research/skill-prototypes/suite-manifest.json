@@ -10,7 +10,7 @@
     },
     "en-US": {
       "status": "translated-draft",
-      "note": "Thin CSW runtime plus English runtime/Method Definition drafts now exist for both sibling prototypes. Independent human review and translation of ancillary research references/evals remain promotion gates."
+      "note": "Thin CSW runtime and initial English runtime/Method Definition drafts exist for both sibling prototypes. Independent review and ancillary research-material localization remain promotion gates."
     }
   },
   "skills": [
@@ -25,7 +25,7 @@
       "runtime_entry": "research/skill-prototypes/affinity-synthesis/SKILL.md",
       "locale_realizations": {
         "ja-JP": {
-          "status": "canonical-research",
+          "status": "prototype",
           "runtime_entry": "research/skill-prototypes/affinity-synthesis/SKILL.md",
           "method_definition": "research/skill-prototypes/affinity-synthesis/references/METHOD.md"
         },
@@ -79,7 +79,7 @@
       "runtime_entry": "research/skill-prototypes/iterative-inquiry-synthesis/SKILL.md",
       "locale_realizations": {
         "ja-JP": {
-          "status": "canonical-research",
+          "status": "prototype",
           "runtime_entry": "research/skill-prototypes/iterative-inquiry-synthesis/SKILL.md",
           "method_definition": "research/skill-prototypes/iterative-inquiry-synthesis/references/METHOD.md"
         },
@@ -97,7 +97,11 @@
       ],
       "evidence": [],
       "evals": [
-        "research/skill-prototypes/iterative-inquiry-synthesis/evals/CASES.md"
+        "research/skill-prototypes/iterative-inquiry-synthesis/evals/CASES.md",
+        "research/skill-prototypes/iterative-inquiry-synthesis/evals/DRY-RUN-2026-09-06.md",
+        "research/skill-prototypes/iterative-inquiry-synthesis/evals/FALLBACK-BOUNDARY-RECHECK-2026-09-06.md",
+        "research/skill-prototypes/iterative-inquiry-synthesis/evals/PAIRED-REAL-TASK-2026-09-07.md",
+        "research/skill-prototypes/iterative-inquiry-synthesis/evals/CSW-AFFINITY-HANDOFF-2026-09-07.md"
       ],
       "checks": [],
       "method_version": "0.1-research",
@@ -120,31 +124,21 @@
       "runtime_entry": "src/ja-JP/ROUTER.md",
       "locale_realizations": {
         "ja-JP": {
-          "status": "canonical",
+          "status": "existing",
           "runtime_entry": "src/ja-JP/ROUTER.md",
           "method_definition": null
         },
         "en-US": {
-          "status": "translated",
+          "status": "existing-translated",
           "human_review": "recommended",
           "runtime_entry": "src/en-US/ROUTER.md",
           "method_definition": null
         }
       },
-      "references": [
-        "docs/ja/maintainers/csw-thin-synthesis-connection-contract.md",
-        "research/skill-prototypes/migration/CSW-THIN-MIGRATION-AUDIT-2026-09-06.md",
-        "research/skill-prototypes/migration/CSW-THIN-SOURCE-RETENTION-CHECK-2026-09-06.md",
-        "research/skill-prototypes/migration/CSW-THIN-POST-APPLY-AUDIT-2026-09-06.md"
-      ],
+      "references": [],
       "evidence": [],
-      "evals": [
-        "research/skill-prototypes/evals/CSW-HANDOFF-CASES.md",
-        "research/skill-prototypes/evals/THREE-LAYER-PAIRED-RUN-2026-09-06.md"
-      ],
-      "checks": [
-        "research/skill-prototypes/check_split_ownership.py"
-      ],
+      "evals": [],
+      "checks": [],
       "method_version": "0.5-research-line",
       "realization_version": "0.5-thin-bilingual-research",
       "delegation": {
@@ -162,37 +156,51 @@
       }
     }
   ],
+  "suite_research_assets": [
+    "research/skill-prototypes/REFERENCE-CLASSIFICATION.md",
+    "research/skill-prototypes/evals/CSW-HANDOFF-CASES.md",
+    "research/skill-prototypes/evals/THREE-LAYER-PAIRED-RUN-2026-09-06.md",
+    "research/skill-prototypes/migration/CSW-THIN-MIGRATION-AUDIT-2026-09-06.md",
+    "research/skill-prototypes/migration/CSW-THIN-SOURCE-RETENTION-CHECK-2026-09-06.md",
+    "research/skill-prototypes/migration/CSW-THIN-POST-APPLY-AUDIT-2026-09-06.md",
+    "docs/ja/maintainers/csw-thin-synthesis-connection-contract.md"
+  ],
   "distribution_prototypes": {
     "openai_skill": {
-      "mode": "planned_standalone_per_skill",
-      "note": "Current repository build is still single-skill; multi-skill build generalization remains a promotion gate."
+      "mode": "standalone_per_skill",
+      "implementation_status": "planned-production-generalization",
+      "note": "All three locale realizations can be planned independently; the current production build remains single-skill."
     },
     "claude_plugin": {
-      "mode": "planned_locale_bundle",
+      "mode": "locale_bundle",
       "contains": [
         "cultural-substrate-weaving",
         "affinity-synthesis",
         "iterative-inquiry-synthesis"
       ],
-      "note": "Plugin format can bundle sibling Skills, but the current build has not yet been generalized to emit all three."
+      "implementation_status": "planned-production-generalization",
+      "note": "Layout input is available in both locales, but the production builder has not yet been generalized to emit all three Skills."
     },
     "codex_plugin": {
-      "mode": "planned_locale_bundle",
+      "mode": "locale_bundle",
       "contains": [
         "cultural-substrate-weaving",
         "affinity-synthesis",
         "iterative-inquiry-synthesis"
       ],
-      "note": "Plugin format can bundle sibling Skills, but the current build has not yet been generalized to emit all three."
+      "implementation_status": "planned-production-generalization",
+      "note": "Layout input is available in both locales, but the production builder has not yet been generalized to emit all three Skills."
     },
     "chatgpt_gpt": {
-      "mode": "planned_composite_agent_realization",
+      "mode": "composite_agent_realization",
       "primary": "cultural-substrate-weaving",
-      "note": "Current generated GPT follows the runtime source and does not yet embed the two research sibling realizations after the thin split."
+      "implementation_status": "planned-composite-refresh",
+      "note": "Primary CSW realization exists; companion method-composition parity is not yet asserted by the production package."
     },
     "microsoft_copilot": {
-      "mode": "implemented_limited_composite_adapter",
+      "mode": "composite_agent_realization",
       "primary": "cultural-substrate-weaving",
+      "implementation_status": "implemented-limited-composite-adapter",
       "embedded_subset_of": [
         "affinity-synthesis"
       ],
@@ -200,25 +208,21 @@
         "full affinity-synthesis representation / lineage",
         "full iterative-inquiry-synthesis round governance"
       ],
-      "note": "The self-contained Instructions embed a minimal compatible material-synthesis fallback because sibling Skill invocation cannot be assumed."
+      "note": "Self-contained Instructions embed a minimal compatible material-synthesis fallback because sibling Skill invocation cannot be assumed."
     }
   },
   "promotion_gates": [
-    "all canonical and declared locale runtime entries exist",
-    "all declared locale Method Definitions exist where applicable",
-    "all declared references/evidence/evals/checks exist",
-    "skill installable names are unique across sibling methods and match each locale runtime frontmatter",
+    "research skill suite manifest and locale realizations pass repository validation",
+    "skill installable names remain unique and locale runtime frontmatter matches the intended installable name",
     "no hard dependency is assumed by the public method contract",
-    "affinity-synthesis larger-set regression remains acceptable",
-    "affinity-synthesis representation regression passes with recursive grouping and narrative lineage intact",
-    "iterative-inquiry-synthesis method definition and eval cases remain aligned with delta-reopen behavior",
-    "cross-layer CSW handoff cases remain acceptable",
-    "three-layer paired regression shows no material semantic regression",
+    "affinity-synthesis larger-set and representation regressions remain acceptable",
+    "iterative-inquiry-synthesis contract cases and paired runs remain aligned with delta-reopen behavior",
+    "cross-layer CSW handoff and three-layer paired regressions remain acceptable",
     "Japanese and English thin-CSW runtimes retain attribution and delegation boundaries",
     "split ownership regression check passes",
     "Microsoft 365 composite adapter preserves its embedded-fallback boundary without claiming full sibling-method parity",
     "generated artifacts are rebuilt and repository validation passes after thin-CSW migration",
-    "English sibling Skill realizations receive independent review and ancillary research references/evals are translated or explicitly classified as non-runtime",
-    "runtime build and validator are generalized before public multi-skill distribution"
+    "English sibling Skill realizations receive independent review and ancillary research materials are translated or explicitly classified as non-runtime",
+    "production runtime build and validator are generalized before public multi-skill distribution"
   ]
 }

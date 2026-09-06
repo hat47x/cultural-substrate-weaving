@@ -15,19 +15,25 @@
 
 必要な範囲だけ記載する。
 
-| Ref | Source provenance | Discovery route | Derivation / independence note |
-|---|---|---|---|
-| | | | |
+| Ref | Source provenance | Discovery route | Input status / role | Derivation / independence note |
+|---|---|---|---|---|
+| | | | | |
 
 `source provenance` と `discovery route` が同じ場合でも、概念上は区別する。派生物を独立資料として数えないための情報が必要なら `Derivation / independence note` に残す。
 
+`Input status / role` は、観察、報告、仮説、未解決、外部探索由来のquestion / correspondence等を、元の認識状態を消さずに受け取るための欄である。呼出側が `framework_generated`、`target_supported`、`cross_field_emergent`、`unresolved` 等の語彙を持つ場合は、その語彙を保持できるが、このテンプレート自身が閉じたtaxonomyを要求するわけではない。
+
+provenanceやstatusは監査情報であり、最初のgrouping geometryにはしない。外部探索由来の仮説・correspondenceを、target-side sourceの一票や独立supportへ自動変換しない。後から対象材料で独立に支持された場合は、その新しいsupportと元の由来を両方残す。
+
 ## 3. Meaning-bearing Cards
 
-| Card ID | Card | Source ref | Epistemic seam / preservation note |
-|---|---|---|---|
-| | | | |
+| Card ID | Card | Source ref | Input status / role | Epistemic seam / preservation note |
+|---|---|---|---|---|
+| | | | | |
 
 カードは短さを目的にしない。単独で何を訴えているか読め、かつ証拠状態の継ぎ目を黙って潰していないことを優先する。
+
+question / hypothesis / correspondenceをcard-like artifactとして扱う必要がある場合も、そのroleを観察事実へ書き換えない。対象側の意味単位と近く見えても、status/provenanceだけを理由に同じ束へ入れたり、別束へ隔離したりしない。
 
 ## 4. Groups and Labels
 
@@ -169,6 +175,7 @@ Mermaidはtopology projectionとして使う。近接・離隔・空白など**�
 - 評価方向の変化:
 - 確度の変化:
 - 行為者・責任方向の脱落:
+- external exploration inputをtarget-side supportへ無言で昇格させた箇所:
 - emergent meaningをsource由来へ遡及させた箇所:
 - その他の違和感:
 
@@ -184,6 +191,7 @@ Mermaidはtopology projectionとして使う。近接・離隔・空白など**�
 - **Singletons kept:**
 - **Conflicts kept:**
 - **Unresolved questions:**
+- **External exploration inputs still not target-supported:**
 - **Intentionally omitted differences:**
 - **Possible next-round inputs:**
 
