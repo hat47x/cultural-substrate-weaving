@@ -25,14 +25,15 @@ class ResearchSkillSuiteTests(unittest.TestCase):
             f"expected error containing {fragment!r}; got {errors!r}",
         )
 
+    def skill(self, manifest: dict, skill_id: str) -> dict:
+        return next(skill for skill in manifest["skills"] if skill["id"] == skill_id)
+
     def test_current_research_suite_manifest_is_internally_consistent(self) -> None:
         self.assertEqual(validate_suite(ROOT, self.manifest), [])
 
     def test_existing_method_file_cannot_be_left_unregistered(self) -> None:
         manifest = copy.deepcopy(self.manifest)
-        iterative = next(
-            skill for skill in manifest["skills"] if skill["id"] == "iterative-inquiry-synthesis"
-        )
+        iterative = self.skill(manifest, "iterative-inquiry-synthesis")
         iterative["method_definition"] = None
         iterative["references"] = [
             path for path in iterative["references"] if not path.endswith("/METHOD.md")
@@ -42,9 +43,7 @@ class ResearchSkillSuiteTests(unittest.TestCase):
 
     def test_method_definition_must_also_be_a_declared_reference(self) -> None:
         manifest = copy.deepcopy(self.manifest)
-        iterative = next(
-            skill for skill in manifest["skills"] if skill["id"] == "iterative-inquiry-synthesis"
-        )
+        iterative = self.skill(manifest, "iterative-inquiry-synthesis")
         iterative["references"] = [
             path for path in iterative["references"] if not path.endswith("/METHOD.md")
         ]
@@ -67,12 +66,66 @@ class ResearchSkillSuiteTests(unittest.TestCase):
 
     def test_skill_paths_must_stay_inside_their_source_root(self) -> None:
         manifest = copy.deepcopy(self.manifest)
-        iterative = next(
-            skill for skill in manifest["skills"] if skill["id"] == "iterative-inquiry-synthesis"
-        )
+        iterative = self.skill(manifest, "iterative-inquiry-synthesis")
         iterative["runtime_entry"] = "CHANGELOG.md"
 
         self.assert_has_error(manifest, "runtime_entry is outside source_root")
+
+    def test_skill_must_declare_every_suite_locale_realization(self) -> None:
+        manifest = copy.deepcopy(self.manifest)
+        affinity = self.skill(manifest, "affinity-synthesis")
+        affinity["locale_realizations"].pop("en-US")
+
+        self.assert_has_error(
+            manifest,
+            "locale_realizations must match suite locales; missing=['en-US']",
+        )
+
+    def test_skill_cannot_declare_unknown_locale_realization(self) -> None:
+        manifest = copy.deepcopy(self.manifest)
+        affinity = self.skill(manifest, "affinity-synthesis")
+        affinity["locale_realizations"]["fr-FR"] = {"status": "planned"}
+
+        self.assert_has_error(
+            manifest,
+            "locale_realizations must match suite locales; missing=[], extra=['fr-FR']",
+        )
+
+    def test_canonical_locale_cannot_be_planned_only(self) -> None:
+        manifest = copy.deepcopy(self.manifest)
+        affinity = self.skill(manifest, "affinity-synthesis")
+        affinity["locale_realizations"]["ja-JP"] = {"status": "planned"}
+
+        self.assert_has_error(manifest, "canonical locale ja-JP cannot be planned-only")
+
+    def test_realized_locale_requires_runtime_entry(self) -> None:
+        manifest = copy.deepcopy(self.manifest)
+        csw = self.skill(manifest, "cultural-substrate-weaving")
+        csw["locale_realizations"]["en-US"] = {"status": "existing"}
+
+        self.assert_has_error(manifest, "realized locale en-US must declare runtime_entry")
+
+    def test_canonical_locale_runtime_entry_matches_skill_entry(self) -> None:
+        manifest = copy.deepcopy(self.manifest)
+        affinity = self.skill(manifest, "affinity-synthesis")
+        affinity["locale_realizations"]["ja-JP"]["runtime_entry"] = (
+            "research/skill-prototypes/affinity-synthesis/references/TEMPLATE.md"
+        )
+
+        self.assert_has_error(
+            manifest,
+            "canonical locale realization runtime_entry must match skill runtime_entry",
+        )
+
+    def test_locale_runtime_entry_must_stay_inside_source_root(self) -> None:
+        manifest = copy.deepcopy(self.manifest)
+        csw = self.skill(manifest, "cultural-substrate-weaving")
+        csw["locale_realizations"]["en-US"]["runtime_entry"] = "CHANGELOG.md"
+
+        self.assert_has_error(
+            manifest,
+            "locale realization en-US runtime_entry is outside source_root",
+        )
 
 
 if __name__ == "__main__":
