@@ -2,26 +2,30 @@
 
 The repository generates localized declarative-agent material for Microsoft 365 Copilot in Japanese and English. There are two ways to install it: a GUI-only route through Agent Builder, or a route through the Agents Toolkit CLI. If you do not need a special organization-managed deployment, Agent Builder is the simpler place to start.
 
-Web search is not required when the task can be completed from supplied material alone, such as KJ integration over a closed source set. When a task needs current facts, external context, or additional source discovery, confirm that web-search grounding is permitted for your tenant.
+Web search is not required when the task can be completed from supplied material alone, including material synthesis over a closed source set. When a task needs current facts, external context, or additional source discovery, confirm that web-search grounding is permitted for your tenant.
 
 ## Current scope of the Microsoft 365 package
 
 In Microsoft 365 Copilot, Knowledge is primarily a source of factual grounding. Do not treat it as a reliable continuation of the agent-level instructions in **Instructions**.
 
-For Microsoft 365, this repository therefore provides a self-contained **limited profile** that stays within the 8,000-character Instructions limit. Only the method written in `instructions.txt` is treated as executable agent instructions. It carries the core retained by this profile: staying revisable by the target, KJ integration around semantic units and epistemic boundaries, provenance controls for cultural-framework exploration, delegated-scope discipline, and separation of observation from AI interpretation.
+For Microsoft 365, this repository therefore provides a self-contained **limited composite adapter** that stays within the 8,000-character Instructions limit. Only the method written in `instructions.txt` is treated as executable agent instructions.
 
-The richer CSW method modules are still bundled under `method-reference/` so that people can inspect the full method without discarding that material. They are human-readable reference assets, not files to upload to Agent Builder or SharePoint Knowledge in order to extend Instructions.
+The center of this adapter is the CSW responsibility: cultural-framework exploration, attribution, and return to the target. Because Microsoft 365 cannot be assumed to invoke independent sibling Skills, `instructions.txt` also embeds a **minimal compatible Affinity Synthesis fallback** so heterogeneous material can still be handled safely. This does not mean CSW itself owns the synthesis algorithm. It also does not reproduce the complete representation/lineage layer of `affinity-synthesis` or the full multi-round governance of `iterative-inquiry-synthesis`.
 
-You can still add business documents, research material, organization documents, and other target-side sources to Knowledge for factual grounding.
+The embedded material-synthesis subset draws from KJ-method, affinity-diagram, and qualitative-synthesis lineage. It keeps a limited core such as meaning-bearing units, epistemic boundaries, cluster-before-naming behavior, and return-to-source checks. KJ Method is a registered trademark of Kawakita Research Institute; this adapter does not claim to be an official KJ Method implementation.
 
-This limited profile does not claim full CSW parity with the other supported platforms. Detailed framework-specific operations, the Taiheki special case, the complete longitudinal research protocol, and other procedures not present in `instructions.txt` remain outside this profile. Use the Codex, Claude Code, or ChatGPT distributions when those capabilities are required. The design history and boundary are tracked in Issue #96.
+The package still bundles `method-reference/` so people can inspect the CSW runtime and related method material. These are human-readable reference assets, not files to upload to Agent Builder or SharePoint Knowledge in order to extend `instructions.txt`.
+
+You can add business documents, research material, organization documents, and other target-side sources to Knowledge for factual grounding.
+
+This limited adapter does not claim full CSW or split-method parity with the other supported platforms. Detailed framework-specific operations, the Taiheki special case, advanced longitudinal research design, full affinity-synthesis diagram/lineage behavior, and complete round-history governance remain outside the adapter unless explicitly present in `instructions.txt`. The design history and boundary are tracked in Issue #96.
 
 ## Get the package
 
 Download `cultural-substrate-weaving-m365-copilot-en-US-vX.Y.Z.zip` (or `-ja-JP-` for Japanese) from [GitHub Releases](https://github.com/hat47x/cultural-substrate-weaving/releases) and extract it. It contains:
 
-- `instructions.txt`: the self-contained Microsoft 365 limited profile;
-- `method-reference/`: human-readable reference material for the full CSW method;
+- `instructions.txt`: the self-contained Microsoft 365 limited composite adapter;
+- `method-reference/`: human-readable reference material for the CSW runtime and related methods;
 - `README.txt`: the package boundary and usage notes; and
 - `agent-project/`: the Agents Toolkit CLI project.
 
@@ -39,7 +43,7 @@ This repository uses manual configuration so the prepared `instructions.txt` can
 4. Paste the contents of the extracted `instructions.txt` into **Instructions** as-is. Build and validation checks keep it within the 8,000-character limit.
 5. If the agent needs target-side business or research material, add it under **Knowledge**. You can add up to 20 files uploaded directly from the device as embedded knowledge sources. Do not upload the package's `method-reference/` directory in order to extend Instructions.
 6. If the agent needs current facts or external information, enable **Search all websites** under **Knowledge**. It is not required when the agent should stay within supplied material.
-7. Test both activation and non-activation examples on the **Try it** tab. Also verify that the work you need fits within the limited profile.
+7. On the **Try it** tab, test a framework-use case, a non-framework case, and a case where the embedded material-synthesis fallback is sufficient. Also verify that the work fits within the limited adapter boundary.
 8. After creating the agent, use **Share** for direct sharing. For organization-wide availability, use **…** → **Submit to your org catalog** and follow your administrator's review process.
 
 ## Method B: Agents Toolkit CLI (advanced / org-managed deployment)
@@ -53,7 +57,7 @@ Use this route when you need AppSource distribution, tenant-wide managed deploym
 
 ### 1. Prepare target-side material in SharePoint Knowledge
 
-When SharePoint is used as Knowledge, put the business, research, or organization documents that the agent should use as factual grounding there. Do not place the package's `method-reference/` material in SharePoint with the expectation that it will act as a continuation of `instructions`.
+When SharePoint is used as Knowledge, put the business, research, or organization documents that the agent should use as factual grounding there. Do not place CSW or Affinity Synthesis execution rules in SharePoint and expect them to continue `instructions.txt`.
 
 1. Put the target-side source material in one SharePoint site or document library.
 2. Clone the repository.
