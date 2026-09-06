@@ -156,3 +156,7 @@ manifestを更新する操作そのものは、推敲を実施した証明には
 `docs/ja/maintainers/v05-cognitive-prompt-roadmap.md`は、段階的な改善方針と独立試行の記録を確定した後、全文を通読した。既存機能、今回の明確化、今後調べる効果が混ざらないように確認し、問いから次の確認へ進む流れを自然な日本語で記述した。試行の出力と担当AIによる解釈も区別した。案内を更新した`docs/README.md`と本記録も、文書全体のつながりを確認した。
 
 `docs/README.md`は以前から全文を通読した記録があった一方、鮮度管理のcheckerとmanifestには含まれていなかった。文書案内の更新後にあらためて全文を読み直し、識別に必要な英語ラベルは残しつつ、日本語文中にそのまま入り込んでいた英語表現や不自然な連結を整えたうえで、鮮度管理対象へ正式に追加した。方法論正本の意味、翻訳の位置づけ、研究・生成物との境界は変更していない。
+
+KJ法由来の技能をCSWから分離する検討として、新しく七つの文書を追加した。`docs/ja/maintainers/affinity-core-and-iterative-synthesis-layering.md`は、一回の材料統合を担う層と複数ラウンドを管理する層をどう分けるかを整理した。`docs/ja/maintainers/external-skill-assimilation-process.md`は、既存Agent Skillの機構を比較して取り込む際の手順を定めた。`docs/ja/maintainers/external-skill-feature-adoption-log.md`は、その手順に沿って個々の外部Skillを採否判定した記録である。`docs/ja/maintainers/kj-skill-delegation-review.md`は、既存の公開Skillへ全面移譲できるかどうかを検討し、できないという結論とその理由を記録した。`docs/ja/maintainers/kj-split-migration-audit.md`は、現行`integration.md`と`iteration.md`の各責務をどの層へ移すかを表形式で監査した。`docs/ja/maintainers/kj-split-packaging-and-dependency-design.md`は、複数Skillへ分けた場合の配布形式と依存関係の設計案を比較した。`docs/ja/maintainers/material-led-synthesis-method-boundary.md`は、分離後の材料統合方法そのものの定義と不変条件をまとめた。
+
+これら七文書は、内容と技術的な意味が固まった状態で全文を通読した。英語の技術用語や識別子が日本語の文の骨格に不自然な影響を与えていないかを中心に確認し、いずれも既に自然な日本語として読めると判断したため、記録のためだけの本文変更は行わなかった。方法論正本である`src/ja-JP/`はこの文書群の対象外であり、変更していない。
