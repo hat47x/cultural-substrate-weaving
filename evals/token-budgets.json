@@ -42,7 +42,8 @@
     "Framework use-exit list openness restoration: ja-JP 82116 -> 82128, en-US 81140 -> 81139 (+12 / -1). Traced the research/diagnosis and generation/composition exit headings to v40 production-semantics integration (3dc8777); the same commit's Router already exposed broader operational exits (artifacts, decisions, research direction, residuals), so the two headings were never exhaustive. Kept both evidence boundaries unchanged while marking them as example exits. JA tripwire raised by the 12-byte growth; EN tripwire ratcheted down by the 1-byte reduction.",
     "Heterogeneous-framework exploration-list openness restoration: ja-JP 82128 -> 82158, en-US 81139 -> 81177 (+30 / +38). Restored the v0.1.0 non-exhaustive semantics for exploratory uses of heterogeneous frameworks after the file-level openness preamble was removed; the list itself expanded from three to five in v40 (3dc8777). Kept all five recurring uses and the homogeneity/attribution boundary unchanged while allowing other target-specific exploratory uses. Corpus tripwires raised by the documented growth.",
     "Framework placement/adoption-axis separation: ja-JP 82158 -> 82458, en-US 81177 -> 81460 (+300 / +283). Traced the original four adoption states to 2b39432 and the measured defect to d2b735d, where a rejected framework still produced three surviving findings and a control framework produced five. Separated where framework-derived material remains (artifact reflection, internal scaffolding, auxiliary model, etc.) from adoption/distortion judgment (rejection, detected distortion, etc.), kept judgment actor/basis explicit, and preserved the rule that rejection alone does not retract independently supported findings. No new fixed taxonomy or autonomous adoption decision was introduced. Corpus tripwires raised by the documented growth.",
-    "Continuation clarification in core/iteration.md: ja-JP: 4875 -> 6103 bytes (+1228); en-US: 4448 -> 5665 bytes (+1217). Connect held questions to subsequent material and return results with provenance. Clarifies existing iteration and evidence boundaries; no mandatory handoff fields or new decision authority. Behavioral benefit remains unmeasured. Corpus tripwires increased only by the source delta."
+    "Continuation clarification in core/iteration.md: ja-JP: 4875 -> 6103 bytes (+1228); en-US: 4448 -> 5665 bytes (+1217). Connect held questions to subsequent material and return results with provenance. Clarifies existing iteration and evidence boundaries; no mandatory handoff fields or new decision authority. Behavioral benefit remains unmeasured. Corpus tripwires increased only by the source delta.",
+    "Governance adoption-vocabulary openness restoration: ja-JP 83686 -> 83839, en-US 82677 -> 82850 (+153 / +173). Restored non-exhaustive decision-provenance semantics after the earlier general openness preamble had been removed and the disposition vocabulary itself had evolved from four placement states to five decision/lifecycle terms. Kept adopted, backgrounded, rejected, distorting, and reopened as representative record terms, allow other actually observed states, and explicitly prevent disposition from deriving attribution state. No new fixed taxonomy or autonomous adoption decision was introduced. Corpus tripwires raised by the documented growth."
   ],
   "router_max_bytes": {
     "ja-JP": 10000,
@@ -61,8 +62,8 @@
     "en-US": 14566
   },
   "corpus_max_bytes": {
-    "ja-JP": 83693,
-    "en-US": 82679
+    "ja-JP": 83846,
+    "en-US": 82852
   },
   "m365_instructions_max_chars": 8000,
   "gpt_knowledge_max_files": 10

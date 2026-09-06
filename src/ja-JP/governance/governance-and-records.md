@@ -20,7 +20,7 @@
 - 文化体系の読み込み深度：`not_loaded / probe / preview / full / enacted`
 - 利用：探索／帰属
 - 帰属：`target_supported / framework_generated / cross_field_emergent / unresolved`
-- 採否：`adopted / backgrounded / rejected / distorting / reopened`
+- 採否（代表的な記録語彙）：`adopted / backgrounded / rejected / distorting / reopened`。必要なら実際に生じた別の状態もそのまま記録し、採否から帰属状態を自動導出しない。
 - 当時の制約
 - 反証条件
 - 未解決事項と再開条件
