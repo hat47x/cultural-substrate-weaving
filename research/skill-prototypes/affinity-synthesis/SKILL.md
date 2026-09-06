@@ -135,6 +135,19 @@ secondary resonanceは新しいカードでも独立supportでもない。cluste
 
 結ばれない束、広い空白、片側だけに伸びる関係は、そのまま観察する。空白から推測した内容を事実として埋めない。
 
+#### Representation rule
+
+成果物へ外在化するときは、少なくとも次を区別する。
+
+- **membership**: card / lower groupがgroupを構成する。
+- **explicit relation**: 二つの意味単位の間に、読み返せるpredicateを置く。
+- **secondary resonance**: membershipや独立supportを増やさず別groupにも響く。
+- **layout**: 図での近接・離隔・上下左右・囲み等。
+
+relationを固定edge-type taxonomyへ押し込めず、短い自然言語predicateとして残す。方向は `-> / <-> / --` 等で別に表せるが、`->` 自体を因果と解釈しない。
+
+compact notation、inventory table、machine-readable JSON、diagram projectionの標準候補は `references/REPRESENTATION.md` を読む。
+
 ### 8. Narrate from the relational structure
 
 図解・関係構造を読んで文章化する。
@@ -153,6 +166,21 @@ secondary resonanceは新しいカードでも独立supportでもない。cluste
 
 差分がゼロであることを成功条件にしない。差分があれば理由を明示し、支持された修正か、emergent meaningか、residual / unresolvedかを区別する。
 
+### 10. Render diagrams only as projections
+
+図が有効な場合、semantic recordからdiagram projectionを作ってよい。
+
+推奨view:
+
+- **group relationship map**: 表札とexplicit relationを中心にしたoverview。
+- **membership map**: group boundary、card membership、secondary resonanceの監査。
+- **lineage map**: source → card → group / relation / narrative claim の来歴監査。
+- **spatial map**: 近接、離隔、空白等、配置そのものを保持する必要がある場合。
+
+Mermaidはtopology projectionに向く。自動layoutで元の空間配置が変わるため、配置自体に分析上の意味がある場合はMermaidだけを正本にしない。必要なら位置情報を別に保持し、自由配置できるformatへ投影する。
+
+rendering toolが使える場合は、syntaxだけでなく視覚的な誤読も確認する。図の見栄えのためにsemantic relationを追加・削除・強化しない。
+
 ## Output Contract
 
 成果物には、用途に応じて少なくとも次を追跡可能にする。
@@ -162,13 +190,15 @@ secondary resonanceは新しいカードでも独立supportでもない。cluste
 3. meaning-bearing cards
 4. groups and labels
 5. singleton / tension / unresolved cards
-6. relational structure
-7. narrative synthesis
-8. source ↔ synthesis ↔ narrative cross-check
-9. inherited / emergent / residual meaning when transformation provenance matters
-10. intentionally omitted differences or unresolved residuals
+6. relational structure with readable predicates where relations are asserted
+7. membership / relation / secondary resonance / layout distinction when relevant
+8. narrative synthesis
+9. source ↔ synthesis ↔ narrative cross-check
+10. inherited / emergent / residual meaning when transformation provenance matters
+11. intentionally omitted differences or unresolved residuals
+12. diagram projection and projection-integrity note when a figure is produced
 
-特定の表形式やcanvas geometryを必須にはしない。標準形が必要な場合は `references/TEMPLATE.md` を使う。
+特定の表形式やcanvas geometryを必須にはしない。標準形が必要な場合は `references/TEMPLATE.md` を使う。machine-readable interchangeやdiagram grammarが必要なら `references/REPRESENTATION.md` を使う。
 
 ## Quality Checklist
 
@@ -184,13 +214,17 @@ secondary resonanceは新しいカードでも独立supportでもない。cluste
 - [ ] 現在の表札・構造に合わない入力済みcardを見直した。
 - [ ] 全カードが綺麗に収まった場合、borderline memberやsecondary resonanceを再確認した。
 - [ ] secondary resonanceをカード複製・独立supportとして数えていない。
+- [ ] membership / relation / resonance / layoutを混同していない。
 - [ ] 表札が他の束にも載る一般カテゴリ名へ逃げていない。
 - [ ] 強い表札名が弱い束のまとまりを隠していない。
 - [ ] 元材料にない因果・内面・一般化・評価方向・確度変更を点検した。
 - [ ] 材料の弱化、ぼかし、行為者脱落を点検した。
 - [ ] emergent meaningを、元材料に最初からあった意味へ遡及させていない。
 - [ ] 強い関係線は、その意味を後から読み返して検査できる。
+- [ ] relation predicateを、描画都合の固定edge typeへ不必要に縮めていない。
 - [ ] 図解と叙述を相互に戻して確認した。
+- [ ] diagramを作った場合、図だけに新しい線・包含・順序・重要度が増えていない。
+- [ ] 自動layout上の近接をsemantic relationへ読み替えていない。
 - [ ] 直接引用が必要な場合、実在する原文だけを引用し、モデルが引用文を創作していない。
 - [ ] residual / gapを、存在確認済みの事実へ格上げしていない。
 
@@ -199,7 +233,9 @@ secondary resonanceは新しいカードでも独立supportでもない。cluste
 必要なときだけ読む。
 
 - 方法の不変条件と系譜: `references/METHOD.md`
+- 書式・ID・relation grammar・machine-readable map・diagram projection: `references/REPRESENTATION.md`
 - 標準成果物: `references/TEMPLATE.md`
+- machine-readable schema候補: `references/affinity-map.schema.json`
 - 評価・反例: `evals/CASES.md`
 - 公開時の根拠と限界: `evidence/dossier.md`
 
