@@ -118,6 +118,7 @@ def validate(data: dict[str, Any]) -> tuple[list[str], list[str]]:
                 warnings.append(f"card {cid} derivation_ref does not resolve locally: {ref}")
 
     group_membership: dict[str, set[str]] = {}
+    member_parents: dict[str, list[str]] = {}
     for group in sections["group"]:
         gid = str(group.get("id", ""))
         members = [str(value) for value in group.get("members", [])]
@@ -126,10 +127,19 @@ def validate(data: dict[str, Any]) -> tuple[list[str], list[str]]:
             errors.append(f"group {gid} repeats member refs: {', '.join(duplicates)}")
         group_membership[gid] = set(members)
         for member in members:
+            member_parents.setdefault(member, []).append(gid)
             if member not in semantic_node_ids:
                 errors.append(f"group {gid} member does not resolve to card/group: {member}")
             if member == gid:
                 errors.append(f"group {gid} directly contains itself")
+
+    for member, parents in sorted(member_parents.items()):
+        unique_parents = sorted(set(parents))
+        if len(unique_parents) > 1:
+            warnings.append(
+                f"semantic item {member} is a member of multiple groups: "
+                f"{', '.join(unique_parents)}; verify this is true membership rather than secondary resonance"
+            )
 
     for cycle in find_group_cycles(sections["group"]):
         errors.append("group membership cycle: " + " -> ".join(cycle))
@@ -160,7 +170,7 @@ def validate(data: dict[str, Any]) -> tuple[list[str], list[str]]:
             errors.append(f"relation {rid} target does not resolve: {target}")
         predicate = str(relation.get("predicate", "")).strip()
         if not predicate:
-            errors.append(f"relation {rid} has no readable predicate")
+            errors.append(f"relation {rid} has no readable canonical predicate")
         direction = str(relation.get("direction", ""))
         if direction not in {"directed", "reciprocal", "unspecified"}:
             errors.append(f"relation {rid} has invalid direction: {direction}")
