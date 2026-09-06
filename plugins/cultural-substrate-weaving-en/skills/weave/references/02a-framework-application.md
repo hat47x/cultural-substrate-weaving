@@ -93,7 +93,7 @@ For attribution use, perform these checks. For exploration-only use, apply the p
 
 The same candidate appearing from several frameworks does not create several independent pieces of target evidence. Counts, when kept, are guards against overclaiming rather than quality scores.
 
-## 3c. Exit according to purpose
+## 3c. Example exits by purpose
 
 ### Research and diagnosis
 
