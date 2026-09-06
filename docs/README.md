@@ -7,6 +7,7 @@
 
 - [スキルの全体理解と改善方針](ja/maintainers/skill-improvement-direction.md)
 - [文化体系とKJ法による認知機能の定性的解析と再現設計](ja/maintainers/longitudinal-cognitive-functions.md)
+- [v0.5.0の段階的なプロンプト改善](ja/maintainers/v05-cognitive-prompt-roadmap.md)
 - [Web Chat Living Lab — 日本語](ja/experiments/web-chat-living-lab.md)
 - [Web Chat Living Lab — English](en/experiments/web-chat-living-lab.md)
 
