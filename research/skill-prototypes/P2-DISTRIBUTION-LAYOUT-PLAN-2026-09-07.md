@@ -1,20 +1,20 @@
 # Research Skill Suite — P2 Distribution Layout Plan 2026-09-07
 
-Status: research layout/buildability planning; no package generation performed
+Status: research layout/buildability planning; production multi-skill build remains unchanged
 
 ## Purpose
 
-P1でskillごとのlocale realization availabilityをmanifestへ追加したため、production `scripts/build.py` をmulti-skill化する前に、現在のresearch suiteから**どのdistribution shapeを構成できるか**を機械的に計画する。
+P2では、P1のlocale realization contractを使って、production `scripts/build.py` をmulti-skill化する前に、**どのdistribution shapeが現在のartifact集合から構成可能か**を機械的に計画する。
 
-この段階の `buildable` は次だけを意味する。
+ここでの `buildable` は次だけを意味する。
 
 > そのdistribution shapeが要求するskill/primaryについて、manifest上のlocale realization artifactが揃っている。
 
 意味しないもの:
 
-- packageが実際に生成・検証済みである。
+- production packageが実際に生成・検証済みである。
 - hostがsibling Skillをroutingできる。
-- English method parityがある。
+- translation / method parityが独立査読済みである。
 - adapters / marketplace metadataがmulti-skill対応済みである。
 - byte budgetやrelease asset contractを満たす。
 - public promotion / release readinessがある。
@@ -23,9 +23,9 @@ P1でskillごとのlocale realization availabilityをmanifestへ追加したた�
 
 `research/skill-prototypes/scripts/plan_suite_layout.py` はrepositoryを書き換えず、`suite-manifest.json` からJSON planを標準出力する。
 
-CLIでは先に `validate_research_skill_suite.py` を通し、manifestが内部整合していなければplanを出さない。
+CLIでは正本validator `scripts/validate_research_skill_suite.py` を先に通す。manifestが内部整合していなければplanを出さない。
 
-pure `plan_suite()` はtestからsynthetic manifestを当てられるよう、package生成やfilesystem mutationを行わない。
+pure `plan_suite()` はsynthetic manifestをtestから与えられるため、package生成やfilesystem mutationを行わない。
 
 ## Distribution rules
 
@@ -33,9 +33,9 @@ pure `plan_suite()` はtestからsynthetic manifestを当てられるよう、pa
 
 各skillを独立artifact候補として扱う。
 
-localeで一部skillだけrealizedなら、distribution全体は `partial` とし、各skillを `buildable` / `blocked` に分ける。
+一部skillだけrealizedならdistribution全体は `partial`、すべてrealizedなら `buildable` とする。
 
-これはOpenAI Skill向けtarget shapeに使う。
+OpenAI Skill向けtarget shapeに使う。
 
 ### `locale_bundle`
 
@@ -49,7 +49,7 @@ Claude/Codex向けtarget shapeに使う。
 
 現段階では `primary` skillのlocale realization availabilityだけを見る。
 
-`buildable` でも、companion Method Definitionが内部へ正しく組み込まれたことは意味しない。planには明示的に
+`buildable` でも、companion Method Definitionが内部へ正しく組み込まれたことは意味しない。planには
 
 > primary realization availability only; internal method-composition parity is not asserted
 
@@ -65,107 +65,102 @@ ChatGPT GPT / Microsoft Copilot向けtarget shapeに使う。
 
 ### ja-JP
 
-skill realization:
-
 ```text
 cultural-substrate-weaving: existing
 affinity-synthesis: prototype
 iterative-inquiry-synthesis: prototype
 ```
 
-したがってlayout availabilityは次になる。
-
-| Distribution | Plan state | Meaning |
-|---|---|---|
-| OpenAI standalone-per-skill | buildable | 三Skillそれぞれにja-JP realization entryがある |
-| Claude locale bundle | buildable | target contains三Skillがすべてrealized |
-| Codex locale bundle | buildable | target contains三Skillがすべてrealized |
-| ChatGPT GPT composite | buildable | primary CSW ja-JP realizationがあるだけを確認 |
-| Microsoft Copilot composite | buildable | primary CSW ja-JP realizationがあるだけを確認 |
-
-ここでClaude/Codex `buildable` は、**研究上のlayout inputが揃った**という意味であり、現行production `build_claude()` が三Skillを生成できるという意味ではない。
-
-## en-US
-
-skill realization:
+### en-US
 
 ```text
-cultural-substrate-weaving: existing
-affinity-synthesis: planned
-iterative-inquiry-synthesis: planned
+cultural-substrate-weaving: existing-translated
+affinity-synthesis: translated-draft
+iterative-inquiry-synthesis: translated-draft
 ```
 
-したがって:
+したがってartifact availabilityだけを見るcurrent planは両localeで次になる。
 
-| Distribution | Plan state | Missing / scope |
-|---|---|---|
-| OpenAI standalone-per-skill | partial | CSWのみbuildable、affinity/iterativeはblocked |
-| Claude locale bundle | blocked | affinity-synthesis, iterative-inquiry-synthesis |
-| Codex locale bundle | blocked | affinity-synthesis, iterative-inquiry-synthesis |
-| ChatGPT GPT composite | buildable | primary CSW availability only |
-| Microsoft Copilot composite | buildable | primary CSW availability only |
+| Distribution | ja-JP | en-US | Scope |
+|---|---|---|---|
+| OpenAI standalone-per-skill | buildable | buildable | 各Skillにruntime artifactがある |
+| Claude locale bundle | buildable | buildable | target三Skillのartifactが揃う |
+| Codex locale bundle | buildable | buildable | target三Skillのartifactが揃う |
+| ChatGPT GPT composite | buildable | buildable | primary CSW availabilityのみ |
+| Microsoft Copilot composite | buildable | buildable | primary CSW availabilityのみ |
 
-このplanにより、`distribution_prototypes.claude_plugin.contains` に三Skillが書かれていることを、英語三Skill packageが現在作れるという誤った意味へ読まなくて済む。
+この表は**production build readiness表ではない**。
+
+特にen-USの `translated-draft` は、artifact availabilityとしてはrealizedだが、independent reviewを終えたという意味ではない。
+
+## Production implementation status remains separate
+
+`suite-manifest.json` のdistribution prototypeには `implementation_status` を別に持たせる。
+
+現在:
+
+- OpenAI standalone-per-skill: `planned-production-generalization`
+- Claude locale bundle: `planned-production-generalization`
+- Codex locale bundle: `planned-production-generalization`
+- ChatGPT GPT: `planned-composite-refresh`
+- Microsoft Copilot: `implemented-limited-composite-adapter`
+
+これにより、plannerの `buildable` とproduction実装状態を同じstateへ押し込まない。
 
 ## Relationship to current production build
 
-現行 `scripts/build.py` は単一Skill前提である。
+現行 `scripts/build.py` は単一CSW Skillを中心に組み立てる。
 
 ### OpenAI
 
-`build_openai()` は `config["name"]` 一つと一組のcanonical modulesから一つのSkill directoryを作る。
-
-P2以降に必要になる変化候補:
+将来必要になる変化候補:
 
 - skillごとのruntime/source descriptorを受け取る。
 - standalone targetをskill単位で反復する。
-- locale realizationがplannedなら生成対象から外すかblockedとして報告する。
+- locale realizationをdescriptorから選ぶ。
+- research-only / translated-draft / public-readyの状態をpackage生成可否と混同しない。
 
-まだ変更しない。
+### Claude / Codex
 
-### Claude
+plugin filesystemは複数Skillを置けるため、同一locale bundleへ三Skillを配置する余地がある。
 
-`build_claude()` は一つのplugin root内に一つの`skills/<skill_name>`を作る。
-
-filesystem shape自体は複数Skillを置けるため、将来は同じplugin rootへ三Skillを生成する余地がある。
-
-ただし現時点で関数を変更しない。まずresearch plannerがtarget compositionを安定して表せることを確認する。
-
-### Codex
-
-現行Codex manifestはpluginの`skills/` rootを参照するため、Claude側bundleがmulti-skillになれば同じdirectoryを利用できる可能性が高い。
-
-ただしhost routing behaviorまでこのplannerは判定しない。
+ただしhost routing behavior、marketplace metadata、生成物validationまでplannerは判定しない。
 
 ### ChatGPT GPT / Microsoft Copilot
 
-現行はCSW composite agent realizationを維持する方針である。
+composite surfaceは、sibling Skillを別artifactとして呼び出せることを前提にしない。
 
-P3でLayer 1/2をcanonical sourceへ昇格した後、composite buildがそれらMethod Definitionを内部へ取り込む構造を別途設計する。
+ChatGPT GPTはcompanion Method Definitionを内部へどう取り込むかを別途設計する。
 
-primary CSW entryが存在するだけで、その将来compositionが完成したとは扱わない。
+Microsoft Copilotは現在、限定composite adapterとして最小限のmaterial-synthesis fallbackだけを自己完結させ、full sibling-method parityを主張しない。
 
 ## Tests
 
-`tests/test_research_skill_suite_layout.py` は少なくとも次を固定する。
+`tests/test_research_skill_suite_layout.py` は現在、少なくとも次を固定する。
 
-- current ja-JP bundleはlayout上buildable。
-- current en-US OpenAI standaloneはpartial。
-- current en-US Claude/Codex bundleは二つのcompanion skill不足でblocked。
-- companion英語realizationが二つとも揃えばbundleはbuildableへ変わる。
+- current ja-JP / en-USはartifact availability上、三Skill standalone/bundleともbuildable。
+- `translated-draft` はbuildable artifactであってpromotion-readyを意味しない。
+- 一つのcompanion realizationを `planned` に戻すとOpenAIはpartial、Claude/Codex bundleはblockedになる。
 - unknown target skillはmissingとしてfail-closedに見える。
 - composite primaryがplannedならblocked。
 - unknown distribution modeはunsupported。
 
-これはactual build testではない。
+## Research preview assembly
+
+`build_preview.py` はplannerとは別の役割を持つ。
+
+planner:
+
+> manifestだけからtarget shapeのartifact availabilityを計算する。
+
+preview assembly:
+
+> 実際にresearch-only package treeを一時構築し、frontmatter、Method Definition、references、相対リンク等を検査する。
+
+この二つを分離することで、layout planが通っただけでpackage assemblyも通ったと誤認しない。
 
 ## P2 decision
 
-**Production `build.py` generalizationへ入る前のlayout/buildability contractは、research plannerとして切り出せる。**
+**P2は、両localeでlayout inputが揃った状態へ進んだ。次の不足はartifactそのものではなく、production distribution descriptor/build generalizationとpromotion reviewである。**
 
-次の判断は二つに分ける。
-
-1. 完全checkoutが復旧したら、このplanner/testを含む `make check` を実行する。
-2. それ以前に進める場合でも、production buildを直接書き換えるのではなく、現行build関数とsuite planの間に必要なdescriptor contractをresearch側で設計する。
-
-英語companion Skillを先に捏造してbundleをgreenにすることはしない。
+次はproduction `build.py` を直接全面改造するのではなく、現行build関数とsuite planの間に入るdescriptor contractをresearch側で定義し、research-only assemblyで三Skill×二localeを安定して再現できることを先に確認する。
