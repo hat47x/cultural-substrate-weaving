@@ -32,8 +32,13 @@ def relation_connector(direction: str) -> str:
     }.get(direction, "---")
 
 
+def display_text(item: dict[str, Any], canonical_key: str) -> str:
+    compact = str(item.get("display_label", "")).strip()
+    return compact or str(item.get(canonical_key, ""))
+
+
 def relation_label(item: dict[str, Any]) -> str:
-    label = f'{item.get("id", "R?")}｜{item.get("predicate", "")}'
+    label = f'{item.get("id", "R?")}｜{display_text(item, "predicate")}'
     state = str(item.get("state", "")).strip()
     if state:
         label += f" [{state}]"
@@ -50,7 +55,7 @@ def render_group_map(data: dict[str, Any]) -> str:
 
     questions = by_id(data.get("questions", []))
     for qid, question in questions.items():
-        label = mermaid_text(f'{qid}?｜{question.get("text", "")}')
+        label = mermaid_text(f'{qid}?｜{display_text(question, "text")}')
         lines.append(f'    {qid}["{label}"]')
 
     if groups or questions:
@@ -72,7 +77,7 @@ def render_group_map(data: dict[str, Any]) -> str:
             origin = str(origin)
             if origin in groups and qid:
                 lines.append(
-                    f'    {origin} -.->|"question / not asserted relation"| {qid}'
+                    f'    {origin} -.->|"question provenance / not asserted relation"| {qid}'
                 )
 
     if data.get("layout"):
@@ -121,9 +126,9 @@ def render_membership_map(data: dict[str, Any]) -> str:
         target = str(crosslink.get("to", ""))
         if not source or target not in groups:
             continue
+        compact = display_text(crosslink, "note")
         note = mermaid_text(
-            f'{crosslink.get("id", "X?")}｜resonance / not membership｜'
-            f'{crosslink.get("note", "")}'
+            f'{crosslink.get("id", "X?")}｜resonance / not membership｜{compact}'
         )
         lines.append(
             f'    {source} -.->|"{note}"| {target}_anchor'
