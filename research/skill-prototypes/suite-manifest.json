@@ -21,9 +21,6 @@
       "working_display_en": "Affinity Synthesis",
       "role": "one_round_material_synthesis",
       "source_root": "research/skill-prototypes/affinity-synthesis",
-      "assembly": {
-        "mode": "direct_skill"
-      },
       "method_definition": "research/skill-prototypes/affinity-synthesis/references/METHOD.md",
       "runtime_entry": "research/skill-prototypes/affinity-synthesis/SKILL.md",
       "locale_realizations": {
@@ -31,24 +28,35 @@
           "status": "prototype",
           "runtime_entry": "research/skill-prototypes/affinity-synthesis/SKILL.md",
           "method_definition": "research/skill-prototypes/affinity-synthesis/references/METHOD.md",
-          "package_references": [
-            "research/skill-prototypes/affinity-synthesis/references/METHOD.md",
-            "research/skill-prototypes/affinity-synthesis/references/TEMPLATE.md",
-            "research/skill-prototypes/affinity-synthesis/references/REPRESENTATION.md",
-            "research/skill-prototypes/affinity-synthesis/references/HIERARCHY-AND-LINEAGE.md",
-            "research/skill-prototypes/affinity-synthesis/references/affinity-map.schema.json"
-          ]
+          "package_source": {
+            "mode": "explicit_files",
+            "root": "research/skill-prototypes/affinity-synthesis",
+            "files": [
+              "SKILL.md",
+              "references/METHOD.md",
+              "references/REPRESENTATION.md",
+              "references/TEMPLATE.md",
+              "references/affinity-map.schema.json",
+              "evals/CASES.md",
+              "evidence/dossier.md"
+            ]
+          }
         },
         "en-US": {
           "status": "translated-draft",
           "human_review": "recommended",
           "runtime_entry": "research/skill-prototypes/affinity-synthesis/SKILL.en.md",
           "method_definition": "research/skill-prototypes/affinity-synthesis/references/METHOD.en.md",
-          "package_references": [
-            "research/skill-prototypes/affinity-synthesis/references/METHOD.en.md",
-            "research/skill-prototypes/affinity-synthesis/references/REPRESENTATION.md",
-            "research/skill-prototypes/affinity-synthesis/references/affinity-map.schema.json"
-          ]
+          "package_source": {
+            "mode": "explicit_files",
+            "root": "research/skill-prototypes/affinity-synthesis",
+            "files": [
+              "SKILL.en.md",
+              "references/METHOD.en.md",
+              "references/REPRESENTATION.md",
+              "references/affinity-map.schema.json"
+            ]
+          }
         }
       },
       "references": [
@@ -90,9 +98,6 @@
       "working_display_en": "Iterative Inquiry Synthesis",
       "role": "multi_round_inquiry_orchestration",
       "source_root": "research/skill-prototypes/iterative-inquiry-synthesis",
-      "assembly": {
-        "mode": "direct_skill"
-      },
       "method_definition": "research/skill-prototypes/iterative-inquiry-synthesis/references/METHOD.md",
       "runtime_entry": "research/skill-prototypes/iterative-inquiry-synthesis/SKILL.md",
       "locale_realizations": {
@@ -100,20 +105,30 @@
           "status": "prototype",
           "runtime_entry": "research/skill-prototypes/iterative-inquiry-synthesis/SKILL.md",
           "method_definition": "research/skill-prototypes/iterative-inquiry-synthesis/references/METHOD.md",
-          "package_references": [
-            "research/skill-prototypes/iterative-inquiry-synthesis/references/METHOD.md",
-            "research/skill-prototypes/iterative-inquiry-synthesis/references/ROUND-TEMPLATE.md"
-          ]
+          "package_source": {
+            "mode": "explicit_files",
+            "root": "research/skill-prototypes/iterative-inquiry-synthesis",
+            "files": [
+              "SKILL.md",
+              "references/METHOD.md",
+              "references/ROUND-TEMPLATE.md"
+            ]
+          }
         },
         "en-US": {
           "status": "translated-draft",
           "human_review": "recommended",
           "runtime_entry": "research/skill-prototypes/iterative-inquiry-synthesis/SKILL.en.md",
           "method_definition": "research/skill-prototypes/iterative-inquiry-synthesis/references/METHOD.en.md",
-          "package_references": [
-            "research/skill-prototypes/iterative-inquiry-synthesis/references/METHOD.en.md",
-            "research/skill-prototypes/iterative-inquiry-synthesis/references/ROUND-TEMPLATE.md"
-          ]
+          "package_source": {
+            "mode": "explicit_files",
+            "root": "research/skill-prototypes/iterative-inquiry-synthesis",
+            "files": [
+              "SKILL.en.md",
+              "references/METHOD.en.md",
+              "references/ROUND-TEMPLATE.md"
+            ]
+          }
         }
       },
       "references": [
@@ -146,23 +161,29 @@
       "working_display_en": "Cultural Substrate Weaving",
       "role": "cultural_framework_exploration",
       "source_root": "src",
-      "assembly": {
-        "mode": "router_modules",
-        "source_manifest": "src/manifest.json"
-      },
       "method_definition": null,
       "runtime_entry": "src/ja-JP/ROUTER.md",
       "locale_realizations": {
         "ja-JP": {
           "status": "existing",
           "runtime_entry": "src/ja-JP/ROUTER.md",
-          "method_definition": null
+          "method_definition": null,
+          "package_source": {
+            "mode": "canonical_manifest",
+            "manifest": "src/manifest.json",
+            "locale_root": "src/ja-JP"
+          }
         },
         "en-US": {
           "status": "existing-translated",
           "human_review": "recommended",
           "runtime_entry": "src/en-US/ROUTER.md",
-          "method_definition": null
+          "method_definition": null,
+          "package_source": {
+            "mode": "canonical_manifest",
+            "manifest": "src/manifest.json",
+            "locale_root": "src/en-US"
+          }
         }
       },
       "references": [],
@@ -187,6 +208,7 @@
     }
   ],
   "suite_research_assets": [
+    "research/skill-prototypes/P2-PACKAGE-SOURCE-DESCRIPTOR-2026-09-07.md",
     "research/skill-prototypes/REFERENCE-CLASSIFICATION.md",
     "research/skill-prototypes/evals/CSW-HANDOFF-CASES.md",
     "research/skill-prototypes/evals/THREE-LAYER-PAIRED-RUN-2026-09-06.md",
@@ -199,7 +221,7 @@
     "openai_skill": {
       "mode": "standalone_per_skill",
       "implementation_status": "planned-production-generalization",
-      "note": "All three locale realizations can be planned independently; the current production build remains single-skill."
+      "note": "All three locale realizations have package-source descriptors; the current production build remains single-skill."
     },
     "claude_plugin": {
       "mode": "locale_bundle",
@@ -209,7 +231,7 @@
         "iterative-inquiry-synthesis"
       ],
       "implementation_status": "planned-production-generalization",
-      "note": "Layout input is available in both locales, but the production builder has not yet been generalized to emit all three Skills."
+      "note": "Package-source input is available in both locales, but the production builder has not yet been generalized to emit all three Skills."
     },
     "codex_plugin": {
       "mode": "locale_bundle",
@@ -219,13 +241,13 @@
         "iterative-inquiry-synthesis"
       ],
       "implementation_status": "planned-production-generalization",
-      "note": "Layout input is available in both locales, but the production builder has not yet been generalized to emit all three Skills."
+      "note": "Package-source input is available in both locales, but the production builder has not yet been generalized to emit all three Skills."
     },
     "chatgpt_gpt": {
       "mode": "composite_agent_realization",
       "primary": "cultural-substrate-weaving",
       "implementation_status": "planned-composite-refresh",
-      "note": "Primary CSW realization exists; companion method-composition parity is not yet asserted by the production package."
+      "note": "Primary CSW realization and package-source descriptor exist; companion method-composition parity is not yet asserted by the production package."
     },
     "microsoft_copilot": {
       "mode": "composite_agent_realization",
@@ -242,9 +264,9 @@
     }
   },
   "promotion_gates": [
-    "research skill suite manifest and locale realizations pass repository validation",
+    "research skill suite manifest, locale realizations, and package-source descriptors pass repository validation",
     "skill installable names remain unique and locale runtime frontmatter matches the intended installable name",
-    "locale package references are explicit and do not silently import research-only or wrong-locale instructions",
+    "package sources preserve runtime-relative structure without silently importing research-only or wrong-locale instructions",
     "no hard dependency is assumed by the public method contract",
     "affinity-synthesis larger-set and representation regressions remain acceptable",
     "iterative-inquiry-synthesis contract cases and paired runs remain aligned with delta-reopen behavior",
