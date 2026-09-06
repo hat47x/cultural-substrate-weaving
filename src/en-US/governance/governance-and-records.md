@@ -33,7 +33,7 @@ For `framework_generated → target_supported`, retain a reference to target-sid
 
 ## 11. Avoid double counting
 
-Treat records with the same causal mechanism and disposition as one lineage. Do not count the following as independent support:
+Treat records derived from the same change or evidential basis as one lineage. Judge independent support by independence of evidence source, observation, or derivation, not merely by a shared causal mechanism or disposition. Do not count the following as independent support:
 
 - reposts of the same source;
 - multiple cards derived from one card;
