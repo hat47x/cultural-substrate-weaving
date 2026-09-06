@@ -107,8 +107,8 @@ Do not confuse compositional adoption with a historical fact about the tradition
 
 A third structure arising from contact among frameworks remains `cross_field_emergent`; do not write it back into the canonical framework itself.
 
-## 3d. Adoption state and over-application
+## 3d. Placement, adoption judgment, and over-application
 
-When useful, distinguish reflection into the artifact, internal scaffolding, a reusable auxiliary model, rejection, and detected distortion. Rejecting a framework does not require deleting every question it generated.
+Do not use one axis for where framework-derived material remains in the work and how framework use is judged. Placement may include reflection into the artifact, internal scaffolding, or a reusable auxiliary model. Adoption or distortion judgments may include rejection or detected distortion; when recorded, keep the judging actor and basis. Rejection alone does not require deleting questions the framework generated or retracting findings independently supported on the target side.
 
 Over-application tends to show up as one-to-one mappings multiplying, pressure to fill empty positions, explanation volume growing without target-side movement, or conflict and irreversibility being absorbed into harmony. Even when these signs are absent, check coverage: a framework may simply be explaining only a small part of the target.
