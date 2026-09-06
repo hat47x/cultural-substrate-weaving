@@ -107,8 +107,17 @@ make research-skill-check
 現在のresearch gateは少なくとも次を検査する。
 
 1. `suite-manifest.json` とlocale realizationの存在・installable name整合
-2. thin-CSW / sibling Method間のsplit ownership
-3. affinity-map representationのrecursive grouping / lineage regression
+2. thin-CSW / sibling Method間のsplit ownership（日英）
+3. 三Skill × 二localeのresearch-only preview assembly、frontmatter、Method Definition、相対link
+4. affinity-map representationのrecursive grouping / lineage regression
+
+previewを実際に目視したい場合は次を使う。
+
+```bash
+make research-skill-preview
+```
+
+`dist/research-skill-suite/` に三Skill × 二localeのresearch-only packageを組み立てる。これはOpenAI / Claude / Codex等の公開platform packageではなく、multi-skill build一般化前の構造確認用である。
 
 release側の通常検証は別である。
 
