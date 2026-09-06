@@ -1,0 +1,58 @@
+{
+  "format": "affinity-map",
+  "version": "0.1",
+  "cards": [
+    {"id": "C001", "text": "card one"},
+    {"id": "C002", "text": "card two"}
+  ],
+  "groups": [
+    {
+      "id": "G01",
+      "label": "first group",
+      "members": ["C001", "C001", "G02"]
+    },
+    {
+      "id": "G02",
+      "label": "second group",
+      "members": ["G01", "C002", "C999"]
+    }
+  ],
+  "resonances": [
+    {
+      "id": "X01",
+      "from": "C001",
+      "to": "G01",
+      "note": "declared secondary resonance even though C001 is already a member"
+    }
+  ],
+  "relations": [
+    {
+      "id": "R01",
+      "from": "G01",
+      "to": "G999",
+      "direction": "directed",
+      "predicate": "points to a missing endpoint"
+    },
+    {
+      "id": "R02",
+      "from": "G02",
+      "to": "G01",
+      "direction": "causal",
+      "predicate": "invalid direction enum"
+    }
+  ],
+  "questions": [
+    {
+      "id": "Q01",
+      "text": "question with missing origin",
+      "arises_from": ["G404"]
+    }
+  ],
+  "layout": {
+    "projection": "spatial-map",
+    "positions": {
+      "G01": {"x": 0.2, "y": 0.3},
+      "G404": {"x": 1.4, "y": 0.4}
+    }
+  }
+}

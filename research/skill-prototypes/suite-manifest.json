@@ -1,0 +1,135 @@
+{
+  "schema": "csw.research-skill-suite/v1",
+  "status": "research-only",
+  "suite_id": "csw-method-suite-prototype",
+  "repository_release_line": "0.5.x",
+  "canonical_locale": "ja-JP",
+  "locales": {
+    "ja-JP": {
+      "status": "canonical"
+    },
+    "en-US": {
+      "status": "planned",
+      "note": "Do not promote prototype skills until English realization parity is explicitly reviewed."
+    }
+  },
+  "skills": [
+    {
+      "id": "affinity-synthesis",
+      "installable_name": "affinity-synthesis",
+      "working_display_ja": "親和統合",
+      "role": "one_round_material_synthesis",
+      "source_root": "research/skill-prototypes/affinity-synthesis",
+      "method_definition": "research/skill-prototypes/affinity-synthesis/references/METHOD.md",
+      "runtime_entry": "research/skill-prototypes/affinity-synthesis/SKILL.md",
+      "references": [
+        "research/skill-prototypes/affinity-synthesis/references/METHOD.md",
+        "research/skill-prototypes/affinity-synthesis/references/TEMPLATE.md"
+      ],
+      "evidence": [
+        "research/skill-prototypes/affinity-synthesis/evidence/dossier.md"
+      ],
+      "evals": [
+        "research/skill-prototypes/affinity-synthesis/evals/CASES.md",
+        "research/skill-prototypes/affinity-synthesis/evals/DRY-RUN-2026-09-06.md",
+        "research/skill-prototypes/affinity-synthesis/evals/PAIRED-REAL-TASK-2026-09-06.md",
+        "research/skill-prototypes/affinity-synthesis/evals/LARGE-SET-RETROSPECTIVE-2026-09-06.md"
+      ],
+      "method_version": "0.1-research",
+      "realization_version": "0.1-research",
+      "delegation": {
+        "may_delegate_narrower_tasks_to": [
+          "compatible-affinity-mapping-skill"
+        ],
+        "does_not_require": []
+      }
+    },
+    {
+      "id": "iterative-inquiry-synthesis",
+      "installable_name": "iterative-inquiry-synthesis",
+      "working_display_ja": "反復探索統合",
+      "role": "multi_round_inquiry_orchestration",
+      "source_root": "research/skill-prototypes/iterative-inquiry-synthesis",
+      "method_definition": null,
+      "runtime_entry": "research/skill-prototypes/iterative-inquiry-synthesis/SKILL.md",
+      "references": [
+        "research/skill-prototypes/iterative-inquiry-synthesis/references/ROUND-TEMPLATE.md"
+      ],
+      "evidence": [],
+      "evals": [],
+      "method_version": "0.1-research",
+      "realization_version": "0.1-research",
+      "delegation": {
+        "prefers_compatible_realization": [
+          "affinity-synthesis"
+        ],
+        "hard_dependency": false
+      }
+    },
+    {
+      "id": "cultural-substrate-weaving",
+      "installable_name": "cultural-substrate-weaving",
+      "working_display_ja": "Cultural Substrate Weaving",
+      "role": "cultural_framework_exploration",
+      "source_root": "src",
+      "method_definition": null,
+      "runtime_entry": "src/ja-JP/ROUTER.md",
+      "references": [],
+      "evidence": [],
+      "evals": [],
+      "method_version": "0.5-research-line",
+      "realization_version": "0.5-research-line",
+      "delegation": {
+        "prefers_compatible_realization": [
+          "affinity-synthesis",
+          "iterative-inquiry-synthesis"
+        ],
+        "hard_dependency": false,
+        "fallback_contract": [
+          "do not promote framework-generated candidates to target-supported findings",
+          "do not claim KJ/affinity synthesis was executed when no compatible realization ran",
+          "return framework-generated questions, hypotheses, correspondences, and residuals with attribution intact"
+        ]
+      }
+    }
+  ],
+  "distribution_prototypes": {
+    "openai_skill": {
+      "mode": "standalone_per_skill"
+    },
+    "claude_plugin": {
+      "mode": "locale_bundle",
+      "contains": [
+        "cultural-substrate-weaving",
+        "affinity-synthesis",
+        "iterative-inquiry-synthesis"
+      ]
+    },
+    "codex_plugin": {
+      "mode": "locale_bundle",
+      "contains": [
+        "cultural-substrate-weaving",
+        "affinity-synthesis",
+        "iterative-inquiry-synthesis"
+      ]
+    },
+    "chatgpt_gpt": {
+      "mode": "composite_agent_realization",
+      "primary": "cultural-substrate-weaving"
+    },
+    "microsoft_copilot": {
+      "mode": "composite_agent_realization",
+      "primary": "cultural-substrate-weaving"
+    }
+  },
+  "promotion_gates": [
+    "all canonical runtime entries exist",
+    "all declared references/evidence/evals exist",
+    "skill installable names are unique",
+    "no hard dependency is assumed by the public method contract",
+    "affinity-synthesis larger-set regression remains acceptable",
+    "iterative-inquiry-synthesis receives its own method definition and eval cases",
+    "English realization parity is reviewed",
+    "runtime build and validator are generalized before canonical source migration"
+  ]
+}
