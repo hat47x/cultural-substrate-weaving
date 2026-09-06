@@ -48,6 +48,7 @@ Layer 1のgrouping / labeling algorithmを再実装しない。
 ```text
 Method Definition
     != Agent Skill realization
+    != package source descriptor
     != representation / renderer
     != evaluation fixture
     != application record
@@ -73,9 +74,27 @@ Method Definitionの不変条件を別realizationが満たせるなら、local S
 - Affinity Synthesis draft: `affinity-synthesis/SKILL.en.md` / `references/METHOD.en.md`
 - Iterative Inquiry Synthesis draft: `iterative-inquiry-synthesis/SKILL.en.md` / `references/METHOD.en.md`
 
-英語sibling realizationは `translated-draft`。独立した人手査読済みとは扱わない。
+英語sibling realizationは `translated-draft`。runtime artifactと英語Method Definitionは存在するが、独立した人手査読済みとは扱わない。
 
 参照資料のlocale依存とruntime依存は [REFERENCE-CLASSIFICATION.md](REFERENCE-CLASSIFICATION.md) を参照する。
+
+## Package source
+
+`runtime_entry` が存在することと、そのSkillをpackageへ組み立てるsource boundaryが分かっていることを分ける。
+
+locale realizationごとに `package_source` を宣言する。
+
+- `explicit_files`: sibling Skill。source rootからの相対構造を保つfile集合。
+- `canonical_manifest`: CSW。既存 `src/manifest.json` とlocale rootを再利用する。
+
+詳細は次を参照する。
+
+- [P1 Locale Realization Audit](P1-LOCALE-REALIZATION-AUDIT-2026-09-07.md)
+- [P2 Distribution Layout Plan](P2-DISTRIBUTION-LAYOUT-PLAN-2026-09-07.md)
+- [P2 Package Source Descriptor Audit](P2-PACKAGE-SOURCE-DESCRIPTOR-2026-09-07.md)
+- [P3 Package Tree Preview](P3-PACKAGE-TREE-PREVIEW-2026-09-07.md)
+
+`package_source` はresearch metadataの全量を意味しない。runtime packageへ必要なsource boundaryだけを表す。
 
 ## 研究資料の役割
 
@@ -85,6 +104,7 @@ Method Definitionの不変条件を別realizationが満たせるなら、local S
 - `evidence/`: lineage / external-skill comparison / research basis
 - `evals/`: regression fixtures / application records
 - `migration/`: split migration and retention audits
+- `package_source`: locale realizationをpackageへ投影するときのsource boundary
 
 未翻訳のevidence / eval / migration資料を、英語runtimeの暗黙の実行指示にはしない。
 
@@ -106,10 +126,24 @@ make research-skill-check
 
 現在のresearch gateは少なくとも次を検査する。
 
-1. `suite-manifest.json` とlocale realizationの存在・installable name整合
-2. thin-CSW / sibling Method間のsplit ownership（日英）
-3. 三Skill × 二localeのresearch-only preview assembly、frontmatter、Method Definition、相対link
-4. affinity-map representationのrecursive grouping / lineage regression
+1. formal suite validator
+   - locale realization
+   - Method Definition
+   - installable name / frontmatter
+   - `package_source`
+   - source-root escape
+   - research metadata / checks
+   - hard-dependency boundary
+2. distribution layout planner
+   - runtimeだけでなくpackage-source descriptorがある場合にだけbuildableとする
+3. thin-CSW / sibling Method間のsplit ownership（日英）
+4. 三Skill × 二localeのresearch-only package-tree preview
+   - `explicit_files` のrelative structure
+   - `canonical_manifest` のrouter / modules
+   - frontmatter
+   - Method Definition
+   - relative links
+5. affinity-map representationのrecursive grouping / lineage regression
 
 previewを実際に目視したい場合は次を使う。
 
@@ -117,7 +151,11 @@ previewを実際に目視したい場合は次を使う。
 make research-skill-preview
 ```
 
-`dist/research-skill-suite/` に三Skill × 二localeのresearch-only packageを組み立てる。これはOpenAI / Claude / Codex等の公開platform packageではなく、multi-skill build一般化前の構造確認用である。
+`dist/research-skill-suite/` に三Skill × 二localeのresearch-only packageを組み立てる。
+
+英語source上の `SKILL.en.md` はpackage entryでは `SKILL.md` へ投影するが、元sourceは `ORIGIN.json` に残す。その他のexplicit fileはsource rootからの相対構造を保つ。
+
+これはOpenAI / Claude / Codex等の公開platform packageではなく、multi-skill build一般化前の構造確認用である。
 
 release側の通常検証は別である。
 
@@ -140,3 +178,11 @@ GitHub Actionsは現在使用していない。ローカルまたは同等の実
 - platformごとのdependency / bundle / composite-agent境界の実装
 
 M365だけは、sibling Skill invocationを前提にできないため、現在の限定adapter内に最小compatible material-synthesis fallbackを埋め込む。これはCSW本体がLayer 1を再所有したことを意味しない。
+
+## Current next gate
+
+現在の不足は「source descriptorがないこと」ではない。
+
+次に必要なのは、実行環境で `make research-skill-check` を実際に通し、preview tree・relative link・validator/testの不整合を実データで潰すことである。
+
+その結果が安定するまでproduction `scripts/build.py` のmulti-skill一般化には進まない。
