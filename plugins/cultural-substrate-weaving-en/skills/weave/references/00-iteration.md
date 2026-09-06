@@ -32,6 +32,14 @@ Blanks and residuals may become receptors for later material. Background them wh
 
 Do not reread the whole history every round. Use **new material, touched residuals, KJ snapshots, probes, and previews** as foregrounding examples, not a closed list.
 
+## Connect held questions to the next material
+
+When continuation is expected, connect a held question to an observation, comparison, source search, or another way to examine it. For example: "This relation remains a hypothesis; inspecting this material next could distinguish support from counterexamples." If it is unclear what could distinguish them, preserve that gap too. The caller's conditions govern the method and scope of execution.
+
+When results arrive, return them to the material or KJ snapshot that raised the question. For a question mediated by a cultural framework, keep the part or operation used traceable too. Distinguish results from searches, calculations, and similar work as derivations within a framework, independent evidence about the target, interpretations of sources, or other kinds as appropriate. Internal consistency within a framework does not itself add support for the target.
+
+For a handoff, select what continuation needs, such as the question, what to examine, where to return, changed relations, and remaining reservations. This is not a mandatory field list. References to source material and local differences can suffice without summarizing the whole again for the record.
+
 ## Observe longitudinal change as events
 
 When useful, record events such as the following; the record format is in `08-governance-and-records.md`.
