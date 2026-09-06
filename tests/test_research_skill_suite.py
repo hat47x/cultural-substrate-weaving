@@ -39,6 +39,11 @@ class ResearchSkillSuiteTests(unittest.TestCase):
             path for path in iterative["references"] if not path.endswith("/METHOD.md")
         ]
         iterative["locale_realizations"]["ja-JP"]["method_definition"] = None
+        iterative["locale_realizations"]["ja-JP"]["package_references"] = [
+            path
+            for path in iterative["locale_realizations"]["ja-JP"]["package_references"]
+            if not path.endswith("/METHOD.md")
+        ]
 
         self.assert_has_error(manifest, "METHOD.md exists but method_definition is not registered")
 
@@ -114,6 +119,27 @@ class ResearchSkillSuiteTests(unittest.TestCase):
         affinity = self.skill(manifest, "affinity-synthesis")
         affinity["locale_realizations"]["en-US"].pop("method_definition")
         self.assert_has_error(manifest, "realized locale en-US must declare method_definition")
+
+    def test_realized_method_skill_requires_package_references(self) -> None:
+        manifest = copy.deepcopy(self.manifest)
+        affinity = self.skill(manifest, "affinity-synthesis")
+        affinity["locale_realizations"]["en-US"].pop("package_references")
+        self.assert_has_error(manifest, "realized locale en-US must declare package_references")
+
+    def test_package_references_must_include_locale_method_definition(self) -> None:
+        manifest = copy.deepcopy(self.manifest)
+        affinity = self.skill(manifest, "affinity-synthesis")
+        realization = affinity["locale_realizations"]["en-US"]
+        realization["package_references"].remove(realization["method_definition"])
+        self.assert_has_error(manifest, "package_references must include method_definition")
+
+    def test_package_reference_must_also_be_a_declared_skill_reference(self) -> None:
+        manifest = copy.deepcopy(self.manifest)
+        affinity = self.skill(manifest, "affinity-synthesis")
+        affinity["locale_realizations"]["en-US"]["package_references"].append(
+            "research/skill-prototypes/affinity-synthesis/SKILL.en.md"
+        )
+        self.assert_has_error(manifest, "package reference must also be declared in references")
 
     def test_locale_method_definition_must_be_declared_as_reference(self) -> None:
         manifest = copy.deepcopy(self.manifest)
