@@ -22,6 +22,15 @@
       "source_root": "research/skill-prototypes/affinity-synthesis",
       "method_definition": "research/skill-prototypes/affinity-synthesis/references/METHOD.md",
       "runtime_entry": "research/skill-prototypes/affinity-synthesis/SKILL.md",
+      "locale_realizations": {
+        "ja-JP": {
+          "status": "prototype",
+          "runtime_entry": "research/skill-prototypes/affinity-synthesis/SKILL.md"
+        },
+        "en-US": {
+          "status": "planned"
+        }
+      },
       "references": [
         "research/skill-prototypes/affinity-synthesis/references/METHOD.md",
         "research/skill-prototypes/affinity-synthesis/references/TEMPLATE.md"
@@ -52,6 +61,15 @@
       "source_root": "research/skill-prototypes/iterative-inquiry-synthesis",
       "method_definition": "research/skill-prototypes/iterative-inquiry-synthesis/references/METHOD.md",
       "runtime_entry": "research/skill-prototypes/iterative-inquiry-synthesis/SKILL.md",
+      "locale_realizations": {
+        "ja-JP": {
+          "status": "prototype",
+          "runtime_entry": "research/skill-prototypes/iterative-inquiry-synthesis/SKILL.md"
+        },
+        "en-US": {
+          "status": "planned"
+        }
+      },
       "references": [
         "research/skill-prototypes/iterative-inquiry-synthesis/references/METHOD.md",
         "research/skill-prototypes/iterative-inquiry-synthesis/references/ROUND-TEMPLATE.md"
@@ -81,6 +99,16 @@
       "source_root": "src",
       "method_definition": null,
       "runtime_entry": "src/ja-JP/ROUTER.md",
+      "locale_realizations": {
+        "ja-JP": {
+          "status": "existing",
+          "runtime_entry": "src/ja-JP/ROUTER.md"
+        },
+        "en-US": {
+          "status": "existing",
+          "runtime_entry": "src/en-US/ROUTER.md"
+        }
+      },
       "references": [],
       "evidence": [],
       "evals": [],
