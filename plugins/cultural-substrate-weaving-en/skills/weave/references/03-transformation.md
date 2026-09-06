@@ -22,7 +22,7 @@ Validate element correspondence separately from causal or temporal correspondenc
 
 In hierarchical frameworks, distinguish stage sequences from overlapping layers. Some principles look like one element while changing the meaning of every layer. Treat an ordinary element separately from a condition for interpreting the whole.
 
-Before reasoning about absence, examine the framework's coverage:
+Before reasoning about absence, examine at least the following aspects of the framework's coverage:
 
 - closed set or open list;
 - mutually exclusive or overlapping;

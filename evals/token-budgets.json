@@ -46,7 +46,8 @@
     "Governance adoption-vocabulary openness restoration: ja-JP 83686 -> 83839, en-US 82677 -> 82850 (+153 / +173). Restored non-exhaustive decision-provenance semantics after the earlier general openness preamble had been removed and the disposition vocabulary itself had evolved from four placement states to five decision/lifecycle terms. Kept adopted, backgrounded, rejected, distorting, and reopened as representative record terms, allow other actually observed states, and explicitly prevent disposition from deriving attribution state. No new fixed taxonomy or autonomous adoption decision was introduced. Corpus tripwires raised by the documented growth.",
     "Iteration round-operation order rebaseline: ja-JP 83839 -> 84112, en-US 82850 -> 83156 (+273 / +306). Distinguished the measured stage-purpose question sequence in 91e33eb from the separate seven-operation round list introduced by the v40 production-semantics consolidation. Kept all seven recurring operations and the KJ/framework/provenance/boundary dependencies, but removed the unsupported implication that every round must traverse every operation once in one fixed order. KJ-specific returns are conditional on KJ use, and operations may be selected, revisited, or repeated under external conditions and delegated scope. No new fixed order, count, stop, or success criterion was introduced.",
     "Evaluation use-exit consistency rebaseline: ja-JP 84112 -> 84142, en-US 83156 -> 83150 (+30 / -6). Reused the framework-use exit audit from PR #246/#247: research/diagnosis and generation/composition remain important evidence-sensitive examples, but evaluation no longer reads them as an exhaustive pair of valid exits. Kept their existing evidence boundaries and changed only the checklist framing to representative examples consistent with framework-application. JA tripwire raised by the 30-byte growth; EN tripwire ratcheted down by the 6-byte reduction.",
-    "Independent-support lineage rebaseline: ja-JP 84142 -> 84283, en-US 83150 -> 83298 (+141 / +148). Traced the broad 'same causal mechanism + disposition = one lineage' rule to an unmeasured generalization added in 2b39432 beyond the externally reviewed requirement to avoid counting one change multiple times across diagnosis/diff/rule/correction. Kept repost/derived-card/framework-rediscovery/paraphrase deduplication, but now judge independent support by evidence-source, observation, or derivation independence rather than causal-mechanism/disposition identity. No new support is created automatically. Corpus tripwires raised by the documented growth."
+    "Independent-support lineage rebaseline: ja-JP 84142 -> 84283, en-US 83150 -> 83298 (+141 / +148). Traced the broad 'same causal mechanism + disposition = one lineage' rule to an unmeasured generalization added in 2b39432 beyond the externally reviewed requirement to avoid counting one change multiple times across diagnosis/diff/rule/correction. Kept repost/derived-card/framework-rediscovery/paraphrase deduplication, but now judge independent support by evidence-source, observation, or derivation independence rather than causal-mechanism/disposition identity. No new support is created automatically. Corpus tripwires raised by the documented growth.",
+    "Transformation coverage-facet openness restoration: ja-JP 84283 -> 84313, en-US 83298 -> 83332 (+30 / +34). Preserved all four existing coverage checks and the closed-set/homogeneity condition for absence detection, while restoring v0.1.0's non-exhaustive semantics. Later coverage measurements (e891d864, 0b24a8bc, 2c504a91, a98d4d3) support checking coverage before absence or fit claims but do not establish four facets as exhaustive. Corpus tripwires raised by the documented growth."
   ],
   "router_max_bytes": {
     "ja-JP": 10000,
@@ -65,8 +66,8 @@
     "en-US": 14566
   },
   "corpus_max_bytes": {
-    "ja-JP": 84290,
-    "en-US": 83300
+    "ja-JP": 84320,
+    "en-US": 83334
   },
   "m365_instructions_max_chars": 8000,
   "gpt_knowledge_max_files": 10
