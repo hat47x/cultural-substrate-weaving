@@ -30,7 +30,8 @@
         "research/skill-prototypes/affinity-synthesis/references/affinity-map.schema.json"
       ],
       "evidence": [
-        "research/skill-prototypes/affinity-synthesis/evidence/dossier.md"
+        "research/skill-prototypes/affinity-synthesis/evidence/dossier.md",
+        "research/skill-prototypes/affinity-synthesis/evidence/KJ-LINEAGE-CARRYOVER.md"
       ],
       "evals": [
         "research/skill-prototypes/affinity-synthesis/evals/CASES.md",
@@ -86,12 +87,19 @@
       "source_root": "src",
       "method_definition": null,
       "runtime_entry": "src/ja-JP/ROUTER.md",
-      "references": [],
+      "references": [
+        "docs/ja/maintainers/csw-thin-synthesis-connection-contract.md",
+        "research/skill-prototypes/migration/CSW-THIN-MIGRATION-AUDIT-2026-09-06.md",
+        "research/skill-prototypes/migration/CSW-THIN-SOURCE-RETENTION-CHECK-2026-09-06.md"
+      ],
       "evidence": [],
-      "evals": [],
+      "evals": [
+        "research/skill-prototypes/evals/CSW-HANDOFF-CASES.md",
+        "research/skill-prototypes/evals/THREE-LAYER-PAIRED-RUN-2026-09-06.md"
+      ],
       "checks": [],
       "method_version": "0.5-research-line",
-      "realization_version": "0.5-research-line",
+      "realization_version": "0.5-thin-ja-research",
       "delegation": {
         "prefers_compatible_realization": [
           "affinity-synthesis",
@@ -101,6 +109,7 @@
         "fallback_contract": [
           "do not promote framework-generated candidates to target-supported findings",
           "do not claim KJ/affinity synthesis was executed when no compatible realization ran",
+          "do not claim multi-round orchestration was executed when no compatible realization ran",
           "return framework-generated questions, hypotheses, correspondences, and residuals with attribution intact"
         ]
       }
@@ -143,7 +152,11 @@
     "affinity-synthesis larger-set regression remains acceptable",
     "affinity-synthesis representation regression passes with recursive grouping and narrative lineage intact",
     "iterative-inquiry-synthesis method definition and eval cases remain aligned with delta-reopen behavior",
+    "cross-layer CSW handoff cases remain acceptable",
+    "three-layer paired regression shows no material semantic regression",
+    "Japanese thin-CSW canonical source retains attribution and delegation boundaries",
+    "generated artifacts are rebuilt and repository validation passes after thin-CSW migration",
     "English realization parity is reviewed",
-    "runtime build and validator are generalized before canonical source migration"
+    "runtime build and validator are generalized before canonical source migration beyond the Japanese research line"
   ]
 }
