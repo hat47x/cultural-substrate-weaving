@@ -64,7 +64,25 @@ def check_translation_hashes(errors: list[str]) -> None:
             f"English translation source_version does not match VERSION: "
             f"{english.get('source_version')} != {version()}",
         )
-    for rel, item in tracking["files"].items():
+
+    tracked_files = tracking.get("files")
+    if not isinstance(tracked_files, dict):
+        fail(errors, "Translation manifest files must be an object")
+        return
+    canonical_files = {
+        str(path.relative_to(locale_source(canonical)))
+        for path in locale_source(canonical).rglob("*.md")
+    }
+    tracked_paths = set(tracked_files)
+    if tracked_paths != canonical_files:
+        missing = sorted(canonical_files - tracked_paths)
+        extra = sorted(tracked_paths - canonical_files)
+        fail(
+            errors,
+            f"Translation manifest file set mismatch; missing={missing}, extra={extra}",
+        )
+
+    for rel, item in tracked_files.items():
         source = locale_source(canonical) / rel
         if not source.exists():
             fail(errors, f"Translation manifest references missing canonical file: {rel}")
