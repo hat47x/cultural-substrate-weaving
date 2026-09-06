@@ -4,7 +4,7 @@ Read this when choosing a cultural framework and deciding why and how deeply to 
 
 ## 3. Search from the target side or the framework side
 
-Normally, search for candidate frameworks from structure the target-side analysis still has trouble holding.
+Normally, search for candidate frameworks from target-side structures that are still hard to hold. Representative examples include:
 
 - multiple states or positions
 - paths, intermediate points, branches, return paths
