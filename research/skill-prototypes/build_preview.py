@@ -16,7 +16,7 @@ PLANNER_DIR = SUITE_ROOT / "scripts"
 if str(PLANNER_DIR) not in sys.path:
     sys.path.insert(0, str(PLANNER_DIR))
 
-from plan_build_descriptors import plan_build_descriptors  # noqa: E402
+from plan_suite_layout import plan_suite  # noqa: E402
 
 FRONTMATTER_NAME = re.compile(
     r"\A---\s*\n.*?^name:\s*([^\n]+)$.*?\n---\s*\n",
@@ -46,20 +46,21 @@ def frontmatter_name(text: str) -> str | None:
 def write_origin(
     target: Path,
     manifest: dict[str, Any],
-    descriptor: dict[str, Any],
+    skill: dict[str, Any],
+    locale: str,
+    package_source: dict[str, Any],
     packaging_mode: str,
 ) -> None:
+    realization = skill["locale_realizations"][locale]
     origin = {
         "suite": manifest["suite_id"],
-        "skill_id": descriptor["skill_id"],
-        "installable_name": descriptor["installable_name"],
-        "locale": descriptor["locale"],
-        "realization_status": descriptor.get("realization_status"),
-        "runtime_source": descriptor.get("runtime_source"),
-        "method_source": descriptor.get("method_source"),
-        "package_reference_sources": descriptor.get("package_reference_sources", []),
-        "assembly_mode": descriptor.get("assembly_mode"),
-        "source_manifest": descriptor.get("source_manifest"),
+        "skill_id": skill["id"],
+        "installable_name": skill["installable_name"],
+        "locale": locale,
+        "realization_status": realization.get("status"),
+        "runtime_source": realization.get("runtime_entry"),
+        "method_source": realization.get("method_definition"),
+        "package_source": package_source,
         "packaging_mode": packaging_mode,
         "research_only": True,
     }
@@ -69,24 +70,49 @@ def write_origin(
     )
 
 
-def build_router_modules_preview(
+def build_explicit_files_preview(
     output_root: Path,
     manifest: dict[str, Any],
-    descriptor: dict[str, Any],
+    skill: dict[str, Any],
+    locale: str,
+    package_source: dict[str, Any],
 ) -> Path:
-    locale = descriptor["locale"]
-    source_manifest_value = descriptor.get("source_manifest")
-    if not isinstance(source_manifest_value, str):
-        raise ValueError(f"{descriptor['skill_id']} {locale} has no source_manifest")
-    source_manifest_path = ROOT / source_manifest_value
-    source_manifest = load_json(source_manifest_path)
+    package_root = ROOT / str(package_source["root"])
+    runtime = (ROOT / skill["locale_realizations"][locale]["runtime_entry"]).resolve()
+    target = output_root / locale / skill["installable_name"]
+    target.mkdir(parents=True, exist_ok=True)
 
-    runtime_value = descriptor.get("runtime_source")
-    if not isinstance(runtime_value, str):
-        raise ValueError(f"{descriptor['skill_id']} {locale} has no runtime_source")
-    runtime = ROOT / runtime_value
+    for relative in package_source["files"]:
+        source = package_root / relative
+        if not source.is_file():
+            raise FileNotFoundError(source)
+        destination_relative = Path("SKILL.md") if source.resolve() == runtime else Path(relative)
+        destination = target / destination_relative
+        destination.parent.mkdir(parents=True, exist_ok=True)
+        shutil.copyfile(source, destination)
 
-    target = output_root / locale / descriptor["installable_name"]
+    write_origin(
+        target,
+        manifest,
+        skill,
+        locale,
+        package_source,
+        "explicit-files-research-preview",
+    )
+    return target
+
+
+def build_canonical_manifest_preview(
+    output_root: Path,
+    manifest: dict[str, Any],
+    skill: dict[str, Any],
+    locale: str,
+    package_source: dict[str, Any],
+) -> Path:
+    source_manifest = load_json(ROOT / str(package_source["manifest"]))
+    locale_root = ROOT / str(package_source["locale_root"])
+    runtime = ROOT / skill["locale_realizations"][locale]["runtime_entry"]
+    target = output_root / locale / skill["installable_name"]
     references = target / "references"
     references.mkdir(parents=True, exist_ok=True)
 
@@ -100,72 +126,58 @@ def build_router_modules_preview(
     description = source_manifest["locales"][locale]["description"].replace("\n", " ").strip()
     skill_text = (
         "---\n"
-        f"name: {descriptor['installable_name']}\n"
+        f"name: {skill['installable_name']}\n"
         f"description: {description}\n"
         "---\n\n"
         + router
     )
     (target / "SKILL.md").write_text(skill_text, encoding="utf-8")
 
-    source_root = ROOT / descriptor["source_root"] / locale
     for module in source_manifest["modules"]:
-        source = source_root / module["source"]
+        source = locale_root / module["source"]
         if not source.is_file():
             raise FileNotFoundError(source)
         shutil.copyfile(source, references / module["skill_reference"])
 
-    write_origin(target, manifest, descriptor, "router-modules-research-preview")
-    return target
-
-
-def build_direct_skill_preview(
-    output_root: Path,
-    manifest: dict[str, Any],
-    descriptor: dict[str, Any],
-) -> Path:
-    locale = descriptor["locale"]
-    runtime_value = descriptor.get("runtime_source")
-    if not isinstance(runtime_value, str):
-        raise ValueError(f"{descriptor['skill_id']} {locale} has no runtime_source")
-    runtime = ROOT / runtime_value
-
-    target = output_root / locale / descriptor["installable_name"]
-    references = target / "references"
-    references.mkdir(parents=True, exist_ok=True)
-
-    shutil.copyfile(runtime, target / "SKILL.md")
-
-    for relative in descriptor.get("package_reference_sources", []):
-        source = ROOT / relative
-        if not source.is_file():
-            raise FileNotFoundError(source)
-        shutil.copyfile(source, references / source.name)
-
-    write_origin(target, manifest, descriptor, "direct-skill-research-preview")
+    write_origin(
+        target,
+        manifest,
+        skill,
+        locale,
+        package_source,
+        "canonical-manifest-research-preview",
+    )
     return target
 
 
 def build_preview(output_root: Path) -> list[Path]:
     manifest = load_manifest()
-    descriptor_plan = plan_build_descriptors(manifest)
+    plan = plan_suite(manifest)
+    skills_by_id = {
+        skill["id"]: skill for skill in manifest["skills"] if isinstance(skill, dict)
+    }
     built: list[Path] = []
 
-    for locale, locale_plan in descriptor_plan["locales"].items():
-        for descriptor in locale_plan["skills"]:
-            if descriptor["state"] != "buildable-input":
-                raise ValueError(
-                    f"cannot preview blocked descriptor: {descriptor['skill_id']} {locale}"
+    for locale, locale_plan in plan["locales"].items():
+        for skill_id, realization_plan in locale_plan["skill_realizations"].items():
+            if not realization_plan["realized"]:
+                raise ValueError(f"cannot preview blocked realization: {skill_id} {locale}")
+            package_source = realization_plan.get("package_source")
+            if not isinstance(package_source, dict):
+                raise ValueError(f"missing package_source: {skill_id} {locale}")
+            skill = skills_by_id[skill_id]
+            mode = package_source.get("mode")
+            if mode == "explicit_files":
+                target = build_explicit_files_preview(
+                    output_root, manifest, skill, locale, package_source
                 )
-
-            mode = descriptor.get("assembly_mode")
-            if mode == "router_modules":
-                target = build_router_modules_preview(output_root, manifest, descriptor)
-            elif mode == "direct_skill":
-                target = build_direct_skill_preview(output_root, manifest, descriptor)
+            elif mode == "canonical_manifest":
+                target = build_canonical_manifest_preview(
+                    output_root, manifest, skill, locale, package_source
+                )
             else:
                 raise ValueError(
-                    f"unsupported preview assembly mode {mode!r} for "
-                    f"{descriptor['skill_id']} {locale}"
+                    f"unsupported package_source mode {mode!r}: {skill_id} {locale}"
                 )
             built.append(target)
 
@@ -174,9 +186,7 @@ def build_preview(output_root: Path) -> list[Path]:
 
 def validate_local_links(output_root: Path, target: Path) -> list[str]:
     errors: list[str] = []
-    for path in [target / "SKILL.md", *sorted((target / "references").glob("*.md"))]:
-        if not path.is_file():
-            continue
+    for path in sorted(target.rglob("*.md")):
         for link in LOCAL_LINK.findall(path.read_text(encoding="utf-8")):
             raw = link.strip()
             if not raw or raw.startswith(("http://", "https://", "mailto:", "#")):
@@ -189,6 +199,17 @@ def validate_local_links(output_root: Path, target: Path) -> list[str]:
                     f"{path.relative_to(output_root)}: unresolved local link -> {raw}"
                 )
     return errors
+
+
+def expected_explicit_destination(
+    origin: dict[str, Any],
+    source_relative: str,
+) -> Path:
+    package_source = origin["package_source"]
+    package_root = ROOT / str(package_source["root"])
+    source = (package_root / source_relative).resolve()
+    runtime = (ROOT / str(origin["runtime_source"])).resolve()
+    return Path("SKILL.md") if source == runtime else Path(source_relative)
 
 
 def validate_preview(output_root: Path, built: list[Path]) -> list[str]:
@@ -222,19 +243,24 @@ def validate_preview(output_root: Path, built: list[Path]) -> list[str]:
         if origin.get("research_only") is not True:
             errors.append(f"{target.relative_to(output_root)}: preview lost research_only marker")
 
+        package_source = origin.get("package_source", {})
+        if package_source.get("mode") == "explicit_files":
+            for source_relative in package_source.get("files", []):
+                destination = target / expected_explicit_destination(origin, source_relative)
+                if not destination.is_file():
+                    errors.append(
+                        f"{target.relative_to(output_root)}: declared package source missing: "
+                        f"{source_relative}"
+                    )
+
         method_source = origin.get("method_source")
-        if method_source:
-            expected_method_name = Path(str(method_source)).name
-            if not (target / "references" / expected_method_name).is_file():
+        if method_source and package_source.get("mode") == "explicit_files":
+            package_root = ROOT / str(package_source["root"])
+            method_path = (ROOT / str(method_source)).resolve()
+            method_relative = method_path.relative_to(package_root.resolve())
+            if not (target / method_relative).is_file():
                 errors.append(
                     f"{target.relative_to(output_root)}: selected locale Method Definition missing"
-                )
-
-        for source in origin.get("package_reference_sources", []):
-            expected = target / "references" / Path(str(source)).name
-            if not expected.is_file():
-                errors.append(
-                    f"{target.relative_to(output_root)}: declared package reference missing: {source}"
                 )
 
         errors.extend(validate_local_links(output_root, target))
