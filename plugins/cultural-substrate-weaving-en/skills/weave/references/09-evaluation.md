@@ -12,7 +12,7 @@ Read this before finalizing an application result to check skill-specific increm
 6. Misfit stayed visible without rereading the target to complete the framework; adoption states retained actor and basis.
 7. **The removal check was not mistaken for evidence generation.** Surviving removal of framework vocabulary did not by itself move an item to `target_supported`.
 8. `target_supported / framework_generated / cross_field_emergent / unresolved` were separated when needed, and target findings had independent target-side support.
-9. The exit matched the purpose: research/diagnosis returned questions, hypotheses, and falsification conditions; generation/composition treated framework structure as compositional material rather than empirical fact.
+9. The exit matched the purpose. Representative examples include returning research/diagnosis use to questions, hypotheses, and falsification conditions, and generation/composition use to compositional resources.
 10. Reposts, derivatives, and rediscovery through multiple frameworks were not double-counted as independent support.
 11. Observable differences, user judgments, AI evaluations, and measurements were not treated as the same thing.
 12. Domain-specific correctness, quality, and feasibility were not replaced by this skill's own evaluation.
