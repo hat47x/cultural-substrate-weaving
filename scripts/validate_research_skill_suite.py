@@ -61,6 +61,86 @@ def _declared_paths(
     return value
 
 
+def _validate_locale_realizations(
+    root: Path,
+    source_root: Path,
+    skill_id: str,
+    skill_runtime_entry: object,
+    canonical_locale: object,
+    suite_locales: set[str],
+    value: object,
+    errors: list[str],
+) -> None:
+    if not isinstance(value, dict):
+        errors.append(f"skill {skill_id}: locale_realizations must be an object")
+        return
+
+    realization_locales = set(value)
+    missing = sorted(suite_locales - realization_locales)
+    extra = sorted(realization_locales - suite_locales)
+    if missing or extra:
+        errors.append(
+            f"skill {skill_id}: locale_realizations must match suite locales; "
+            f"missing={missing}, extra={extra}"
+        )
+
+    for locale in sorted(suite_locales & realization_locales):
+        realization = value.get(locale)
+        if not isinstance(realization, dict):
+            errors.append(f"skill {skill_id}: locale realization {locale} must be an object")
+            continue
+
+        status = realization.get("status")
+        if not isinstance(status, str) or not status.strip():
+            errors.append(
+                f"skill {skill_id}: locale realization {locale} status must be a non-empty string"
+            )
+            continue
+
+        runtime_relative = realization.get("runtime_entry")
+        if locale == canonical_locale and status == "planned":
+            errors.append(
+                f"skill {skill_id}: canonical locale {locale} cannot be planned-only"
+            )
+
+        if status != "planned" and (
+            not isinstance(runtime_relative, str) or not runtime_relative
+        ):
+            errors.append(
+                f"skill {skill_id}: realized locale {locale} must declare runtime_entry"
+            )
+            continue
+
+        if runtime_relative is not None:
+            runtime_entry = _repo_path(
+                root,
+                runtime_relative,
+                f"skill {skill_id} locale realization {locale} runtime_entry",
+                errors,
+            )
+            if runtime_entry is not None:
+                if not runtime_entry.is_relative_to(source_root):
+                    errors.append(
+                        f"skill {skill_id}: locale realization {locale} runtime_entry "
+                        f"is outside source_root: {runtime_relative}"
+                    )
+                if not runtime_entry.is_file():
+                    errors.append(
+                        f"skill {skill_id}: locale realization {locale} runtime_entry "
+                        f"is missing: {runtime_relative}"
+                    )
+
+        if (
+            locale == canonical_locale
+            and status != "planned"
+            and runtime_relative != skill_runtime_entry
+        ):
+            errors.append(
+                f"skill {skill_id}: canonical locale realization runtime_entry must match "
+                f"skill runtime_entry: {runtime_relative!r} != {skill_runtime_entry!r}"
+            )
+
+
 def validate_suite(root: Path, manifest: dict) -> list[str]:
     errors: list[str] = []
 
@@ -73,10 +153,13 @@ def validate_suite(root: Path, manifest: dict) -> list[str]:
     canonical_locale = manifest.get("canonical_locale")
     if not isinstance(locales, dict):
         errors.append("research skill suite locales must be an object")
-    elif not isinstance(canonical_locale, str) or canonical_locale not in locales:
-        errors.append(
-            f"research skill suite canonical_locale must name a declared locale: {canonical_locale!r}"
-        )
+        suite_locales: set[str] = set()
+    else:
+        suite_locales = set(locales)
+        if not isinstance(canonical_locale, str) or canonical_locale not in locales:
+            errors.append(
+                f"research skill suite canonical_locale must name a declared locale: {canonical_locale!r}"
+            )
 
     skills = manifest.get("skills")
     if not isinstance(skills, list) or not skills:
@@ -119,6 +202,17 @@ def validate_suite(root: Path, manifest: dict) -> list[str]:
                 )
             if not runtime_entry.is_file():
                 errors.append(f"skill {skill_id}: runtime_entry is missing: {runtime_relative}")
+
+        _validate_locale_realizations(
+            root,
+            source_root,
+            skill_id,
+            runtime_relative,
+            canonical_locale,
+            suite_locales,
+            skill.get("locale_realizations"),
+            errors,
+        )
 
         references = _declared_paths(
             root,
