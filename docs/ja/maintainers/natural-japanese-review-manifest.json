@@ -36,9 +36,21 @@
       "git_blob_sha": "11147a61261e444e6da358b22c267083893b4c63",
       "reviewed_at": "2026-09-03"
     },
+    "docs/ja/maintainers/affinity-core-and-iterative-synthesis-layering.md": {
+      "git_blob_sha": "23b0fd6ab451c091924d0d4a514d48da403aefee",
+      "reviewed_at": "2026-09-06"
+    },
     "docs/ja/maintainers/development.md": {
       "git_blob_sha": "fdaa791a1089ae7ce0e9c716b258b066397b4f08",
       "reviewed_at": "2026-09-04"
+    },
+    "docs/ja/maintainers/external-skill-assimilation-process.md": {
+      "git_blob_sha": "5238835fe92d77fdc7a001192fedbcab0a4c5f18",
+      "reviewed_at": "2026-09-06"
+    },
+    "docs/ja/maintainers/external-skill-feature-adoption-log.md": {
+      "git_blob_sha": "22dc5b137b2385308ca7234d8a31ce2950c1439a",
+      "reviewed_at": "2026-09-06"
     },
     "docs/ja/maintainers/framework-loading-depth-observation.md": {
       "git_blob_sha": "9a0bb30d0d98d0c8cf11a2330a46276a34128a53",
@@ -68,12 +80,28 @@
       "git_blob_sha": "9d2a36a5f8ad809542dd51d0ec6217b8d6d10f2f",
       "reviewed_at": "2026-09-04"
     },
+    "docs/ja/maintainers/kj-skill-delegation-review.md": {
+      "git_blob_sha": "691eb4ccf7b0eb60d0e728fde7900c06ee90d26d",
+      "reviewed_at": "2026-09-06"
+    },
+    "docs/ja/maintainers/kj-split-migration-audit.md": {
+      "git_blob_sha": "3a138a8ba6e8e125c0139a1abb0ae84af2432655",
+      "reviewed_at": "2026-09-06"
+    },
+    "docs/ja/maintainers/kj-split-packaging-and-dependency-design.md": {
+      "git_blob_sha": "3b65b57af75b2a5b3a5d2f76c98fbfbd44eab992",
+      "reviewed_at": "2026-09-06"
+    },
     "docs/ja/maintainers/longitudinal-cognitive-functions.md": {
       "git_blob_sha": "6a102b229c41c21e84339836ac71d4e6c04e7c61",
       "reviewed_at": "2026-09-05"
     },
+    "docs/ja/maintainers/material-led-synthesis-method-boundary.md": {
+      "git_blob_sha": "0366cd351f512dee841aaeebf8df42e8c3038a80",
+      "reviewed_at": "2026-09-06"
+    },
     "docs/ja/maintainers/natural-japanese-review.md": {
-      "git_blob_sha": "264b8446e136bae501210c748f6b5fa687fb06c3",
+      "git_blob_sha": "cc494ec62bee412981f534d3f2fec94e04499163",
       "reviewed_at": "2026-09-06"
     },
     "docs/ja/maintainers/official-sources.md": {
