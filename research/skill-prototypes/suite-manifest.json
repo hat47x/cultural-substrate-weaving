@@ -9,8 +9,8 @@
       "status": "canonical"
     },
     "en-US": {
-      "status": "planned",
-      "note": "Do not promote prototype skills until English runtime and prototype realization parity are explicitly reviewed."
+      "status": "translated-draft",
+      "note": "Thin CSW runtime plus English runtime/Method Definition drafts now exist for both sibling prototypes. Independent human review and translation of ancillary research references/evals remain promotion gates."
     }
   },
   "skills": [
@@ -18,12 +18,27 @@
       "id": "affinity-synthesis",
       "installable_name": "affinity-synthesis",
       "working_display_ja": "親和統合",
+      "working_display_en": "Affinity Synthesis",
       "role": "one_round_material_synthesis",
       "source_root": "research/skill-prototypes/affinity-synthesis",
       "method_definition": "research/skill-prototypes/affinity-synthesis/references/METHOD.md",
       "runtime_entry": "research/skill-prototypes/affinity-synthesis/SKILL.md",
+      "locale_realizations": {
+        "ja-JP": {
+          "status": "canonical-research",
+          "runtime_entry": "research/skill-prototypes/affinity-synthesis/SKILL.md",
+          "method_definition": "research/skill-prototypes/affinity-synthesis/references/METHOD.md"
+        },
+        "en-US": {
+          "status": "translated-draft",
+          "human_review": "recommended",
+          "runtime_entry": "research/skill-prototypes/affinity-synthesis/SKILL.en.md",
+          "method_definition": "research/skill-prototypes/affinity-synthesis/references/METHOD.en.md"
+        }
+      },
       "references": [
         "research/skill-prototypes/affinity-synthesis/references/METHOD.md",
+        "research/skill-prototypes/affinity-synthesis/references/METHOD.en.md",
         "research/skill-prototypes/affinity-synthesis/references/TEMPLATE.md",
         "research/skill-prototypes/affinity-synthesis/references/REPRESENTATION.md",
         "research/skill-prototypes/affinity-synthesis/references/HIERARCHY-AND-LINEAGE.md",
@@ -45,7 +60,7 @@
         "research/skill-prototypes/affinity-synthesis/scripts/check_representation.py"
       ],
       "method_version": "0.1-research",
-      "realization_version": "0.1-research",
+      "realization_version": "0.1-research-bilingual-draft",
       "delegation": {
         "may_delegate_narrower_tasks_to": [
           "compatible-affinity-mapping-skill"
@@ -57,12 +72,27 @@
       "id": "iterative-inquiry-synthesis",
       "installable_name": "iterative-inquiry-synthesis",
       "working_display_ja": "反復探索統合",
+      "working_display_en": "Iterative Inquiry Synthesis",
       "role": "multi_round_inquiry_orchestration",
       "source_root": "research/skill-prototypes/iterative-inquiry-synthesis",
       "method_definition": "research/skill-prototypes/iterative-inquiry-synthesis/references/METHOD.md",
       "runtime_entry": "research/skill-prototypes/iterative-inquiry-synthesis/SKILL.md",
+      "locale_realizations": {
+        "ja-JP": {
+          "status": "canonical-research",
+          "runtime_entry": "research/skill-prototypes/iterative-inquiry-synthesis/SKILL.md",
+          "method_definition": "research/skill-prototypes/iterative-inquiry-synthesis/references/METHOD.md"
+        },
+        "en-US": {
+          "status": "translated-draft",
+          "human_review": "recommended",
+          "runtime_entry": "research/skill-prototypes/iterative-inquiry-synthesis/SKILL.en.md",
+          "method_definition": "research/skill-prototypes/iterative-inquiry-synthesis/references/METHOD.en.md"
+        }
+      },
       "references": [
         "research/skill-prototypes/iterative-inquiry-synthesis/references/METHOD.md",
+        "research/skill-prototypes/iterative-inquiry-synthesis/references/METHOD.en.md",
         "research/skill-prototypes/iterative-inquiry-synthesis/references/ROUND-TEMPLATE.md"
       ],
       "evidence": [],
@@ -71,7 +101,7 @@
       ],
       "checks": [],
       "method_version": "0.1-research",
-      "realization_version": "0.1-research",
+      "realization_version": "0.1-research-bilingual-draft",
       "delegation": {
         "prefers_compatible_realization": [
           "affinity-synthesis"
@@ -83,10 +113,24 @@
       "id": "cultural-substrate-weaving",
       "installable_name": "cultural-substrate-weaving",
       "working_display_ja": "Cultural Substrate Weaving",
+      "working_display_en": "Cultural Substrate Weaving",
       "role": "cultural_framework_exploration",
       "source_root": "src",
       "method_definition": null,
       "runtime_entry": "src/ja-JP/ROUTER.md",
+      "locale_realizations": {
+        "ja-JP": {
+          "status": "canonical",
+          "runtime_entry": "src/ja-JP/ROUTER.md",
+          "method_definition": null
+        },
+        "en-US": {
+          "status": "translated",
+          "human_review": "recommended",
+          "runtime_entry": "src/en-US/ROUTER.md",
+          "method_definition": null
+        }
+      },
       "references": [
         "docs/ja/maintainers/csw-thin-synthesis-connection-contract.md",
         "research/skill-prototypes/migration/CSW-THIN-MIGRATION-AUDIT-2026-09-06.md",
@@ -102,7 +146,7 @@
         "research/skill-prototypes/check_split_ownership.py"
       ],
       "method_version": "0.5-research-line",
-      "realization_version": "0.5-thin-ja-research",
+      "realization_version": "0.5-thin-bilingual-research",
       "delegation": {
         "prefers_compatible_realization": [
           "affinity-synthesis",
@@ -160,20 +204,21 @@
     }
   },
   "promotion_gates": [
-    "all canonical runtime entries exist",
+    "all canonical and declared locale runtime entries exist",
+    "all declared locale Method Definitions exist where applicable",
     "all declared references/evidence/evals/checks exist",
-    "skill installable names are unique",
+    "skill installable names are unique across sibling methods and match each locale runtime frontmatter",
     "no hard dependency is assumed by the public method contract",
     "affinity-synthesis larger-set regression remains acceptable",
     "affinity-synthesis representation regression passes with recursive grouping and narrative lineage intact",
     "iterative-inquiry-synthesis method definition and eval cases remain aligned with delta-reopen behavior",
     "cross-layer CSW handoff cases remain acceptable",
     "three-layer paired regression shows no material semantic regression",
-    "Japanese thin-CSW canonical source retains attribution and delegation boundaries",
+    "Japanese and English thin-CSW runtimes retain attribution and delegation boundaries",
     "split ownership regression check passes",
     "Microsoft 365 composite adapter preserves its embedded-fallback boundary without claiming full sibling-method parity",
     "generated artifacts are rebuilt and repository validation passes after thin-CSW migration",
-    "English runtime and prototype realization parity are reviewed",
-    "runtime build and validator are generalized before canonical source migration beyond the Japanese research line"
+    "English sibling Skill realizations receive independent review and ancillary research references/evals are translated or explicitly classified as non-runtime",
+    "runtime build and validator are generalized before public multi-skill distribution"
   ]
 }
