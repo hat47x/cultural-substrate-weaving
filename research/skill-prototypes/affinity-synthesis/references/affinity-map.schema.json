@@ -89,7 +89,8 @@
           "id": {"type": "string"},
           "from": {"type": "string"},
           "to": {"type": "string"},
-          "note": {"type": "string"}
+          "note": {"type": "string"},
+          "display_label": {"type": "string"}
         },
         "additionalProperties": true
       }
@@ -108,6 +109,7 @@
             "enum": ["directed", "reciprocal", "unspecified"]
           },
           "predicate": {"type": "string"},
+          "display_label": {"type": "string"},
           "state": {"type": "string"},
           "basis": {
             "type": "array",
@@ -141,7 +143,8 @@
           "id": {"type": "string"},
           "text": {"type": "string"},
           "arises_from": {"type": "array", "items": {"type": "string"}},
-          "state": {"type": "string"}
+          "state": {"type": "string"},
+          "display_label": {"type": "string"}
         },
         "additionalProperties": true
       }
