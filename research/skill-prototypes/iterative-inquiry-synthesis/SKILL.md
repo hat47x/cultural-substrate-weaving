@@ -9,6 +9,8 @@ description: Orchestrates repeated inquiry rounds in which new material is synth
 
 このSkillは**統合アルゴリズムそのものを所有しない**。各ラウンドの材料統合には、利用可能なら `affinity-synthesis` または同じMethod Definitionを満たす別realizationを使う。
 
+one-round synthesisが必要なのにcompatible realizationを利用できない場合、別のgrouping / labeling手順を即興して統合済みとは扱わない。synthesis未実行としてstop / handoffし、後で戻れるinput deltaとreopen対象を残す。今回のroundでone-round synthesis自体が不要なら、その状態を明示したうえで差分・履歴管理だけを進められる。
+
 ## When to Use
 
 - 調査・設計・創作・分析が複数回の資料追加を前提としている。
@@ -30,6 +32,7 @@ description: Orchestrates repeated inquiry rounds in which new material is synth
 
 1. **Receive delta**
    - 新しい資料、観察、反証、実行結果、依頼条件の変更を受け取る。
+   - 外部探索routeから来た問い・仮説・correspondence等には、origin / operation / incoming status or roleを必要な範囲で残す。
 2. **Locate touched semantic artifacts**
    - 関係する旧カード、旧group、relation、secondary resonance、residual、questionを前景へ戻す。
    - stable semantic IDがある場合は、そのhandleを利用する。
@@ -37,9 +40,12 @@ description: Orchestrates repeated inquiry rounds in which new material is synth
 3. **State the current inquiry**
    - 今回何を確かめるroundかを一文で置く。
    - 前回の問いがそのまま妥当とは限らない。
-4. **Run one synthesis realization**
+4. **Bind one synthesis realization when synthesis is needed**
    - 新材料と必要な旧材料を、一回の統合方法へ渡す。
    - 複数の統合方法を無自覚に混ぜない。使用realizationを記録する。
+   - 外部探索由来のquestion / hypothesis / correspondenceは、target-side source materialと同じ認識状態へ潰さず渡す。
+   - one-round synthesisが不要なら、その状態を明示して次へ進む。
+   - synthesisが必要だがcompatible realizationを利用できないなら、未実行としてstop / handoffする。Layer 2独自の即興統合をcompatible methodの実行結果として扱わない。
 5. **Inspect structural delta**
    - 何が新しく生じたか。
    - 何が変わったか。
@@ -64,6 +70,7 @@ description: Orchestrates repeated inquiry rounds in which new material is synth
 - round id
 - current inquiry / purpose
 - input delta
+- external exploration input status / provenance when relevant
 - reopened prior artifact refs / touched semantic IDs
 - synthesis realization id or name
 - representation / schema ref when available
@@ -165,6 +172,7 @@ IDは意味分類ではなく、局所reopenとhistory comparisonのhandleであ
 - 次に必要なのがdomain decision / human value judgment / external actionである。
 - 追加探索の費用が、期待される認知上の改善を上回る。
 - 外部利用条件が終了を要求する。
+- 必要なone-round synthesisを実行できるcompatible realizationが現在利用できず、callerや後続roundへhandoffする。
 
 ## Restart Conditions
 
@@ -174,6 +182,7 @@ IDは意味分類ではなく、局所reopenとhistory comparisonのhandleであ
 - contact with an old residual
 - explicit revisit
 - a different cognitive field or framework exposes a new question
+- previously unavailable compatible synthesis realization becomes available
 
 過去の停止を失敗扱いせず、触れた箇所だけを再開する。
 
@@ -183,7 +192,9 @@ IDは意味分類ではなく、局所reopenとhistory comparisonのhandleであ
 
 それぞれが出した仮説やcorrespondenceを、独立した観察事実へ自動昇格させない。
 
-特に `cultural-substrate-weaving` を使う場合、文化体系から得た問い・対応候補は、その由来を保ったまま対象材料へ返す。
+外部探索由来のものをone-round synthesisへ渡す場合は、origin / operation / incoming status or roleを、target-side source materialと区別できる状態で渡す。これらのmetadataをgrouping geometryや独立support数へ変換しない。
+
+特に `cultural-substrate-weaving` を使う場合、文化体系から得た問い・対応候補は、その由来を保ったまま対象材料へ返す。後から対象側の資料で独立に支持された場合も、最初のframework由来を履歴から消さず、新しいtarget-side supportを別に記録する。
 
 ## Quality Checklist
 
@@ -191,7 +202,8 @@ IDは意味分類ではなく、局所reopenとhistory comparisonのhandleであ
 - [ ] 前roundを上書きせず、差分として追跡できる。
 - [ ] 新材料が触れない部分まで無理由に再構成していない。
 - [ ] stable IDがある場合、意味上同一なものを無理由に振り直していない。
-- [ ] 使用したsynthesis realizationを追跡できる。
+- [ ] 外部探索由来の問い・仮説・correspondenceを、origin / statusを失ってtarget-side factへ混ぜていない。
+- [ ] 使用したsynthesis realizationを追跡できる。必要なのに利用できなかった場合は未実行として区別している。
 - [ ] semantic deltaとwording / renderer / layoutだけの差を区別した。
 - [ ] diagram proximity / hierarchyをsemantic relationへ自動変換していない。
 - [ ] gap / conflict / singleton / unresolvedを次の観察事実と混同していない。

@@ -1,239 +1,320 @@
-# Iterative Inquiry Synthesis — Evaluation Cases
+# Iterative Inquiry Synthesis — Contract Cases
 
-Status: research fixtures
+Status: research fixture; no empirical result is implied
 
-このfixtureはround数や特定文面を固定するためではない。multi-round orchestrationを変更したとき、差分再開・履歴保持・停止境界が壊れていないかを見る。
+このfixtureは、`references/METHOD.md` の不変条件を、後続のprototype evaluationで同じ入力へ繰り返し当てられる形へ落としたものです。
 
-## Case 1 — 局所deltaで全体を作り直さない
+ここでは「このSkillが有効だった」という結果を記録しません。各caseについて、**prior state / new delta / required external behavior / invalid behavior** を定義します。実際のmodel runやpaired comparisonでは、出力がこの契約をどこまで満たしたかを別記録へ残します。
 
-### Prior state
+## 共通判定軸
 
-```text
-G01 — stable
-G02 — stable
-G03 — stable
-R01: G01 -> G02
-R02: G02 -> G03
-```
+すべてのcaseで、少なくとも次を確認します。
 
-### New material
+- roundを全面再開始ではなく差分として扱う。
+- 触れたartifactと、触れていないartifactを区別する。
+- old structureを保存すること自体を成功条件にしない。
+- semantic deltaとrepresentation-only deltaを混同しない。
+- 使用したone-round synthesis realizationを追跡できる。
+- residual / unresolvedを消すために推測を事実化しない。
+- stop / continue / handoff理由を外部から説明できる。
+- private chain-of-thoughtではなく、外部成果物だけを履歴へ残す。
 
-C115はG02の表札とmembershipにだけ直接触れる。
+---
 
-### Expected handling
+## Case 1 — 局所deltaは局所reopenする
 
-- G02をreopenする。
-- G02変更がR01/R02へ影響するかを局所点検する。
-- G01/G03が実際に影響を受けないなら、全面再clusterしない。
-- G01/G03を「未変更」と大量列挙する必要もない。触れたものだけ記録する。
+### Invariants
 
-### Fail if
-
-- 新カードが1枚来ただけで全カードを再カード化・再clusterする。
-- 以前と文面が少し変わっただけの全groupへ新IDを振る。
-
-## Case 2 — 全体前提を壊す反証なら広くreopenする
+I1, I2, I4, I13
 
 ### Prior state
 
-全体構造は「S1が独立資料である」という前提に強く依存している。
+- `G01`: 「利用開始時の迷い」 — `C01`, `C02`
+- `G02`: 「継続後の手応え」 — `C03`, `C04`
+- `R01`: `G01 -> G02` の時間的推移candidate
+- `Q01`: 「開始前の迷いを減らした要因は何か」
 
-### New material
+### New delta
 
-S1が実はS0の転載であり、独立corroborationではないと判明した。
+`C05`: 開始前の説明文を読んだことで不安が一部減った、という新しい観察が追加された。
 
-### Expected handling
+`C05` は `G01` と `Q01` に直接関係するが、`G02` の内容には新しい情報を与えない。
 
-- 局所追補だけで済ませない。
-- S1を独立supportとして重く使ったgroup / relation / narrativeをlineageから特定してreopenする。
-- 影響範囲が全体ならglobal reopenを許容する。
-- 以前のroundを削除せず、「独立性前提が崩れた」deltaとして残す。
+### Required external behavior
 
-### Fail if
+- `G01` / `Q01` をreopen対象として示す。
+- `G02` を無理由に再構成しない。
+- `G01` のmembershipやlabelが変わる場合は `~` として差分を示す。
+- `G02` を実際に再検査した場合だけ `=` として「触れたが変わらない」を記録できる。
+- stable IDが意味上継続するなら `G01`, `Q01` を維持する。
 
-- `reopen only what delta touches` を文字通り狭く読み、全体への波及を調べない。
-- 逆に、何でもglobal restartにする。
+### Invalid behavior
 
-## Case 3 — 新材料を確認しても構造が変わらないことは成果になり得る
+- 新材料が来たという理由だけで全card/group/relationへ新IDを振る。
+- `G02` の表札を、今回のdeltaと無関係に言い換えて「新しい構造」と数える。
+- `C05` だけから `R01` の因果を確定する。
 
-### New material
+---
 
-C116はG04と近いが、元材料へ戻すとG04の既存表札とmembershipを修正する必要はない。
+## Case 2 — global contradictionでは広いreopenを許す
 
-### Expected delta
+### Invariants
 
-```text
-= G04 :: new material checked; current semantic core still holds
-```
-
-必要ならC116をG04へ追加できるが、「新しいテーマを発見した」と誇張しない。
-
-### Fail if
-
-- 毎round必ず新しい島・関係・洞察を作る。
-- 変更がなかったことを「何もしていない」として記録から消す。
-
-## Case 4 — renderer変更をsemantic discoveryにしない
+I2, I3, I4
 
 ### Prior state
 
-G01とG02のsemantic recordは同じ。
+- `G10`: 「遅延の主因は外部承認待ち」
+- `G11`: 「内部実装は予定どおり進行」
+- `R10`: `G10` が全体遅延を説明する中心relationとして採用中
 
-### Round change
+### New delta
 
-Mermaidの自動layoutでG01が左から上へ移動し、edge labelの改行位置も変わった。
+一次資料が見つかり、外部承認は予定どおり完了していた一方、内部実装がその後2週間停止していたことが確認された。
 
-### Expected handling
+### Required external behavior
 
-```text
-Representation delta only
-- node placement changed
-- line wrapping changed
-Semantic delta: none
-```
+- 今回は局所追補だけでは足りない理由を明示し、`G10`, `G11`, `R10` を広くreopenする。
+- 旧構造を履歴から削除せず、現在採用できない要素は `-` または弱化として残す。
+- 新しいgroup / relationが必要なら、旧IDとのderivationを残す。
+- 「既存を安易に壊さない」を理由に反証を旧groupへ押し込まない。
 
-### Fail if
+### Invalid behavior
 
-- 上下配置になったため「G01がG02より上位」と解釈する。
-- 見た目の近接が増えたため新Rを作る。
+- 旧構造を守るため、一次資料を例外扱いして中心relationを維持する。
+- 以前のroundが存在しなかったかのように履歴を書き換える。
+- 全体を再生成しただけで、何が反証によって変わったかを示さない。
 
-## Case 5 — 問いの変更で過去roundを書き換えない
+---
 
-### Prior inquiry
+## Case 3 — question shiftを版管理する
 
-「なぜ利用が減ったか」
+### Invariants
 
-### New material
-
-減少量より「誰が残ったか」の方が重要だと分かり、現在の問いが「残った人は何を支えに継続したか」へ変わる。
-
-### Expected handling
-
-- previous inquiryをそのまま履歴へ残す。
-- current inquiryを新しく記録する。
-- shiftを起こした材料を残す。
-- 以前の構造のうち何がまだ利用できるかを明示する。
-
-### Fail if
-
-- 過去roundの問いを現在の問いへ書き換える。
-- 問いが変わったことを以前のroundの「失敗」とみなす。
-
-## Case 6 — 未解決を残して正常停止できる
-
-### State
-
-Q08は重要だが、現在入手できる資料では区別できない。
-
-現在の利用目的には、Q08以外の構造で十分対応できる。
-
-### Expected handling
-
-- Q08とreopen conditionを残す。
-- stopを正常な境界として記録する。
-- gapゼロを目指して推測で埋めない。
-
-### Fail if
-
-- 「未解決があるから続ける」と無限round化する。
-- 停止のためにQ08をもっともらしい仮説で閉じる。
-
-## Case 7 — round数を使い切ることを目的にしない
-
-### Configuration
-
-最大10roundまで作業できるが、Round 4で現在の目的に十分な粒度へ達した。
-
-### Expected handling
-
-Round 4で停止できる。
-
-`max rounds = 10` は使い切るべきquotaではなく、必要なら設けるhard budgetである。
-
-### Fail if
-
-- 10まで回さないと浅いと判断する。
-- 新材料がないのに「もう一周」する。
-
-## Case 8 — synthesis realization変更とmaterial deltaを混同しない
-
-### Round A
-
-同じ材料をrealization `affinity-synthesis/v0.1` で統合した。
-
-### Round B
-
-材料は変えず、比較のため `external-affinity-skill/x` で再統合した。
-
-### Expected handling
-
-- input material delta = none
-- realization delta = changed
-- 出力差を「世界について新しい事実が増えた」と扱わない。
-- realization差で生じた構造差をpaired comparisonとして記録する。
-
-### Fail if
-
-- method変更による差をmaterial由来の新発見としてbankする。
-
-## Case 9 — secondary resonanceの追加はcard複製ではない
+I6, I9
 
 ### Prior state
 
-C072 primary membership → G_A
+- previous inquiry: 「どの案を採用すれば実装時間を最小化できるか」
+- 現在までの材料はA案/B案の工数比較を中心に統合されている。
 
-### New round
+### New delta
 
-別材料との接触で、C072がG_Dにも強く響くことが見えた。
+利用部門から「導入後に現場が自力で変更できること」が必須条件として追加された。
 
-### Expected delta
+### Required external behavior
 
-```text
-+ X072D: C072 ~> G_D :: "newly visible resonance / not membership"
-= C072 primary membership → G_A
-```
+- current inquiryを、たとえば「実装時間と運用時の自律変更可能性を両立する案はどれか」へ更新できる。
+- previous inquiryを履歴上そのまま残す。
+- 問いを変えた外部条件を記録する。
+- 旧roundの工数比較のうち、現在も有効な部分を明示する。
 
-### Fail if
+### Invalid behavior
 
-- C072を複製してG_Dへ独立cardとして追加する。
-- G_Aから自動的に移動させる。
+- 過去roundの問いを新しい問いで上書きし、当初の比較目的を消す。
+- 問いが変わったことを「前roundが失敗だった」と自動評価する。
+- 新必須条件を受けても、工数だけの旧問いを固定stageとして維持する。
 
-## Case 10 — narrativeから新relationが見えても即bankしない
+---
 
-### Prior map
+## Case 4 — unresolvedを残した正常停止
 
-G01とG05にexplicit relationはない。
+### Invariants
 
-### Narrative round
+I5, I7, I8
 
-文章化中に「G01がG05の前提条件なのでは」という関係候補が生じた。
+### Prior state
 
-### Expected handling
+- `Q20`: 二つの証言の食い違いが未解決。
+- 追加資料候補として非公開議事録の存在が示唆されている。
 
-- narrative-generated candidateとして記録する。
-- source / mapへ戻す。
-- 支持されれば新Rとして追加する。
-- 支持不足なら? / residualへ残す。
+### New delta
 
-### Fail if
+現時点では議事録へアクセスできず、他に独立した確認源も見つからない。
 
-- 流暢な文章に現れた接続詞だけで新Rを確定する。
+### Required external behavior
 
-## Cross-realization comparison
+- `Q20` をunresolvedとして保持する。
+- 「現時点で取得できる材料では判別できない」をstop reasonにできる。
+- reopen条件として、議事録入手や別の独立証拠の出現を残せる。
+- gapが残っていても正常停止として扱う。
 
-実装A/Bを比較する場合は、少なくとも次を見る。
+### Invalid behavior
 
-| Check | A | B | Notes |
-|---|---|---|---|
-| unnecessary global rebuild | | | |
-| touched-artifact localization | | | |
-| global contradiction propagation | | | |
-| stable-ID preservation | | | |
-| semantic vs representation delta | | | |
-| question-shift history | | | |
-| unresolved-safe stop | | | |
-| no forced round count | | | |
-| realization delta separated from material delta | | | |
-| resonance without duplication | | | |
+- 完了感を作るため片方の証言を推測で採用する。
+- `gap == 0` にするため `Q20` を削除する。
+- 新材料がないのにround数を増やすこと自体をcontinue理由にする。
 
-重大な履歴破壊やunsupported semantic promotionが一つでもあれば、平均的な読みやすさで相殺しない。
+---
+
+## Case 5 — synthesis realization切替をmaterial deltaと混同しない
+
+### Invariants
+
+I10, I4
+
+### Prior state
+
+- Round 3では `affinity-synthesis@0.1-research` を使用。
+- 同一入力集合から `G30`, `G31`, `R30` が得られている。
+
+### New delta
+
+材料は追加されていない。ただし比較目的で、Round 4では別のcompatible synthesis realizationを同じ入力へ適用する。
+
+### Required external behavior
+
+- 使用realizationが変わったことを明示する。
+- 出力差が出ても、material changeによる差と断定しない。
+- semantic differenceがある場合、「realization差の影響を含む比較対象」として分離して記録する。
+- prior snapshotを保持する。
+
+### Invalid behavior
+
+- realization変更を記録せず、新しい表札やrelationを新材料由来の発見とみなす。
+- 同じ入力を別modelで処理しただけで「時間とともに構造が変化した」と扱う。
+
+---
+
+## Case 6 — representation-only deltaをsemantic discoveryへ昇格させない
+
+### Invariants
+
+I14
+
+### Prior state
+
+semantic record:
+
+- `G40`: members `C41`, `C42`
+- `G41`: members `C43`, `C44`
+- `R40`: `G40 -- G41` 「相互に制約する」
+
+projectionはMermaidで描画されている。
+
+### New delta
+
+renderer更新により、`G40` が図の左から上へ、`G41` が右から下へ移動した。edge routingも変わった。semantic record自体は変更されていない。
+
+### Required external behavior
+
+- representation-only deltaとして記録する。
+- nodeの上下位置を階層、因果、優先度へ変換しない。
+- semantic recordに変化がないなら、新relationを追加しない。
+- 見た目から新relation candidateに気づいた場合は、候補として材料とsemantic recordへ戻して検査する。
+
+### Invalid behavior
+
+- 「上に来たから上位概念になった」とみなす。
+- edgeの曲がり方をrelation changeとして数える。
+- diagram diffだけを根拠に `+ R41` を確定する。
+
+---
+
+## Case 7 — stable IDは同一性を保ち、splitではderivationを残す
+
+### Invariants
+
+I13, I9
+
+### Prior state
+
+- `G50`: label「利用時のためらい」, members `C51`, `C52`, `C53`
+
+### New delta A
+
+新材料 `C54` が入り、labelが「利用開始時のためらい」へ微修正されるが、groupの核と既存membershipの意味上の同一性は維持される。
+
+### Required behavior A
+
+- `G50` を維持し、`~ G50` としてlabel/membership差分を記録できる。
+- 微修正だけで `G51` を新設しない。
+
+### New delta B
+
+その後、`C51`, `C54` は「操作への不安」、`C52`, `C53` は「周囲の評価への不安」という別々の意味核を持つことが追加材料で明確になった。
+
+### Required behavior B
+
+- splitが必要なら新しいgroup IDsを立てる。
+- 新groupが `G50` から派生したことを記録する。
+- `G50` の過去round履歴を削除しない。
+
+### Invalid behavior
+
+- Aの段階で単なる文言変更を理由に全IDを振り直す。
+- Bの段階でID継続を優先し、異なる意味核を一つのgroupへ押し込む。
+
+---
+
+## Case 8 — 外部探索routeの認識状態を保持する
+
+### Invariants
+
+I11, I5
+
+### Prior state
+
+- `Q60`: 「この対立は役割境界の違いから生じているのか」
+- 対象側材料だけでは未判別。
+
+### New delta
+
+外部のcultural framework探索から、「境界の内外」という対応候補と追加質問が生成された。ただし対象側の新観察はまだない。
+
+### Required external behavior
+
+- framework由来のcorrespondence / questionであることを保持する。
+- `Q60` の次の確認先として利用できる。
+- target-supported findingへ自動昇格させない。
+- 次roundで対象材料が得られたとき、そこで初めてsupport状態を再評価する。
+
+### Invalid behavior
+
+- 文化体系が示した対応を「対象の構造が確認された」と書く。
+- 同じframework内の別表現を独立した対象証拠として二重計上する。
+
+---
+
+## Case 9 — one-round synthesisをLayer 2が再実装しない
+
+### Invariants
+
+Relationship to Affinity Synthesis / Realization boundary
+
+### Prior state
+
+新しい材料集合 `M70` があり、one-round meaning integrationが必要である。
+
+### New delta
+
+compatible `affinity-synthesis` realizationが利用可能である。
+
+### Required external behavior
+
+- Layer 2はcurrent inquiry、reopened refs、input delta、realization binding、round後のstructural deltaとcontinuation boundaryを扱う。
+- grouping / labeling / return-checkの内部手順はcompatible realizationへ委ねる。
+- 受け取ったartifact refs / residualsをround snapshotへ接続する。
+
+### Invalid behavior
+
+- Layer 2側で独自の別grouping algorithmを追加し、どちらが正本か分からなくする。
+- realizationを呼んだかどうかを記録せず、「統合した」とだけ書く。
+
+---
+
+## 後続evaluationで記録するもの
+
+各実行記録は、fixture本文を直接「合格」に書き換えません。別ファイルへ次を残します。
+
+- case id
+- model / realization / version
+- input refs
+- output refs
+- required behaviorごとのobserved / not observed / unclear
+- invalid behaviorの有無
+- representation-only差の有無
+- evaluator interpretation
+- unresolved evaluation questions
+
+単一model・単一runの成功をMethod Definitionの妥当性証明にはしません。fixtureは、paired comparisonやrealization差し替え時に同じ境界を再確認するための基準です。
