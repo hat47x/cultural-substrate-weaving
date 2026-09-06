@@ -113,6 +113,66 @@ def _validate_method_definition(
     return path
 
 
+def _validate_package_references(
+    root: Path,
+    source_root: Path,
+    skill_id: str,
+    locale: str,
+    status: str,
+    method_relative: object,
+    declared_references: list[str],
+    value: object,
+    errors: list[str],
+) -> None:
+    if value is None:
+        if status != "planned" and method_relative is not None:
+            errors.append(
+                f"skill {skill_id}: realized locale {locale} must declare package_references"
+            )
+        return
+
+    if not isinstance(value, list) or not all(isinstance(item, str) for item in value):
+        errors.append(
+            f"skill {skill_id}: locale realization {locale} package_references must be a string list"
+        )
+        return
+
+    if len(value) != len(set(value)):
+        errors.append(
+            f"skill {skill_id}: locale realization {locale} package_references contains duplicates"
+        )
+
+    for relative in value:
+        path = _repo_path(
+            root,
+            relative,
+            f"skill {skill_id} locale realization {locale} package_references",
+            errors,
+        )
+        if path is None:
+            continue
+        if not path.is_relative_to(source_root):
+            errors.append(
+                f"skill {skill_id}: locale realization {locale} package reference "
+                f"is outside source_root: {relative}"
+            )
+        if not path.is_file():
+            errors.append(
+                f"skill {skill_id}: locale realization {locale} package reference is missing: {relative}"
+            )
+        if relative not in declared_references:
+            errors.append(
+                f"skill {skill_id}: locale realization {locale} package reference "
+                f"must also be declared in references: {relative}"
+            )
+
+    if isinstance(method_relative, str) and method_relative not in value:
+        errors.append(
+            f"skill {skill_id}: locale realization {locale} package_references "
+            f"must include method_definition: {method_relative}"
+        )
+
+
 def _validate_locale_realizations(
     root: Path,
     source_root: Path,
@@ -205,6 +265,18 @@ def _validate_locale_realizations(
                     f"skill {skill_id}: locale realization {locale} method_definition "
                     f"must also be declared in references: {method_relative}"
                 )
+
+        _validate_package_references(
+            root,
+            source_root,
+            skill_id,
+            locale,
+            status,
+            method_relative,
+            declared_references,
+            realization.get("package_references"),
+            errors,
+        )
 
         if locale == canonical_locale and status != "planned":
             if runtime_relative != skill_runtime_entry:
