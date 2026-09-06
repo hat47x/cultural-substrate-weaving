@@ -29,6 +29,7 @@ class ResearchSkillSuiteLayoutTests(unittest.TestCase):
             "status": "prototype",
             "runtime_entry": canonical["runtime_entry"],
             "package_source": copy.deepcopy(canonical["package_source"]),
+            "package_targets": copy.deepcopy(canonical["package_targets"]),
         }
 
     def test_current_locale_buildability_is_explicit(self) -> None:
@@ -40,6 +41,14 @@ class ResearchSkillSuiteLayoutTests(unittest.TestCase):
         self.assertEqual(ja["openai_skill"]["state"], "buildable")
         self.assertEqual(ja["claude_plugin"]["state"], "buildable")
         self.assertEqual(ja["codex_plugin"]["state"], "buildable")
+        self.assertEqual(
+            ja["claude_plugin"]["target_skill_names"],
+            {
+                "cultural-substrate-weaving": "weave",
+                "affinity-synthesis": "affinity-synthesis",
+                "iterative-inquiry-synthesis": "iterative-inquiry-synthesis",
+            },
+        )
 
         self.assertEqual(en["openai_skill"]["state"], "partial")
         self.assertEqual(en["claude_plugin"]["state"], "blocked")
@@ -48,12 +57,16 @@ class ResearchSkillSuiteLayoutTests(unittest.TestCase):
             en["claude_plugin"]["missing_skills"],
             ["affinity-synthesis", "iterative-inquiry-synthesis"],
         )
+        self.assertEqual(
+            en["claude_plugin"]["target_skill_names"],
+            {"cultural-substrate-weaving": "weave"},
+        )
 
         self.assertEqual(en["chatgpt_gpt"]["state"], "buildable")
         self.assertEqual(en["microsoft_copilot"]["state"], "buildable")
-        self.assertIn("primary realization", en["chatgpt_gpt"]["scope"])
+        self.assertIn("no sibling Skill-tree target name", en["chatgpt_gpt"]["scope"])
 
-    def test_openai_standalones_expose_package_sources(self) -> None:
+    def test_openai_standalones_expose_sources_and_targets(self) -> None:
         plan = plan_suite(self.manifest)
         ja_items = {
             item["skill_id"]: item
@@ -69,13 +82,22 @@ class ResearchSkillSuiteLayoutTests(unittest.TestCase):
             "explicit_files",
         )
         self.assertEqual(
+            ja_items["affinity-synthesis"]["package_target"]["skill_name"],
+            "affinity-synthesis",
+        )
+        self.assertEqual(
             ja_items["cultural-substrate-weaving"]["package_source"]["mode"],
             "canonical_manifest",
+        )
+        self.assertEqual(
+            ja_items["cultural-substrate-weaving"]["package_target"]["skill_name"],
+            "cultural-substrate-weaving",
         )
         self.assertEqual(en_items["cultural-substrate-weaving"]["state"], "buildable")
         self.assertEqual(en_items["affinity-synthesis"]["state"], "blocked")
         self.assertEqual(en_items["affinity-synthesis"]["status"], "planned")
         self.assertIsNone(en_items["affinity-synthesis"]["package_source"])
+        self.assertIsNone(en_items["affinity-synthesis"]["package_target"])
         self.assertEqual(en_items["iterative-inquiry-synthesis"]["state"], "blocked")
 
     def test_locale_bundle_unblocks_only_when_all_target_skills_are_realized(self) -> None:
@@ -103,6 +125,19 @@ class ResearchSkillSuiteLayoutTests(unittest.TestCase):
 
         self.assertEqual(ja_items["affinity-synthesis"]["state"], "blocked")
         self.assertIsNone(ja_items["affinity-synthesis"]["package_source"])
+
+    def test_source_without_distribution_target_is_not_buildable_for_that_distribution(self) -> None:
+        manifest = copy.deepcopy(self.manifest)
+        iterative = self.skill(manifest, "iterative-inquiry-synthesis")
+        iterative["locale_realizations"]["ja-JP"]["package_targets"].pop("claude_plugin")
+
+        plan = plan_suite(manifest)
+        ja = plan["locales"]["ja-JP"]["distributions"]
+
+        self.assertEqual(ja["openai_skill"]["state"], "buildable")
+        self.assertEqual(ja["claude_plugin"]["state"], "blocked")
+        self.assertIn("iterative-inquiry-synthesis", ja["claude_plugin"]["missing_skills"])
+        self.assertEqual(ja["codex_plugin"]["state"], "buildable")
 
     def test_bundle_reports_unknown_target_skill_as_missing(self) -> None:
         manifest = copy.deepcopy(self.manifest)
