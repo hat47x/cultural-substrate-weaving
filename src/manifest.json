@@ -11,8 +11,8 @@
     "en-US": {
       "label": "English",
       "status": "translated",
-      "review_note": "The English realization still reflects the pre-split monolithic CSW ownership model on this research branch. Treat it as a parity backlog until the thin-CSW migration is translated and independently reviewed.",
-      "description": "A complementary AI skill that stays revisable by the target while combining cultural-framework structure supply with KJ-method integration and gap discovery, validating only target-side increments. Domain expertise comes from the calling context, available materials, or companion skills."
+      "review_note": "The thin-CSW ownership migration is translated on this research branch. Independent human review is still recommended. English realizations of the separate affinity-synthesis and iterative-inquiry-synthesis research Skills remain a separate backlog.",
+      "description": "A complementary AI skill that keeps its interpretation revisable by the target, opens cultural frameworks as temporary cognitive fields, preserves attribution of framework-generated candidates, and returns them to target-side material for validation. When compatible realizations are available, one-round material synthesis and multi-round delta/reopen orchestration are delegated rather than owned by CSW. Domain expertise comes from the calling context, available materials, or companion skills."
     }
   },
   "router": "ROUTER.md",
