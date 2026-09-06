@@ -22,6 +22,15 @@ class ResearchSkillSuiteLayoutTests(unittest.TestCase):
     def skill(self, manifest: dict, skill_id: str) -> dict:
         return next(skill for skill in manifest["skills"] if skill["id"] == skill_id)
 
+    def realize_like_canonical(self, manifest: dict, skill_id: str, locale: str) -> None:
+        skill = self.skill(manifest, skill_id)
+        canonical = skill["locale_realizations"][manifest["canonical_locale"]]
+        skill["locale_realizations"][locale] = {
+            "status": "prototype",
+            "runtime_entry": canonical["runtime_entry"],
+            "package_source": copy.deepcopy(canonical["package_source"]),
+        }
+
     def test_current_locale_buildability_is_explicit(self) -> None:
         plan = plan_suite(self.manifest)
 
@@ -42,28 +51,37 @@ class ResearchSkillSuiteLayoutTests(unittest.TestCase):
 
         self.assertEqual(en["chatgpt_gpt"]["state"], "buildable")
         self.assertEqual(en["microsoft_copilot"]["state"], "buildable")
-        self.assertIn("primary realization availability only", en["chatgpt_gpt"]["scope"])
+        self.assertIn("primary realization", en["chatgpt_gpt"]["scope"])
 
-    def test_openai_standalones_are_planned_per_skill(self) -> None:
+    def test_openai_standalones_expose_package_sources(self) -> None:
         plan = plan_suite(self.manifest)
+        ja_items = {
+            item["skill_id"]: item
+            for item in plan["locales"]["ja-JP"]["distributions"]["openai_skill"]["items"]
+        }
         en_items = {
             item["skill_id"]: item
             for item in plan["locales"]["en-US"]["distributions"]["openai_skill"]["items"]
         }
 
+        self.assertEqual(
+            ja_items["affinity-synthesis"]["package_source"]["mode"],
+            "explicit_files",
+        )
+        self.assertEqual(
+            ja_items["cultural-substrate-weaving"]["package_source"]["mode"],
+            "canonical_manifest",
+        )
         self.assertEqual(en_items["cultural-substrate-weaving"]["state"], "buildable")
         self.assertEqual(en_items["affinity-synthesis"]["state"], "blocked")
         self.assertEqual(en_items["affinity-synthesis"]["status"], "planned")
+        self.assertIsNone(en_items["affinity-synthesis"]["package_source"])
         self.assertEqual(en_items["iterative-inquiry-synthesis"]["state"], "blocked")
 
     def test_locale_bundle_unblocks_only_when_all_target_skills_are_realized(self) -> None:
         manifest = copy.deepcopy(self.manifest)
         for skill_id in ("affinity-synthesis", "iterative-inquiry-synthesis"):
-            skill = self.skill(manifest, skill_id)
-            skill["locale_realizations"]["en-US"] = {
-                "status": "prototype",
-                "runtime_entry": skill["runtime_entry"],
-            }
+            self.realize_like_canonical(manifest, skill_id, "en-US")
 
         plan = plan_suite(manifest)
         en = plan["locales"]["en-US"]["distributions"]
@@ -71,6 +89,20 @@ class ResearchSkillSuiteLayoutTests(unittest.TestCase):
         self.assertEqual(en["claude_plugin"]["state"], "buildable")
         self.assertEqual(en["claude_plugin"]["missing_skills"], [])
         self.assertEqual(en["codex_plugin"]["state"], "buildable")
+
+    def test_runtime_entry_without_package_source_is_not_buildable(self) -> None:
+        manifest = copy.deepcopy(self.manifest)
+        affinity = self.skill(manifest, "affinity-synthesis")
+        affinity["locale_realizations"]["ja-JP"].pop("package_source")
+
+        plan = plan_suite(manifest)
+        ja_items = {
+            item["skill_id"]: item
+            for item in plan["locales"]["ja-JP"]["distributions"]["openai_skill"]["items"]
+        }
+
+        self.assertEqual(ja_items["affinity-synthesis"]["state"], "blocked")
+        self.assertIsNone(ja_items["affinity-synthesis"]["package_source"])
 
     def test_bundle_reports_unknown_target_skill_as_missing(self) -> None:
         manifest = copy.deepcopy(self.manifest)
