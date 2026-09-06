@@ -49,7 +49,8 @@ research-skill-preview:
 	python research/skill-prototypes/build_preview.py --output dist/research-skill-suite --check
 
 research-skill-check:
-	python research/skill-prototypes/validate_suite.py
+	python scripts/validate_research_skill_suite.py
+	python research/skill-prototypes/scripts/plan_suite_layout.py >/dev/null
 	python research/skill-prototypes/check_split_ownership.py
 	python research/skill-prototypes/build_preview.py --check
 	python research/skill-prototypes/affinity-synthesis/scripts/check_representation.py
