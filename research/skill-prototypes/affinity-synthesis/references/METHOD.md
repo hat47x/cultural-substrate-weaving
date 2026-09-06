@@ -30,6 +30,7 @@ Status: research candidate
 - 流暢な補完で入りやすい因果、人物内面、一般化、評価方向、確度変更等の戻し検査。
 - 図解と叙述の双方向差分検査。
 - 変換後の意味を `inherited / emergent / residual` として監査し、新しい意味を元材料へ遡及させない。
+- membership / explicit relation / secondary resonance / layout を区別し、描画都合による意味混線を防ぐ。
 - private chain-of-thoughtではなく、外部から再検査できる成果物・来歴・残差を残す。
 
 ## Applicability
@@ -154,6 +155,25 @@ source provenance、discovery route、derivation、必要に応じた採取時�
 
 残差、空白、対立、未解決は、統合失敗の証拠とは限らない。現在の材料が語れる範囲を明示する成果物であり得る。
 
+### I13. Membership, relation, resonance, and layout remain distinct
+
+生成AIの内部表現および成果物では、少なくとも次を意味上区別できるようにする。
+
+- **membership**: card / lower groupが現在のgroupを構成すること。
+- **explicit relation**: 二つの意味単位について、predicateとして読み返せる関係を主張すること。
+- **secondary resonance**: membershipや独立supportを増やさず、別のgroupにも意味上響くこと。
+- **layout**: 近接・離隔・上下左右・囲み等の描画上の配置。
+
+図で近く置いたことをrelation assertionへ自動変換しない。secondary resonanceを二重所属・二重supportへ変換しない。線を引いたという描画事実だけで意味関係の種類を補わない。
+
+### I14. Rendering is a projection, not the method authority
+
+Mermaid、Excalidraw、SVG、canvas等の描画形式は、意味構造から作るprojectionである。
+
+描画toolの制約や自動layoutに合わせて、group membership、relation predicate、方向、確度、residualを変更しない。
+
+配置そのものが分析上重要な場合は、topology-onlyな自動layout図だけを正本にせず、必要に応じて位置情報を別に保持する。
+
 ## Frequent AI failure modes
 
 - 流暢な言い換えで材料固有の語感・温度を消す。
@@ -167,6 +187,9 @@ source provenance、discovery route、derivation、必要に応じた採取時�
 - 表札の巧さで弱いgroup coherenceを覆う。
 - 文章を整える過程で、図解にない論理を足す。
 - 後のroundで生じた洞察を、最初のカードがすでに語っていた意味へ遡及させる。
+- 一枚のcardを複数groupへ複製し、secondary resonanceを複数票として数える。
+- Mermaid等の自動配置で近くなったnodeへ、元にないsemantic relationを読み込む。
+- diagramの見栄えを優先して、曖昧・tentativeなrelationを強い一本線へ単純化する。
 
 ## Relationship to external methods and skills
 
@@ -182,9 +205,25 @@ source provenance、discovery route、derivation、必要に応じた採取時�
 
 概念化済みの項目間の関係を明示命題へする段階では補助的に利用できる。ただし、材料を早期にconcept nodeへ変換することを本方法の標準にはしない。
 
+Concept Mapping実装でよく使われる固定edge-type vocabularyは、downstream互換の補助tagとして使うことはできるが、本方法のrelation predicateを置き換える必須taxonomyにはしない。
+
+### Diagram-generation skills
+
+Mermaid等のdiagram skillは、semantic recordからのprojection生成・render validationに利用できる。
+
+ただしdiagram skillのvisual grammarを、親和統合のsemantic grammarより上位に置かない。自由配置が必要な場合は、座標を持つcanvas系表現等を使える。
+
 ### Evidence / Inference auditing
 
 完成した成果物の独立監査には利用できる。カードを作る前に全材料を閉じたclaim taxonomyへ入れることは本方法の標準にはしない。
+
+## Representation boundary
+
+具体的なhuman-readable notation、machine-readable interchange、diagram projectionは `REPRESENTATION.md` に置く。
+
+Method Definitionは、ID prefix、JSON property名、Mermaid syntax、色、shape、canvas geometryなどを不変条件として所有しない。
+
+Representation Grammarが将来変更されても、I1〜I14の意味保存条件を満たす限り、方法そのものの変更とはみなさない。
 
 ## Realization boundary
 
