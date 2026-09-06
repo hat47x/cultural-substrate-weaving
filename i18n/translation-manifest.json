@@ -17,9 +17,9 @@
   },
   "files": {
     "ROUTER.md": {
-      "ja_sha256": "102b705bef810d979fb1627c28ca6af87322ab94d697a6095b2226e9aa0dc724",
+      "ja_sha256": "3d671df7fb1ee9b0be1d43229729a3678f0b47155bfd0491500fece156406b55",
       "en_present": true,
-      "en_source_ja_sha256": "102b705bef810d979fb1627c28ca6af87322ab94d697a6095b2226e9aa0dc724",
+      "en_source_ja_sha256": "3d671df7fb1ee9b0be1d43229729a3678f0b47155bfd0491500fece156406b55",
       "en_status": "translated"
     },
     "core/activation.md": {
@@ -35,9 +35,9 @@
       "en_status": "translated"
     },
     "core/iteration.md": {
-      "ja_sha256": "223d15bd8b9afa3addf79136f374e3a40b44cba4bf37bcc4beda147a5ba22a20",
+      "ja_sha256": "a4dd396fd122e27c132c774b520117d91a03582101859bb581511727f5bb202e",
       "en_present": true,
-      "en_source_ja_sha256": "223d15bd8b9afa3addf79136f374e3a40b44cba4bf37bcc4beda147a5ba22a20",
+      "en_source_ja_sha256": "a4dd396fd122e27c132c774b520117d91a03582101859bb581511727f5bb202e",
       "en_status": "translated"
     },
     "core/principles-and-constraints.md": {
@@ -71,9 +71,9 @@
       "en_status": "translated"
     },
     "methods/integration.md": {
-      "ja_sha256": "d1605354451aad24f14c1695964c760b549b391bdf273edcb3e26ca90ddc5090",
+      "ja_sha256": "b3758d6d10bda637470ec89e2e05fc909d6fb7bfb2e0bd3bb5b40225b96c2f85",
       "en_present": true,
-      "en_source_ja_sha256": "d1605354451aad24f14c1695964c760b549b391bdf273edcb3e26ca90ddc5090",
+      "en_source_ja_sha256": "b3758d6d10bda637470ec89e2e05fc909d6fb7bfb2e0bd3bb5b40225b96c2f85",
       "en_status": "translated"
     },
     "methods/scope-and-facts.md": {
