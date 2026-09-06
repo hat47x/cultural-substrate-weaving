@@ -20,6 +20,10 @@
       "git_blob_sha": "9ecea841b62e26e472986576be6c1e4dc0e70ae4",
       "reviewed_at": "2026-09-03"
     },
+    "docs/README.md": {
+      "git_blob_sha": "d254154dd7a300ad027d717e332b7c482800514d",
+      "reviewed_at": "2026-09-06"
+    },
     "docs/ja/architecture.md": {
       "git_blob_sha": "986b6d8255680dc2d57ef608ed8b8b54e4fde3aa",
       "reviewed_at": "2026-08-31"
@@ -69,7 +73,7 @@
       "reviewed_at": "2026-09-05"
     },
     "docs/ja/maintainers/natural-japanese-review.md": {
-      "git_blob_sha": "e36f20605c457b46412daa3b993542588d0d560c",
+      "git_blob_sha": "264b8446e136bae501210c748f6b5fa687fb06c3",
       "reviewed_at": "2026-09-06"
     },
     "docs/ja/maintainers/official-sources.md": {

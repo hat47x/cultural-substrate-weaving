@@ -19,6 +19,7 @@ SHA_RE = re.compile(r"^[0-9a-f]{40}$")
 def review_scope(root: Path = ROOT) -> list[str]:
     paths = {
         "README.md",
+        "docs/README.md",
         ".github/release-validation-note.md",
         "docs/ja/architecture.md",
         "docs/ja/getting-started.md",
