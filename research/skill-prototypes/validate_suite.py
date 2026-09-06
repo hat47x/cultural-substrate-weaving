@@ -19,7 +19,7 @@ def load_json(path: Path) -> dict[str, Any]:
 
 
 def read_frontmatter_name(path: Path) -> str | None:
-    if path.name != "SKILL.md" or not path.is_file():
+    if not path.is_file():
         return None
     text = path.read_text(encoding="utf-8")
     match = re.match(r"\A---\s*\n(.*?)\n---\s*\n", text, flags=re.DOTALL)
@@ -36,6 +36,45 @@ def as_list(value: Any) -> list[Any]:
     return value if isinstance(value, list) else []
 
 
+def validate_runtime_entry(
+    sid: str,
+    label: str,
+    runtime_value: Any,
+    installable: str,
+    errors: list[str],
+) -> None:
+    if not isinstance(runtime_value, str) or not runtime_value:
+        errors.append(f"{sid}: {label} runtime_entry missing")
+        return
+
+    runtime = ROOT / runtime_value
+    if not runtime.is_file():
+        errors.append(f"{sid}: {label} runtime_entry does not exist: {runtime_value}")
+        return
+
+    frontmatter_name = read_frontmatter_name(runtime)
+    if frontmatter_name is not None and frontmatter_name != installable:
+        errors.append(
+            f"{sid}: {label} runtime frontmatter name {frontmatter_name!r} "
+            f"!= installable_name {installable!r}"
+        )
+
+
+def validate_method_definition(
+    sid: str,
+    label: str,
+    method_value: Any,
+    errors: list[str],
+) -> None:
+    if method_value is None:
+        return
+    if not isinstance(method_value, str) or not method_value:
+        errors.append(f"{sid}: {label} method_definition must be a path or null")
+        return
+    if not (ROOT / method_value).is_file():
+        errors.append(f"{sid}: {label} method_definition missing: {method_value}")
+
+
 def validate(manifest: dict[str, Any]) -> tuple[list[str], list[str]]:
     errors: list[str] = []
     warnings: list[str] = []
@@ -44,6 +83,19 @@ def validate(manifest: dict[str, Any]) -> tuple[list[str], list[str]]:
         errors.append("unexpected suite schema")
     if manifest.get("status") != "research-only":
         warnings.append("suite is no longer marked research-only")
+
+    locale_config = manifest.get("locales")
+    if not isinstance(locale_config, dict) or not locale_config:
+        errors.append("suite locales are missing")
+        expected_locales: set[str] = set()
+    else:
+        expected_locales = {str(locale) for locale in locale_config}
+
+    canonical_locale = str(manifest.get("canonical_locale", ""))
+    if not canonical_locale:
+        errors.append("canonical_locale missing")
+    elif expected_locales and canonical_locale not in expected_locales:
+        errors.append(f"canonical_locale is not declared in locales: {canonical_locale}")
 
     skills = [item for item in as_list(manifest.get("skills")) if isinstance(item, dict)]
     if not skills:
@@ -76,24 +128,58 @@ def validate(manifest: dict[str, Any]) -> tuple[list[str], list[str]]:
                 errors.append(f"{sid}: source_root does not exist: {source_root_value}")
 
         runtime_value = skill.get("runtime_entry")
-        if not isinstance(runtime_value, str) or not runtime_value:
-            errors.append(f"{sid}: runtime_entry missing")
-        else:
-            runtime = ROOT / runtime_value
-            if not runtime.is_file():
-                errors.append(f"{sid}: runtime_entry does not exist: {runtime_value}")
-            else:
-                frontmatter_name = read_frontmatter_name(runtime)
-                if frontmatter_name is not None and frontmatter_name != installable:
-                    errors.append(
-                        f"{sid}: SKILL.md frontmatter name {frontmatter_name!r} "
-                        f"!= installable_name {installable!r}"
-                    )
+        validate_runtime_entry(sid, "canonical", runtime_value, installable, errors)
 
         method_value = skill.get("method_definition")
-        if isinstance(method_value, str) and method_value:
-            if not (ROOT / method_value).is_file():
-                errors.append(f"{sid}: method_definition missing: {method_value}")
+        validate_method_definition(sid, "canonical", method_value, errors)
+
+        realizations = skill.get("locale_realizations")
+        if not isinstance(realizations, dict) or not realizations:
+            errors.append(f"{sid}: locale_realizations missing")
+        else:
+            actual_locales = {str(locale) for locale in realizations}
+            missing_locales = sorted(expected_locales - actual_locales)
+            extra_locales = sorted(actual_locales - expected_locales)
+            if missing_locales:
+                errors.append(
+                    f"{sid}: locale_realizations missing locale(s): {', '.join(missing_locales)}"
+                )
+            if extra_locales:
+                errors.append(
+                    f"{sid}: locale_realizations contain undeclared locale(s): {', '.join(extra_locales)}"
+                )
+
+            for locale, realization in realizations.items():
+                label = f"locale {locale}"
+                if not isinstance(realization, dict):
+                    errors.append(f"{sid}: {label} realization must be an object")
+                    continue
+                if not str(realization.get("status", "")).strip():
+                    errors.append(f"{sid}: {label} realization status missing")
+                validate_runtime_entry(
+                    sid,
+                    label,
+                    realization.get("runtime_entry"),
+                    installable,
+                    errors,
+                )
+                validate_method_definition(
+                    sid,
+                    label,
+                    realization.get("method_definition"),
+                    errors,
+                )
+
+            canonical_realization = realizations.get(canonical_locale)
+            if isinstance(canonical_realization, dict):
+                if canonical_realization.get("runtime_entry") != runtime_value:
+                    errors.append(
+                        f"{sid}: top-level runtime_entry must match canonical locale realization"
+                    )
+                if canonical_realization.get("method_definition") != method_value:
+                    errors.append(
+                        f"{sid}: top-level method_definition must match canonical locale realization"
+                    )
 
         for section in ("references", "evidence", "evals", "checks"):
             declared = skill.get(section, [])
@@ -125,9 +211,7 @@ def validate(manifest: dict[str, Any]) -> tuple[list[str], list[str]]:
                     if not isinstance(refs, list):
                         errors.append(f"distribution {surface}.{field} must be an array")
                         continue
-                    unknown = sorted(
-                        str(ref) for ref in refs if str(ref) not in known_ids
-                    )
+                    unknown = sorted(str(ref) for ref in refs if str(ref) not in known_ids)
                     if unknown:
                         errors.append(
                             f"distribution {surface}.{field} references unknown skills: "
