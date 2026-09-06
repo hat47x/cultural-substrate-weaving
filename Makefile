@@ -47,6 +47,7 @@ living-lab-summary:
 
 research-skill-check:
 	python research/skill-prototypes/validate_suite.py
+	python research/skill-prototypes/check_split_ownership.py
 	python research/skill-prototypes/affinity-synthesis/scripts/check_representation.py
 
 check: repository-contracts generated-artifacts-check validate japanese-docs-check test tokens living-lab-check living-lab-summary
