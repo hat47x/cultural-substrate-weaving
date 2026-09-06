@@ -74,7 +74,7 @@ Before attributing a gap or bias to the target, ask whether framework elements a
 
 Homogeneity belongs to the **framework-layer-target combination**, not to the framework alone. The same framework may be homogeneous at one layer and heterogeneous at another. Even units of the same apparent type may differ in classification principle.
 
-Heterogeneous frameworks can still be used exploratorily to:
+Heterogeneous frameworks can still be used exploratorily. Representative exploratory uses include:
 
 - obtain verbs for relations;
 - establish contrast axes;
