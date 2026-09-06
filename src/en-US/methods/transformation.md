@@ -49,7 +49,7 @@ Separate absence detection from consistency checking.
 
 Consistency checking can also be used for a single unit.
 
-Where layers of differing depth are involved, distinguish the unspoken bodily response held by one person, the shared experience accumulated in a place or an object, and the isomorphic structure that recurs locally and across the whole. Different frameworks may be used for different layers, or different layers of one framework may be used. When multiple frameworks are used, preserve not only shared change principles but also partitions on which the frameworks do not agree.
+When layers of differing depth are involved, make the layer distinction explicit. Representative examples include the unspoken bodily response held by one person, the shared experience accumulated in a place or an object, and the isomorphic structure that recurs locally and across the whole. Different frameworks may be used for different layers, or different layers of one framework may be used. When multiple frameworks are used, preserve not only shared change principles but also partitions on which the frameworks do not agree.
 
 **Layering orthogonal frameworks produces structure no single framework yields. Reach for it.** Where one framework supplies the positions and another cuts the same target by a different classification principle, the intersections of the two grids hold places neither framework can name on its own.
 
