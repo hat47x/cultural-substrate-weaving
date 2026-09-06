@@ -21,6 +21,9 @@
       "working_display_en": "Affinity Synthesis",
       "role": "one_round_material_synthesis",
       "source_root": "research/skill-prototypes/affinity-synthesis",
+      "assembly": {
+        "mode": "direct_skill"
+      },
       "method_definition": "research/skill-prototypes/affinity-synthesis/references/METHOD.md",
       "runtime_entry": "research/skill-prototypes/affinity-synthesis/SKILL.md",
       "locale_realizations": {
@@ -87,6 +90,9 @@
       "working_display_en": "Iterative Inquiry Synthesis",
       "role": "multi_round_inquiry_orchestration",
       "source_root": "research/skill-prototypes/iterative-inquiry-synthesis",
+      "assembly": {
+        "mode": "direct_skill"
+      },
       "method_definition": "research/skill-prototypes/iterative-inquiry-synthesis/references/METHOD.md",
       "runtime_entry": "research/skill-prototypes/iterative-inquiry-synthesis/SKILL.md",
       "locale_realizations": {
@@ -140,6 +146,10 @@
       "working_display_en": "Cultural Substrate Weaving",
       "role": "cultural_framework_exploration",
       "source_root": "src",
+      "assembly": {
+        "mode": "router_modules",
+        "source_manifest": "src/manifest.json"
+      },
       "method_definition": null,
       "runtime_entry": "src/ja-JP/ROUTER.md",
       "locale_realizations": {
