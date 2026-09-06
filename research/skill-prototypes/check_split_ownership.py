@@ -44,7 +44,6 @@ def main() -> None:
         ),
         errors,
     )
-
     require(
         "src/ja-JP/methods/integration.md",
         (
@@ -59,6 +58,84 @@ def main() -> None:
         (
             "round delta",
             "compatible iterative realization",
+            "CSWはこれらを別系統のround管理として再実装しない",
+        ),
+        errors,
+    )
+
+    require(
+        "src/en-US/ROUTER.md",
+        (
+            "CSW does not own those internal algorithms",
+            "affinity-synthesis",
+            "iterative-inquiry-synthesis",
+            "Do not claim that affinity synthesis or multi-round orchestration was executed when it was not",
+        ),
+        errors,
+    )
+    forbid(
+        "src/en-US/ROUTER.md",
+        (
+            "This skill combines two capabilities",
+            "Integration through KJ",
+        ),
+        errors,
+    )
+    require(
+        "src/en-US/methods/integration.md",
+        (
+            "This document does not implement affinity synthesis itself",
+            "compatible realization",
+            "CSW does not independently re-implement these internal algorithms",
+        ),
+        errors,
+    )
+    require(
+        "src/en-US/core/iteration.md",
+        (
+            "This document does not implement multi-round inquiry orchestration itself",
+            "compatible realization",
+            "CSW does not independently re-implement this general round governance",
+        ),
+        errors,
+    )
+
+    require(
+        "research/skill-prototypes/affinity-synthesis/SKILL.en.md",
+        (
+            "Status: research English realization",
+            "This Skill owns **one synthesis round**",
+            "Join when semantic unity must be preserved; split when epistemic state must be preserved",
+            "membership",
+            "secondary resonance",
+        ),
+        errors,
+    )
+    require(
+        "research/skill-prototypes/affinity-synthesis/references/METHOD.en.md",
+        (
+            "I1. Material-led structure",
+            "I14. Rendering is a projection, not the method authority",
+            "A realization may be replaced by an existing external Skill",
+        ),
+        errors,
+    )
+    require(
+        "research/skill-prototypes/iterative-inquiry-synthesis/SKILL.en.md",
+        (
+            "Status: research English realization",
+            "does not own the one-round synthesis algorithm",
+            "Semantic delta is not diagram delta",
+            "Stable semantic handles",
+        ),
+        errors,
+    )
+    require(
+        "research/skill-prototypes/iterative-inquiry-synthesis/references/METHOD.en.md",
+        (
+            "I1. A round is a delta, not a restart",
+            "I14. Semantic delta and representation delta are distinct",
+            "Layer 2 does not reimplement Layer 1 grouping or labeling algorithms",
         ),
         errors,
     )
@@ -87,7 +164,8 @@ def main() -> None:
         (
             "このresearch branchでは方法分離を試験中です",
             "これはまだ公開済みの三Skill構成を意味しません",
-            "English (`en-US`) | parity backlog",
+            "英語の `SKILL.en.md` と `METHOD.en.md` の初期版",
+            "English (`en-US`) | translated draft",
         ),
         errors,
     )
@@ -96,7 +174,8 @@ def main() -> None:
         (
             "This research branch is testing a method split",
             "This does not mean that a three-Skill distribution has already been publicly released",
-            "English (`en-US`) | Parity backlog",
+            "initial English `SKILL.en.md` and `METHOD.en.md` drafts",
+            "English (`en-US`) | Translated draft",
         ),
         errors,
     )
