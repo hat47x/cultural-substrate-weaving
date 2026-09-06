@@ -1,0 +1,61 @@
+{
+  "format": "affinity-map",
+  "version": "0.1",
+  "subject": {
+    "question": "How can accountability remain reachable without forcing immediate conversion?"
+  },
+  "cards": [
+    {
+      "id": "C001",
+      "text": "人格否定ではなく具体的な行為へ話を戻すと、自己防御を強めず責任を扱える。"
+    },
+    {
+      "id": "C002",
+      "text": "その場での改心を迫らず、理解や反応に時間差が生じる余地を残す。"
+    },
+    {
+      "id": "C003",
+      "text": "反発を避けることが、責任そのものを曖昧にする方向へ流れる危険もある。"
+    }
+  ],
+  "groups": [
+    {
+      "id": "G01",
+      "label": "自己防御を過度に刺激せず、具体的な責任行為へ戻れる通路を保つ",
+      "members": ["C001", "C002"]
+    },
+    {
+      "id": "G02",
+      "label": "配慮が責任の希薄化へ変わる境界は別に監査する必要がある",
+      "members": ["C003"]
+    }
+  ],
+  "relations": [
+    {
+      "id": "R01",
+      "from": "G01",
+      "to": "G02",
+      "direction": "directed",
+      "predicate": "通路を保つ配慮は、責任の希薄化へ変わる境界を同時に監査する必要を生む",
+      "display_label": "配慮には境界監査が要る",
+      "state": "supported as synthesis",
+      "basis": ["C001", "C002", "C003"]
+    }
+  ],
+  "questions": [
+    {
+      "id": "Q01",
+      "text": "時間差を許すことが、どの条件で責任放棄へ変わるのか",
+      "display_label": "時間差はいつ責任放棄へ変わるか",
+      "arises_from": ["G01", "G02"]
+    }
+  ],
+  "layout": {
+    "projection": "spatial-map",
+    "positions": {
+      "G01": {"x": 0.20, "y": 0.42},
+      "G02": {"x": 0.72, "y": 0.38},
+      "Q01": {"x": 0.50, "y": 0.78}
+    }
+  }
+}
