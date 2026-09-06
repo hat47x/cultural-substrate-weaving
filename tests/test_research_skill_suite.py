@@ -39,12 +39,6 @@ class ResearchSkillSuiteTests(unittest.TestCase):
             path for path in iterative["references"] if not path.endswith("/METHOD.md")
         ]
         iterative["locale_realizations"]["ja-JP"]["method_definition"] = None
-        iterative["locale_realizations"]["ja-JP"]["package_references"] = [
-            path
-            for path in iterative["locale_realizations"]["ja-JP"]["package_references"]
-            if not path.endswith("/METHOD.md")
-        ]
-
         self.assert_has_error(manifest, "METHOD.md exists but method_definition is not registered")
 
     def test_method_definition_must_also_be_a_declared_reference(self) -> None:
@@ -53,7 +47,6 @@ class ResearchSkillSuiteTests(unittest.TestCase):
         iterative["references"] = [
             path for path in iterative["references"] if not path.endswith("/METHOD.md")
         ]
-
         self.assert_has_error(manifest, "method_definition must also be declared in references")
 
     def test_installable_names_must_be_unique(self) -> None:
@@ -111,7 +104,11 @@ class ResearchSkillSuiteTests(unittest.TestCase):
     def test_realized_locale_requires_runtime_entry(self) -> None:
         manifest = copy.deepcopy(self.manifest)
         csw = self.skill(manifest, "cultural-substrate-weaving")
-        csw["locale_realizations"]["en-US"] = {"status": "existing"}
+        package_source = copy.deepcopy(csw["locale_realizations"]["en-US"]["package_source"])
+        csw["locale_realizations"]["en-US"] = {
+            "status": "existing-translated",
+            "package_source": package_source,
+        }
         self.assert_has_error(manifest, "realized locale en-US must declare runtime_entry")
 
     def test_realized_locale_requires_method_definition_when_skill_has_one(self) -> None:
@@ -120,33 +117,27 @@ class ResearchSkillSuiteTests(unittest.TestCase):
         affinity["locale_realizations"]["en-US"].pop("method_definition")
         self.assert_has_error(manifest, "realized locale en-US must declare method_definition")
 
-    def test_realized_method_skill_requires_package_references(self) -> None:
-        manifest = copy.deepcopy(self.manifest)
-        affinity = self.skill(manifest, "affinity-synthesis")
-        affinity["locale_realizations"]["en-US"].pop("package_references")
-        self.assert_has_error(manifest, "realized locale en-US must declare package_references")
-
-    def test_package_references_must_include_locale_method_definition(self) -> None:
-        manifest = copy.deepcopy(self.manifest)
-        affinity = self.skill(manifest, "affinity-synthesis")
-        realization = affinity["locale_realizations"]["en-US"]
-        realization["package_references"].remove(realization["method_definition"])
-        self.assert_has_error(manifest, "package_references must include method_definition")
-
-    def test_package_reference_must_also_be_a_declared_skill_reference(self) -> None:
-        manifest = copy.deepcopy(self.manifest)
-        affinity = self.skill(manifest, "affinity-synthesis")
-        affinity["locale_realizations"]["en-US"]["package_references"].append(
-            "research/skill-prototypes/affinity-synthesis/SKILL.en.md"
-        )
-        self.assert_has_error(manifest, "package reference must also be declared in references")
-
     def test_locale_method_definition_must_be_declared_as_reference(self) -> None:
         manifest = copy.deepcopy(self.manifest)
         affinity = self.skill(manifest, "affinity-synthesis")
         en_method = affinity["locale_realizations"]["en-US"]["method_definition"]
         affinity["references"].remove(en_method)
-        self.assert_has_error(manifest, "locale realization en-US method_definition must also be declared in references")
+        self.assert_has_error(
+            manifest,
+            "locale realization en-US method_definition must also be declared in references",
+        )
+
+    def test_realized_locale_requires_package_source(self) -> None:
+        manifest = copy.deepcopy(self.manifest)
+        iterative = self.skill(manifest, "iterative-inquiry-synthesis")
+        iterative["locale_realizations"]["en-US"].pop("package_source")
+        self.assert_has_error(manifest, "realized locale en-US must declare package_source")
+
+    def test_planned_locale_cannot_carry_stale_package_source(self) -> None:
+        manifest = copy.deepcopy(self.manifest)
+        affinity = self.skill(manifest, "affinity-synthesis")
+        affinity["locale_realizations"]["en-US"]["status"] = "planned"
+        self.assert_has_error(manifest, "planned locale en-US must not declare package_source")
 
     def test_canonical_locale_runtime_entry_matches_skill_entry(self) -> None:
         manifest = copy.deepcopy(self.manifest)
@@ -177,6 +168,94 @@ class ResearchSkillSuiteTests(unittest.TestCase):
         self.assert_has_error(
             manifest,
             "locale realization en-US runtime_entry is outside source_root",
+        )
+
+    def test_explicit_package_source_must_include_runtime_entry(self) -> None:
+        manifest = copy.deepcopy(self.manifest)
+        affinity = self.skill(manifest, "affinity-synthesis")
+        files = affinity["locale_realizations"]["en-US"]["package_source"]["files"]
+        files.remove("SKILL.en.md")
+        self.assert_has_error(manifest, "package_source must include runtime_entry")
+
+    def test_explicit_package_source_must_include_method_definition(self) -> None:
+        manifest = copy.deepcopy(self.manifest)
+        affinity = self.skill(manifest, "affinity-synthesis")
+        files = affinity["locale_realizations"]["en-US"]["package_source"]["files"]
+        files.remove("references/METHOD.en.md")
+        self.assert_has_error(manifest, "package_source must include method_definition")
+
+    def test_explicit_package_source_file_cannot_escape_package_root(self) -> None:
+        manifest = copy.deepcopy(self.manifest)
+        affinity = self.skill(manifest, "affinity-synthesis")
+        affinity["locale_realizations"]["ja-JP"]["package_source"]["files"].append(
+            "../../../../CHANGELOG.md"
+        )
+        self.assert_has_error(manifest, "package file escapes package root")
+
+    def test_explicit_package_source_file_must_exist(self) -> None:
+        manifest = copy.deepcopy(self.manifest)
+        iterative = self.skill(manifest, "iterative-inquiry-synthesis")
+        iterative["locale_realizations"]["ja-JP"]["package_source"]["files"].append(
+            "references/DOES-NOT-EXIST.md"
+        )
+        self.assert_has_error(manifest, "package file is missing")
+
+    def test_explicit_package_source_file_must_be_runtime_or_declared_metadata(self) -> None:
+        manifest = copy.deepcopy(self.manifest)
+        affinity = self.skill(manifest, "affinity-synthesis")
+        affinity["locale_realizations"]["en-US"]["package_source"]["files"].append(
+            "references/HIERARCHY-AND-LINEAGE.md"
+        )
+        self.assert_has_error(manifest, "package file is not runtime or declared research metadata")
+
+    def test_canonical_manifest_router_must_match_runtime_entry(self) -> None:
+        manifest = copy.deepcopy(self.manifest)
+        csw = self.skill(manifest, "cultural-substrate-weaving")
+        csw["locale_realizations"]["en-US"]["package_source"]["locale_root"] = "src/ja-JP"
+        self.assert_has_error(manifest, "canonical_manifest router does not match runtime_entry")
+
+    def test_affinity_japanese_runtime_progressive_files_are_packaged(self) -> None:
+        affinity = self.skill(self.manifest, "affinity-synthesis")
+        files = set(affinity["locale_realizations"]["ja-JP"]["package_source"]["files"])
+        expected = {
+            "SKILL.md",
+            "references/METHOD.md",
+            "references/REPRESENTATION.md",
+            "references/TEMPLATE.md",
+            "references/affinity-map.schema.json",
+            "evals/CASES.md",
+            "evidence/dossier.md",
+        }
+        self.assertEqual(files, expected)
+
+    def test_affinity_english_package_does_not_silently_import_japanese_method_or_template(self) -> None:
+        affinity = self.skill(self.manifest, "affinity-synthesis")
+        files = set(affinity["locale_realizations"]["en-US"]["package_source"]["files"])
+        self.assertEqual(
+            files,
+            {
+                "SKILL.en.md",
+                "references/METHOD.en.md",
+                "references/REPRESENTATION.md",
+                "references/affinity-map.schema.json",
+            },
+        )
+        self.assertNotIn("references/METHOD.md", files)
+        self.assertNotIn("references/TEMPLATE.md", files)
+        self.assertNotIn("references/HIERARCHY-AND-LINEAGE.md", files)
+
+    def test_iterative_standalone_files_do_not_require_sibling_tree(self) -> None:
+        iterative = self.skill(self.manifest, "iterative-inquiry-synthesis")
+        for locale in ("ja-JP", "en-US"):
+            files = iterative["locale_realizations"][locale]["package_source"]["files"]
+            self.assertFalse(any(".." in Path(path).parts for path in files))
+        self.assertEqual(
+            iterative["locale_realizations"]["ja-JP"]["package_source"]["files"],
+            ["SKILL.md", "references/METHOD.md", "references/ROUND-TEMPLATE.md"],
+        )
+        self.assertEqual(
+            iterative["locale_realizations"]["en-US"]["package_source"]["files"],
+            ["SKILL.en.md", "references/METHOD.en.md", "references/ROUND-TEMPLATE.md"],
         )
 
     def test_hard_dependency_is_not_allowed(self) -> None:
