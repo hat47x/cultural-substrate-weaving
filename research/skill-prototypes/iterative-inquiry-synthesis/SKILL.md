@@ -215,7 +215,7 @@ IDは意味分類ではなく、局所reopenとhistory comparisonのhandleであ
 
 - 方法の不変条件: `references/METHOD.md`
 - 標準round記録とdelta notation: `references/ROUND-TEMPLATE.md`
-- Layer 1との境界とsemantic representation: sibling prototype `../affinity-synthesis/`
+- Layer 1との境界とsemantic representation: 利用可能な場合はcompanion Skill `affinity-synthesis` のMethod Definition / representation contractを参照する。sibling filesystem pathの存在は前提にしない。
 
 ## Boundary
 
