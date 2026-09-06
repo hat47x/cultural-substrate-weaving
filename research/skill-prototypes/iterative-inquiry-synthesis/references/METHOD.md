@@ -176,12 +176,31 @@ web research、interview、experiment、cultural framework等から得たもの�
 
 モデル内部のtoken-by-token reasoningを方法履歴の正本にしない。
 
+### I13. Stable semantic handles should survive across rounds when identity survives
+
+one-round synthesis artifactがstable IDを持つ場合、意味上同じcard / group / relation / residualについて、文面を少し直しただけで毎round新IDへ振り直さない。
+
+IDの継続は「意味が変わっていない」という保証ではない。`~ G03` のように、同じhandleの内容・membership・labelが変わったことを記録できる。
+
+逆に、意味単位がsplit / mergeされ、同一性を保てない場合は新IDへ分け、旧IDとのderivationを残せる。
+
+### I14. Semantic delta and representation delta are not the same
+
+少なくとも次を区別する。
+
+- **semantic delta**: card meaning、membership、label、explicit relation predicate / direction / state、secondary resonance、residual、question等の意味上の変化。
+- **representation delta**: line wrapping、表記統一、renderer変更、色・shape、automatic layout、図上の位置調整等の表示上の変化。
+
+図が動いた、文章の順序が変わった、Mermaidのlayoutが変わったというだけで、新しい構造発見として数えない。
+
+representation changeがsemantic interpretationへ影響した可能性がある場合は、projectionからsemantic recordへ戻って再検査する。
+
 ## Round Kernel
 
 ```text
 receive delta
   ↓
-locate touched artifacts
+locate touched artifacts / stable semantic IDs
   ↓
 state current inquiry
   ↓
@@ -189,7 +208,9 @@ reopen locally or globally with reason
   ↓
 run one compatible synthesis realization
   ↓
-compare with prior structure
+compare with prior semantic structure
+  ↓
+separate semantic delta from representation-only delta
   ↓
 record new / changed / unchanged / withdrawn / residual
   ↓
@@ -209,6 +230,7 @@ append round snapshot
 - 何度も処理した派生物を独立supportとして重くする。
 - 完了感を得るためにresidualを消す。
 - 終わらない探索を「深さ」と誤認する。
+- rendererやlayoutの変化をmeaning changeと取り違える。
 
 本方法は、**再計算能力を全面再生成ではなく差分再開へ使う**ことを生成AI向けの中心補正とする。
 
@@ -219,6 +241,8 @@ append round snapshot
 `iterative-inquiry-synthesis` は、そのinput/output/residualをround間で扱う。
 
 Layer 2が独自のgrouping / labeling algorithmを再実装しない。
+
+`affinity-map` 等のmachine-readable semantic recordがある場合は、そのstable IDsとrelation / resonance distinctionをround deltaで再利用できる。
 
 ## Relationship to Cultural Substrate Weaving
 
@@ -238,6 +262,8 @@ Layer 2はその由来を保ったまま次round materialへ接続する。
 - stopを「諦め」とみなし無限に探索する。
 - synthesis realization変更の影響をmaterial changeと混同する。
 - 外部探索routeの仮説をsource factへ昇格させる。
+- wording / renderer / layout changeをsemantic discoveryとして数える。
+- 既存IDを毎round振り直し、局所reopenやhistory comparisonを不可能にする。
 
 ## Realization boundary
 
