@@ -11,14 +11,23 @@ from typing import Any
 ROOT = Path(__file__).resolve().parents[2]
 SUITE_ROOT = Path(__file__).resolve().parent
 MANIFEST_PATH = SUITE_ROOT / "suite-manifest.json"
-FRONTMATTER_NAME = re.compile(r"\A---\s*\n.*?^name:\s*([^\n]+)$.*?\n---\s*\n", re.MULTILINE | re.DOTALL)
+SOURCE_MANIFEST_PATH = ROOT / "src" / "manifest.json"
+FRONTMATTER_NAME = re.compile(
+    r"\A---\s*\n.*?^name:\s*([^\n]+)$.*?\n---\s*\n",
+    re.MULTILINE | re.DOTALL,
+)
+LOCAL_LINK = re.compile(r"\[[^\]]*\]\(([^)]+)\)")
+
+
+def load_json(path: Path) -> dict[str, Any]:
+    value = json.loads(path.read_text(encoding="utf-8"))
+    if not isinstance(value, dict):
+        raise ValueError(f"expected JSON object: {path}")
+    return value
 
 
 def load_manifest() -> dict[str, Any]:
-    value = json.loads(MANIFEST_PATH.read_text(encoding="utf-8"))
-    if not isinstance(value, dict):
-        raise ValueError("suite manifest must be a JSON object")
-    return value
+    return load_json(MANIFEST_PATH)
 
 
 def frontmatter_name(text: str) -> str | None:
@@ -31,7 +40,6 @@ def frontmatter_name(text: str) -> str | None:
 def selected_reference_paths(skill: dict[str, Any], locale: str) -> list[Path]:
     realization = skill["locale_realizations"][locale]
     selected_method = realization.get("method_definition")
-    canonical_method = skill.get("method_definition")
     locale_methods = {
         str(item.get("method_definition"))
         for item in skill.get("locale_realizations", {}).values()
@@ -44,11 +52,100 @@ def selected_reference_paths(skill: dict[str, Any], locale: str) -> list[Path]:
 
     for relative in skill.get("references", []):
         relative = str(relative)
-        if relative == canonical_method or relative in locale_methods:
+        if relative in locale_methods:
             continue
         selected.append(ROOT / relative)
 
     return selected
+
+
+def write_origin(
+    target: Path,
+    manifest: dict[str, Any],
+    skill: dict[str, Any],
+    locale: str,
+    packaging_mode: str,
+) -> None:
+    realization = skill["locale_realizations"][locale]
+    origin = {
+        "suite": manifest["suite_id"],
+        "skill_id": skill["id"],
+        "installable_name": skill["installable_name"],
+        "locale": locale,
+        "realization_status": realization.get("status"),
+        "runtime_source": realization["runtime_entry"],
+        "method_source": realization.get("method_definition"),
+        "packaging_mode": packaging_mode,
+        "research_only": True,
+    }
+    (target / "ORIGIN.json").write_text(
+        json.dumps(origin, ensure_ascii=False, indent=2) + "\n",
+        encoding="utf-8",
+    )
+
+
+def build_csw_preview(
+    output_root: Path,
+    manifest: dict[str, Any],
+    skill: dict[str, Any],
+    locale: str,
+) -> Path:
+    source_manifest = load_json(SOURCE_MANIFEST_PATH)
+    realization = skill["locale_realizations"][locale]
+    runtime = ROOT / realization["runtime_entry"]
+    target = output_root / locale / skill["installable_name"]
+    references = target / "references"
+    references.mkdir(parents=True, exist_ok=True)
+
+    router = runtime.read_text(encoding="utf-8")
+    for module in source_manifest["modules"]:
+        router = router.replace(
+            f"({module['source']})",
+            f"(references/{module['skill_reference']})",
+        )
+
+    description = source_manifest["locales"][locale]["description"].replace("\n", " ").strip()
+    skill_text = (
+        "---\n"
+        f"name: {skill['installable_name']}\n"
+        f"description: {description}\n"
+        "---\n\n"
+        + router
+    )
+    (target / "SKILL.md").write_text(skill_text, encoding="utf-8")
+
+    locale_root = ROOT / "src" / locale
+    for module in source_manifest["modules"]:
+        source = locale_root / module["source"]
+        if not source.is_file():
+            raise FileNotFoundError(source)
+        shutil.copyfile(source, references / module["skill_reference"])
+
+    write_origin(target, manifest, skill, locale, "existing-csw-runtime-shape")
+    return target
+
+
+def build_sibling_preview(
+    output_root: Path,
+    manifest: dict[str, Any],
+    skill: dict[str, Any],
+    locale: str,
+) -> Path:
+    realization = skill["locale_realizations"][locale]
+    runtime = ROOT / realization["runtime_entry"]
+    target = output_root / locale / skill["installable_name"]
+    references = target / "references"
+    references.mkdir(parents=True, exist_ok=True)
+
+    shutil.copyfile(runtime, target / "SKILL.md")
+
+    for source in selected_reference_paths(skill, locale):
+        if not source.is_file():
+            raise FileNotFoundError(source)
+        shutil.copyfile(source, references / source.name)
+
+    write_origin(target, manifest, skill, locale, "sibling-research-realization")
+    return target
 
 
 def build_preview(output_root: Path) -> list[Path]:
@@ -57,36 +154,32 @@ def build_preview(output_root: Path) -> list[Path]:
 
     for locale in manifest["locales"]:
         for skill in manifest["skills"]:
-            realization = skill["locale_realizations"][locale]
-            runtime = ROOT / realization["runtime_entry"]
-            target = output_root / locale / skill["installable_name"]
-            references = target / "references"
-            references.mkdir(parents=True, exist_ok=True)
-
-            shutil.copyfile(runtime, target / "SKILL.md")
+            if skill["id"] == "cultural-substrate-weaving":
+                target = build_csw_preview(output_root, manifest, skill, locale)
+            else:
+                target = build_sibling_preview(output_root, manifest, skill, locale)
             built.append(target)
 
-            for source in selected_reference_paths(skill, locale):
-                if not source.is_file():
-                    raise FileNotFoundError(source)
-                shutil.copyfile(source, references / source.name)
-
-            origin = {
-                "suite": manifest["suite_id"],
-                "skill_id": skill["id"],
-                "installable_name": skill["installable_name"],
-                "locale": locale,
-                "realization_status": realization.get("status"),
-                "runtime_source": realization["runtime_entry"],
-                "method_source": realization.get("method_definition"),
-                "research_only": True,
-            }
-            (target / "ORIGIN.json").write_text(
-                json.dumps(origin, ensure_ascii=False, indent=2) + "\n",
-                encoding="utf-8",
-            )
-
     return built
+
+
+def validate_local_links(output_root: Path, target: Path) -> list[str]:
+    errors: list[str] = []
+    for path in [target / "SKILL.md", *sorted((target / "references").glob("*.md"))]:
+        if not path.is_file():
+            continue
+        for link in LOCAL_LINK.findall(path.read_text(encoding="utf-8")):
+            raw = link.strip()
+            if not raw or raw.startswith(("http://", "https://", "mailto:", "#")):
+                continue
+            relative = raw.split("#", 1)[0].strip()
+            if not relative:
+                continue
+            if not (path.parent / relative).exists():
+                errors.append(
+                    f"{path.relative_to(output_root)}: unresolved local link -> {raw}"
+                )
+    return errors
 
 
 def validate_preview(output_root: Path, built: list[Path]) -> list[str]:
@@ -111,7 +204,9 @@ def validate_preview(output_root: Path, built: list[Path]) -> list[str]:
         origin = json.loads(origin_path.read_text(encoding="utf-8"))
         expected_name = origin["installable_name"]
 
-        if name is not None and name != expected_name:
+        if name is None:
+            errors.append(f"{target.relative_to(output_root)}: packaged SKILL.md has no name frontmatter")
+        elif name != expected_name:
             errors.append(
                 f"{target.relative_to(output_root)}: frontmatter name {name!r} != {expected_name!r}"
             )
@@ -126,11 +221,15 @@ def validate_preview(output_root: Path, built: list[Path]) -> list[str]:
                     f"{target.relative_to(output_root)}: selected locale Method Definition missing"
                 )
 
+        errors.extend(validate_local_links(output_root, target))
+
     return errors
 
 
 def main() -> None:
-    parser = argparse.ArgumentParser(description="Build a research-only bilingual sibling-Skill preview.")
+    parser = argparse.ArgumentParser(
+        description="Build a research-only bilingual three-Skill preview."
+    )
     parser.add_argument(
         "--output",
         type=Path,
