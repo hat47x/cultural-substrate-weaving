@@ -25,7 +25,20 @@
       "locale_realizations": {
         "ja-JP": {
           "status": "prototype",
-          "runtime_entry": "research/skill-prototypes/affinity-synthesis/SKILL.md"
+          "runtime_entry": "research/skill-prototypes/affinity-synthesis/SKILL.md",
+          "package_source": {
+            "mode": "explicit_files",
+            "root": "research/skill-prototypes/affinity-synthesis",
+            "files": [
+              "SKILL.md",
+              "references/METHOD.md",
+              "references/REPRESENTATION.md",
+              "references/TEMPLATE.md",
+              "references/affinity-map.schema.json",
+              "evals/CASES.md",
+              "evidence/dossier.md"
+            ]
+          }
         },
         "en-US": {
           "status": "planned"
@@ -33,7 +46,9 @@
       },
       "references": [
         "research/skill-prototypes/affinity-synthesis/references/METHOD.md",
-        "research/skill-prototypes/affinity-synthesis/references/TEMPLATE.md"
+        "research/skill-prototypes/affinity-synthesis/references/REPRESENTATION.md",
+        "research/skill-prototypes/affinity-synthesis/references/TEMPLATE.md",
+        "research/skill-prototypes/affinity-synthesis/references/affinity-map.schema.json"
       ],
       "evidence": [
         "research/skill-prototypes/affinity-synthesis/evidence/dossier.md"
@@ -64,7 +79,16 @@
       "locale_realizations": {
         "ja-JP": {
           "status": "prototype",
-          "runtime_entry": "research/skill-prototypes/iterative-inquiry-synthesis/SKILL.md"
+          "runtime_entry": "research/skill-prototypes/iterative-inquiry-synthesis/SKILL.md",
+          "package_source": {
+            "mode": "explicit_files",
+            "root": "research/skill-prototypes/iterative-inquiry-synthesis",
+            "files": [
+              "SKILL.md",
+              "references/METHOD.md",
+              "references/ROUND-TEMPLATE.md"
+            ]
+          }
         },
         "en-US": {
           "status": "planned"
@@ -102,11 +126,21 @@
       "locale_realizations": {
         "ja-JP": {
           "status": "existing",
-          "runtime_entry": "src/ja-JP/ROUTER.md"
+          "runtime_entry": "src/ja-JP/ROUTER.md",
+          "package_source": {
+            "mode": "canonical_manifest",
+            "manifest": "src/manifest.json",
+            "locale_root": "src/ja-JP"
+          }
         },
         "en-US": {
           "status": "existing",
-          "runtime_entry": "src/en-US/ROUTER.md"
+          "runtime_entry": "src/en-US/ROUTER.md",
+          "package_source": {
+            "mode": "canonical_manifest",
+            "manifest": "src/manifest.json",
+            "locale_root": "src/en-US"
+          }
         }
       },
       "references": [],
