@@ -55,6 +55,9 @@ def _format_source(skill: dict, locale: str) -> dict:
             "root": root,
             "runtime_entry": f"{root}/{source['runtime_entry']}",
             "operation": "copy_locale_tree_preserving_runtime_relative_paths",
+            "copy_scope": "entire_locale_tree",
+            "package_closed": True,
+            "exclusion_filter": "none",
         }
     raise ValueError(f"unsupported production source mode: {mode!r}")
 
