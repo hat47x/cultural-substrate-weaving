@@ -33,6 +33,9 @@ from plan_skill_entry_transforms import (  # noqa: E402
 )
 from plan_skill_subtrees import plan_skill_subtrees  # noqa: E402
 from validate_research_adapter_metadata import validate_adapter_metadata  # noqa: E402
+from validate_research_package_reference_closure import (  # noqa: E402
+    validate_package_reference_closure,
+)
 from validate_research_package_targets import validate_package_targets  # noqa: E402
 from validate_research_skill_suite import validate_suite  # noqa: E402
 
@@ -50,6 +53,7 @@ def _validated_inputs(root: Path) -> tuple[dict, dict]:
     metadata = _load_json(root / METADATA_PATH.relative_to(ROOT))
     errors = validate_suite(root, suite)
     errors.extend(validate_package_targets(suite))
+    errors.extend(validate_package_reference_closure(root, suite))
     errors.extend(validate_adapter_metadata(root, metadata))
     if errors:
         raise ValueError("invalid research packaging inputs: " + "; ".join(errors))
