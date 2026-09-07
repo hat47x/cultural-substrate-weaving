@@ -19,6 +19,15 @@ from validate_research_adapter_metadata import validate_adapter_metadata  # noqa
 SUITE_PATH = ROOT / "research" / "skill-prototypes" / "suite-manifest.json"
 METADATA_PATH = ROOT / "research" / "skill-prototypes" / "adapter-metadata-plan.json"
 RESEARCH_OPENAI = ROOT / "research" / "skill-prototypes" / "adapters" / "openai-skill"
+RESEARCH_BUNDLE = (
+    ROOT
+    / "research"
+    / "skill-prototypes"
+    / "adapters"
+    / "claude-codex"
+    / "ja-JP"
+    / "bundle-metadata.json"
+)
 
 
 class ResearchAdapterMetadataTests(unittest.TestCase):
@@ -92,7 +101,7 @@ class ResearchAdapterMetadataTests(unittest.TestCase):
 
         self.assert_has_error(metadata, "allow_implicit_invocation: true")
 
-    def test_multi_skill_bundle_baseline_must_remain_review_required(self) -> None:
+    def test_multi_skill_bundle_prototype_must_remain_review_required(self) -> None:
         metadata = copy.deepcopy(self.metadata)
         metadata["distributions"]["claude_plugin"][
             "review_required_for_multi_skill"
@@ -107,6 +116,21 @@ class ResearchAdapterMetadataTests(unittest.TestCase):
         )
 
         self.assert_has_error(metadata, "locale catalog does not declare metadata")
+
+    def test_bundle_prototype_source_must_exist(self) -> None:
+        metadata = copy.deepcopy(self.metadata)
+        metadata["distributions"]["claude_plugin"]["locales"]["ja-JP"][
+            "prototype_source"
+        ] = "research/skill-prototypes/DOES-NOT-EXIST.json"
+
+        self.assert_has_error(metadata, "prototype metadata source is missing")
+
+    def test_bundle_prototype_skill_composition_must_match_suite(self) -> None:
+        metadata = copy.deepcopy(self.metadata)
+        entry = metadata["distributions"]["claude_plugin"]["locales"]["ja-JP"]
+        entry["prototype_source"] = "research/skill-prototypes/suite-manifest.json"
+
+        self.assert_has_error(metadata, "prototype metadata ja-JP schema")
 
     def test_ja_companion_openai_metadata_is_prototype_not_existing(self) -> None:
         for skill_id in ("affinity-synthesis", "iterative-inquiry-synthesis"):
@@ -160,6 +184,27 @@ class ResearchAdapterMetadataTests(unittest.TestCase):
         self.assertIn("残差・次の問い・停止理由", text)
         self.assertNotIn("文化体系", text)
 
+    def test_ja_bundle_metadata_keeps_three_roles_distinct(self) -> None:
+        prototype = json.loads(RESEARCH_BUNDLE.read_text(encoding="utf-8"))
+        description = prototype["description"]
+
+        self.assertEqual(prototype["plugin_name"], "cultural-substrate-weaving-ja")
+        self.assertEqual(prototype["invocation_policy"], "explicit")
+        self.assertEqual(
+            set(prototype["contains"]),
+            {
+                "cultural-substrate-weaving",
+                "affinity-synthesis",
+                "iterative-inquiry-synthesis",
+            },
+        )
+        self.assertIn("文化的体系による探索", description)
+        self.assertIn("一回統合", description)
+        self.assertIn("複数ラウンド", description)
+        self.assertIn("3つのSkill", description)
+        self.assertIn("handoff", description)
+        self.assertIn("万能手順", description)
+
     def test_current_openai_coverage_separates_runtime_and_metadata_maturity(self) -> None:
         plan = plan_adapter_metadata(self.suite, self.metadata, ROOT)
         ja = plan["locales"]["ja-JP"]["distributions"]["openai_skill"]
@@ -178,21 +223,31 @@ class ResearchAdapterMetadataTests(unittest.TestCase):
         self.assertEqual(en_items["cultural-substrate-weaving"]["metadata_state"], "existing")
         self.assertEqual(en_items["affinity-synthesis"]["metadata_state"], "runtime-blocked")
 
-    def test_current_bundle_metadata_is_baseline_requiring_review(self) -> None:
+    def test_current_ja_bundle_metadata_is_prototype_not_reviewed(self) -> None:
         plan = plan_adapter_metadata(self.suite, self.metadata, ROOT)
         ja = plan["locales"]["ja-JP"]["distributions"]
         en = plan["locales"]["en-US"]["distributions"]
 
         self.assertEqual(ja["claude_plugin"]["runtime_state"], "buildable")
-        self.assertEqual(ja["claude_plugin"]["metadata_state"], "review-required")
-        self.assertEqual(ja["codex_plugin"]["metadata_state"], "review-required")
+        self.assertEqual(ja["claude_plugin"]["metadata_state"], "prototype")
+        self.assertEqual(ja["codex_plugin"]["metadata_state"], "prototype")
+        self.assertEqual(ja["claude_plugin"]["source_kind"], "research-prototype")
         self.assertEqual(
             ja["claude_plugin"]["catalog_entry"]["plugin_name"],
             "cultural-substrate-weaving-ja",
         )
+        self.assertEqual(
+            set(ja["claude_plugin"]["catalog_entry"]["contains"]),
+            {
+                "cultural-substrate-weaving",
+                "affinity-synthesis",
+                "iterative-inquiry-synthesis",
+            },
+        )
 
         self.assertEqual(en["claude_plugin"]["runtime_state"], "blocked")
         self.assertEqual(en["claude_plugin"]["metadata_state"], "review-required")
+        self.assertEqual(en["claude_plugin"]["source_kind"], "locale-catalog")
 
 
 if __name__ == "__main__":
