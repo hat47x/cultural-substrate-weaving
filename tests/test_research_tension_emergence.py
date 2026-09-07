@@ -25,6 +25,14 @@ class ResearchTensionEmergenceTests(unittest.TestCase):
         self.assertIn("cross_field_emergent: none yet", text)
         self.assertIn("第三構造を作れないことを失敗にしない", text)
 
+    def test_core_fixture_keeps_unresolved_tension_valid(self) -> None:
+        text = (
+            ROOT / "research/skill-prototypes/evals/CSW-TENSION-EMERGENCE-CASES.md"
+        ).read_text(encoding="utf-8")
+        self.assertIn("Framework fit is not itself a success condition", text)
+        self.assertIn("Tension without synthesis", text)
+        self.assertIn("No synthesis is required", text)
+
     def test_fixture_rejects_clean_correspondence_as_automatic_success(self) -> None:
         text = (
             ROOT
@@ -33,17 +41,24 @@ class ResearchTensionEmergenceTests(unittest.TestCase):
         self.assertIn("clean correspondence is not automatically the most informative result", text)
         self.assertIn("対応の美しさより、対象からの抵抗によって読みが更新される", text)
 
-    def test_layer1_runtime_does_not_own_sublation(self) -> None:
-        ja = (
-            ROOT / "research/skill-prototypes/affinity-synthesis/SKILL.md"
-        ).read_text(encoding="utf-8")
-        en = (
-            ROOT / "research/skill-prototypes/affinity-synthesis/SKILL.en.md"
-        ).read_text(encoding="utf-8")
-        for marker in ("止揚", "アウフヘーベン", "正・反・合"):
-            self.assertNotIn(marker, ja)
-        for marker in ("sublation", "Aufhebung", "thesis-antithesis-synthesis"):
-            self.assertNotIn(marker, en)
+    def test_generic_layers_do_not_own_sublation(self) -> None:
+        pairs = [
+            (
+                ROOT / "research/skill-prototypes/affinity-synthesis/SKILL.md",
+                ROOT / "research/skill-prototypes/affinity-synthesis/SKILL.en.md",
+            ),
+            (
+                ROOT / "research/skill-prototypes/iterative-inquiry-synthesis/SKILL.md",
+                ROOT / "research/skill-prototypes/iterative-inquiry-synthesis/SKILL.en.md",
+            ),
+        ]
+        for ja_path, en_path in pairs:
+            ja = ja_path.read_text(encoding="utf-8")
+            en = en_path.read_text(encoding="utf-8")
+            for marker in ("止揚", "アウフヘーベン", "正・反・合"):
+                self.assertNotIn(marker, ja)
+            for marker in ("sublation", "Aufhebung", "thesis-antithesis-synthesis"):
+                self.assertNotIn(marker, en)
 
     def test_csw_handoff_preserves_generating_tension(self) -> None:
         ja = (ROOT / "src/ja-JP/methods/integration.md").read_text(encoding="utf-8")
@@ -52,6 +67,14 @@ class ResearchTensionEmergenceTests(unittest.TestCase):
             self.assertIn("target_side_tension:", text)
             self.assertIn("framework_side_claim_or_operation:", text)
             self.assertIn("cross_field_candidate:", text)
+
+    def test_evaluation_does_not_reward_forced_sublation(self) -> None:
+        ja = (ROOT / "src/ja-JP/governance/evaluation.md").read_text(encoding="utf-8")
+        en = (ROOT / "src/en-US/governance/evaluation.md").read_text(encoding="utf-8")
+        self.assertIn("止揚を成功quotaにしない", ja)
+        self.assertIn("Do not make sublation a success quota", en)
+        self.assertIn("第三構造が立たず、緊張だけが残ることも正常な結果", ja)
+        self.assertIn("normal result for tension to remain without a third structure", en)
 
 
 if __name__ == "__main__":
