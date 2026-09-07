@@ -2,164 +2,166 @@
 
 ## 目的
 
-CSW改善では、方法論の責務分離、research prototype、package topology、production builder/validator、production inclusion、Living Lab評価が複数レーンで並行して進んでいる。
+CSW改善では、方法論の責務分離、research prototype、package topology、production builder/validator、production inclusion、Living Lab評価が複数レーンで並行して進んでいます。
 
-並行作業そのものは有効だが、各レーンで「次へ進める」ことと、productionへ昇格してよいことは同義ではない。本書では、現在の作業を意味上の依存関係に沿って整理し、他レーンの未完了判断をproduction都合で先取りしない統合順序を定める。
+各レーンで先へ進めることと、productionへ昇格してよいことは同義ではありません。本書は、他レーンの未完了判断をproduction都合で先取りしないために、**耐久的な統合順序、停止条件、レーン責務、promotion開始条件**だけを共有します。
 
-## 現在の方法論側の共通前提
+## この文書が正本とするもの／しないもの
 
-2026-09-07時点では、次を共通前提とする。
+本書が正本として持つのは次です。
 
-- KJ系技能をCSW本体から分離する方向は有力である。
-- 一回の材料統合を担う `affinity-synthesis` と、複数roundの探索継続を担う `iterative-inquiry-synthesis` は research prototype として存在する。
-- 上記名称はworking nameであり、公開最終名とはまだ扱わない。
-- CSWは文化的体系による探索、体系由来候補の帰属、対象側への戻しを中心責務として残す方向で検討する。
-- CSW → Iterative → Affinityのhandoffでは、framework由来候補のprovenance / epistemic statusを保持し、target-side supportへ無言で昇格させない。
-- `iterative-inquiry-synthesis` は compatible one-round synthesis が必要なのに利用できない場合、その処理を未実行のままstop / handoffできる。
-- canonical `src/ja-JP/methods/integration.md` と `src/ja-JP/core/iteration.md` は、分離後のhandoffと評価が十分になるまで縮小しない。
-- ja-JP companion prototypeがpackage可能であることは、production readyを意味しない。
-- en-US companion realizationはplannedのままであり、locale parityは未確定である。
+- A → B → Cという統合の考え方
+- 各グループの停止条件
+- レーンごとの責務
+- production promotionを始めるための条件
 
-## 統合グループA — research parity / package probes
+一方、次のような変化の速い状態は本書の正本にしません。
 
-対象:
+- 各PRのopen/closed/mergeable等のlifecycle
+- 各Skillのlocale realizationの現在状態
+- adapter metadataの現在のmaturity
+- active research branchでの最新prototype状態
 
-- #294 `validation: research CSW subtree parityを固定する`
-- #295 `research: OpenAI host package materializerを追加する`
-- #296 `research: Claude/Codex plugin core materializerを追加する`
+これらは次を参照します。
 
-### 性質
+```text
+PR current state
+  -> 各PR
 
-これらはresearch materializerとpackage候補を扱い、canonical `src/`、production `scripts/build.py`、production generated artifactを変更しない。
+research realization current state
+  -> suite manifest / owning research branch
 
-そのため、方法論側で公開名やcanonical責務移動が未確定でも、比較的独立して統合できる。
+host materialization implementation
+  -> owning package-research branch
+```
+
+本文で時点依存の状態に触れる場合も、参考snapshotとしてのみ扱います。
+
+## 方法論側の共通前提
+
+次は、production側が先回りしないための耐久的な前提です。
+
+- KJ系技能をCSW本体から分離する方向は有力です。
+- 一回の材料統合と、複数roundの探索継続は別責務として検討します。
+- `affinity-synthesis` / `iterative-inquiry-synthesis` はworking nameであり、公開最終名とは限りません。
+- CSWは文化的体系による探索、体系由来候補の帰属、対象側への戻しを中心責務として残す方向です。
+- CSW → Iterative → Affinityのhandoffでは、framework由来候補のprovenance / epistemic statusを保持し、target-side supportへ無言で昇格させません。
+- compatible one-round synthesisが必要なのに利用できない場合、未実行の処理を実行済みと扱いません。
+- canonical `integration.md` / `iteration.md` は、分離後のhandoffと評価が十分になるまで縮小しません。
+- package、translation、adapter metadata等のprototypeが存在することは、production readyを意味しません。
+
+## 統合グループA — research parity / host-package contract
+
+### 目的
+
+production buildへ入る前に、research側で予定package形と既存CSWの不変条件を観測します。
+
+### 重要な収束方針
+
+hostごとの検査観点は複数あっても、**host package materializerの恒久実行経路は一つにします。**
+
+OpenAI専用、Claude/Codex専用のprobeから得た強いinvariantは、単一の汎用host materialization contractへ吸収します。専用scriptを第二正本として恒久維持しません。
+
+残す価値が高いinvariantは、例えば次です。
+
+```text
+OpenAI
+  - interactive / meteredで agents/openai.yaml を除くSkill treeがbyte-identical
+  - packaged agents/openai.yaml がdeclared metadata sourceとbyte-identical
+
+Claude / Codex
+  - 同localeで skills/ subtreeがbyte-identical
+  - bundle metadata wordingとrepository VERSION由来manifestがdriftしない
+
+共通
+  - repository外にのみmaterializeする
+  - failure時にpartial outputを残さない
+  - prototypeをproduction reviewedとして扱わない
+```
 
 ### 統合条件
 
-- 完全checkoutで新規unit testが実行できること。
-- #294では既存ja-JP CSW subtreeのbyte parityが実測で通ること。
-- #295/#296ではrepository外materializationが意図した境界で動作すること。
-- prototype metadataをproduction reviewedと誤記しないこと。
-
-### 推奨順
-
-```text
-#294
-  ↓
-#295  #296
-```
-
-#295と#296はhost surfaceが異なるため、#294通過後は互いに強い順序依存を持たない。
+- 既存CSW subtreeのbyte parityが実測で確認できること。
+- host package生成がstaging等を使い、途中失敗時にpartial final outputを残さないこと。
+- 専用probeで得たoracleを汎用materializer/testへ核融合できていること。
+- 古くなったlocale readiness前提を固定testとして残さないこと。
+- complete checkoutで関連unit testを実行できること。
 
 ## 統合グループB — production mechanical refactor
 
-対象:
+### 目的
 
-- #297 `refactor: production Skill-tree writerをhost非依存にする`
-- #298 `refactor: production Skill validationをartifact単位へ切り出す`
+公開Skill集合を変えずに、production内部のmechanicsだけを複数Skillへ拡張可能な形へ整えます。
 
-### 性質
-
-公開Skill数、canonical method、host metadataを変えず、production内部のmechanicsだけを一般化する。
-
-この二つはKJ分離の方法論判断をproductionへ持ち込まないため、方法論レーンと並行して進められる。
+対象は、Skill tree writerやartifact validation等のmechanicalな責務です。
 
 ### 統合条件
 
-- 完全checkout上の`make check`を実行する。
+- production Skill数を増やさないこと。
+- canonical method contentを変更しないこと。
+- host metadataの意味を変えないこと。
 - `generated-artifacts-check`で既存生成物に意図しない差分が出ないこと。
-- `tests/test_build.py`の現行「plugin内Skill数=1」境界を維持すること。
-- validation report schema / token budget semanticsを変えないこと。
-
-### 推奨順
-
-#297と#298は独立しているが、説明上は writer → validator の順が理解しやすい。
-
-```text
-#297
-  ↓
-#298
-```
-
-ただし、片方の統合がもう片方をproduction promotionへ自動的に進める理由にはならない。
+- validation report schemaや既存token budget semanticsを変えないこと。
+- complete checkout上で`make check`を実行すること。
 
 ## 統合グループC — production inclusion boundary
 
-対象:
+### 目的
 
-- #299 `research: production Skill inclusion境界を明示する`
-- #300 `research: production Skill-setを最小descriptorへ射影する`
-- #301 `research: production Skill-set resolver parity gateを追加する`
+「researchで作れるSkill」と「productionに含めるSkill」を明示的に分けます。
 
-### 性質
+production descriptorは、方法論側の候補を自動発見しません。他レーンで明示的な昇格判断が終わったSkillだけを受け入れます。
 
-ここでは「作れるSkill」と「productionに含めるSkill」を明示的に分ける。
+### 依存関係
 
-現在のproduction memberは `cultural-substrate-weaving` 一つだけであり、Affinity / Iterativeはcandidateのままとする。
-
-### 依存順
+production inclusionは、少なくとも次の順序で進めます。
 
 ```text
-#299
-  ↓
-#300
-  ↓
-#301
+research inclusion decision
+  -> minimal production Skill-set
+  -> read-only resolver / current-build parity
+  -> intentional multi-Skill wiring
 ```
 
-#300は#299上、#301は#300上のstacked PRとして作成している。
-
-### 統合手順
-
-1. #299をdevelopへ統合する。
-2. #300のbaseをdevelopへ付け替えるか、#299統合後のdevelopへrebaseして差分を確認する。
-3. #300を統合する。
-4. #301について同じ処理を行う。
-
-stacked PRを親より先にdevelopへ直接取り込まない。
+multi-Skill wiring前にexact-one legacy gate等を置く場合、そのgateは恒久制約ではなく、公開集合の変更とbuild wiringを同じ意図的変更にするためのmigration guardとして扱います。
 
 ## グループ間の推奨順
 
-production出力を変えない範囲では、次を推奨する。
+production出力を変えない範囲では、次を推奨します。
 
 ```text
-A: research parity/package probes
+A: research parity / host-package contract
         ↓
 B: production mechanical refactor
         ↓
 C: production inclusion boundary
 ```
 
-厳密なコード依存ではA/Bの一部を並行統合できるが、レビュー上はこの順の方が、
+厳密なコード依存では一部を並行できますが、レビュー上は、
 
-1. research側で予定形を観測する
+1. research側で予定形と不変条件を観測する
 2. production mechanicsを出力不変で一般化する
 3. inclusion判断を外在化する
 
-という因果を追いやすい。
+という順にすると、意味上の原因を追いやすくなります。
 
-## ここで止める境界
+## A〜Cを終えても止める境界
 
-A〜Cをすべて統合しても、次はまだ行わない。
+A〜Cをすべて整えても、次は別のpromotion phaseです。
 
-- production descriptorへのAffinity / Iterative追加
-- `scripts/build.py`のmulti-Skill output有効化
-- Claude/Codex marketplace文面の三Skill化
-- release ZIPへのcompanion追加
-- canonical `integration.md` / `iteration.md` の削減
-- CSW ROUTERからKJ/iteration責務を削除
-- en-US companionの公開
-
-これらは別のpromotion phaseである。
+- production descriptorへのcompanion追加
+- multi-Skill build outputの有効化
+- marketplace / release ZIPへのcompanion追加
+- canonical KJ/iteration責務の削減
+- locale/hostごとのcompanion公開
 
 ## 方法論レーンから必要なpromotion input
 
-production multi-Skill wiringへ進む前に、少なくとも次を他レーンと照合する。
+production multi-Skill wiringへ進む前に、少なくとも次を他レーンと照合します。
 
 ### 名称
 
-- `affinity-synthesis`を公開名として採用するか。
-- `iterative-inquiry-synthesis`を公開名として採用するか。
+- working nameを公開名として採用するか。
 - 「KJ法」という一般名を過度に代表する名称になっていないか。
 - 既存のAffinity Mapping系Skill等との役割差が利用者に説明可能か。
 
@@ -172,30 +174,42 @@ production multi-Skill wiringへ進む前に、少なくとも次を他レーン
 
 ### Handoff
 
-- `framework_generated`等のstatusがhandoff後も保存されるか。
+- framework由来statusがhandoff後も保存されるか。
 - target-supported findingとの二重計上を防げるか。
-- compatible synthesis不在時を「実行済み」と誤認しないか。
+- compatible synthesis不在時を実行済みと誤認しないか。
 - delayed reactivation / residual / untouched regionを保持できるか。
 
 ### 評価
 
-- same-authoring-session fixtureだけでなく、独立性の高い実タスク評価が増えているか。
-- Layer 1が本当に必要になるroundを含むか。
+- same-authoring-session fixtureだけでなく、独立性の高い実タスク評価があるか。
+- one-round synthesisが実際に必要になるroundを含むか。
 - 長期session handoffを含むか。
-- useful nonuse / stoppingが評価できるか。
+- useful nonuse / stoppingを観測できるか。
 - Living Labの観察を単発scoreへ還元していないか。
 
 ### Locale / host
 
-- en-US realizationをどの時点で要求するか。
 - locale単位の段階公開を認めるか。
-- OpenAI interactive/metered metadataがproduction review済みか。
-- Claude/Codex bundle metadata / README / marketplaceが三Skill構成としてreview済みか。
+- host metadataがproduction review済みか。
+- README / marketplace等のpackage外周文面が新しい構成に追随しているか。
 - 実hostでinvocation / routing behaviorを確認したか。
+
+## Production Skill-set source contract
+
+production wiringを始める前に、**production Skill-set source contractを確定**します。
+
+現在の単一CSWを`id + source_manifest`で表すcontractが妥当でも、将来のcompanion canonical sourceがlocale treeになる場合、そのまま二件目へ追加できるとは限りません。
+
+promotion時には、少なくとも次のどちらかをproduction側で明示的に決めます。
+
+1. companionにも薄いproduction manifestを持たせ、既存`source_manifest`型へ揃える。
+2. production Skill-set schemaをversion-upし、`manifest` / `locale_tree`等のsource kindを区別して表現・検査する。
+
+research `suite-manifest.json`やpromotion planning descriptorをproduction builderが直接読む第三経路は作りません。
 
 ## Production wiring開始条件
 
-次の全体像が揃って初めて、production descriptorに二つ目のSkillを追加する変更を検討する。
+次の全体像が揃って初めて、production descriptorへ二つ目以降のSkillを追加する変更を検討します。
 
 ```text
 method boundary stable enough
@@ -204,27 +218,27 @@ handoff/fallback evidence acceptable
         +
 public naming decision
         +
+production Skill-set source contract resolved
+        +
 production metadata review
         +
 generic writer/validator integrated
         +
 current CSW parity verified
         +
+host materialization contract consolidated
+        +
 package/release validators prepared
         +
 full checkout make check available
 ```
 
-この時点では、#301のlegacy single-Skill parity gateが意図的に失敗する。その失敗を、multi-Skill wiring PRで置き換える。
+## レーン間の責務
 
-## 現在の結論
+- 方法論レーン: 何を別Skillとして成立させるかを決めます。
+- 評価/Living Labレーン: 分離が実タスクで何を保ち、何を失うかを観察します。
+- package researchレーン: hostごとの予定形をproduction外で検証し、実行経路を一つに保ちます。
+- production mechanicsレーン: 公開集合を変えずにwriter/validatorを一般化します。
+- production inclusionレーン: 方法論側の判断を先取りせず、公開集合とsource contractの境界を明示します。
 
-各レーンは次の役割で協調する。
-
-- 方法論レーン: 何を別Skillとして成立させるかを決める。
-- 評価/Living Labレーン: 分離が実タスクで何を保ち、何を失うかを観察する。
-- package researchレーン: hostごとの予定形をproduction外で検証する。
-- production mechanicsレーン: 公開集合を変えずにwriter/validatorを一般化する。
-- production inclusionレーン: 方法論側の判断を先取りせず、公開集合の境界を明示する。
-
-**production inclusionレーンは、他レーンで確定していない意味上の判断を代行しない。方法論レーンは、production mechanicsの都合だけでcanonical分離を急がない。**
+**production inclusionレーンは、他レーンで確定していない意味上の判断を代行しません。方法論レーンは、production mechanicsの都合だけでcanonical分離を急ぎません。**
