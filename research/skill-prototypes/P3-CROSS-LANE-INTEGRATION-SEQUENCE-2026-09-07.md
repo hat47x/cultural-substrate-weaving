@@ -1,6 +1,8 @@
 # CSW改善 cross-lane integration sequence — 2026-09-07
 
 > 2026-09-08 source-contract refresh: A→B→Cという統合原則は維持しつつ、P4で収束したproduction source contractを反映した。
+>
+> 2026-09-08 package-closed refinement: sibling `locale_tree`自体をruntime package境界とし、builder側のresearch-only除外filterへ責務を逃がさないこと、research→production source mappingはread-only planとして先に観測することを追補した。
 
 ## 目的
 
@@ -101,6 +103,7 @@ Claude / Codex
   - repository外にのみmaterializeする
   - failure時にpartial final outputを残さない
   - prototypeをproduction reviewedとして扱わない
+  - packageとして宣言したMarkdown内部の参照閉包をruntime entry一段だけに限定しない
 ```
 
 ### 統合条件
@@ -108,6 +111,7 @@ Claude / Codex
 - 既存CSW subtreeのbyte parityが実測で確認できること。
 - host package生成がstaging等を使い、途中失敗時にpartial final outputを残さないこと。
 - host-specific probeで得たoracleを汎用host materializer/testへ核融合できていること。
+- packageに宣言されたMarkdownの多段参照がpackage root外やundeclared fileへ漏れないこと。
 - 古くなったlocale readiness前提を固定testとして残さないこと。
 - complete checkoutで関連unit testを実行できること。
 
@@ -129,23 +133,29 @@ canonical_manifest source resolver
   -> low-level writer
 
 locale_tree source adapter
-  -> canonical SKILL.md / referencesのcopy・entry transform contract
-  -> target tree
+  -> package-closed canonical Skill tree
+  -> 明示されたentry/content transform
+  -> relative pathを保ったtarget tree copy
 ```
 
 低位writerを「全source kindをそのまま飲み込む万能renderer」にしません。特に、frontmatterを持つcanonical `SKILL.md`をfrontmatter-free bodyとして誤投入し、二重frontmatterを生成しないようにします。
 
+`locale_tree`では、runtimeに含めないresearch-only fileをbuilderが後から除外する設計を採りません。production source root自体をpackage-closedにし、builderはその境界を信頼してcopyします。rename、frontmatter name、明示installable-name等の必要なcontent transformはpromotion/source-adapter contractへ明示し、暗黙の文字列置換へしません。
+
 ### Validator境界
 
-validator側も、production対象Skillを選ぶ責務と、解決済みartifactを検査する責務を分けます。
+validator側も、production対象Skillを選ぶ責務と、解決済みsource/artifactを検査する責務を分けます。
 
 ```text
 production authority / source resolver
+  -> locale_tree source package purity
+  -> source / generated subtree parity
   -> generated artifact paths
-  -> reference parity / runtime-entry budget / closure checks
+  -> runtime-entry budget
+  -> installed package-local reference closure
 ```
 
-writerだけが複数Skill対応し、validatorが単一Skill前提のまま残る状態を許しません。
+writerだけが複数Skill対応し、validatorが単一Skill前提のまま残る状態を許しません。また、generated treeが正しいだけでは不十分で、`locale_tree` source自身にruntime外fileを混在させてbuilder filterへ責務を逃がしていないことも検査対象とします。
 
 ### 統合条件
 
@@ -155,6 +165,7 @@ writerだけが複数Skill対応し、validatorが単一Skill前提のまま残�
 - current CSW path / name / frontmatter / reference bytesを変えないこと。
 - `generated-artifacts-check`で既存生成物に意図しない差分が出ないこと。
 - validation report schemaや既存token budget semanticsを変えないこと。
+- future `locale_tree`検査がsource purity / generated parity / installed closureを別々に観測できる設計であること。
 - complete checkout上で`make check`を実行すること。
 
 ## 統合グループC — production inclusion boundary
@@ -172,11 +183,15 @@ P4でsource-mode設計が収束したため、production inclusionの耐久的�
 ```text
 research inclusion decision
   -> production source contract
+  -> read-only research-to-production source promotion plan
+  -> promotion mapping / exclusion / transform inspection
   -> thin production suite descriptor
   -> source-kind resolver / adapter
   -> current-build parity guardの意図的置換
   -> intentional multi-Skill wiring
 ```
+
+read-only promotion planは、research側でpackage対象として既に選ばれたfileをfuture production sourceへどう対応させるか、何をresearch-onlyとして残すか、どのrename/content transformが必要かを観測するためのものです。production `src/skills`を作るmutationでも、promotion authorizationでもありません。
 
 旧い`id + source_manifest`一種類のprojectionをfuture multi-Skill schemaとして暗黙拡張しません。
 
@@ -199,7 +214,8 @@ C: production inclusion boundary
 1. research側で予定形と不変条件を観測する
 2. production mechanicsを出力不変で一般化する
 3. production source / inclusion authorityを明示する
-4. その後にだけmulti-Skill wiringを行う
+4. read-only source promotion planでmapping・除外・transformを点検する
+5. その後にだけmulti-Skill wiringを行う
 
 という順にすると、意味上の原因を追いやすくなります。
 
@@ -283,10 +299,36 @@ sibling Skillのproduction canonical source候補です。
 src/skills/<installable-name>/<locale>/
   SKILL.md
   references/...
-  [package closure]
+  [runtime packageに含めるfileだけ]
 ```
 
+このlocale tree自体を **package-closed production source boundary** とします。builderはrelative pathを保ってtreeをcopyし、research-only fileを除外するfilterを持ちません。
+
+したがって、maintainer-only migration record、未参照のresearch evidence、review packet、promotion rationale等をproduction locale treeへ置いて「build時に落とす」設計にしません。runtimeからprogressive referenceされるeval/evidence等はpackage contentとして入れられますが、存在するresearch materialを自動的にproductionへ昇格させることはしません。
+
 locale treeはcanonical `SKILL.md`を持つため、CSWのrouter-render pathへ無理に正規化しません。relative pathを保ったcopy / source-kind固有entry transformとして扱います。
+
+英語incubation sourceの`.en.md`等をproduction canonical filenameへ正規化する必要がある場合も、renameとpackage-local reference/content transformをpromotion planへ明示し、source filenameの偶然やresearch IDから暗黙推測しません。
+
+### Research → production source promotion planning
+
+research sourceからproduction `locale_tree`へ進む前に、read-only planで少なくとも次を可視化します。
+
+```text
+research package_source.files
+  -> promotion candidate mappings
+
+research metadata not selected by package_source
+  -> excluded / research-only
+
+research identity / incubation filename
+  -> explicit production target / rename
+
+content-level public-name or realization rewrite
+  -> explicit transform declaration
+```
+
+このplanの存在やvalidator通過はproduction mutationではありません。実際のproduction source作成、builder wiring、artifact generation、release validation、promotion authorizationを別段階として残します。
 
 ### Production suite descriptor
 
@@ -365,6 +407,8 @@ public naming decision + immediate recheck
         +
 production source contract resolved
         +
+read-only source promotion mapping / exclusion / transform plan internally consistent
+        +
 production metadata review
         +
 generic writer / validator integrated
@@ -388,12 +432,12 @@ complete-checkout execution evidence
 - 評価/Living Labレーン: 分離が実タスクで何を保ち、何を失うかを観察します。
 - package researchレーン: hostごとの予定形をproduction外で検証し、host package実行経路を一つに保ちます。
 - production mechanicsレーン: 公開集合を変えずにwriter/validatorを一般化します。
-- production inclusionレーン: 方法論側の判断を先取りせず、公開集合・source mode・distribution targetの境界を明示します。
+- production inclusionレーン: 方法論側の判断を先取りせず、公開集合・source mode・distribution target・source promotion mappingの境界を明示します。
 
 **production inclusionレーンは、他レーンで確定していない意味上の判断を代行しません。方法論レーンは、production mechanicsの都合だけでcanonical分離を急ぎません。**
 
 ## 結論
 
-production側で先に固定するのは「どの候補を公開するか」ではなく、**既存CSWを壊さず、異なるsource kindとidentityを混同せず、生成と検査を対称に拡張できる境界**です。
+production側で先に固定するのは「どの候補を公開するか」ではなく、**既存CSWを壊さず、異なるsource kindとidentityを混同せず、package-closed sourceから生成と検査を対称に拡張できる境界**です。
 
 そのうえで、research evidence、naming、locale review、host behavior、complete-checkout executionが揃った段階に限り、intentional multi-Skill wiringへ進みます。
