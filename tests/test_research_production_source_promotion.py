@@ -40,15 +40,19 @@ class ResearchProductionSourcePromotionTests(unittest.TestCase):
         source = self.plan if plan is None else plan
         return next(item for item in source["skills"] if item["research_id"] == research_id)
 
-    def mapping(self, research_id: str, locale: str, source_suffix: str) -> dict:
-        mappings = self.skill(research_id)["locales"][locale]["mappings"]
+    def mapping(self, research_id: str, locale: str, source_suffix: str, plan: dict | None = None) -> dict:
+        mappings = self.skill(research_id, plan)["locales"][locale]["mappings"]
         return next(item for item in mappings if item["source"].endswith(source_suffix))
 
-    def test_current_plan_is_valid(self) -> None:
-        self.assertEqual(
-            validate_production_source_promotion_plan(self.plan, self.descriptor),
-            [],
+    def validate(self, plan: dict | None = None) -> list[str]:
+        return validate_production_source_promotion_plan(
+            self.plan if plan is None else plan,
+            self.descriptor,
+            self.inventory,
         )
+
+    def test_current_plan_is_valid(self) -> None:
+        self.assertEqual(self.validate(), [])
 
     def test_layer1_uses_public_name_and_never_research_id_in_production_root(self) -> None:
         layer1 = self.skill("affinity-synthesis")
@@ -82,6 +86,35 @@ class ResearchProductionSourcePromotionTests(unittest.TestCase):
         self.assertIn("rewrite-realization-identifier-not-method-role", ja_method["content_transforms"])
         self.assertIn("rewrite-realization-identifier-not-method-role", en_method["content_transforms"])
         self.assertEqual(en_method["target_relative"], "references/METHOD.md")
+
+    def test_projection_inventory_action_cannot_be_silently_dropped_from_plan(self) -> None:
+        plan = copy.deepcopy(self.plan)
+        mapping = self.mapping(
+            "iterative-inquiry-synthesis",
+            "en-US",
+            "/references/METHOD.en.md",
+            plan,
+        )
+        mapping["content_transforms"].remove("rewrite-realization-identifier-not-method-role")
+        errors = self.validate(plan)
+        self.assertTrue(
+            any("missing projection-inventory transform" in error for error in errors),
+            errors,
+        )
+
+    def test_projection_inventory_source_cannot_be_silently_dropped_from_plan(self) -> None:
+        plan = copy.deepcopy(self.plan)
+        locale_plan = self.skill("iterative-inquiry-synthesis", plan)["locales"]["en-US"]
+        locale_plan["mappings"] = [
+            item
+            for item in locale_plan["mappings"]
+            if not item["source"].endswith("/references/METHOD.en.md")
+        ]
+        errors = self.validate(plan)
+        self.assertTrue(
+            any("promotion-sensitive source declared by projection inventory is missing" in error for error in errors),
+            errors,
+        )
 
     def test_english_locale_suffixes_are_normalized_in_canonical_targets(self) -> None:
         for research_id in ("affinity-synthesis", "iterative-inquiry-synthesis"):
@@ -117,7 +150,7 @@ class ResearchProductionSourcePromotionTests(unittest.TestCase):
         plan = copy.deepcopy(self.plan)
         layer1 = self.skill("affinity-synthesis", plan)
         layer1["locales"]["ja-JP"]["target_collision"] = True
-        errors = validate_production_source_promotion_plan(plan, self.descriptor)
+        errors = self.validate(plan)
         self.assertTrue(any("target collision" in error for error in errors))
 
     def test_research_id_leak_in_layer1_production_root_is_rejected(self) -> None:
@@ -126,7 +159,7 @@ class ResearchProductionSourcePromotionTests(unittest.TestCase):
         locale_plan = layer1["locales"]["ja-JP"]
         locale_plan["production_root"] = "src/skills/affinity-synthesis/ja-JP"
         locale_plan["runtime_entry"] = "src/skills/affinity-synthesis/ja-JP/SKILL.md"
-        errors = validate_production_source_promotion_plan(plan, self.descriptor)
+        errors = self.validate(plan)
         self.assertTrue(any("research id leaked" in error for error in errors))
 
     def test_stale_descriptor_source_mode_is_rejected_by_planner(self) -> None:
