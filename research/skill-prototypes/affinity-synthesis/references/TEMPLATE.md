@@ -254,3 +254,43 @@ Mermaidはtopology projectionとして使う。近接・離隔・空白など**�
 - **Possible next-round inputs:**
 
 `Possible next-round inputs` は引継ぎ情報であり、このSkill自身が次ラウンドを開始する指示ではない。
+
+## 11. Optional Round Handoff Capsule
+
+反復探索へ渡す必要がある場合だけ作る。これは**現在の統合成果物から作るhandoff projection**であり、次roundの開始命令ではない。
+
+- **Semantic refs to preserve:** C... / G... / X... / R... / N... / U... / Q...
+- **Residual / reopenable anchor refs:**
+- **Source refs whose provenance / incoming status must survive:**
+- **Possible next check candidates:**
+- **Do not silently assume:**
+
+### Handoff rules
+
+1. `Semantic refs to preserve` は、後のroundでも意味同一性を追跡できるよう持ち越すhandleである。**すべてを次roundでreopenするという意味ではない。**
+2. `Residual / reopenable anchor refs` は、後の新材料が実際に触れた場合に再開できるanchorである。残っているだけで探索継続を義務づけない。
+3. `Possible next check candidates` は候補であり、Layer 1自身が次の問い・検索・実験を決定したことを意味しない。
+4. question / hypothesis / correspondence等のincoming statusは、handoffによってobservation / factへ昇格しない。
+5. stable IDがある場合、文言調整だけでIDを振り直さない。split / mergeで意味同一性が失われる場合はderivationを残す。
+6. handoff capsuleが不要な単発利用では省略してよい。
+
+machine-readable `affinity-map` では、同じ情報をoptionalな `handoff` objectへ置ける。
+
+```json
+{
+  "handoff": {
+    "semantic_refs": ["G03", "R05", "X02"],
+    "residual_refs": ["U04", "Q08"],
+    "source_refs_to_preserve": ["S11"],
+    "next_check_candidates": [
+      {"text": "Q08を区別できる新材料が得られたら再検査する", "refs": ["Q08", "G03"], "status": "candidate"}
+    ],
+    "do_not_assume": [
+      "Q08が示唆する関係はまだRとして支持されていない",
+      "S11由来の仮説はtarget-side observationではない"
+    ]
+  }
+}
+```
+
+このcapsuleを受け取ったLayer 2は、新しいdeltaが実際に触れたsubsetだけを `Reopened prior artifacts` として選ぶ。
