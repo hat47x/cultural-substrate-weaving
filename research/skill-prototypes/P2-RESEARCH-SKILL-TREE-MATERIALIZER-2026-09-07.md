@@ -59,6 +59,8 @@ Skill subtreeを実体化する次の三つだけを扱う。
 - package target contract
 - adapter metadata contract
 
+さらにresearch gateでは、runtime entryが参照するpackage-local fileが `package_source.files` に閉じていることをreference-closure validatorで確認する。
+
 その後、次を組み合わせる。
 
 1. `plan_skill_subtrees.py`
@@ -79,7 +81,7 @@ materialize対象となるrealized Skillについて、metadata stateが次の�
 
 `planned`や`runtime-blocked`はmaterialize-readyとはしない。
 
-research branchではen-US三Skill runtime自体はbuildableだが、Affinity / Iterative OpenAI metadataが`planned`なのでmaterializeしない。
+現在はja-JP / en-USとも、CSWが`existing`、Affinity / Iterativeが`prototype`である。三Skill runtimeも両localeでbuildableなので、OpenAI Skill treeは日英とも通常モードでmaterialize可能である。
 
 ### Claude/Codex
 
@@ -90,13 +92,17 @@ locale bundle metadataが次のどちらかである必要がある。
 
 `existing-baseline`から導かれる`review-required`は、三Skill bundleのmetadataとしてはmaterialize-readyにしない。
 
-したがってja-JPはbundle prototypeによりmaterialize可能だが、en-USはruntimeがbuildableでもbundle metadataが`review-required`なのでmaterializeしない。
+現在はja-JP / en-USともbundle-specific research prototypeがあるため、Claude/Codex Skill treeも両localeでmaterialize可能である。
+
+ただし、metadata sourceが`prototype`である限り、production-approvedとは扱わない。
 
 ## Entry transform
 
 ### Companion Skills
 
-`explicit_files`の`SKILL.md`はprototype frontmatterを読み、distribution target名へ`name`を正規化する。
+`explicit_files`のruntime entryはprototype frontmatterを読み、distribution target名へ`name`を正規化する。
+
+ja-JPではsource entryが `SKILL.md`、en-USでは `SKILL.en.md` だが、package側のentry名はいずれも `SKILL.md` とする。
 
 - OpenAI: `disable-model-invocation`なし
 - Claude/Codex: `disable-model-invocation: true`
@@ -113,7 +119,7 @@ production `scripts/build.py` の `skill_frontmatter()` と `scripts/common.py` 
 
 entry以外のexplicit filesはsource root相対pathをそのままtarget Skill rootへ保持する。
 
-例:
+ja-JP Affinityの例:
 
 ```text
 affinity-synthesis/
@@ -126,15 +132,25 @@ affinity-synthesis/
   evidence/dossier.md
 ```
 
-Iterativeも`references/METHOD.md`と`references/ROUND-TEMPLATE.md`を保持する。
+en-USでは英語runtime / Method Definitionを使うため、たとえば次を保持する。
 
-CSW modulesは既存`src/manifest.json`の`skill_reference`へ従い、`references/00-...`〜`10-integration.md`へ写像する。
+```text
+affinity-synthesis/
+  SKILL.md                 # source: SKILL.en.md
+  references/METHOD.en.md
+  references/REPRESENTATION.md
+  references/affinity-map.schema.json
+```
+
+IterativeもlocaleごとのMethod Definitionと `references/ROUND-TEMPLATE.md` を保持する。
+
+CSW modulesは既存`src/manifest.json`の`skill_reference`へ従い、両localeとも `references/00-...`〜`10-integration.md` へ写像する。
 
 ## Current regression expectations
 
-### ja-JP OpenAI
+### OpenAI — ja-JP / en-US
 
-三つのstandalone treeを生成する。
+両localeで三つのstandalone treeを生成する。
 
 ```text
 cultural-substrate-weaving/
@@ -144,7 +160,11 @@ iterative-inquiry-synthesis/
 
 各`SKILL.md`に`disable-model-invocation`は付けない。
 
-### ja-JP Claude/Codex
+英語側でもpackage entry名は`SKILL.md`へ正規化するが、英語Method Definitionは `references/METHOD.en.md` として保持する。
+
+### Claude/Codex — ja-JP / en-US
+
+両localeで次のshared Skill treeを生成する。
 
 ```text
 skills/
@@ -155,17 +175,15 @@ skills/
 
 三つの`SKILL.md`に`disable-model-invocation: true`を一度だけ付ける。
 
-### en-US OpenAI
+これにより、英語metadataが揃った後もClaude/Codexのexplicit invocation policyがlocaleによって変わらないことを検査できる。
 
-三Skill runtime subtreeはbuildableである。
+## `allow_partial` の位置づけ
 
-しかしAffinity / Iterative OpenAI metadataが`planned`のため、通常materializationも`allow_partial=True`も拒否する。
+`allow_partial=True` はruntime/subtree不足を意図的に観察するためのresearch例外であり、metadata maturity gateを迂回する機能ではない。
 
-`allow_partial`はruntime/subtree不足を意図的に観察するための例外であり、metadata maturity gateを迂回する機能ではない。
+現在の日英Skill-tree distributionsはruntime/package/metadataが揃っているため、通常のregression expectationではpartial materializationを使わない。
 
-### en-US Claude/Codex
-
-三Skill runtime subtreeはbuildableだが、bundle metadataが既存single-Skill catalog由来の`review-required`状態なのでmaterializeしない。
+将来、一部localeや一部Skillを再び`planned`へ戻す研究変更が入った場合でも、metadata不足を`allow_partial`で無視してはならない。
 
 ## まだ生成しないもの
 
@@ -182,6 +200,8 @@ skills/
 - release asset
 
 したがって「host packageが完成した」とは扱えない。
+
+adapter metadata prototypeはmaterialization可否のgateとして参照するが、このscript自体はmetadata fileをoutputへ書き出さない。
 
 ## 失敗時の扱い
 
@@ -201,23 +221,25 @@ skills/
 
 ## 検証境界
 
-unit test fixtureを追加するが、現在の実行環境ではGitHub checkoutを直接cloneできないため、full repository `make check` 成功は主張しない。
+unit test fixtureでは、ja-JP / en-US × OpenAI / Claude / CodexのSkill treeを通常モードでmaterializeする期待値へ更新した。
 
-adapter metadata層についてはconnector取得内容を用いた最小契約テストを実行し、日英6状態とbundle prototype invariantは確認済みである。materializer自体の実ファイルtree生成はcomplete checkoutでのunit testをpromotion gateとして残す。
+ただし、現在の実行環境ではcomplete repository checkoutを確保できず、接続済み開発端末もofflineである。そのため、実 `make research-skill-check` / `make check` 成功はまだ主張しない。
+
+adapter metadataについては、source・descriptor・validator contractを静的に整合させた。materializer自体の実ファイルtree生成は、complete checkoutでのunit testをpromotion gateとして残す。
 
 ## 次の段階
 
 materializerが実checkout上でunit testを通った後、次を比較できる。
 
-1. research materialized ja-JP CSW subtree と現行production generated subtree
-2. companion Skill subtreeのfrontmatter / relative reference
+1. research materialized ja-JP / en-US CSW subtree と現行production generated subtree
+2. companion Skill subtreeのfrontmatter / relative reference / locale identity
 3. production builder generalization時に必要な最小共通関数
 4. host metadata materializerをSkill tree materializerへ接続するか
 
-この比較まではcanonical migrationやproduction builder置換へ進まない。
+この比較まではproduction builder置換やrelease asset変更へ進まない。
 
 ## 結論
 
-P2 research contractからSkill subtreeを**repository外の一時領域だけへ**実体化する境界を設計した。
+P2 research contractから、ja-JP / en-US双方のSkill subtreeを**repository外の一時領域だけへ**実体化できる条件を設計上そろえた。
 
-これにより、read-only planからproduction migrationへ直接飛ばず、実ファイルtreeを中間証拠として挟める。
+これにより、read-only planからproduction migrationへ直接飛ばず、bilingualな実ファイルtreeを中間証拠として挟める。
