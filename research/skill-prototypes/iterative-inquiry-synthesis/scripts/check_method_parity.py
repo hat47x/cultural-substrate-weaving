@@ -11,6 +11,7 @@ from __future__ import annotations
 
 import re
 import sys
+from collections import Counter
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -20,24 +21,44 @@ EXPECTED_IDS = tuple(range(1, 17))
 INVARIANT_RE = re.compile(r"^### I(\d+)\.\s+(.+?)\s*$", re.MULTILINE)
 
 
-def invariant_map(text: str) -> dict[int, str]:
-    return {int(number): title for number, title in INVARIANT_RE.findall(text)}
+def invariant_entries(text: str) -> list[tuple[int, str]]:
+    return [(int(number), title) for number, title in INVARIANT_RE.findall(text)]
+
+
+def invariant_map(entries: list[tuple[int, str]]) -> dict[int, str]:
+    return dict(entries)
 
 
 def validate() -> list[str]:
     errors: list[str] = []
     ja = JA_METHOD.read_text(encoding="utf-8")
     en = EN_METHOD.read_text(encoding="utf-8")
-    ja_map = invariant_map(ja)
-    en_map = invariant_map(en)
+    ja_entries = invariant_entries(ja)
+    en_entries = invariant_entries(en)
+    ja_map = invariant_map(ja_entries)
+    en_map = invariant_map(en_entries)
 
     expected = set(EXPECTED_IDS)
-    for locale, mapping in (("ja-JP", ja_map), ("en-US", en_map)):
+    for locale, entries, mapping in (
+        ("ja-JP", ja_entries, ja_map),
+        ("en-US", en_entries, en_map),
+    ):
+        counts = Counter(number for number, _ in entries)
+        duplicates = sorted(number for number, count in counts.items() if count > 1)
+        if duplicates:
+            errors.append(f"{locale} Method has duplicate invariant ids: {duplicates}")
+
         missing = sorted(expected - set(mapping))
         extra = sorted(set(mapping) - expected)
         if missing or extra:
             errors.append(
                 f"{locale} Method invariant ids drifted; missing={missing}, extra={extra}"
+            )
+
+        if len(entries) != len(EXPECTED_IDS):
+            errors.append(
+                f"{locale} Method must expose exactly {len(EXPECTED_IDS)} numbered invariant headings; "
+                f"found={len(entries)}"
             )
 
     if set(ja_map) != set(en_map):
