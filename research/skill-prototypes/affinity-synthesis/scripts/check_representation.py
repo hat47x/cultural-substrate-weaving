@@ -13,6 +13,9 @@ from validate_map import validate
 ROOT = Path(__file__).resolve().parents[1]
 TEMPLATE_PATH = ROOT / "references" / "TEMPLATE.md"
 REPRESENTATION_PATH = ROOT / "references" / "REPRESENTATION.md"
+ITERATIVE_ROUND_TEMPLATE_PATH = (
+    ROOT.parent / "iterative-inquiry-synthesis" / "references" / "ROUND-TEMPLATE.md"
+)
 
 
 def assert_true(condition: bool, message: str) -> None:
@@ -155,6 +158,95 @@ def check_questionable_relation_metadata() -> None:
     )
 
 
+def check_round_handoff_contract() -> None:
+    template = TEMPLATE_PATH.read_text(encoding="utf-8")
+    round_template = ITERATIVE_ROUND_TEMPLATE_PATH.read_text(encoding="utf-8")
+
+    assert_true(
+        "Optional Round Handoff Capsule" in template,
+        "one-round output template must expose an optional iterative handoff capsule",
+    )
+    assert_true(
+        "すべてを次roundでreopenするという意味ではない" in template,
+        "one-round handoff must distinguish preservation from reopening",
+    )
+    assert_true(
+        "Prior synthesis handoff capsule" in round_template,
+        "iterative round template must accept a prior synthesis handoff capsule",
+    )
+    assert_true(
+        "Semantic refs carried forward` をすべて再開しない" in round_template,
+        "iterative intake must not reopen every carried semantic ref",
+    )
+    assert_true(
+        "実際に触れたsubsetだけ" in round_template,
+        "iterative intake must select reopened artifacts from the current delta",
+    )
+
+    valid_handoff = {
+        "format": "affinity-map",
+        "version": "0.2",
+        "sources": [{"id": "S01", "ref": "source"}],
+        "cards": [
+            {"id": "C001", "text": "one", "source_refs": ["S01"]},
+            {"id": "C002", "text": "two", "source_refs": ["S01"]},
+        ],
+        "groups": [
+            {"id": "G01", "label": "group one", "members": ["C001"]},
+            {"id": "G02", "label": "group two", "members": ["C002"]},
+        ],
+        "resonances": [
+            {"id": "X01", "from": "C001", "to": "G02", "note": "also resonates"}
+        ],
+        "residuals": [{"id": "U01", "text": "left open", "refs": ["C002"]}],
+        "questions": [
+            {"id": "Q01", "text": "what would clarify this?", "arises_from": ["G02"]}
+        ],
+        "handoff": {
+            "semantic_refs": ["G01", "X01", "Q01"],
+            "residual_refs": ["U01", "Q01"],
+            "source_refs_to_preserve": ["S01"],
+            "next_check_candidates": [
+                {"text": "recheck if new material touches Q01", "refs": ["Q01", "G02"]}
+            ],
+            "do_not_assume": ["Q01 is not a supported relation"],
+        },
+    }
+    errors, warnings = validate(valid_handoff)
+    assert_true(not errors, f"valid round handoff has errors: {errors}")
+    assert_true(not warnings, f"valid round handoff has warnings: {warnings}")
+
+    invalid_semantic = {
+        **valid_handoff,
+        "handoff": {**valid_handoff["handoff"], "semantic_refs": ["G404"]},
+    }
+    semantic_errors, _ = validate(invalid_semantic)
+    assert_true(
+        any("handoff semantic_ref does not resolve" in error for error in semantic_errors),
+        "handoff must reject unknown semantic refs",
+    )
+
+    invalid_residual = {
+        **valid_handoff,
+        "handoff": {**valid_handoff["handoff"], "residual_refs": ["G01"]},
+    }
+    residual_errors, _ = validate(invalid_residual)
+    assert_true(
+        any("handoff residual_ref" in error for error in residual_errors),
+        "handoff residual refs must remain cards/residuals/questions rather than arbitrary groups",
+    )
+
+    invalid_source = {
+        **valid_handoff,
+        "handoff": {**valid_handoff["handoff"], "source_refs_to_preserve": ["S404"]},
+    }
+    source_errors, _ = validate(invalid_source)
+    assert_true(
+        any("handoff source_ref_to_preserve does not resolve" in error for error in source_errors),
+        "handoff must reject unknown source refs",
+    )
+
+
 def main() -> None:
     data = build()
 
@@ -216,6 +308,7 @@ def main() -> None:
     check_reader_facing_overview()
     check_relation_readback_contract()
     check_questionable_relation_metadata()
+    check_round_handoff_contract()
 
     with tempfile.TemporaryDirectory() as tmp:
         path = Path(tmp) / "hierarchy.mmd"
