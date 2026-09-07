@@ -71,6 +71,7 @@ class ResearchClaudeCodexPluginCoreTests(unittest.TestCase):
         _, plugin_root, _, temp = self.materialize()
         self.addCleanup(temp.cleanup)
         prototype = json.loads(BUNDLE_METADATA.read_text(encoding="utf-8"))
+        expected_version = (ROOT / "VERSION").read_text(encoding="utf-8").strip()
         claude = json.loads(
             (plugin_root / ".claude-plugin" / "plugin.json").read_text(encoding="utf-8")
         )
@@ -84,8 +85,8 @@ class ResearchClaudeCodexPluginCoreTests(unittest.TestCase):
         self.assertEqual(codex["description"], prototype["description"])
         self.assertEqual(codex["interface"]["displayName"], prototype["display"])
         self.assertEqual(codex["interface"]["shortDescription"], prototype["description"])
-        self.assertEqual(claude["version"], "0.5.0")
-        self.assertEqual(codex["version"], "0.5.0")
+        self.assertEqual(claude["version"], expected_version)
+        self.assertEqual(codex["version"], expected_version)
 
     def test_plugin_core_intentionally_omits_unreviewed_outer_artifacts(self) -> None:
         _, plugin_root, _, temp = self.materialize()
@@ -98,7 +99,7 @@ class ResearchClaudeCodexPluginCoreTests(unittest.TestCase):
     def test_en_bundle_is_blocked_and_leaves_requested_output_absent(self) -> None:
         with tempfile.TemporaryDirectory() as temp_dir:
             output = Path(temp_dir) / "blocked"
-            with self.assertRaisesRegex(ValueError, "not buildable"):
+            with self.assertRaisesRegex(ValueError, "blocked"):
                 materialize_claude_codex_plugin_core(
                     locale="en-US",
                     output_root=output,
