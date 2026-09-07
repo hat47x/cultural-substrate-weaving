@@ -29,10 +29,8 @@ def invariant_map(entries: list[tuple[int, str]]) -> dict[int, str]:
     return dict(entries)
 
 
-def validate() -> list[str]:
+def validate_texts(ja: str, en: str) -> list[str]:
     errors: list[str] = []
-    ja = JA_METHOD.read_text(encoding="utf-8")
-    en = EN_METHOD.read_text(encoding="utf-8")
     ja_entries = invariant_entries(ja)
     en_entries = invariant_entries(en)
     ja_map = invariant_map(ja_entries)
@@ -92,6 +90,12 @@ def validate() -> list[str]:
                 errors.append(f"{locale} Method missing parity marker: {marker!r}")
 
     return errors
+
+
+def validate() -> list[str]:
+    ja = JA_METHOD.read_text(encoding="utf-8")
+    en = EN_METHOD.read_text(encoding="utf-8")
+    return validate_texts(ja, en)
 
 
 def main() -> int:
