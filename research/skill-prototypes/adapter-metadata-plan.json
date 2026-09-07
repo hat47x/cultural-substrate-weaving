@@ -83,7 +83,8 @@
       "source": "adapters/claude-code/locales.json",
       "locales": {
         "ja-JP": {
-          "status": "existing-baseline"
+          "status": "prototype",
+          "prototype_source": "research/skill-prototypes/adapters/claude-code/ja-JP/bundle-metadata.json"
         },
         "en-US": {
           "status": "existing-baseline"
@@ -97,7 +98,8 @@
       "source": "adapters/claude-code/locales.json",
       "locales": {
         "ja-JP": {
-          "status": "existing-baseline"
+          "status": "prototype",
+          "prototype_source": "research/skill-prototypes/adapters/claude-code/ja-JP/bundle-metadata.json"
         },
         "en-US": {
           "status": "existing-baseline"
