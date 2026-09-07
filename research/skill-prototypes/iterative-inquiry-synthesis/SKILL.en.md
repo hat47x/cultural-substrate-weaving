@@ -94,7 +94,7 @@ Treat this capsule as **carry-forward candidates, not reopen instructions**.
 6. Preserve source provenance and incoming epistemic status; do not promote a question, hypothesis, or correspondence into an observation merely because it crossed the handoff.
 7. The capsule is optional. If the prior synthesis exposes equivalent inspectable artifacts without this exact schema, use those artifacts instead. Do not make this Skill hard-dependent on one representation format.
 
-The standard research record is in `references/ROUND-TEMPLATE.md`.
+The standard English research record is in `references/ROUND-TEMPLATE.en.md`.
 
 ### Compact delta notation
 
@@ -227,10 +227,10 @@ When `cultural-substrate-weaving` supplies a framework-generated question or cor
 ## Progressive references
 
 - English Method Definition: `references/METHOD.en.md`
-- Japanese research round template: `references/ROUND-TEMPLATE.md`
+- English research round template: `references/ROUND-TEMPLATE.en.md`
 - Layer 1 semantic representation: sibling prototype `../affinity-synthesis/`
 
-The untranslated round-template prose is not treated as additional English runtime instruction. The round contract above is authoritative for this English research realization.
+The English round template is a translated technical research asset. It remains separate from the Method Definition and does not by itself establish independent English review or public promotion readiness.
 
 ## Boundary
 
