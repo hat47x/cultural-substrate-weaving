@@ -33,6 +33,8 @@ def main() -> None:
             "affinity-synthesis",
             "iterative-inquiry-synthesis",
             "実行していない親和統合やmulti-round orchestrationを実行済みとは称しない",
+            "対象が体系を押し返す不一致・抵抗・逆転",
+            "対応 ≠ 統合",
         ),
         errors,
     )
@@ -45,11 +47,44 @@ def main() -> None:
         errors,
     )
     require(
+        "src/ja-JP/core/cognitive-stance.md",
+        (
+            "一致より、緊張から何が生まれるかを見る",
+            "止揚（Aufhebung）",
+            "正・反・合の固定段階",
+            "cross_field_emergent",
+        ),
+        errors,
+    )
+    require(
+        "src/ja-JP/core/principles-and-constraints.md",
+        (
+            "対象と体系の差・抵抗・矛盾が接触によってどう変形するか",
+            "適合よりも不一致・抵抗・相互修正から生じたものを含む",
+            "対立を自動的に「解決済み」にするラベルではない",
+        ),
+        errors,
+    )
+    require(
         "src/ja-JP/methods/integration.md",
         (
             "接続契約",
             "compatible realization",
             "CSWはこれらの内部アルゴリズムを独自に再実装しない",
+            "target_side_tension:",
+            "framework_side_claim_or_operation:",
+            "cross_field_candidate:",
+            "これはLayer 1に弁証法や文化体系処理を実装させるためではない",
+        ),
+        errors,
+    )
+    require(
+        "src/ja-JP/methods/transformation.md",
+        (
+            "対象と体系の緊張を変換材料にする",
+            "一致、不一致、抵抗、逆転、欠落、過剰、相互修正",
+            "正 → 反 → 合",
+            "第三構造としない",
         ),
         errors,
     )
@@ -70,6 +105,8 @@ def main() -> None:
             "affinity-synthesis",
             "iterative-inquiry-synthesis",
             "Do not claim that affinity synthesis or multi-round orchestration was executed when it was not",
+            "the target pushing back against the framework through misfit, resistance, reversal, or excess",
+            "Correspondence != synthesis",
         ),
         errors,
     )
@@ -82,11 +119,44 @@ def main() -> None:
         errors,
     )
     require(
+        "src/en-US/core/cognitive-stance.md",
+        (
+            "Look for what tension produces, not only for fit",
+            "sublation (Aufhebung)",
+            "fixed thesis-antithesis-synthesis stage model",
+            "cross_field_emergent",
+        ),
+        errors,
+    )
+    require(
+        "src/en-US/core/principles-and-constraints.md",
+        (
+            "observe how difference, resistance, or contradiction changes through contact",
+            "misfit, resistance, and mutual revision rather than only by agreement",
+            "automatically declares a contradiction resolved",
+        ),
+        errors,
+    )
+    require(
         "src/en-US/methods/integration.md",
         (
             "This document does not implement affinity synthesis itself",
             "compatible realization",
             "CSW does not independently re-implement these internal algorithms",
+            "target_side_tension:",
+            "framework_side_claim_or_operation:",
+            "cross_field_candidate:",
+            "This does not ask Layer 1 to implement dialectics or cultural-framework interpretation",
+        ),
+        errors,
+    )
+    require(
+        "src/en-US/methods/transformation.md",
+        (
+            "Use target-framework tension as transformation material",
+            "fit, misfit, resistance, reversal, absence, excess, and mutual revision",
+            "thesis -> antithesis -> synthesis",
+            "Do not call a simple midpoint between target and framework a third structure",
         ),
         errors,
     )
@@ -111,12 +181,31 @@ def main() -> None:
         ),
         errors,
     )
+    forbid(
+        "research/skill-prototypes/affinity-synthesis/SKILL.en.md",
+        (
+            "thesis-antithesis-synthesis",
+            "sublation",
+            "Aufhebung",
+            "target-framework tension",
+        ),
+        errors,
+    )
     require(
         "research/skill-prototypes/affinity-synthesis/references/METHOD.en.md",
         (
             "I1. Material-led structure",
             "I14. Rendering is a projection, not the method authority",
             "A realization may be replaced by an existing external Skill",
+        ),
+        errors,
+    )
+    forbid(
+        "research/skill-prototypes/affinity-synthesis/references/METHOD.en.md",
+        (
+            "thesis-antithesis-synthesis",
+            "sublation",
+            "Aufhebung",
         ),
         errors,
     )
@@ -136,6 +225,17 @@ def main() -> None:
             "I1. A round is a delta, not a restart",
             "I14. Semantic delta and representation delta are distinct",
             "Layer 2 does not reimplement Layer 1 grouping or labeling algorithms",
+        ),
+        errors,
+    )
+
+    require(
+        "research/skill-prototypes/evals/CSW-TENSION-AND-SUBLATION-CASES-2026-09-07.md",
+        (
+            "対象と体系の緊張、不一致、抵抗、相互修正から生じる情報",
+            "Hegelian stage modelをそのままruntimeへ導入する意味ではない",
+            "tension may end without synthesis",
+            "framework agreement can be less informative than disagreement",
         ),
         errors,
     )
