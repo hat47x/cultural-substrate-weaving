@@ -11,6 +11,12 @@
     "scope": "GitHub exact code search plus public Web search",
     "production_promotion_authorized": false
   },
+  "english_independent_review": {
+    "status": "pending",
+    "packet": "research/skill-prototypes/P4-ENGLISH-INDEPENDENT-REVIEW-PACKET-2026-09-07.md",
+    "completed_review": null,
+    "production_promotion_authorized": false
+  },
   "first_wave_distributions": [
     "openai_skill",
     "claude_plugin",
