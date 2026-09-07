@@ -24,6 +24,27 @@
 
 この欄のstatus / provenanceは**監査とhandoffのための情報**であり、one-round synthesisのgrouping geometryや独立support数へ自動変換しない。外部探索から来た仮説・correspondenceをtarget側の観察事実として渡さない。後にtarget側で独立に支持された場合は、元のoriginを消さず、何が新しく支持したかを別に記録する。
 
+### Prior synthesis handoff capsule — when supplied
+
+compatible one-round synthesisが前roundの成果物からcapsuleを出している場合に使う。
+
+- **Prior synthesis artifact ref:**
+- **Representation / schema ref:**
+- **Semantic refs carried forward:**
+- **Residual / reopenable anchor refs:**
+- **Source refs whose provenance / incoming status must survive:**
+- **Possible next check candidates received:**
+- **Do not silently assume:**
+
+この欄は、前roundの**持越し候補と意味同一性のhandle**を受け取るためのものである。
+
+- `Semantic refs carried forward` をすべて再開しない。
+- `Possible next check candidates` を、このroundの問い・検索・実験指示へ自動昇格させない。
+- residualが残っていること自体を、round継続理由にしない。
+- incoming status / provenanceを、target-side factへ変換しない。
+
+新しいdeltaを見た後、実際に触れたsubsetだけを次の `Reopened prior artifacts` / `Touched semantic IDs` へ移す。
+
 ### Reopened prior artifacts
 
 - 
