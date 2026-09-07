@@ -3,7 +3,9 @@
 
 from __future__ import annotations
 
+import hashlib
 import json
+import re
 import sys
 from pathlib import Path, PurePosixPath
 
@@ -18,7 +20,19 @@ EXPECTED_PACKET = (
     "research/skill-prototypes/"
     "P4-ENGLISH-INDEPENDENT-REVIEW-PACKET-2026-09-07.md"
 )
+EXPECTED_TARGETS = (
+    "research/skill-prototypes/"
+    "P4-ENGLISH-INDEPENDENT-REVIEW-TARGETS-2026-09-07.json"
+)
+TARGET_SCHEMA = "csw.english-independent-review-targets/v1"
 ALLOWED_STATUS = {"pending", "completed"}
+HEX40 = re.compile(r"^[0-9a-f]{40}$")
+EXPECTED_PAIRS = {
+    ("affinity-synthesis", "runtime"),
+    ("affinity-synthesis", "method_definition"),
+    ("iterative-inquiry-synthesis", "runtime"),
+    ("iterative-inquiry-synthesis", "method_definition"),
+}
 
 
 def _safe_repo_relative(value: object) -> bool:
@@ -33,6 +47,79 @@ def _existing_file(root: Path, value: object) -> Path | None:
         return None
     path = root / str(value)
     return path if path.is_file() else None
+
+
+def _git_blob_sha(path: Path) -> str:
+    data = path.read_bytes()
+    header = f"blob {len(data)}\0".encode("ascii")
+    return hashlib.sha1(header + data).hexdigest()
+
+
+def _validate_targets(root: Path, targets_path: Path, errors: list[str]) -> None:
+    try:
+        snapshot = json.loads(targets_path.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError) as exc:
+        errors.append(f"cannot read English independent review target snapshot: {exc}")
+        return
+
+    if not isinstance(snapshot, dict):
+        errors.append("English independent review target snapshot must be a JSON object")
+        return
+    if snapshot.get("schema") != TARGET_SCHEMA:
+        errors.append(f"English review target snapshot schema must be {TARGET_SCHEMA}")
+    if snapshot.get("status") != "review-target-snapshot":
+        errors.append("English review target snapshot status must remain review-target-snapshot")
+    source_commit = snapshot.get("review_source_commit")
+    if not isinstance(source_commit, str) or not HEX40.fullmatch(source_commit):
+        errors.append("English review target snapshot review_source_commit must be a 40-char SHA")
+
+    targets = snapshot.get("targets")
+    if not isinstance(targets, list):
+        errors.append("English review target snapshot targets must be a list")
+        return
+
+    actual_pairs: set[tuple[str, str]] = set()
+    for item in targets:
+        if not isinstance(item, dict):
+            errors.append("English review target entry must be an object")
+            continue
+        research_id = item.get("research_id")
+        artifact = item.get("artifact")
+        if isinstance(research_id, str) and isinstance(artifact, str):
+            pair = (research_id, artifact)
+            if pair in actual_pairs:
+                errors.append(f"duplicate English review target pair: {pair}")
+            actual_pairs.add(pair)
+
+        for locale in ("ja", "en"):
+            side = item.get(locale)
+            if not isinstance(side, dict):
+                errors.append(f"English review target {research_id}/{artifact} missing {locale} side")
+                continue
+            relative = side.get("path")
+            expected_sha = side.get("blob_sha")
+            path = _existing_file(root, relative)
+            if path is None:
+                errors.append(
+                    f"English review target file is missing or unsafe: {relative!r}"
+                )
+                continue
+            if not isinstance(expected_sha, str) or not HEX40.fullmatch(expected_sha):
+                errors.append(
+                    f"English review target blob_sha must be a 40-char SHA: {relative}"
+                )
+                continue
+            actual_sha = _git_blob_sha(path)
+            if actual_sha != expected_sha:
+                errors.append(
+                    f"English review target blob changed since snapshot: {relative}; "
+                    f"expected={expected_sha}, actual={actual_sha}"
+                )
+
+    if actual_pairs != EXPECTED_PAIRS:
+        errors.append(
+            "English review target snapshot must contain exactly runtime and method_definition pairs for both sibling Skills"
+        )
 
 
 def validate_english_review_gate(root: Path, descriptor: dict) -> list[str]:
@@ -57,13 +144,28 @@ def validate_english_review_gate(root: Path, descriptor: dict) -> list[str]:
         text = packet_path.read_text(encoding="utf-8")
         for marker in (
             "review not yet completed",
+            "固定査読snapshot",
+            EXPECTED_TARGETS,
             "Layer 1 必須不変条件",
             "Layer 2 必須不変条件",
             "Cross-layer査読",
+            "reviewer relation / independence:",
+            "Reviewed target snapshot:",
             "production promotion全体の承認ではない",
         ):
             if marker not in text:
                 errors.append(f"English review packet missing required marker: {marker}")
+
+    targets = gate.get("targets")
+    if targets != EXPECTED_TARGETS:
+        errors.append(
+            "english_independent_review.targets must reference the canonical review target snapshot"
+        )
+    targets_path = _existing_file(root, targets)
+    if targets_path is None:
+        errors.append("English independent review target snapshot is missing or unsafe")
+    else:
+        _validate_targets(root, targets_path, errors)
 
     completed_review = gate.get("completed_review")
     if status == "pending":
@@ -77,24 +179,33 @@ def validate_english_review_gate(root: Path, descriptor: dict) -> list[str]:
             errors.append(
                 "completed English independent review must reference an existing safe review record"
             )
-        elif review_path == packet_path:
-            errors.append("completed review record must be separate from the review packet")
+        elif review_path in {packet_path, targets_path}:
+            errors.append(
+                "completed review record must be separate from the review packet and target snapshot"
+            )
         else:
             review_text = review_path.read_text(encoding="utf-8")
             for marker in (
                 "reviewer:",
+                "reviewer relation / independence:",
                 "review date:",
+                "review scope:",
                 "Layer 1:",
                 "Layer 2:",
                 "Cross-layer ownership:",
                 "KJ lineage / naming:",
                 "Promotion recommendation:",
+                "Reviewed target snapshot:",
                 "Reviewed commit / blob refs:",
             ):
                 if marker not in review_text:
                     errors.append(
                         f"completed English review record missing required marker: {marker}"
                     )
+            if EXPECTED_TARGETS not in review_text:
+                errors.append(
+                    "completed English review record must identify the canonical target snapshot"
+                )
 
     if gate.get("production_promotion_authorized") is not False:
         errors.append(
