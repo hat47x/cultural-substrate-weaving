@@ -57,9 +57,11 @@ research-skill-check:
 	python scripts/validate_research_public_name_migration.py
 	python scripts/validate_research_public_name_projection_inventory.py
 	python scripts/validate_research_english_review_gate.py
+	python scripts/validate_research_production_builder_contract.py
 	python research/skill-prototypes/scripts/plan_suite_layout.py >/dev/null
 	python research/skill-prototypes/scripts/plan_skill_subtrees.py >/dev/null
 	python research/skill-prototypes/scripts/plan_skill_entry_transforms.py >/dev/null
+	python research/skill-prototypes/scripts/plan_production_builder_generalization.py >/dev/null
 	python scripts/validate_research_adapter_metadata.py
 	python research/skill-prototypes/scripts/plan_adapter_metadata.py >/dev/null
 	python research/skill-prototypes/check_split_ownership.py
