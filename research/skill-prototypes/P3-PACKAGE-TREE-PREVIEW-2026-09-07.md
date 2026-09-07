@@ -4,188 +4,147 @@ Status: research package-tree experiment; production build remains unchanged
 
 ## Purpose
 
-P2でlocale realizationごとの `package_source` が定義されたため、P3ではそのdescriptorを**実際の予定package treeへ投影できるか**を検査する。
-
-この段階でproduction `scripts/build.py` をmulti-skill化しない。
-
-P3が確かめるのは、次の境界である。
+P2で packaging contract を次の四層へ分離した。
 
 ```text
-Method / runtime source
-    -> package_source descriptor
-    -> layout plan
-    -> research-only package tree preview
-    -> link / topology validation
-
-!= production release artifact
-!= host routing validation
-!= public promotion
+locale realization
+  -> package_source
+  -> package_targets
+  -> Skill subtree mapping
+  -> Skill entry transform
 ```
 
-## Why no additional build-descriptor layer
+P3では、これらのread-only planを経たsourceをresearch-only temporary treeへ実際に投影し、relative structureとlink topologyを確認する。
 
-当初、`package_source` とproduction builderの間に別のnormalized build descriptorを置く案も試した。
+production `scripts/build.py` はまだmulti-skill化しない。
 
-しかし並行研究で導入された `package_source` はすでに、packageを構成するsource boundaryを十分具体的に表していた。
+## No duplicate descriptor schema
 
-- `explicit_files`: rootと相対file集合を持つ。
-- `canonical_manifest`: canonical manifestとlocale rootを持つ。
-- `plan_suite_layout.py`: realization availabilityとpackage sourceを同じplanへ残す。
+途中で別のbuild descriptor / package-tree plannerを置く案も試したが、責務がP2 plannerと重なったため削除した。
 
-この上に同じ情報を再包装する独自descriptorを置くと、二つのschemaを同期する必要が生じる。
+正本は次とする。
 
-そのため追加descriptor layerは採用せず、research previewを `plan_suite_layout.py` の最初のconsumerとする。
+- realization/source/target metadata: `suite-manifest.json`
+- layout readiness: `plan_suite_layout.py`
+- source→target path: `plan_skill_subtrees.py`
+- host Skill-entry policy: `plan_skill_entry_transforms.py`
 
-これは「一度作った実装を残す」より、責務が重なるなら削除する方を優先した判断である。
+P3 previewはこれらと矛盾しない実treeを検査するconsumerであり、新しいmethod/package schemaの正本にはしない。
 
-## Preview consumer
+## Bilingual runtime entry projection
 
-`research/skill-prototypes/build_preview.py` は次の順で動く。
-
-1. `suite-manifest.json` を読む。
-2. `plan_suite_layout.py` でlocale / skill realizationを計画する。
-3. `realized == false` のinputはpreview生成しない。
-4. 各realizationの `package_source.mode` で投影方法を選ぶ。
-5. 一時directoryまたは明示outputへpackage treeを構築する。
-6. frontmatter、Method Definition、declared source、相対linkを検査する。
-7. `ORIGIN.json` にresearch-only provenanceを残す。
-
-previewは三Skill×二locale、計6 packageを対象にする。
-
-## `explicit_files` projection
-
-`affinity-synthesis` と `iterative-inquiry-synthesis` に使う。
-
-source descriptor例:
-
-```json
-{
-  "mode": "explicit_files",
-  "root": "research/skill-prototypes/affinity-synthesis",
-  "files": [
-    "SKILL.md",
-    "references/METHOD.md",
-    "references/REPRESENTATION.md"
-  ]
-}
-```
-
-### Relative structure preservation
-
-runtime以外のfileは、`root` からの相対pathをpackage内でも維持する。
+ja-JP sibling source:
 
 ```text
-source                                   preview
-references/METHOD.md                  -> references/METHOD.md
-evals/CASES.md                        -> evals/CASES.md
-evidence/dossier.md                   -> evidence/dossier.md
+SKILL.md -> SKILL.md
 ```
 
-これにより、Skill本文のprogressive referenceをflatteningで壊さない。
-
-### Runtime canonical name
-
-locale source上では英語runtimeが `SKILL.en.md` でも、installable packageのentryは `SKILL.md` とする。
+en-US sibling source:
 
 ```text
 SKILL.en.md -> SKILL.md
 ```
 
-これはsource identityを書き換えるのではなく、配布面のcanonical entry nameへのprojectionである。元sourceは `ORIGIN.json` に残す。
+subtree planではsource identityとtarget-relative pathを両方保持する。
 
-## `canonical_manifest` projection
+このため英語source filenameを日本語sourceへ寄せたり、package側に `SKILL.en.md` を要求したりしない。
 
-CSWは既存 `src/manifest.json` を再利用する。
+## Copy vs render
 
-preview builderは別のmodule listを持たない。
+subtree mappingはoperationを保持する。
 
-- manifestのrouterを読む。
-- manifestのmodulesを読む。
-- locale rootからmoduleを取得する。
-- current production OpenAI/Claude shapeと同様に、routerのmodule linkをpackage `references/` へ書き換える。
+### Explicit sibling Skill
 
-これによりresearch suiteのためだけにCSW source正本を複製しない。
+```text
+operation = copy
+```
+
+ただしentry bodyをhost surfaceへ出すときは `plan_skill_entry_transforms.py` のfrontmatter policyを適用できる。
+
+### Canonical CSW
+
+```text
+ROUTER.md -> SKILL.md
+operation = render_runtime_entry
+```
+
+CSW routerについてresearch側に第二のrendererを作らず、production migration時も既存canonical builder renderを正本にする。
+
+modulesは `copy` として `references/<skill_reference>` へ写る。
+
+## Distribution topology
+
+OpenAI standalone:
+
+```text
+cultural-substrate-weaving/
+affinity-synthesis/
+iterative-inquiry-synthesis/
+```
+
+Claude / Codex locale bundle:
+
+```text
+skills/weave/
+skills/affinity-synthesis/
+skills/iterative-inquiry-synthesis/
+```
+
+現在は日英ともartifact/source/target metadataが揃うため、read-only topologyは両localeで計画できる。
+
+これはproduction bundle生成や英語promotion readinessを意味しない。
+
+## Generic preview
+
+`build_preview.py` はhost-specific release packageではなく、三Skill×二localeのgeneric research packageをtemporary directoryへ組み立てる。
+
+確認対象:
+
+- `SKILL.md` entryが存在する
+- installable nameが一致する
+- locale Method Definitionが存在する
+- explicit fileの相対構造が保持される
+- CSWはcanonical manifest/module集合を再利用する
+- relative Markdown linkが解決する
+- `ORIGIN.json` に `research_only: true` を残す
+
+host-specific OpenAI/Claude/Codex treeの正確なpath・entry policyはP2 subtree/entry plan側を正本とする。
 
 ## Locale boundary
 
-英語realizationが存在することと、英語の全research materialが翻訳済みであることは別である。
+英語 `translated-draft` はartifact availabilityを表し、独立査読済みを意味しない。
 
-### Affinity Synthesis en-US
+Affinity en-US package sourceは現在、英語runtime/Methodと共有technical assetへ限定する。日本語Methodや全research recordを暗黙同梱しない。
 
-package sourceは現在次に限定する。
+Iterative en-USでは `ROUND-TEMPLATE.md` が日本語research templateであることをSkill本文上で明示し、英語Method Definitionの代わりにはしない。
 
-```text
-SKILL.en.md
-references/METHOD.en.md
-references/REPRESENTATION.md
-references/affinity-map.schema.json
-```
+## What P3 does not prove
 
-日本語Method、template、lineage noteを自動同梱しない。
+- actual production package build
+- host routing behavior
+- OpenAI agent metadata parity
+- Claude/Codex plugin / marketplace metadata parity
+- ChatGPT GPT composite Method composition
+- Microsoft 365 full sibling-method parity
+- independent English review
+- token / byte budget
+- release readiness
 
-`REPRESENTATION.md` は共有technical assetであり、日本語説明を英語runtimeの追加instructionとして扱わない。
+## Next boundary
 
-### Iterative Inquiry Synthesis en-US
+`plan_skill_entry_transforms.py` の次に残るのはhost adapter metadataである。
 
-```text
-SKILL.en.md
-references/METHOD.en.md
-references/ROUND-TEMPLATE.md
-```
+特に、
 
-`ROUND-TEMPLATE.md` は英語Skill本文で日本語research templateであることを明示している。英語runtimeのMethod Definitionを置き換えない。
+- OpenAI `agents/openai.yaml`
+- Claude `.claude-plugin/plugin.json`
+- Codex `.codex-plugin/plugin.json`
+- locale plugin README / marketplace metadata
 
-## Validation boundary
+について、bundle-level metadataとSkill-level metadataを分ける必要がある。
 
-P3 preview checkは少なくとも次を確認する。
-
-- 6 packageが構築対象になる。
-- installable packageに `SKILL.md` がある。
-- frontmatter `name` がinstallable nameと一致する。
-- `ORIGIN.json` の `research_only` がtrueである。
-- explicit sourceとして宣言したfileが期待pathへ存在する。
-- locale Method Definitionがpackage内に存在する。
-- package内Markdownのrelative linkが解決する。
-
-formal suite validator側では、生成前に次を止める。
-
-- package root escape。
-- missing source file。
-- runtime entryがexplicit sourceから抜ける。
-- locale Method Definitionがpackage sourceから抜ける。
-- canonical manifestのrouterとruntime entryが食い違う。
-- canonical manifestのmodule sourceが欠ける。
-- research metadataとして追跡されていないfileをexplicit packageへ混ぜる。
-
-## What this does not prove
-
-previewが通っても次は未証明である。
-
-- OpenAI / Claude / Codexが三Skillを期待どおりroutingする。
-- ChatGPT GPT compositeへLayer 1/2が正しく内包される。
-- Microsoft Copilotでfull sibling method parityがある。
-- English translation / method parityが独立査読済みである。
-- token / byte budgetがproduction targetで成立する。
-- release package contractを満たす。
-
-## Promotion consequence
-
-P3の結果が安定し、実行環境でresearch gateを通せた後に初めて、production build一般化の候補を検討する。
-
-その際も、いきなり全surfaceをmulti-skill化しない。
-
-候補順序は次のように分けられる。
-
-1. standalone-per-skill出力を持つsurface。
-2. multi-skill filesystemを自然に持てるClaude/Codex bundle。
-3. sibling invocationを前提にできないcomposite agent surface。
-
-各surfaceでsource topologyとhost capabilityは別に検証する。
+ただしcomplete execution environmentでresearch gateを通すまではproduction builder一般化を急がない。
 
 ## Decision
 
-**P3では、新しいdescriptor schemaを増やさず、P2 `package_source` をresearch package treeへ直接投影する。**
-
-`build_preview.py` をその最初のconsumerとして使い、relative structure、locale boundary、Method Definition、link topologyをrelease buildから隔離したまま検査する。
-
-次のgateは、実行環境でこのpreviewを含む `make research-skill-check` を実行し、静的設計ではなく実際のpackage treeで不整合を潰すことである。
+**P3 previewはP2のsource/target/subtree/entry-transform contractをdogfoodする検査層であり、第五のpackage schemaを追加しない。**
