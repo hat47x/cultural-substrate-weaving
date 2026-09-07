@@ -80,6 +80,22 @@ private chain-of-thoughtではなく、外部から検査できるartifactを残
 
 保存形式は固定しない。
 
+### Prior synthesis handoff capsule
+
+前roundのcompatible one-round synthesisが、stable semantic refs、residual anchors、source provenance / incoming status、possible next checksをcapsuleとして渡す場合がある。
+
+このcapsuleは**持越し候補の集合であり、reopen命令ではない**。
+
+1. まずnew deltaを読む。
+2. carried refsのうち、deltaが実際に触れるものだけを `reopened prior artifacts / touched semantic IDs` へ移す。
+3. 触れていないstable refsは意味同一性を保つために持ち越してよいが、再検査済みとは記録しない。
+4. residualが残っているだけではcontinue理由にしない。
+5. possible next checkは候補であり、現在の問い・検索・実験へ自動採用しない。
+6. source provenance / incoming epistemic statusを維持し、question / hypothesis / correspondenceを観察事実へ昇格させない。
+7. capsuleがない場合も、このSkill自身がone-round成果物から必要なprior refsを読み取れるなら処理できる。特定schemaへのhard dependencyにはしない。
+
+標準記録例は `references/ROUND-TEMPLATE.md` を使える。
+
 ### Compact delta notation
 
 stable IDがある場合、次の記号で**change operation**を表せる。
@@ -202,6 +218,8 @@ complete explanationやresidual zeroを成功条件にしない。
 - [ ] 前roundを上書きせず、差分として追跡できる。
 - [ ] 新材料が触れない部分まで無理由に再構成していない。
 - [ ] stable IDがある場合、意味上同一なものを無理由に振り直していない。
+- [ ] handoff capsuleのcarried refsを、delta確認前に一括reopenしていない。
+- [ ] residualやpossible next checkが存在するだけで自動continueしていない。
 - [ ] 外部探索由来の問い・仮説・correspondenceを、origin / statusを失ってtarget-side factへ混ぜていない。
 - [ ] 使用したsynthesis realizationを追跡できる。必要なのに利用できなかった場合は未実行として区別している。
 - [ ] semantic deltaとwording / renderer / layoutだけの差を区別した。
