@@ -83,6 +83,32 @@ relationの**意味**、**向き**、**確度・状態**を分ける。
 
 ただし省略はsemantic recordからの削除ではない。図はprojectionである。
 
+### R7. Explicit relations must survive proposition read-back
+
+強いsemantic relationを `R` として主張した場合は、監査時に少なくとも一度、
+
+```text
+[source meaning unit] + [predicate] + [target meaning unit]
+```
+
+を自然な一文として読み返す。
+
+ここで確認するのは、概念地図の固定語彙へ変換できるかではない。
+
+- 向きとpredicateが噛み合っているか。
+- 主語・目的語が入れ替わっていないか。
+- 因果、意図、一般化、責任方向をpredicateが勝手に補っていないか。
+- `basis`へ戻ったとき、その関係をなお支持できるか。
+- `supported` と書いた関係が、実際には `tentative` / `unresolved` ではないか。
+
+読み返して文として成立しない、または材料へ戻ると支えられない場合は、線を強くするためにpredicateを作文しない。
+
+- relationを弱める。
+- `R`を撤回する。
+- まだ気になる接続なら `Q` としてquestionable relation candidateへ戻す。
+
+このread-backは**監査操作**であり、同じ意味を別fieldへ重複保存する必須schemaではない。
+
 ## 3. Compact human-readable grammar
 
 小規模な成果物やレビュー時には、次のline notationを使える。
@@ -139,6 +165,14 @@ R01: G01 -> G02 :: "relation predicate" @basis[C001,G02] @state["tentative"]
 - `basis` は、このrelationが何を比較・統合して立ったかを辿るhandleである。独立support数とは同義ではない。
 - `state` は必要な場合だけ付ける。
 
+relationを採用した後、必要なら次のように一文へ戻して監査する。
+
+```text
+G01「表札A」は、[predicate] という意味で、G02「表札B」へ向く。
+```
+
+このread-back文そのものを正本へ複製保存する必要はない。predicate / direction / endpointが意味を保てているかを確認するための操作である。
+
 ### 3.4 Residual and gap-as-question
 
 ```text
@@ -147,6 +181,23 @@ Q01? := "question made visible by arrangement" @arises_from[G02,U01]
 ```
 
 `Q` は空白から生じた問いであり、欠けている対象が実在するというassertionではない。
+
+### 3.5 Questionable / missing relation candidate
+
+配置・叙述・cross-checkから「この二者には何か接続がありそうだ」と気づいても、まだpredicateを材料へ戻して支持できない場合は `R` を作らない。
+
+```text
+Q07? := "G02 と G05 の間に、時間差を介した接続があるか" @arises_from[G02,G05]
+```
+
+必要なら補助的に次を記録できる。
+
+```text
+@candidate_relation[G02,G05]
+@would_clarify[C021,S08]
+```
+
+これはmissing linkの**問い**であり、missing relationの存在を主張するものではない。
 
 ## 4. Inventory tables
 
@@ -160,11 +211,13 @@ Q01? := "question made visible by arrangement" @arises_from[G02,U01]
 
 ### 4.2 Relation inventory
 
-| Relation | From | Predicate | To | Direction | State | Basis |
-|---|---|---|---|---|---|---|
-| R01 | G01 | ... | G02 | -> | supported | C001, C004 |
+| Relation | From | Predicate | To | Direction | State | Basis | Read-back audit |
+|---|---|---|---|---|---|---|---|
+| R01 | G01 | ... | G02 | -> | supported | C001, C004 | survives / revise / withdraw |
 
 relation inventoryでは、predicateを単一のedge-type keywordだけに縮めない。
+
+`Read-back audit` はrelationの意味を別fieldとして複製する欄ではない。endpoint + predicate + directionを一文として読み返し、材料へ戻したときに維持できるかの監査結果だけを置く。
 
 ### 4.3 Residual / question inventory
 
@@ -172,6 +225,14 @@ relation inventoryでは、predicateを単一のedge-type keywordだけに縮め
 |---|---|---|---|
 | U01 | ... | C002, C007 | keep separate |
 | Q01 | ... | G01, G03 | next-round candidate |
+
+### 4.4 Questionable relation / missing-link candidate inventory
+
+| Question | Between / arises from | Why it looks connected | What would support / refute | Current handling |
+|---|---|---|---|---|
+| Q07 | G02, G05 | ... | ... | keep as question / promote after return-check / dissolve |
+
+この表にあるものは `R` ではない。図へ載せる場合も、semantic relationの実線と同じvisual semanticsを使わない。
 
 ## 5. Machine-readable interchange
 
@@ -207,6 +268,8 @@ JSONは方法の正本ではなくinterchange formatである。Schema候補は 
   ]
 }
 ```
+
+relation read-backはcanonical JSONへ同じ意味を複製する必須fieldにはしない。questionable relation candidateは、確定relationへ昇格するまでは `Q` / question recordとして保持する。
 
 ## 6. Diagram projections
 
@@ -302,6 +365,7 @@ flowchart TB
 - solid undirected line: relation exists, direction not asserted
 - dashed arrow: resonance、gap link等の補助projection。必ずlabelで意味を明示する。
 - tentative / unresolved等のstateは、線種や色だけへ預けずedge labelまたはlegendでも読めるようにする。
+- questionable relation / missing-link candidateは`R`と同じ実線へ昇格させない。`Q?`として表示するか、詳細図だけへ残す。
 - 色だけを唯一の意味carrierにしない。
 
 ### 7.4 Rendering limits
@@ -319,9 +383,11 @@ rendering toolを利用できる場合、図は少なくとも次を確認する
 1. syntaxが通る。
 2. labelが切れていない。
 3. relationの向きがsemantic recordと一致する。
-4. resonanceがmembershipやsupportに見えない。
-5. omitted detailが削除された事実として扱われていない。
-6. line crossingやautomatic layoutが、誤った因果・階層を視覚的に暗示していない。
+4. explicit relationをendpoint + predicate + directionとして読み返しても意味が維持される。
+5. resonanceがmembershipやsupportに見えない。
+6. questionable relation candidateが確定relationの線に見えない。
+7. omitted detailが削除された事実として扱われていない。
+8. line crossingやautomatic layoutが、誤った因果・階層を視覚的に暗示していない。
 
 rendering toolがない場合は、sourceを出力し `render not validated` と明示できる。
 
@@ -332,6 +398,8 @@ rendering toolがない場合は、sourceを出力し `render not validated` と
 - **record -> diagram:** 重要relation / residual / resonanceが落ちていないか。
 - **diagram -> record:** 図だけに新しい線・包含・順序が増えていないか。
 - **layout -> semantics:** 近接や上下配置を、元にない意味へ読み替えていないか。
+- **relation -> proposition read-back:** 明示relationを一文として戻したとき、方向・predicate・endpointが材料に支持されるか。
+- **candidate -> relation:** questionable / missing-link candidateを、return-checkなしに`R`へ昇格させていないか。
 - **diagram -> narrative:** 図の視覚的強調だけを根拠に、文章で重要度や因果を増幅していないか。
 
 この照合を通らない図は、見栄えが良くても親和統合の正しいprojectionではない。
