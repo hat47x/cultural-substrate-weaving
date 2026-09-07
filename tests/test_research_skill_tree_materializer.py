@@ -4,6 +4,7 @@ import sys
 import tempfile
 import unittest
 from pathlib import Path
+from unittest.mock import patch
 
 ROOT = Path(__file__).resolve().parents[1]
 PLANNER_DIR = ROOT / "research" / "skill-prototypes" / "scripts"
@@ -155,6 +156,20 @@ class ResearchSkillTreeMaterializerTests(unittest.TestCase):
 
     def test_en_codex_uses_same_shared_skill_tree_entry_policy(self) -> None:
         self.assert_bundle_three_skill_tree("en-US", "codex_plugin")
+
+    def test_materializer_preflight_rejects_reference_closure_errors(self) -> None:
+        with patch(
+            "materialize_skill_tree.validate_package_reference_closure",
+            return_value=["reference closure probe failure"],
+        ):
+            with tempfile.TemporaryDirectory() as temp_dir:
+                with self.assertRaisesRegex(ValueError, "reference closure probe failure"):
+                    materialize_skill_tree(
+                        locale="ja-JP",
+                        distribution_name="openai_skill",
+                        output_root=Path(temp_dir) / "tree",
+                        root=ROOT,
+                    )
 
     def test_materializer_refuses_output_inside_repository(self) -> None:
         with self.assertRaisesRegex(ValueError, "outside the repository"):
