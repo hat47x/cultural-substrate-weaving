@@ -1,0 +1,6 @@
+interface:
+  display_name: "Iterative Inquiry Synthesis — English"
+  short_description: "Reopen only what new material touches and track synthesis results, residuals, and questions across rounds"
+  default_prompt: "Do not overwrite the previous round. Reopen only artifacts touched by new material, delegate any needed one-round synthesis to an available compatible realization, and track residuals, the next inquiry, and stop or handoff reasons."
+policy:
+  allow_implicit_invocation: true
