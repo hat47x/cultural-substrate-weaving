@@ -42,6 +42,15 @@ class ResearchCompleteCheckoutGateTests(unittest.TestCase):
         self.assertEqual(validate_complete_checkout_gate(ROOT, self.descriptor), [])
         gate = self.descriptor["complete_checkout_validation"]
         self.assertEqual(gate["status"], "blocked-not-run")
+        self.assertEqual(
+            gate["required_commands"],
+            [
+                "make update-en-hashes",
+                "make research-skill-check",
+                "make build",
+                "make check",
+            ],
+        )
         self.assertFalse(gate["production_promotion_authorized"])
 
     def test_blocked_gate_cannot_authorize_promotion(self) -> None:
@@ -52,9 +61,19 @@ class ResearchCompleteCheckoutGateTests(unittest.TestCase):
             "must not authorize production promotion by itself",
         )
 
+    def test_command_set_cannot_silently_drop_translation_refresh(self) -> None:
+        descriptor = copy.deepcopy(self.descriptor)
+        descriptor["complete_checkout_validation"]["required_commands"] = [
+            "make research-skill-check",
+            "make build",
+            "make check",
+        ]
+        self.assert_has_error(descriptor, "must remain the canonical command set")
+
     def test_command_set_cannot_silently_drop_full_check(self) -> None:
         descriptor = copy.deepcopy(self.descriptor)
         descriptor["complete_checkout_validation"]["required_commands"] = [
+            "make update-en-hashes",
             "make research-skill-check",
             "make build",
         ]
@@ -78,6 +97,7 @@ class ResearchCompleteCheckoutGateTests(unittest.TestCase):
             evidence_path.parent.mkdir(parents=True, exist_ok=True)
             evidence_path.write_text(
                 "execution commit: 0123456789abcdef0123456789abcdef01234567\n"
+                "make update-en-hashes: PASS\n"
                 "make research-skill-check: PASS\n"
                 "make build: PASS\n"
                 "make check: PASS\n",
