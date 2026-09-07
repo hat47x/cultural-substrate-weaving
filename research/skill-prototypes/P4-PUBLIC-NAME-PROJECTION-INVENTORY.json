@@ -39,6 +39,19 @@
       "class": "packaged-method-definition",
       "action": "rewrite-realization-identifier-not-method-role",
       "required_markers": ["`affinity-synthesis`"]
+    },
+    {
+      "path": "research/skill-prototypes/P4-PRODUCTION-SOURCE-AND-BUILDER-PROMOTION-PLAN-2026-09-07.md",
+      "class": "maintainer-production-projection",
+      "action": "keep-production-path-examples-on-production-name",
+      "required_markers": [
+        "src/skills/material-led-synthesis/",
+        "adapters/openai-skill/<locale>/material-led-synthesis/"
+      ],
+      "forbidden_markers": [
+        "src/skills/affinity-synthesis/",
+        "adapters/openai-skill/<locale>/affinity-synthesis/"
+      ]
     }
   ],
   "structured_projection": [
