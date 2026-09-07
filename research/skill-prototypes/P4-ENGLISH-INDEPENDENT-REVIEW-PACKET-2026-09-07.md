@@ -12,6 +12,17 @@ Status: review handoff; **review not yet completed**
 
 この文書を作成したこと自体は査読完了を意味しない。
 
+## 固定査読snapshot
+
+査読対象のruntime / Method Definitionは、次のsnapshotで具体的なblobへ固定する。
+
+- `research/skill-prototypes/P4-ENGLISH-INDEPENDENT-REVIEW-TARGETS-2026-09-07.json`
+- review source commit: `2e06c03b4b917d7a05fe22a9e5c2412e8159ce3b`
+
+査読者はbranchの「現在内容」だけを参照して完了判定しない。snapshotに記録された日本語canonical blobと英語translated-draft blobを比較対象とする。
+
+査読後にlisted blobが変更された場合、その変更を自動的に査読済みへ継承しない。新snapshotを作るか、変更blobについて明示的なdelta reviewを残す。
+
 ## 査読対象
 
 ### Layer 1 — research ID `affinity-synthesis`
@@ -244,6 +255,7 @@ KJ lineageの「空白」に近い意味を、単なるmissing data fieldへ縮�
 
 ```text
 reviewer:
+reviewer relation / independence:
 review date:
 review scope:
 
@@ -268,6 +280,7 @@ KJ lineage / naming:
 Promotion recommendation:
   ready-for-next-gate | revise-before-next-gate | blocked
 
+Reviewed target snapshot:
 Reviewed commit / blob refs:
 ```
 
