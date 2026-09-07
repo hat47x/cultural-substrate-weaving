@@ -14,6 +14,7 @@ import argparse
 import json
 import shutil
 import sys
+import tempfile
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[3]
@@ -47,6 +48,47 @@ def _repository_version(root: Path) -> str:
     if not value:
         raise ValueError("VERSION must not be empty")
     return value
+
+
+def _validate_final_output_root(output_root: Path, root: Path) -> Path:
+    """Validate a final output path without creating or modifying it."""
+
+    resolved = output_root.resolve()
+    repository = root.resolve()
+    if resolved == repository or repository in resolved.parents:
+        raise ValueError("research materializer output_root must be outside the repository")
+    if resolved.exists():
+        if not resolved.is_dir():
+            raise ValueError("research materializer output_root exists and is not a directory")
+        if any(resolved.iterdir()):
+            raise ValueError("research materializer output_root must be empty")
+    return resolved
+
+
+def _create_staging_root(final_output: Path) -> Path:
+    """Create a repository-external staging directory next to the final output."""
+
+    final_output.parent.mkdir(parents=True, exist_ok=True)
+    return Path(
+        tempfile.mkdtemp(
+            prefix=f".{final_output.name}.staging-",
+            dir=final_output.parent,
+        )
+    ).resolve()
+
+
+def _commit_staging_root(staging: Path, final_output: Path) -> None:
+    """Move a completed staging tree into place, preserving an empty target on failure."""
+
+    target_existed = final_output.exists()
+    if target_existed:
+        final_output.rmdir()
+    try:
+        staging.rename(final_output)
+    except OSError:
+        if target_existed:
+            final_output.mkdir(parents=True, exist_ok=True)
+        raise
 
 
 def _prepare_openai_metadata(
@@ -221,71 +263,81 @@ def materialize_host_package(
         )
         _require_bundle_fields(bundle, locale)
 
-    tree_result = materialize_skill_tree(
-        locale=locale,
-        distribution_name=distribution_name,
-        output_root=output_root,
-        root=root,
-        allow_partial=False,
-    )
-    output = Path(tree_result["output_root"]).resolve()
-    host_files: list[dict] = []
+    final_output = _validate_final_output_root(output_root, root)
+    staging_output = _create_staging_root(final_output)
+    committed = False
+    try:
+        tree_result = materialize_skill_tree(
+            locale=locale,
+            distribution_name=distribution_name,
+            output_root=staging_output,
+            root=root,
+            allow_partial=False,
+        )
+        output = Path(tree_result["output_root"]).resolve()
+        host_files: list[dict] = []
 
-    if distribution_name == "openai_skill":
-        assert openai_mappings is not None
-        for mapping in openai_mappings:
-            target_relative = f"{mapping['skill_name']}/agents/openai.yaml"
+        if distribution_name == "openai_skill":
+            assert openai_mappings is not None
+            for mapping in openai_mappings:
+                target_relative = f"{mapping['skill_name']}/agents/openai.yaml"
+                target = _target_path(output, target_relative)
+                if target.exists():
+                    raise ValueError(f"host metadata target already exists: {target_relative}")
+                target.parent.mkdir(parents=True, exist_ok=True)
+                shutil.copyfile(mapping["source_path"], target)
+                host_files.append(
+                    {
+                        "skill_id": mapping["skill_id"],
+                        "source": mapping["source"],
+                        "target": target_relative,
+                        "action": "copy",
+                    }
+                )
+        else:
+            assert bundle is not None
+            current_version = _repository_version(root)
+            if distribution_name == "claude_plugin":
+                target_relative = ".claude-plugin/plugin.json"
+                manifest = _claude_manifest(bundle, current_version)
+            else:
+                target_relative = ".codex-plugin/plugin.json"
+                manifest = _codex_manifest(bundle, current_version, locale)
             target = _target_path(output, target_relative)
             if target.exists():
                 raise ValueError(f"host metadata target already exists: {target_relative}")
             target.parent.mkdir(parents=True, exist_ok=True)
-            shutil.copyfile(mapping["source_path"], target)
+            target.write_text(
+                json.dumps(manifest, ensure_ascii=False, indent=2) + "\n",
+                encoding="utf-8",
+            )
             host_files.append(
                 {
-                    "skill_id": mapping["skill_id"],
-                    "source": mapping["source"],
+                    "source": bundle_source,
                     "target": target_relative,
-                    "action": "copy",
+                    "action": "render",
                 }
             )
-    else:
-        assert bundle is not None
-        current_version = _repository_version(root)
-        if distribution_name == "claude_plugin":
-            target_relative = ".claude-plugin/plugin.json"
-            manifest = _claude_manifest(bundle, current_version)
-        else:
-            target_relative = ".codex-plugin/plugin.json"
-            manifest = _codex_manifest(bundle, current_version, locale)
-        target = _target_path(output, target_relative)
-        if target.exists():
-            raise ValueError(f"host metadata target already exists: {target_relative}")
-        target.parent.mkdir(parents=True, exist_ok=True)
-        target.write_text(
-            json.dumps(manifest, ensure_ascii=False, indent=2) + "\n",
-            encoding="utf-8",
-        )
-        host_files.append(
-            {
-                "source": bundle_source,
-                "target": target_relative,
-                "action": "render",
-            }
-        )
 
-    return {
-        "schema": "csw.research-host-package-materialization/v1",
-        "locale": locale,
-        "distribution": distribution_name,
-        "profile": profile if distribution_name == "openai_skill" else None,
-        "output_root": str(output),
-        "skill_tree": tree_result,
-        "host_files": host_files,
-        "note": (
-            "Research host-package probe only. Package-local host metadata was added, but no "
-            "marketplace catalog, README, archive, release manifest, or release asset was generated."
-        ),
-    }
+        _commit_staging_root(staging_output, final_output)
+        committed = True
+        tree_result["output_root"] = str(final_output)
+        return {
+            "schema": "csw.research-host-package-materialization/v1",
+            "locale": locale,
+            "distribution": distribution_name,
+            "profile": profile if distribution_name == "openai_skill" else None,
+            "output_root": str(final_output),
+            "skill_tree": tree_result,
+            "host_files": host_files,
+            "note": (
+                "Research host-package probe only. Package-local host metadata was added, but no "
+                "marketplace catalog, README, archive, release manifest, or release asset was generated."
+            ),
+        }
+    finally:
+        if not committed and staging_output.exists():
+            shutil.rmtree(staging_output, ignore_errors=True)
 
 
 def main() -> int:
