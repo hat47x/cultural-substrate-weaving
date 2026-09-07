@@ -1,0 +1,35 @@
+{
+  "schema": "csw.public-name-migration-contract/v1",
+  "status": "design-only",
+  "descriptor": "research/skill-prototypes/P4-PRODUCTION-SUITE-DESCRIPTOR-PROTOTYPE.json",
+  "research_to_production_name": {
+    "cultural-substrate-weaving": "cultural-substrate-weaving",
+    "affinity-synthesis": "material-led-synthesis",
+    "iterative-inquiry-synthesis": "iterative-inquiry-synthesis"
+  },
+  "policy": {
+    "research_ids_remain_research_only": true,
+    "research_history_is_not_renamed": true,
+    "production_frontmatter_uses_production_name": true,
+    "production_explicit_skill_references_use_production_name": true,
+    "production_runtime_filesystem_sibling_paths_forbidden": true,
+    "production_research_path_references_forbidden": true,
+    "display_names_are_not_installable_identifiers": true,
+    "compatibility_alias_directory_is_not_created_by_default": true
+  },
+  "display_terms": {
+    "affinity-synthesis": {
+      "en": "Affinity Synthesis",
+      "ja": "親和統合"
+    },
+    "iterative-inquiry-synthesis": {
+      "en": "Iterative Inquiry Synthesis",
+      "ja": "反復探索統合"
+    }
+  },
+  "forbidden_production_reference_prefixes": [
+    "research/skill-prototypes/",
+    "../affinity-synthesis/"
+  ],
+  "note": "Design-only rename projection contract. Research IDs and history remain stable; production identity and explicit installable-Skill references use the promoted public names only after the promotion preconditions pass."
+}
