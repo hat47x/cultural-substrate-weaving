@@ -5,6 +5,12 @@
   "version_source": "VERSION",
   "canonical_locale": "ja-JP",
   "locales": ["ja-JP", "en-US"],
+  "public_name_recheck": {
+    "date": "2026-09-07",
+    "evidence": "research/skill-prototypes/P4-PUBLIC-NAME-RECHECK-2026-09-07.md",
+    "scope": "GitHub exact code search plus public Web search",
+    "production_promotion_authorized": false
+  },
   "first_wave_distributions": [
     "openai_skill",
     "claude_plugin",
@@ -48,7 +54,7 @@
       "research_id": "affinity-synthesis",
       "role": "one_round_material_synthesis",
       "proposed_installable_name": "material-led-synthesis",
-      "public_name_status": "candidate-after-collision-audit",
+      "public_name_status": "rechecked-no-current-exact-collision-found",
       "production_source": {
         "mode": "locale_tree",
         "root_pattern": "src/skills/material-led-synthesis/{locale}",
@@ -78,7 +84,7 @@
       "research_id": "iterative-inquiry-synthesis",
       "role": "multi_round_inquiry_orchestration",
       "proposed_installable_name": "iterative-inquiry-synthesis",
-      "public_name_status": "candidate-no-current-exact-collision-found",
+      "public_name_status": "rechecked-no-current-exact-collision-found",
       "production_source": {
         "mode": "locale_tree",
         "root_pattern": "src/skills/iterative-inquiry-synthesis/{locale}",
