@@ -27,7 +27,10 @@ PACKET_RELATIVE = Path(
     "research/skill-prototypes/P4-ENGLISH-INDEPENDENT-REVIEW-PACKET-2026-09-07.md"
 )
 TARGETS_RELATIVE = Path(
-    "research/skill-prototypes/P4-ENGLISH-INDEPENDENT-REVIEW-TARGETS-2026-09-07.json"
+    "research/skill-prototypes/P4-ENGLISH-INDEPENDENT-REVIEW-TARGETS-2026-09-07-v2.json"
+)
+LOCALIZATION_RELATIVE = Path(
+    "research/skill-prototypes/P4-TECHNICAL-ASSET-LOCALIZATION-2026-09-07.json"
 )
 
 
@@ -44,7 +47,7 @@ class ResearchEnglishReviewGateTests(unittest.TestCase):
         )
 
     def prepare_review_root(self, root: Path) -> None:
-        for relative in (PACKET_RELATIVE, TARGETS_RELATIVE):
+        for relative in (PACKET_RELATIVE, TARGETS_RELATIVE, LOCALIZATION_RELATIVE):
             source = ROOT / relative
             target = root / relative
             target.parent.mkdir(parents=True, exist_ok=True)
@@ -63,8 +66,29 @@ class ResearchEnglishReviewGateTests(unittest.TestCase):
         gate = self.descriptor["english_independent_review"]
         self.assertEqual(gate["status"], "pending")
         self.assertEqual(gate["targets"], str(TARGETS_RELATIVE))
+        self.assertEqual(
+            gate["technical_asset_localization"], str(LOCALIZATION_RELATIVE)
+        )
         self.assertIsNone(gate["completed_review"])
         self.assertFalse(gate["production_promotion_authorized"])
+
+    def test_v2_snapshot_contains_runtime_method_and_direct_technical_assets(self) -> None:
+        pairs = {
+            (item["research_id"], item["artifact"])
+            for item in self.targets["targets"]
+        }
+        self.assertEqual(
+            pairs,
+            {
+                ("affinity-synthesis", "runtime"),
+                ("affinity-synthesis", "method_definition"),
+                ("affinity-synthesis", "representation_grammar"),
+                ("iterative-inquiry-synthesis", "runtime"),
+                ("iterative-inquiry-synthesis", "method_definition"),
+                ("iterative-inquiry-synthesis", "round_template"),
+            },
+        )
+        self.assertIn("supersedes", self.targets)
 
     def test_pending_gate_cannot_claim_completed_review(self) -> None:
         descriptor = copy.deepcopy(self.descriptor)
@@ -110,6 +134,16 @@ class ResearchEnglishReviewGateTests(unittest.TestCase):
                 errors,
             )
 
+    def test_gate_requires_localization_contract(self) -> None:
+        descriptor = copy.deepcopy(self.descriptor)
+        descriptor["english_independent_review"]["technical_asset_localization"] = (
+            "research/skill-prototypes/other-localization.json"
+        )
+        self.assert_has_error(
+            descriptor,
+            "must reference the canonical localization contract",
+        )
+
     def test_completed_gate_accepts_structured_independent_review_record(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
             root = Path(tmp)
@@ -124,9 +158,11 @@ class ResearchEnglishReviewGateTests(unittest.TestCase):
                 "reviewer: external-reviewer\n"
                 "reviewer relation / independence: independent of the draft author\n"
                 "review date: 2026-09-07\n"
-                "review scope: both sibling runtimes and Method Definitions\n"
+                "review scope: sibling runtimes, Method Definitions, and directly referenced technical assets\n"
                 "Layer 1:\n"
+                "  technical asset parity: pass\n"
                 "Layer 2:\n"
+                "  technical asset parity: pass\n"
                 "Cross-layer ownership:\n"
                 "KJ lineage / naming:\n"
                 "Promotion recommendation:\n"
