@@ -8,13 +8,16 @@ production promotion gateにあるcomplete-checkout validationについて、設
 
 ## Intended commands
 
-完全なcheckoutで少なくとも次を実行する。
+今回のCSW canonical bilingual変更ではtranslation-manifestのbyte-level hash更新も必要なため、完全なcheckoutで少なくとも次をこの順序で実行する。
 
 ```bash
+make update-en-hashes
 make research-skill-check
 make build
 make check
 ```
+
+`make update-en-hashes` は、英訳本文を生成する処理ではない。現在の日本語canonical bytesを `i18n/translation-manifest.json` のsource hashへ正規のrepository scriptで反映するための処理である。
 
 必要なproduction promotion段階へ進んだ後は、generated artifact diffとrelease-internal composition validationも別途確認する。
 
@@ -38,14 +41,18 @@ GitHub repository source上では、少なくとも次の契約を静的に更�
 - public-name current collision recheck evidence
 - English independent review packet / pinned blob target snapshot
 - English independent review gate validator
+- English runtime technical-asset localization contract and tests
+- target/framework tension and cross-field emergence runtime contract
+- tension/sublation regression fixture and ownership boundary
 - research gateへのvalidator接続
-- tests for public-name and English-review gate boundaries
+- translation-manifest hash refreshが未実行であることのmaintainer record
 
-これはPython execution、generated artifact regeneration、test discovery成功を意味しない。
+これはPython execution、translation hash refresh、generated artifact regeneration、test discovery成功を意味しない。
 
 ## Gate state
 
 ```text
+translation-manifest hash refresh:       NOT RUN after latest CSW canonical changes
 complete-checkout research-skill-check: NOT RUN
 production build regeneration:          NOT RUN after latest research changes
 full repository make check:             NOT RUN after latest research changes
