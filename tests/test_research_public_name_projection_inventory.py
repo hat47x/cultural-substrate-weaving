@@ -77,10 +77,43 @@ class ResearchPublicNameProjectionInventoryTests(unittest.TestCase):
         item["forbidden_markers"] = [None]
         self.assert_has_error(inventory, "forbidden_markers must contain non-empty strings")
 
+    def test_layer2_method_projection_cannot_be_removed_from_inventory(self) -> None:
+        inventory = copy.deepcopy(self.inventory)
+        target = (
+            "research/skill-prototypes/iterative-inquiry-synthesis/references/METHOD.en.md"
+        )
+        inventory["content_projection"] = [
+            item for item in inventory["content_projection"] if item.get("path") != target
+        ]
+        self.assert_has_error(
+            inventory,
+            "missing promotion-critical content projection paths",
+        )
+
+    def test_promotion_plan_projection_cannot_be_removed_from_inventory(self) -> None:
+        inventory = copy.deepcopy(self.inventory)
+        inventory["content_projection"] = [
+            item
+            for item in inventory["content_projection"]
+            if item.get("path") != PROMOTION_PLAN_PATH
+        ]
+        self.assert_has_error(
+            inventory,
+            "missing promotion-critical content projection paths",
+        )
+
     def test_bundle_contains_must_still_expose_research_id_before_projection(self) -> None:
         inventory = copy.deepcopy(self.inventory)
         inventory["structured_projection"][0]["field"] = "missing-field"
         self.assert_has_error(inventory, "unsupported structured projection field")
+
+    def test_bundle_structured_projection_cannot_be_removed(self) -> None:
+        inventory = copy.deepcopy(self.inventory)
+        inventory["structured_projection"] = inventory["structured_projection"][1:]
+        self.assert_has_error(
+            inventory,
+            "missing promotion-critical structured projection paths",
+        )
 
     def test_production_path_projection_must_not_point_into_research(self) -> None:
         inventory = copy.deepcopy(self.inventory)
