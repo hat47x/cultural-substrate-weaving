@@ -54,6 +54,7 @@ research-skill-check:
 	python scripts/validate_research_package_targets.py
 	python scripts/validate_research_package_reference_closure.py
 	python scripts/validate_research_production_suite_descriptor.py
+	python scripts/validate_research_promotion_preconditions.py
 	python scripts/validate_research_complete_checkout_gate.py
 	python scripts/validate_research_public_name_migration.py
 	python scripts/validate_research_public_name_projection_inventory.py
