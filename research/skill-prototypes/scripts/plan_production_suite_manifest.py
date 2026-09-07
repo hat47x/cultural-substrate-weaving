@@ -38,6 +38,31 @@ FORBIDDEN_OUTPUT_KEYS = {
     "forbidden_production_inputs",
     "production_promotion_authorized",
 }
+ALLOWED_PRODUCTION_ADAPTER_MODES = {"per_locale_profile", "locale_catalog"}
+
+
+def _project_adapter_metadata(skill: dict) -> dict:
+    """Drop research maturity state and retain only production lookup semantics."""
+
+    projected = {}
+    for distribution, metadata in skill["adapter_metadata"].items():
+        if "source_pattern" in metadata:
+            projected[distribution] = {
+                "mode": "per_locale_profile",
+                "source_pattern": metadata["source_pattern"],
+            }
+            continue
+        if "source" in metadata:
+            projected[distribution] = {
+                "mode": "locale_catalog",
+                "source": metadata["source"],
+            }
+            continue
+        raise ValueError(
+            f"adapter metadata for {skill['proposed_installable_name']}/{distribution} "
+            "has no production source or source_pattern"
+        )
+    return projected
 
 
 def project_production_suite_manifest(descriptor: dict) -> dict:
@@ -50,7 +75,7 @@ def project_production_suite_manifest(descriptor: dict) -> dict:
                 "role": skill["role"],
                 "source": skill["production_source"],
                 "targets": skill["targets"],
-                "adapter_metadata": skill["adapter_metadata"],
+                "adapter_metadata": _project_adapter_metadata(skill),
             }
         )
 
@@ -141,8 +166,25 @@ def validate_projected_production_suite(manifest: dict, descriptor: dict) -> lis
             errors.append(f"projected production Skill {public_id} source mismatch")
         if skill.get("targets") != source_skill.get("targets"):
             errors.append(f"projected production Skill {public_id} targets mismatch")
-        if skill.get("adapter_metadata") != source_skill.get("adapter_metadata"):
+        try:
+            expected_adapter_metadata = _project_adapter_metadata(source_skill)
+        except ValueError as exc:
+            errors.append(str(exc))
+            expected_adapter_metadata = None
+        if skill.get("adapter_metadata") != expected_adapter_metadata:
             errors.append(f"projected production Skill {public_id} adapter metadata mismatch")
+        projected_adapter = skill.get("adapter_metadata")
+        if isinstance(projected_adapter, dict):
+            for distribution, metadata in projected_adapter.items():
+                if not isinstance(metadata, dict):
+                    errors.append(
+                        f"projected production Skill {public_id}/{distribution} adapter metadata must be an object"
+                    )
+                    continue
+                if metadata.get("mode") not in ALLOWED_PRODUCTION_ADAPTER_MODES:
+                    errors.append(
+                        f"projected production Skill {public_id}/{distribution} uses non-production adapter mode"
+                    )
 
     distributions = manifest.get("distributions")
     if not isinstance(distributions, dict) or set(distributions) != {
@@ -175,6 +217,8 @@ def validate_projected_production_suite(manifest: dict, descriptor: dict) -> lis
     for value in walked:
         if isinstance(value, str) and "research/skill-prototypes" in value:
             errors.append(f"projected production suite must not contain research path: {value}")
+        if isinstance(value, str) and value == "planned-promotion-from-research-prototype":
+            errors.append("projected production suite must not retain research promotion adapter state")
 
     if "affinity-synthesis" in actual_ids:
         errors.append("Layer 1 research ID affinity-synthesis must not become a production Skill id")
@@ -197,7 +241,12 @@ def main() -> int:
             print(f"ERROR: {error}", file=sys.stderr)
         return 1
 
-    projected = project_production_suite_manifest(descriptor)
+    try:
+        projected = project_production_suite_manifest(descriptor)
+    except ValueError as exc:
+        print(f"production suite manifest projection failed: {exc}", file=sys.stderr)
+        return 1
+
     errors = validate_projected_production_suite(projected, descriptor)
     if errors:
         for error in errors:
