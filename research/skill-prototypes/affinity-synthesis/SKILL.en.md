@@ -202,7 +202,7 @@ Do not chain those narrower operations and claim that the chain is equivalent to
 ## Progressive references
 
 - English Method Definition: `references/METHOD.en.md`
-- Shared representation grammar: `references/REPRESENTATION.md`
+- English representation grammar: `references/REPRESENTATION.en.md`
 - Shared machine-readable schema: `references/affinity-map.schema.json`
 
-The shared representation files are technical research assets and may still contain Japanese explanatory prose. This English realization does not treat untranslated prose there as additional runtime instructions.
+The representation grammar is a translated technical research asset. It remains separate from the Method Definition and does not by itself establish independent English review or public promotion readiness.
