@@ -52,6 +52,7 @@ research-skill-check:
 	python scripts/validate_research_skill_suite.py
 	python scripts/validate_research_package_targets.py
 	python research/skill-prototypes/scripts/plan_suite_layout.py >/dev/null
+	python research/skill-prototypes/scripts/plan_package_tree.py >/dev/null
 	python research/skill-prototypes/check_split_ownership.py
 	python research/skill-prototypes/build_preview.py --check
 	python research/skill-prototypes/affinity-synthesis/scripts/check_representation.py
