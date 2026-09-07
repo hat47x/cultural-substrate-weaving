@@ -22,7 +22,11 @@ EXPECTED_PACKET = (
 )
 EXPECTED_TARGETS = (
     "research/skill-prototypes/"
-    "P4-ENGLISH-INDEPENDENT-REVIEW-TARGETS-2026-09-07.json"
+    "P4-ENGLISH-INDEPENDENT-REVIEW-TARGETS-2026-09-07-v2.json"
+)
+EXPECTED_LOCALIZATION = (
+    "research/skill-prototypes/"
+    "P4-TECHNICAL-ASSET-LOCALIZATION-2026-09-07.json"
 )
 TARGET_SCHEMA = "csw.english-independent-review-targets/v1"
 ALLOWED_STATUS = {"pending", "completed"}
@@ -30,8 +34,10 @@ HEX40 = re.compile(r"^[0-9a-f]{40}$")
 EXPECTED_PAIRS = {
     ("affinity-synthesis", "runtime"),
     ("affinity-synthesis", "method_definition"),
+    ("affinity-synthesis", "representation_grammar"),
     ("iterative-inquiry-synthesis", "runtime"),
     ("iterative-inquiry-synthesis", "method_definition"),
+    ("iterative-inquiry-synthesis", "round_template"),
 }
 
 
@@ -72,6 +78,12 @@ def _validate_targets(root: Path, targets_path: Path, errors: list[str]) -> None
     source_commit = snapshot.get("review_source_commit")
     if not isinstance(source_commit, str) or not HEX40.fullmatch(source_commit):
         errors.append("English review target snapshot review_source_commit must be a 40-char SHA")
+
+    supersedes = snapshot.get("supersedes")
+    if supersedes != (
+        "research/skill-prototypes/P4-ENGLISH-INDEPENDENT-REVIEW-TARGETS-2026-09-07.json"
+    ):
+        errors.append("English review target v2 must preserve the superseded snapshot reference")
 
     targets = snapshot.get("targets")
     if not isinstance(targets, list):
@@ -118,7 +130,7 @@ def _validate_targets(root: Path, targets_path: Path, errors: list[str]) -> None
 
     if actual_pairs != EXPECTED_PAIRS:
         errors.append(
-            "English review target snapshot must contain exactly runtime and method_definition pairs for both sibling Skills"
+            "English review target snapshot must contain exactly runtime, method_definition, and directly referenced explanatory technical-asset pairs for both sibling Skills"
         )
 
 
@@ -146,9 +158,11 @@ def validate_english_review_gate(root: Path, descriptor: dict) -> list[str]:
             "review not yet completed",
             "固定査読snapshot",
             EXPECTED_TARGETS,
+            "representation grammarとround template",
             "Layer 1 必須不変条件",
             "Layer 2 必須不変条件",
             "Cross-layer査読",
+            "technical asset parity:",
             "reviewer relation / independence:",
             "Reviewed target snapshot:",
             "production promotion全体の承認ではない",
@@ -159,13 +173,21 @@ def validate_english_review_gate(root: Path, descriptor: dict) -> list[str]:
     targets = gate.get("targets")
     if targets != EXPECTED_TARGETS:
         errors.append(
-            "english_independent_review.targets must reference the canonical review target snapshot"
+            "english_independent_review.targets must reference the canonical v2 review target snapshot"
         )
     targets_path = _existing_file(root, targets)
     if targets_path is None:
         errors.append("English independent review target snapshot is missing or unsafe")
     else:
         _validate_targets(root, targets_path, errors)
+
+    localization = gate.get("technical_asset_localization")
+    if localization != EXPECTED_LOCALIZATION:
+        errors.append(
+            "english_independent_review.technical_asset_localization must reference the canonical localization contract"
+        )
+    if _existing_file(root, localization) is None:
+        errors.append("English technical-asset localization contract is missing or unsafe")
 
     completed_review = gate.get("completed_review")
     if status == "pending":
@@ -192,6 +214,7 @@ def validate_english_review_gate(root: Path, descriptor: dict) -> list[str]:
                 "review scope:",
                 "Layer 1:",
                 "Layer 2:",
+                "technical asset parity:",
                 "Cross-layer ownership:",
                 "KJ lineage / naming:",
                 "Promotion recommendation:",
@@ -204,7 +227,7 @@ def validate_english_review_gate(root: Path, descriptor: dict) -> list[str]:
                     )
             if EXPECTED_TARGETS not in review_text:
                 errors.append(
-                    "completed English review record must identify the canonical target snapshot"
+                    "completed English review record must identify the canonical v2 target snapshot"
                 )
 
     if gate.get("production_promotion_authorized") is not False:
