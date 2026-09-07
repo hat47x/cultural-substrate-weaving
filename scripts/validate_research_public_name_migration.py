@@ -30,6 +30,7 @@ REQUIRED_POLICY = {
     "display_names_are_not_installable_identifiers": True,
     "compatibility_alias_directory_is_not_created_by_default": True,
 }
+RECHECKED_NAME_STATUS = "rechecked-no-current-exact-collision-found"
 
 
 def _load_json(path: Path) -> dict:
@@ -37,6 +38,20 @@ def _load_json(path: Path) -> dict:
     if not isinstance(value, dict):
         raise ValueError(f"{path} must contain a JSON object")
     return value
+
+
+def _repo_file(root: Path, relative: object, label: str, errors: list[str]) -> Path | None:
+    if not isinstance(relative, str) or not relative:
+        errors.append(f"{label} must be a repository-relative path")
+        return None
+    path = (root / relative).resolve()
+    if not path.is_relative_to(root.resolve()):
+        errors.append(f"{label} must remain inside repository")
+        return None
+    if not path.is_file():
+        errors.append(f"{label} is missing: {relative}")
+        return None
+    return path
 
 
 def validate_public_name_migration(root: Path, contract: dict) -> list[str]:
@@ -48,18 +63,32 @@ def validate_public_name_migration(root: Path, contract: dict) -> list[str]:
         errors.append("public-name migration contract must remain status=design-only")
 
     descriptor_relative = contract.get("descriptor")
-    if not isinstance(descriptor_relative, str) or not descriptor_relative:
-        return errors + ["public-name migration descriptor must be a repository-relative path"]
-    descriptor_path = (root / descriptor_relative).resolve()
-    if not descriptor_path.is_relative_to(root.resolve()):
-        return errors + ["public-name migration descriptor must remain inside repository"]
-    if not descriptor_path.is_file():
-        return errors + [f"public-name migration descriptor is missing: {descriptor_relative}"]
+    descriptor_path = _repo_file(
+        root, descriptor_relative, "public-name migration descriptor", errors
+    )
+    if descriptor_path is None:
+        return errors
+
+    recheck_relative = contract.get("recheck_evidence")
+    _repo_file(root, recheck_relative, "public-name recheck evidence", errors)
 
     try:
         descriptor = _load_json(descriptor_path)
     except (OSError, json.JSONDecodeError, ValueError) as exc:
         return errors + [f"cannot read production descriptor for public-name migration: {exc}"]
+
+    descriptor_recheck = descriptor.get("public_name_recheck")
+    if not isinstance(descriptor_recheck, dict):
+        errors.append("production descriptor must preserve public_name_recheck evidence")
+    else:
+        if descriptor_recheck.get("evidence") != recheck_relative:
+            errors.append(
+                "production descriptor public_name_recheck.evidence must match migration contract recheck_evidence"
+            )
+        if descriptor_recheck.get("production_promotion_authorized") is not False:
+            errors.append(
+                "public-name recheck must not authorize production promotion by itself"
+            )
 
     skills = descriptor.get("skills")
     if not isinstance(skills, list):
@@ -71,6 +100,18 @@ def validate_public_name_migration(root: Path, contract: dict) -> list[str]:
         and isinstance(skill.get("research_id"), str)
         and isinstance(skill.get("proposed_installable_name"), str)
     }
+    skill_by_id = {
+        skill.get("research_id"): skill
+        for skill in skills
+        if isinstance(skill, dict) and isinstance(skill.get("research_id"), str)
+    }
+
+    for research_id in ("affinity-synthesis", "iterative-inquiry-synthesis"):
+        skill = skill_by_id.get(research_id, {})
+        if skill.get("public_name_status") != RECHECKED_NAME_STATUS:
+            errors.append(
+                f"{research_id} public_name_status must record the current collision recheck"
+            )
 
     mapping = contract.get("research_to_production_name")
     if not isinstance(mapping, dict):
@@ -129,6 +170,8 @@ def validate_public_name_migration(root: Path, contract: dict) -> list[str]:
     note = contract.get("note")
     if not isinstance(note, str) or "Research IDs and history remain stable" not in note:
         errors.append("public-name migration note must preserve research-history stability")
+    if isinstance(note, str) and "final immediate recheck" not in note:
+        errors.append("public-name migration note must preserve the final pre-promotion recheck")
 
     return errors
 
