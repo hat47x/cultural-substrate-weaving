@@ -58,6 +58,7 @@ research-skill-check:
 	python scripts/validate_research_public_name_projection_inventory.py
 	python scripts/validate_research_english_review_gate.py
 	python scripts/validate_research_production_builder_contract.py
+	python research/skill-prototypes/scripts/plan_promotion_readiness.py >/dev/null
 	python research/skill-prototypes/scripts/plan_suite_layout.py >/dev/null
 	python research/skill-prototypes/scripts/plan_skill_subtrees.py >/dev/null
 	python research/skill-prototypes/scripts/plan_skill_entry_transforms.py >/dev/null
@@ -82,7 +83,7 @@ release-tag-contract: main-contract release-validate
 	@git merge-base --is-ancestor HEAD origin/main || { \
 		echo "release-tag-contract requires HEAD to be present in origin/main history; verify the public main commit first" >&2; \
 		exit 1; \
-	}
+	fi
 	python scripts/check_release_tag.py --tag "$(TAG)"
 
 release-remote-tag-contract: release-validate
