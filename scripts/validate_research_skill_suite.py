@@ -31,7 +31,12 @@ REQUIRED_SKILL_EVIDENCE = {
         {
             "research/skill-prototypes/affinity-synthesis/evidence/EXTERNAL-FORMAT-ADOPTION-2026-09-07.md"
         }
-    )
+    ),
+    "iterative-inquiry-synthesis": frozenset(
+        {
+            "research/skill-prototypes/iterative-inquiry-synthesis/evidence/dossier.md"
+        }
+    ),
 }
 
 
