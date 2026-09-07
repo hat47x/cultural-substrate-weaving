@@ -11,6 +11,7 @@ The target/framework tension and cross-field emergence update changed these cano
 - `src/ja-JP/core/principles-and-constraints.md` / `src/en-US/core/principles-and-constraints.md`
 - `src/ja-JP/methods/transformation.md` / `src/en-US/methods/transformation.md`
 - `src/ja-JP/methods/integration.md` / `src/en-US/methods/integration.md`
+- `src/ja-JP/governance/evaluation.md` / `src/en-US/governance/evaluation.md`
 
 The English files were edited in the same work sequence to preserve the same method boundary:
 
@@ -19,7 +20,8 @@ The English files were edited in the same work sequence to preserve the same met
 - sublation is not a fixed thesis-antithesis-synthesis runtime stage model;
 - a third structure remains non-factual until independently supported on the target side;
 - the generating tension is preserved when handing material to Layer 1;
-- Layer 1 does not acquire CSW-specific dialectical ownership.
+- Layer 1 does not acquire CSW-specific dialectical ownership;
+- evaluation does not reward correspondence count or force a third structure when tension remains unresolved.
 
 ## Why hashes are not updated in this record
 
