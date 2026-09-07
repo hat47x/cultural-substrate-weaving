@@ -115,6 +115,10 @@ src/
 
 Layer 1のresearch IDは `affinity-synthesis` のまま履歴・research asset上で保持するが、production canonical source候補はpublic installable candidate `material-led-synthesis` を使う。
 
+Layer 1のlocale treeが非対称なのは意図的である。現在の日本語 `SKILL.md` は `evals/CASES.md` と `evidence/dossier.md` をoptional progressive referenceとして直接参照するため、日本語package closureにはこれらを含める。一方、英語 `SKILL.en.md` は `METHOD.en.md` / `REPRESENTATION.en.md` / language-neutral schemaだけを参照し、日本語のresearch-only eval/evidenceを暗黙依存にしない。
+
+したがって、locale parityを「同じfile集合」と解釈しない。英語独立査読やresearch-material localizationによって英語側の参照契約を明示的に変更しない限り、日本語eval/evidenceを英語production treeへ自動copyしない。
+
 ここではsource側でもpackage entry名を `SKILL.md` に正規化する。
 
 research段階の `SKILL.en.md` は、英語draftであることを明示するためのincubation namingであり、production canonical sourceへそのまま持ち込まない。
@@ -395,6 +399,7 @@ P4で採用する第一候補は次である。
 - `src/manifest.json` はCSW一Skill manifestとして維持する。
 - sibling Skillsは別canonical source treeへ昇格する。
 - Layer 1 production source / target pathにはresearch IDではなく `material-led-synthesis` を使う。
+- Layer 1のlocale package file集合はruntime reference closureに従い、日本語research supportを英語側へ自動複製しない。
 - `src/skill-suite.json` のような薄いproduction suite descriptorを追加する。
 - research `suite-manifest.json` をproduction builderから直接読まない。
 - OpenAI / Claude / Codexだけを最初のstandalone/bundle promotion対象とする。
