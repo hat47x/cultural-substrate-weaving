@@ -12,6 +12,7 @@ from validate_map import validate
 
 ROOT = Path(__file__).resolve().parents[1]
 TEMPLATE_PATH = ROOT / "references" / "TEMPLATE.md"
+REPRESENTATION_PATH = ROOT / "references" / "REPRESENTATION.md"
 
 
 def assert_true(condition: bool, message: str) -> None:
@@ -51,6 +52,45 @@ def check_reader_facing_overview() -> None:
     assert_true(
         "Weight (H/M/L)" not in text,
         "standard output must not import affinity-map weight scoring as a default semantic field",
+    )
+
+
+def check_relation_readback_contract() -> None:
+    representation = REPRESENTATION_PATH.read_text(encoding="utf-8")
+    template = TEMPLATE_PATH.read_text(encoding="utf-8")
+
+    assert_true(
+        "Explicit relations must survive proposition read-back" in representation,
+        "representation grammar must keep proposition read-back for explicit semantic relations",
+    )
+    assert_true(
+        "read-backは監査操作" in representation,
+        "relation read-back must remain an audit operation rather than duplicated canonical meaning",
+    )
+    assert_true(
+        "Questionable / missing relation candidate" in representation,
+        "representation grammar must keep questionable relations as question candidates",
+    )
+    assert_true(
+        "missing linkの**問い**" in representation,
+        "missing-link notation must remain a question rather than a relation assertion",
+    )
+
+    assert_true(
+        "Read-back audit" in template,
+        "standard output relation inventory must expose read-back audit status",
+    )
+    assert_true(
+        "Questionable relation / missing-link candidates" in template,
+        "standard output must keep questionable relations separate from relation assertions",
+    )
+    assert_true(
+        "ここにあるものは `R` ではない" in template,
+        "questionable-link candidates must not be represented as explicit R relations",
+    )
+    assert_true(
+        "support / refute" in template,
+        "questionable-link inventory must state what would support or refute a candidate",
     )
 
 
@@ -113,6 +153,7 @@ def main() -> None:
     )
 
     check_reader_facing_overview()
+    check_relation_readback_contract()
 
     with tempfile.TemporaryDirectory() as tmp:
         path = Path(tmp) / "hierarchy.mmd"
