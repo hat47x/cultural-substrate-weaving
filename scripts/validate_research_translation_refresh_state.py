@@ -3,7 +3,8 @@
 
 This gate intentionally distinguishes bilingual semantic editing from the later
 translation-manifest refresh. In pending state it proves that the stale set is
-explicit and bounded; in synchronized state it requires no stale files.
+explicit and bounded; in synchronized state it requires no stale files while
+retaining the semantic-edit scope and English boundary markers.
 """
 
 from __future__ import annotations
@@ -33,6 +34,15 @@ def _safe_repo_relative(value: object) -> bool:
 
 def _sha256(path: Path) -> str:
     return hashlib.sha256(path.read_bytes()).hexdigest()
+
+
+def _string_set(value: object, label: str, errors: list[str]) -> set[str]:
+    if not isinstance(value, list) or not all(isinstance(item, str) and item for item in value):
+        errors.append(f"{label} must be a string list")
+        return set()
+    if len(value) != len(set(value)):
+        errors.append(f"{label} must not contain duplicates")
+    return set(value)
 
 
 def validate_translation_refresh_state(
@@ -65,32 +75,33 @@ def validate_translation_refresh_state(
     if manifest_path_value != "i18n/translation-manifest.json":
         errors.append("translation refresh state must point to i18n/translation-manifest.json")
 
-    expected_stale_raw = status.get("expected_stale_files")
-    if not isinstance(expected_stale_raw, list) or not all(
-        isinstance(item, str) and item for item in expected_stale_raw
-    ):
-        errors.append("expected_stale_files must be a nonempty string list while pending")
-        expected_stale: set[str] = set()
-    else:
-        if len(expected_stale_raw) != len(set(expected_stale_raw)):
-            errors.append("expected_stale_files must not contain duplicates")
-        expected_stale = set(expected_stale_raw)
+    scope_files = _string_set(status.get("scope_files"), "scope_files", errors)
+    if not scope_files:
+        errors.append("scope_files must preserve the nonempty bilingual semantic-edit scope")
 
+    expected_stale = _string_set(
+        status.get("expected_stale_files"), "expected_stale_files", errors
+    )
+
+    if not expected_stale.issubset(scope_files):
+        errors.append("expected_stale_files must be a subset of scope_files")
     if state == "synchronized" and expected_stale:
         errors.append("synchronized translation refresh state must have no expected_stale_files")
-    if state == "pending-review-hash-refresh" and not expected_stale:
-        errors.append("pending translation refresh state must name at least one expected stale file")
+    if state == "pending-review-hash-refresh" and expected_stale != scope_files:
+        errors.append(
+            "pending translation refresh state must mark the complete semantic-edit scope stale"
+        )
 
     files = manifest.get("files")
     if not isinstance(files, dict):
         return errors + ["translation manifest files must be an object"]
 
     manifest_names = set(files)
-    unknown_expected = expected_stale - manifest_names
-    if unknown_expected:
+    unknown_scope = scope_files - manifest_names
+    if unknown_scope:
         errors.append(
-            "expected_stale_files contains files not tracked by translation manifest: "
-            + ", ".join(sorted(unknown_expected))
+            "scope_files contains files not tracked by translation manifest: "
+            + ", ".join(sorted(unknown_scope))
         )
 
     stale: set[str] = set()
@@ -154,8 +165,8 @@ def validate_translation_refresh_state(
     if not isinstance(markers, dict):
         errors.append("english_markers must be an object")
     else:
-        if set(markers) != expected_stale:
-            errors.append("english_markers must cover exactly expected_stale_files")
+        if set(markers) != scope_files:
+            errors.append("english_markers must cover exactly scope_files")
         for relative, required in markers.items():
             if not isinstance(required, list) or not required or not all(
                 isinstance(marker, str) and marker for marker in required
@@ -164,6 +175,7 @@ def validate_translation_refresh_state(
                 continue
             en_path = root / "src" / "en-US" / relative
             if not en_path.is_file():
+                errors.append(f"English scope file missing: src/en-US/{relative}")
                 continue
             text = en_path.read_text(encoding="utf-8")
             for marker in required:
@@ -174,6 +186,10 @@ def validate_translation_refresh_state(
 
     if status.get("refresh_command") != "make update-en-hashes":
         errors.append("translation refresh command must remain make update-en-hashes")
+    if status.get("synchronization_command") != (
+        "python scripts/mark_research_translation_refresh_synchronized.py"
+    ):
+        errors.append("translation synchronization command has drifted")
 
     followup = status.get("followup_commands")
     if followup != ["make research-skill-check", "make build", "make check"]:
@@ -186,6 +202,7 @@ def validate_translation_refresh_state(
         joined = "\n".join(item for item in invariants if isinstance(item, str))
         for fragment in (
             "do not guess or hand-enter translation hashes",
+            "scope_files preserves",
             "exact canonical files",
             "files outside expected_stale_files",
             "does not authorize production promotion",
