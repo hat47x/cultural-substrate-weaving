@@ -81,7 +81,7 @@ working layout:
 ```text
 src/
   skills/
-    affinity-synthesis/
+    material-led-synthesis/
       ja-JP/
         SKILL.md
         references/
@@ -113,6 +113,8 @@ src/
           ROUND-TEMPLATE.md
 ```
 
+Layer 1のresearch IDは `affinity-synthesis` のまま履歴・research asset上で保持するが、production canonical source候補はpublic installable candidate `material-led-synthesis` を使う。
+
 ここではsource側でもpackage entry名を `SKILL.md` に正規化する。
 
 research段階の `SKILL.en.md` は、英語draftであることを明示するためのincubation namingであり、production canonical sourceへそのまま持ち込まない。
@@ -141,7 +143,7 @@ src/skill-suite.json
 suite id
 version / locale set
 Skill ids
-locale별 canonical package source
+locale別 canonical package source
 OpenAI / Claude / Codex target names
 distribution composition
 production adapter metadata source
@@ -180,13 +182,13 @@ Sibling prototypeをpromotionする場合は、production adapter directoryへ�
 候補:
 
 ```text
-adapters/openai-skill/<locale>/affinity-synthesis/openai.interactive.yaml
-adapters/openai-skill/<locale>/affinity-synthesis/openai.metered.yaml
+adapters/openai-skill/<locale>/material-led-synthesis/openai.interactive.yaml
+adapters/openai-skill/<locale>/material-led-synthesis/openai.metered.yaml
 adapters/openai-skill/<locale>/iterative-inquiry-synthesis/openai.interactive.yaml
 adapters/openai-skill/<locale>/iterative-inquiry-synthesis/openai.metered.yaml
 ```
 
-Research pathをproduction builderが直接読まない。
+Research pathやresearch IDをproduction builderが暗黙に読み替えない。production adapter pathはproduction target nameを使う。
 
 ### Claude / Codex
 
@@ -244,7 +246,7 @@ OpenAI profileごとに、
 ```text
 dist/<locale>/openai-skill/<profile>/
   cultural-substrate-weaving/
-  affinity-synthesis/
+  material-led-synthesis/
   iterative-inquiry-synthesis/
 ```
 
@@ -258,7 +260,7 @@ plugin root identityは一つのままにする。
 plugins/cultural-substrate-weaving-<locale>/
   skills/
     weave/
-    affinity-synthesis/
+    material-led-synthesis/
     iterative-inquiry-synthesis/
 ```
 
@@ -299,12 +301,12 @@ Claude/Codex marketplaceはlocale plugin identityを検査しているため、p
 ```text
 OpenAI:
   cultural-substrate-weaving
-  affinity-synthesis
+  material-led-synthesis
   iterative-inquiry-synthesis
 
 Claude/Codex:
   weave
-  affinity-synthesis
+  material-led-synthesis
   iterative-inquiry-synthesis
 ```
 
@@ -338,13 +340,22 @@ OpenAI / Claude ZIPはsuite distributionとして既存命名を維持する。
 
 ## Public name gate
 
-`affinity-synthesis` と `iterative-inquiry-synthesis` は現時点でworking / research nameである。
+`affinity-synthesis` と `iterative-inquiry-synthesis` はresearch ID / working identityとして保持する。
+
+production候補は現在、
+
+```text
+affinity-synthesis          -> material-led-synthesis
+iterative-inquiry-synthesis -> iterative-inquiry-synthesis
+```
+
+である。
 
 特にLayer 1はKJ法・親和図法・質的統合法の系譜を受けつつ、生成AI向け補正を含む。
 
 production canonical pathとinstallable nameを固定する前に、少なくとも次を再確認する。
 
-1. `affinity-synthesis` が公開名称として十分に非誤認的か。
+1. `material-led-synthesis` が公開名称として十分に非誤認的か。
 2. KJ法を公式再現と誤認させないdescriptionになっているか。
 3. 既存Agent Skill ecosystemで重大な名称衝突がないか。
 4. KJ法®等の商標・系譜表記をnameではなくlineage/referenceへ置く方針を維持するか。
@@ -383,6 +394,7 @@ P4で採用する第一候補は次である。
 
 - `src/manifest.json` はCSW一Skill manifestとして維持する。
 - sibling Skillsは別canonical source treeへ昇格する。
+- Layer 1 production source / target pathにはresearch IDではなく `material-led-synthesis` を使う。
 - `src/skill-suite.json` のような薄いproduction suite descriptorを追加する。
 - research `suite-manifest.json` をproduction builderから直接読まない。
 - OpenAI / Claude / Codexだけを最初のstandalone/bundle promotion対象とする。
