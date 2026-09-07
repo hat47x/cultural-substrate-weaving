@@ -11,6 +11,37 @@
 - **Source set:**
 - **What must not be flattened:**
 
+## 1A. Reader-facing Overview — fill last
+
+この節は**最初に書かない**。cards / groups / relations / narrative / return-to-source checkを行った後に、下位成果物から作るreader-facing projectionである。
+
+### What the material currently says
+
+[3–5文程度。主要な表札と関係を、必要なら `G / R / U / Q` IDを添えて述べる。結論を滑らかにするためにresidualや対立を消さない。]
+
+### Overview table
+
+| Group | Label | Contribution to the current reading | Member count | Anchor refs | Current caution / residual |
+|---|---|---|---:|---|---|
+| G01 | | | | C001, C004 | |
+| G02 | | | | C008 | |
+
+**この表の読み方:**
+
+- **Member count** は現在のworking geometryでの記述値であり、truth、importance、independent supportの強さを意味しない。
+- **Anchor refs** は読者が詳細へ降りるためのnavigation用であり、代表例だけを証拠として残すためのものではない。完全なmembershipとlineageは後続節へ残す。
+- 強い少数派、singleton、conflict、薄い違和感を、overviewに入れにくいという理由で落とさない。
+- summaryが詳細map / narrativeと矛盾した場合、summaryを正本にせずsemantic recordへ戻す。
+
+### Residuals that change the reading
+
+- **Singleton / outlier:**
+- **Conflict / tension:**
+- **Unresolved question:**
+- **Borderline grouping or relation:**
+
+読者がoverviewだけ読んでも、「何がまだ分からないか」「何を無理に束ねなかったか」が見える状態を目指す。
+
 ## 2. Source and Lineage Notes
 
 必要な範囲だけ記載する。
