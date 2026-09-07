@@ -2,6 +2,7 @@
   "schema": "csw.public-name-migration-contract/v1",
   "status": "design-only",
   "descriptor": "research/skill-prototypes/P4-PRODUCTION-SUITE-DESCRIPTOR-PROTOTYPE.json",
+  "recheck_evidence": "research/skill-prototypes/P4-PUBLIC-NAME-RECHECK-2026-09-07.md",
   "research_to_production_name": {
     "cultural-substrate-weaving": "cultural-substrate-weaving",
     "affinity-synthesis": "material-led-synthesis",
@@ -31,5 +32,5 @@
     "research/skill-prototypes/",
     "../affinity-synthesis/"
   ],
-  "note": "Design-only rename projection contract. Research IDs and history remain stable; production identity and explicit installable-Skill references use the promoted public names only after the promotion preconditions pass."
+  "note": "Design-only rename projection contract. Research IDs and history remain stable; production identity and explicit installable-Skill references use the promoted public names only after the promotion preconditions pass. The 2026-09-07 recheck found no current exact GitHub code-search collision for the two proposed production installable names, but canonical promotion still requires a final immediate recheck."
 }
