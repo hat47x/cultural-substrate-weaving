@@ -3,6 +3,7 @@ from __future__ import annotations
 import copy
 import json
 import sys
+import tempfile
 import unittest
 from pathlib import Path
 
@@ -32,6 +33,7 @@ DESCRIPTOR_PATH = (
 class ResearchPublicNameMigrationTests(unittest.TestCase):
     def setUp(self) -> None:
         self.contract = json.loads(CONTRACT_PATH.read_text(encoding="utf-8"))
+        self.descriptor = json.loads(DESCRIPTOR_PATH.read_text(encoding="utf-8"))
 
     def assert_has_error(self, contract: dict, fragment: str) -> None:
         errors = validate_public_name_migration(ROOT, contract)
@@ -39,6 +41,32 @@ class ResearchPublicNameMigrationTests(unittest.TestCase):
             any(fragment in error for error in errors),
             f"expected error containing {fragment!r}; got {errors!r}",
         )
+
+    def assert_has_error_with_descriptor(
+        self,
+        contract: dict,
+        descriptor: dict,
+        fragment: str,
+    ) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            descriptor_relative = Path(contract["descriptor"])
+            recheck_relative = Path(contract["recheck_evidence"])
+            descriptor_path = root / descriptor_relative
+            recheck_path = root / recheck_relative
+            descriptor_path.parent.mkdir(parents=True, exist_ok=True)
+            recheck_path.parent.mkdir(parents=True, exist_ok=True)
+            descriptor_path.write_text(
+                json.dumps(descriptor, ensure_ascii=False, indent=2) + "\n",
+                encoding="utf-8",
+            )
+            recheck_path.write_text("test recheck evidence\n", encoding="utf-8")
+
+            errors = validate_public_name_migration(root, contract)
+            self.assertTrue(
+                any(fragment in error for error in errors),
+                f"expected error containing {fragment!r}; got {errors!r}",
+            )
 
     def test_current_contract_is_valid(self) -> None:
         self.assertEqual(validate_public_name_migration(ROOT, self.contract), [])
@@ -107,43 +135,27 @@ class ResearchPublicNameMigrationTests(unittest.TestCase):
         )
 
     def test_name_recheck_never_authorizes_production_promotion(self) -> None:
-        descriptor = json.loads(DESCRIPTOR_PATH.read_text(encoding="utf-8"))
+        descriptor = copy.deepcopy(self.descriptor)
         descriptor["public_name_recheck"]["production_promotion_authorized"] = True
-
-        original = DESCRIPTOR_PATH.read_text(encoding="utf-8")
-        try:
-            DESCRIPTOR_PATH.write_text(
-                json.dumps(descriptor, ensure_ascii=False, indent=2) + "\n",
-                encoding="utf-8",
-            )
-            self.assert_has_error(
-                self.contract,
-                "public-name recheck must not authorize production promotion by itself",
-            )
-        finally:
-            DESCRIPTOR_PATH.write_text(original, encoding="utf-8")
+        self.assert_has_error_with_descriptor(
+            self.contract,
+            descriptor,
+            "public-name recheck must not authorize production promotion by itself",
+        )
 
     def test_sibling_status_must_record_current_recheck(self) -> None:
-        descriptor = json.loads(DESCRIPTOR_PATH.read_text(encoding="utf-8"))
+        descriptor = copy.deepcopy(self.descriptor)
         affinity = next(
             skill
             for skill in descriptor["skills"]
             if skill["research_id"] == "affinity-synthesis"
         )
         affinity["public_name_status"] = "pending-final-collision-recheck"
-
-        original = DESCRIPTOR_PATH.read_text(encoding="utf-8")
-        try:
-            DESCRIPTOR_PATH.write_text(
-                json.dumps(descriptor, ensure_ascii=False, indent=2) + "\n",
-                encoding="utf-8",
-            )
-            self.assert_has_error(
-                self.contract,
-                "affinity-synthesis public_name_status must record the current collision recheck",
-            )
-        finally:
-            DESCRIPTOR_PATH.write_text(original, encoding="utf-8")
+        self.assert_has_error_with_descriptor(
+            self.contract,
+            descriptor,
+            "affinity-synthesis public_name_status must record the current collision recheck",
+        )
 
     def test_contract_note_must_keep_final_immediate_recheck(self) -> None:
         contract = copy.deepcopy(self.contract)
