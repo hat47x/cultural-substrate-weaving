@@ -1,0 +1,105 @@
+{
+  "schema": "csw.research-adapter-metadata-plan/v1",
+  "suite_manifest": "research/skill-prototypes/suite-manifest.json",
+  "distributions": {
+    "openai_skill": {
+      "scope": "per_skill_per_profile",
+      "profiles": {
+        "interactive": {
+          "expected_allow_implicit_invocation": true
+        },
+        "metered": {
+          "expected_allow_implicit_invocation": false
+        }
+      },
+      "skills": {
+        "affinity-synthesis": {
+          "ja-JP": {
+            "interactive": {
+              "status": "planned"
+            },
+            "metered": {
+              "status": "planned"
+            }
+          },
+          "en-US": {
+            "interactive": {
+              "status": "planned"
+            },
+            "metered": {
+              "status": "planned"
+            }
+          }
+        },
+        "iterative-inquiry-synthesis": {
+          "ja-JP": {
+            "interactive": {
+              "status": "planned"
+            },
+            "metered": {
+              "status": "planned"
+            }
+          },
+          "en-US": {
+            "interactive": {
+              "status": "planned"
+            },
+            "metered": {
+              "status": "planned"
+            }
+          }
+        },
+        "cultural-substrate-weaving": {
+          "ja-JP": {
+            "interactive": {
+              "status": "existing",
+              "source": "adapters/openai-skill/ja-JP/openai.interactive.yaml"
+            },
+            "metered": {
+              "status": "existing",
+              "source": "adapters/openai-skill/ja-JP/openai.metered.yaml"
+            }
+          },
+          "en-US": {
+            "interactive": {
+              "status": "existing",
+              "source": "adapters/openai-skill/en-US/openai.interactive.yaml"
+            },
+            "metered": {
+              "status": "existing",
+              "source": "adapters/openai-skill/en-US/openai.metered.yaml"
+            }
+          }
+        }
+      }
+    },
+    "claude_plugin": {
+      "scope": "locale_bundle",
+      "source_mode": "locale_catalog",
+      "source": "adapters/claude-code/locales.json",
+      "locales": {
+        "ja-JP": {
+          "status": "existing-baseline"
+        },
+        "en-US": {
+          "status": "existing-baseline"
+        }
+      },
+      "review_required_for_multi_skill": true
+    },
+    "codex_plugin": {
+      "scope": "locale_bundle",
+      "source_mode": "locale_catalog",
+      "source": "adapters/claude-code/locales.json",
+      "locales": {
+        "ja-JP": {
+          "status": "existing-baseline"
+        },
+        "en-US": {
+          "status": "existing-baseline"
+        }
+      },
+      "review_required_for_multi_skill": true
+    }
+  }
+}
