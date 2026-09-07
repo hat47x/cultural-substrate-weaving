@@ -169,7 +169,10 @@ Use the level of externalization the task needs. A complete research-grade outpu
 - explicit relations and secondary resonance;
 - a narrative synthesis;
 - source-return / transformation audit notes;
-- a representation projection when useful.
+- a representation projection when useful;
+- an optional **round handoff capsule** when a downstream iterative-inquiry layer needs stable semantic refs, reopenable residual anchors, or source provenance/status that must survive across rounds.
+
+The handoff capsule is **not** an instruction to start another round, choose the next inquiry, or reopen every carried reference. It only externalizes enough of the current synthesis for later semantic identity, residuals, and provenance/status to remain traceable. The downstream iterative layer decides which carried references the new delta actually touches.
 
 Do not expose private chain-of-thought. Preserve inspectable artifacts, provenance, and transformation results instead.
 
@@ -194,6 +197,7 @@ Do not chain those narrower operations and claim that the chain is equivalent to
 - [ ] Suspected or missing links stayed questions until return-to-source checking supported an explicit relation.
 - [ ] Narrative-only relations were returned to the map/source before promotion.
 - [ ] Rendering constraints did not rewrite semantic structure.
+- [ ] If a handoff capsule was emitted, carried refs were not presented as automatic reopen instructions, incoming epistemic status was preserved, and the capsule did not imply automatic continuation.
 
 ## Progressive references
 
