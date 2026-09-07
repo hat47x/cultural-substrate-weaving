@@ -13,6 +13,7 @@ from validate_research_declared_checks import validate_declared_checks  # noqa: 
 
 MANIFEST_PATH = ROOT / "research" / "skill-prototypes" / "suite-manifest.json"
 MAKEFILE_PATH = ROOT / "Makefile"
+META_VALIDATOR_COMMAND = "\tpython scripts/validate_research_declared_checks.py\n"
 
 
 class ResearchDeclaredCheckWiringTests(unittest.TestCase):
@@ -29,6 +30,9 @@ class ResearchDeclaredCheckWiringTests(unittest.TestCase):
 
     def test_current_declared_checks_are_wired(self) -> None:
         self.assertEqual(validate_declared_checks(self.manifest, self.makefile), [])
+
+    def test_meta_validator_itself_is_wired_into_research_gate(self) -> None:
+        self.assertIn(META_VALIDATOR_COMMAND, self.makefile)
 
     def test_declared_check_cannot_disappear_from_research_gate(self) -> None:
         makefile = self.makefile.replace(
