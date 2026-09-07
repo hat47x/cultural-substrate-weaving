@@ -57,6 +57,7 @@ research-skill-check:
 	python scripts/validate_research_public_name_migration.py
 	python scripts/validate_research_public_name_projection_inventory.py
 	python scripts/validate_research_english_review_gate.py
+	python scripts/validate_research_technical_asset_localization.py
 	python scripts/validate_research_production_builder_contract.py
 	python scripts/validate_research_tension_emergence.py
 	python research/skill-prototypes/scripts/plan_suite_layout.py >/dev/null
