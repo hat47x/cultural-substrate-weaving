@@ -121,15 +121,20 @@
         "research/skill-prototypes/iterative-inquiry-synthesis/references/ROUND-TEMPLATE.md",
         "research/skill-prototypes/iterative-inquiry-synthesis/references/ROUND-TEMPLATE.en.md"
       ],
-      "evidence": [],
+      "evidence": [
+        "research/skill-prototypes/iterative-inquiry-synthesis/evidence/dossier.md"
+      ],
       "evals": [
         "research/skill-prototypes/iterative-inquiry-synthesis/evals/CASES.md",
         "research/skill-prototypes/iterative-inquiry-synthesis/evals/DRY-RUN-2026-09-06.md",
         "research/skill-prototypes/iterative-inquiry-synthesis/evals/FALLBACK-BOUNDARY-RECHECK-2026-09-06.md",
         "research/skill-prototypes/iterative-inquiry-synthesis/evals/PAIRED-REAL-TASK-2026-09-07.md",
-        "research/skill-prototypes/iterative-inquiry-synthesis/evals/CSW-AFFINITY-HANDOFF-2026-09-07.md"
+        "research/skill-prototypes/iterative-inquiry-synthesis/evals/CSW-AFFINITY-HANDOFF-2026-09-07.md",
+        "research/skill-prototypes/iterative-inquiry-synthesis/evals/HANDOFF-CARRY-FORWARD-RECHECK-2026-09-08.md"
       ],
-      "checks": [],
+      "checks": [
+        "research/skill-prototypes/iterative-inquiry-synthesis/scripts/check_method_parity.py"
+      ],
       "method_version": "0.1-research",
       "realization_version": "0.1-research-bilingual-draft",
       "delegation": {"prefers_compatible_realization": ["affinity-synthesis"], "hard_dependency": false}
@@ -257,6 +262,8 @@
     "affinity-synthesis larger-set and representation regressions remain acceptable",
     "external Skill format adoption remains selective: reader overview and explicit-relation read-back may be reused without importing weight-as-truth or cross-link-as-importance semantics",
     "Layer 1 to Layer 2 handoff regressions preserve carry-forward identity separately from touched-subset reopening and continuation decisions",
+    "iterative-inquiry-synthesis external-loop adoption remains selective: append-only ledger, recovery, evidence refs, and explicit stop boundaries are adopted without mandatory scalar metrics or autonomous-until-budget semantics",
+    "iterative-inquiry-synthesis Japanese and English Method Definitions retain the same I1-I16 invariant surface, including explicit missing-realization and carry-forward boundaries",
     "iterative-inquiry-synthesis contract cases and paired runs remain aligned with delta-reopen behavior",
     "cross-layer CSW handoff and three-layer paired regressions remain acceptable",
     "Japanese and English thin-CSW runtimes retain attribution and delegation boundaries",
