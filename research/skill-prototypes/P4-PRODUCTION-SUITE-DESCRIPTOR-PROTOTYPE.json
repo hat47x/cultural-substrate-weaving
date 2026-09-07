@@ -14,6 +14,7 @@
   "english_independent_review": {
     "status": "pending",
     "packet": "research/skill-prototypes/P4-ENGLISH-INDEPENDENT-REVIEW-PACKET-2026-09-07.md",
+    "targets": "research/skill-prototypes/P4-ENGLISH-INDEPENDENT-REVIEW-TARGETS-2026-09-07.json",
     "completed_review": null,
     "production_promotion_authorized": false
   },
