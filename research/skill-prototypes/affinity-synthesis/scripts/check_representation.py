@@ -13,9 +13,12 @@ from validate_map import validate
 ROOT = Path(__file__).resolve().parents[1]
 TEMPLATE_PATH = ROOT / "references" / "TEMPLATE.md"
 REPRESENTATION_PATH = ROOT / "references" / "REPRESENTATION.md"
-ITERATIVE_ROUND_TEMPLATE_PATH = (
-    ROOT.parent / "iterative-inquiry-synthesis" / "references" / "ROUND-TEMPLATE.md"
-)
+AFFINITY_JA_RUNTIME_PATH = ROOT / "SKILL.md"
+AFFINITY_EN_RUNTIME_PATH = ROOT / "SKILL.en.md"
+ITERATIVE_ROOT = ROOT.parent / "iterative-inquiry-synthesis"
+ITERATIVE_JA_RUNTIME_PATH = ITERATIVE_ROOT / "SKILL.md"
+ITERATIVE_EN_RUNTIME_PATH = ITERATIVE_ROOT / "SKILL.en.md"
+ITERATIVE_ROUND_TEMPLATE_PATH = ITERATIVE_ROOT / "references" / "ROUND-TEMPLATE.md"
 
 
 def assert_true(condition: bool, message: str) -> None:
@@ -161,6 +164,10 @@ def check_questionable_relation_metadata() -> None:
 def check_round_handoff_contract() -> None:
     template = TEMPLATE_PATH.read_text(encoding="utf-8")
     round_template = ITERATIVE_ROUND_TEMPLATE_PATH.read_text(encoding="utf-8")
+    affinity_ja = AFFINITY_JA_RUNTIME_PATH.read_text(encoding="utf-8")
+    affinity_en = AFFINITY_EN_RUNTIME_PATH.read_text(encoding="utf-8")
+    iterative_ja = ITERATIVE_JA_RUNTIME_PATH.read_text(encoding="utf-8")
+    iterative_en = ITERATIVE_EN_RUNTIME_PATH.read_text(encoding="utf-8")
 
     assert_true(
         "Optional Round Handoff Capsule" in template,
@@ -181,6 +188,33 @@ def check_round_handoff_contract() -> None:
     assert_true(
         "実際に触れたsubsetだけ" in round_template,
         "iterative intake must select reopened artifacts from the current delta",
+    )
+
+    assert_true(
+        "optional round handoff capsule" in affinity_ja.lower()
+        and "全参照のreopenを指示しない" in affinity_ja,
+        "Japanese Layer 1 runtime must expose handoff without owning reopen decisions",
+    )
+    assert_true(
+        "optional **round handoff capsule**" in affinity_en
+        and "not** an instruction" not in affinity_en
+        and "not**" not in affinity_en,
+        "English Layer 1 runtime handoff marker check is malformed",
+    )
+    assert_true(
+        "The handoff capsule is **not** an instruction" in affinity_en
+        and "reopen every carried reference" in affinity_en,
+        "English Layer 1 runtime must expose handoff without owning reopen decisions",
+    )
+    assert_true(
+        "持越し候補の集合であり、reopen命令ではない" in iterative_ja
+        and "residualが残っているだけではcontinue理由にしない" in iterative_ja,
+        "Japanese Layer 2 runtime must distinguish carried refs and residuals from reopen/continue triggers",
+    )
+    assert_true(
+        "carry-forward candidates, not reopen instructions" in iterative_en
+        and "A residual does not by itself justify continuing another round" in iterative_en,
+        "English Layer 2 runtime must distinguish carried refs and residuals from reopen/continue triggers",
     )
 
     valid_handoff = {
