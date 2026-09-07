@@ -197,12 +197,7 @@ def check_round_handoff_contract() -> None:
     )
     assert_true(
         "optional **round handoff capsule**" in affinity_en
-        and "not** an instruction" not in affinity_en
-        and "not**" not in affinity_en,
-        "English Layer 1 runtime handoff marker check is malformed",
-    )
-    assert_true(
-        "The handoff capsule is **not** an instruction" in affinity_en
+        and "The handoff capsule is **not** an instruction" in affinity_en
         and "reopen every carried reference" in affinity_en,
         "English Layer 1 runtime must expose handoff without owning reopen decisions",
     )
