@@ -5,6 +5,7 @@ import sys
 import tempfile
 import unittest
 from pathlib import Path
+from unittest.mock import patch
 
 ROOT = Path(__file__).resolve().parents[1]
 PLANNER_DIR = ROOT / "research" / "skill-prototypes" / "scripts"
@@ -165,6 +166,46 @@ class ResearchHostPackageMaterializerTests(unittest.TestCase):
             self.assertFalse((output / ".claude-plugin").exists())
             self.assertFalse((output / ".agents").exists())
             self.assertFalse((output / "README.md").exists())
+
+    def test_failed_host_metadata_step_leaves_no_partial_output(self) -> None:
+        with tempfile.TemporaryDirectory() as temp_dir:
+            base = Path(temp_dir)
+            output = base / "package"
+            with patch(
+                "materialize_host_package._repository_version",
+                side_effect=ValueError("forced metadata failure"),
+            ):
+                with self.assertRaisesRegex(ValueError, "forced metadata failure"):
+                    materialize_host_package(
+                        locale="ja-JP",
+                        distribution_name="claude_plugin",
+                        output_root=output,
+                        root=ROOT,
+                    )
+
+            self.assertFalse(output.exists())
+            self.assertEqual(list(base.iterdir()), [])
+
+    def test_failed_host_metadata_step_preserves_preexisting_empty_output(self) -> None:
+        with tempfile.TemporaryDirectory() as temp_dir:
+            base = Path(temp_dir)
+            output = base / "package"
+            output.mkdir()
+            with patch(
+                "materialize_host_package._repository_version",
+                side_effect=ValueError("forced metadata failure"),
+            ):
+                with self.assertRaisesRegex(ValueError, "forced metadata failure"):
+                    materialize_host_package(
+                        locale="ja-JP",
+                        distribution_name="claude_plugin",
+                        output_root=output,
+                        root=ROOT,
+                    )
+
+            self.assertTrue(output.is_dir())
+            self.assertEqual(list(output.iterdir()), [])
+            self.assertEqual(list(base.iterdir()), [output])
 
     def test_composite_agent_distribution_is_not_host_materialized(self) -> None:
         with tempfile.TemporaryDirectory() as temp_dir:
