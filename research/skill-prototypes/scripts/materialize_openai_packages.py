@@ -73,18 +73,6 @@ def materialize_openai_packages(
 
     suite = _load_json(root / SUITE_PATH.relative_to(ROOT))
     metadata = _load_json(root / METADATA_PATH.relative_to(ROOT))
-    metadata_plan = plan_adapter_metadata(suite, metadata, root)
-
-    try:
-        openai_plan = metadata_plan["locales"][locale]["distributions"]["openai_skill"]
-    except KeyError as exc:
-        raise ValueError(f"unknown research suite locale: {locale}") from exc
-
-    coverage = openai_plan.get("metadata_coverage")
-    if coverage not in {"complete-for-realized", "prototype-for-realized"}:
-        raise ValueError(f"OpenAI metadata coverage is not materializable: {coverage!r}")
-
-    output = _safe_output_root(output_root, root)
 
     with tempfile.TemporaryDirectory() as temp_dir:
         stage = Path(temp_dir) / "skill-trees"
@@ -95,6 +83,16 @@ def materialize_openai_packages(
             root=root,
             allow_partial=allow_partial,
         )
+
+        metadata_plan = plan_adapter_metadata(suite, metadata, root)
+        try:
+            openai_plan = metadata_plan["locales"][locale]["distributions"]["openai_skill"]
+        except KeyError as exc:
+            raise ValueError(f"unknown research suite locale: {locale}") from exc
+
+        coverage = openai_plan.get("metadata_coverage")
+        if coverage not in {"complete-for-realized", "prototype-for-realized"}:
+            raise ValueError(f"OpenAI metadata coverage is not materializable: {coverage!r}")
 
         items = {
             item["skill_id"]: item
@@ -109,6 +107,7 @@ def materialize_openai_packages(
         if not realized_skill_ids:
             raise ValueError("OpenAI package materialization has no realized Skills")
 
+        output = _safe_output_root(output_root, root)
         written: list[dict] = []
         for profile in PROFILES:
             for skill_id in realized_skill_ids:
@@ -125,15 +124,15 @@ def materialize_openai_packages(
                         f"{source_tree_name!r}"
                     )
 
-                target_root = output / profile / source_tree_name
-                shutil.copytree(source_tree, target_root)
-
                 metadata_source = _metadata_source(
                     root,
                     profile_entry,
                     skill_id,
                     profile,
                 )
+
+                target_root = output / profile / source_tree_name
+                shutil.copytree(source_tree, target_root)
                 metadata_target = target_root / "agents" / "openai.yaml"
                 metadata_target.parent.mkdir(parents=True, exist_ok=True)
                 shutil.copyfile(metadata_source, metadata_target)
