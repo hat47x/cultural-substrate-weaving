@@ -15,12 +15,16 @@ Agentがそのlocaleで方法を実行するために必要な規範的内容。
 - `src/ja-JP/ROUTER.md` と参照される日本語runtime modules: semantic canonical runtime
 - `src/en-US/ROUTER.md` と対応runtime modules: English translated runtime
 
+CSWでは、対象と文化体系の一致だけでなく、不一致・抵抗・相互修正から第三構造が生じるかを見る原則もruntime contractに属する。これは一般的なLayer 1 synthesis algorithmではなく、文化体系との接触と帰属を所有するCSW固有の認知契約である。
+
 ### affinity-synthesis
 
 - Japanese research runtime: `affinity-synthesis/SKILL.md`
 - Japanese Method Definition: `affinity-synthesis/references/METHOD.md`
 - English research runtime: `affinity-synthesis/SKILL.en.md`
 - English Method Definition: `affinity-synthesis/references/METHOD.en.md`
+
+Layer 1はmaterial-led one-round synthesisを所有するが、CSW固有の`target-framework tension / sublation`を方法上の必須原理として所有しない。
 
 ### iterative-inquiry-synthesis
 
@@ -35,14 +39,23 @@ Agentがそのlocaleで方法を実行するために必要な規範的内容。
 
 方法の実行を補助するが、Method Definitionそのものではない。
 
-例:
+### affinity-synthesis
 
 - `affinity-synthesis/references/REPRESENTATION.md`
+- `affinity-synthesis/references/REPRESENTATION.en.md`
 - `affinity-synthesis/references/HIERARCHY-AND-LINEAGE.md`
 - `affinity-synthesis/references/affinity-map.schema.json`
 - `affinity-synthesis/references/TEMPLATE.md`
-- `iterative-inquiry-synthesis/references/ROUND-TEMPLATE.md`
 - representation renderer / validator scripts
+
+英語runtimeは `REPRESENTATION.en.md` を直接参照する。`affinity-map.schema.json` は言語非依存assetとしてlocale間で共有する。
+
+### iterative-inquiry-synthesis
+
+- `iterative-inquiry-synthesis/references/ROUND-TEMPLATE.md`
+- `iterative-inquiry-synthesis/references/ROUND-TEMPLATE.en.md`
+
+英語runtimeは `ROUND-TEMPLATE.en.md` を直接参照する。
 
 これらは、表現・交換・監査・作業効率のためのassetである。
 
@@ -50,6 +63,7 @@ Agentがそのlocaleで方法を実行するために必要な規範的内容。
 - 日本語説明を含むassetは、英語runtimeがそれを理解していることを前提にしない。
 - 英語利用者にそのassetを直接使わせる場合は、必要箇所を英訳するか、英語runtime内に必要契約を埋め込む。
 - representation変更だけでMethod Definitionを変更したことにしない。
+- technical assetの翻訳状態は `P4-TECHNICAL-ASSET-LOCALIZATION-2026-09-07.json` で追跡する。
 
 ## 3. Evidence / lineage material
 
@@ -75,6 +89,9 @@ Agentがそのlocaleで方法を実行するために必要な規範的内容。
 - `iterative-inquiry-synthesis/evals/`
 - cross-layer paired runs
 - representation scale checks
+- `evals/CSW-TENSION-AND-SUBLATION-CASES-2026-09-07.md`
+
+`CSW-TENSION-AND-SUBLATION-CASES-2026-09-07.md` は、文化体系を都合のよい説明へ使わず、対象との不一致・抵抗から情報が立つこと、第三構造を強制しないこと、Layer 1へ弁証法的stage modelを移さないことを検査するsuite-level fixtureである。
 
 これらは**方法の妥当性や回帰を検査するためのfixture / record**であり、通常runtimeの作業手順ではない。
 
@@ -88,8 +105,11 @@ Agentがそのlocaleで方法を実行するために必要な規範的内容。
 
 - `research/skill-prototypes/migration/`
 - `docs/ja/maintainers/`
+- `P4-CSW-TENSION-TRANSLATION-STATUS-2026-09-07.md`
 
 Agent runtimeへ読み込ませない。過去の移行判断を現在のMethod Definitionより上位の規則として扱わない。
+
+translation status記録は、英語本文が存在することと、`i18n/translation-manifest.json` のbyte-level source hashが更新済みであることを混同しないためのmaintainer recordである。
 
 ## 6. Locale parityの扱い
 
@@ -100,11 +120,12 @@ locale parityを一つのbooleanへ潰さない。
 1. **CSW runtime parity** — `src/ja-JP` と `src/en-US` の責務・意味対応。
 2. **Sibling Skill runtime parity** — `SKILL.md` / `SKILL.en.md` が同じMethod境界を実行できるか。
 3. **Method Definition parity** — `METHOD.md` / `METHOD.en.md` が同じ不変条件を保持するか。
-4. **Technical asset localization** — template / representation prose等が対象localeで直接利用可能か。
+4. **Technical asset localization** — representation grammar / round template等が対象localeで直接利用可能か。
 5. **Research-material localization** — evidence / eval / migration文書の翻訳状態。
 6. **Independent review** — 翻訳が意味を保つことを独立に確認したか。
+7. **Translation-manifest hash parity** — canonical Japanese bytesと英訳追跡manifestが現在のsourceへ同期しているか。
 
-1〜3が揃っても、4〜6が未完であれば `translated draft` として扱える。逆に、研究記録を大量に英訳してもruntime / Method Definitionの意味対応が崩れていればparityとはしない。
+1〜4が揃っても、5〜7が未完であれば `translated draft` として扱える。逆に、研究記録を大量に英訳してもruntime / Method Definitionの意味対応が崩れていればparityとはしない。
 
 ## 7. Public promotion rule
 
@@ -116,5 +137,6 @@ locale parityを一つのbooleanへ潰さない。
 - untranslated research-only materialを、実行に必要なKnowledge / instructionsとして暗黙依存させない。
 - 同じ重要regression fixtureをlocale間で適用できる。
 - independent review未実施なら、その状態を明示し、査読済みと称しない。
+- canonical Japaneseを変更した場合、translation-manifestのsource hashを正規の更新scriptで再計算する。
 
 この分類は、翻訳量を増やすための規則ではない。**実行契約・方法定義・表現技術・研究根拠を混同しないための境界**である。
