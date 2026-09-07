@@ -1,0 +1,6 @@
+interface:
+  display_name: "親和統合 — 日本語"
+  short_description: "異種の材料を先に分類せず、一回の統合として意味単位・束・関係・残差を立ち上げる"
+  default_prompt: "元材料の来歴と認識状態を保ち、先に分類体系を置かず、一回の親和統合として意味単位・束・関係・残差を立ち上げてください。"
+policy:
+  allow_implicit_invocation: true

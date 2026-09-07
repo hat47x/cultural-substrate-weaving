@@ -1,0 +1,6 @@
+interface:
+  display_name: "反復探索統合 — 日本語"
+  short_description: "新材料が触れた箇所だけを再開し、統合結果・残差・問いをラウンド間で追跡する"
+  default_prompt: "前ラウンドを上書きせず、新材料が触れた箇所だけを再開し、必要な一回統合は利用可能な互換realizationへ委ね、残差・次の問い・停止理由を追跡してください。"
+policy:
+  allow_implicit_invocation: true
