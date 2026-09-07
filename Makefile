@@ -52,6 +52,7 @@ research-skill-check:
 	python scripts/validate_research_skill_suite.py
 	python scripts/validate_research_package_targets.py
 	python scripts/validate_research_package_reference_closure.py
+	python scripts/validate_research_production_suite_descriptor.py
 	python research/skill-prototypes/scripts/plan_suite_layout.py >/dev/null
 	python research/skill-prototypes/scripts/plan_skill_subtrees.py >/dev/null
 	python research/skill-prototypes/scripts/plan_skill_entry_transforms.py >/dev/null
