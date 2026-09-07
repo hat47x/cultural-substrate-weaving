@@ -8,7 +8,7 @@
     "ja-JP": {"status": "canonical"},
     "en-US": {
       "status": "translated-draft",
-      "note": "Thin CSW runtime and initial English runtime/Method Definition drafts exist for both sibling prototypes. Independent review and ancillary research-material localization remain promotion gates."
+      "note": "Thin CSW runtime and English runtime/Method Definition drafts exist for both sibling prototypes. Directly referenced representation/round technical assets now also have English drafts. Independent review and research-only ancillary-material classification/localization remain promotion gates."
     }
   },
   "skills": [
@@ -45,7 +45,7 @@
           "package_source": {
             "mode": "explicit_files",
             "root": "research/skill-prototypes/affinity-synthesis",
-            "files": ["SKILL.en.md", "references/METHOD.en.md", "references/REPRESENTATION.md", "references/affinity-map.schema.json"]
+            "files": ["SKILL.en.md", "references/METHOD.en.md", "references/REPRESENTATION.en.md", "references/affinity-map.schema.json"]
           },
           "package_targets": {
             "openai_skill": {"skill_name": "affinity-synthesis"},
@@ -59,6 +59,7 @@
         "research/skill-prototypes/affinity-synthesis/references/METHOD.en.md",
         "research/skill-prototypes/affinity-synthesis/references/TEMPLATE.md",
         "research/skill-prototypes/affinity-synthesis/references/REPRESENTATION.md",
+        "research/skill-prototypes/affinity-synthesis/references/REPRESENTATION.en.md",
         "research/skill-prototypes/affinity-synthesis/references/HIERARCHY-AND-LINEAGE.md",
         "research/skill-prototypes/affinity-synthesis/references/affinity-map.schema.json"
       ],
@@ -106,7 +107,7 @@
           "human_review": "recommended",
           "runtime_entry": "research/skill-prototypes/iterative-inquiry-synthesis/SKILL.en.md",
           "method_definition": "research/skill-prototypes/iterative-inquiry-synthesis/references/METHOD.en.md",
-          "package_source": {"mode": "explicit_files", "root": "research/skill-prototypes/iterative-inquiry-synthesis", "files": ["SKILL.en.md", "references/METHOD.en.md", "references/ROUND-TEMPLATE.md"]},
+          "package_source": {"mode": "explicit_files", "root": "research/skill-prototypes/iterative-inquiry-synthesis", "files": ["SKILL.en.md", "references/METHOD.en.md", "references/ROUND-TEMPLATE.en.md"]},
           "package_targets": {
             "openai_skill": {"skill_name": "iterative-inquiry-synthesis"},
             "claude_plugin": {"skill_name": "iterative-inquiry-synthesis"},
@@ -117,7 +118,8 @@
       "references": [
         "research/skill-prototypes/iterative-inquiry-synthesis/references/METHOD.md",
         "research/skill-prototypes/iterative-inquiry-synthesis/references/METHOD.en.md",
-        "research/skill-prototypes/iterative-inquiry-synthesis/references/ROUND-TEMPLATE.md"
+        "research/skill-prototypes/iterative-inquiry-synthesis/references/ROUND-TEMPLATE.md",
+        "research/skill-prototypes/iterative-inquiry-synthesis/references/ROUND-TEMPLATE.en.md"
       ],
       "evidence": [],
       "evals": [
@@ -198,12 +200,19 @@
     "research/skill-prototypes/P3-PACKAGE-TREE-PREVIEW-2026-09-07.md",
     "research/skill-prototypes/P3-RESEARCH-HOST-PACKAGE-MATERIALIZER-2026-09-07.md",
     "research/skill-prototypes/P3-HOST-PACKAGE-STRUCTURAL-PARITY-AUDIT-2026-09-07.md",
-    "research/skill-prototypes/P4-PRODUCTION-SOURCE-AND-BUILDER-PROMOTION-PLAN-2026-09-07.md",
+    "research/skill-prototypes/P4-COMPLETE-CHECKOUT-EXECUTION-STATUS-2026-09-07.md",
     "research/skill-prototypes/P4-PUBLIC-NAME-AUDIT-2026-09-07.md",
+    "research/skill-prototypes/P4-PUBLIC-NAME-RECHECK-2026-09-07.md",
     "research/skill-prototypes/P4-PUBLIC-NAME-MIGRATION-CONTRACT-2026-09-07.md",
     "research/skill-prototypes/P4-PUBLIC-NAME-MIGRATION-CONTRACT.json",
     "research/skill-prototypes/P4-PUBLIC-NAME-PROJECTION-INVENTORY.json",
+    "research/skill-prototypes/P4-ENGLISH-INDEPENDENT-REVIEW-PACKET-2026-09-07.md",
+    "research/skill-prototypes/P4-ENGLISH-INDEPENDENT-REVIEW-TARGETS-2026-09-07.json",
+    "research/skill-prototypes/P4-TECHNICAL-ASSET-LOCALIZATION-2026-09-07.json",
+    "research/skill-prototypes/P4-PRODUCTION-SOURCE-AND-BUILDER-PROMOTION-PLAN-2026-09-07.md",
     "research/skill-prototypes/P4-PRODUCTION-SUITE-DESCRIPTOR-PROTOTYPE.json",
+    "research/skill-prototypes/P4-PRODUCTION-BUILDER-GENERALIZATION-CONTRACT.json",
+    "research/skill-prototypes/P4-PRODUCTION-BUILDER-STATIC-PLAN-2026-09-07.md",
     "research/skill-prototypes/P4-RELEASE-INTERNAL-COMPOSITION-PLAN-2026-09-07.md",
     "research/skill-prototypes/REFERENCE-CLASSIFICATION.md",
     "research/skill-prototypes/evals/CSW-HANDOFF-CASES.md",
@@ -254,7 +263,8 @@
     "split ownership regression check passes",
     "Microsoft 365 composite adapter preserves its embedded-fallback boundary without claiming full sibling-method parity",
     "generated artifacts are rebuilt and repository validation passes after thin-CSW migration",
-    "English sibling Skill realizations receive independent review and ancillary research materials are translated or explicitly classified as non-runtime",
+    "English runtime-referenced technical assets are localized or language-neutral, while research-only ancillary material is explicitly classified",
+    "English sibling Skill realizations receive independent review",
     "production runtime build and validator are generalized before public multi-skill distribution"
   ]
 }
