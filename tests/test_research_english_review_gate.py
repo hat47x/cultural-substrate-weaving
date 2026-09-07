@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import copy
 import json
+import shutil
 import sys
 import tempfile
 import unittest
@@ -25,11 +26,15 @@ DESCRIPTOR_PATH = (
 PACKET_RELATIVE = Path(
     "research/skill-prototypes/P4-ENGLISH-INDEPENDENT-REVIEW-PACKET-2026-09-07.md"
 )
+TARGETS_RELATIVE = Path(
+    "research/skill-prototypes/P4-ENGLISH-INDEPENDENT-REVIEW-TARGETS-2026-09-07.json"
+)
 
 
 class ResearchEnglishReviewGateTests(unittest.TestCase):
     def setUp(self) -> None:
         self.descriptor = json.loads(DESCRIPTOR_PATH.read_text(encoding="utf-8"))
+        self.targets = json.loads((ROOT / TARGETS_RELATIVE).read_text(encoding="utf-8"))
 
     def assert_has_error(self, descriptor: dict, fragment: str) -> None:
         errors = validate_english_review_gate(ROOT, descriptor)
@@ -38,10 +43,26 @@ class ResearchEnglishReviewGateTests(unittest.TestCase):
             f"expected error containing {fragment!r}; got {errors!r}",
         )
 
+    def prepare_review_root(self, root: Path) -> None:
+        for relative in (PACKET_RELATIVE, TARGETS_RELATIVE):
+            source = ROOT / relative
+            target = root / relative
+            target.parent.mkdir(parents=True, exist_ok=True)
+            shutil.copy2(source, target)
+
+        for item in self.targets["targets"]:
+            for locale in ("ja", "en"):
+                relative = Path(item[locale]["path"])
+                source = ROOT / relative
+                target = root / relative
+                target.parent.mkdir(parents=True, exist_ok=True)
+                shutil.copy2(source, target)
+
     def test_current_gate_is_valid_and_pending(self) -> None:
         self.assertEqual(validate_english_review_gate(ROOT, self.descriptor), [])
         gate = self.descriptor["english_independent_review"]
         self.assertEqual(gate["status"], "pending")
+        self.assertEqual(gate["targets"], str(TARGETS_RELATIVE))
         self.assertIsNone(gate["completed_review"])
         self.assertFalse(gate["production_promotion_authorized"])
 
@@ -73,19 +94,26 @@ class ResearchEnglishReviewGateTests(unittest.TestCase):
             "completed review record must be separate from the review packet",
         )
 
+    def test_snapshot_detects_changed_review_target_blob(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            self.prepare_review_root(root)
+            changed_relative = Path(self.targets["targets"][0]["en"]["path"])
+            changed = root / changed_relative
+            changed.write_text(
+                changed.read_text(encoding="utf-8") + "\nchanged after snapshot\n",
+                encoding="utf-8",
+            )
+            errors = validate_english_review_gate(root, self.descriptor)
+            self.assertTrue(
+                any("blob changed since snapshot" in error for error in errors),
+                errors,
+            )
+
     def test_completed_gate_accepts_structured_independent_review_record(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
             root = Path(tmp)
-            packet_path = root / PACKET_RELATIVE
-            packet_path.parent.mkdir(parents=True, exist_ok=True)
-            packet_path.write_text(
-                "review not yet completed\n"
-                "Layer 1 必須不変条件\n"
-                "Layer 2 必須不変条件\n"
-                "Cross-layer査読\n"
-                "production promotion全体の承認ではない\n",
-                encoding="utf-8",
-            )
+            self.prepare_review_root(root)
 
             review_relative = Path(
                 "research/skill-prototypes/reviews/english-independent-review.md"
@@ -94,12 +122,15 @@ class ResearchEnglishReviewGateTests(unittest.TestCase):
             review_path.parent.mkdir(parents=True, exist_ok=True)
             review_path.write_text(
                 "reviewer: external-reviewer\n"
+                "reviewer relation / independence: independent of the draft author\n"
                 "review date: 2026-09-07\n"
+                "review scope: both sibling runtimes and Method Definitions\n"
                 "Layer 1:\n"
                 "Layer 2:\n"
                 "Cross-layer ownership:\n"
                 "KJ lineage / naming:\n"
                 "Promotion recommendation:\n"
+                f"Reviewed target snapshot: {TARGETS_RELATIVE}\n"
                 "Reviewed commit / blob refs:\n",
                 encoding="utf-8",
             )
