@@ -50,6 +50,24 @@ make check
 
 したがって、GitHub上でsource / tests / validatorsを更新できていることを、`make research-skill-check` が成功した証拠として扱わない。
 
+## 2026-09-08 addendum — newly added Layer 2 checks
+
+Layer 1 → Layer 2 handoff再設計とexternal iterative-research Skill比較により、repository source上では次を追加した。
+
+- `iterative-inquiry-synthesis/evidence/dossier.md`
+- Method Definition I16: carry-forward state is not reopen or continuation authority
+- English Method DefinitionへのI15復元
+- `evals/CASES.md` Case 10
+- `evals/HANDOFF-CARRY-FORWARD-RECHECK-2026-09-08.md`
+- `iterative-inquiry-synthesis/scripts/check_method_parity.py`
+- suite validator上のLayer 2 promotion-relevant evidence登録要件
+- `tests/test_research_skill_suite.py` のnegative regression
+- `Makefile` の `research-skill-check` へのLayer 2 Method parity check接続
+
+また、unit test側に残っていた英語Layer 1 packageの旧 `references/REPRESENTATION.md` 期待値を、現在のmanifestに合わせて `references/REPRESENTATION.en.md` へ修正した。
+
+これらは**source-level changeであり、実行成功の証拠ではない**。特に、新しくMakefileへ配線したMethod parity checkと更新したsuite unit testsは、complete checkout上ではまだ一度も実行していない。
+
 ## What has been checked without claiming command execution
 
 GitHub repository source上では、少なくとも次の契約を静的に更新・確認した。
@@ -63,6 +81,9 @@ GitHub repository source上では、少なくとも次の契約を静的に更�
 - tension/sublation regression fixture and ownership boundary
 - research gateへのvalidator接続
 - translation refresh pending scope / English markers / state transitionを保持するmachine-readable contract
+- Layer 1 → Layer 2 carry-forward / reopen / continuation separation
+- Layer 2 external-loop mechanism adoption/rejection evidence
+- Japanese / English Layer 2 Method I1〜I16 static parity check source
 
 これはPython execution、translation hash refresh、translation state transition、generated artifact regeneration、test discovery成功を意味しない。
 
@@ -72,6 +93,8 @@ GitHub repository source上では、少なくとも次の契約を静的に更�
 translation-manifest hash refresh:       NOT RUN after latest CSW canonical changes
 translation research state transition:  NOT RUN
 complete-checkout research-skill-check: NOT RUN
+Layer 2 Method parity check:            NOT RUN in complete checkout
+updated research unit tests:            NOT RUN in complete checkout
 production build regeneration:          NOT RUN after latest research changes
 full repository make check:             NOT RUN after latest research changes
 production promotion authorization:     NO
