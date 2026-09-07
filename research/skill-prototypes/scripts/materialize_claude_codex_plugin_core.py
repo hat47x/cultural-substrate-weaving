@@ -56,7 +56,10 @@ def _tree_snapshot(root: Path) -> dict[str, bytes]:
 
 def _write_json(path: Path, value: dict) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
-    path.write_text(json.dumps(value, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    path.write_text(
+        json.dumps(value, ensure_ascii=False, indent=2) + "\n",
+        encoding="utf-8",
+    )
 
 
 def _bundle_plan(metadata_plan: dict, locale: str, distribution: str) -> dict:
@@ -74,7 +77,10 @@ def _bundle_plan(metadata_plan: dict, locale: str, distribution: str) -> dict:
             f"{distribution} bundle metadata is not materializable: "
             f"{plan.get('metadata_state')!r}"
         )
-    if plan.get("source_kind") != "research-prototype" and plan.get("metadata_state") != "reviewed":
+    if (
+        plan.get("source_kind") != "research-prototype"
+        and plan.get("metadata_state") != "reviewed"
+    ):
         raise ValueError(
             f"{distribution} bundle metadata has no approved research source: "
             f"{plan.get('source_kind')!r}"
@@ -83,24 +89,34 @@ def _bundle_plan(metadata_plan: dict, locale: str, distribution: str) -> dict:
 
 
 def _bundle_metadata(root: Path, claude_plan: dict, codex_plan: dict) -> tuple[dict, str]:
+    if claude_plan.get("metadata_state") != codex_plan.get("metadata_state"):
+        raise ValueError("Claude/Codex bundle metadata maturity diverges")
+
     claude_source = claude_plan.get("source")
     codex_source = codex_plan.get("source")
     if not isinstance(claude_source, str) or claude_source != codex_source:
         raise ValueError("Claude/Codex bundle metadata sources diverge")
 
+    claude_entry = claude_plan.get("catalog_entry")
+    codex_entry = codex_plan.get("catalog_entry")
+    if not isinstance(claude_entry, dict) or not isinstance(codex_entry, dict):
+        raise ValueError("Claude/Codex bundle plans must expose catalog metadata")
+
     source = (root / claude_source).resolve()
     repository = root.resolve()
     if not source.is_file() or not source.is_relative_to(repository):
-        raise ValueError(f"bundle metadata source is missing or outside repository: {claude_source!r}")
+        raise ValueError(
+            f"bundle metadata source is missing or outside repository: {claude_source!r}"
+        )
 
     value = _load_json(source)
     if value.get("invocation_policy") != "explicit":
         raise ValueError("Claude/Codex research bundle must preserve explicit invocation policy")
 
     for field in ("plugin_name", "display", "description", "contains"):
-        if value.get(field) != claude_plan.get("catalog_entry", {}).get(field):
+        if value.get(field) != claude_entry.get(field):
             raise ValueError(f"Claude bundle plan drifts from prototype field: {field}")
-        if value.get(field) != codex_plan.get("catalog_entry", {}).get(field):
+        if value.get(field) != codex_entry.get(field):
             raise ValueError(f"Codex bundle plan drifts from prototype field: {field}")
 
     return value, source.relative_to(root).as_posix()
@@ -170,7 +186,13 @@ def materialize_claude_codex_plugin_core(
             "homepage": REPOSITORY_URL,
             "repository": REPOSITORY_URL,
             "license": "MIT",
-            "keywords": ["analysis", "design", "writing", "architecture", _locale_short(locale)],
+            "keywords": [
+                "analysis",
+                "design",
+                "writing",
+                "architecture",
+                _locale_short(locale),
+            ],
             "skills": "./skills/",
             "interface": {
                 "displayName": bundle["display"],
