@@ -21,6 +21,10 @@ INVENTORY_PATH = (
     / "skill-prototypes"
     / "P4-PUBLIC-NAME-PROJECTION-INVENTORY.json"
 )
+PROMOTION_PLAN_PATH = (
+    "research/skill-prototypes/"
+    "P4-PRODUCTION-SOURCE-AND-BUILDER-PROMOTION-PLAN-2026-09-07.md"
+)
 
 
 class ResearchPublicNameProjectionInventoryTests(unittest.TestCase):
@@ -33,6 +37,9 @@ class ResearchPublicNameProjectionInventoryTests(unittest.TestCase):
             any(fragment in error for error in errors),
             f"expected error containing {fragment!r}; got {errors!r}",
         )
+
+    def content_item(self, inventory: dict, path: str) -> dict:
+        return next(item for item in inventory["content_projection"] if item["path"] == path)
 
     def test_current_inventory_is_valid(self) -> None:
         self.assertEqual(validate_projection_inventory(ROOT, self.inventory), [])
@@ -48,6 +55,27 @@ class ResearchPublicNameProjectionInventoryTests(unittest.TestCase):
             "name: does-not-exist"
         ]
         self.assert_has_error(inventory, "marker changed and requires audit")
+
+    def test_promotion_plan_is_guarded_against_stale_production_paths(self) -> None:
+        item = self.content_item(self.inventory, PROMOTION_PLAN_PATH)
+        self.assertIn("src/skills/material-led-synthesis/", item["required_markers"])
+        self.assertIn("src/skills/affinity-synthesis/", item["forbidden_markers"])
+        self.assertIn(
+            "adapters/openai-skill/<locale>/affinity-synthesis/",
+            item["forbidden_markers"],
+        )
+
+    def test_forbidden_projection_marker_requires_audit(self) -> None:
+        inventory = copy.deepcopy(self.inventory)
+        item = self.content_item(inventory, PROMOTION_PLAN_PATH)
+        item["forbidden_markers"] = ["src/skills/material-led-synthesis/"]
+        self.assert_has_error(inventory, "forbidden marker requires audit")
+
+    def test_forbidden_projection_markers_must_be_strings(self) -> None:
+        inventory = copy.deepcopy(self.inventory)
+        item = self.content_item(inventory, PROMOTION_PLAN_PATH)
+        item["forbidden_markers"] = [None]
+        self.assert_has_error(inventory, "forbidden_markers must contain non-empty strings")
 
     def test_bundle_contains_must_still_expose_research_id_before_projection(self) -> None:
         inventory = copy.deepcopy(self.inventory)
