@@ -98,6 +98,7 @@ class ResearchCompleteCheckoutGateTests(unittest.TestCase):
             evidence_path.write_text(
                 "execution commit: 0123456789abcdef0123456789abcdef01234567\n"
                 "make update-en-hashes: PASS\n"
+                "translation research state transition: PASS\n"
                 "make research-skill-check: PASS\n"
                 "make build: PASS\n"
                 "make check: PASS\n",
@@ -110,6 +111,31 @@ class ResearchCompleteCheckoutGateTests(unittest.TestCase):
             gate["evidence"] = str(evidence_relative)
 
             self.assertEqual(validate_complete_checkout_gate(root, descriptor), [])
+
+    def test_passed_status_requires_translation_state_transition(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            evidence_relative = Path(
+                "research/skill-prototypes/execution/P4-COMPLETE-CHECKOUT-PASS.md"
+            )
+            evidence_path = root / evidence_relative
+            evidence_path.parent.mkdir(parents=True, exist_ok=True)
+            evidence_path.write_text(
+                "execution commit: 0123456789abcdef0123456789abcdef01234567\n"
+                "make update-en-hashes: PASS\n"
+                "make research-skill-check: PASS\n"
+                "make build: PASS\n"
+                "make check: PASS\n",
+                encoding="utf-8",
+            )
+            descriptor = copy.deepcopy(self.descriptor)
+            gate = descriptor["complete_checkout_validation"]
+            gate["status"] = "passed"
+            gate["evidence"] = str(evidence_relative)
+            errors = validate_complete_checkout_gate(root, descriptor)
+            self.assertTrue(
+                any("translation research state transition: PASS" in error for error in errors)
+            )
 
     def test_blocked_status_requires_canonical_blocked_record(self) -> None:
         descriptor = copy.deepcopy(self.descriptor)
