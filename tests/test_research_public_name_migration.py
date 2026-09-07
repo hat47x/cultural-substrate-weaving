@@ -21,6 +21,12 @@ CONTRACT_PATH = (
     / "skill-prototypes"
     / "P4-PUBLIC-NAME-MIGRATION-CONTRACT.json"
 )
+DESCRIPTOR_PATH = (
+    ROOT
+    / "research"
+    / "skill-prototypes"
+    / "P4-PRODUCTION-SUITE-DESCRIPTOR-PROTOTYPE.json"
+)
 
 
 class ResearchPublicNameMigrationTests(unittest.TestCase):
@@ -81,6 +87,70 @@ class ResearchPublicNameMigrationTests(unittest.TestCase):
         self.assert_has_error(
             contract,
             "compatibility_alias_directory_is_not_created_by_default must remain True",
+        )
+
+    def test_recheck_evidence_must_exist(self) -> None:
+        contract = copy.deepcopy(self.contract)
+        contract["recheck_evidence"] = (
+            "research/skill-prototypes/DOES-NOT-EXIST-PUBLIC-NAME-RECHECK.md"
+        )
+        self.assert_has_error(contract, "public-name recheck evidence is missing")
+
+    def test_recheck_evidence_must_match_descriptor(self) -> None:
+        contract = copy.deepcopy(self.contract)
+        contract["recheck_evidence"] = (
+            "research/skill-prototypes/P4-PUBLIC-NAME-AUDIT-2026-09-07.md"
+        )
+        self.assert_has_error(
+            contract,
+            "public_name_recheck.evidence must match migration contract recheck_evidence",
+        )
+
+    def test_name_recheck_never_authorizes_production_promotion(self) -> None:
+        descriptor = json.loads(DESCRIPTOR_PATH.read_text(encoding="utf-8"))
+        descriptor["public_name_recheck"]["production_promotion_authorized"] = True
+
+        original = DESCRIPTOR_PATH.read_text(encoding="utf-8")
+        try:
+            DESCRIPTOR_PATH.write_text(
+                json.dumps(descriptor, ensure_ascii=False, indent=2) + "\n",
+                encoding="utf-8",
+            )
+            self.assert_has_error(
+                self.contract,
+                "public-name recheck must not authorize production promotion by itself",
+            )
+        finally:
+            DESCRIPTOR_PATH.write_text(original, encoding="utf-8")
+
+    def test_sibling_status_must_record_current_recheck(self) -> None:
+        descriptor = json.loads(DESCRIPTOR_PATH.read_text(encoding="utf-8"))
+        affinity = next(
+            skill
+            for skill in descriptor["skills"]
+            if skill["research_id"] == "affinity-synthesis"
+        )
+        affinity["public_name_status"] = "pending-final-collision-recheck"
+
+        original = DESCRIPTOR_PATH.read_text(encoding="utf-8")
+        try:
+            DESCRIPTOR_PATH.write_text(
+                json.dumps(descriptor, ensure_ascii=False, indent=2) + "\n",
+                encoding="utf-8",
+            )
+            self.assert_has_error(
+                self.contract,
+                "affinity-synthesis public_name_status must record the current collision recheck",
+            )
+        finally:
+            DESCRIPTOR_PATH.write_text(original, encoding="utf-8")
+
+    def test_contract_note_must_keep_final_immediate_recheck(self) -> None:
+        contract = copy.deepcopy(self.contract)
+        contract["note"] = "Research IDs and history remain stable."
+        self.assert_has_error(
+            contract,
+            "must preserve the final pre-promotion recheck",
         )
 
 
