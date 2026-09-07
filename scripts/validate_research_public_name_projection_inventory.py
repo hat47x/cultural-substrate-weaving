@@ -81,6 +81,20 @@ def validate_projection_inventory(root: Path, inventory: dict) -> list[str]:
                     f"projection inventory marker changed and requires audit: {relative} -> {marker!r}"
                 )
 
+        forbidden_markers = item.get("forbidden_markers", [])
+        if not isinstance(forbidden_markers, list) or not all(
+            isinstance(marker, str) and marker for marker in forbidden_markers
+        ):
+            errors.append(
+                f"content_projection forbidden_markers must contain non-empty strings: {relative}"
+            )
+            continue
+        for marker in forbidden_markers:
+            if marker in text:
+                errors.append(
+                    f"projection inventory forbidden marker requires audit: {relative} -> {marker!r}"
+                )
+
     structured_items = inventory.get("structured_projection")
     if not isinstance(structured_items, list) or not structured_items:
         errors.append("structured_projection must be a non-empty list")
