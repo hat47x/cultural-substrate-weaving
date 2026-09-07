@@ -17,6 +17,23 @@ INVENTORY_PATH = (
 EXPECTED_SCHEMA = "csw.public-name-projection-inventory/v1"
 EXPECTED_RESEARCH_ID = "affinity-synthesis"
 EXPECTED_PRODUCTION_NAME = "material-led-synthesis"
+REQUIRED_CONTENT_PROJECTION_PATHS = frozenset(
+    {
+        "research/skill-prototypes/affinity-synthesis/SKILL.md",
+        "research/skill-prototypes/affinity-synthesis/SKILL.en.md",
+        "research/skill-prototypes/iterative-inquiry-synthesis/SKILL.md",
+        "research/skill-prototypes/iterative-inquiry-synthesis/SKILL.en.md",
+        "research/skill-prototypes/iterative-inquiry-synthesis/references/METHOD.md",
+        "research/skill-prototypes/iterative-inquiry-synthesis/references/METHOD.en.md",
+        "research/skill-prototypes/P4-PRODUCTION-SOURCE-AND-BUILDER-PROMOTION-PLAN-2026-09-07.md",
+    }
+)
+REQUIRED_STRUCTURED_PROJECTION_PATHS = frozenset(
+    {
+        "research/skill-prototypes/adapters/claude-codex/ja-JP/bundle-metadata.json",
+        "research/skill-prototypes/adapters/claude-codex/en-US/bundle-metadata.json",
+    }
+)
 
 
 def _load_json(path: Path) -> dict:
@@ -95,15 +112,25 @@ def validate_projection_inventory(root: Path, inventory: dict) -> list[str]:
                     f"projection inventory forbidden marker requires audit: {relative} -> {marker!r}"
                 )
 
+    missing_content = sorted(REQUIRED_CONTENT_PROJECTION_PATHS - seen_paths)
+    if missing_content:
+        errors.append(
+            "projection inventory is missing promotion-critical content projection paths: "
+            f"{missing_content}"
+        )
+
     structured_items = inventory.get("structured_projection")
     if not isinstance(structured_items, list) or not structured_items:
         errors.append("structured_projection must be a non-empty list")
         structured_items = []
+    seen_structured_paths: set[str] = set()
     for index, item in enumerate(structured_items):
         if not isinstance(item, dict):
             errors.append(f"structured_projection[{index}] must be an object")
             continue
         relative = item.get("path")
+        if isinstance(relative, str):
+            seen_structured_paths.add(relative)
         path = _repo_path(root, relative, f"structured_projection[{index}].path", errors)
         if path is None:
             continue
@@ -124,6 +151,13 @@ def validate_projection_inventory(root: Path, inventory: dict) -> list[str]:
             errors.append(
                 f"structured projection source no longer contains research id and requires audit: {relative}"
             )
+
+    missing_structured = sorted(REQUIRED_STRUCTURED_PROJECTION_PATHS - seen_structured_paths)
+    if missing_structured:
+        errors.append(
+            "projection inventory is missing promotion-critical structured projection paths: "
+            f"{missing_structured}"
+        )
 
     path_items = inventory.get("path_projection")
     if not isinstance(path_items, list) or len(path_items) < 2:
