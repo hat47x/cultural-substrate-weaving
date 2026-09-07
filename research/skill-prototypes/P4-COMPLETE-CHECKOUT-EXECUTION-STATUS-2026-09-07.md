@@ -108,6 +108,71 @@ execution commit == current checkout HEAD
 
 対応unit testでは、同一SHAを受理し、stale SHAとcurrent HEAD不明を拒否するfixtureを追加した。これもcomplete checkout上ではまだ実行していない。
 
+## 2026-09-08 addendum — promotion preconditions and locale-tree package purity
+
+production migration準備をさらに静的監査し、次のdriftを閉じた。
+
+### Promotion preconditions are now machine-checked
+
+`P4-PRODUCTION-SUITE-DESCRIPTOR-PROTOTYPE.json` の `promotion_preconditions` を単なる説明配列として放置せず、最低必須集合を検査するvalidatorを追加した。
+
+- `scripts/validate_research_promotion_preconditions.py`
+- `tests/test_research_promotion_preconditions.py`
+- `make research-skill-check` への接続
+
+最低必須条件には、complete-checkout research gate、current HEADとのPASS evidence一致、public-name再確認、英語sibling独立査読、production adapterへの昇格、builder/validator一般化、release内部三Skill composition等を含む。
+
+### Production name projection drift in maintainer plan
+
+production descriptor / builder static planではLayer 1公開候補が `material-led-synthesis` である一方、古いpromotion planに `affinity-synthesis` production path例が残っていたため修正した。
+
+再発防止として、`P4-PUBLIC-NAME-PROJECTION-INVENTORY.json` にpromotion planを監査対象として追加し、次を行う。
+
+- `material-led-synthesis` production source / adapter pathをrequired markerにする。
+- `affinity-synthesis` production source / adapter pathをforbidden markerにする。
+- `validate_research_public_name_projection_inventory.py` がforbidden markerを検出する。
+- unit testでstale production path再侵入を負例化する。
+
+research ID `affinity-synthesis` 自体はresearch history / research artifactで保持し、production identityとの区別を壊さない。
+
+### `locale_tree` is now a package-closed production source boundary
+
+promotion planに残っていた古い `explicit_files` source-mode記述を、現在のdescriptor / builder contractと同じ `locale_tree` へ統一した。
+
+machine-readable contractでは次を固定した。
+
+```text
+src/skills/<public-name>/<locale>/
+    = package-closed source tree
+
+copy_scope       = entire_locale_tree
+exclusion_filter = none
+```
+
+具体的な追加・更新:
+
+- `P4-PRODUCTION-BUILDER-GENERALIZATION-CONTRACT.json`
+  - `locale_tree_source_package_purity: true`
+  - sibling production sourceは `locale_tree`
+  - builderはresearch-only exclusion filterを持たない
+- `scripts/validate_research_production_builder_contract.py`
+  - descriptor sibling source modeの `locale_tree` 固定
+  - package-purity validation flag / invariantの固定
+- `tests/test_research_production_builder_contract.py`
+  - `explicit_files` rollback、purity flag削除、exclusion-filter invariant削除を負例化
+- `scripts/validate_research_production_plan_consistency.py`
+  - machine-readable descriptor / contractを正本としてpromotion planのsource-mode proseを照合
+- `tests/test_research_production_plan_consistency.py`
+  - stale `explicit_files` sentence、old production path、package-closed marker欠落を負例化
+- `plan_production_builder_generalization.py`
+  - locale-tree projectionへ `copy_scope: entire_locale_tree`, `package_closed: true`, `exclusion_filter: none` を外在化
+- `REFERENCE-CLASSIFICATION.md`
+  - research/eval artifactであっても、locale Skillがoptional progressive referenceとして明示参照する場合はpackage supportになり得ることを明文化
+
+Layer 1 Japaneseの `evals/CASES.md` / `evidence/dossier.md` はJapanese Skillから直接progressive referenceされるためpackage closureへ含める。一方、Layer 1 EnglishやLayer 2 dossierへ日本語research supportをlocale parityの名目で自動copyしない。
+
+これらも**設計・source-level regressionの追加であり、complete checkout execution結果ではない**。
+
 ## What has been checked without claiming command execution
 
 GitHub repository source上では、少なくとも次の契約を静的に更新・確認した。
@@ -126,22 +191,29 @@ GitHub repository source上では、少なくとも次の契約を静的に更�
 - Japanese / English Layer 2 Method I1〜I16 static parity check source
 - manifest-declared Skill checkとresearch gate executionの双方向wiring contract
 - passed complete-checkout evidenceとcurrent HEADの一致要求
+- promotion preconditionsの最低必須集合
+- production-name projectionのstale-path negative guard
+- `locale_tree` production sourceのpackage-closed / whole-tree-copy契約
+- localeごとのruntime reference closureに基づくresearch-support package inclusion境界
 
 これはPython execution、translation hash refresh、translation state transition、generated artifact regeneration、test discovery成功を意味しない。
 
 ## Gate state
 
 ```text
-translation-manifest hash refresh:       NOT RUN after latest CSW canonical changes
-translation research state transition:  NOT RUN
-complete-checkout research-skill-check: NOT RUN
-Layer 2 Method parity check:            NOT RUN in complete checkout
-declared-check wiring validator:        NOT RUN in complete checkout
-updated research unit tests:            NOT RUN in complete checkout
-stale-pass HEAD binding tests:          NOT RUN in complete checkout
-production build regeneration:          NOT RUN after latest research changes
-full repository make check:             NOT RUN after latest research changes
-production promotion authorization:     NO
+translation-manifest hash refresh:          NOT RUN after latest CSW canonical changes
+translation research state transition:     NOT RUN
+complete-checkout research-skill-check:    NOT RUN
+Layer 2 Method parity check:               NOT RUN in complete checkout
+declared-check wiring validator:           NOT RUN in complete checkout
+promotion-precondition validator:          NOT RUN in complete checkout
+production-plan consistency validator:     NOT RUN in complete checkout
+locale-tree package-purity regressions:    NOT RUN in complete checkout
+updated research unit tests:               NOT RUN in complete checkout
+stale-pass HEAD binding tests:             NOT RUN in complete checkout
+production build regeneration:             NOT RUN after latest research changes
+full repository make check:                NOT RUN after latest research changes
+production promotion authorization:        NO
 ```
 
 ## Reopen condition
