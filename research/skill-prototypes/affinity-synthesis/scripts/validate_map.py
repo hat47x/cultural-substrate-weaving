@@ -211,6 +211,30 @@ def validate(data: dict[str, Any]) -> tuple[list[str], list[str]]:
             if str(ref) not in semantic_node_ids | residual_ids | relation_ids | narrative_ids:
                 warnings.append(f"question {qid} arises_from ref does not resolve locally: {ref}")
 
+        candidate_between = question.get("candidate_relation_between")
+        if candidate_between is not None:
+            if not isinstance(candidate_between, list) or len(candidate_between) != 2:
+                errors.append(
+                    f"question {qid} candidate_relation_between must contain exactly two semantic-node refs"
+                )
+            else:
+                endpoints = [str(ref) for ref in candidate_between]
+                if endpoints[0] == endpoints[1]:
+                    errors.append(
+                        f"question {qid} candidate_relation_between must refer to two distinct semantic nodes"
+                    )
+                for ref in endpoints:
+                    if ref not in semantic_node_ids:
+                        errors.append(
+                            f"question {qid} candidate relation endpoint does not resolve to card/group: {ref}"
+                        )
+
+        for ref in question.get("would_clarify_refs", []):
+            if str(ref) not in local_artifact_ids:
+                warnings.append(
+                    f"question {qid} would_clarify_ref does not resolve locally: {ref}"
+                )
+
     layout = data.get("layout")
     if isinstance(layout, dict):
         positions = layout.get("positions", {})
