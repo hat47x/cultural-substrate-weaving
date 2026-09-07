@@ -42,6 +42,7 @@ EXPECTED_SOURCE_OPERATIONS = {
 EXPECTED_VALIDATION_FLAGS = {
     "skill_composition",
     "sibling_source_generated_parity",
+    "locale_tree_source_package_purity",
     "runtime_entry_budget_for_all_installed_skills",
     "installed_reference_closure_for_all_skill_subtrees",
     "release_internal_three_skill_composition",
@@ -51,6 +52,9 @@ REQUIRED_INVARIANT_FRAGMENTS = (
     "must not read research/skill-prototypes",
     "src/manifest.json remains",
     "under src/skills",
+    "use locale_tree mode",
+    "package-closed",
+    "without a research-only exclusion filter",
     "do not default to research IDs",
     "interactive and metered",
     "three Skill subtrees",
@@ -186,6 +190,27 @@ def validate_production_builder_contract(
         for skill in skills:
             if not isinstance(skill, dict):
                 continue
+            research_id = skill.get("research_id")
+            source = skill.get("production_source")
+            if research_id == "cultural-substrate-weaving":
+                if not isinstance(source, dict) or source.get("mode") != "canonical_manifest":
+                    errors.append("CSW production source must remain canonical_manifest")
+            else:
+                if not isinstance(source, dict) or source.get("mode") != "locale_tree":
+                    errors.append(
+                        f"descriptor sibling skill {research_id} production source must use locale_tree"
+                    )
+                else:
+                    root_pattern = source.get("root_pattern")
+                    if not isinstance(root_pattern, str) or not root_pattern.startswith("src/skills/"):
+                        errors.append(
+                            f"descriptor sibling skill {research_id} locale_tree root must stay under src/skills/"
+                        )
+                    if source.get("runtime_entry") != "SKILL.md":
+                        errors.append(
+                            f"descriptor sibling skill {research_id} locale_tree runtime_entry must be SKILL.md"
+                        )
+
             targets = skill.get("targets")
             if not isinstance(targets, dict):
                 continue
@@ -193,7 +218,7 @@ def validate_production_builder_contract(
                 target_name = targets.get(distribution)
                 if not isinstance(target_name, str) or not target_name:
                     errors.append(
-                        f"descriptor skill {skill.get('research_id')} lacks production target for {distribution}"
+                        f"descriptor skill {research_id} lacks production target for {distribution}"
                     )
     else:
         errors.append("production descriptor skills must be a list")
