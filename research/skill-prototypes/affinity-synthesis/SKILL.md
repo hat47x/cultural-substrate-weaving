@@ -201,6 +201,9 @@ rendering toolが使える場合は、syntaxだけでなく視覚的な誤読も
 10. inherited / emergent / residual meaning when transformation provenance matters
 11. intentionally omitted differences or unresolved residuals
 12. diagram projection and projection-integrity note when a figure is produced
+13. optional round handoff capsule when a downstream iterative-inquiry layer needs stable semantic refs, reopenable residual anchors, or provenance/status that must survive across rounds
+
+handoff capsuleは**次roundの開始・問いの決定・全参照のreopenを指示しない**。現在の成果物から、後で意味同一性と残差を追跡できる情報だけを外在化する。
 
 特定の表形式やcanvas geometryを必須にはしない。標準形が必要な場合は `references/TEMPLATE.md` を使う。machine-readable interchangeやdiagram grammarが必要なら `references/REPRESENTATION.md` を使う。
 
@@ -233,6 +236,7 @@ rendering toolが使える場合は、syntaxだけでなく視覚的な誤読も
 - [ ] 自動layout上の近接をsemantic relationへ読み替えていない。
 - [ ] 直接引用が必要な場合、実在する原文だけを引用し、モデルが引用文を創作していない。
 - [ ] residual / gapを、存在確認済みの事実へ格上げしていない。
+- [ ] handoff capsuleを出した場合、持越しrefと実際のreopenを混同せず、incoming statusを昇格させず、次roundの自動継続を指示していない。
 
 ## Progressive References
 
