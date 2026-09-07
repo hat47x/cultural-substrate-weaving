@@ -3,6 +3,7 @@ from __future__ import annotations
 import copy
 import json
 import sys
+import tempfile
 import unittest
 from pathlib import Path
 
@@ -63,8 +64,57 @@ class ResearchPackageReferenceClosureTests(unittest.TestCase):
     def test_english_iterative_round_template_reference_must_be_packaged(self) -> None:
         manifest = copy.deepcopy(self.manifest)
         files = self._files(manifest, "iterative-inquiry-synthesis", "en-US")
-        files.remove("references/ROUND-TEMPLATE.md")
-        self.assert_has_error(manifest, "references/ROUND-TEMPLATE.md")
+        files.remove("references/ROUND-TEMPLATE.en.md")
+        self.assert_has_error(manifest, "references/ROUND-TEMPLATE.en.md")
+
+    def test_declared_markdown_second_hop_reference_must_be_packaged(self) -> None:
+        with tempfile.TemporaryDirectory() as temp_dir:
+            root = Path(temp_dir)
+            package_root = root / "research" / "skill"
+            (package_root / "references").mkdir(parents=True)
+            (package_root / "evidence").mkdir(parents=True)
+            (package_root / "SKILL.md").write_text(
+                "See `references/METHOD.md`.\n",
+                encoding="utf-8",
+            )
+            (package_root / "references" / "METHOD.md").write_text(
+                "Design evidence is in `evidence/dossier.md`.\n",
+                encoding="utf-8",
+            )
+            (package_root / "evidence" / "dossier.md").write_text(
+                "research evidence\n",
+                encoding="utf-8",
+            )
+
+            manifest = {
+                "skills": [
+                    {
+                        "id": "example",
+                        "locale_realizations": {
+                            "ja-JP": {
+                                "status": "prototype",
+                                "runtime_entry": "research/skill/SKILL.md",
+                                "package_source": {
+                                    "mode": "explicit_files",
+                                    "root": "research/skill",
+                                    "files": ["SKILL.md", "references/METHOD.md"],
+                                },
+                            }
+                        },
+                    }
+                ]
+            }
+
+            errors = validate_package_reference_closure(root, manifest)
+            self.assertTrue(
+                any("evidence/dossier.md" in error for error in errors),
+                errors,
+            )
+
+            manifest["skills"][0]["locale_realizations"]["ja-JP"]["package_source"][
+                "files"
+            ].append("evidence/dossier.md")
+            self.assertEqual(validate_package_reference_closure(root, manifest), [])
 
     def test_canonical_manifest_realizations_are_out_of_scope(self) -> None:
         manifest = copy.deepcopy(self.manifest)
