@@ -144,6 +144,23 @@ class ResearchProductionBuilderContractTests(unittest.TestCase):
                 self.assertTrue(layer1["target_root"].endswith("/material-led-synthesis"))
                 self.assertFalse(layer1["target_root"].endswith("/affinity-synthesis"))
 
+    def test_planner_exposes_package_closed_locale_tree_semantics(self) -> None:
+        plan = plan_production_builder(self.descriptor, self.contract)
+        for locale in self.descriptor["locales"]:
+            skills = plan["locales"][locale]["distributions"]["openai_skill"]["profiles"]["interactive"]["skills"]
+            for item in skills:
+                if item["research_id"] == "cultural-substrate-weaving":
+                    continue
+                source = item["source"]
+                self.assertEqual(source["mode"], "locale_tree")
+                self.assertEqual(source["copy_scope"], "entire_locale_tree")
+                self.assertTrue(source["package_closed"])
+                self.assertEqual(source["exclusion_filter"], "none")
+                self.assertEqual(
+                    source["operation"],
+                    "copy_locale_tree_preserving_runtime_relative_paths",
+                )
+
     def test_planner_preserves_existing_csw_target_identities(self) -> None:
         plan = plan_production_builder(self.descriptor, self.contract)
         for locale in self.descriptor["locales"]:
