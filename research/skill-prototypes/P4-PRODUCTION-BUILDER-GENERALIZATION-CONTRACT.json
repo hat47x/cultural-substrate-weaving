@@ -1,0 +1,75 @@
+{
+  "schema": "csw.production-builder-generalization-contract/v1",
+  "status": "design-only",
+  "source_descriptor": "research/skill-prototypes/P4-PRODUCTION-SUITE-DESCRIPTOR-PROTOTYPE.json",
+  "production_files": {
+    "builder": "scripts/build.py",
+    "validator": "scripts/validate.py",
+    "packager": "scripts/package.py",
+    "planned_suite_descriptor": "src/skill-suite.json"
+  },
+  "target_name_source": "production_descriptor.skills[].targets",
+  "source_mode_operations": {
+    "canonical_manifest": "render_runtime_entry_and_copy_manifest_references",
+    "locale_tree": "copy_locale_tree_preserving_runtime_relative_paths"
+  },
+  "first_wave": {
+    "openai_skill": {
+      "mode": "standalone_per_skill",
+      "profiles": ["interactive", "metered"],
+      "target_pattern": "dist/{locale}/openai-skill/{profile}/{target_name}",
+      "adapter_pattern_source": "production_descriptor.skills[].adapter_metadata.openai_skill",
+      "required_skill_set_source": "production_descriptor.skills",
+      "frontmatter_name_uses_target_name": true
+    },
+    "claude_plugin": {
+      "mode": "locale_bundle",
+      "plugin_identity_source": "production_descriptor.bundle_identity",
+      "target_pattern": "plugins/{plugin_name}/skills/{target_name}",
+      "required_skill_set_source": "production_descriptor.skills",
+      "frontmatter_name_uses_target_name": true,
+      "marketplace_plugin_identity_is_preserved": true
+    },
+    "codex_plugin": {
+      "mode": "reuse_claude_skill_tree",
+      "plugin_identity_source": "production_descriptor.bundle_identity",
+      "shared_skill_tree_distribution": "claude_plugin",
+      "target_pattern": "plugins/{plugin_name}/skills/{target_name}",
+      "required_skill_set_source": "production_descriptor.skills",
+      "frontmatter_name_uses_target_name": true,
+      "new_release_zip_kind": false
+    }
+  },
+  "deferred_composite": {
+    "chatgpt_gpt": {
+      "first_wave_builder_change": false,
+      "reason": "composite realization; standalone sibling Skill trees are not copied into this distribution by the first-wave generalization"
+    },
+    "microsoft_copilot": {
+      "first_wave_builder_change": false,
+      "reason": "limited composite adapter; preserve the embedded-fallback boundary instead of copying full sibling implementations"
+    }
+  },
+  "validation_requirements": {
+    "skill_composition": true,
+    "sibling_source_generated_parity": true,
+    "runtime_entry_budget_for_all_installed_skills": true,
+    "installed_reference_closure_for_all_skill_subtrees": true,
+    "release_internal_three_skill_composition": true,
+    "existing_package_kind_set_is_preserved": true
+  },
+  "invariants": [
+    "production builder must not read research/skill-prototypes as a runtime build input",
+    "src/manifest.json remains the Cultural Substrate Weaving runtime manifest rather than becoming a generic suite manifest",
+    "sibling production sources are read only from promoted production paths under src/skills",
+    "production target names come from the production descriptor and do not default to research IDs",
+    "OpenAI keeps interactive and metered package profiles and emits one standalone directory per Skill",
+    "Claude keeps one locale plugin identity and emits three Skill subtrees inside that plugin",
+    "Codex reuses the Claude plugin Skill tree rather than creating a second copied Skill tree",
+    "ChatGPT GPT and Microsoft Copilot composite realizations remain outside the first builder generalization",
+    "the first builder generalization does not create a new Codex release ZIP kind",
+    "research planning artifacts do not authorize production promotion"
+  ],
+  "production_promotion_authorized": false,
+  "note": "Research-only static contract for the future production builder change. It describes required behavior without changing scripts/build.py or creating src/skills."
+}
