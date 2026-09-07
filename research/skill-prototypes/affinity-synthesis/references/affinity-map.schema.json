@@ -150,6 +150,15 @@
           "id": {"type": "string"},
           "text": {"type": "string"},
           "arises_from": {"type": "array", "items": {"type": "string"}},
+          "candidate_relation_between": {
+            "type": "array",
+            "items": {"type": "string"},
+            "minItems": 2,
+            "maxItems": 2,
+            "uniqueItems": true
+          },
+          "would_clarify_refs": {"type": "array", "items": {"type": "string"}},
+          "handling": {"type": "string"},
           "state": {"type": "string"},
           "display_label": {"type": "string"}
         },
