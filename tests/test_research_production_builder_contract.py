@@ -37,17 +37,28 @@ class ResearchProductionBuilderContractTests(unittest.TestCase):
         self.contract = json.loads(CONTRACT_PATH.read_text(encoding="utf-8"))
         self.descriptor = json.loads(DESCRIPTOR_PATH.read_text(encoding="utf-8"))
 
-    def assert_has_error(self, contract: dict, fragment: str) -> None:
-        errors = validate_production_builder_contract(ROOT, contract, self.descriptor)
+    def assert_has_error(
+        self,
+        contract: dict,
+        fragment: str,
+        *,
+        descriptor: dict | None = None,
+    ) -> None:
+        errors = validate_production_builder_contract(
+            ROOT,
+            contract,
+            self.descriptor if descriptor is None else descriptor,
+        )
         self.assertTrue(
             any(fragment in error for error in errors),
             f"expected error containing {fragment!r}; got {errors!r}",
         )
 
-    def skill(self, research_id: str) -> dict:
+    def skill(self, research_id: str, *, descriptor: dict | None = None) -> dict:
+        source = self.descriptor if descriptor is None else descriptor
         return next(
             skill
-            for skill in self.descriptor["skills"]
+            for skill in source["skills"]
             if skill["research_id"] == research_id
         )
 
@@ -75,6 +86,34 @@ class ResearchProductionBuilderContractTests(unittest.TestCase):
         self.assert_has_error(
             contract,
             "production target names must be sourced from production_descriptor.skills[].targets",
+        )
+
+    def test_locale_tree_package_purity_validation_cannot_be_disabled(self) -> None:
+        contract = copy.deepcopy(self.contract)
+        contract["validation_requirements"].pop("locale_tree_source_package_purity")
+        self.assert_has_error(contract, "validation_requirements set has drifted")
+
+    def test_locale_tree_cannot_gain_research_only_exclusion_filter(self) -> None:
+        contract = copy.deepcopy(self.contract)
+        contract["invariants"] = [
+            item
+            for item in contract["invariants"]
+            if "without a research-only exclusion filter" not in item
+        ]
+        self.assert_has_error(contract, "missing invariant fragment: without a research-only exclusion filter")
+
+    def test_sibling_descriptor_source_mode_must_remain_locale_tree(self) -> None:
+        descriptor = copy.deepcopy(self.descriptor)
+        layer1 = self.skill("affinity-synthesis", descriptor=descriptor)
+        layer1["production_source"] = {
+            "mode": "explicit_files",
+            "root": "src/skills/material-led-synthesis/ja-JP",
+            "files": ["SKILL.md"],
+        }
+        self.assert_has_error(
+            self.contract,
+            "production source must use locale_tree",
+            descriptor=descriptor,
         )
 
     def test_openai_profiles_cannot_drop_metered(self) -> None:
