@@ -236,26 +236,28 @@ class ResearchSkillSuiteTests(unittest.TestCase):
             {
                 "SKILL.en.md",
                 "references/METHOD.en.md",
-                "references/REPRESENTATION.md",
+                "references/REPRESENTATION.en.md",
                 "references/affinity-map.schema.json",
             },
         )
         self.assertNotIn("references/METHOD.md", files)
+        self.assertNotIn("references/REPRESENTATION.md", files)
         self.assertNotIn("references/TEMPLATE.md", files)
         self.assertNotIn("references/HIERARCHY-AND-LINEAGE.md", files)
 
-    def test_iterative_standalone_files_do_not_require_sibling_tree(self) -> None:
+    def test_iterative_standalone_files_do_not_require_sibling_tree_or_research_evidence(self) -> None:
         iterative = self.skill(self.manifest, "iterative-inquiry-synthesis")
         for locale in ("ja-JP", "en-US"):
             files = iterative["locale_realizations"][locale]["package_source"]["files"]
             self.assertFalse(any(".." in Path(path).parts for path in files))
+            self.assertFalse(any(path.startswith("evidence/") for path in files))
         self.assertEqual(
             iterative["locale_realizations"]["ja-JP"]["package_source"]["files"],
             ["SKILL.md", "references/METHOD.md", "references/ROUND-TEMPLATE.md"],
         )
         self.assertEqual(
             iterative["locale_realizations"]["en-US"]["package_source"]["files"],
-            ["SKILL.en.md", "references/METHOD.en.md", "references/ROUND-TEMPLATE.md"],
+            ["SKILL.en.md", "references/METHOD.en.md", "references/ROUND-TEMPLATE.en.md"],
         )
 
     def test_hard_dependency_is_not_allowed(self) -> None:
@@ -288,6 +290,14 @@ class ResearchSkillSuiteTests(unittest.TestCase):
         affinity = self.skill(manifest, "affinity-synthesis")
         affinity["evidence"].remove(
             "research/skill-prototypes/affinity-synthesis/evidence/EXTERNAL-FORMAT-ADOPTION-2026-09-07.md"
+        )
+        self.assert_has_error(manifest, "required promotion-relevant evidence is not registered")
+
+    def test_iterative_external_loop_evidence_cannot_be_left_unregistered(self) -> None:
+        manifest = copy.deepcopy(self.manifest)
+        iterative = self.skill(manifest, "iterative-inquiry-synthesis")
+        iterative["evidence"].remove(
+            "research/skill-prototypes/iterative-inquiry-synthesis/evidence/dossier.md"
         )
         self.assert_has_error(manifest, "required promotion-relevant evidence is not registered")
 
