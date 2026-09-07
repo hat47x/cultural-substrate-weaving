@@ -5,6 +5,7 @@ from __future__ import annotations
 
 import json
 import re
+import subprocess
 import sys
 from pathlib import Path, PurePosixPath
 
@@ -43,7 +44,26 @@ def _existing_file(root: Path, value: object) -> Path | None:
     return path if path.is_file() else None
 
 
-def validate_complete_checkout_gate(root: Path, descriptor: dict) -> list[str]:
+def _current_checkout_head(root: Path) -> str | None:
+    try:
+        result = subprocess.run(
+            ["git", "-C", str(root), "rev-parse", "HEAD"],
+            check=True,
+            capture_output=True,
+            text=True,
+        )
+    except (OSError, subprocess.CalledProcessError):
+        return None
+    value = result.stdout.strip().lower()
+    return value if HEX40.fullmatch(value) else None
+
+
+def validate_complete_checkout_gate(
+    root: Path,
+    descriptor: dict,
+    *,
+    current_commit: str | None = None,
+) -> list[str]:
     errors: list[str] = []
     gate = descriptor.get("complete_checkout_validation")
     if not isinstance(gate, dict):
@@ -100,9 +120,20 @@ def validate_complete_checkout_gate(root: Path, descriptor: dict) -> list[str]:
                 (line for line in text.splitlines() if line.startswith("execution commit:")),
                 "",
             )
-            commit = commit_line.partition(":")[2].strip()
+            commit = commit_line.partition(":")[2].strip().lower()
             if commit and not HEX40.fullmatch(commit):
                 errors.append("passed complete-checkout execution commit must be a 40-char SHA")
+            elif HEX40.fullmatch(commit):
+                if current_commit is None:
+                    errors.append(
+                        "passed complete-checkout validation requires the current checkout HEAD"
+                    )
+                elif not HEX40.fullmatch(current_commit.lower()):
+                    errors.append("current checkout HEAD must be a 40-char SHA")
+                elif commit != current_commit.lower():
+                    errors.append(
+                        "passed complete-checkout execution commit must match current checkout HEAD"
+                    )
 
     if gate.get("production_promotion_authorized") is not False:
         errors.append(
@@ -119,7 +150,16 @@ def main() -> int:
         print(f"complete-checkout gate validation failed: {exc}", file=sys.stderr)
         return 1
 
-    errors = validate_complete_checkout_gate(ROOT, descriptor)
+    gate = descriptor.get("complete_checkout_validation")
+    current_commit = None
+    if isinstance(gate, dict) and gate.get("status") == "passed":
+        current_commit = _current_checkout_head(ROOT)
+
+    errors = validate_complete_checkout_gate(
+        ROOT,
+        descriptor,
+        current_commit=current_commit,
+    )
     if errors:
         for error in errors:
             print(f"ERROR: {error}", file=sys.stderr)
