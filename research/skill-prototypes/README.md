@@ -43,6 +43,18 @@ KJ法・親和図法・質的統合法の系譜を参照するが、生成AI向�
 
 Layer 1のgrouping / labeling algorithmを再実装しない。
 
+現在の中心境界は次である。
+
+```text
+preserve / carry forward
+    !=
+reopen now
+    !=
+continue another round
+```
+
+前roundから持ち越したsemantic handleやresidualは、identityやrestart可能性を保存するためのstateであり、それだけで再開・継続命令にはならない。
+
 ## Method Definitionとrealizationを分ける
 
 ```text
@@ -76,6 +88,8 @@ Method Definitionの不変条件を別realizationが満たせるなら、local S
 
 英語sibling realizationは `translated-draft`。runtime artifactと英語Method Definitionは存在するが、独立した人手査読済みとは扱わない。
 
+Layer 2については、実際に英語MethodからI15が一時欠落したparity driftが見つかったため、現在はI1〜I16のinvariant surfaceを静的に照合するcheckをresearch gateへ追加している。このcheckは翻訳査読の代替ではない。
+
 参照資料のlocale依存とruntime依存は [REFERENCE-CLASSIFICATION.md](REFERENCE-CLASSIFICATION.md) を参照する。
 
 ## Package境界
@@ -99,6 +113,8 @@ locale realizationごとに `package_source` を宣言する。
 - [P3 Package Tree Preview](P3-PACKAGE-TREE-PREVIEW-2026-09-07.md)
 
 `package_source` はresearch metadataの全量を意味しない。runtime packageへ必要なsource boundaryだけを表す。
+
+特にLayer 2のexternal-loop comparison dossierはsuite manifest上の必須research evidenceとして追跡するが、Japanese / English runtime packageには含めない。
 
 ## Host adapter metadata
 
@@ -160,13 +176,15 @@ marketplace、README、archive、release manifest、release assetは生成しな
 
 - `SKILL*.md`: Agent Skill realization
 - `references/METHOD*.md`: Method Definition
-- `references/REPRESENTATION.md`, schema, renderer: representation / technical assets
+- `references/REPRESENTATION*.md`, schema, renderer: representation / technical assets
 - `evidence/`: lineage / external-skill comparison / research basis
 - `evals/`: regression fixtures / application records
 - `migration/`: split migration and retention audits
 - `package_source`: locale realizationをpackageへ投影するときのsource boundary
 - `adapter-metadata-plan.json`: host metadataのsourceとmaturity
 - `P2/P3-...MATERIALIZER...md`: production migration前のpackage projection boundary
+
+Layer 2では `evidence/dossier.md` にautoresearch / autonomous research loop / systematic searchとの比較を残す。採用するのはgoal、append-only ledger、recovery、evidence refs、explicit stop等の移植可能なmechanismであり、mandatory scalar metric、autonomous-until-budget、universal search backlog等はMethod不変条件にしない。
 
 未翻訳のevidence / eval / migration資料を、英語runtimeの暗黙の実行指示にはしない。
 
@@ -177,8 +195,10 @@ marketplace、README、archive、release manifest、release assetは生成しな
 - simple bottom-up theme clustering → compatible Affinity Mapping Skill
 - already-conceptualized proposition network → Concept Mapping
 - finished-claim evidence/inference audit → evidence/inference sorting
+- metric-driven autonomous experiment loop → compatible autoresearch realization
+- candidate-centric systematic search → compatible search-loop realization
 
-ただし、それらを順に連結しただけで `affinity-synthesis` 全体と同等とは扱わない。semantic boundary、source return、residual、relation/narrative round-trip等の不変条件を実際に満たす必要がある。
+ただし、それらを順に連結しただけで `affinity-synthesis` や `iterative-inquiry-synthesis` 全体と同等とは扱わない。それぞれのMethod Definitionの不変条件を実際に満たす必要がある。
 
 ## Checks
 
@@ -194,6 +214,7 @@ make research-skill-check
    - installable name / frontmatter
    - `package_source`
    - source-root escape
+   - promotion-relevant skill evidence registration
    - research metadata / checks
    - hard-dependency boundary
 2. package target / package-local reference closure
@@ -201,13 +222,15 @@ make research-skill-check
 4. OpenAI per-Skill / Claude-Codex bundle adapter metadata validator
 5. thin-CSW / sibling Method間のsplit ownership（日英）
 6. 三Skill × 二localeのresearch-only package-tree preview
-7. affinity-map representationのrecursive grouping / lineage regression
-8. `test_research_*.py` のunit test一式
+7. affinity-map representationのrecursive grouping / lineage / handoff regression
+8. iterative-inquiry-synthesis Method Definitionの日英I1〜I16 parity check
+9. `test_research_*.py` のunit test一式
    - bilingual Skill-tree materialization
    - bilingual host-package materialization
    - adapter metadata
    - package reference closure
    - suite/layout/target/entry transform等
+   - Layer 1 / Layer 2 promotion-relevant evidence registration
 
 previewを実際に目視したい場合は次を使う。
 
@@ -241,14 +264,14 @@ GitHub Actionsは現在使用していない。ローカルまたは同等の実
 - repository validation / tests成功
 - English sibling realizationの独立査読
 - runtimeに必要なtechnical assetのlocale可用性確認
-- cross-layer handoff / paired regressionの再確認
+- Layer 1 / Layer 2 / CSWのcross-layer handoff / paired regression再確認
 - platformごとのdependency / bundle / composite-agent境界の実装
 
 M365だけは、sibling Skill invocationを前提にできないため、現在の限定adapter内に最小compatible material-synthesis fallbackを埋め込む。これはCSW本体がLayer 1を再所有したことを意味しない。
 
 ## Current next gate
 
-現在の不足は、runtime、package source、adapter metadata、materializer sourceが存在しないことではない。
+現在の不足は、runtime、package source、adapter metadata、materializer source、Layer 2 external evidence、Method parity checkが存在しないことではない。
 
 次に必要なのは、**complete checkoutでresearch gateとmaterializer testsを実際に通し、生成した日英host package treeを現行production artifactと比較すること**である。
 
