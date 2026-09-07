@@ -30,6 +30,25 @@ def file_snapshot(root: Path, *, exclude: set[str] | None = None) -> dict[str, b
     }
 
 
+def declared_bundle_metadata(metadata: dict, distribution: str, locale: str) -> dict:
+    config = metadata["distributions"][distribution]
+    locale_entry = config["locales"][locale]
+    status = locale_entry["status"]
+
+    if status == "prototype":
+        source = ROOT / locale_entry["prototype_source"]
+        return json.loads(source.read_text(encoding="utf-8"))
+
+    if status == "reviewed":
+        source = ROOT / config["source"]
+        catalog = json.loads(source.read_text(encoding="utf-8"))
+        return catalog[locale]
+
+    raise AssertionError(
+        f"{distribution}/{locale} is not expected to be host-materializable: {status!r}"
+    )
+
+
 class ResearchHostPackageCrossSurfaceParityTests(unittest.TestCase):
     def materialize(
         self,
@@ -113,15 +132,19 @@ class ResearchHostPackageCrossSurfaceParityTests(unittest.TestCase):
                 f"Claude/Codex Skill tree diverged for {locale}",
             )
 
-    def test_materialized_bundle_manifests_preserve_prototype_wording_and_version(self) -> None:
+    def test_materialized_bundle_manifests_preserve_declared_wording_and_version(self) -> None:
         metadata = json.loads(METADATA_PATH.read_text(encoding="utf-8"))
         version = (ROOT / "VERSION").read_text(encoding="utf-8").strip()
 
         for locale in ("ja-JP", "en-US"):
-            bundle_source = metadata["distributions"]["claude_plugin"]["locales"][locale][
-                "prototype_source"
-            ]
-            bundle = json.loads((ROOT / bundle_source).read_text(encoding="utf-8"))
+            claude_bundle = declared_bundle_metadata(metadata, "claude_plugin", locale)
+            codex_bundle = declared_bundle_metadata(metadata, "codex_plugin", locale)
+            for field in ("plugin_name", "description", "display"):
+                self.assertEqual(
+                    claude_bundle[field],
+                    codex_bundle[field],
+                    f"Claude/Codex declared bundle wording diverged for {locale}/{field}",
+                )
 
             claude, claude_temp = self.materialize(locale, "claude_plugin")
             codex, codex_temp = self.materialize(locale, "codex_plugin")
@@ -135,12 +158,15 @@ class ResearchHostPackageCrossSurfaceParityTests(unittest.TestCase):
                 (codex / ".codex-plugin" / "plugin.json").read_text(encoding="utf-8")
             )
 
-            self.assertEqual(claude_manifest["name"], bundle["plugin_name"])
-            self.assertEqual(codex_manifest["name"], bundle["plugin_name"])
-            self.assertEqual(claude_manifest["description"], bundle["description"])
-            self.assertEqual(codex_manifest["description"], bundle["description"])
-            self.assertEqual(codex_manifest["interface"]["displayName"], bundle["display"])
-            self.assertEqual(codex_manifest["interface"]["shortDescription"], bundle["description"])
+            self.assertEqual(claude_manifest["name"], claude_bundle["plugin_name"])
+            self.assertEqual(codex_manifest["name"], codex_bundle["plugin_name"])
+            self.assertEqual(claude_manifest["description"], claude_bundle["description"])
+            self.assertEqual(codex_manifest["description"], codex_bundle["description"])
+            self.assertEqual(codex_manifest["interface"]["displayName"], codex_bundle["display"])
+            self.assertEqual(
+                codex_manifest["interface"]["shortDescription"],
+                codex_bundle["description"],
+            )
             self.assertEqual(claude_manifest["version"], version)
             self.assertEqual(codex_manifest["version"], version)
 
