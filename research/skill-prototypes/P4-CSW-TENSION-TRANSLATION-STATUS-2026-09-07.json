@@ -4,6 +4,14 @@
   "locale": "en-US",
   "human_record": "research/skill-prototypes/P4-CSW-TENSION-TRANSLATION-STATUS-2026-09-07.md",
   "manifest": "i18n/translation-manifest.json",
+  "scope_files": [
+    "ROUTER.md",
+    "core/cognitive-stance.md",
+    "core/principles-and-constraints.md",
+    "governance/evaluation.md",
+    "methods/integration.md",
+    "methods/transformation.md"
+  ],
   "expected_stale_files": [
     "ROUTER.md",
     "core/cognitive-stance.md",
@@ -41,6 +49,7 @@
     ]
   },
   "refresh_command": "make update-en-hashes",
+  "synchronization_command": "python scripts/mark_research_translation_refresh_synchronized.py",
   "followup_commands": [
     "make research-skill-check",
     "make build",
@@ -48,8 +57,9 @@
   ],
   "invariants": [
     "do not guess or hand-enter translation hashes",
+    "scope_files preserves the bilingual semantic-edit scope after hash synchronization",
     "pending status must identify the exact canonical files whose current Japanese bytes differ from translation-manifest tracking",
-    "English counterparts must exist and contain the declared tension/emergence boundary markers",
+    "English counterparts must exist and contain the declared tension/emergence boundary markers for every scope file",
     "files outside expected_stale_files must remain synchronized with the translation manifest",
     "hash refresh records source tracking only after bilingual semantic review; stale tracking is not translated-and-validated status",
     "translation refresh does not authorize production promotion"
