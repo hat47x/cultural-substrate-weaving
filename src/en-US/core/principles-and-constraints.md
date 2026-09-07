@@ -26,6 +26,8 @@ As an exploration and recording method, this skill keeps two forms of fidelity d
 
 This distinction is an information structure that lets the requester or executing AI later examine correspondences.
 
+Dual fidelity is not complete merely because both sides are archived separately. **Keep enough of each side intact to observe how difference, resistance, or contradiction changes through contact.** Do not erase the difference by absorbing the target into the framework, and do not weaken the framework into a convenient metaphor just to make it fit.
+
 ## Attribution principle
 
 **Return structures obtained from external frameworks to the target for validation. Treat only parts independently supported by target-side material as findings that have been confirmed on the target side.**
@@ -36,8 +38,10 @@ Distinguish when needed:
 
 - `target_supported`: independently supported by target-side sources, observation, or falsification.
 - `framework_generated`: a question, hypothesis, contrast, mapping candidate, or compositional resource generated from a cultural framework.
-- `cross_field_emergent`: a third structure arising from contact among frameworks, or between a framework and KJ.
+- `cross_field_emergent`: **a third structure arising through contact between target and framework, among frameworks, or between a framework and a synthesis process, as a distinction, question, relation, or recomposition that cannot be reduced to either original side. This explicitly includes structures produced by misfit, resistance, and mutual revision rather than only by agreement.**
 - `unresolved`: a residual on which usefulness, attribution, or confidence has not yet been decided.
+
+Do not use `cross_field_emergent` as a label that automatically declares a contradiction resolved. Use it only when it remains possible to trace what was preserved, what was negated, and what was recomposed. Simple mixture, framework-language restatement of the target, or a compromise obtained by collapsing one side into the other does not qualify.
 
 These labels preserve provenance and evidence state. They do not automatically decide adoption, publication, or stopping.
 
