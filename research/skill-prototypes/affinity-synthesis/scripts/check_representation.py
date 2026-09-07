@@ -10,6 +10,10 @@ from render_lineage import LineageGraph
 from validate_map import validate
 
 
+ROOT = Path(__file__).resolve().parents[1]
+TEMPLATE_PATH = ROOT / "references" / "TEMPLATE.md"
+
+
 def assert_true(condition: bool, message: str) -> None:
     if not condition:
         raise AssertionError(message)
@@ -24,6 +28,30 @@ def direct_card_membership_counts(data: dict) -> Counter[str]:
             if member in cards:
                 counts[member] += 1
     return counts
+
+
+def check_reader_facing_overview() -> None:
+    text = TEMPLATE_PATH.read_text(encoding="utf-8")
+    assert_true(
+        "Reader-facing Overview — fill last" in text,
+        "standard output must keep the reader-facing overview as a post-synthesis projection",
+    )
+    assert_true(
+        "Member count" in text and "truth" in text and "importance" in text,
+        "overview must state that member count is descriptive rather than truth/importance",
+    )
+    assert_true(
+        "Anchor refs" in text and "navigation" in text,
+        "overview anchor refs must remain navigation rather than evidence substitution",
+    )
+    assert_true(
+        "Residuals that change the reading" in text,
+        "overview must keep residuals visible to summary-only readers",
+    )
+    assert_true(
+        "Weight (H/M/L)" not in text,
+        "standard output must not import affinity-map weight scoring as a default semantic field",
+    )
 
 
 def main() -> None:
@@ -83,6 +111,8 @@ def main() -> None:
         any("narrative N001 basis ref does not resolve" in warning for warning in invalid_warnings),
         "validator must expose unresolved narrative lineage",
     )
+
+    check_reader_facing_overview()
 
     with tempfile.TemporaryDirectory() as tmp:
         path = Path(tmp) / "hierarchy.mmd"
