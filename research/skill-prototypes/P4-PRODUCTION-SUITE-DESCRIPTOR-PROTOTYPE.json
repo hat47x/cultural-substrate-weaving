@@ -1,0 +1,140 @@
+{
+  "schema": "csw.production-suite-promotion-prototype/v1",
+  "status": "design-only",
+  "suite_id": "cultural-substrate-weaving-method-suite",
+  "version_source": "VERSION",
+  "canonical_locale": "ja-JP",
+  "locales": ["ja-JP", "en-US"],
+  "first_wave_distributions": [
+    "openai_skill",
+    "claude_plugin",
+    "codex_plugin"
+  ],
+  "deferred_composite_distributions": [
+    "chatgpt_gpt",
+    "microsoft_copilot"
+  ],
+  "skills": [
+    {
+      "research_id": "cultural-substrate-weaving",
+      "role": "cultural_framework_exploration",
+      "proposed_installable_name": "cultural-substrate-weaving",
+      "public_name_status": "existing",
+      "production_source": {
+        "mode": "canonical_manifest",
+        "manifest": "src/manifest.json"
+      },
+      "targets": {
+        "openai_skill": "cultural-substrate-weaving",
+        "claude_plugin": "weave",
+        "codex_plugin": "weave"
+      },
+      "adapter_metadata": {
+        "openai_skill": {
+          "mode": "existing-per-locale-profile",
+          "source_pattern": "adapters/openai-skill/{locale}/openai.{profile}.yaml"
+        },
+        "claude_plugin": {
+          "mode": "existing-locale-catalog-to-update",
+          "source": "adapters/claude-code/locales.json"
+        },
+        "codex_plugin": {
+          "mode": "existing-locale-catalog-to-update",
+          "source": "adapters/claude-code/locales.json"
+        }
+      }
+    },
+    {
+      "research_id": "affinity-synthesis",
+      "role": "one_round_material_synthesis",
+      "proposed_installable_name": "material-led-synthesis",
+      "public_name_status": "candidate-after-collision-audit",
+      "production_source": {
+        "mode": "locale_tree",
+        "root_pattern": "src/skills/material-led-synthesis/{locale}",
+        "runtime_entry": "SKILL.md"
+      },
+      "targets": {
+        "openai_skill": "material-led-synthesis",
+        "claude_plugin": "material-led-synthesis",
+        "codex_plugin": "material-led-synthesis"
+      },
+      "adapter_metadata": {
+        "openai_skill": {
+          "mode": "planned-promotion-from-research-prototype",
+          "source_pattern": "adapters/openai-skill/{locale}/material-led-synthesis/openai.{profile}.yaml"
+        },
+        "claude_plugin": {
+          "mode": "bundle-via-locale-catalog",
+          "source": "adapters/claude-code/locales.json"
+        },
+        "codex_plugin": {
+          "mode": "bundle-via-locale-catalog",
+          "source": "adapters/claude-code/locales.json"
+        }
+      }
+    },
+    {
+      "research_id": "iterative-inquiry-synthesis",
+      "role": "multi_round_inquiry_orchestration",
+      "proposed_installable_name": "iterative-inquiry-synthesis",
+      "public_name_status": "candidate-no-current-exact-collision-found",
+      "production_source": {
+        "mode": "locale_tree",
+        "root_pattern": "src/skills/iterative-inquiry-synthesis/{locale}",
+        "runtime_entry": "SKILL.md"
+      },
+      "targets": {
+        "openai_skill": "iterative-inquiry-synthesis",
+        "claude_plugin": "iterative-inquiry-synthesis",
+        "codex_plugin": "iterative-inquiry-synthesis"
+      },
+      "adapter_metadata": {
+        "openai_skill": {
+          "mode": "planned-promotion-from-research-prototype",
+          "source_pattern": "adapters/openai-skill/{locale}/iterative-inquiry-synthesis/openai.{profile}.yaml"
+        },
+        "claude_plugin": {
+          "mode": "bundle-via-locale-catalog",
+          "source": "adapters/claude-code/locales.json"
+        },
+        "codex_plugin": {
+          "mode": "bundle-via-locale-catalog",
+          "source": "adapters/claude-code/locales.json"
+        }
+      }
+    }
+  ],
+  "bundle_identity": {
+    "ja-JP": {
+      "plugin_name": "cultural-substrate-weaving-ja",
+      "display": "Cultural Substrate Weaving — 日本語"
+    },
+    "en-US": {
+      "plugin_name": "cultural-substrate-weaving-en",
+      "display": "Cultural Substrate Weaving — English"
+    }
+  },
+  "release_shape": {
+    "keep_existing_distribution_package_kinds": true,
+    "openai_package_contains_three_standalone_skills": true,
+    "claude_package_contains_three_skill_subtrees": true,
+    "codex_reuses_claude_plugin_skill_tree": true,
+    "add_new_codex_release_zip_kind": false,
+    "marketplace_generation_in_first_builder_change": false
+  },
+  "promotion_preconditions": [
+    "complete-checkout research-skill-check passes",
+    "public installable names are rechecked immediately before canonical promotion",
+    "English sibling Skill realizations receive independent review",
+    "research prototype metadata is promoted into production adapter paths rather than read directly by production build",
+    "production builder and validator are generalized with generated-artifact diff review",
+    "release validation checks internal three-Skill composition before public promotion"
+  ],
+  "forbidden_production_inputs": [
+    "research/skill-prototypes/suite-manifest.json",
+    "research/skill-prototypes/adapter-metadata-plan.json",
+    "research/skill-prototypes/adapters/"
+  ],
+  "note": "Design-only promotion descriptor. It is not a production manifest, is not read by scripts/build.py, and does not authorize creating src/skills or changing public package names before the listed promotion preconditions pass."
+}
