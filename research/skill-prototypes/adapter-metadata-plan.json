@@ -16,10 +16,12 @@
         "affinity-synthesis": {
           "ja-JP": {
             "interactive": {
-              "status": "planned"
+              "status": "prototype",
+              "source": "research/skill-prototypes/adapters/openai-skill/ja-JP/affinity-synthesis/openai.interactive.yaml"
             },
             "metered": {
-              "status": "planned"
+              "status": "prototype",
+              "source": "research/skill-prototypes/adapters/openai-skill/ja-JP/affinity-synthesis/openai.metered.yaml"
             }
           },
           "en-US": {
@@ -34,10 +36,12 @@
         "iterative-inquiry-synthesis": {
           "ja-JP": {
             "interactive": {
-              "status": "planned"
+              "status": "prototype",
+              "source": "research/skill-prototypes/adapters/openai-skill/ja-JP/iterative-inquiry-synthesis/openai.interactive.yaml"
             },
             "metered": {
-              "status": "planned"
+              "status": "prototype",
+              "source": "research/skill-prototypes/adapters/openai-skill/ja-JP/iterative-inquiry-synthesis/openai.metered.yaml"
             }
           },
           "en-US": {
