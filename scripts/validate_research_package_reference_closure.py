@@ -1,9 +1,10 @@
 #!/usr/bin/env python3
-"""Validate local runtime-entry references against research package contents.
+"""Validate package-local references across declared research package Markdown.
 
-The research suite can declare an explicit package file set that is internally
-valid yet still omit a progressive-reference file named by SKILL.md. This
-checker closes that gap without deciding promotion or release readiness.
+An explicit package file set can be internally valid yet still contain a
+progressive-reference path to a file that was omitted from the package. Check
+all declared Markdown files, not only the runtime entry, so a packaged Method
+Definition cannot introduce an unchecked second-hop reference.
 """
 
 from __future__ import annotations
@@ -51,6 +52,47 @@ def _package_local_reference(token: str) -> str | None:
     return pure.as_posix()
 
 
+def _validate_markdown_references(
+    *,
+    errors: list[str],
+    skill_id: str,
+    locale: str,
+    package_root: Path,
+    declared: set[str],
+    source_relative: str,
+) -> None:
+    source = (package_root / Path(source_relative)).resolve()
+    if not source.is_relative_to(package_root) or not source.is_file():
+        return
+    if source.suffix.lower() != ".md":
+        return
+
+    text = source.read_text(encoding="utf-8")
+    for token in sorted(_candidate_refs(text)):
+        relative = _package_local_reference(token)
+        if relative is None:
+            continue
+
+        candidate = (package_root / Path(relative)).resolve()
+        if not candidate.is_relative_to(package_root):
+            errors.append(
+                f"skill {skill_id}: locale {locale} package file {source_relative} "
+                f"reference escapes package root: {relative}"
+            )
+            continue
+        if not candidate.is_file():
+            errors.append(
+                f"skill {skill_id}: locale {locale} package file {source_relative} "
+                f"reference is missing: {relative}"
+            )
+            continue
+        if relative not in declared:
+            errors.append(
+                f"skill {skill_id}: locale {locale} package file {source_relative} "
+                f"reference is not included in package_source.files: {relative}"
+            )
+
+
 def validate_package_reference_closure(root: Path, manifest: dict) -> list[str]:
     errors: list[str] = []
     for skill in manifest.get("skills", []):
@@ -82,29 +124,15 @@ def validate_package_reference_closure(root: Path, manifest: dict) -> list[str]:
                 continue
 
             declared = {PurePosixPath(item).as_posix() for item in files}
-            text = runtime_path.read_text(encoding="utf-8")
-            for token in sorted(_candidate_refs(text)):
-                relative = _package_local_reference(token)
-                if relative is None:
-                    continue
-
-                candidate = (package_root / Path(relative)).resolve()
-                if not candidate.is_relative_to(package_root):
-                    errors.append(
-                        f"skill {skill_id}: locale {locale} runtime reference escapes package root: "
-                        f"{relative}"
-                    )
-                    continue
-                if not candidate.is_file():
-                    errors.append(
-                        f"skill {skill_id}: locale {locale} runtime reference is missing: {relative}"
-                    )
-                    continue
-                if relative not in declared:
-                    errors.append(
-                        f"skill {skill_id}: locale {locale} runtime reference is not included in "
-                        f"package_source.files: {relative}"
-                    )
+            for source_relative in sorted(declared):
+                _validate_markdown_references(
+                    errors=errors,
+                    skill_id=skill_id,
+                    locale=str(locale),
+                    package_root=package_root,
+                    declared=declared,
+                    source_relative=source_relative,
+                )
 
     return errors
 
@@ -122,7 +150,7 @@ def main() -> int:
             print(f"ERROR: {error}", file=sys.stderr)
         return 1
 
-    print("Research package runtime references are closed over declared package files")
+    print("Research package Markdown references are closed over declared package files")
     return 0
 
 
