@@ -1,8 +1,9 @@
 #!/usr/bin/env python3
 """Validate CSW target-framework tension / cross-field emergence boundaries.
 
-This research check keeps the new tension-derived emergence principle inside CSW
-and prevents it from becoming a mandatory Layer-1 synthesis algorithm.
+This research check keeps tension-derived emergence as a CSW contact/attribution
+responsibility, verifies it through runtime and evaluation, and prevents it from
+becoming a mandatory Layer-1 or Layer-2 synthesis/orchestration algorithm.
 """
 
 from __future__ import annotations
@@ -12,6 +13,16 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 
 REQUIRED: dict[str, tuple[str, ...]] = {
+    "src/ja-JP/ROUTER.md": (
+        "体系との一致だけでなく、対象が体系を押し返す不一致・抵抗・逆転にも注意し",
+        "**対応 ≠ 統合**",
+        "第三構造が生じても、対象側の独立supportなしに事実へ昇格させない",
+    ),
+    "src/en-US/ROUTER.md": (
+        "misfit, resistance, reversal, or excess",
+        "**Correspondence != synthesis**",
+        "Do not promote a third structure to target-side fact without independent target-side support",
+    ),
     "src/ja-JP/core/cognitive-stance.md": (
         "## 一致より、緊張から何が生まれるかを見る",
         "止揚（Aufhebung）",
@@ -36,6 +47,11 @@ REQUIRED: dict[str, tuple[str, ...]] = {
         "framework_side_claim_or_operation:",
         "cross_field_candidate:",
         "これはLayer 1に弁証法や文化体系処理を実装させるためではない",
+    ),
+    "src/ja-JP/governance/evaluation.md": (
+        "## 一致より、情報を生んだ緊張を見る",
+        "止揚を成功quotaにしない",
+        "第三構造が生じなかった場合も、それを失敗として捏造で埋めていない",
     ),
     "src/en-US/core/cognitive-stance.md": (
         "## Look for what tension produces, not only for fit",
@@ -62,6 +78,22 @@ REQUIRED: dict[str, tuple[str, ...]] = {
         "cross_field_candidate:",
         "This does not ask Layer 1 to implement dialectics or cultural-framework interpretation",
     ),
+    "src/en-US/governance/evaluation.md": (
+        "## Look for informative tension rather than fit alone",
+        "Do not make sublation a success quota",
+        "When no third structure emerged, the result was not fabricated merely to make the exploration look successful",
+    ),
+    "docs/ja/maintainers/csw-tension-emergence-and-aufhebung-contract.md": (
+        "文化体系が**都合のよい解釈資源**になりやすい",
+        "アウフヘーベンを成功quotaや必須stageにしない",
+        "対象との抵抗によって新しい差・問い・構造を立ち上げる認知場",
+    ),
+    "research/skill-prototypes/evals/CSW-TENSION-EMERGENCE-CASES.md": (
+        "Framework fit is not itself a success condition",
+        "Generic compromise masquerading as Aufhebung",
+        "Tension without synthesis",
+        "without turning those distinctions into a fixed stage sequence or success quota",
+    ),
     "research/skill-prototypes/evals/CSW-TENSION-AND-SUBLATION-CASES-2026-09-07.md": (
         "対象と体系の緊張、不一致、抵抗、相互修正から生じる情報",
         "Hegelian stage modelをそのままruntimeへ導入する意味ではない",
@@ -72,9 +104,14 @@ REQUIRED: dict[str, tuple[str, ...]] = {
         "tension may end without synthesis",
         "framework agreement can be less informative than disagreement",
     ),
+    "research/skill-prototypes/evals/CSW-HANDOFF-CASES.md": (
+        "cross-field emergence is neither source fact nor pure framework output",
+        "cross_field_emergent",
+        "framework妥当性の追加supportとして数えない",
+    ),
 }
 
-FORBIDDEN_IN_LAYER1: dict[str, tuple[str, ...]] = {
+FORBIDDEN_OUTSIDE_CSW: dict[str, tuple[str, ...]] = {
     "research/skill-prototypes/affinity-synthesis/SKILL.md": (
         "止揚",
         "アウフヘーベン",
@@ -91,6 +128,26 @@ FORBIDDEN_IN_LAYER1: dict[str, tuple[str, ...]] = {
         "正・反・合",
     ),
     "research/skill-prototypes/affinity-synthesis/references/METHOD.en.md": (
+        "sublation",
+        "Aufhebung",
+        "thesis-antithesis-synthesis",
+    ),
+    "research/skill-prototypes/iterative-inquiry-synthesis/SKILL.md": (
+        "止揚",
+        "アウフヘーベン",
+        "正・反・合",
+    ),
+    "research/skill-prototypes/iterative-inquiry-synthesis/SKILL.en.md": (
+        "sublation",
+        "Aufhebung",
+        "thesis-antithesis-synthesis",
+    ),
+    "research/skill-prototypes/iterative-inquiry-synthesis/references/METHOD.md": (
+        "止揚",
+        "アウフヘーベン",
+        "正・反・合",
+    ),
+    "research/skill-prototypes/iterative-inquiry-synthesis/references/METHOD.en.md": (
         "sublation",
         "Aufhebung",
         "thesis-antithesis-synthesis",
@@ -115,31 +172,30 @@ def validate() -> list[str]:
             if marker not in text:
                 errors.append(f"{relative}: missing tension/emergence marker: {marker}")
 
-    for relative, markers in FORBIDDEN_IN_LAYER1.items():
+    for relative, markers in FORBIDDEN_OUTSIDE_CSW.items():
         path = ROOT / relative
         if not path.is_file():
-            errors.append(f"Layer-1 boundary asset missing: {relative}")
+            errors.append(f"non-CSW boundary asset missing: {relative}")
             continue
         text = path.read_text(encoding="utf-8")
         for marker in markers:
             if marker in text:
                 errors.append(
-                    f"{relative}: CSW-specific tension/sublation vocabulary leaked into Layer 1: {marker}"
+                    f"{relative}: CSW-specific tension/sublation vocabulary leaked outside CSW ownership: {marker}"
                 )
 
     # The handoff contract must carry the generating tension, not only a polished third statement.
-    ja_integration = _read("src/ja-JP/methods/integration.md")
     trio = (
         "target_side_tension:",
         "framework_side_claim_or_operation:",
         "cross_field_candidate:",
     )
-    if not all(marker in ja_integration for marker in trio):
-        errors.append("Japanese CSW -> Layer-1 handoff must preserve the full tension lineage trio")
-
-    en_integration = _read("src/en-US/methods/integration.md")
-    if not all(marker in en_integration for marker in trio):
-        errors.append("English CSW -> Layer-1 handoff must preserve the full tension lineage trio")
+    for locale in ("ja-JP", "en-US"):
+        integration = _read(f"src/{locale}/methods/integration.md")
+        if not all(marker in integration for marker in trio):
+            errors.append(
+                f"{locale} CSW -> Layer-1 handoff must preserve the full tension lineage trio"
+            )
 
     return errors
 
