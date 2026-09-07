@@ -47,7 +47,7 @@ host materialization implementation
 - CSWは文化的体系による探索、体系由来候補の帰属、対象側への戻しを中心責務として残す方向です。
 - CSW → Iterative → Affinityのhandoffでは、framework由来候補のprovenance / epistemic statusを保持し、target-side supportへ無言で昇格させません。
 - compatible one-round synthesisが必要なのに利用できない場合、未実行の処理を実行済みと扱いません。
-- canonical `integration.md` / `iteration.md` は、分離後のhandoffと評価が十分になるまで縮小しません。
+- research branch上のthin canonical ownership experimentは進めてよいが、その結果をhandoff・評価・promotion gateなしにdevelop / production baselineへ昇格しません。
 - package、translation、adapter metadata等のprototypeが存在することは、production readyを意味しません。
 
 ## 統合グループA — research parity / host-package contract
@@ -152,7 +152,7 @@ A〜Cをすべて整えても、次は別のpromotion phaseです。
 - production descriptorへのcompanion追加
 - multi-Skill build outputの有効化
 - marketplace / release ZIPへのcompanion追加
-- canonical KJ/iteration責務の削減
+- thin-CSW ownership変更のdevelop / production昇格
 - locale/hostごとのcompanion公開
 
 ## 方法論レーンから必要なpromotion input
