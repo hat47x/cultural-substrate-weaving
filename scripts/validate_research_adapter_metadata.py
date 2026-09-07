@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """Validate research adapter-metadata declarations against the repository tree.
 
-This checker keeps metadata provenance and planned/existing states honest. It does
-not decide whether wording is production-ready or whether a package may release.
+This checker keeps metadata provenance and planned/prototype/existing states honest.
+It does not decide whether wording is production-ready or whether a package may release.
 """
 
 from __future__ import annotations
@@ -14,7 +14,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 PLAN_PATH = ROOT / "research/skill-prototypes/adapter-metadata-plan.json"
 EXPECTED_SCHEMA = "csw.research-adapter-metadata-plan/v1"
-ALLOWED_SOURCE_STATUS = {"planned", "existing"}
+ALLOWED_SOURCE_STATUS = {"planned", "prototype", "existing"}
 ALLOWED_BUNDLE_STATUS = {"planned", "existing-baseline", "reviewed"}
 SKILL_TREE_MODES = {"standalone_per_skill", "locale_bundle"}
 
