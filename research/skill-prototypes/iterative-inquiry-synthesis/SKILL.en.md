@@ -80,6 +80,22 @@ A round should be able to expose, as needed:
 
 The storage format is not fixed.
 
+### Prior synthesis handoff capsule
+
+A compatible one-round synthesis may supply a capsule containing stable semantic refs, residual anchors, source provenance or incoming epistemic status, and possible next checks.
+
+Treat this capsule as **carry-forward candidates, not reopen instructions**.
+
+1. Read the new delta first.
+2. Move only carried refs that the delta actually touches into `reopened prior artifacts / touched semantic IDs`.
+3. Untouched stable refs may remain available for identity and history, but do not record them as rechecked.
+4. A residual does not by itself justify continuing another round.
+5. A possible next check is a candidate, not an instruction to adopt a question, search, or experiment.
+6. Preserve source provenance and incoming epistemic status; do not promote a question, hypothesis, or correspondence into an observation merely because it crossed the handoff.
+7. The capsule is optional. If the prior synthesis exposes equivalent inspectable artifacts without this exact schema, use those artifacts instead. Do not make this Skill hard-dependent on one representation format.
+
+The standard research record is in `references/ROUND-TEMPLATE.md`.
+
 ### Compact delta notation
 
 With stable IDs, these symbols may describe **change operations**:
@@ -197,6 +213,9 @@ When `cultural-substrate-weaving` supplies a framework-generated question or cor
 - [ ] Previous rounds remain inspectable rather than overwritten.
 - [ ] Material that did not touch an artifact did not trigger needless reconstruction.
 - [ ] Stable semantic IDs survive when identity survives.
+- [ ] Carried refs from a handoff capsule were not reopened wholesale before inspecting the new delta.
+- [ ] Residuals or possible-next-check candidates did not trigger automatic continuation by themselves.
+- [ ] Incoming question/hypothesis/correspondence status was preserved rather than promoted to target-side fact.
 - [ ] The synthesis realization used in each round is traceable.
 - [ ] Semantic delta is separated from wording/renderer/layout delta.
 - [ ] Diagram proximity or hierarchy was not promoted into semantic relation automatically.
