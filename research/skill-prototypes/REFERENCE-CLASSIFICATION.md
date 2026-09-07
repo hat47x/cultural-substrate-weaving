@@ -72,10 +72,15 @@ Layer 1はmaterial-led one-round synthesisを所有するが、CSW固有の`targ
 例:
 
 - `affinity-synthesis/evidence/`
+- `iterative-inquiry-synthesis/evidence/`
 - maintainer review documents
 - external-skill comparison records
 
+Layer 2の `iterative-inquiry-synthesis/evidence/dossier.md` は、autoresearch / autonomous-research-loop / systematic-search系Skillとの比較から、goal、append-only ledger、recovery、evidence refs、stop boundary等を選択的に採用し、mandatory scalar metric、autonomous-until-budget、universal search backlog等をMethod不変条件にはしない判断を残す。
+
 これは**方法の根拠や設計判断を監査する研究資料**であり、Agentが毎回読むruntime instructionではない。
+
+したがって、Layer 2 dossierがsuite manifestのskill-owned `evidence` に登録されることと、各localeの `package_source.files` に入ることは別である。現在のresearch packageはこのdossierをruntime dependencyとして含めない。
 
 英訳は公開説明や外部査読には有益だが、英語Skillを実行するための必須依存にはしない。
 
@@ -124,6 +129,8 @@ locale parityを一つのbooleanへ潰さない。
 5. **Research-material localization** — evidence / eval / migration文書の翻訳状態。
 6. **Independent review** — 翻訳が意味を保つことを独立に確認したか。
 7. **Translation-manifest hash parity** — canonical Japanese bytesと英訳追跡manifestが現在のsourceへ同期しているか。
+
+Method Definition parityについては、numbered invariant surfaceの静的checkを補助的に使える。これは重要節の欠落を検出するが、自然な英訳や意味の独立査読を代替しない。
 
 1〜4が揃っても、5〜7が未完であれば `translated draft` として扱える。逆に、研究記録を大量に英訳してもruntime / Method Definitionの意味対応が崩れていればparityとはしない。
 
