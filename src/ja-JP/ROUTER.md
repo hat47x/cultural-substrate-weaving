@@ -4,7 +4,7 @@
 
 本スキルは、文化的体系を答えや分類器として使うのではなく、対象を見るための一時的な認知場として開く。
 
-位置、関係、状態、遷移、周期、象徴、境界、経路など、通常分析とは異なる構造候補を得たら、対象材料へ戻して、何が支えられ、何が支えられず、何が新しい問いとして残るかを確かめる。
+位置、関係、状態、遷移、周期、象徴、境界、経路など、通常分析とは異なる構造候補を得たら、対象材料へ戻して、何が支えられ、何が支えられず、何が新しい問いとして残るかを確かめる。**体系との一致だけでなく、対象が体系を押し返す不一致・抵抗・逆転にも注意し、その緊張から元のどちらにも還元できない第三構造が生じるかを見る。**
 
 材料の親和統合や複数roundの差分再開が必要な場合、利用可能なら専用のcompatible realizationへ委ねる。CSWはそれらの内部アルゴリズムを所有しない。
 
@@ -32,8 +32,8 @@ compatible realizationがない環境でも、CSW自体の文化体系探索、�
 3. **基準線と保持事項を置く**：元材料、対象固有の事実・例外、領域固有手法だけの出力を確認する。
 4. **必要なら材料統合へ委ねる**：多数・異種の材料から構造を立ち上げる必要があれば、`methods/integration.md` の接続契約からcompatible synthesis realizationへ渡す。
 5. **文化体系を開く**：外部利用条件と委任範囲に応じて `not_loaded / probe / preview / full / enacted` 等を使い分ける。
-6. **探索する**：文化体系から問い・関係・状態・遷移・対応候補を得る。体系固有構造を汎用語へ早く薄めない。
-7. **対象へ返す**：`target_supported / framework_generated / cross_field_emergent / unresolved` を混同せず保持する。
+6. **探索する**：文化体系から問い・関係・状態・遷移・対応候補を得る。体系固有構造を汎用語へ早く薄めない。対応だけでなく、対象との不一致・抵抗・相互修正から何が生じるかを見る。
+7. **対象へ返す**：`target_supported / framework_generated / cross_field_emergent / unresolved` を混同せず保持する。第三構造が生じても、対象側の独立supportなしに事実へ昇格させない。
 8. **必要ならround deltaへ渡す**：新しいframework contactが旧artifactや残差へ触れるなら、`core/iteration.md` の接続契約からcompatible iterative realizationへ渡す。
 9. **実作業へ反映する**：成果物、判断材料、調査方針、残差、再開条件へ反映する。区切りや採否は外部利用条件に従う。
 
@@ -44,6 +44,7 @@ compatible realizationがない環境でも、CSW自体の文化体系探索、�
 - **状態記録 ≠ 決定権**：来歴、証拠状態、利用深度を区別して残すことと、その区別から採否・停止・公開を決めることを分ける。
 - **保存 ≠ 現在の注意**：正本は厚く残し、今回前景化する範囲は必要に応じて選ぶ。
 - **探索 ≠ 帰属**：体系から問いを得ることと、対象にその構造があると主張することを分ける。
+- **対応 ≠ 統合**：体系とのきれいな対応は、それ自体では第三構造ではない。対象と体系の差が保存されたまま新しい区別・関係・問いへ組み替わったかを見る。
 - **de-binding ≠ 証拠**：体系語彙を外して文が成立しても、対象側の独立supportが増えたことにはならない。
 - **利用状態 ≠ 成否評価**：読み込み状態や不採用は探索状態であり、それ自体を成否評価にしない。
 - **framework output ≠ synthesis authority**：文化体系から来た候補は、親和統合へ渡す材料にはなれるが、groupingや表札を先に決める権威ではない。
@@ -60,7 +61,7 @@ compatible realizationがない環境でも、CSW自体の文化体系探索、�
 | 対象範囲、基準線、事実整理 | [01-scope-and-facts.md](methods/scope-and-facts.md) |
 | 体系の選定、探索／帰属利用 | [02-system-selection.md](methods/system-selection.md) |
 | 割当、遷移、採用後検査、出口 | [02a-framework-application.md](methods/framework-application.md) |
-| 関係種別、欠落と接続、複数体系 | [03-transformation.md](methods/transformation.md) |
+| 関係種別、対象と体系の緊張、欠落と接続、複数体系 | [03-transformation.md](methods/transformation.md) |
 | 人間の身体反応をTaihekiで探索 | [05-human-and-taiheki.md](domains/human-and-taiheki.md) |
 | 判断来歴、長期event | [08-governance-and-records.md](governance/governance-and-records.md) |
 | 最終評価 | [09-evaluation.md](governance/evaluation.md) |
