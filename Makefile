@@ -54,6 +54,8 @@ research-skill-check:
 	python research/skill-prototypes/scripts/plan_suite_layout.py >/dev/null
 	python research/skill-prototypes/scripts/plan_skill_subtrees.py >/dev/null
 	python research/skill-prototypes/scripts/plan_skill_entry_transforms.py >/dev/null
+	python scripts/validate_research_adapter_metadata.py
+	python research/skill-prototypes/scripts/plan_adapter_metadata.py >/dev/null
 	python research/skill-prototypes/check_split_ownership.py
 	python research/skill-prototypes/build_preview.py --check
 	python research/skill-prototypes/affinity-synthesis/scripts/check_representation.py
