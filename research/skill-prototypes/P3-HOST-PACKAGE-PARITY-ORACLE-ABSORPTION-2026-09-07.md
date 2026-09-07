@@ -41,9 +41,11 @@ metadata wordingをmaterializer側で再生成・再解釈しません。
 
 host差はplugin manifestへ閉じ、method treeを分岐させません。
 
-### Bundle wording / VERSION parity
+### Declared bundle wording / VERSION parity
 
-materialized Claude/Codex manifestについて、bundle prototypeのplugin identity / description / display wordingとrepository `VERSION` 由来versionが一致することを要求します。
+materialized Claude/Codex manifestについて、その時点で`adapter-metadata-plan.json`が宣言するbundle metadataのplugin identity / description / display wordingと、repository `VERSION` 由来versionが一致することを要求します。
+
+bundle metadataが`prototype`の間は`prototype_source`を、`reviewed`へ昇格した後はproduction locale catalogを読むため、test自身が特定のmaturityへ固定されません。
 
 ## 吸収しないもの
 
