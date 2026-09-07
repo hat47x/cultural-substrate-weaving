@@ -57,6 +57,8 @@ The following are not invariants of this method:
 
 This method also supports inquiry in research, creation, analysis, and design that cannot be reduced to one scalar metric.
 
+The detailed external-Skill comparison and adoption decisions are kept in `evidence/dossier.md`.
+
 ## Inputs
 
 - current inquiry / question;
@@ -154,6 +156,10 @@ Web research, interviews, experiments, and cultural frameworks may supply materi
 
 An exploration route supplies input; it does not automatically determine truth status.
 
+When external exploration output is handed to a one-round synthesis, preserve enough information to distinguish its origin, operation, and incoming status/role from target-side source material. A question, hypothesis, correspondence, or unresolved item must not silently become an independent observation or independent support merely because it entered another round.
+
+If later target-side material independently supports the candidate, record the new support without erasing the original exploration provenance.
+
 ### I12. No private chain-of-thought as history
 
 The method history consists of externally meaningful artifacts: inquiry, material, outputs, deltas, residuals, and decision reasons. Token-by-token hidden reasoning is not the canonical record.
@@ -175,26 +181,62 @@ Do not count a moved diagram node or changed sentence order as a new structural 
 
 If representation change may have altered interpretation, return from the projection to the semantic record and recheck it.
 
+### I15. Missing synthesis realization stays explicit
+
+When a round requires one-round synthesis but no compatible realization is available, Layer 2 must not improvise a different grouping, labeling, or return-check procedure and then treat the round as already synthesized.
+
+Distinguish at least these cases:
+
+- synthesis is not required and the round only updates delta/history state;
+- synthesis is required but no compatible realization is available, so the input remains unsynthesized and the round stops or hands off explicitly;
+- the caller explicitly selects another realization, which is recorded and used as that realization rather than silently relabeled as the preferred one.
+
+Temporary unavailability is not automatically a permanent failure. If a compatible realization becomes available later, the pending input delta and reopen targets may be revisited.
+
+### I16. Carry-forward state is not reopen or continuation authority
+
+Preserving semantic identity, provenance, residuals, or possible checks from a prior round is not the same as reopening them now.
+
+A later round first reads the current delta, then reopens only the subset of carried state that the delta actually touches. Untouched artifacts are not recorded as rechecked or unchanged merely because they were carried forward.
+
+Likewise, the existence of a residual or possible next check does not by itself justify continuing another round.
+
+```text
+preserve / carry forward
+    !=
+reopen now
+    !=
+continue another round
+```
+
+This invariant does not require a particular handoff schema or ID format.
+
 ## Round kernel
 
 ```text
 receive delta
   ↓
-locate touched artifacts / stable semantic IDs
+receive prior carried state when available
+  ↓
+locate only touched artifacts / stable semantic IDs
   ↓
 state current inquiry
   ↓
 reopen locally or globally with reason
   ↓
-run one compatible synthesis realization
+if synthesis is required:
+    run one explicitly bound compatible synthesis realization
+    or record synthesis unavailable and stop / hand off without pretending it ran
+else:
+    continue with delta/history management only
   ↓
-compare with prior semantic structure
+compare with prior semantic structure when synthesis produced a comparable result
   ↓
 separate semantic delta from representation-only delta
   ↓
 record new / changed / unchanged / withdrawn / residual
   ↓
-continue | stop | handoff
+continue | stop | hand off for an explicit reason
   ↓
 append round snapshot
 ```
@@ -208,9 +250,12 @@ Generative AI can reread and resynthesize material cheaply, making many rounds e
 - repeatedly processing derivatives until they look like independent support;
 - deleting residuals to manufacture completion;
 - confusing endless iteration with depth;
-- treating renderer/layout changes as meaning changes.
+- treating renderer/layout changes as meaning changes;
+- reactivating all carried state every round and turning local delta into total regeneration.
 
 The central AI-era correction is to use recomputation capacity for **delta-based reopening rather than automatic total regeneration**.
+
+Round count itself is not converted into greater truth, confidence, or independent support.
 
 ## Relationship to Affinity Synthesis
 
@@ -220,7 +265,11 @@ The central AI-era correction is to use recomputation capacity for **delta-based
 
 Layer 2 does not reimplement Layer 1 grouping or labeling algorithms.
 
+If no compatible one-round synthesis realization is available, this ownership boundary still holds. Do not claim a required synthesis ran; preserve the unsynthesized input, reopen refs, and handoff reason instead.
+
 If the one-round representation has stable semantic IDs, Layer 2 may reuse them for local reopening and delta comparison.
+
+When the representation also carries handoff state, Layer 2 treats it as carry-forward context rather than as a command to reopen everything.
 
 ## Relationship to Cultural Substrate Weaving
 
@@ -237,9 +286,12 @@ Layer 2 preserves that origin when connecting them to later material. Framework-
 - converting guesses into facts to eliminate unresolved material;
 - treating stopping as failure and iterating indefinitely;
 - confusing realization changes with material changes;
+- claiming synthesis ran when a compatible realization was unavailable;
 - promoting an external exploration hypothesis to source fact;
 - counting wording/renderer/layout changes as semantic discoveries;
-- assigning new IDs every round and making local comparison impossible.
+- assigning new IDs every round and making local comparison impossible;
+- reopening every carried ref and marking untouched artifacts as checked;
+- continuing merely because a residual remains.
 
 ## Realization boundary
 
