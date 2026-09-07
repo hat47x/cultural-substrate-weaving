@@ -71,6 +71,7 @@ research-skill-check:
 	python research/skill-prototypes/check_split_ownership.py
 	python research/skill-prototypes/build_preview.py --check
 	python research/skill-prototypes/affinity-synthesis/scripts/check_representation.py
+	python research/skill-prototypes/iterative-inquiry-synthesis/scripts/check_method_parity.py
 	python -m unittest discover -s tests -p 'test_research_*.py'
 
 check: repository-contracts generated-artifacts-check validate japanese-docs-check test tokens living-lab-check living-lab-summary
