@@ -73,6 +73,7 @@ def validate_complete_checkout_gate(root: Path, descriptor: dict) -> list[str]:
             for marker in (
                 "Status: **blocked / not run**",
                 "translation-manifest hash refresh:       NOT RUN",
+                "translation research state transition:  NOT RUN",
                 "complete-checkout research-skill-check: NOT RUN",
                 "production build regeneration:          NOT RUN",
                 "full repository make check:             NOT RUN",
@@ -86,6 +87,7 @@ def validate_complete_checkout_gate(root: Path, descriptor: dict) -> list[str]:
             for marker in (
                 "execution commit:",
                 "make update-en-hashes: PASS",
+                "translation research state transition: PASS",
                 "make research-skill-check: PASS",
                 "make build: PASS",
                 "make check: PASS",
