@@ -10,7 +10,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[3]
 SUITE_PATH = ROOT / "research/skill-prototypes/suite-manifest.json"
 METADATA_PATH = ROOT / "research/skill-prototypes/adapter-metadata-plan.json"
-PLANNER_DIR = ROOT / "research/skill-prototypes/scripts"
+PLANNER_DIR = ROOT / "research" / "skill-prototypes" / "scripts"
 VALIDATOR_DIR = ROOT / "scripts"
 for path in (PLANNER_DIR, VALIDATOR_DIR):
     if str(path) not in sys.path:
@@ -35,7 +35,11 @@ def _profile_metadata_state(profile_output: dict[str, dict]) -> str:
     return "mixed"
 
 
-def _openai_locale_plan(locale: str, layout_distribution: dict, metadata_config: dict) -> dict:
+def _openai_locale_plan(
+    locale: str,
+    layout_distribution: dict,
+    metadata_config: dict,
+) -> dict:
     item_map = {item["skill_id"]: item for item in layout_distribution["items"]}
     profiles = list(metadata_config["profiles"])
     items: list[dict] = []
@@ -58,12 +62,14 @@ def _openai_locale_plan(locale: str, layout_distribution: dict, metadata_config:
             metadata_state = declared_state
             realized_metadata_states.append(metadata_state)
 
-        items.append({
-            "skill_id": skill_id,
-            "runtime_state": item["state"],
-            "metadata_state": metadata_state,
-            "profiles": profile_output,
-        })
+        items.append(
+            {
+                "skill_id": skill_id,
+                "runtime_state": item["state"],
+                "metadata_state": metadata_state,
+                "profiles": profile_output,
+            }
+        )
 
     if not realized_metadata_states:
         coverage = "no-realized-skills"
@@ -87,20 +93,44 @@ def _openai_locale_plan(locale: str, layout_distribution: dict, metadata_config:
     }
 
 
-def _bundle_locale_plan(root: Path, locale: str, layout_distribution: dict, suite_distribution: dict, metadata_config: dict) -> dict:
-    locale_state = metadata_config["locales"][locale]["status"]
-    source = metadata_config.get("source")
+def _bundle_locale_plan(
+    root: Path,
+    locale: str,
+    layout_distribution: dict,
+    suite_distribution: dict,
+    metadata_config: dict,
+) -> dict:
+    locale_entry = metadata_config["locales"][locale]
+    locale_state = locale_entry["status"]
+    baseline_source = metadata_config.get("source")
+    source = baseline_source
+    source_kind = "locale-catalog"
     catalog_entry = None
-    if isinstance(source, str) and locale_state != "planned":
-        catalog = _load_json(root / source)
+
+    if locale_state == "prototype":
+        source = locale_entry.get("prototype_source")
+        source_kind = "research-prototype"
+        if isinstance(source, str):
+            value = _load_json(root / source)
+            catalog_entry = {
+                key: value.get(key)
+                for key in ("plugin_name", "description", "display", "contains")
+            }
+    elif isinstance(baseline_source, str) and locale_state != "planned":
+        catalog = _load_json(root / baseline_source)
         value = catalog.get(locale)
         if isinstance(value, dict):
-            catalog_entry = {key: value.get(key) for key in ("plugin_name", "description", "display")}
+            catalog_entry = {
+                key: value.get(key)
+                for key in ("plugin_name", "description", "display")
+            }
 
     multi_skill = len(suite_distribution.get("contains", [])) > 1
     review_required = bool(metadata_config.get("review_required_for_multi_skill"))
     if locale_state == "planned":
         metadata_state = "planned"
+    elif locale_state == "prototype":
+        metadata_state = "prototype"
     elif locale_state == "existing-baseline" and multi_skill and review_required:
         metadata_state = "review-required"
     elif locale_state == "reviewed":
@@ -113,16 +143,22 @@ def _bundle_locale_plan(root: Path, locale: str, layout_distribution: dict, suit
         "runtime_state": layout_distribution["state"],
         "metadata_state": metadata_state,
         "source": source,
+        "source_kind": source_kind,
         "catalog_entry": catalog_entry,
         "target_skills": suite_distribution.get("contains", []),
         "note": (
-            "An existing single-Skill locale catalog is only a baseline for the research "
-            "multi-Skill bundle until its user-facing wording is reviewed."
+            "Bundle metadata prototypes stay distinct from production-reviewed metadata. "
+            "An existing single-Skill locale catalog remains only a baseline until the "
+            "multi-Skill wording and host behavior are reviewed."
         ),
     }
 
 
-def plan_adapter_metadata(suite: dict, metadata_plan: dict, root: Path = ROOT) -> dict:
+def plan_adapter_metadata(
+    suite: dict,
+    metadata_plan: dict,
+    root: Path = ROOT,
+) -> dict:
     """Return runtime-vs-adapter-metadata coverage for Skill-tree distributions."""
 
     layout = plan_suite(suite)
@@ -139,13 +175,25 @@ def plan_adapter_metadata(suite: dict, metadata_plan: dict, root: Path = ROOT) -
     for locale in suite.get("locales", {}):
         distributions: dict[str, dict] = {}
         for distribution_name, metadata_config in metadata_plan["distributions"].items():
-            layout_distribution = layout["locales"][locale]["distributions"][distribution_name]
+            layout_distribution = layout["locales"][locale]["distributions"][
+                distribution_name
+            ]
             suite_distribution = suite["distribution_prototypes"][distribution_name]
             scope = metadata_config.get("scope")
             if scope == "per_skill_per_profile":
-                distributions[distribution_name] = _openai_locale_plan(locale, layout_distribution, metadata_config)
+                distributions[distribution_name] = _openai_locale_plan(
+                    locale,
+                    layout_distribution,
+                    metadata_config,
+                )
             elif scope == "locale_bundle":
-                distributions[distribution_name] = _bundle_locale_plan(root, locale, layout_distribution, suite_distribution, metadata_config)
+                distributions[distribution_name] = _bundle_locale_plan(
+                    root,
+                    locale,
+                    layout_distribution,
+                    suite_distribution,
+                    metadata_config,
+                )
             else:
                 distributions[distribution_name] = {
                     "scope": scope,
