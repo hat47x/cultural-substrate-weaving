@@ -69,12 +69,14 @@ class ResearchOpenAIPackageMaterializerTests(unittest.TestCase):
             interactive_files = {
                 path.relative_to(interactive).as_posix(): path.read_bytes()
                 for path in interactive.rglob("*")
-                if path.is_file() and path.relative_to(interactive).as_posix() != "agents/openai.yaml"
+                if path.is_file()
+                and path.relative_to(interactive).as_posix() != "agents/openai.yaml"
             }
             metered_files = {
                 path.relative_to(metered).as_posix(): path.read_bytes()
                 for path in metered.rglob("*")
-                if path.is_file() and path.relative_to(metered).as_posix() != "agents/openai.yaml"
+                if path.is_file()
+                and path.relative_to(metered).as_posix() != "agents/openai.yaml"
             }
             self.assertEqual(interactive_files, metered_files)
 
@@ -114,12 +116,14 @@ class ResearchOpenAIPackageMaterializerTests(unittest.TestCase):
 
     def test_en_requires_explicit_partial_probe_and_materializes_only_csw(self) -> None:
         with tempfile.TemporaryDirectory() as temp_dir:
+            blocked = Path(temp_dir) / "blocked"
             with self.assertRaisesRegex(ValueError, "allow_partial=True"):
                 materialize_openai_packages(
                     locale="en-US",
-                    output_root=Path(temp_dir) / "blocked",
+                    output_root=blocked,
                     root=ROOT,
                 )
+            self.assertFalse(blocked.exists())
 
         output, result, temp = self.materialize("en-US", allow_partial=True)
         self.addCleanup(temp.cleanup)
