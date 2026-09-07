@@ -80,7 +80,15 @@ Layer 2の `iterative-inquiry-synthesis/evidence/dossier.md` は、autoresearch 
 
 これは**方法の根拠や設計判断を監査する研究資料**であり、Agentが毎回読むruntime instructionではない。
 
-したがって、Layer 2 dossierがsuite manifestのskill-owned `evidence` に登録されることと、各localeの `package_source.files` に入ることは別である。現在のresearch packageはこのdossierをruntime dependencyとして含めない。
+ただし、**research / evaluation artifactであることと、packageへ絶対に含めないことは同義ではない**。あるAgent Skill realizationが、そのartifactを「必要時だけ読むprogressive support」として `SKILL.md` から直接参照する場合、そのlocaleではpackage reference closureを満たすために同梱してよい。これはそのartifactをMethod Definitionへ昇格させることも、毎回読むruntime instructionへ変えることも意味しない。
+
+現在の具体例は次である。
+
+- Layer 1 Japanese: `SKILL.md` が `evals/CASES.md` と `evidence/dossier.md` をoptional progressive referenceとして直接参照するため、research packageでは同梱する。
+- Layer 1 English: `SKILL.en.md` は日本語eval/evidenceを参照しないため、それらをlocale parityの名目で自動同梱しない。
+- Layer 2 Japanese / English: external-loop comparison dossierはMethod設計のresearch evidenceとしてsuite manifestで追跡するが、runtime Skillから参照しないためpackage dependencyにはしない。
+
+したがって、package inclusionはartifact分類だけで決めず、**そのlocale realizationの明示的runtime reference closure**と合わせて決める。
 
 英訳は公開説明や外部査読には有益だが、英語Skillを実行するための必須依存にはしない。
 
