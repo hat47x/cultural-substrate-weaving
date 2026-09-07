@@ -10,7 +10,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[3]
 SUITE_PATH = ROOT / "research/skill-prototypes/suite-manifest.json"
 METADATA_PATH = ROOT / "research/skill-prototypes/adapter-metadata-plan.json"
-PLANNER_DIR = ROOT / "research/skill-prototypes/scripts"
+PLANNER_DIR = ROOT / "research" / "skill-prototypes" / "scripts"
 VALIDATOR_DIR = ROOT / "scripts"
 for path in (PLANNER_DIR, VALIDATOR_DIR):
     if str(path) not in sys.path:
@@ -100,11 +100,24 @@ def _bundle_locale_plan(
     suite_distribution: dict,
     metadata_config: dict,
 ) -> dict:
-    locale_state = metadata_config["locales"][locale]["status"]
-    source = metadata_config.get("source")
+    locale_entry = metadata_config["locales"][locale]
+    locale_state = locale_entry["status"]
+    baseline_source = metadata_config.get("source")
+    source = baseline_source
+    source_kind = "locale-catalog"
     catalog_entry = None
-    if isinstance(source, str) and locale_state != "planned":
-        catalog = _load_json(root / source)
+
+    if locale_state == "prototype":
+        source = locale_entry.get("prototype_source")
+        source_kind = "research-prototype"
+        if isinstance(source, str):
+            value = _load_json(root / source)
+            catalog_entry = {
+                key: value.get(key)
+                for key in ("plugin_name", "description", "display", "contains")
+            }
+    elif isinstance(baseline_source, str) and locale_state != "planned":
+        catalog = _load_json(root / baseline_source)
         value = catalog.get(locale)
         if isinstance(value, dict):
             catalog_entry = {
@@ -116,6 +129,8 @@ def _bundle_locale_plan(
     review_required = bool(metadata_config.get("review_required_for_multi_skill"))
     if locale_state == "planned":
         metadata_state = "planned"
+    elif locale_state == "prototype":
+        metadata_state = "prototype"
     elif locale_state == "existing-baseline" and multi_skill and review_required:
         metadata_state = "review-required"
     elif locale_state == "reviewed":
@@ -128,11 +143,13 @@ def _bundle_locale_plan(
         "runtime_state": layout_distribution["state"],
         "metadata_state": metadata_state,
         "source": source,
+        "source_kind": source_kind,
         "catalog_entry": catalog_entry,
         "target_skills": suite_distribution.get("contains", []),
         "note": (
-            "An existing single-Skill locale catalog is only a baseline for the research "
-            "multi-Skill bundle until its user-facing wording is reviewed."
+            "Bundle metadata prototypes stay distinct from production-reviewed metadata. "
+            "An existing single-Skill locale catalog remains only a baseline until the "
+            "multi-Skill wording and host behavior are reviewed."
         ),
     }
 
