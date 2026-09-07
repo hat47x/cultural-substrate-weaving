@@ -64,7 +64,8 @@
       ],
       "evidence": [
         "research/skill-prototypes/affinity-synthesis/evidence/dossier.md",
-        "research/skill-prototypes/affinity-synthesis/evidence/KJ-LINEAGE-CARRYOVER.md"
+        "research/skill-prototypes/affinity-synthesis/evidence/KJ-LINEAGE-CARRYOVER.md",
+        "research/skill-prototypes/affinity-synthesis/evidence/EXTERNAL-FORMAT-ADOPTION-2026-09-07.md"
       ],
       "evals": [
         "research/skill-prototypes/affinity-synthesis/evals/CASES.md",
@@ -199,6 +200,9 @@
     "research/skill-prototypes/P3-HOST-PACKAGE-STRUCTURAL-PARITY-AUDIT-2026-09-07.md",
     "research/skill-prototypes/P4-PRODUCTION-SOURCE-AND-BUILDER-PROMOTION-PLAN-2026-09-07.md",
     "research/skill-prototypes/P4-PUBLIC-NAME-AUDIT-2026-09-07.md",
+    "research/skill-prototypes/P4-PUBLIC-NAME-MIGRATION-CONTRACT-2026-09-07.md",
+    "research/skill-prototypes/P4-PUBLIC-NAME-MIGRATION-CONTRACT.json",
+    "research/skill-prototypes/P4-PUBLIC-NAME-PROJECTION-INVENTORY.json",
     "research/skill-prototypes/P4-PRODUCTION-SUITE-DESCRIPTOR-PROTOTYPE.json",
     "research/skill-prototypes/P4-RELEASE-INTERNAL-COMPOSITION-PLAN-2026-09-07.md",
     "research/skill-prototypes/REFERENCE-CLASSIFICATION.md",
@@ -236,10 +240,12 @@
     "research host-package materializer tests pass in a complete checkout before production builder generalization",
     "production sibling source promotion does not read research suite metadata directly and waits for the complete-checkout research gate, public-name review, and independent English review",
     "the design-only production suite descriptor validates research-id/public-name separation, production-source boundaries, first-wave distributions, and release-shape assumptions before any production source is created",
+    "public-name migration and projection inventory validations keep research IDs historical while production runtime handoffs use the selected public installable names",
     "public installable names are rechecked for current ecosystem collisions before production canonical paths and package names are fixed",
     "first-wave release validation eventually checks internal three-Skill composition without adding a new Codex ZIP kind",
     "no hard dependency is assumed by the public method contract",
     "affinity-synthesis larger-set and representation regressions remain acceptable",
+    "external Skill format adoption remains selective: reader overview and explicit-relation read-back may be reused without importing weight-as-truth or cross-link-as-importance semantics",
     "iterative-inquiry-synthesis contract cases and paired runs remain aligned with delta-reopen behavior",
     "cross-layer CSW handoff and three-layer paired regressions remain acceptable",
     "Japanese and English thin-CSW runtimes retain attribution and delegation boundaries",
