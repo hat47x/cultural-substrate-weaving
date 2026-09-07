@@ -133,6 +133,10 @@ secondary resonanceは新しいカードでも独立supportでもない。cluste
 
 関係を主張する場合は、後から `source - relation - target` の意味を読み返して検査できる程度に明示する。すべての近接を命題化する必要はないが、何を意味する線なのか不明なまま強い関係を主張しない。
 
+明示的なrelationを置いた場合は、少なくとも一度、endpoint + predicate + directionを自然な一文へ戻して読む。文として不自然、向きが逆、またはbasisへ戻ると支えられない場合は、線を保つためにpredicateを作文しない。stateを弱める、relationを撤回する、またはまだ気になる接続をquestionable relation candidateとして`Q`へ戻す。
+
+「この二つには何か線がありそうだ」という段階はrelation assertionではない。layout上の近接、secondary resonance、叙述で生じた違和感だけを根拠に`R`へ昇格させず、何があれば支持・反証できるかを問いとして残せる。
+
 結ばれない束、広い空白、片側だけに伸びる関係は、そのまま観察する。空白から推測した内容を事実として埋めない。
 
 #### Representation rule
@@ -221,6 +225,8 @@ rendering toolが使える場合は、syntaxだけでなく視覚的な誤読も
 - [ ] 材料の弱化、ぼかし、行為者脱落を点検した。
 - [ ] emergent meaningを、元材料に最初からあった意味へ遡及させていない。
 - [ ] 強い関係線は、その意味を後から読み返して検査できる。
+- [ ] explicit relationをendpoint + predicate + directionの一文として読み返し、basisへ戻っても支持できることを確認した。
+- [ ] questionable / missing relation candidateを、return-checkなしに`R`へ昇格させていない。
 - [ ] relation predicateを、描画都合の固定edge typeへ不必要に縮めていない。
 - [ ] 図解と叙述を相互に戻して確認した。
 - [ ] diagramを作った場合、図だけに新しい線・包含・順序・重要度が増えていない。
@@ -238,11 +244,3 @@ rendering toolが使える場合は、syntaxだけでなく視覚的な誤読も
 - machine-readable schema候補: `references/affinity-map.schema.json`
 - 評価・反例: `evals/CASES.md`
 - 公開時の根拠と限界: `evidence/dossier.md`
-
-## Boundary with Iterative Inquiry
-
-このSkillは一回の統合で終わる。
-
-出力した gap / conflict / singleton / unresolved question を使って新しい資料を探す、問いを変える、次のラウンドを開始する、といった処理は別Skillへ渡す。
-
-一回の統合を何度も内側で自動反復しない。反復には、各ラウンドの問い・入力・差分・停止理由を外から追跡できる別の契約が必要である。
