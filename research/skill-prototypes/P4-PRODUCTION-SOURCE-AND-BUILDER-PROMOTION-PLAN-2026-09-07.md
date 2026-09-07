@@ -166,9 +166,13 @@ research-only status
 
 CSW entryは `src/manifest.json` を参照する `canonical_manifest` modeとして残せる。
 
-Sibling entryはproduction `src/skills/...` を指す `explicit_files` modeでよい。
+Sibling entryはproduction `src/skills/<public-name>/<locale>/` を指す `locale_tree` modeとする。builderはこのtreeをpackage内へ相対pathを保ったままcopyするため、production locale tree自体を **package-closed source boundary** として扱う。
 
-これによりP2で検証したsource descriptorを、research metadataから切り離してproduction inputへ昇格できる。
+したがって `src/skills/.../<locale>/` には、そのlocaleのruntime packageへ出す意図のあるfileだけを置く。maintainer-only migration record、未参照のresearch evidence、review packet等を置いて「builder側で除外する」設計にはしない。
+
+Layer 1日本語の `evals/CASES.md` / `evidence/dossier.md` は現在のJapanese Skillが直接progressive referenceしているためpackage contentである。Layer 1英語やLayer 2の外部比較dossierなど、runtimeが参照しないresearch-only materialはproduction locale treeへ自動昇格させない。
+
+これによりP2で検証したsource descriptorの意味を、research metadataから切り離したproduction `locale_tree` boundaryへ昇格できる。
 
 ## Adapter metadata promotion
 
@@ -239,7 +243,7 @@ router + modules
 Sibling:
 
 ```text
-canonical SKILL.md + explicit package files
+canonical SKILL.md + locale-tree package files
   -> target Skill directory
 ```
 
@@ -316,7 +320,7 @@ Claude/Codex:
 
 #### sibling source / generated parity
 
-production suite descriptorに宣言したexplicit filesが、generated treeへ欠落なく写っていることを検査する。
+production suite descriptorに宣言したlocale treeが、generated sibling treeへ欠落なく写っていることを検査する。
 
 #### byte budget
 
@@ -399,6 +403,7 @@ P4で採用する第一候補は次である。
 - `src/manifest.json` はCSW一Skill manifestとして維持する。
 - sibling Skillsは別canonical source treeへ昇格する。
 - Layer 1 production source / target pathにはresearch IDではなく `material-led-synthesis` を使う。
+- sibling production sourceは `locale_tree` とし、そのtree自体をpackage-closed boundaryとして扱う。
 - Layer 1のlocale package file集合はruntime reference closureに従い、日本語research supportを英語側へ自動複製しない。
 - `src/skill-suite.json` のような薄いproduction suite descriptorを追加する。
 - research `suite-manifest.json` をproduction builderから直接読まない。
