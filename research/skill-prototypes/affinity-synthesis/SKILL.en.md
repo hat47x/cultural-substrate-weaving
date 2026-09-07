@@ -126,6 +126,10 @@ Keep these representation concepts distinct:
 
 A drawn edge is not automatically causal. Visual proximity is not automatically a semantic relation.
 
+Whenever an explicit relation is asserted, read its endpoints, predicate, and direction back as a natural sentence at least once. If the sentence is awkward, reverses the intended direction, or is not supported when you return to its basis, do not invent a better-sounding predicate merely to preserve the edge. Weaken the state, revise or withdraw the relation, or return the still-interesting connection to a **questionable relation candidate**.
+
+A suspected link is not yet a relation. Proximity, secondary resonance, or a narrative hunch may be preserved as a question together with what evidence would support or refute it. Promote it to an explicit relation only after a predicate, direction, and basis survive return-to-source checking.
+
 ### 8. Narrate from the relational structure
 
 Write a narrative from the groups and relations without using prose fluency to add unsupported logic.
@@ -186,6 +190,8 @@ Do not chain those narrower operations and claim that the chain is equivalent to
 - [ ] Every important synthesis can be returned to source material.
 - [ ] Invented causality, inner state, generalization, evaluation direction, and confidence shifts were checked.
 - [ ] Membership, explicit relation, secondary resonance, and layout are distinguishable.
+- [ ] Every strong explicit relation was read back as endpoint + predicate + endpoint with its direction and still held against its basis.
+- [ ] Suspected or missing links stayed questions until return-to-source checking supported an explicit relation.
 - [ ] Narrative-only relations were returned to the map/source before promotion.
 - [ ] Rendering constraints did not rewrite semantic structure.
 
