@@ -17,6 +17,22 @@ ROOT = Path(__file__).resolve().parents[1]
 MANIFEST_PATH = ROOT / "research/skill-prototypes/suite-manifest.json"
 EXPECTED_SCHEMA = "csw.research-skill-suite/v1"
 PACKAGE_SOURCE_MODES = {"explicit_files", "canonical_manifest"}
+REQUIRED_SUITE_RESEARCH_ASSETS = frozenset(
+    {
+        "research/skill-prototypes/P4-PUBLIC-NAME-MIGRATION-CONTRACT-2026-09-07.md",
+        "research/skill-prototypes/P4-PUBLIC-NAME-MIGRATION-CONTRACT.json",
+        "research/skill-prototypes/P4-PUBLIC-NAME-PROJECTION-INVENTORY.json",
+        "research/skill-prototypes/P4-PRODUCTION-SUITE-DESCRIPTOR-PROTOTYPE.json",
+        "research/skill-prototypes/evals/L1-L2-HANDOFF-CAPSULE-2026-09-07.md",
+    }
+)
+REQUIRED_SKILL_EVIDENCE = {
+    "affinity-synthesis": frozenset(
+        {
+            "research/skill-prototypes/affinity-synthesis/evidence/EXTERNAL-FORMAT-ADOPTION-2026-09-07.md"
+        }
+    )
+}
 
 
 def load_manifest(path: Path = MANIFEST_PATH) -> dict:
@@ -539,6 +555,13 @@ def validate_suite(root: Path, manifest: dict) -> list[str]:
         )
         _declared_paths(root, source_root, skill_id, "checks", skill.get("checks", []), errors)
 
+        required_evidence = REQUIRED_SKILL_EVIDENCE.get(skill_id, frozenset())
+        missing_evidence = sorted(required_evidence - set(evidence))
+        if missing_evidence:
+            errors.append(
+                f"skill {skill_id}: required promotion-relevant evidence is not registered: {missing_evidence}"
+            )
+
         method_relative = skill.get("method_definition")
         _validate_method_definition(
             root, source_root, skill_id, "method_definition", method_relative, errors
@@ -602,6 +625,11 @@ def validate_suite(root: Path, manifest: dict) -> list[str]:
             path = _repo_path(root, relative, "suite_research_assets", errors)
             if path is not None and not path.is_file():
                 errors.append(f"suite_research_assets file is missing: {relative}")
+        missing_assets = sorted(REQUIRED_SUITE_RESEARCH_ASSETS - set(research_assets))
+        if missing_assets:
+            errors.append(
+                f"suite_research_assets is missing promotion-critical assets: {missing_assets}"
+            )
 
     known_skill_ids = set(skill_ids)
     distributions = manifest.get("distribution_prototypes")
