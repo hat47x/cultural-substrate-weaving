@@ -74,6 +74,7 @@ research-skill-check:
 	python research/skill-prototypes/scripts/plan_production_builder_generalization.py >/dev/null
 	python scripts/validate_research_adapter_metadata.py
 	python research/skill-prototypes/scripts/plan_adapter_metadata.py >/dev/null
+	python research/skill-prototypes/scripts/plan_production_adapter_metadata_promotion.py >/dev/null
 	python research/skill-prototypes/check_split_ownership.py
 	python research/skill-prototypes/build_preview.py --check
 	python research/skill-prototypes/affinity-synthesis/scripts/check_representation.py
