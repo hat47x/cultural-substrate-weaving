@@ -68,6 +68,46 @@ Layer 1 → Layer 2 handoff再設計とexternal iterative-research Skill比較�
 
 これらは**source-level changeであり、実行成功の証拠ではない**。特に、新しくMakefileへ配線したMethod parity checkと更新したsuite unit testsは、complete checkout上ではまだ一度も実行していない。
 
+## 2026-09-08 addendum — declared-check wiring and stale-pass prevention
+
+research gateの構造監査から、次の二つの追加リスクを閉じた。
+
+### Skill-owned check declaration / execution drift
+
+`suite-manifest.json` の各Skillに `checks` を宣言しても、従来はMakefileへ自動配線されなかった。そのため、manifestへcheckを追加しても `make research-skill-check` が実行しない、またはMakefileへ直書きしたSkill-owned checkがmanifestへ登録されない、というdriftが起こり得た。
+
+repository source上では次を追加した。
+
+- `scripts/validate_research_declared_checks.py`
+- `tests/test_research_declared_checks.py`
+- `make research-skill-check` へのmeta-validator接続
+
+契約は次である。
+
+```text
+manifest-declared Skill check
+    <=>
+research-skill-check direct execution
+```
+
+suite-level validatorやplannerはこの双方向契約の対象外であり、Skill source root配下のcheckだけをmanifestの正本と照合する。
+
+isolated sanity checkでは、現在相当のrecipeはerrorなし、Layer 2 parity check行削除はmissing、未登録Skill-owned checkの直書きはunregisteredとして検出した。ただしこれはrepository全体のtest実行ではない。
+
+### Old passed evidence must not survive a new HEAD
+
+従来のcomplete-checkout validatorは、`status: passed` のexecution recordに40桁SHAを要求していたが、そのSHAが現在のcheckout HEADと同じかまでは確認していなかった。
+
+これを修正し、passed状態では次を要求する。
+
+```text
+execution commit == current checkout HEAD
+```
+
+したがって、research gateやtestを変更した後に、以前のcommitで作ったPASS recordをそのまま再利用することはできない。
+
+対応unit testでは、同一SHAを受理し、stale SHAとcurrent HEAD不明を拒否するfixtureを追加した。これもcomplete checkout上ではまだ実行していない。
+
 ## What has been checked without claiming command execution
 
 GitHub repository source上では、少なくとも次の契約を静的に更新・確認した。
@@ -84,6 +124,8 @@ GitHub repository source上では、少なくとも次の契約を静的に更�
 - Layer 1 → Layer 2 carry-forward / reopen / continuation separation
 - Layer 2 external-loop mechanism adoption/rejection evidence
 - Japanese / English Layer 2 Method I1〜I16 static parity check source
+- manifest-declared Skill checkとresearch gate executionの双方向wiring contract
+- passed complete-checkout evidenceとcurrent HEADの一致要求
 
 これはPython execution、translation hash refresh、translation state transition、generated artifact regeneration、test discovery成功を意味しない。
 
@@ -94,7 +136,9 @@ translation-manifest hash refresh:       NOT RUN after latest CSW canonical chan
 translation research state transition:  NOT RUN
 complete-checkout research-skill-check: NOT RUN
 Layer 2 Method parity check:            NOT RUN in complete checkout
+declared-check wiring validator:        NOT RUN in complete checkout
 updated research unit tests:            NOT RUN in complete checkout
+stale-pass HEAD binding tests:          NOT RUN in complete checkout
 production build regeneration:          NOT RUN after latest research changes
 full repository make check:             NOT RUN after latest research changes
 production promotion authorization:     NO
