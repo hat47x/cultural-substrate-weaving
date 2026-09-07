@@ -1,0 +1,14 @@
+{
+  "schema": "csw.research-locale-bundle-metadata/v1",
+  "locale": "ja-JP",
+  "plugin_name": "cultural-substrate-weaving-ja",
+  "display": "Cultural Substrate Weaving — 日本語",
+  "description": "文化的体系による探索、材料主導の一回統合、複数ラウンドの探索継続を、責務の異なる3つのSkillとして収録し、必要に応じてhandoffします。帰属・残差・未解決を保ち、各Skillを一つの万能手順へ混ぜません。明示呼び出し専用。",
+  "contains": [
+    "cultural-substrate-weaving",
+    "affinity-synthesis",
+    "iterative-inquiry-synthesis"
+  ],
+  "invocation_policy": "explicit",
+  "status": "prototype"
+}
