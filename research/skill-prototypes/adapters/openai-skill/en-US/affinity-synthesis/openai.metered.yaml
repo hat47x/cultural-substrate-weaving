@@ -1,0 +1,6 @@
+interface:
+  display_name: "Affinity Synthesis — English"
+  short_description: "Synthesize heterogeneous material bottom-up in one round while preserving provenance, epistemic seams, relations, and residuals"
+  default_prompt: "Preserve source provenance and epistemic state, avoid predefined categories, and perform one round of affinity synthesis to raise meaning-bearing units, groups, relations, and residuals."
+policy:
+  allow_implicit_invocation: false
