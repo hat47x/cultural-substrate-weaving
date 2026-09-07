@@ -1,0 +1,73 @@
+{
+  "schema": "csw.public-name-projection-inventory/v1",
+  "status": "design-only",
+  "research_id": "affinity-synthesis",
+  "production_name": "material-led-synthesis",
+  "content_projection": [
+    {
+      "path": "research/skill-prototypes/affinity-synthesis/SKILL.md",
+      "class": "runtime-identity",
+      "action": "rewrite-frontmatter-name-only",
+      "required_markers": ["name: affinity-synthesis"]
+    },
+    {
+      "path": "research/skill-prototypes/affinity-synthesis/SKILL.en.md",
+      "class": "runtime-identity",
+      "action": "rewrite-frontmatter-name-only",
+      "required_markers": ["name: affinity-synthesis"]
+    },
+    {
+      "path": "research/skill-prototypes/iterative-inquiry-synthesis/SKILL.md",
+      "class": "runtime-handoff",
+      "action": "rewrite-explicit-installable-name",
+      "required_markers": ["`affinity-synthesis`"]
+    },
+    {
+      "path": "research/skill-prototypes/iterative-inquiry-synthesis/SKILL.en.md",
+      "class": "runtime-handoff-and-filesystem-reference",
+      "action": "rewrite-explicit-installable-name-and-remove-sibling-filesystem-reference",
+      "required_markers": ["`affinity-synthesis`", "../affinity-synthesis/"]
+    },
+    {
+      "path": "research/skill-prototypes/iterative-inquiry-synthesis/references/METHOD.md",
+      "class": "packaged-method-definition",
+      "action": "rewrite-realization-identifier-not-method-role",
+      "required_markers": ["`affinity-synthesis`"]
+    },
+    {
+      "path": "research/skill-prototypes/iterative-inquiry-synthesis/references/METHOD.en.md",
+      "class": "packaged-method-definition",
+      "action": "rewrite-realization-identifier-not-method-role",
+      "required_markers": ["`affinity-synthesis`"]
+    }
+  ],
+  "structured_projection": [
+    {
+      "path": "research/skill-prototypes/adapters/claude-codex/ja-JP/bundle-metadata.json",
+      "field": "contains",
+      "action": "map-research-id-to-production-name"
+    },
+    {
+      "path": "research/skill-prototypes/adapters/claude-codex/en-US/bundle-metadata.json",
+      "field": "contains",
+      "action": "map-research-id-to-production-name"
+    }
+  ],
+  "path_projection": [
+    {
+      "research_prefix": "research/skill-prototypes/affinity-synthesis/",
+      "production_pattern": "src/skills/material-led-synthesis/{locale}/"
+    },
+    {
+      "research_prefix": "research/skill-prototypes/adapters/openai-skill/{locale}/affinity-synthesis/",
+      "production_pattern": "adapters/openai-skill/{locale}/material-led-synthesis/"
+    }
+  ],
+  "research_history_keep": [
+    "research/skill-prototypes/suite-manifest.json",
+    "research/skill-prototypes/affinity-synthesis/evals/",
+    "research/skill-prototypes/evals/",
+    "research/skill-prototypes/migration/"
+  ],
+  "note": "This inventory describes promotion-sensitive references in the current research realization. It is not an instruction to perform global string replacement. Missing or newly introduced markers require conscious audit before production promotion."
+}
