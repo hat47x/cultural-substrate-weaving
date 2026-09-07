@@ -14,8 +14,9 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 PLAN_PATH = ROOT / "research/skill-prototypes/adapter-metadata-plan.json"
 EXPECTED_SCHEMA = "csw.research-adapter-metadata-plan/v1"
+EXPECTED_BUNDLE_PROTOTYPE_SCHEMA = "csw.research-locale-bundle-metadata/v1"
 ALLOWED_SOURCE_STATUS = {"planned", "prototype", "existing"}
-ALLOWED_BUNDLE_STATUS = {"planned", "existing-baseline", "reviewed"}
+ALLOWED_BUNDLE_STATUS = {"planned", "existing-baseline", "prototype", "reviewed"}
 SKILL_TREE_MODES = {"standalone_per_skill", "locale_bundle"}
 
 
@@ -175,6 +176,97 @@ def _validate_openai(
                             )
 
 
+def _validate_bundle_prototype(
+    root: Path,
+    distribution_name: str,
+    locale: str,
+    entry: dict,
+    suite_distribution: dict,
+    baseline_catalog: dict | None,
+    errors: list[str],
+) -> None:
+    source_relative = entry.get("prototype_source")
+    source = _repo_path(
+        root,
+        source_relative,
+        f"{distribution_name} prototype metadata source {locale}",
+        errors,
+    )
+    if source is None:
+        return
+    if not source.is_file():
+        errors.append(
+            f"{distribution_name} prototype metadata source is missing for {locale}: "
+            f"{source_relative}"
+        )
+        return
+    prototype = _load_json(
+        source,
+        f"{distribution_name} prototype metadata source {locale}",
+        errors,
+    )
+    if prototype is None:
+        return
+
+    if prototype.get("schema") != EXPECTED_BUNDLE_PROTOTYPE_SCHEMA:
+        errors.append(
+            f"{distribution_name} prototype metadata {locale} schema must be "
+            f"{EXPECTED_BUNDLE_PROTOTYPE_SCHEMA}"
+        )
+    if prototype.get("locale") != locale:
+        errors.append(
+            f"{distribution_name} prototype metadata locale mismatch: "
+            f"expected {locale!r}, got {prototype.get('locale')!r}"
+        )
+    if prototype.get("status") != "prototype":
+        errors.append(
+            f"{distribution_name} prototype metadata {locale} must declare status=prototype"
+        )
+    if prototype.get("invocation_policy") != "explicit":
+        errors.append(
+            f"{distribution_name} prototype metadata {locale} must remain explicit invocation"
+        )
+
+    for field in ("plugin_name", "description", "display"):
+        value = prototype.get(field)
+        if not isinstance(value, str) or not value.strip():
+            errors.append(
+                f"{distribution_name} prototype metadata {locale} must declare {field}"
+            )
+
+    expected_contains = suite_distribution.get("contains", [])
+    actual_contains = prototype.get("contains")
+    if not isinstance(expected_contains, list) or not all(
+        isinstance(value, str) for value in expected_contains
+    ):
+        errors.append(f"{distribution_name} suite contains must be a string list")
+    elif not isinstance(actual_contains, list) or not all(
+        isinstance(value, str) for value in actual_contains
+    ):
+        errors.append(
+            f"{distribution_name} prototype metadata {locale} contains must be a string list"
+        )
+    elif len(actual_contains) != len(set(actual_contains)):
+        errors.append(
+            f"{distribution_name} prototype metadata {locale} contains must not repeat skills"
+        )
+    elif set(actual_contains) != set(expected_contains):
+        errors.append(
+            f"{distribution_name} prototype metadata {locale} skill composition must match suite; "
+            + _set_mismatch(set(expected_contains), set(actual_contains))
+        )
+
+    if isinstance(baseline_catalog, dict):
+        baseline_entry = baseline_catalog.get(locale)
+        if isinstance(baseline_entry, dict):
+            baseline_name = baseline_entry.get("plugin_name")
+            if isinstance(baseline_name, str) and prototype.get("plugin_name") != baseline_name:
+                errors.append(
+                    f"{distribution_name} prototype metadata {locale} must preserve existing "
+                    f"plugin_name {baseline_name!r}"
+                )
+
+
 def _validate_locale_bundle(
     root: Path,
     distribution_name: str,
@@ -237,13 +329,39 @@ def _validate_locale_bundle(
                 f"{distribution_name} metadata locale {locale} has invalid status: {status!r}"
             )
             continue
-        if multi_skill and status == "existing-baseline" and not review_required:
+
+        if multi_skill and status in {"existing-baseline", "prototype"} and not review_required:
             errors.append(
-                f"{distribution_name} multi-Skill bundle using existing-baseline metadata "
-                "must require review"
+                f"{distribution_name} multi-Skill bundle using {status} metadata must require review"
             )
 
-        if status == "planned" or catalog is None:
+        prototype_source = entry.get("prototype_source")
+        if status == "planned":
+            if prototype_source is not None:
+                errors.append(
+                    f"planned {distribution_name} metadata {locale} must not declare prototype_source"
+                )
+            continue
+
+        if status == "prototype":
+            _validate_bundle_prototype(
+                root,
+                distribution_name,
+                locale,
+                entry,
+                suite_distribution,
+                catalog,
+                errors,
+            )
+            continue
+
+        if prototype_source is not None:
+            errors.append(
+                f"{distribution_name} metadata {locale} with status {status} must not declare "
+                "prototype_source"
+            )
+
+        if catalog is None:
             continue
         catalog_entry = catalog.get(locale)
         if not isinstance(catalog_entry, dict):
