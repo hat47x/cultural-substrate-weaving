@@ -4,7 +4,7 @@
 
 This skill opens cultural frameworks as temporary cognitive fields rather than using them as answers or classifiers.
 
-Use positions, relations, states, transitions, cycles, symbols, boundaries, paths, and other native structures to obtain candidates that ordinary analysis may not foreground. Then return those candidates to target-side material and distinguish what is supported, unsupported, or still only a new question.
+Use positions, relations, states, transitions, cycles, symbols, boundaries, paths, and other native structures to obtain candidates that ordinary analysis may not foreground. Then return those candidates to target-side material and distinguish what is supported, unsupported, or still only a new question. **Attend not only to fit but also to the target pushing back against the framework through misfit, resistance, reversal, or excess, and ask whether that tension produces a third structure reducible to neither side.**
 
 When affinity synthesis of material or multi-round delta/reopen work is needed, delegate to a dedicated compatible realization when one is available. CSW does not own those internal algorithms.
 
@@ -32,8 +32,8 @@ See `core/cognitive-stance.md` for details.
 3. **Set a baseline and preservation set**: inspect source material, target-specific facts and exceptions, and the domain-method-only baseline.
 4. **Delegate material synthesis when needed**: if numerous or heterogeneous materials need material-led structure discovery, use the connection contract in `methods/integration.md` to hand them to a compatible synthesis realization.
 5. **Open cultural frameworks**: according to external use conditions and delegated discretion, use states such as `not_loaded / probe / preview / full / enacted` as appropriate.
-6. **Explore**: obtain candidate questions, relations, states, transitions, and correspondences from the framework. Do not thin framework-native structure into generic language too early.
-7. **Return to the target**: keep `target_supported / framework_generated / cross_field_emergent / unresolved` distinguishable.
+6. **Explore**: obtain candidate questions, relations, states, transitions, and correspondences from the framework. Do not thin framework-native structure into generic language too early. Attend to what emerges from misfit, resistance, and mutual revision as well as correspondence.
+7. **Return to the target**: keep `target_supported / framework_generated / cross_field_emergent / unresolved` distinguishable. Do not promote a third structure to target-side fact without independent target-side support.
 8. **Hand off a round delta when needed**: if a new framework contact touches prior artifacts or residuals, use the connection contract in `core/iteration.md` to hand it to a compatible iterative realization.
 9. **Reflect into real work**: carry results into artifacts, decision material, research directions, residuals, and reopening conditions. Boundaries and adoption follow external use conditions.
 
@@ -44,6 +44,7 @@ Do not encode framework count, full reading, or the amount of framework-native e
 - **State recording != decision authority**: distinguish preserving provenance, epistemic state, and loading depth from deciding adoption, stopping, or publication based on those distinctions.
 - **Preservation != current attention**: keep canonical material rich; foreground only what current work needs.
 - **Exploration != attribution**: getting a question from a framework is not the same as claiming that the target has that structure.
+- **Correspondence != synthesis**: a clean mapping to a framework is not itself a third structure. Ask whether consequential differences remained visible while being recomposed into a new distinction, relation, or question.
 - **De-binding != evidence**: a statement surviving removal of framework vocabulary does not create independent target-side support.
 - **Use state != success judgment**: loading depth or rejection is an exploration state, not success or failure by itself.
 - **Framework output != synthesis authority**: a framework-generated candidate may enter affinity synthesis as material, but it does not get to determine grouping or labels in advance.
@@ -60,7 +61,7 @@ Do not encode framework count, full reading, or the amount of framework-native e
 | Target scope, baseline, preserved facts | [01-scope-and-facts.md](methods/scope-and-facts.md) |
 | Framework selection, exploration / attribution use | [02-system-selection.md](methods/system-selection.md) |
 | Assignment, transitions, post-use checks, exits | [02a-framework-application.md](methods/framework-application.md) |
-| Relation types, missing connections, multiple frameworks | [03-transformation.md](methods/transformation.md) |
+| Relation types, target-framework tension, missing connections, multiple frameworks | [03-transformation.md](methods/transformation.md) |
 | Taiheki exploration of human bodily responses | [05-human-and-taiheki.md](domains/human-and-taiheki.md) |
 | Decision provenance and longitudinal events | [08-governance-and-records.md](governance/governance-and-records.md) |
 | Final evaluation | [09-evaluation.md](governance/evaluation.md) |
