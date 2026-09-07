@@ -167,6 +167,49 @@ class ResearchHostPackageMaterializerTests(unittest.TestCase):
             self.assertFalse((output / ".agents").exists())
             self.assertFalse((output / "README.md").exists())
 
+    def test_bundle_prototypes_preserve_production_structural_identity(self) -> None:
+        expected_names = {
+            "ja-JP": "cultural-substrate-weaving-ja",
+            "en-US": "cultural-substrate-weaving-en",
+        }
+        version = (ROOT / "VERSION").read_text(encoding="utf-8").strip()
+
+        for locale, plugin_name in expected_names.items():
+            bundle = json.loads(
+                (
+                    ROOT
+                    / "research"
+                    / "skill-prototypes"
+                    / "adapters"
+                    / "claude-codex"
+                    / locale
+                    / "bundle-metadata.json"
+                ).read_text(encoding="utf-8")
+            )
+            production_root = ROOT / "plugins" / plugin_name
+            claude = json.loads(
+                (production_root / ".claude-plugin" / "plugin.json").read_text(
+                    encoding="utf-8"
+                )
+            )
+            codex = json.loads(
+                (production_root / ".codex-plugin" / "plugin.json").read_text(
+                    encoding="utf-8"
+                )
+            )
+
+            self.assertEqual(bundle["plugin_name"], plugin_name)
+            self.assertEqual(claude["name"], plugin_name)
+            self.assertEqual(codex["name"], plugin_name)
+            self.assertEqual(bundle["display"], codex["interface"]["displayName"])
+            self.assertEqual(claude["version"], version)
+            self.assertEqual(codex["version"], version)
+            for field in ("author", "homepage", "repository", "license"):
+                self.assertEqual(claude[field], codex[field])
+            self.assertEqual(codex["skills"], "./skills/")
+            self.assertEqual(codex["interface"]["developerName"], "hat47x")
+            self.assertEqual(codex["interface"]["category"], "Productivity")
+
     def test_failed_host_metadata_step_leaves_no_partial_output(self) -> None:
         with tempfile.TemporaryDirectory() as temp_dir:
             base = Path(temp_dir)
