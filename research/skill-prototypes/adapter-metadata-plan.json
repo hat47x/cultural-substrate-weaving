@@ -15,8 +15,8 @@
             "metered": {"status": "prototype", "source": "research/skill-prototypes/adapters/openai-skill/ja-JP/affinity-synthesis/openai.metered.yaml"}
           },
           "en-US": {
-            "interactive": {"status": "planned"},
-            "metered": {"status": "planned"}
+            "interactive": {"status": "prototype", "source": "research/skill-prototypes/adapters/openai-skill/en-US/affinity-synthesis/openai.interactive.yaml"},
+            "metered": {"status": "prototype", "source": "research/skill-prototypes/adapters/openai-skill/en-US/affinity-synthesis/openai.metered.yaml"}
           }
         },
         "iterative-inquiry-synthesis": {
@@ -25,8 +25,8 @@
             "metered": {"status": "prototype", "source": "research/skill-prototypes/adapters/openai-skill/ja-JP/iterative-inquiry-synthesis/openai.metered.yaml"}
           },
           "en-US": {
-            "interactive": {"status": "planned"},
-            "metered": {"status": "planned"}
+            "interactive": {"status": "prototype", "source": "research/skill-prototypes/adapters/openai-skill/en-US/iterative-inquiry-synthesis/openai.interactive.yaml"},
+            "metered": {"status": "prototype", "source": "research/skill-prototypes/adapters/openai-skill/en-US/iterative-inquiry-synthesis/openai.metered.yaml"}
           }
         },
         "cultural-substrate-weaving": {
@@ -50,7 +50,10 @@
           "status": "prototype",
           "prototype_source": "research/skill-prototypes/adapters/claude-codex/ja-JP/bundle-metadata.json"
         },
-        "en-US": {"status": "existing-baseline"}
+        "en-US": {
+          "status": "prototype",
+          "prototype_source": "research/skill-prototypes/adapters/claude-codex/en-US/bundle-metadata.json"
+        }
       },
       "review_required_for_multi_skill": true
     },
@@ -63,7 +66,10 @@
           "status": "prototype",
           "prototype_source": "research/skill-prototypes/adapters/claude-codex/ja-JP/bundle-metadata.json"
         },
-        "en-US": {"status": "existing-baseline"}
+        "en-US": {
+          "status": "prototype",
+          "prototype_source": "research/skill-prototypes/adapters/claude-codex/en-US/bundle-metadata.json"
+        }
       },
       "review_required_for_multi_skill": true
     }
