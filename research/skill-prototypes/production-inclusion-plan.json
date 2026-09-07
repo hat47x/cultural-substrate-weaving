@@ -1,0 +1,33 @@
+{
+  "schema": "csw.research-production-inclusion-plan/v1",
+  "suite_manifest": "research/skill-prototypes/suite-manifest.json",
+  "skills": {
+    "cultural-substrate-weaving": {
+      "production_state": "included",
+      "production_source": {
+        "mode": "canonical_manifest",
+        "manifest": "src/manifest.json"
+      },
+      "locales": {
+        "ja-JP": "included",
+        "en-US": "included"
+      }
+    },
+    "affinity-synthesis": {
+      "production_state": "candidate",
+      "production_source": null,
+      "locales": {
+        "ja-JP": "candidate",
+        "en-US": "blocked"
+      }
+    },
+    "iterative-inquiry-synthesis": {
+      "production_state": "candidate",
+      "production_source": null,
+      "locales": {
+        "ja-JP": "candidate",
+        "en-US": "blocked"
+      }
+    }
+  }
+}
