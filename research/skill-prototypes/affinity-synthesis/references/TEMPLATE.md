@@ -113,23 +113,46 @@ X01: C007 ~> G01 :: "別group主配置のままG01にも響く理由"
 
 ### Relation inventory
 
-| Relation | From | Predicate | To | Direction | State | Basis |
-|---|---|---|---|---|---|---|
-| R01 | G01 | ... | G02 | -> | supported / tentative / ... | C001, C004 |
+| Relation | From | Predicate | To | Direction | State | Basis | Read-back audit |
+|---|---|---|---|---|---|---|---|
+| R01 | G01 | ... | G02 | -> | supported / tentative / ... | C001, C004 | survives / revise / withdraw |
 
 `Predicate` は自由な自然言語を基本とし、固定edge taxonomyへ縮めない。
+
+`Read-back audit` はrelationの意味を別fieldへ複製保存するための欄ではない。`From + Predicate + To` を自然な一文として読み返し、directionとbasisへ戻してもその関係が維持できるかを記録する。
 
 向きの最小記法:
 
 - `A -> B`: AからBへの方向を主張する。因果を自動では意味しない。
 - `A <-> B`: 相互方向を主張する。
-- `A -- B`: 関係は主張するが方向は主張しない。
+- `A -- B`: 関係は主張するが方向を主張しない。
 
 compact notation:
 
 ```text
 R01: G01 -> G02 :: "relation predicate" @basis[C001,C004] @state["tentative"]
 ```
+
+read-back例:
+
+```text
+G01「表札A」は、[relation predicate] という意味で、G02「表札B」へ向く。
+```
+
+この文が不自然、過剰、または材料へ戻すと支持できない場合、predicateを作文して線を維持しない。`state`を弱める、`R`を撤回する、または次のquestionable relation candidateへ戻す。
+
+### Questionable relation / missing-link candidates
+
+| Question | Between / arises from | Why it looks connected | What would support / refute | Current handling |
+|---|---|---|---|---|
+| Q07 | G02, G05 | ... | ... | keep as question / promote after return-check / dissolve |
+
+ここにあるものは `R` ではない。「線がありそう」という違和感・空白を問いとして外在化する欄である。
+
+- proximityやcross-linkがあるだけでrelationへ昇格させない。
+- missing linkが実在すると断定しない。
+- supporting materialが得られた場合も、predicate / direction / basisを作って元材料へ戻した後にのみ `R` へ昇格する。
+- 何も支持しなければcandidateを解消・撤回してよい。
 
 ### Group-level text view
 
@@ -183,6 +206,7 @@ Mermaidはtopology projectionとして使う。近接・離隔・空白など**�
 - 図だけに新しい線・包含・順序が増えていないか。
 - proximityを、元にないrelationへ読み替えていないか。
 - secondary resonanceがmembershipや独立supportに見えていないか。
+- questionable relation candidateが、確定relationと同じ線に見えていないか。
 
 ## 8. Narrative Synthesis
 
@@ -206,6 +230,8 @@ Mermaidはtopology projectionとして使う。近接・離隔・空白など**�
 - 評価方向の変化:
 - 確度の変化:
 - 行為者・責任方向の脱落:
+- explicit relationをread-backしたとき、source / target / predicate / directionが噛み合わない箇所:
+- questionable relation candidateをreturn-checkなしにrelationへ昇格した箇所:
 - external exploration inputをtarget-side supportへ無言で昇格させた箇所:
 - emergent meaningをsource由来へ遡及させた箇所:
 - その他の違和感:
@@ -222,6 +248,7 @@ Mermaidはtopology projectionとして使う。近接・離隔・空白など**�
 - **Singletons kept:**
 - **Conflicts kept:**
 - **Unresolved questions:**
+- **Questionable / missing relation candidates still open:**
 - **External exploration inputs still not target-supported:**
 - **Intentionally omitted differences:**
 - **Possible next-round inputs:**
