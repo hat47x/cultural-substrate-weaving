@@ -41,6 +41,31 @@ A framework-generated candidate receives no authority bonus, independent support
 
 Internal framework consistency, sharing a group in affinity synthesis, diagram proximity, secondary resonance, or an explicit relation is not independent target-side corroboration by itself.
 
+### When handing off a third structure produced by tension
+
+Do not hand off a `cross_field_emergent` candidate only as a polished synthesis sentence with its generating tension removed.
+
+Where practical, keep at least these three elements traceable:
+
+```text
+target_side_tension:
+framework_side_claim_or_operation:
+cross_field_candidate:
+```
+
+When useful, also retain:
+
+```text
+preserved_from_target:
+preserved_from_framework:
+negated_or_revised:
+newly_recomposed:
+```
+
+This does not ask Layer 1 to implement dialectics or cultural-framework interpretation. It exists so **the third structure remains traceable to the tension that produced it and affinity synthesis can treat the tension itself as material**.
+
+Layer 1 does not treat the `cross_field_candidate` as a privileged higher-order label. It may keep the target-side resistance, framework-side reading, and third candidate as separate meaning-bearing units and integrate them again from the material upward.
+
 ## Receiving synthesis output
 
 When affinity synthesis returns a result, CSW keeps at least these distinct:
@@ -62,6 +87,8 @@ verification: target_supported | unresolved | other explicit state
 
 This is not a fixed schema.
 
+If the third structure changes further inside affinity synthesis, retain lineage back to the original target/framework tension. Do not delete the history of tension merely because the resulting prose has become smooth.
+
 ## Synthesis may correct a framework reading
 
 If affinity synthesis or later target material does not support a framework-derived correspondence candidate, do not force the target to fit the framework.
@@ -75,6 +102,8 @@ Allow the correspondence to be:
 - reopened through another framework contact.
 
 CSW is not trying to make the framework fit the target completely.
+
+When a mismatch causes the framework reading itself to change, that revision may be useful exploration information. Do not collapse it into a single “framework failed” status when it matters which assumption the target caused you to revise.
 
 ## When no compatible realization is available
 
@@ -97,6 +126,7 @@ When handing work to material synthesis, include only what the current task need
 - synthesis subject / current purpose;
 - target-side material refs;
 - framework-generated / cross-field candidates and their origin;
+- when a cross-field candidate arose from tension, refs to both the target-side and framework-side material involved;
 - known residual / conflict / unresolved items; and
 - provenance / derivation needed for audit.
 
@@ -110,6 +140,7 @@ In particular, CSW retains:
 
 - dual fidelity;
 - attribution principles;
+- provenance of third structures produced by target-framework tension;
 - target specificity;
 - separation of preservation from current attention;
 - separation of possibility from adoption; and
