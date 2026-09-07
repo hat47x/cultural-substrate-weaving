@@ -269,6 +269,28 @@ class ResearchSkillSuiteTests(unittest.TestCase):
         manifest["suite_research_assets"].append("research/skill-prototypes/DOES-NOT-EXIST.md")
         self.assert_has_error(manifest, "suite_research_assets file is missing")
 
+    def test_promotion_critical_suite_asset_cannot_be_left_unregistered(self) -> None:
+        manifest = copy.deepcopy(self.manifest)
+        manifest["suite_research_assets"].remove(
+            "research/skill-prototypes/P4-PUBLIC-NAME-PROJECTION-INVENTORY.json"
+        )
+        self.assert_has_error(manifest, "missing promotion-critical assets")
+
+    def test_l1_l2_handoff_eval_cannot_be_left_unregistered(self) -> None:
+        manifest = copy.deepcopy(self.manifest)
+        manifest["suite_research_assets"].remove(
+            "research/skill-prototypes/evals/L1-L2-HANDOFF-CAPSULE-2026-09-07.md"
+        )
+        self.assert_has_error(manifest, "missing promotion-critical assets")
+
+    def test_external_format_adoption_evidence_cannot_be_left_unregistered(self) -> None:
+        manifest = copy.deepcopy(self.manifest)
+        affinity = self.skill(manifest, "affinity-synthesis")
+        affinity["evidence"].remove(
+            "research/skill-prototypes/affinity-synthesis/evidence/EXTERNAL-FORMAT-ADOPTION-2026-09-07.md"
+        )
+        self.assert_has_error(manifest, "required promotion-relevant evidence is not registered")
+
 
 if __name__ == "__main__":
     unittest.main()
