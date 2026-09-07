@@ -186,6 +186,9 @@
   "suite_research_assets": [
     "research/skill-prototypes/P2-PACKAGE-SOURCE-DESCRIPTOR-2026-09-07.md",
     "research/skill-prototypes/P2-PACKAGE-TARGET-NAMING-2026-09-07.md",
+    "research/skill-prototypes/P2-SKILL-SUBTREE-PLAN-2026-09-07.md",
+    "research/skill-prototypes/P2-SKILL-ENTRY-TRANSFORM-2026-09-07.md",
+    "research/skill-prototypes/P3-PACKAGE-TREE-PREVIEW-2026-09-07.md",
     "research/skill-prototypes/REFERENCE-CLASSIFICATION.md",
     "research/skill-prototypes/evals/CSW-HANDOFF-CASES.md",
     "research/skill-prototypes/evals/THREE-LAYER-PAIRED-RUN-2026-09-06.md",
@@ -206,6 +209,7 @@
     "skill installable names remain unique and locale runtime frontmatter matches the intended installable name",
     "package sources preserve runtime-relative structure without silently importing research-only or wrong-locale instructions",
     "distribution-specific package target names are safe, non-colliding, and synchronized with existing adapters where applicable",
+    "Skill subtree and entry-transform plans preserve bilingual runtime identity without leaking source filename conventions into package entry names",
     "no hard dependency is assumed by the public method contract",
     "affinity-synthesis larger-set and representation regressions remain acceptable",
     "iterative-inquiry-synthesis contract cases and paired runs remain aligned with delta-reopen behavior",
