@@ -57,7 +57,7 @@ Autonomous research / autoresearch系Skillから、次の運用上の長所を�
 
 本方法は探索・創作・分析・設計など、単一metricへ還元できないinquiryも扱う。
 
-外部Skillとの詳細な採否比較は `evidence/dossier.md` に残す。
+外部Skillとの詳細な採否比較はresearch evidenceとして別管理し、runtime packageの必須参照にはしない。
 
 ## Inputs
 
