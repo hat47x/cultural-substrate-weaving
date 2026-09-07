@@ -60,6 +60,17 @@ class ResearchProductionAdapterMetadataPromotionTests(unittest.TestCase):
         self.assertEqual(len(self.plan["openai_profile_promotions"]), 12)
         self.assertEqual(len(self.plan["locale_bundle_promotions"]), 2)
 
+    def test_claude_and_codex_research_bundle_sources_are_shared_per_locale(self) -> None:
+        distributions = self.adapter_plan["distributions"]
+        claude = distributions["claude_plugin"]
+        codex = distributions["codex_plugin"]
+        self.assertEqual(claude["source"], codex["source"])
+        for locale in ("ja-JP", "en-US"):
+            self.assertEqual(
+                claude["locales"][locale]["prototype_source"],
+                codex["locales"][locale]["prototype_source"],
+            )
+
     def test_layer1_openai_metadata_uses_public_name_path_and_byte_identical_content(self) -> None:
         for locale in ("ja-JP", "en-US"):
             for profile in ("interactive", "metered"):
