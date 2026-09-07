@@ -19,7 +19,12 @@ EXPECTED_BLOCKED_EVIDENCE = (
     "research/skill-prototypes/"
     "P4-COMPLETE-CHECKOUT-EXECUTION-STATUS-2026-09-07.md"
 )
-EXPECTED_COMMANDS = ["make research-skill-check", "make build", "make check"]
+EXPECTED_COMMANDS = [
+    "make update-en-hashes",
+    "make research-skill-check",
+    "make build",
+    "make check",
+]
 ALLOWED_STATUS = {"blocked-not-run", "passed"}
 HEX40 = re.compile(r"^[0-9a-f]{40}$")
 
@@ -67,6 +72,7 @@ def validate_complete_checkout_gate(root: Path, descriptor: dict) -> list[str]:
                 )
             for marker in (
                 "Status: **blocked / not run**",
+                "translation-manifest hash refresh:       NOT RUN",
                 "complete-checkout research-skill-check: NOT RUN",
                 "production build regeneration:          NOT RUN",
                 "full repository make check:             NOT RUN",
@@ -79,6 +85,7 @@ def validate_complete_checkout_gate(root: Path, descriptor: dict) -> list[str]:
         elif status == "passed":
             for marker in (
                 "execution commit:",
+                "make update-en-hashes: PASS",
                 "make research-skill-check: PASS",
                 "make build: PASS",
                 "make check: PASS",
