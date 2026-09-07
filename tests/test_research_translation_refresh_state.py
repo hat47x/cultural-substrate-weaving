@@ -45,19 +45,23 @@ class ResearchTranslationRefreshStateTests(unittest.TestCase):
 
     def test_current_pending_refresh_state_is_valid(self) -> None:
         self.assertEqual(self.errors(), [])
+        self.assertEqual(
+            set(self.status["scope_files"]),
+            set(self.status["expected_stale_files"]),
+        )
 
     def test_pending_scope_cannot_hide_a_stale_file(self) -> None:
         status = copy.deepcopy(self.status)
-        removed = "governance/evaluation.md"
-        status["expected_stale_files"].remove(removed)
-        status["english_markers"].pop(removed)
+        status["expected_stale_files"].remove("governance/evaluation.md")
+        self.assert_has_error(status, "must mark the complete semantic-edit scope stale")
         self.assert_has_error(status, "undeclared stale files")
 
     def test_pending_scope_cannot_claim_an_unchanged_file_is_stale(self) -> None:
         status = copy.deepcopy(self.status)
         extra = "core/activation.md"
+        status["scope_files"].append(extra)
         status["expected_stale_files"].append(extra)
-        status["english_markers"][extra] = ["Use depth"]
+        status["english_markers"][extra] = ["#"]
         self.assert_has_error(status, "already synchronized or did not change")
 
     def test_english_marker_must_exist_in_translated_file(self) -> None:
@@ -66,6 +70,11 @@ class ResearchTranslationRefreshStateTests(unittest.TestCase):
             "THIS MARKER MUST NOT EXIST IN THE RUNTIME"
         )
         self.assert_has_error(status, "English translation missing declared tension marker")
+
+    def test_semantic_scope_keeps_english_markers_after_refresh(self) -> None:
+        status = copy.deepcopy(self.status)
+        status["english_markers"].pop("ROUTER.md")
+        self.assert_has_error(status, "english_markers must cover exactly scope_files")
 
     def test_pending_state_cannot_authorize_production(self) -> None:
         status = copy.deepcopy(self.status)
@@ -81,6 +90,11 @@ class ResearchTranslationRefreshStateTests(unittest.TestCase):
         status = copy.deepcopy(self.status)
         status["refresh_command"] = "edit i18n/translation-manifest.json by hand"
         self.assert_has_error(status, "refresh command must remain make update-en-hashes")
+
+    def test_synchronization_command_is_explicit(self) -> None:
+        status = copy.deepcopy(self.status)
+        status["synchronization_command"] = "edit status JSON manually"
+        self.assert_has_error(status, "translation synchronization command has drifted")
 
 
 if __name__ == "__main__":
