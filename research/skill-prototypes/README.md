@@ -78,7 +78,7 @@ Method Definitionの不変条件を別realizationが満たせるなら、local S
 
 参照資料のlocale依存とruntime依存は [REFERENCE-CLASSIFICATION.md](REFERENCE-CLASSIFICATION.md) を参照する。
 
-## Package source
+## Package境界
 
 `runtime_entry` が存在することと、そのSkillをpackageへ組み立てるsource boundaryが分かっていることを分ける。
 
@@ -87,14 +87,74 @@ locale realizationごとに `package_source` を宣言する。
 - `explicit_files`: sibling Skill。source rootからの相対構造を保つfile集合。
 - `canonical_manifest`: CSW。既存 `src/manifest.json` とlocale rootを再利用する。
 
+さらに、package sourceが宣言されているだけでは十分ではない。runtime entryが参照する `references/`、`evals/`、`evidence/` 等が `package_source.files` から抜けていないことをreference-closure validatorで確認する。
+
 詳細は次を参照する。
 
 - [P1 Locale Realization Audit](P1-LOCALE-REALIZATION-AUDIT-2026-09-07.md)
 - [P2 Distribution Layout Plan](P2-DISTRIBUTION-LAYOUT-PLAN-2026-09-07.md)
 - [P2 Package Source Descriptor Audit](P2-PACKAGE-SOURCE-DESCRIPTOR-2026-09-07.md)
+- [P2 Skill Subtree Plan](P2-SKILL-SUBTREE-PLAN-2026-09-07.md)
+- [P2 Skill Entry Transform](P2-SKILL-ENTRY-TRANSFORM-2026-09-07.md)
 - [P3 Package Tree Preview](P3-PACKAGE-TREE-PREVIEW-2026-09-07.md)
 
 `package_source` はresearch metadataの全量を意味しない。runtime packageへ必要なsource boundaryだけを表す。
+
+## Host adapter metadata
+
+runtime/package treeの成熟度と、host固有metadataの成熟度も分ける。
+
+`adapter-metadata-plan.json` は、少なくとも次を独立に追跡する。
+
+- OpenAI Skill: Skill × locale × interactive/metered profile
+- Claude plugin: locale bundle
+- Codex plugin: locale bundle
+
+現在はja-JP / en-USとも、
+
+- CSW OpenAI metadata = `existing`
+- Affinity / Iterative OpenAI metadata = `prototype`
+- Claude/Codex三Skill bundle metadata = `prototype`
+
+である。
+
+したがって、両localeともresearch上はSkill treeとpackage-local host metadataを組み立てる最低条件がそろっている。ただし、prototype wordingがhost上で適切に見え、routingされることを実証したわけではない。
+
+詳細は [P2 Adapter Metadata Plan](P2-ADAPTER-METADATA-PLAN-2026-09-07.md) を参照する。
+
+## 二段のmaterializer
+
+production builderへ直接進まず、repository外の一時領域だけを使う二段のprobeを置く。
+
+### 1. Skill tree
+
+`research/skill-prototypes/scripts/materialize_skill_tree.py`
+
+対象:
+
+- OpenAI Skill tree
+- Claude shared `skills/` tree
+- Codex shared `skills/` tree
+
+この段階ではhost manifestを生成しない。
+
+詳細は [P2 Research Skill-tree Materializer](P2-RESEARCH-SKILL-TREE-MATERIALIZER-2026-09-07.md) を参照する。
+
+### 2. Host package shape
+
+`research/skill-prototypes/scripts/materialize_host_package.py`
+
+Skill treeを再利用し、package-local metadataだけを追加する。
+
+- OpenAI: `<skill>/agents/openai.yaml`
+- Claude: `.claude-plugin/plugin.json`
+- Codex: `.codex-plugin/plugin.json`
+
+marketplace、README、archive、release manifest、release assetは生成しない。
+
+詳細は [P3 Research Host Package Materializer](P3-RESEARCH-HOST-PACKAGE-MATERIALIZER-2026-09-07.md) を参照する。
+
+両materializerは、suite / package target / adapter metadata / package reference closureをpreflightとして共有する。
 
 ## 研究資料の役割
 
@@ -105,6 +165,8 @@ locale realizationごとに `package_source` を宣言する。
 - `evals/`: regression fixtures / application records
 - `migration/`: split migration and retention audits
 - `package_source`: locale realizationをpackageへ投影するときのsource boundary
+- `adapter-metadata-plan.json`: host metadataのsourceとmaturity
+- `P2/P3-...MATERIALIZER...md`: production migration前のpackage projection boundary
 
 未翻訳のevidence / eval / migration資料を、英語runtimeの暗黙の実行指示にはしない。
 
@@ -134,16 +196,18 @@ make research-skill-check
    - source-root escape
    - research metadata / checks
    - hard-dependency boundary
-2. distribution layout planner
-   - runtimeだけでなくpackage-source descriptorがある場合にだけbuildableとする
-3. thin-CSW / sibling Method間のsplit ownership（日英）
-4. 三Skill × 二localeのresearch-only package-tree preview
-   - `explicit_files` のrelative structure
-   - `canonical_manifest` のrouter / modules
-   - frontmatter
-   - Method Definition
-   - relative links
-5. affinity-map representationのrecursive grouping / lineage regression
+2. package target / package-local reference closure
+3. distribution layout / Skill subtree / entry transform planner
+4. OpenAI per-Skill / Claude-Codex bundle adapter metadata validator
+5. thin-CSW / sibling Method間のsplit ownership（日英）
+6. 三Skill × 二localeのresearch-only package-tree preview
+7. affinity-map representationのrecursive grouping / lineage regression
+8. `test_research_*.py` のunit test一式
+   - bilingual Skill-tree materialization
+   - bilingual host-package materialization
+   - adapter metadata
+   - package reference closure
+   - suite/layout/target/entry transform等
 
 previewを実際に目視したい場合は次を使う。
 
@@ -151,7 +215,7 @@ previewを実際に目視したい場合は次を使う。
 make research-skill-preview
 ```
 
-`dist/research-skill-suite/` に三Skill × 二localeのresearch-only packageを組み立てる。
+`dist/research-skill-suite/` に三Skill × 二localeのresearch-only package previewを組み立てる。
 
 英語source上の `SKILL.en.md` はpackage entryでは `SKILL.md` へ投影するが、元sourceは `ORIGIN.json` に残す。その他のexplicit fileはsource rootからの相対構造を保つ。
 
@@ -169,7 +233,10 @@ GitHub Actionsは現在使用していない。ローカルまたは同等の実
 
 公開multi-skill distributionへ進む前に、少なくとも次が必要である。
 
-- research gate実行成功
+- complete checkoutで `make research-skill-check` が成功する
+- bilingual Skill-tree materializer testsが成功する
+- bilingual host-package materializer testsが成功する
+- materialized packageと現行production generated packageの構造差分を監査する
 - thin-CSW migration後のgenerated artifacts再build
 - repository validation / tests成功
 - English sibling realizationの独立査読
@@ -181,8 +248,10 @@ M365だけは、sibling Skill invocationを前提にできないため、現在�
 
 ## Current next gate
 
-現在の不足は「source descriptorがないこと」ではない。
+現在の不足は、runtime、package source、adapter metadata、materializer sourceが存在しないことではない。
 
-次に必要なのは、実行環境で `make research-skill-check` を実際に通し、preview tree・relative link・validator/testの不整合を実データで潰すことである。
+次に必要なのは、**complete checkoutでresearch gateとmaterializer testsを実際に通し、生成した日英host package treeを現行production artifactと比較すること**である。
 
-その結果が安定するまでproduction `scripts/build.py` のmulti-skill一般化には進まない。
+現時点の実行環境ではrepository checkoutを取得できず、接続済み開発端末もofflineだったため、その実行証拠はまだない。
+
+その証拠が得られるまで、production `scripts/build.py` のmulti-Skill一般化、marketplace変更、release asset変更には進まない。
