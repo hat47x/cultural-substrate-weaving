@@ -94,6 +94,67 @@ def check_relation_readback_contract() -> None:
     )
 
 
+def check_questionable_relation_metadata() -> None:
+    valid_candidate = {
+        "format": "affinity-map",
+        "version": "0.2",
+        "sources": [{"id": "S01", "ref": "source"}],
+        "cards": [
+            {"id": "C001", "text": "one", "source_refs": ["S01"]},
+            {"id": "C002", "text": "two", "source_refs": ["S01"]},
+        ],
+        "groups": [
+            {"id": "G01", "label": "group one", "members": ["C001"]},
+            {"id": "G02", "label": "group two", "members": ["C002"]},
+        ],
+        "questions": [
+            {
+                "id": "Q01",
+                "text": "Is there a relation between the groups?",
+                "arises_from": ["G01", "G02"],
+                "candidate_relation_between": ["G01", "G02"],
+                "would_clarify_refs": ["C001", "S01"],
+                "handling": "keep as question",
+            }
+        ],
+    }
+    errors, warnings = validate(valid_candidate)
+    assert_true(not errors, f"valid questionable relation candidate has errors: {errors}")
+    assert_true(not warnings, f"valid questionable relation candidate has warnings: {warnings}")
+
+    same_endpoint = {
+        **valid_candidate,
+        "questions": [
+            {
+                "id": "Q01",
+                "text": "self relation?",
+                "candidate_relation_between": ["G01", "G01"],
+            }
+        ],
+    }
+    same_errors, _ = validate(same_endpoint)
+    assert_true(
+        any("two distinct semantic nodes" in error for error in same_errors),
+        "questionable relation candidate must reject identical endpoints",
+    )
+
+    unknown_endpoint = {
+        **valid_candidate,
+        "questions": [
+            {
+                "id": "Q01",
+                "text": "unknown relation?",
+                "candidate_relation_between": ["G01", "G404"],
+            }
+        ],
+    }
+    unknown_errors, _ = validate(unknown_endpoint)
+    assert_true(
+        any("candidate relation endpoint does not resolve" in error for error in unknown_errors),
+        "questionable relation candidate must reject unknown semantic endpoints",
+    )
+
+
 def main() -> None:
     data = build()
 
@@ -154,6 +215,7 @@ def main() -> None:
 
     check_reader_facing_overview()
     check_relation_readback_contract()
+    check_questionable_relation_metadata()
 
     with tempfile.TemporaryDirectory() as tmp:
         path = Path(tmp) / "hierarchy.mmd"
