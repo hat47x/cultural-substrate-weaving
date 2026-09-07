@@ -14,12 +14,14 @@ Status: review handoff; **review not yet completed**
 
 ## 固定査読snapshot
 
-査読対象のruntime / Method Definitionは、次のsnapshotで具体的なblobへ固定する。
+査読対象のruntime、Method Definition、および英語runtimeが直接参照する説明的technical assetは、次のsnapshotで具体的なblobへ固定する。
 
-- `research/skill-prototypes/P4-ENGLISH-INDEPENDENT-REVIEW-TARGETS-2026-09-07.json`
-- review source commit: `2e06c03b4b917d7a05fe22a9e5c2412e8159ce3b`
+- `research/skill-prototypes/P4-ENGLISH-INDEPENDENT-REVIEW-TARGETS-2026-09-07-v2.json`
+- review source commit: `f14326626563c5d8de4bcf06d9e19d9a280c826c`
 
-査読者はbranchの「現在内容」だけを参照して完了判定しない。snapshotに記録された日本語canonical blobと英語translated-draft blobを比較対象とする。
+旧snapshot `P4-ENGLISH-INDEPENDENT-REVIEW-TARGETS-2026-09-07.json` は、technical asset localization前の履歴として残す。上書きして現在の査読対象であったことにはしない。
+
+査読者はbranchの「現在内容」だけを参照して完了判定しない。v2 snapshotに記録された日本語canonical blobと英語translated-draft blobを比較対象とする。
 
 査読後にlisted blobが変更された場合、その変更を自動的に査読済みへ継承しない。新snapshotを作るか、変更blobについて明示的なdelta reviewを残す。
 
@@ -31,18 +33,19 @@ Canonical Japanese:
 
 - `research/skill-prototypes/affinity-synthesis/SKILL.md`
 - `research/skill-prototypes/affinity-synthesis/references/METHOD.md`
+- `research/skill-prototypes/affinity-synthesis/references/REPRESENTATION.md`
 
 English draft:
 
 - `research/skill-prototypes/affinity-synthesis/SKILL.en.md`
 - `research/skill-prototypes/affinity-synthesis/references/METHOD.en.md`
+- `research/skill-prototypes/affinity-synthesis/references/REPRESENTATION.en.md`
 
-Shared language-neutral / currently shared research assets:
+Language-neutral / research-only supporting assets:
 
-- `references/REPRESENTATION.md`
-- `references/HIERARCHY-AND-LINEAGE.md`
-- `references/affinity-map.schema.json`
-- `evals/CASES.md`
+- `references/affinity-map.schema.json` — shared language-neutral schema
+- `references/HIERARCHY-AND-LINEAGE.md` — research/lineage note; not an English runtime dependency
+- `evals/CASES.md` — regression fixture; not runtime instruction
 
 ### Layer 2 — research ID `iterative-inquiry-synthesis`
 
@@ -50,17 +53,20 @@ Canonical Japanese:
 
 - `research/skill-prototypes/iterative-inquiry-synthesis/SKILL.md`
 - `research/skill-prototypes/iterative-inquiry-synthesis/references/METHOD.md`
+- `research/skill-prototypes/iterative-inquiry-synthesis/references/ROUND-TEMPLATE.md`
 
 English draft:
 
 - `research/skill-prototypes/iterative-inquiry-synthesis/SKILL.en.md`
 - `research/skill-prototypes/iterative-inquiry-synthesis/references/METHOD.en.md`
+- `research/skill-prototypes/iterative-inquiry-synthesis/references/ROUND-TEMPLATE.en.md`
 
-Shared research assets:
+Research-only supporting assets:
 
-- `references/ROUND-TEMPLATE.md`
 - `evals/CASES.md`
 - `evals/CSW-AFFINITY-HANDOFF-2026-09-07.md`
+
+technical assetの翻訳状態とruntime / Method Definition parityは同一条件ではない。`P4-TECHNICAL-ASSET-LOCALIZATION-2026-09-07.json` が、英語packageで直接必要なtechnical assetとresearch-only資料の区別を記録する。
 
 ## 査読者へ伝える前提
 
@@ -86,9 +92,11 @@ Layer 1はKJ法、関連する質的統合、親和的整理の系譜を受け�
 
 `KJ Method` / `KJ法` はlineage説明として必要な場所に残してよいが、Skill identityへ昇格させない。
 
-### 3. 翻訳ではなくrealization parityを見る
+### 3. 翻訳一致ではなくrealization parityを見る
 
 語順や直訳一致より、次の方法的不変条件が英語版でも同じ判断を生むかを見る。
+
+representation grammarとround templateについても、文章の逐語一致ではなく、runtimeから利用したときに意味境界・監査境界が変わらないことを確認する。
 
 ## Layer 1 必須不変条件
 
@@ -140,6 +148,7 @@ Layer 1はKJ法、関連する質的統合、親和的整理の系譜を受け�
    - secondary resonance
    - layout
    を混同しない。
+   - `REPRESENTATION.en.md` が、`REPRESENTATION.md` にあるrelation read-back、questionable relation candidate、projection integrityの境界を弱めていない。
 
 10. **no fixed success counts**
     - card数、group数、gap数、isolate数を成功quotaにしない。
@@ -181,6 +190,7 @@ Layer 1はKJ法、関連する質的統合、親和的整理の系譜を受け�
     - material synthesisが必要ならcompatible Layer 1 realizationを利用できる。
     - hard dependencyとして特定実装を絶対条件にしない。
     - Layer 1内部アルゴリズムをLayer 2へ再複製しない。
+    - `ROUND-TEMPLATE.en.md` が、handoff capsuleを一括reopen命令や自動継続命令へ変えていない。
 
 ## Cross-layer査読
 
@@ -243,7 +253,10 @@ KJ lineageの「空白」に近い意味を、単なるmissing data fieldへ縮�
 - `affinity-synthesis`を単純theme clusteringだけへ縮めている。
 - provenance fieldで先に分類してからgroupingするよう読める。
 - isolate / conflict / gapを失敗として除去する。
+- relation / resonance / layout / membershipを英語representation grammarが混同している。
+- questionable relation candidateをreturn-checkなしにexplicit relationへ昇格させる。
 - Layer 2が毎round global rebuildを要求する。
+- `ROUND-TEMPLATE.en.md` がcarry-forward refを自動reopen対象へ変えている。
 - stop条件として未解決ゼロを要求する。
 - realization差をmaterial差として扱う。
 - CSW / Layer 1 / Layer 2のownershipが再混合している。
@@ -261,11 +274,13 @@ review scope:
 
 Layer 1:
   semantic parity: pass | revise | blocked
+  technical asset parity: pass | revise | blocked
   major issues:
   wording-only issues:
 
 Layer 2:
   semantic parity: pass | revise | blocked
+  technical asset parity: pass | revise | blocked
   major issues:
   wording-only issues:
 
