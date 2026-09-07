@@ -41,6 +41,33 @@ CSWはこれらの内部アルゴリズムを独自に再実装しない。
 
 体系内の整合、親和統合での同島、図上の近接、secondary resonance、explicit relationの成立は、それだけでは対象側の独立corroborationにならない。
 
+### 緊張から生じた第三構造を渡すとき
+
+`cross_field_emergent` な候補だけを、完成した統合文として単独で渡さない。
+
+可能な範囲で、少なくとも次の三者を追跡できるようにする。
+
+```text
+target_side_tension:
+framework_side_claim_or_operation:
+cross_field_candidate:
+```
+
+必要ならさらに、
+
+```text
+preserved_from_target:
+preserved_from_framework:
+negated_or_revised:
+newly_recomposed:
+```
+
+を持たせる。
+
+これはLayer 1に弁証法や文化体系処理を実装させるためではない。**第三構造が何との緊張から生じたのかを失わず、親和統合がその緊張自体も材料として扱えるようにするため**である。
+
+Layer 1は、`cross_field_candidate` を特権的な上位表札として扱わない。対象側の抵抗、体系側の読み、第三候補を必要に応じて別々のmeaning-bearing unitとして保持し、そこから改めて材料主導で統合する。
+
 ## 統合結果を受け取る
 
 親和統合から結果が返ったら、CSWは少なくとも次を混同しない。
@@ -62,6 +89,8 @@ verification: target_supported | unresolved | other explicit state
 
 固定schemaではない。
 
+第三構造が親和統合の中でさらに変化した場合も、元のtarget/framework tensionへ戻れるlineageを残す。統合後の文が滑らかになったことを理由に、緊張の履歴を削除しない。
+
 ## 文化体系の読みを修正できる
 
 親和統合または後続の対象材料が文化体系由来の対応候補を支えない場合、対象を体系へ合わせない。
@@ -75,6 +104,8 @@ verification: target_supported | unresolved | other explicit state
 ことを許容する。
 
 CSWの目的は、文化体系を対象へ当てはめ切ることではない。
+
+不一致によって体系の読みが修正された場合、その修正自体が探索上の情報になり得る。体系が「外れた」という一語だけで捨てず、何を前提にした読みが対象によって崩れたかを必要に応じて残す。
 
 ## compatible realizationがない場合
 
@@ -97,6 +128,7 @@ CSWの目的は、文化体系を対象へ当てはめ切ることではない�
 - synthesis subject / current purpose
 - target-side material refs
 - framework-generated / cross-field candidatesとその由来
+- cross-field candidateが緊張から生じた場合のtarget/framework双方の参照
 - 既知のresidual / conflict / unresolved
 - 監査上必要なprovenance / derivation
 
@@ -110,6 +142,7 @@ CSWの目的は、文化体系を対象へ当てはめ切ることではない�
 
 - 二重の忠実性
 - 帰属の原則
+- 対象と体系の緊張から生じる第三構造の来歴
 - 対象固有性
 - 保存と現在の注意の分離
 - 可能性と採用の分離
