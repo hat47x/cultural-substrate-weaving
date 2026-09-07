@@ -57,7 +57,7 @@ The following are not invariants of this method:
 
 This method also supports inquiry in research, creation, analysis, and design that cannot be reduced to one scalar metric.
 
-The detailed external-Skill comparison and adoption decisions are kept in `evidence/dossier.md`.
+The detailed external-Skill comparison and adoption decisions are maintained as separate research evidence, not as a required runtime-package reference.
 
 ## Inputs
 
