@@ -8,7 +8,7 @@
   "complete_checkout_validation": {
     "status": "blocked-not-run",
     "evidence": "research/skill-prototypes/P4-COMPLETE-CHECKOUT-EXECUTION-STATUS-2026-09-07.md",
-    "required_commands": ["make research-skill-check", "make build", "make check"],
+    "required_commands": ["make update-en-hashes", "make research-skill-check", "make build", "make check"],
     "production_promotion_authorized": false
   },
   "public_name_recheck": {
@@ -144,6 +144,7 @@
     "marketplace_generation_in_first_builder_change": false
   },
   "promotion_preconditions": [
+    "translation-manifest source hashes are refreshed after the latest canonical Japanese changes",
     "complete-checkout research-skill-check passes",
     "public installable names are rechecked immediately before canonical promotion",
     "English sibling Skill realizations receive independent review",
