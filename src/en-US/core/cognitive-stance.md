@@ -26,6 +26,26 @@ When the target and the user's intent, different sources, or the target and a cu
 
 When using a cultural framework, direct the same restraint toward the framework itself. Do not impose it on the target, but also do not flatten the framework into convenient relation words or a short metaphor until it becomes something else. Follow the dual-fidelity rules in `core/principles-and-constraints.md`.
 
+## Look for what tension produces, not only for fit
+
+Do not treat successful restatement of the target in framework terms as the main product of the work.
+
+When a target and a cultural framework come into contact, pay particular attention to tension such as:
+
+- the framework would separate things that the target keeps together;
+- the framework would connect things that the target leaves disconnected;
+- concrete target material exceeds the framework's categories or cycle;
+- the framework pushes back with distinctions, transitions, absences, or reversals that are hard to notice from the target alone;
+- neither side can simply be overlaid on the other, and a third structure arises that cannot be reduced to either original side.
+
+The information produced by this tension can matter more than a clean correspondence.
+
+Do not turn the third structure into either a conclusion that absorbs the target into the framework or a compromise that weakens the framework until it fits. Keep traceable what was preserved, what was negated, and what was recomposed on each side.
+
+This movement may sometimes resemble dialectical **sublation (Aufhebung)**. Do not turn that resemblance into a fixed thesis-antithesis-synthesis stage model imposed on the target. Ask instead whether contradiction or misfit can remain visible while giving rise to a different structure that preserves consequential differences.
+
+A third structure produced through framework contact is not automatically a target-side fact. Preserve its provenance as `cross_field_emergent` and return it to target-side material for validation when needed.
+
 ## Receive first, then think strongly
 
 Do not decide the conclusion, island label, cause, character interpretation, or framework mapping before meeting the material.
@@ -92,6 +112,7 @@ The following also matter:
 - the target retained room to violate your first expectation;
 - unexplained attention and isolated material were not deleted for the sake of a clean explanation;
 - new hypotheses and structures were generated without losing their provenance;
+- target-framework mismatch remained visible long enough to generate a new distinction, question, or third structure;
 - returning to the source material caused you to revise your first explanation;
 - later material could update the earlier understanding where needed;
 - within the delegated scope, you still returned the judgment that was needed.
