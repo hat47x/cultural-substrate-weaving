@@ -26,6 +26,10 @@ from validate_research_production_suite_descriptor import validate_production_su
 from validate_research_skill_suite import validate_suite  # noqa: E402
 
 PLAN_SCHEMA = "csw.production-source-promotion-plan/v1"
+SKILL_PROJECTION_PREFIXES = (
+    "research/skill-prototypes/affinity-synthesis/",
+    "research/skill-prototypes/iterative-inquiry-synthesis/",
+)
 
 
 def _target_relative(source_relative: str, locale: str) -> str:
@@ -167,7 +171,11 @@ def plan_production_source_promotion(
     return output
 
 
-def validate_production_source_promotion_plan(plan: dict, descriptor: dict) -> list[str]:
+def validate_production_source_promotion_plan(
+    plan: dict,
+    descriptor: dict,
+    inventory: dict | None = None,
+) -> list[str]:
     errors: list[str] = []
     if plan.get("schema") != PLAN_SCHEMA:
         errors.append(f"production source promotion plan schema must be {PLAN_SCHEMA}")
@@ -181,6 +189,7 @@ def validate_production_source_promotion_plan(plan: dict, descriptor: dict) -> l
         for item in descriptor.get("skills", [])
         if isinstance(item, dict) and isinstance(item.get("research_id"), str)
     }
+    mapping_by_source: dict[str, dict] = {}
     for skill in plan.get("skills", []):
         if not isinstance(skill, dict):
             errors.append("production source promotion Skill entries must be objects")
@@ -226,6 +235,35 @@ def validate_production_source_promotion_plan(plan: dict, descriptor: dict) -> l
                 stale = [target for target in targets if isinstance(target, str) and ".en.md" in target]
                 if stale:
                     errors.append(f"English production canonical filenames must drop .en suffix: {stale}")
+            for mapping in mappings:
+                if not isinstance(mapping, dict):
+                    errors.append(f"production source mapping must be an object: {research_id}/{locale}")
+                    continue
+                source = mapping.get("source")
+                if isinstance(source, str):
+                    if source in mapping_by_source:
+                        errors.append(f"production source mapping repeats source across locale plans: {source}")
+                    mapping_by_source[source] = mapping
+
+    if inventory is not None:
+        expected_actions = {
+            path: action
+            for path, action in _projection_actions(inventory).items()
+            if path.startswith(SKILL_PROJECTION_PREFIXES)
+        }
+        for source, action in sorted(expected_actions.items()):
+            mapping = mapping_by_source.get(source)
+            if mapping is None:
+                errors.append(
+                    f"promotion-sensitive source declared by projection inventory is missing from source plan: {source}"
+                )
+                continue
+            transforms = mapping.get("content_transforms")
+            if not isinstance(transforms, list) or action not in transforms:
+                errors.append(
+                    "production source mapping is missing projection-inventory transform: "
+                    f"{source} -> {action}"
+                )
 
     return errors
 
@@ -253,7 +291,7 @@ def main() -> int:
         print(f"production source promotion planning failed: {exc}", file=sys.stderr)
         return 1
 
-    errors = validate_production_source_promotion_plan(plan, descriptor)
+    errors = validate_production_source_promotion_plan(plan, descriptor, inventory)
     if errors:
         for error in errors:
             print(f"ERROR: {error}", file=sys.stderr)
