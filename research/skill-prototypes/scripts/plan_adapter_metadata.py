@@ -28,6 +28,13 @@ def _load_json(path: Path) -> dict:
     return json.loads(path.read_text(encoding="utf-8"))
 
 
+def _profile_metadata_state(profile_output: dict[str, dict]) -> str:
+    states = {entry["status"] for entry in profile_output.values()}
+    if len(states) == 1:
+        return next(iter(states))
+    return "mixed"
+
+
 def _openai_locale_plan(
     locale: str,
     layout_distribution: dict,
@@ -47,17 +54,12 @@ def _openai_locale_plan(
             }
             for profile in profiles
         }
-        all_existing = all(
-            profile_output[profile]["status"] == "existing" for profile in profiles
-        )
+        declared_state = _profile_metadata_state(profile_output)
 
         if item["state"] != "buildable":
             metadata_state = "runtime-blocked"
-        elif all_existing:
-            metadata_state = "existing"
-            realized_metadata_states.append(metadata_state)
         else:
-            metadata_state = "planned"
+            metadata_state = declared_state
             realized_metadata_states.append(metadata_state)
 
         items.append(
@@ -73,6 +75,8 @@ def _openai_locale_plan(
         coverage = "no-realized-skills"
     elif all(state == "existing" for state in realized_metadata_states):
         coverage = "complete-for-realized"
+    elif all(state in {"existing", "prototype"} for state in realized_metadata_states):
+        coverage = "prototype-for-realized"
     else:
         coverage = "incomplete-for-realized"
 
@@ -83,7 +87,8 @@ def _openai_locale_plan(
         "items": items,
         "note": (
             "Metadata coverage is evaluated only for currently buildable Skill realizations; "
-            "runtime-blocked skills remain separate from metadata gaps."
+            "prototype is kept distinct from existing production metadata, and runtime-blocked "
+            "skills remain separate from metadata gaps."
         ),
     }
 
