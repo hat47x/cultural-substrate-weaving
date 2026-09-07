@@ -5,6 +5,12 @@
   "version_source": "VERSION",
   "canonical_locale": "ja-JP",
   "locales": ["ja-JP", "en-US"],
+  "complete_checkout_validation": {
+    "status": "blocked-not-run",
+    "evidence": "research/skill-prototypes/P4-COMPLETE-CHECKOUT-EXECUTION-STATUS-2026-09-07.md",
+    "required_commands": ["make research-skill-check", "make build", "make check"],
+    "production_promotion_authorized": false
+  },
   "public_name_recheck": {
     "date": "2026-09-07",
     "evidence": "research/skill-prototypes/P4-PUBLIC-NAME-RECHECK-2026-09-07.md",
