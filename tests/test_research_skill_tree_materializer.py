@@ -35,8 +35,8 @@ class ResearchSkillTreeMaterializerTests(unittest.TestCase):
         )
         return output, result, temp
 
-    def test_ja_openai_materializes_three_standalone_skill_trees(self) -> None:
-        output, result, temp = self.materialize("ja-JP", "openai_skill")
+    def assert_openai_three_skill_tree(self, locale: str) -> None:
+        output, result, temp = self.materialize(locale, "openai_skill")
         self.addCleanup(temp.cleanup)
 
         self.assertFalse(result["partial"])
@@ -63,29 +63,53 @@ class ResearchSkillTreeMaterializerTests(unittest.TestCase):
         self.assertNotIn("disable-model-invocation:", affinity)
         self.assertNotIn("disable-model-invocation:", iterative)
 
-        self.assertTrue(
-            (output / "cultural-substrate-weaving" / "references" / "10-integration.md").is_file()
-        )
-        self.assertTrue(
-            (output / "affinity-synthesis" / "references" / "METHOD.md").is_file()
-        )
-        self.assertTrue(
-            (output / "affinity-synthesis" / "evidence" / "dossier.md").is_file()
-        )
-        self.assertTrue(
-            output
-            .joinpath("iterative-inquiry-synthesis", "references", "ROUND-TEMPLATE.md")
-            .is_file()
-        )
+        if locale == "ja-JP":
+            self.assertTrue(
+                (output / "cultural-substrate-weaving" / "references" / "10-integration.md").is_file()
+            )
+            self.assertTrue(
+                (output / "affinity-synthesis" / "references" / "METHOD.md").is_file()
+            )
+            self.assertTrue(
+                (output / "affinity-synthesis" / "evidence" / "dossier.md").is_file()
+            )
+            self.assertTrue(
+                output
+                .joinpath("iterative-inquiry-synthesis", "references", "ROUND-TEMPLATE.md")
+                .is_file()
+            )
+        else:
+            self.assertTrue(
+                (output / "cultural-substrate-weaving" / "references" / "10-integration.md").is_file()
+            )
+            self.assertTrue(
+                (output / "affinity-synthesis" / "references" / "METHOD.en.md").is_file()
+            )
+            self.assertTrue(
+                (output / "affinity-synthesis" / "references" / "REPRESENTATION.md").is_file()
+            )
+            self.assertTrue(
+                output
+                .joinpath("iterative-inquiry-synthesis", "references", "METHOD.en.md")
+                .is_file()
+            )
+            self.assertTrue(
+                output
+                .joinpath("iterative-inquiry-synthesis", "references", "ROUND-TEMPLATE.md")
+                .is_file()
+            )
+
         self.assertNotIn("../affinity-synthesis/", iterative)
 
-    def test_ja_claude_materializes_shared_skill_tree_with_explicit_invocation(self) -> None:
-        output, result, temp = self.materialize("ja-JP", "claude_plugin")
+    def assert_bundle_three_skill_tree(self, locale: str, distribution: str) -> None:
+        output, result, temp = self.materialize(locale, distribution)
         self.addCleanup(temp.cleanup)
 
         self.assertFalse(result["partial"])
         for skill_name in ("weave", "affinity-synthesis", "iterative-inquiry-synthesis"):
-            entry = (output / "skills" / skill_name / "SKILL.md").read_text(encoding="utf-8")
+            entry = (output / "skills" / skill_name / "SKILL.md").read_text(
+                encoding="utf-8"
+            )
             self.assertIn(f"name: {skill_name}", entry)
             self.assertEqual(entry.count("disable-model-invocation: true"), 1)
 
@@ -102,61 +126,35 @@ class ResearchSkillTreeMaterializerTests(unittest.TestCase):
             ).is_file()
         )
 
-    def test_ja_codex_uses_same_shared_skill_tree_entry_policy(self) -> None:
-        output, result, temp = self.materialize("ja-JP", "codex_plugin")
-        self.addCleanup(temp.cleanup)
-
-        self.assertFalse(result["partial"])
-        weave = (output / "skills" / "weave" / "SKILL.md").read_text(encoding="utf-8")
-        affinity = (output / "skills" / "affinity-synthesis" / "SKILL.md").read_text(
-            encoding="utf-8"
+        expected_method = "METHOD.md" if locale == "ja-JP" else "METHOD.en.md"
+        self.assertTrue(
+            output
+            .joinpath("skills", "affinity-synthesis", "references", expected_method)
+            .is_file()
         )
-        self.assertIn("disable-model-invocation: true", weave)
-        self.assertIn("disable-model-invocation: true", affinity)
+        self.assertTrue(
+            output
+            .joinpath("skills", "iterative-inquiry-synthesis", "references", expected_method)
+            .is_file()
+        )
 
-    def test_en_openai_runtime_is_buildable_but_metadata_blocks_materialization(self) -> None:
-        with tempfile.TemporaryDirectory() as temp_dir:
-            with self.assertRaisesRegex(
-                ValueError,
-                "OpenAI metadata for affinity-synthesis is not materializable: 'planned'",
-            ):
-                materialize_skill_tree(
-                    locale="en-US",
-                    distribution_name="openai_skill",
-                    output_root=Path(temp_dir) / "tree",
-                    root=ROOT,
-                )
+    def test_ja_openai_materializes_three_standalone_skill_trees(self) -> None:
+        self.assert_openai_three_skill_tree("ja-JP")
 
-    def test_en_openai_allow_partial_does_not_bypass_metadata_gate(self) -> None:
-        with tempfile.TemporaryDirectory() as temp_dir:
-            with self.assertRaisesRegex(ValueError, "OpenAI metadata.*planned"):
-                materialize_skill_tree(
-                    locale="en-US",
-                    distribution_name="openai_skill",
-                    output_root=Path(temp_dir) / "tree",
-                    root=ROOT,
-                    allow_partial=True,
-                )
+    def test_en_openai_materializes_three_standalone_skill_trees(self) -> None:
+        self.assert_openai_three_skill_tree("en-US")
 
-    def test_en_claude_buildable_runtime_still_requires_bundle_metadata(self) -> None:
-        with tempfile.TemporaryDirectory() as temp_dir:
-            with self.assertRaisesRegex(ValueError, "bundle metadata is not materializable"):
-                materialize_skill_tree(
-                    locale="en-US",
-                    distribution_name="claude_plugin",
-                    output_root=Path(temp_dir) / "tree",
-                    root=ROOT,
-                )
+    def test_ja_claude_materializes_shared_skill_tree_with_explicit_invocation(self) -> None:
+        self.assert_bundle_three_skill_tree("ja-JP", "claude_plugin")
 
-    def test_en_codex_buildable_runtime_still_requires_bundle_metadata(self) -> None:
-        with tempfile.TemporaryDirectory() as temp_dir:
-            with self.assertRaisesRegex(ValueError, "bundle metadata is not materializable"):
-                materialize_skill_tree(
-                    locale="en-US",
-                    distribution_name="codex_plugin",
-                    output_root=Path(temp_dir) / "tree",
-                    root=ROOT,
-                )
+    def test_en_claude_materializes_shared_skill_tree_with_explicit_invocation(self) -> None:
+        self.assert_bundle_three_skill_tree("en-US", "claude_plugin")
+
+    def test_ja_codex_uses_same_shared_skill_tree_entry_policy(self) -> None:
+        self.assert_bundle_three_skill_tree("ja-JP", "codex_plugin")
+
+    def test_en_codex_uses_same_shared_skill_tree_entry_policy(self) -> None:
+        self.assert_bundle_three_skill_tree("en-US", "codex_plugin")
 
     def test_materializer_refuses_output_inside_repository(self) -> None:
         with self.assertRaisesRegex(ValueError, "outside the repository"):
