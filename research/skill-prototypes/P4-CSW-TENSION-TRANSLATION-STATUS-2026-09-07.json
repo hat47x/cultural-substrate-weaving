@@ -1,0 +1,58 @@
+{
+  "schema": "csw.translation-refresh-status/v1",
+  "status": "pending-review-hash-refresh",
+  "locale": "en-US",
+  "human_record": "research/skill-prototypes/P4-CSW-TENSION-TRANSLATION-STATUS-2026-09-07.md",
+  "manifest": "i18n/translation-manifest.json",
+  "expected_stale_files": [
+    "ROUTER.md",
+    "core/cognitive-stance.md",
+    "core/principles-and-constraints.md",
+    "governance/evaluation.md",
+    "methods/integration.md",
+    "methods/transformation.md"
+  ],
+  "english_markers": {
+    "ROUTER.md": [
+      "misfit, resistance, reversal, or excess",
+      "Correspondence != synthesis"
+    ],
+    "core/cognitive-stance.md": [
+      "Look for what tension produces, not only for fit",
+      "sublation (Aufhebung)",
+      "fixed thesis-antithesis-synthesis stage model"
+    ],
+    "core/principles-and-constraints.md": [
+      "misfit, resistance, and mutual revision",
+      "Do not use `cross_field_emergent` as a label that automatically declares a contradiction resolved"
+    ],
+    "governance/evaluation.md": [
+      "Look for informative tension rather than fit alone",
+      "Do not make sublation a success quota"
+    ],
+    "methods/integration.md": [
+      "When handing off a third structure produced by tension",
+      "target_side_tension:",
+      "framework_side_claim_or_operation:"
+    ],
+    "methods/transformation.md": [
+      "Use target-framework tension as transformation material",
+      "Treat fit, misfit, resistance, reversal, absence, excess, and mutual revision as transformation material"
+    ]
+  },
+  "refresh_command": "make update-en-hashes",
+  "followup_commands": [
+    "make research-skill-check",
+    "make build",
+    "make check"
+  ],
+  "invariants": [
+    "do not guess or hand-enter translation hashes",
+    "pending status must identify the exact canonical files whose current Japanese bytes differ from translation-manifest tracking",
+    "English counterparts must exist and contain the declared tension/emergence boundary markers",
+    "files outside expected_stale_files must remain synchronized with the translation manifest",
+    "hash refresh records source tracking only after bilingual semantic review; stale tracking is not translated-and-validated status",
+    "translation refresh does not authorize production promotion"
+  ],
+  "production_promotion_authorized": false
+}
