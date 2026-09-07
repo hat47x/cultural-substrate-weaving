@@ -29,13 +29,19 @@ The explanatory record in this file is paired with:
 
 - `research/skill-prototypes/P4-CSW-TENSION-TRANSLATION-STATUS-2026-09-07.json`
 - validator: `scripts/validate_research_translation_refresh_state.py`
-- regression: `tests/test_research_translation_refresh_state.py`
+- state-transition helper: `scripts/mark_research_translation_refresh_synchronized.py`
+- regressions: `tests/test_research_translation_refresh_state.py` and `tests/test_research_translation_refresh_transition.py`
 
-The JSON contract is the machine-readable source for the **current pending refresh scope**. It declares the exact six files expected to be stale, required English semantic markers, the canonical refresh command, and the non-promotion boundary.
+The JSON contract separates two concepts:
 
-The validator computes current Japanese SHA-256 values itself. While status is pending it requires:
+- `scope_files`: the six bilingual files changed by this semantic edit; this remains as history after synchronization;
+- `expected_stale_files`: files whose current Japanese bytes are intentionally not yet reflected in `translation-manifest.json`; this becomes empty after synchronization.
 
-1. the actual stale set to equal the declared six-file scope;
+English semantic markers remain attached to `scope_files`, including after hash synchronization. The state transition therefore does not erase what semantic boundary was reviewed.
+
+While status is pending, the validator requires:
+
+1. the actual stale set to equal the complete six-file scope;
 2. no other translation-manifest entry to have unexpected source-hash drift;
 3. every declared English counterpart to exist;
 4. the English tension/emergence markers to be present;
@@ -57,20 +63,22 @@ The existing `update_translation_hashes.py` command records that the English tra
 
 ## Required follow-up in a complete checkout
 
-Run, in order:
+Run the transition explicitly:
 
 ```text
 make update-en-hashes
+# inspect the translation-manifest diff and confirm the bilingual semantic edit
+python scripts/mark_research_translation_refresh_synchronized.py
 make research-skill-check
 make build
 make check
 ```
 
-Then inspect the translation-manifest diff and generated-artifact diff.
+The synchronization helper refuses to change state unless all tracked Japanese/source hashes are already synchronized and every declared English tension marker remains present. It changes only the research status JSON; it does not write translation hashes.
 
-After the refresh has been reviewed, change the JSON state to `synchronized`, clear `expected_stale_files`, and update/remove tension-specific marker requirements only through an explicit state transition. Do not rewrite this historical explanation to imply the hashes were already synchronized during the current research step.
+After that transition, `scope_files` and `english_markers` remain, while `expected_stale_files` becomes empty. Do not rewrite this historical explanation to imply the hashes were already synchronized during the current research step.
 
-The translation manifest should be considered **stale for the files above until the command is run**. This is not evidence that the English text is absent; it means the byte-level source tracking has not yet been refreshed.
+The translation manifest should be considered **stale for the files above until the refresh and state transition are performed**. This is not evidence that the English text is absent; it means the byte-level source tracking has not yet been refreshed and acknowledged by the research state machine.
 
 ## Promotion boundary
 
