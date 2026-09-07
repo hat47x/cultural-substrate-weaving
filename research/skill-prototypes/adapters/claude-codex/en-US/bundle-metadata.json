@@ -1,0 +1,14 @@
+{
+  "schema": "csw.research-locale-bundle-metadata/v1",
+  "locale": "en-US",
+  "plugin_name": "cultural-substrate-weaving-en",
+  "display": "Cultural Substrate Weaving — English",
+  "description": "Includes three distinct Skills for cultural-framework exploration, one-round material-led synthesis, and multi-round inquiry continuation, with handoffs when needed. Preserves attribution, residuals, and unresolved material without collapsing the Skills into one universal procedure. Explicit invocation only.",
+  "contains": [
+    "cultural-substrate-weaving",
+    "affinity-synthesis",
+    "iterative-inquiry-synthesis"
+  ],
+  "invocation_policy": "explicit",
+  "status": "prototype"
+}
