@@ -1,4 +1,4 @@
-.PHONY: build generated-artifacts-check production-skill-set-check validate test tokens package release-validate check release-check release-tag-contract release-remote-tag-contract clean update-en-hashes living-lab-check living-lab-summary japanese-docs-check repository-contracts main-contract research-skill-check research-skill-preview research-complete-checkout research-translation-prepare
+.PHONY: build generated-artifacts-check production-skill-set-check production-skill-set-legacy-parity validate test tokens package release-validate check release-check release-tag-contract release-remote-tag-contract clean update-en-hashes living-lab-check living-lab-summary japanese-docs-check repository-contracts main-contract research-skill-check research-skill-preview research-complete-checkout research-translation-prepare
 
 .NOTPARALLEL: check release-check
 
@@ -21,6 +21,9 @@ generated-artifacts-check: build
 
 production-skill-set-check:
 	python scripts/validate_production_skill_set.py
+
+production-skill-set-legacy-parity: production-skill-set-check
+	python scripts/check_production_skill_set_legacy_parity.py
 
 validate:
 	python scripts/validate.py
@@ -99,7 +102,7 @@ research-skill-check:
 	python research/skill-prototypes/iterative-inquiry-synthesis/scripts/check_method_parity.py
 	python -m unittest discover -s tests -p 'test_research_*.py'
 
-check: repository-contracts production-skill-set-check generated-artifacts-check validate japanese-docs-check test tokens living-lab-check living-lab-summary
+check: repository-contracts production-skill-set-legacy-parity generated-artifacts-check validate japanese-docs-check test tokens living-lab-check living-lab-summary
 
 release-check: check package release-validate
 
