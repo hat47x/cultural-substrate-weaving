@@ -7,7 +7,7 @@
   "locales": ["ja-JP", "en-US"],
   "complete_checkout_validation": {
     "status": "blocked-not-run",
-    "evidence": "research/skill-prototypes/P4-COMPLETE-CHECKOUT-EXECUTION-STATUS-2026-09-07.md",
+    "evidence": "research/skill-prototypes/P4-COMPLETE-CHECKOUT-EXECUTION-STATUS-2026-09-08.md",
     "binding_contract": "research/skill-prototypes/P4-COMPLETE-CHECKOUT-EVIDENCE-BINDING-2026-09-08.md",
     "required_commands": ["make update-en-hashes", "make research-skill-check", "make build", "make check"],
     "production_promotion_authorized": false
