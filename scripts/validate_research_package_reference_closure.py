@@ -4,6 +4,10 @@
 The research suite can declare an explicit package file set that is internally
 valid yet still omit a progressive-reference file named by SKILL.md. This
 checker closes that gap without deciding promotion or release readiness.
+
+`package_local_references()` is intentionally shared with the production-source
+projection preview so source-stage and post-transform closure use the same
+reference grammar.
 """
 
 from __future__ import annotations
@@ -51,6 +55,25 @@ def _package_local_reference(token: str) -> str | None:
     return pure.as_posix()
 
 
+def package_local_references(text: str) -> set[str]:
+    """Return package-root-relative references recognized by the research grammar.
+
+    This helper deliberately preserves the existing parser semantics: inline-code
+    paths and Markdown-link targets are candidates, while only known package-local
+    prefixes are treated as package dependencies. Callers decide which documents
+    are normative enough to scan; the current closure contracts scan runtime
+    entries rather than recursively treating every support document as runtime
+    instruction.
+    """
+
+    references: set[str] = set()
+    for token in _candidate_refs(text):
+        relative = _package_local_reference(token)
+        if relative is not None:
+            references.add(relative)
+    return references
+
+
 def validate_package_reference_closure(root: Path, manifest: dict) -> list[str]:
     errors: list[str] = []
     for skill in manifest.get("skills", []):
@@ -83,11 +106,7 @@ def validate_package_reference_closure(root: Path, manifest: dict) -> list[str]:
 
             declared = {PurePosixPath(item).as_posix() for item in files}
             text = runtime_path.read_text(encoding="utf-8")
-            for token in sorted(_candidate_refs(text)):
-                relative = _package_local_reference(token)
-                if relative is None:
-                    continue
-
+            for relative in sorted(package_local_references(text)):
                 candidate = (package_root / Path(relative)).resolve()
                 if not candidate.is_relative_to(package_root):
                     errors.append(
