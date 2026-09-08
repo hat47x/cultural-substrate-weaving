@@ -25,6 +25,8 @@ REQUIRED_POLICY = {
     "research_history_is_not_renamed": True,
     "production_frontmatter_uses_production_name": True,
     "production_explicit_skill_references_use_production_name": True,
+    "production_packaged_support_copies_use_production_name": True,
+    "production_host_visible_metadata_uses_public_identity": True,
     "production_runtime_filesystem_sibling_paths_forbidden": True,
     "production_research_path_references_forbidden": True,
     "display_names_are_not_installable_identifiers": True,
@@ -170,6 +172,10 @@ def validate_public_name_migration(root: Path, contract: dict) -> list[str]:
     note = contract.get("note")
     if not isinstance(note, str) or "Research IDs and history remain stable" not in note:
         errors.append("public-name migration note must preserve research-history stability")
+    if isinstance(note, str) and "packaged support copies" not in note:
+        errors.append("public-name migration note must cover packaged support copies")
+    if isinstance(note, str) and "host-visible adapter metadata" not in note:
+        errors.append("public-name migration note must cover host-visible adapter metadata")
     if isinstance(note, str) and "final immediate recheck" not in note:
         errors.append("public-name migration note must preserve the final pre-promotion recheck")
 

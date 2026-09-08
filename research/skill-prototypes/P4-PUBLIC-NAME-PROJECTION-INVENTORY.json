@@ -17,6 +17,18 @@
       "required_markers": ["name: affinity-synthesis"]
     },
     {
+      "path": "research/skill-prototypes/affinity-synthesis/evals/CASES.md",
+      "class": "packaged-progressive-support",
+      "action": "rewrite-explicit-installable-name",
+      "required_markers": ["`affinity-synthesis`"]
+    },
+    {
+      "path": "research/skill-prototypes/affinity-synthesis/evidence/dossier.md",
+      "class": "packaged-progressive-support",
+      "action": "rewrite-explicit-installable-name",
+      "required_markers": ["`affinity-synthesis`"]
+    },
+    {
       "path": "research/skill-prototypes/iterative-inquiry-synthesis/SKILL.md",
       "class": "runtime-handoff",
       "action": "rewrite-explicit-installable-name",
