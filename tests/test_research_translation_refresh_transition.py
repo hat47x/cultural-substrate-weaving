@@ -20,6 +20,11 @@ def sha256(data: bytes) -> str:
     return hashlib.sha256(data).hexdigest()
 
 
+def git_blob_sha(data: bytes) -> str:
+    header = f"blob {len(data)}\0".encode("ascii")
+    return hashlib.sha1(header + data).hexdigest()
+
+
 class ResearchTranslationRefreshTransitionTests(unittest.TestCase):
     def make_fixture(self, root: Path, *, synchronized_manifest: bool = True) -> tuple[dict, dict]:
         ja = root / "src/ja-JP/x.md"
@@ -29,7 +34,8 @@ class ResearchTranslationRefreshTransitionTests(unittest.TestCase):
         ja.write_text("日本語 current\n", encoding="utf-8")
         en.write_text("English tension marker\n", encoding="utf-8")
 
-        current = sha256(ja.read_bytes())
+        ja_bytes = ja.read_bytes()
+        current = sha256(ja_bytes)
         old = "0" * 64
         tracked = current if synchronized_manifest else old
         status = {
@@ -37,6 +43,10 @@ class ResearchTranslationRefreshTransitionTests(unittest.TestCase):
             "scope_files": ["x.md"],
             "expected_stale_files": ["x.md"],
             "english_markers": {"x.md": ["tension marker"]},
+            "reviewed_source_blobs": {"x.md": git_blob_sha(ja_bytes)},
+            "invariants": [
+                "reviewed_source_blobs pins the exact Japanese source bytes accepted by bilingual semantic review and is not rewritten by hash synchronization"
+            ],
         }
         manifest = {
             "files": {
@@ -58,6 +68,7 @@ class ResearchTranslationRefreshTransitionTests(unittest.TestCase):
             self.assertEqual(updated["expected_stale_files"], [])
             self.assertEqual(updated["scope_files"], ["x.md"])
             self.assertEqual(updated["english_markers"], {"x.md": ["tension marker"]})
+            self.assertEqual(updated["reviewed_source_blobs"], status["reviewed_source_blobs"])
 
     def test_transition_refuses_stale_manifest(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
@@ -75,6 +86,20 @@ class ResearchTranslationRefreshTransitionTests(unittest.TestCase):
             updated, errors = transition_to_synchronized(root, status, manifest)
             self.assertIs(updated, status)
             self.assertTrue(any("missing declared tension marker" in error for error in errors))
+
+    def test_transition_refuses_source_changed_after_semantic_review_even_if_hashes_are_refreshed(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            status, manifest = self.make_fixture(root, synchronized_manifest=True)
+            ja = root / "src/ja-JP/x.md"
+            ja.write_text("日本語 changed after review\n", encoding="utf-8")
+            refreshed = sha256(ja.read_bytes())
+            manifest["files"]["x.md"]["ja_sha256"] = refreshed
+            manifest["files"]["x.md"]["en_source_ja_sha256"] = refreshed
+
+            updated, errors = transition_to_synchronized(root, status, manifest)
+            self.assertIs(updated, status)
+            self.assertTrue(any("changed after bilingual semantic review" in error for error in errors))
 
 
 if __name__ == "__main__":

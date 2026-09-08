@@ -113,6 +113,43 @@ design contract present
 
 production inclusion descriptorはlegacy filenameをhard-codeせず、builder contractの`production_files.planned_suite_descriptor`を読む。
 
+### current authorityの世代管理をobserverへ複製しない
+
+complete-checkout status、binding contract、public-name recheck evidence、English review packet / target snapshot / technical-asset localization、将来のcompleted reviewについて、current authorityの選択はproduction descriptorを正本とする。
+
+`scripts/validate_research_current_p4_assets.py` は、descriptorが現在指しているauthority fileが存在し、suite research assetとして登録されていることを検査する。過去のdated packetやstatus recordはresearch historyとして残してよい。
+
+observerはこのcurrent-authority registryを再実装せず、descriptor pointerが指す状態だけを観測する。
+
+## 観測軸に含めないmeta-gate
+
+research gateには、promotion evidenceそのものではなく、**evidence / contractを読む仕組みが壊れていないことを検査するmeta-gate**がある。
+
+現在少なくとも次をこの分類に置く。
+
+- `validate_research_current_p4_assets.py`
+  - current authority pointerとsuite登録の整合。
+- `validate_research_declared_checks.py`
+  - Skill-owned `checks`宣言と`research-skill-check`実行配線の双方向整合。
+- `validate_research_production_plan_consistency.py`
+  - machine-readable descriptor / builder contractとP4 maintainer proseの整合。
+- `validate_research_promotion_preconditions.py`
+  - production descriptorのpromotion precondition最低集合の保持。
+- complete-checkout evidence binding validator
+  - execution evidenceが許されたvalidation treeへ結びつくこと。
+
+これらを19番目以降のreadiness observationへ増やさない。
+
+```text
+more gate plumbing
+  != more promotion evidence
+
+validator/test source present
+  != promotion readiness improved
+```
+
+meta-gateが失敗すればobserverの出力やpromotion contractを信用できないためresearch gate全体は失敗すべきだが、meta-gateが増えたこと自体をpromotion evidenceの増加として数えない。
+
 ## 非合成
 
 ```text
@@ -148,6 +185,9 @@ release validator source
 
 static repository state
   != complete-checkout command execution
+
+meta-gate coverage
+  != substantive promotion evidence
 ```
 
 reportには`ready` / `promotion_ready` booleanを置かない。全observationは`production_promotion_authorized=false`、最上位`authorization.issued=false`とする。
@@ -159,12 +199,14 @@ observerはPR lifecycleや別branchの進捗を手入力しない。
 - execution gate → P4 production-suite descriptor / execution record
 - translation refresh → dedicated translation status JSON
 - public name / English review → P4 descriptorと各evidence authority
+- current P4 authority registration → descriptor + current-P4 asset validator
 - Method parity check → suite manifestのdeclared checks
 - production source contract → P4 descriptor
 - source projection → dedicated preview + regression source
 - adapter metadata promotion → dedicated planner + regression source
 - production mechanics / inclusion path → builder contract
 - release composition → release plan + dedicated validator/test source
+- gate wiring / prose consistency / precondition integrity → suite-level meta-validators
 
 別PRに実装が存在しても、checked-out branchに無ければ`not-observed-in-this-branch`とする。
 
@@ -173,6 +215,10 @@ observerはPR lifecycleや別branchの進捗を手入力しない。
 observer plannerを`research-skill-check`からread-only実行する。
 
 observerより前段のvalidator/plannerが同じcommand chainで成功していても、その成功をobserver report内へ自動転記しない。durable execution authorityが必要なものは、complete-checkout execution record等の専用証拠へ委ねる。
+
+Skill-owned checkについてはsuite manifestを宣言正本とし、`validate_research_declared_checks.py`がMakefileとの双方向配線を検査する。suite-level meta-validatorはSkill-owned evidence軸には数えない。
+
+complete-checkout PASSは古いexecution recordを新しいHEADへ持ち越さない。binding contractとcomplete-checkout validatorがvalidation treeとの結びつきを管理し、observerはその状態を再判定しない。
 
 ## 境界
 
@@ -185,4 +231,4 @@ observerより前段のvalidator/plannerが同じcommand chainで成功してい
 
 ## 結論
 
-**promotion readinessはscoreではなく異質な証拠集合である。source projectionやadapter metadata promotionのように設計より一段具体化したprobeが増えても、それらをproduction mutation・review完了・execution PASSへ無言で昇格させない。**
+**promotion readinessはscoreではなく異質な証拠集合である。source projectionやadapter metadata promotionのように設計より一段具体化したprobeが増えても、それらをproduction mutation・review完了・execution PASSへ無言で昇格させない。さらに、gate wiringやcontract consistencyの改善そのものを新しいpromotion evidenceとして数えない。**
