@@ -9,7 +9,10 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "scripts"))
 
-from validate_research_declared_checks import validate_declared_checks  # noqa: E402
+from validate_research_declared_checks import (  # noqa: E402
+    _suite_validator_paths,
+    validate_declared_checks,
+)
 
 MANIFEST_PATH = ROOT / "research" / "skill-prototypes" / "suite-manifest.json"
 MAKEFILE_PATH = ROOT / "Makefile"
@@ -20,19 +23,31 @@ class ResearchDeclaredCheckWiringTests(unittest.TestCase):
     def setUp(self) -> None:
         self.manifest = json.loads(MANIFEST_PATH.read_text(encoding="utf-8"))
         self.makefile = MAKEFILE_PATH.read_text(encoding="utf-8")
+        self.suite_validators = _suite_validator_paths(ROOT)
+
+    def validate(self, manifest: dict, makefile: str) -> list[str]:
+        return validate_declared_checks(
+            manifest,
+            makefile,
+            suite_validator_paths=self.suite_validators,
+        )
 
     def assert_has_error(self, manifest: dict, makefile: str, fragment: str) -> None:
-        errors = validate_declared_checks(manifest, makefile)
+        errors = self.validate(manifest, makefile)
         self.assertTrue(
             any(fragment in error for error in errors),
             f"expected error containing {fragment!r}; got {errors!r}",
         )
 
-    def test_current_declared_checks_are_wired(self) -> None:
-        self.assertEqual(validate_declared_checks(self.manifest, self.makefile), [])
+    def test_current_declared_checks_and_suite_validators_are_wired(self) -> None:
+        self.assertEqual(self.validate(self.manifest, self.makefile), [])
 
     def test_meta_validator_itself_is_wired_into_research_gate(self) -> None:
         self.assertIn(META_VALIDATOR_COMMAND, self.makefile)
+        self.assertIn(
+            "scripts/validate_research_declared_checks.py",
+            self.suite_validators,
+        )
 
     def test_declared_check_cannot_disappear_from_research_gate(self) -> None:
         makefile = self.makefile.replace(
@@ -71,6 +86,39 @@ class ResearchDeclaredCheckWiringTests(unittest.TestCase):
             manifest,
             self.makefile,
             "future_check.py",
+        )
+
+    def test_suite_level_validator_cannot_disappear_from_research_gate(self) -> None:
+        validator = "scripts/validate_research_production_plan_consistency.py"
+        self.assertIn(validator, self.suite_validators)
+        makefile = self.makefile.replace(f"\tpython {validator}\n", "")
+        self.assert_has_error(
+            self.manifest,
+            makefile,
+            f"suite-level research validator is not wired into research-skill-check: {validator}",
+        )
+
+    def test_unknown_suite_level_validator_cannot_be_wired(self) -> None:
+        injected = "\tpython scripts/validate_research_does_not_exist.py\n"
+        makefile = self.makefile.replace(
+            "\tpython -m unittest discover -s tests -p 'test_research_*.py'\n",
+            injected + "\tpython -m unittest discover -s tests -p 'test_research_*.py'\n",
+        )
+        self.assert_has_error(
+            self.manifest,
+            makefile,
+            "research gate references an unknown suite-level validator",
+        )
+
+    def test_suite_level_validator_cannot_be_wired_twice(self) -> None:
+        validator = "scripts/validate_research_skill_suite.py"
+        command = f"\tpython {validator}\n"
+        self.assertIn(command, self.makefile)
+        makefile = self.makefile.replace(command, command + command, 1)
+        self.assert_has_error(
+            self.manifest,
+            makefile,
+            "suite-level research validator must be wired exactly once",
         )
 
     def test_missing_research_gate_target_is_rejected(self) -> None:
