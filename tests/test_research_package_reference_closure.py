@@ -14,6 +14,7 @@ if str(SCRIPTS_DIR) not in sys.path:
 
 from validate_research_package_reference_closure import (  # noqa: E402
     package_local_references,
+    validate_in_memory_package_reference_closure,
     validate_package_reference_closure,
 )
 
@@ -48,6 +49,74 @@ class ResearchPackageReferenceClosureTests(unittest.TestCase):
         self.assertEqual(
             package_local_references(text),
             {"references/METHOD.md", "evals/CASES.md"},
+        )
+
+    def test_in_memory_projected_package_closure_accepts_valid_tree(self) -> None:
+        files = {
+            "SKILL.md": "Read `references/METHOD.md`.\n",
+            "references/METHOD.md": "[Detail](DETAIL.md)\n",
+            "references/DETAIL.md": "detail\n",
+        }
+        self.assertEqual(
+            validate_in_memory_package_reference_closure(
+                files,
+                "SKILL.md",
+                label="projected fixture",
+            ),
+            [],
+        )
+
+    def test_in_memory_projected_runtime_rejects_stale_locale_suffix_reference(self) -> None:
+        files = {
+            "SKILL.md": "Read `references/METHOD.en.md`.\n",
+            "references/METHOD.md": "method\n",
+        }
+        errors = validate_in_memory_package_reference_closure(
+            files,
+            "SKILL.md",
+            label="projected fixture",
+        )
+        self.assertTrue(
+            any(
+                "runtime reference is missing" in error
+                and "references/METHOD.en.md" in error
+                for error in errors
+            ),
+            errors,
+        )
+
+    def test_in_memory_projected_markdown_link_rejects_missing_target(self) -> None:
+        files = {
+            "SKILL.md": "Read `references/METHOD.md`.\n",
+            "references/METHOD.md": "[Detail](DETAIL.md)\n",
+        }
+        errors = validate_in_memory_package_reference_closure(
+            files,
+            "SKILL.md",
+            label="projected fixture",
+        )
+        self.assertTrue(
+            any(
+                "packaged Markdown link is missing" in error
+                and "references/DETAIL.md" in error
+                for error in errors
+            ),
+            errors,
+        )
+
+    def test_in_memory_projected_markdown_link_cannot_escape_package_root(self) -> None:
+        files = {
+            "SKILL.md": "Read `references/METHOD.md`.\n",
+            "references/METHOD.md": "[Outside](../../outside.md)\n",
+        }
+        errors = validate_in_memory_package_reference_closure(
+            files,
+            "SKILL.md",
+            label="projected fixture",
+        )
+        self.assertTrue(
+            any("packaged Markdown link escapes package root" in error for error in errors),
+            errors,
         )
 
     def test_affinity_template_reference_must_be_packaged(self) -> None:
