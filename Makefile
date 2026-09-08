@@ -50,6 +50,7 @@ research-skill-preview:
 
 research-skill-check:
 	python scripts/validate_research_skill_suite.py
+	python scripts/validate_research_current_p4_assets.py
 	python scripts/validate_research_declared_checks.py
 	python scripts/validate_research_package_targets.py
 	python scripts/validate_research_package_reference_closure.py
