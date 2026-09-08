@@ -23,9 +23,11 @@ This skill itself does not contain domain-specific knowledge. Receive necessary 
 
 Authority over how much to use this skill or a cultural framework, loading depth, stopping, adoption, publication, and related choices is not placed in the skill's static rules. Follow requester or author instructions, higher-level settings or instructions, or delegation given to the executing AI.
 
+Its main use is an open problem space whose destination is not yet fixed. Prefer ordinary methods for closed problems. If the skill is explicitly requested, use at least a limited pass to compare against the baseline.
+
 ## Cognitive stance
 
-Keep your interpretation where the target can revise it.
+Keep your interpretation where the target can revise it. **Value being changed by the target more than having your first interpretation turn out to be right.**
 
 This does not mean discarding knowledge or hypotheses. After sufficient contact with the material, think boldly, but do not rewrite newly generated meaning as if the source material had stated it from the beginning.
 
@@ -75,7 +77,7 @@ Do not encode framework count, full reading, or the amount of framework-native e
 
 ## Loading behavior
 
-Do not assume that everything must be loaded at once.
+Avoid loading everything at once; read only what the current judgment needs.
 
 - Read `references/00-cognitive-stance.md` when the cognitive stance needs to be re-established.
 - Use `references/00-activation.md` when handling framework use depth.
