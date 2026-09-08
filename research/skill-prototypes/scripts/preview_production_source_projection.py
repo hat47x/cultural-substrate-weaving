@@ -166,6 +166,18 @@ def validate_projected_contents(projected: dict[str, dict], plan: dict) -> list[
         key = (item["research_id"], item["locale"])
         by_skill_locale.setdefault(key, []).append(item)
 
+        content = item.get("content", "")
+        if f"`{RESEARCH_LAYER1_ID}`" in content:
+            errors.append(
+                "projected production package content retains research installable identifier: "
+                f"{item['target']}"
+            )
+        if "../affinity-synthesis/" in content:
+            errors.append(
+                "projected production package content retains research sibling filesystem path: "
+                f"{item['target']}"
+            )
+
     for skill in plan.get("skills", []):
         if not isinstance(skill, dict) or skill.get("research_id") == "cultural-substrate-weaving":
             continue
@@ -197,26 +209,6 @@ def validate_projected_contents(projected: dict[str, dict], plan: dict) -> list[
 
             if research_id == "affinity-synthesis" and frontmatter_name != PRODUCTION_LAYER1_NAME:
                 errors.append("Layer 1 projected runtime must use material-led-synthesis frontmatter name")
-
-            if research_id == "iterative-inquiry-synthesis":
-                promotion_sensitive = [
-                    item
-                    for item in items
-                    if item["target_relative"] == "SKILL.md"
-                    or item["target_relative"] == "references/METHOD.md"
-                ]
-                for item in promotion_sensitive:
-                    content = item["content"]
-                    if f"`{RESEARCH_LAYER1_ID}`" in content:
-                        errors.append(
-                            "Layer 2 projected runtime/Method retains research installable identifier: "
-                            f"{item['target']}"
-                        )
-                    if "../affinity-synthesis/" in content:
-                        errors.append(
-                            "Layer 2 projected runtime/Method retains research sibling filesystem path: "
-                            f"{item['target']}"
-                        )
 
     return errors
 
