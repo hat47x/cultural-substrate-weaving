@@ -1,0 +1,177 @@
+#!/usr/bin/env python3
+"""Run the complete-checkout research gate on one clean validation commit.
+
+This runner does not mutate the production descriptor and does not create
+repository evidence. It pins the current HEAD as validation commit V, executes
+the canonical command sequence, refuses any command that changes repository
+identity or leaves a non-ignored working-tree diff, and only then writes an
+ignored `.tmp/` candidate record for the later evidence-only commit workflow.
+"""
+
+from __future__ import annotations
+
+import json
+import subprocess
+import sys
+from pathlib import Path
+from typing import Callable, Sequence
+
+ROOT = Path(__file__).resolve().parents[1]
+DESCRIPTOR_PATH = (
+    ROOT / "research/skill-prototypes/P4-PRODUCTION-SUITE-DESCRIPTOR-PROTOTYPE.json"
+)
+OUTPUT_DIR = ROOT / ".tmp" / "research-complete-checkout"
+
+COMMANDS: tuple[tuple[str, tuple[str, ...]], ...] = (
+    ("make update-en-hashes", ("make", "update-en-hashes")),
+    (
+        "translation research state transition",
+        (sys.executable, "scripts/mark_research_translation_refresh_synchronized.py"),
+    ),
+    ("make research-skill-check", ("make", "research-skill-check")),
+    ("make build", ("make", "build")),
+    ("make check", ("make", "check")),
+)
+
+RunCommand = Callable[[Path, Sequence[str]], int]
+ReadText = Callable[[Path], str]
+
+
+def _run_command(root: Path, argv: Sequence[str]) -> int:
+    return subprocess.run(list(argv), cwd=root, check=False).returncode
+
+
+def _git_text(root: Path, *args: str) -> str:
+    result = subprocess.run(
+        ["git", "-C", str(root), *args],
+        check=True,
+        capture_output=True,
+        text=True,
+    )
+    return result.stdout.strip()
+
+
+def _head(root: Path) -> str:
+    return _git_text(root, "rev-parse", "HEAD").lower()
+
+
+def _status(root: Path) -> str:
+    return _git_text(root, "status", "--porcelain", "--untracked-files=all")
+
+
+def _descriptor(root: Path) -> dict:
+    return json.loads((root / DESCRIPTOR_PATH.relative_to(ROOT)).read_text(encoding="utf-8"))
+
+
+def candidate_record(execution_commit: str) -> str:
+    return (
+        "# P4 Complete-Checkout Execution Candidate\n\n"
+        "Status: **candidate / not yet repository evidence**\n\n"
+        f"execution commit: {execution_commit}\n"
+        "make update-en-hashes: PASS\n"
+        "translation research state transition: PASS\n"
+        "make research-skill-check: PASS\n"
+        "make build: PASS\n"
+        "make check: PASS\n"
+        "production promotion authorization: NO\n\n"
+        "This file was generated under `.tmp/`. It is not durable evidence until "
+        "reviewed and recorded through the evidence-only child commit contract.\n"
+    )
+
+
+def validate_preconditions(root: Path, descriptor: dict, *, head: str, status: str) -> list[str]:
+    errors: list[str] = []
+    if len(head) != 40 or any(ch not in "0123456789abcdef" for ch in head):
+        errors.append("current HEAD is not a 40-character lowercase commit SHA")
+    if status:
+        errors.append("complete-checkout runner requires a clean working tree")
+
+    gate = descriptor.get("complete_checkout_validation")
+    if not isinstance(gate, dict):
+        errors.append("production descriptor must declare complete_checkout_validation")
+        return errors
+    if gate.get("status") != "blocked-not-run":
+        errors.append("complete-checkout runner requires descriptor status blocked-not-run")
+
+    required = gate.get("required_commands")
+    expected = [label for label, _ in COMMANDS if label != "translation research state transition"]
+    if required != expected:
+        errors.append("descriptor required_commands does not match runner canonical command set")
+
+    return errors
+
+
+def execute_gate(
+    root: Path,
+    *,
+    run_command: RunCommand = _run_command,
+    head_reader: ReadText = _head,
+    status_reader: ReadText = _status,
+    descriptor: dict | None = None,
+) -> tuple[int, str | None, list[str]]:
+    """Execute the canonical sequence and return (code, candidate, messages)."""
+
+    messages: list[str] = []
+    try:
+        validation_commit = head_reader(root)
+        initial_status = status_reader(root)
+        descriptor_value = descriptor if descriptor is not None else _descriptor(root)
+    except (OSError, subprocess.CalledProcessError, json.JSONDecodeError) as exc:
+        return 2, None, [f"complete-checkout preflight failed: {exc}"]
+
+    errors = validate_preconditions(
+        root,
+        descriptor_value,
+        head=validation_commit,
+        status=initial_status,
+    )
+    if errors:
+        return 2, None, errors
+
+    for label, argv in COMMANDS:
+        messages.append(f"RUN {label}")
+        code = run_command(root, argv)
+        if code != 0:
+            messages.append(f"FAIL {label}: exit {code}")
+            return code, None, messages
+
+        try:
+            current_head = head_reader(root)
+            current_status = status_reader(root)
+        except (OSError, subprocess.CalledProcessError) as exc:
+            messages.append(f"FAIL {label}: repository state check failed: {exc}")
+            return 2, None, messages
+
+        if current_head != validation_commit:
+            messages.append(
+                f"FAIL {label}: HEAD changed during validation ({validation_commit} -> {current_head})"
+            )
+            return 2, None, messages
+        if current_status:
+            messages.append(
+                f"FAIL {label}: command left repository changes; validated commit V is incomplete"
+            )
+            return 2, None, messages
+        messages.append(f"PASS {label}")
+
+    return 0, candidate_record(validation_commit), messages
+
+
+def main() -> int:
+    code, record, messages = execute_gate(ROOT)
+    for message in messages:
+        print(message)
+    if code != 0 or record is None:
+        return code or 2
+
+    OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
+    execution_commit = _head(ROOT)
+    output = OUTPUT_DIR / f"P4-COMPLETE-CHECKOUT-PASS-{execution_commit[:12]}.md"
+    output.write_text(record, encoding="utf-8")
+    print(f"Candidate record written to {output.relative_to(ROOT)}")
+    print("No descriptor or tracked execution evidence was modified.")
+    return 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())
