@@ -63,6 +63,10 @@ def _descriptor(root: Path) -> dict:
     return json.loads((root / DESCRIPTOR_PATH.relative_to(ROOT)).read_text(encoding="utf-8"))
 
 
+def _valid_sha(value: str) -> bool:
+    return len(value) == 40 and all(ch in "0123456789abcdef" for ch in value)
+
+
 def candidate_record(execution_commit: str) -> str:
     return (
         "# P4 Complete-Checkout Execution Candidate\n\n"
@@ -79,9 +83,34 @@ def candidate_record(execution_commit: str) -> str:
     )
 
 
+def candidate_execution_commit(record: str) -> str | None:
+    line = next(
+        (line for line in record.splitlines() if line.startswith("execution commit:")),
+        "",
+    )
+    value = line.partition(":")[2].strip().lower()
+    return value if _valid_sha(value) else None
+
+
+def validate_candidate_recording_head(record: str, current_head: str) -> list[str]:
+    errors: list[str] = []
+    normalized_head = current_head.lower()
+    if not _valid_sha(normalized_head):
+        return ["candidate recording requires a 40-character lowercase current HEAD"]
+    execution_commit = candidate_execution_commit(record)
+    if execution_commit is None:
+        return ["candidate record does not contain a valid execution commit"]
+    if execution_commit != normalized_head:
+        errors.append(
+            "candidate record execution commit no longer matches current HEAD; "
+            "repository identity changed after validation"
+        )
+    return errors
+
+
 def validate_preconditions(root: Path, descriptor: dict, *, head: str, status: str) -> list[str]:
     errors: list[str] = []
-    if len(head) != 40 or any(ch not in "0123456789abcdef" for ch in head):
+    if not _valid_sha(head):
         errors.append("current HEAD is not a 40-character lowercase commit SHA")
     if status:
         errors.append("complete-checkout runner requires a clean working tree")
@@ -164,9 +193,20 @@ def main() -> int:
     if code != 0 or record is None:
         return code or 2
 
+    try:
+        current_head = _head(ROOT)
+    except (OSError, subprocess.CalledProcessError) as exc:
+        print(f"FAIL candidate recording: cannot re-read current HEAD: {exc}")
+        return 2
+
+    errors = validate_candidate_recording_head(record, current_head)
+    if errors:
+        for error in errors:
+            print(f"FAIL candidate recording: {error}")
+        return 2
+
     OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
-    execution_commit = _head(ROOT)
-    output = OUTPUT_DIR / f"P4-COMPLETE-CHECKOUT-PASS-{execution_commit[:12]}.md"
+    output = OUTPUT_DIR / f"P4-COMPLETE-CHECKOUT-PASS-{current_head[:12]}.md"
     output.write_text(record, encoding="utf-8")
     print(f"Candidate record written to {output.relative_to(ROOT)}")
     print("No descriptor or tracked execution evidence was modified.")
