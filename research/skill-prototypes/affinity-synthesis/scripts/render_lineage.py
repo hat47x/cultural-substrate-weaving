@@ -40,6 +40,7 @@ class LineageGraph:
                 "sources",
                 "cards",
                 "groups",
+                "resonances",
                 "relations",
                 "narratives",
                 "residuals",
@@ -73,6 +74,7 @@ class LineageGraph:
             item.get("display_label")
             or item.get("label")
             or item.get("text")
+            or item.get("note")
             or item.get("ref")
             or ref
         )
@@ -121,6 +123,19 @@ class LineageGraph:
                 self.edges.append((virtual, ref, "membership summary"))
             return
 
+        if kind == "resonances":
+            source = item.get("from")
+            target = item.get("to")
+            if source:
+                source = str(source)
+                self.walk(source)
+                self.edges.append((source, ref, "secondary resonance source"))
+            if target:
+                target = str(target)
+                self.walk(target)
+                self.edges.append((target, ref, "resonance target / not membership"))
+            return
+
         if kind == "relations":
             parents = [item.get("from"), item.get("to"), *item.get("basis", [])]
             for parent in parents:
@@ -158,6 +173,8 @@ class LineageGraph:
                 shape = f'[["{quoted}"]]'
             elif kind == "relations":
                 shape = f'{{{{"{quoted}"}}}}'
+            elif kind == "resonances":
+                shape = f'(["{quoted}"])'
             elif kind in {"questions", "residuals"}:
                 shape = f'("{quoted}")'
             else:
