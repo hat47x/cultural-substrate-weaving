@@ -69,6 +69,7 @@ research-skill-check:
 	python scripts/validate_research_production_builder_contract.py
 	python scripts/validate_research_tension_emergence.py
 	python scripts/validate_research_translation_refresh_state.py
+	python scripts/validate_research_translation_review_snapshot.py
 	python research/skill-prototypes/scripts/plan_suite_layout.py >/dev/null
 	python research/skill-prototypes/scripts/plan_skill_subtrees.py >/dev/null
 	python research/skill-prototypes/scripts/plan_skill_entry_transforms.py >/dev/null
