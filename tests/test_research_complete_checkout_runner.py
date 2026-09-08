@@ -59,6 +59,24 @@ class ResearchCompleteCheckoutRunnerTests(unittest.TestCase):
         self.assertNotIn(STATE_TRANSITION_LABEL, REQUIRED_GATE_COMMANDS)
         self.assertIn(STATE_TRANSITION_LABEL, labels)
 
+    def test_runner_executes_canonical_argv_not_only_canonical_labels(self) -> None:
+        self.assertEqual(
+            COMMANDS,
+            (
+                ("make update-en-hashes", ("make", "update-en-hashes")),
+                (
+                    STATE_TRANSITION_LABEL,
+                    (
+                        sys.executable,
+                        "scripts/mark_research_translation_refresh_synchronized.py",
+                    ),
+                ),
+                ("make research-skill-check", ("make", "research-skill-check")),
+                ("make build", ("make", "build")),
+                ("make check", ("make", "check")),
+            ),
+        )
+
     def test_candidate_recording_requires_same_head_after_validation(self) -> None:
         record = candidate_record(HEAD)
         self.assertEqual(validate_candidate_recording_head(record, HEAD), [])
