@@ -9,16 +9,16 @@
       "reviewed_at": "2026-09-01"
     },
     "README.md": {
-      "git_blob_sha": "2ad83c099fc91fbfc4271449ceecfb93ed81e95e",
-      "reviewed_at": "2026-09-04"
+      "git_blob_sha": "d8fa6944be62b1fb12c7a4cf9770de6a7ec0f61a",
+      "reviewed_at": "2026-09-09"
     },
     "adapters/microsoft-copilot/ja-JP/instructions.md": {
-      "git_blob_sha": "9015b362593eb6454100311a2a3525cfaed1687a",
-      "reviewed_at": "2026-09-03"
+      "git_blob_sha": "cf019c6ffcc72eb13b2222fda659b1d6b7a12fdc",
+      "reviewed_at": "2026-09-09"
     },
     "adapters/microsoft-copilot/ja-JP/package-readme.txt": {
-      "git_blob_sha": "9ecea841b62e26e472986576be6c1e4dc0e70ae4",
-      "reviewed_at": "2026-09-03"
+      "git_blob_sha": "563051418e25a4ae9cf697a2d65d9a74399d7ff3",
+      "reviewed_at": "2026-09-09"
     },
     "docs/README.md": {
       "git_blob_sha": "d254154dd7a300ad027d717e332b7c482800514d",
@@ -39,6 +39,18 @@
     "docs/ja/maintainers/affinity-core-and-iterative-synthesis-layering.md": {
       "git_blob_sha": "23b0fd6ab451c091924d0d4a514d48da403aefee",
       "reviewed_at": "2026-09-06"
+    },
+    "docs/ja/maintainers/affinity-representation-existing-skill-review.md": {
+      "git_blob_sha": "0cfc93a2c053ad639ae49bb67eb55c5598ebcda9",
+      "reviewed_at": "2026-09-09"
+    },
+    "docs/ja/maintainers/csw-tension-emergence-and-aufhebung-contract.md": {
+      "git_blob_sha": "e551778e205923b0334b51cb9db1b4a2dc3da648",
+      "reviewed_at": "2026-09-09"
+    },
+    "docs/ja/maintainers/csw-thin-synthesis-connection-contract.md": {
+      "git_blob_sha": "e1e9c1b68173b1f634edad2f21a37bf8ae2e4a7e",
+      "reviewed_at": "2026-09-09"
     },
     "docs/ja/maintainers/development.md": {
       "git_blob_sha": "fdaa791a1089ae7ce0e9c716b258b066397b4f08",
@@ -101,8 +113,8 @@
       "reviewed_at": "2026-09-06"
     },
     "docs/ja/maintainers/natural-japanese-review.md": {
-      "git_blob_sha": "cc494ec62bee412981f534d3f2fec94e04499163",
-      "reviewed_at": "2026-09-06"
+      "git_blob_sha": "9c0b73eb2c450a404056245541a7e5a1b5fab214",
+      "reviewed_at": "2026-09-09"
     },
     "docs/ja/maintainers/official-sources.md": {
       "git_blob_sha": "bb03e5be067398061cba8f2a328f3ff682ccc123",
@@ -145,8 +157,8 @@
       "reviewed_at": "2026-09-03"
     },
     "docs/ja/platforms/microsoft-copilot.md": {
-      "git_blob_sha": "fb25c947ff385b73c79198e19eaef46b122fe075",
-      "reviewed_at": "2026-09-03"
+      "git_blob_sha": "9e956d0ebd6c821b80131cbac800d3ae62edee69",
+      "reviewed_at": "2026-09-09"
     },
     "docs/ja/platforms/project-instructions.md": {
       "git_blob_sha": "e5857c064c4d9a2bb0b59bfcf233c87730fb82ff",

@@ -42,6 +42,9 @@ Microsoft 365向けのこの2ファイルは、生成物そのものではなく
 ### 開発・保守・研究・実験・運用文書
 
 - `docs/ja/architecture.md`
+- `docs/ja/maintainers/affinity-representation-existing-skill-review.md`
+- `docs/ja/maintainers/csw-tension-emergence-and-aufhebung-contract.md`
+- `docs/ja/maintainers/csw-thin-synthesis-connection-contract.md`
 - `docs/ja/maintainers/development.md`
 - `docs/ja/maintainers/framework-loading-depth-observation.md`
 - `docs/ja/maintainers/framework-use-lifecycle-trace.md`
@@ -160,3 +163,9 @@ manifestを更新する操作そのものは、推敲を実施した証明には
 KJ法由来の技能をCSWから分離する検討として、新しく七つの文書を追加した。`docs/ja/maintainers/affinity-core-and-iterative-synthesis-layering.md`は、一回の材料統合を担う層と複数ラウンドを管理する層をどう分けるかを整理した。`docs/ja/maintainers/external-skill-assimilation-process.md`は、既存Agent Skillの機構を比較して取り込む際の手順を定めた。`docs/ja/maintainers/external-skill-feature-adoption-log.md`は、その手順に沿って個々の外部Skillを採否判定した記録である。`docs/ja/maintainers/kj-skill-delegation-review.md`は、既存の公開Skillへ全面移譲できるかどうかを検討し、できないという結論とその理由を記録した。`docs/ja/maintainers/kj-split-migration-audit.md`は、現行`integration.md`と`iteration.md`の各責務をどの層へ移すかを表形式で監査した。`docs/ja/maintainers/kj-split-packaging-and-dependency-design.md`は、複数Skillへ分けた場合の配布形式と依存関係の設計案を比較した。`docs/ja/maintainers/material-led-synthesis-method-boundary.md`は、分離後の材料統合方法そのものの定義と不変条件をまとめた。
 
 これら七文書は、内容と技術的な意味が固まった状態で全文を通読した。英語の技術用語や識別子が日本語の文の骨格に不自然な影響を与えていないかを中心に確認し、いずれも既に自然な日本語として読めると判断したため、記録のためだけの本文変更は行わなかった。方法論正本である`src/ja-JP/`はこの文書群の対象外であり、変更していない。
+
+## 2026-09-09の追加レビュー
+
+`docs/ja/maintainers/affinity-representation-existing-skill-review.md`、`docs/ja/maintainers/csw-tension-emergence-and-aufhebung-contract.md`、`docs/ja/maintainers/csw-thin-synthesis-connection-contract.md`の三文書を全文で通読した。既存Agent Skillとの表現書式照合、対象と体系の緊張・アウフヘーベンの扱い、親和統合／反復探索との最小接続契約という、それぞれ独立した論点が文の骨格へ不自然な影響を与えていないかを確認した。英語の技術用語や識別子は保持しつつ、いずれも既に自然な日本語として読めると判断し、記録のためだけの本文変更は行わなかった。方法論正本である`src/ja-JP/`はこの文書群の対象外であり、変更していない。
+
+あわせて、`README.md`、`adapters/microsoft-copilot/ja-JP/instructions.md`、`adapters/microsoft-copilot/ja-JP/package-readme.txt`、`docs/ja/platforms/microsoft-copilot.md`を、鮮度検査が要求する再確認として全文で読み直した。ブランチ統合によって前後の技術的な意味は変わっていないため、いずれも本文変更は行わず、確認日だけを更新した。
