@@ -1,4 +1,4 @@
-.PHONY: build generated-artifacts-check validate test tokens package release-validate check release-check release-tag-contract release-remote-tag-contract clean update-en-hashes living-lab-check living-lab-summary japanese-docs-check repository-contracts main-contract research-skill-check research-skill-preview research-complete-checkout
+.PHONY: build generated-artifacts-check validate test tokens package release-validate check release-check release-tag-contract release-remote-tag-contract clean update-en-hashes living-lab-check living-lab-summary japanese-docs-check repository-contracts main-contract research-skill-check research-skill-preview research-complete-checkout research-translation-prepare
 
 .NOTPARALLEL: check release-check
 
@@ -48,6 +48,14 @@ living-lab-summary:
 research-skill-preview:
 	python research/skill-prototypes/build_preview.py --output dist/research-skill-suite --check
 
+research-translation-prepare:
+	python scripts/validate_research_translation_refresh_state.py
+	python scripts/validate_research_translation_review_snapshot.py
+	$(MAKE) update-en-hashes
+	python scripts/mark_research_translation_refresh_synchronized.py
+	python scripts/validate_research_translation_refresh_state.py
+	python scripts/validate_research_translation_review_snapshot.py
+
 research-complete-checkout:
 	python scripts/run_research_complete_checkout_gate.py
 
@@ -69,6 +77,7 @@ research-skill-check:
 	python scripts/validate_research_production_builder_contract.py
 	python scripts/validate_research_tension_emergence.py
 	python scripts/validate_research_translation_refresh_state.py
+	python scripts/validate_research_translation_review_snapshot.py
 	python research/skill-prototypes/scripts/plan_suite_layout.py >/dev/null
 	python research/skill-prototypes/scripts/plan_skill_subtrees.py >/dev/null
 	python research/skill-prototypes/scripts/plan_skill_entry_transforms.py >/dev/null

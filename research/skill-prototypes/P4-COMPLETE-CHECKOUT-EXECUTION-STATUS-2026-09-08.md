@@ -40,17 +40,46 @@ Eより後に別commitが入れば、Vはcurrent HEADのdirect parentでなく�
 
 translation stateはvalidation対象treeの一部なので、execution record commitへ混ぜない。
 
-まず:
+現在のV準備入口は:
 
 ```bash
-make update-en-hashes
-# inspect translation-manifest diff and bilingual semantic scope
-python scripts/mark_research_translation_refresh_synchronized.py
+make research-translation-prepare
 ```
 
-を行い、必要な差分をreviewしてcommitする。
+である。
+
+このtargetはmutation前に:
+
+```text
+translation refresh state
+reviewed Japanese source snapshot
+```
+
+を検査し、想定stale集合またはsemantic-review済みsource identityにdriftがあればhash manifestへ触れず停止する。
+
+preflight通過後に:
+
+```text
+make update-en-hashes
+translation state -> synchronized
+```
+
+を行い、その後もう一度refresh stateとreviewed-source snapshotを検査する。
+
+実行後は少なくとも:
+
+```bash
+git diff -- i18n/translation-manifest.json \
+  research/skill-prototypes/P4-CSW-TENSION-TRANSLATION-STATUS-2026-09-07.json
+```
+
+等でtranslation-manifest diffとstate transitionをreviewし、意図したhash/state変更だけをcommitする。
+
+`reviewed_source_blobs`はhash synchronizationで書き換えない。canonical日本語sourceへ追加編集が必要なら、bilingual semantic reviewとreview identityの更新を先に行う。
 
 この準備commitを含むclean HEADをVとして固定する。
+
+`make research-translation-prepare`はVを作るためのresearch-only mutation helperであり、production descriptorの`required_commands`へ追加しない。
 
 ## Canonical execution on V
 
@@ -75,7 +104,7 @@ make build
 make check
 ```
 
-である。translation state helperはhash refreshとresearch gateの間の明示的state transitionであり、別のproduction gateを追加するものではない。
+である。translation state helperはrunner-owned idempotence guard、`research-translation-prepare`はV preparation helperであり、どちらも別のproduction gateを追加するものではない。
 
 ## Current `research-skill-check` surface — not yet executed
 
@@ -88,6 +117,9 @@ make check
 - public-name projection inventory and migration contract
 - host-visible adapter metadata public-identity leakage check
 - production source / adapter metadata read-only planners
+- translation stale-set / English marker validation
+- bilingual semantic-review Japanese source snapshot validation
+- V preparation command-order regression
 - `test_research_*.py` full research unit-test discovery
 
 これらはsource上で配線済みだが、complete checkout上では**まだ一度も現行集合としてPASSしていない**。
@@ -116,6 +148,7 @@ recordは`research/skill-prototypes/execution/`配下へ新規作成し、Vに�
 ## Gate state
 
 ```text
+translation V preparation:              NOT RUN
 translation-manifest hash refresh:       NOT RUN
 translation research state transition:  NOT RUN
 complete-checkout research-skill-check: NOT RUN
@@ -137,6 +170,15 @@ complete-checkout PASSだけでは次を満たしたことにならない。
 
 ## Reopen condition
 
-完全checkout環境が利用可能になった時点で、binding contractに従ってpreparation -> V execution -> E evidence recordingを行う。
+完全checkout環境が利用可能になった時点で、binding contractに従って:
+
+```text
+make research-translation-prepare
+  -> review/commit V
+  -> make research-complete-checkout
+  -> E evidence recording
+```
+
+を行う。
 
 失敗時は失敗commandとaffected contractを記録し、PASSへ書き換えない。

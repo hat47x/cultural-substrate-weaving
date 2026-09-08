@@ -12,6 +12,8 @@ WIDTH = 1200
 HEIGHT = 800
 NODE_W = 330
 NODE_H = 120
+CARD_W = 270
+CARD_H = 90
 QUESTION_W = 300
 QUESTION_H = 96
 MARGIN_X = 70
@@ -84,11 +86,73 @@ def rect_edge_point(
     return sx + dx * scale, sy + dy * scale
 
 
-def node_size(ref: str, questions: dict[str, Any]) -> tuple[int, int]:
-    return (QUESTION_W, QUESTION_H) if ref in questions else (NODE_W, NODE_H)
+def node_size(
+    ref: str,
+    questions: dict[str, Any],
+    cards: dict[str, Any],
+) -> tuple[int, int]:
+    if ref in questions:
+        return QUESTION_W, QUESTION_H
+    if ref in cards:
+        return CARD_W, CARD_H
+    return NODE_W, NODE_H
+
+
+def semantic_endpoint_card_ids(
+    data: dict[str, Any],
+    cards: dict[str, dict[str, Any]],
+    positions: dict[str, Any],
+) -> set[str]:
+    visible: set[str] = set()
+    for relation in data.get("relations", []):
+        for key in ("from", "to"):
+            endpoint = str(relation.get(key, ""))
+            if endpoint in cards and endpoint in positions:
+                visible.add(endpoint)
+    for question in data.get("questions", []):
+        candidate = question.get("candidate_relation_between", [])
+        if isinstance(candidate, list):
+            for endpoint in candidate:
+                endpoint_id = str(endpoint)
+                if endpoint_id in cards and endpoint_id in positions:
+                    visible.add(endpoint_id)
+        for origin in question.get("arises_from", []):
+            origin_id = str(origin)
+            if origin_id in cards and origin_id in positions:
+                visible.add(origin_id)
+    return visible
+
+
+def draw_audit_link(
+    out: list[str],
+    *,
+    source: str,
+    target: str,
+    label: str,
+    centers: dict[str, tuple[float, float]],
+    questions: dict[str, Any],
+    cards: dict[str, Any],
+) -> None:
+    sw, sh = node_size(source, questions, cards)
+    tw, th = node_size(target, questions, cards)
+    start = rect_edge_point(centers[source], centers[target], sw, sh)
+    end = rect_edge_point(centers[target], centers[source], tw, th)
+    out.append(
+        f'  <line x1="{start[0]:.1f}" y1="{start[1]:.1f}" x2="{end[0]:.1f}" y2="{end[1]:.1f}" stroke="#777" stroke-width="1.5" stroke-dasharray="7 6"/>'
+    )
+    mx = (start[0] + end[0]) / 2
+    my = (start[1] + end[1]) / 2
+    label_w = 330 if "candidate endpoint +" in label else 285
+    out.append(
+        f'  <rect x="{mx - label_w/2:.1f}" y="{my - 11:.1f}" width="{label_w}" height="22" rx="5" fill="white"/>'
+    )
+    out.append(
+        f'  <text x="{mx:.1f}" y="{my + 4:.1f}" text-anchor="middle" font-family="{FONT_FAMILY}" font-size="11" fill="#555">{svg_text(label)}</text>'
+    )
 
 
 def render(data: dict[str, Any]) -> str:
+    all_cards = index(data.get("cards", []))
     groups = index(data.get("groups", []))
     questions = index(data.get("questions", []))
     layout = data.get("layout", {})
@@ -96,7 +160,9 @@ def render(data: dict[str, Any]) -> str:
     if not isinstance(positions, dict):
         raise ValueError("layout.positions must be an object")
 
-    drawable = {**groups, **questions}
+    visible_card_ids = semantic_endpoint_card_ids(data, all_cards, positions)
+    cards = {cid: all_cards[cid] for cid in sorted(visible_card_ids)}
+    drawable = {**groups, **cards, **questions}
     centers: dict[str, tuple[float, float]] = {
         ref: position(ref, positions) for ref in drawable
     }
@@ -119,8 +185,8 @@ def render(data: dict[str, Any]) -> str:
         target = str(relation.get("to", ""))
         if source not in centers or target not in centers:
             continue
-        sw, sh = node_size(source, questions)
-        tw, th = node_size(target, questions)
+        sw, sh = node_size(source, questions, cards)
+        tw, th = node_size(target, questions, cards)
         start = rect_edge_point(centers[source], centers[target], sw, sh)
         end = rect_edge_point(centers[target], centers[source], tw, th)
         direction = str(relation.get("direction", "unspecified"))
@@ -144,31 +210,50 @@ def render(data: dict[str, Any]) -> str:
                 f'  <text x="{mx:.1f}" y="{y:.1f}" text-anchor="middle" font-family="{FONT_FAMILY}" font-size="12" fill="#222">{svg_text(line)}</text>'
             )
 
-    # Question-origin links are explicitly labelled as non-asserted semantic relations.
+    # Question provenance and questionable-relation candidates are audit links,
+    # never weak semantic relations. Candidate endpoints connect to Q, not to
+    # each other, so the diagram preserves their unresolved state.
     for question in questions.values():
         qid = str(question.get("id", ""))
         if qid not in centers:
             continue
-        for origin in question.get("arises_from", []):
-            origin = str(origin)
+        candidate_raw = question.get("candidate_relation_between", [])
+        candidate_endpoints = (
+            [str(value) for value in candidate_raw]
+            if isinstance(candidate_raw, list)
+            else []
+        )
+        candidate_set = {value for value in candidate_endpoints if value in centers}
+        origins = [str(value) for value in question.get("arises_from", [])]
+        origin_set = set(origins)
+
+        for origin in origins:
             if origin not in centers:
                 continue
-            sw, sh = node_size(origin, questions)
-            qw, qh = node_size(qid, questions)
-            start = rect_edge_point(centers[origin], centers[qid], sw, sh)
-            end = rect_edge_point(centers[qid], centers[origin], qw, qh)
-            out.append(
-                f'  <line x1="{start[0]:.1f}" y1="{start[1]:.1f}" x2="{end[0]:.1f}" y2="{end[1]:.1f}" stroke="#777" stroke-width="1.5" stroke-dasharray="7 6"/>'
-            )
-            mx = (start[0] + end[0]) / 2
-            my = (start[1] + end[1]) / 2
             label = "question provenance / not asserted relation"
-            label_w = 270
-            out.append(
-                f'  <rect x="{mx - label_w/2:.1f}" y="{my - 11:.1f}" width="{label_w}" height="22" rx="5" fill="white"/>'
+            if origin in candidate_set:
+                label = "candidate endpoint + question provenance / not asserted relation"
+            draw_audit_link(
+                out,
+                source=origin,
+                target=qid,
+                label=label,
+                centers=centers,
+                questions=questions,
+                cards=cards,
             )
-            out.append(
-                f'  <text x="{mx:.1f}" y="{my + 4:.1f}" text-anchor="middle" font-family="{FONT_FAMILY}" font-size="11" fill="#555">{label}</text>'
+
+        for endpoint in candidate_endpoints:
+            if endpoint not in centers or endpoint in origin_set:
+                continue
+            draw_audit_link(
+                out,
+                source=endpoint,
+                target=qid,
+                label="candidate endpoint / not asserted relation",
+                centers=centers,
+                questions=questions,
+                cards=cards,
             )
 
     for gid, group in groups.items():
@@ -186,6 +271,21 @@ def render(data: dict[str, Any]) -> str:
                 f'  <text x="{cx:.1f}" y="{y + 50 + i*18:.1f}" text-anchor="middle" font-family="{FONT_FAMILY}" font-size="14" fill="#222">{svg_text(line)}</text>'
             )
 
+    for cid, card in cards.items():
+        cx, cy = centers[cid]
+        x = cx - CARD_W / 2
+        y = cy - CARD_H / 2
+        out.append(
+            f'  <rect x="{x:.1f}" y="{y:.1f}" width="{CARD_W}" height="{CARD_H}" rx="14" fill="white" stroke="#666" stroke-width="1.5"/>'
+        )
+        out.append(
+            f'  <text x="{cx:.1f}" y="{y + 23:.1f}" text-anchor="middle" font-family="{FONT_FAMILY}" font-size="13" font-weight="700" fill="#333">{svg_text(cid)}</text>'
+        )
+        for i, line in enumerate(lines(str(card.get("text", "")), width=18, max_lines=3)):
+            out.append(
+                f'  <text x="{cx:.1f}" y="{y + 45 + i*16:.1f}" text-anchor="middle" font-family="{FONT_FAMILY}" font-size="12" fill="#444">{svg_text(line)}</text>'
+            )
+
     for qid, question in questions.items():
         cx, cy = centers[qid]
         x = cx - QUESTION_W / 2
@@ -201,13 +301,14 @@ def render(data: dict[str, Any]) -> str:
                 f'  <text x="{cx:.1f}" y="{y + 49 + i*18:.1f}" text-anchor="middle" font-family="{FONT_FAMILY}" font-size="13" fill="#333">{svg_text(line)}</text>'
             )
 
-    out.append('  <text x="40" y="770" font-family="sans-serif" font-size="13" fill="#555">Edge display labels are projections; canonical predicates remain in the semantic record.</text>')
+    out.append('  <text x="40" y="752" font-family="sans-serif" font-size="13" fill="#555">Dashed audit links terminate at Q; candidate endpoints are never connected directly.</text>')
+    out.append('  <text x="40" y="772" font-family="sans-serif" font-size="13" fill="#555">Edge display labels are projections; canonical predicates remain in the semantic record.</text>')
     out.append("</svg>")
     return "\n".join(out) + "\n"
 
 
 def main() -> None:
-    parser = argparse.ArgumentParser(description="Render a free-position group-level SVG projection from affinity-map JSON.")
+    parser = argparse.ArgumentParser(description="Render a free-position spatial SVG projection from affinity-map JSON.")
     parser.add_argument("input", type=Path)
     parser.add_argument("-o", "--output", type=Path)
     args = parser.parse_args()

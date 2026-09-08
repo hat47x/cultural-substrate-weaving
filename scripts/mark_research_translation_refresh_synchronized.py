@@ -2,9 +2,10 @@
 """Mark the research translation refresh state synchronized after hash refresh.
 
 Run only after reviewing the bilingual semantic edits and running
-`make update-en-hashes`. The helper refuses to change state unless every tracked
-Japanese hash is synchronized and all declared English semantic markers remain
-present. It does not alter the translation manifest itself.
+`make update-en-hashes`. The helper refuses to change state unless the reviewed
+Japanese source snapshot still matches, every tracked Japanese hash is
+synchronized, and all declared English semantic markers remain present. It does
+not alter the translation manifest itself.
 """
 
 from __future__ import annotations
@@ -13,6 +14,8 @@ import hashlib
 import json
 import sys
 from pathlib import Path
+
+from validate_research_translation_review_snapshot import validate_review_snapshot
 
 ROOT = Path(__file__).resolve().parents[1]
 STATUS_PATH = (
@@ -32,6 +35,10 @@ def transition_to_synchronized(root: Path, status: dict, manifest: dict) -> tupl
     if status.get("status") not in {"pending-review-hash-refresh", "synchronized"}:
         errors.append("translation refresh state is not transitionable")
         return status, errors
+
+    snapshot_errors = validate_review_snapshot(root, status)
+    if snapshot_errors:
+        return status, snapshot_errors
 
     scope = status.get("scope_files")
     if not isinstance(scope, list) or not scope:

@@ -2,10 +2,10 @@
 """Validate registration of the current P4 authority assets.
 
 The suite manifest keeps historical research assets, while the design-only
-production descriptor points to the current complete-checkout and English
-review authorities. This checker makes sure those current pointers are also
-registered in suite_research_assets without hard-coding a particular dated
-packet or target-snapshot filename.
+production descriptor points to the current promotion authorities. This
+checker makes sure those current pointers are also registered in
+suite_research_assets without hard-coding a particular dated packet, evidence,
+or target-snapshot filename.
 """
 
 from __future__ import annotations
@@ -30,15 +30,23 @@ def _safe_repo_relative(value: object) -> bool:
 
 def current_p4_authority_paths(descriptor: dict) -> list[str]:
     complete = descriptor.get("complete_checkout_validation")
+    public_name = descriptor.get("public_name_recheck")
     english = descriptor.get("english_independent_review")
-    if not isinstance(complete, dict) or not isinstance(english, dict):
+    if (
+        not isinstance(complete, dict)
+        or not isinstance(public_name, dict)
+        or not isinstance(english, dict)
+    ):
         return []
 
     values = [
         complete.get("evidence"),
         complete.get("binding_contract"),
+        public_name.get("evidence"),
         english.get("packet"),
         english.get("targets"),
+        english.get("technical_asset_localization"),
+        english.get("completed_review"),
     ]
     return [value for value in values if isinstance(value, str)]
 
@@ -47,9 +55,13 @@ def validate_current_p4_assets(root: Path, manifest: dict, descriptor: dict) -> 
     errors: list[str] = []
 
     complete = descriptor.get("complete_checkout_validation")
+    public_name = descriptor.get("public_name_recheck")
     english = descriptor.get("english_independent_review")
     if not isinstance(complete, dict):
         errors.append("production descriptor must declare complete_checkout_validation")
+        return errors
+    if not isinstance(public_name, dict):
+        errors.append("production descriptor must declare public_name_recheck")
         return errors
     if not isinstance(english, dict):
         errors.append("production descriptor must declare english_independent_review")
@@ -58,20 +70,31 @@ def validate_current_p4_assets(root: Path, manifest: dict, descriptor: dict) -> 
     required_fields = {
         "complete_checkout_validation.evidence": complete.get("evidence"),
         "complete_checkout_validation.binding_contract": complete.get("binding_contract"),
+        "public_name_recheck.evidence": public_name.get("evidence"),
         "english_independent_review.packet": english.get("packet"),
         "english_independent_review.targets": english.get("targets"),
+        "english_independent_review.technical_asset_localization": english.get(
+            "technical_asset_localization"
+        ),
     }
+    completed_review = english.get("completed_review")
+    if completed_review is not None:
+        required_fields["english_independent_review.completed_review"] = completed_review
 
     assets = manifest.get("suite_research_assets")
     if not isinstance(assets, list) or not all(isinstance(item, str) for item in assets):
         return ["suite_research_assets must be a string list"]
     registered = set(assets)
 
+    seen: set[str] = set()
     for field, value in required_fields.items():
         if not _safe_repo_relative(value):
             errors.append(f"current P4 authority path is missing or unsafe: {field}")
             continue
         relative = str(value)
+        if relative in seen:
+            errors.append(f"current P4 authority path is reused by multiple fields: {relative}")
+        seen.add(relative)
         if not (root / relative).is_file():
             errors.append(f"current P4 authority file is missing: {relative}")
         if relative not in registered:
