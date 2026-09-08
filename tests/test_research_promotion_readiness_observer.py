@@ -47,6 +47,17 @@ class ResearchPromotionReadinessObserverTests(unittest.TestCase):
         self.assertNotIn("promotion_ready", self.report)
         self.assertIs(self.report["authorization"]["issued"], False)
 
+    def test_meta_gates_are_not_promoted_to_readiness_evidence_axes(self) -> None:
+        for meta_gate_id in (
+            "current_p4_authority_registry",
+            "declared_check_wiring",
+            "production_plan_consistency",
+            "promotion_precondition_integrity",
+            "complete_checkout_evidence_binding",
+        ):
+            self.assertNotIn(meta_gate_id, OBSERVATION_IDS)
+            self.assertNotIn(meta_gate_id, self.by_id)
+
     def test_each_observation_cannot_authorize_production(self) -> None:
         for item in self.report["observations"]:
             self.assertIs(item["production_promotion_authorized"], False)
