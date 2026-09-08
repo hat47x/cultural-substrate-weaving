@@ -92,20 +92,34 @@ def candidate_execution_commit(record: str) -> str | None:
     return value if _valid_sha(value) else None
 
 
-def validate_candidate_recording_head(record: str, current_head: str) -> list[str]:
+def validate_candidate_recording_state(
+    record: str,
+    current_head: str,
+    current_status: str,
+) -> list[str]:
     errors: list[str] = []
     normalized_head = current_head.lower()
     if not _valid_sha(normalized_head):
-        return ["candidate recording requires a 40-character lowercase current HEAD"]
+        errors.append("candidate recording requires a 40-character lowercase current HEAD")
     execution_commit = candidate_execution_commit(record)
     if execution_commit is None:
-        return ["candidate record does not contain a valid execution commit"]
-    if execution_commit != normalized_head:
+        errors.append("candidate record does not contain a valid execution commit")
+    elif _valid_sha(normalized_head) and execution_commit != normalized_head:
         errors.append(
             "candidate record execution commit no longer matches current HEAD; "
             "repository identity changed after validation"
         )
+    if current_status:
+        errors.append(
+            "candidate recording requires a clean working tree after validation"
+        )
     return errors
+
+
+def validate_candidate_recording_head(record: str, current_head: str) -> list[str]:
+    """Backward-compatible helper for callers that only need HEAD binding."""
+
+    return validate_candidate_recording_state(record, current_head, "")
 
 
 def validate_preconditions(root: Path, descriptor: dict, *, head: str, status: str) -> list[str]:
@@ -195,11 +209,12 @@ def main() -> int:
 
     try:
         current_head = _head(ROOT)
+        current_status = _status(ROOT)
     except (OSError, subprocess.CalledProcessError) as exc:
-        print(f"FAIL candidate recording: cannot re-read current HEAD: {exc}")
+        print(f"FAIL candidate recording: cannot re-read repository state: {exc}")
         return 2
 
-    errors = validate_candidate_recording_head(record, current_head)
+    errors = validate_candidate_recording_state(record, current_head, current_status)
     if errors:
         for error in errors:
             print(f"FAIL candidate recording: {error}")
