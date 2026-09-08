@@ -81,6 +81,33 @@ class ResearchProductionSourceProjectionPreviewTests(unittest.TestCase):
         self.assertIn("references/ROUND-TEMPLATE.md", text)
         self.assertNotIn(".en.md", text)
 
+    def test_projected_runtime_rejects_missing_reference_added_after_transform(self) -> None:
+        projected = copy.deepcopy(self.projected)
+        target = "src/skills/iterative-inquiry-synthesis/en-US/SKILL.md"
+        projected[target]["content"] += "\nRead `references/DOES-NOT-EXIST.md` when needed.\n"
+        errors = validate_projected_contents(projected, self.plan)
+        self.assertTrue(
+            any(
+                "projected package runtime reference is missing after transforms" in error
+                and "references/DOES-NOT-EXIST.md" in error
+                for error in errors
+            ),
+            errors,
+        )
+
+    def test_projected_runtime_rejects_dropped_known_reference_target(self) -> None:
+        projected = copy.deepcopy(self.projected)
+        del projected["src/skills/material-led-synthesis/ja-JP/references/TEMPLATE.md"]
+        errors = validate_projected_contents(projected, self.plan)
+        self.assertTrue(
+            any(
+                "projected package runtime reference is missing after transforms" in error
+                and "references/TEMPLATE.md" in error
+                for error in errors
+            ),
+            errors,
+        )
+
     def test_layer2_method_rewrites_realization_identifier_not_method_display_term(self) -> None:
         for locale in ("ja-JP", "en-US"):
             text = self.projected[
