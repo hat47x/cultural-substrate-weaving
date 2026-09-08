@@ -6,10 +6,10 @@ production-source promotion plan, applies only declared content transforms in
 memory, validates promotion-sensitive runtime/Method results, and prints hashes
 and target paths. It never writes production source files.
 
-The preview also re-runs package-local runtime reference closure after all path
-and content transforms. Source-stage closure alone is insufficient because
-locale filename normalization and public-name projection can change the final
-package tree.
+The preview also re-runs package-local runtime and Markdown-link closure after
+all path and content transforms. Source-stage closure alone is insufficient
+because locale filename normalization and public-name projection can change the
+final package tree.
 """
 
 from __future__ import annotations
@@ -37,7 +37,7 @@ from plan_production_source_promotion import (  # noqa: E402
     validate_production_source_promotion_plan,
 )
 from validate_research_package_reference_closure import (  # noqa: E402
-    package_local_references,
+    validate_in_memory_package_reference_closure,
 )
 
 PREVIEW_SCHEMA = "csw.production-source-content-preview/v1"
@@ -211,15 +211,19 @@ def validate_projected_contents(projected: dict[str, dict], plan: dict) -> list[
             if len(target_relatives) != len(items):
                 errors.append(f"projected target-relative collision: {research_id}/{locale}")
 
-            # Re-evaluate the runtime's direct package-local references after all
-            # filename and content transforms. This intentionally uses the same
-            # grammar as the research source-stage closure validator.
-            for relative in sorted(package_local_references(runtime["content"])):
-                if relative not in target_relatives:
-                    errors.append(
-                        "projected package runtime reference is missing after transforms: "
-                        f"{research_id}/{locale}/{runtime['source']} -> {relative}"
-                    )
+            projected_file_map = {
+                item["target_relative"]: item["content"]
+                for item in items
+                if isinstance(item.get("target_relative"), str)
+                and isinstance(item.get("content"), str)
+            }
+            errors.extend(
+                validate_in_memory_package_reference_closure(
+                    projected_file_map,
+                    "SKILL.md",
+                    label=f"projected package {research_id}/{locale}",
+                )
+            )
 
             if locale == "en-US":
                 if any(".en.md" in relative for relative in target_relatives):
