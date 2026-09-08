@@ -5,9 +5,9 @@ The research suite can declare an explicit package file set that is internally
 valid yet still omit a progressive-reference file named by SKILL.md. This
 checker closes that gap without deciding promotion or release readiness.
 
-`package_local_references()` is intentionally shared with the production-source
-projection preview so source-stage and post-transform runtime closure use the
-same reference grammar.
+`package_local_references()` and `validate_in_memory_package_reference_closure()`
+are intentionally shared with the production-source projection preview so
+source-stage and post-transform runtime closure use the same reference grammar.
 
 In addition, every Markdown file selected for an explicit package is checked for
 clickable relative Markdown links. Those links must resolve to another declared
@@ -104,6 +104,66 @@ def _resolved_markdown_target(source_relative: str, token: str) -> tuple[str | N
     if normalized == ".." or normalized.startswith("../") or normalized.startswith("/"):
         return normalized, True
     return PurePosixPath(normalized).as_posix(), False
+
+
+def validate_in_memory_package_reference_closure(
+    files: dict[str, str],
+    runtime_entry: str,
+    *,
+    label: str = "in-memory package",
+) -> list[str]:
+    """Validate runtime refs and Markdown links against an in-memory package tree.
+
+    `files` keys are package-root-relative target paths after any filename/content
+    projection. This lets production-source previews re-check closure after
+    `.en.md -> .md` normalization and public-name transforms without writing a
+    production tree to disk.
+    """
+
+    errors: list[str] = []
+    normalized: dict[str, str] = {}
+    for relative, text in files.items():
+        if not isinstance(relative, str) or not isinstance(text, str):
+            errors.append(f"{label} file map must contain string paths and text contents")
+            continue
+        path = PurePosixPath(relative).as_posix()
+        if path == ".." or path.startswith("../") or path.startswith("/"):
+            errors.append(f"{label} file path escapes package root: {relative}")
+            continue
+        if path in normalized:
+            errors.append(f"{label} file map contains duplicate normalized path: {path}")
+            continue
+        normalized[path] = text
+
+    runtime = PurePosixPath(runtime_entry).as_posix()
+    runtime_text = normalized.get(runtime)
+    if runtime_text is None:
+        errors.append(f"{label} runtime entry is missing: {runtime}")
+    else:
+        for relative in sorted(package_local_references(runtime_text)):
+            if relative not in normalized:
+                errors.append(f"{label} runtime reference is missing: {relative}")
+
+    for source_relative, text in sorted(normalized.items()):
+        if PurePosixPath(source_relative).suffix.lower() != ".md":
+            continue
+        for token in sorted(_markdown_link_targets(text)):
+            target_relative, escaped = _resolved_markdown_target(source_relative, token)
+            if target_relative is None:
+                continue
+            if escaped:
+                errors.append(
+                    f"{label} packaged Markdown link escapes package root: "
+                    f"{source_relative} -> {token}"
+                )
+                continue
+            if target_relative not in normalized:
+                errors.append(
+                    f"{label} packaged Markdown link is missing: "
+                    f"{source_relative} -> {target_relative}"
+                )
+
+    return errors
 
 
 def validate_package_reference_closure(root: Path, manifest: dict) -> list[str]:
