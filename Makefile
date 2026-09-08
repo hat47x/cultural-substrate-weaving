@@ -74,6 +74,7 @@ research-skill-check:
 	python research/skill-prototypes/scripts/preview_production_source_projection.py >/dev/null
 	python research/skill-prototypes/scripts/plan_production_builder_generalization.py >/dev/null
 	python scripts/validate_research_adapter_metadata.py
+	python scripts/validate_research_adapter_public_identity.py
 	python research/skill-prototypes/scripts/plan_adapter_metadata.py >/dev/null
 	python research/skill-prototypes/scripts/plan_production_adapter_metadata_promotion.py >/dev/null
 	python research/skill-prototypes/scripts/plan_promotion_readiness.py >/dev/null

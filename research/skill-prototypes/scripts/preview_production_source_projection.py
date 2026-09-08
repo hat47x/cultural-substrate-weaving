@@ -5,6 +5,11 @@ This is a research-only content projection probe. It consumes the read-only
 production-source promotion plan, applies only declared content transforms in
 memory, validates promotion-sensitive runtime/Method results, and prints hashes
 and target paths. It never writes production source files.
+
+The preview also re-runs package-local runtime and Markdown-link closure after
+all path and content transforms. Source-stage closure alone is insufficient
+because locale filename normalization and public-name projection can change the
+final package tree.
 """
 
 from __future__ import annotations
@@ -22,12 +27,17 @@ DESCRIPTOR_PATH = BASE / "P4-PRODUCTION-SUITE-DESCRIPTOR-PROTOTYPE.json"
 MIGRATION_PATH = BASE / "P4-PUBLIC-NAME-MIGRATION-CONTRACT.json"
 INVENTORY_PATH = BASE / "P4-PUBLIC-NAME-PROJECTION-INVENTORY.json"
 PLANNER_DIR = BASE / "scripts"
-if str(PLANNER_DIR) not in sys.path:
-    sys.path.insert(0, str(PLANNER_DIR))
+VALIDATOR_DIR = ROOT / "scripts"
+for directory in (PLANNER_DIR, VALIDATOR_DIR):
+    if str(directory) not in sys.path:
+        sys.path.insert(0, str(directory))
 
 from plan_production_source_promotion import (  # noqa: E402
     plan_production_source_promotion,
     validate_production_source_promotion_plan,
+)
+from validate_research_package_reference_closure import (  # noqa: E402
+    validate_in_memory_package_reference_closure,
 )
 
 PREVIEW_SCHEMA = "csw.production-source-content-preview/v1"
@@ -166,6 +176,18 @@ def validate_projected_contents(projected: dict[str, dict], plan: dict) -> list[
         key = (item["research_id"], item["locale"])
         by_skill_locale.setdefault(key, []).append(item)
 
+        content = item.get("content", "")
+        if f"`{RESEARCH_LAYER1_ID}`" in content:
+            errors.append(
+                "projected production package content retains research installable identifier: "
+                f"{item['target']}"
+            )
+        if "../affinity-synthesis/" in content:
+            errors.append(
+                "projected production package content retains research sibling filesystem path: "
+                f"{item['target']}"
+            )
+
     for skill in plan.get("skills", []):
         if not isinstance(skill, dict) or skill.get("research_id") == "cultural-substrate-weaving":
             continue
@@ -189,6 +211,20 @@ def validate_projected_contents(projected: dict[str, dict], plan: dict) -> list[
             if len(target_relatives) != len(items):
                 errors.append(f"projected target-relative collision: {research_id}/{locale}")
 
+            projected_file_map = {
+                item["target_relative"]: item["content"]
+                for item in items
+                if isinstance(item.get("target_relative"), str)
+                and isinstance(item.get("content"), str)
+            }
+            errors.extend(
+                validate_in_memory_package_reference_closure(
+                    projected_file_map,
+                    "SKILL.md",
+                    label=f"projected package {research_id}/{locale}",
+                )
+            )
+
             if locale == "en-US":
                 if any(".en.md" in relative for relative in target_relatives):
                     errors.append(f"English projected filenames retain .en suffix: {research_id}")
@@ -197,26 +233,6 @@ def validate_projected_contents(projected: dict[str, dict], plan: dict) -> list[
 
             if research_id == "affinity-synthesis" and frontmatter_name != PRODUCTION_LAYER1_NAME:
                 errors.append("Layer 1 projected runtime must use material-led-synthesis frontmatter name")
-
-            if research_id == "iterative-inquiry-synthesis":
-                promotion_sensitive = [
-                    item
-                    for item in items
-                    if item["target_relative"] == "SKILL.md"
-                    or item["target_relative"] == "references/METHOD.md"
-                ]
-                for item in promotion_sensitive:
-                    content = item["content"]
-                    if f"`{RESEARCH_LAYER1_ID}`" in content:
-                        errors.append(
-                            "Layer 2 projected runtime/Method retains research installable identifier: "
-                            f"{item['target']}"
-                        )
-                    if "../affinity-synthesis/" in content:
-                        errors.append(
-                            "Layer 2 projected runtime/Method retains research sibling filesystem path: "
-                            f"{item['target']}"
-                        )
 
     return errors
 

@@ -13,6 +13,8 @@
     "research_history_is_not_renamed": true,
     "production_frontmatter_uses_production_name": true,
     "production_explicit_skill_references_use_production_name": true,
+    "production_packaged_support_copies_use_production_name": true,
+    "production_host_visible_metadata_uses_public_identity": true,
     "production_runtime_filesystem_sibling_paths_forbidden": true,
     "production_research_path_references_forbidden": true,
     "display_names_are_not_installable_identifiers": true,
@@ -32,5 +34,5 @@
     "research/skill-prototypes/",
     "../affinity-synthesis/"
   ],
-  "note": "Design-only rename projection contract. Research IDs and history remain stable; production identity and explicit installable-Skill references use the promoted public names only after the promotion preconditions pass. The 2026-09-07 recheck found no current exact GitHub code-search collision for the two proposed production installable names, but canonical promotion still requires a final immediate recheck."
+  "note": "Design-only rename projection contract. Research IDs and history remain stable in the research source; production identity, explicit installable-Skill references, packaged support copies, and host-visible adapter metadata use promoted public identities only after the promotion preconditions pass. Display terms such as Affinity Synthesis / 親和統合 remain presentation labels rather than installable identifiers. The 2026-09-07 recheck found no current exact GitHub code-search collision for the two proposed production installable names, but canonical promotion still requires a final immediate recheck."
 }
