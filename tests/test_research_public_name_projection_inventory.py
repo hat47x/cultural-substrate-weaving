@@ -25,6 +25,8 @@ PROMOTION_PLAN_PATH = (
     "research/skill-prototypes/"
     "P4-PRODUCTION-SOURCE-AND-BUILDER-PROMOTION-PLAN-2026-09-07.md"
 )
+LAYER1_CASES_PATH = "research/skill-prototypes/affinity-synthesis/evals/CASES.md"
+LAYER1_DOSSIER_PATH = "research/skill-prototypes/affinity-synthesis/evidence/dossier.md"
 
 
 class ResearchPublicNameProjectionInventoryTests(unittest.TestCase):
@@ -55,6 +57,25 @@ class ResearchPublicNameProjectionInventoryTests(unittest.TestCase):
             "name: does-not-exist"
         ]
         self.assert_has_error(inventory, "marker changed and requires audit")
+
+    def test_packaged_layer1_support_docs_are_projection_sensitive(self) -> None:
+        for path in (LAYER1_CASES_PATH, LAYER1_DOSSIER_PATH):
+            item = self.content_item(self.inventory, path)
+            self.assertEqual(item["class"], "packaged-progressive-support")
+            self.assertEqual(item["action"], "rewrite-explicit-installable-name")
+            self.assertIn("`affinity-synthesis`", item["required_markers"])
+
+    def test_packaged_layer1_support_projection_cannot_be_removed(self) -> None:
+        inventory = copy.deepcopy(self.inventory)
+        inventory["content_projection"] = [
+            item
+            for item in inventory["content_projection"]
+            if item.get("path") != LAYER1_DOSSIER_PATH
+        ]
+        self.assert_has_error(
+            inventory,
+            "missing promotion-critical content projection paths",
+        )
 
     def test_promotion_plan_is_guarded_against_stale_production_paths(self) -> None:
         item = self.content_item(self.inventory, PROMOTION_PLAN_PATH)
