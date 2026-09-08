@@ -94,6 +94,14 @@ class ResearchPublicNameMigrationTests(unittest.TestCase):
             "production_explicit_skill_references_use_production_name must remain True",
         )
 
+    def test_packaged_support_copies_use_public_name(self) -> None:
+        contract = copy.deepcopy(self.contract)
+        contract["policy"]["production_packaged_support_copies_use_production_name"] = False
+        self.assert_has_error(
+            contract,
+            "production_packaged_support_copies_use_production_name must remain True",
+        )
+
     def test_host_visible_metadata_uses_public_identity(self) -> None:
         contract = copy.deepcopy(self.contract)
         contract["policy"]["production_host_visible_metadata_uses_public_identity"] = False
@@ -165,6 +173,14 @@ class ResearchPublicNameMigrationTests(unittest.TestCase):
             "affinity-synthesis public_name_status must record the current collision recheck",
         )
 
+    def test_contract_note_must_cover_packaged_support_copies(self) -> None:
+        contract = copy.deepcopy(self.contract)
+        contract["note"] = contract["note"].replace("packaged support copies, ", "")
+        self.assert_has_error(
+            contract,
+            "must cover packaged support copies",
+        )
+
     def test_contract_note_must_cover_host_visible_metadata(self) -> None:
         contract = copy.deepcopy(self.contract)
         contract["note"] = (
@@ -179,7 +195,7 @@ class ResearchPublicNameMigrationTests(unittest.TestCase):
 
     def test_contract_note_must_keep_final_immediate_recheck(self) -> None:
         contract = copy.deepcopy(self.contract)
-        contract["note"] = "Research IDs and history remain stable. host-visible adapter metadata."
+        contract["note"] = "Research IDs and history remain stable. packaged support copies. host-visible adapter metadata."
         self.assert_has_error(
             contract,
             "must preserve the final pre-promotion recheck",
