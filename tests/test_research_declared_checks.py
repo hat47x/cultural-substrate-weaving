@@ -10,6 +10,7 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "scripts"))
 
 from validate_research_declared_checks import (  # noqa: E402
+    _planner_paths,
     _suite_validator_paths,
     validate_declared_checks,
 )
@@ -24,12 +25,14 @@ class ResearchDeclaredCheckWiringTests(unittest.TestCase):
         self.manifest = json.loads(MANIFEST_PATH.read_text(encoding="utf-8"))
         self.makefile = MAKEFILE_PATH.read_text(encoding="utf-8")
         self.suite_validators = _suite_validator_paths(ROOT)
+        self.planners = _planner_paths(ROOT)
 
     def validate(self, manifest: dict, makefile: str) -> list[str]:
         return validate_declared_checks(
             manifest,
             makefile,
             suite_validator_paths=self.suite_validators,
+            planner_paths=self.planners,
         )
 
     def assert_has_error(self, manifest: dict, makefile: str, fragment: str) -> None:
@@ -39,7 +42,7 @@ class ResearchDeclaredCheckWiringTests(unittest.TestCase):
             f"expected error containing {fragment!r}; got {errors!r}",
         )
 
-    def test_current_declared_checks_and_suite_validators_are_wired(self) -> None:
+    def test_current_declared_checks_suite_validators_and_planners_are_wired(self) -> None:
         self.assertEqual(self.validate(self.manifest, self.makefile), [])
 
     def test_meta_validator_itself_is_wired_into_research_gate(self) -> None:
@@ -107,7 +110,7 @@ class ResearchDeclaredCheckWiringTests(unittest.TestCase):
         self.assert_has_error(
             self.manifest,
             makefile,
-            "research gate references an unknown suite-level validator",
+            "research gate references an unknown suite-level research validator",
         )
 
     def test_suite_level_validator_cannot_be_wired_twice(self) -> None:
@@ -119,6 +122,39 @@ class ResearchDeclaredCheckWiringTests(unittest.TestCase):
             self.manifest,
             makefile,
             "suite-level research validator must be wired exactly once",
+        )
+
+    def test_planner_cannot_disappear_from_research_gate(self) -> None:
+        planner = "research/skill-prototypes/scripts/plan_production_source_promotion.py"
+        self.assertIn(planner, self.planners)
+        makefile = self.makefile.replace(f"\tpython {planner} >/dev/null\n", "")
+        self.assert_has_error(
+            self.manifest,
+            makefile,
+            f"research planner is not wired into research-skill-check: {planner}",
+        )
+
+    def test_unknown_planner_cannot_be_wired(self) -> None:
+        injected = "\tpython research/skill-prototypes/scripts/plan_does_not_exist.py >/dev/null\n"
+        makefile = self.makefile.replace(
+            "\tpython -m unittest discover -s tests -p 'test_research_*.py'\n",
+            injected + "\tpython -m unittest discover -s tests -p 'test_research_*.py'\n",
+        )
+        self.assert_has_error(
+            self.manifest,
+            makefile,
+            "research gate references an unknown research planner",
+        )
+
+    def test_planner_cannot_be_wired_twice(self) -> None:
+        planner = "research/skill-prototypes/scripts/plan_suite_layout.py"
+        command = f"\tpython {planner} >/dev/null\n"
+        self.assertIn(command, self.makefile)
+        makefile = self.makefile.replace(command, command + command, 1)
+        self.assert_has_error(
+            self.manifest,
+            makefile,
+            "research planner must be wired exactly once",
         )
 
     def test_missing_research_gate_target_is_rejected(self) -> None:
