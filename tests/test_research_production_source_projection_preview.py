@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import copy
 import json
 import sys
 import unittest
@@ -59,6 +60,15 @@ class ResearchProductionSourceProjectionPreviewTests(unittest.TestCase):
             self.assertNotIn("name: affinity-synthesis", text)
             self.assertIn("# Affinity Synthesis", text)
 
+    def test_layer1_japanese_progressive_support_uses_production_installable_name(self) -> None:
+        for target in (
+            "src/skills/material-led-synthesis/ja-JP/evals/CASES.md",
+            "src/skills/material-led-synthesis/ja-JP/evidence/dossier.md",
+        ):
+            text = self.projected[target]["content"]
+            self.assertIn("`material-led-synthesis`", text)
+            self.assertNotIn("`affinity-synthesis`", text)
+
     def test_layer2_english_runtime_rewrites_installable_name_and_package_local_refs(self) -> None:
         text = self.projected[
             "src/skills/iterative-inquiry-synthesis/en-US/SKILL.md"
@@ -82,6 +92,26 @@ class ResearchProductionSourceProjectionPreviewTests(unittest.TestCase):
             "src/skills/iterative-inquiry-synthesis/en-US/references/METHOD.md"
         ]["content"]
         self.assertIn("## Relationship to Affinity Synthesis", en)
+
+    def test_any_projected_package_file_rejects_old_backtick_installable_id(self) -> None:
+        projected = copy.deepcopy(self.projected)
+        target = "src/skills/material-led-synthesis/ja-JP/evals/CASES.md"
+        projected[target]["content"] += "\nlegacy `affinity-synthesis` identifier\n"
+        errors = validate_projected_contents(projected, self.plan)
+        self.assertTrue(
+            any("retains research installable identifier" in error for error in errors),
+            errors,
+        )
+
+    def test_any_projected_package_file_rejects_research_sibling_path(self) -> None:
+        projected = copy.deepcopy(self.projected)
+        target = "src/skills/material-led-synthesis/ja-JP/evidence/dossier.md"
+        projected[target]["content"] += "\n../affinity-synthesis/\n"
+        errors = validate_projected_contents(projected, self.plan)
+        self.assertTrue(
+            any("retains research sibling filesystem path" in error for error in errors),
+            errors,
+        )
 
     def test_projection_is_in_memory_and_does_not_create_production_source(self) -> None:
         self.assertFalse((ROOT / "src/skills/material-led-synthesis").exists())
