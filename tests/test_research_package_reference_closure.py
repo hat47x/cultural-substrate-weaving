@@ -63,8 +63,8 @@ class ResearchPackageReferenceClosureTests(unittest.TestCase):
     def test_english_iterative_round_template_reference_must_be_packaged(self) -> None:
         manifest = copy.deepcopy(self.manifest)
         files = self._files(manifest, "iterative-inquiry-synthesis", "en-US")
-        files.remove("references/ROUND-TEMPLATE.md")
-        self.assert_has_error(manifest, "references/ROUND-TEMPLATE.md")
+        files.remove("references/ROUND-TEMPLATE.en.md")
+        self.assert_has_error(manifest, "references/ROUND-TEMPLATE.en.md")
 
     def test_canonical_manifest_realizations_are_out_of_scope(self) -> None:
         manifest = copy.deepcopy(self.manifest)
