@@ -3,9 +3,10 @@
 
 This runner does not mutate the production descriptor and does not create
 repository evidence. It pins the current HEAD as validation commit V, executes
-the canonical command sequence, refuses any command that changes repository
-identity or leaves a non-ignored working-tree diff, and only then writes an
-ignored `.tmp/` candidate record for the later evidence-only commit workflow.
+the four descriptor-required gate commands plus one translation state-transition
+step, refuses any command that changes repository identity or leaves a
+non-ignored working-tree diff, and only then writes an ignored `.tmp/` candidate
+record for the later evidence-only commit workflow.
 """
 
 from __future__ import annotations
@@ -22,10 +23,21 @@ DESCRIPTOR_PATH = (
 )
 OUTPUT_DIR = ROOT / ".tmp" / "research-complete-checkout"
 
+STATE_TRANSITION_LABEL = "translation research state transition"
+REQUIRED_GATE_COMMANDS: tuple[str, ...] = (
+    "make update-en-hashes",
+    "make research-skill-check",
+    "make build",
+    "make check",
+)
+
+# The execution sequence contains one state-transition helper that is deliberately
+# not part of descriptor.required_commands. Its PASS marker is still required in
+# durable execution evidence by validate_research_complete_checkout_gate.py.
 COMMANDS: tuple[tuple[str, tuple[str, ...]], ...] = (
     ("make update-en-hashes", ("make", "update-en-hashes")),
     (
-        "translation research state transition",
+        STATE_TRANSITION_LABEL,
         (sys.executable, "scripts/mark_research_translation_refresh_synchronized.py"),
     ),
     ("make research-skill-check", ("make", "research-skill-check")),
@@ -137,9 +149,10 @@ def validate_preconditions(root: Path, descriptor: dict, *, head: str, status: s
         errors.append("complete-checkout runner requires descriptor status blocked-not-run")
 
     required = gate.get("required_commands")
-    expected = [label for label, _ in COMMANDS if label != "translation research state transition"]
-    if required != expected:
-        errors.append("descriptor required_commands does not match runner canonical command set")
+    if required != list(REQUIRED_GATE_COMMANDS):
+        errors.append(
+            "descriptor required_commands does not match canonical required gate commands"
+        )
 
     return errors
 
