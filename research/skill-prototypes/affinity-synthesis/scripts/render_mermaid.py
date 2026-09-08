@@ -45,13 +45,42 @@ def relation_label(item: dict[str, Any]) -> str:
     return mermaid_text(label)
 
 
+def _semantic_endpoint_card_ids(data: dict[str, Any], cards: dict[str, dict[str, Any]]) -> set[str]:
+    visible: set[str] = set()
+    for relation in data.get("relations", []):
+        for key in ("from", "to"):
+            endpoint = str(relation.get(key, ""))
+            if endpoint in cards:
+                visible.add(endpoint)
+    for question in data.get("questions", []):
+        candidate = question.get("candidate_relation_between", [])
+        if not isinstance(candidate, list):
+            continue
+        for endpoint in candidate:
+            endpoint_id = str(endpoint)
+            if endpoint_id in cards:
+                visible.add(endpoint_id)
+        for origin in question.get("arises_from", []):
+            origin_id = str(origin)
+            if origin_id in cards:
+                visible.add(origin_id)
+    return visible
+
+
 def render_group_map(data: dict[str, Any]) -> str:
     lines = ["flowchart LR"]
+    cards = by_id(data.get("cards", []))
     groups = by_id(data.get("groups", []))
 
     for gid, group in groups.items():
         label = mermaid_text(f'{gid}｜{group.get("label", "")}')
         lines.append(f'    {gid}["{label}"]')
+
+    # Keep the overview compact: show card nodes only when a relation or
+    # questionable-relation audit needs that card as an explicit endpoint.
+    for cid in sorted(_semantic_endpoint_card_ids(data, cards)):
+        text = mermaid_text(f'{cid}｜{cards[cid].get("text", "")}')
+        lines.append(f'    {cid}["{text}"]')
 
     questions = by_id(data.get("questions", []))
     for qid, question in questions.items():
@@ -71,14 +100,40 @@ def render_group_map(data: dict[str, Any]) -> str:
             f'    {source} {connector}|"{relation_label(relation)}"| {target}'
         )
 
+    semantic_nodes = set(cards) | set(groups)
     for question in data.get("questions", []):
         qid = str(question.get("id", ""))
-        for origin in question.get("arises_from", []):
-            origin = str(origin)
-            if origin in groups and qid:
-                lines.append(
-                    f'    {origin} -.->|"question provenance / not asserted relation"| {qid}'
+        if not qid:
+            continue
+
+        candidate_raw = question.get("candidate_relation_between", [])
+        candidate_endpoints = (
+            [str(value) for value in candidate_raw]
+            if isinstance(candidate_raw, list)
+            else []
+        )
+        candidate_set = {value for value in candidate_endpoints if value in semantic_nodes}
+        origins = [str(value) for value in question.get("arises_from", [])]
+        origin_set = set(origins)
+
+        for origin in origins:
+            if origin not in semantic_nodes:
+                continue
+            label = "question provenance / not asserted relation"
+            if origin in candidate_set:
+                label = (
+                    "candidate endpoint + question provenance / not asserted relation"
                 )
+            lines.append(f'    {origin} -.->|"{label}"| {qid}')
+
+        # Never connect the two candidate endpoints directly. The Q node is the
+        # visual proof that this is still an audit question, not a weak R edge.
+        for endpoint in candidate_endpoints:
+            if endpoint not in semantic_nodes or endpoint in origin_set:
+                continue
+            lines.append(
+                f'    {endpoint} -.->|"candidate endpoint / not asserted relation"| {qid}'
+            )
 
     if data.get("layout"):
         lines.append("")
