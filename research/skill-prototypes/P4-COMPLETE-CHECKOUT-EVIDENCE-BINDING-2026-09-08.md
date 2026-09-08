@@ -18,6 +18,36 @@ execution commit == current checkout HEAD
 
 本contractはstale-pass防止を弱めず、**validated commitとevidence recording commitを分離する。**
 
+## Command authority
+
+production descriptorの`complete_checkout_validation.required_commands`が所有するpromotion command authorityは次の4件である。
+
+```text
+make update-en-hashes
+make research-skill-check
+make build
+make check
+```
+
+complete-checkout runnerはこの4件に加えて、
+
+```text
+python scripts/mark_research_translation_refresh_synchronized.py
+```
+
+を **runner-owned idempotence guard** として実行する。
+
+このhelperはpromotion command authorityを増やすものではない。validated commit Vを作る前にtranslation state transitionが完了しており、V上で再実行してもtracked diffを残さないことを確認するためのguardである。
+
+したがって、
+
+```text
+descriptor required_commands
+  != runner execution steps
+```
+
+である。前者はpromotion gateの宣言集合、後者はその宣言集合にidempotence guardを足したfail-closed実行手順である。現行runner/validatorも、descriptorの4件とexecution recordに必要なguard PASS markerを別に扱う。
+
 ## Three phases
 
 ### A. Prepare a clean validation commit
@@ -38,23 +68,23 @@ python scripts/mark_research_translation_refresh_synchronized.py
 
 V上でcommandを実行するとき、source/test/translation stateはcleanなrepository identityとして固定されていることが重要である。
 
-### B. Execute the canonical gate on V
+### B. Execute the declared gate plus the idempotence guard on V
 
-Vをcheckoutした状態でcanonical command setを実行する。
+Vをcheckoutした状態で、descriptorの4 promotion commandsとrunner-owned translation-state guardを次の順で実行する。
 
 ```bash
 make update-en-hashes
-python scripts/mark_research_translation_refresh_synchronized.py
+python scripts/mark_research_translation_refresh_synchronized.py  # runner-owned idempotence guard
 make research-skill-check
 make build
 make check
 ```
 
-最初の二つはVで準備済みならidempotentでなければならない。`make update-en-hashes`後にunexpected diffが生じた場合、Vはvalidation対象として未完成なのでPASS recordへ進まない。
+最初の`make update-en-hashes`とtranslation-state guardはVで準備済みならtracked diffを残してはならない。いずれかの実行後にunexpected diffが生じた場合、Vはvalidation対象として未完成なのでPASS recordへ進まない。
 
-全command成功後も、generated tracked artifactやsource fileにunexpected diffが残る場合はrecordしない。
+全step成功後も、generated tracked artifactやsource fileにunexpected diffが残る場合はrecordしない。runnerはcandidateを書き出す直前にもHEADとworking treeを再読し、Vとclean stateが維持されていなければcandidateを作らない。
 
-execution recordの`execution commit:`にはVの40桁SHAを記録する。
+execution recordの`execution commit:`にはVの40桁SHAを記録する。candidate recordは4 promotion commandsに加え、runner-owned guardのPASSも明示するが、guardをdescriptorの`required_commands`へ昇格させない。
 
 ### C. Record evidence in one evidence-only child commit
 
@@ -74,7 +104,7 @@ Eのfirst parentはVでなければならない。
 ```text
 V  validated commit
 |
-|  all canonical commands PASS
+|  declared promotion commands + runner-owned guard PASS
 |
 E  evidence-only recording commit
 ```
@@ -113,10 +143,10 @@ passed stateでは少なくとも次を拒否する。
 - current HEADがexecution commitのdirect evidence-only childではない
 - V→Eでdescriptor/evidence以外のpathが変わった
 - descriptorのcomplete-checkout gate以外のfieldがV→Eで変わった
-- gateのrequired command setや`production_promotion_authorized`がV→Eで変わった
+- descriptorの4件の`required_commands`や`production_promotion_authorized`がV→Eで変わった
 - execution recordがVですでに存在していた
 - evidence pathがexecution record用directory外である
-- required PASS markerが欠ける
+- 4 promotion commandsまたはrunner-owned idempotence guardのrequired PASS markerが欠ける
 
 ## Translation boundary
 
@@ -127,7 +157,7 @@ translation hash/state transitionはevidence recording commitへ混ぜない。
 - translation changeそのものがvalidation対象source stateだから
 - hash/stateを書き換えたtreeと、それ以前のcommitを同一execution identityにできないから
 
-したがって、translation準備をcommitしてからVでcanonical sequenceを再実行する。
+したがって、translation準備をcommitしてからVでpromotion commandsとidempotence guardを再実行する。
 
 ## Promotion boundary
 
