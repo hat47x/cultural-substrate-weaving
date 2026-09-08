@@ -1,18 +1,24 @@
 #!/usr/bin/env python3
-"""Validate local runtime-entry references against research package contents.
+"""Validate research Skill package reference closure.
 
 The research suite can declare an explicit package file set that is internally
 valid yet still omit a progressive-reference file named by SKILL.md. This
 checker closes that gap without deciding promotion or release readiness.
 
 `package_local_references()` is intentionally shared with the production-source
-projection preview so source-stage and post-transform closure use the same
-reference grammar.
+projection preview so source-stage and post-transform runtime closure use the
+same reference grammar.
+
+In addition, every Markdown file selected for an explicit package is checked for
+clickable relative Markdown links. Those links must resolve to another declared
+package file. Nested inline-code tokens are not followed recursively because
+method names and research identifiers are too ambiguous to treat as file paths.
 """
 
 from __future__ import annotations
 
 import json
+import posixpath
 import re
 import sys
 from pathlib import Path, PurePosixPath
@@ -29,6 +35,7 @@ PACKAGE_REFERENCE_PREFIXES = {
     "examples",
     "scripts",
 }
+FILE_LIKE_SUFFIXES = {".md", ".json", ".yaml", ".yml", ".py"}
 
 
 def _candidate_refs(text: str) -> set[str]:
@@ -61,9 +68,9 @@ def package_local_references(text: str) -> set[str]:
     This helper deliberately preserves the existing parser semantics: inline-code
     paths and Markdown-link targets are candidates, while only known package-local
     prefixes are treated as package dependencies. Callers decide which documents
-    are normative enough to scan; the current closure contracts scan runtime
-    entries rather than recursively treating every support document as runtime
-    instruction.
+    are normative enough to scan; the runtime closure contract scans the runtime
+    entry while package-document closure separately follows explicit Markdown
+    links in every declared Markdown file.
     """
 
     references: set[str] = set()
@@ -72,6 +79,31 @@ def package_local_references(text: str) -> set[str]:
         if relative is not None:
             references.add(relative)
     return references
+
+
+def _markdown_link_targets(text: str) -> set[str]:
+    return {value.strip() for value in MARKDOWN_LINK_RE.findall(text) if value.strip()}
+
+
+def _resolved_markdown_target(source_relative: str, token: str) -> tuple[str | None, bool]:
+    """Resolve an explicit Markdown link relative to its containing document."""
+
+    raw = token.strip()
+    if not raw or raw.startswith(("#", "/")) or "://" in raw or raw.startswith("mailto:"):
+        return None, False
+    raw = raw.split("#", 1)[0].split("?", 1)[0].strip()
+    if not raw:
+        return None, False
+
+    pure = PurePosixPath(raw)
+    if pure.suffix.lower() not in FILE_LIKE_SUFFIXES:
+        return None, False
+
+    base = PurePosixPath(source_relative).parent
+    normalized = posixpath.normpath((base / pure).as_posix())
+    if normalized == ".." or normalized.startswith("../") or normalized.startswith("/"):
+        return normalized, True
+    return PurePosixPath(normalized).as_posix(), False
 
 
 def validate_package_reference_closure(root: Path, manifest: dict) -> list[str]:
@@ -105,8 +137,9 @@ def validate_package_reference_closure(root: Path, manifest: dict) -> list[str]:
                 continue
 
             declared = {PurePosixPath(item).as_posix() for item in files}
-            text = runtime_path.read_text(encoding="utf-8")
-            for relative in sorted(package_local_references(text)):
+
+            runtime_text = runtime_path.read_text(encoding="utf-8")
+            for relative in sorted(package_local_references(runtime_text)):
                 candidate = (package_root / Path(relative)).resolve()
                 if not candidate.is_relative_to(package_root):
                     errors.append(
@@ -125,6 +158,44 @@ def validate_package_reference_closure(root: Path, manifest: dict) -> list[str]:
                         f"package_source.files: {relative}"
                     )
 
+            # A document selected for the package must not contain a clickable
+            # local Markdown link that becomes broken after materialization.
+            for source_relative in sorted(declared):
+                if PurePosixPath(source_relative).suffix.lower() != ".md":
+                    continue
+                source_path = (package_root / Path(source_relative)).resolve()
+                if not source_path.is_file() or not source_path.is_relative_to(package_root):
+                    continue
+                text = source_path.read_text(encoding="utf-8")
+                for token in sorted(_markdown_link_targets(text)):
+                    target_relative, escaped = _resolved_markdown_target(source_relative, token)
+                    if target_relative is None:
+                        continue
+                    if escaped:
+                        errors.append(
+                            f"skill {skill_id}: locale {locale} packaged Markdown link escapes "
+                            f"package root: {source_relative} -> {token}"
+                        )
+                        continue
+                    target_path = (package_root / Path(target_relative)).resolve()
+                    if not target_path.is_relative_to(package_root):
+                        errors.append(
+                            f"skill {skill_id}: locale {locale} packaged Markdown link escapes "
+                            f"package root: {source_relative} -> {token}"
+                        )
+                        continue
+                    if not target_path.is_file():
+                        errors.append(
+                            f"skill {skill_id}: locale {locale} packaged Markdown link is missing: "
+                            f"{source_relative} -> {target_relative}"
+                        )
+                        continue
+                    if target_relative not in declared:
+                        errors.append(
+                            f"skill {skill_id}: locale {locale} packaged Markdown link target is not "
+                            f"included in package_source.files: {source_relative} -> {target_relative}"
+                        )
+
     return errors
 
 
@@ -141,7 +212,7 @@ def main() -> int:
             print(f"ERROR: {error}", file=sys.stderr)
         return 1
 
-    print("Research package runtime references are closed over declared package files")
+    print("Research package runtime references and packaged Markdown links are closed")
     return 0
 
 
