@@ -21,6 +21,8 @@ REQUIRED_CONTENT_PROJECTION_PATHS = frozenset(
     {
         "research/skill-prototypes/affinity-synthesis/SKILL.md",
         "research/skill-prototypes/affinity-synthesis/SKILL.en.md",
+        "research/skill-prototypes/affinity-synthesis/evals/CASES.md",
+        "research/skill-prototypes/affinity-synthesis/evidence/dossier.md",
         "research/skill-prototypes/iterative-inquiry-synthesis/SKILL.md",
         "research/skill-prototypes/iterative-inquiry-synthesis/SKILL.en.md",
         "research/skill-prototypes/iterative-inquiry-synthesis/references/METHOD.md",
