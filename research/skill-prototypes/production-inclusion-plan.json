@@ -18,7 +18,7 @@
       "production_source": null,
       "locales": {
         "ja-JP": "candidate",
-        "en-US": "blocked"
+        "en-US": "candidate"
       }
     },
     "iterative-inquiry-synthesis": {
@@ -26,7 +26,7 @@
       "production_source": null,
       "locales": {
         "ja-JP": "candidate",
-        "en-US": "blocked"
+        "en-US": "candidate"
       }
     }
   }
