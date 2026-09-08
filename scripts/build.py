@@ -20,10 +20,34 @@ def skill_frontmatter(name: str, description: str, claude_explicit: bool = False
     return "\n".join(lines) + "\n\n"
 
 
-def copy_references(locale: str, target: Path, config: dict) -> None:
+def canonical_reference_files(locale: str, config: dict) -> list[tuple[Path, str]]:
     source_root = locale_source(locale)
-    for module in config["modules"]:
-        copy_file(source_root / module["source"], target / "references" / module["skill_reference"])
+    return [
+        (source_root / module["source"], module["skill_reference"])
+        for module in config["modules"]
+    ]
+
+
+def write_skill_tree(
+    target: Path,
+    *,
+    name: str,
+    description: str,
+    body: str,
+    references: list[tuple[Path, str]],
+    explicit_invocation: bool = False,
+) -> None:
+    """Write one host-independent Skill tree from already-resolved inputs."""
+
+    content = skill_frontmatter(
+        name,
+        description,
+        claude_explicit=explicit_invocation,
+    )
+    content += body
+    write_text(target / "SKILL.md", content)
+    for source, reference_name in references:
+        copy_file(source, target / "references" / reference_name)
 
 
 def concatenate_modules(locale: str, config: dict, module_paths: list[str]) -> str:
@@ -34,12 +58,17 @@ def concatenate_modules(locale: str, config: dict, module_paths: list[str]) -> s
 
 def build_openai(locale: str, config: dict, router: str) -> None:
     locale_info = config["locales"][locale]
+    body = replace_router_links(router, config["modules"])
+    references = canonical_reference_files(locale, config)
     for profile in ("interactive", "metered"):
         target = DIST / locale / "openai-skill" / profile / config["name"]
-        content = skill_frontmatter(config["name"], locale_info["description"])
-        content += replace_router_links(router, config["modules"])
-        write_text(target / "SKILL.md", content)
-        copy_references(locale, target, config)
+        write_skill_tree(
+            target,
+            name=config["name"],
+            description=locale_info["description"],
+            body=body,
+            references=references,
+        )
         copy_file(
             ADAPTERS / "openai-skill" / locale / f"openai.{profile}.yaml",
             target / "agents" / "openai.yaml",
@@ -64,10 +93,14 @@ def build_claude(locale: str, config: dict, router: str, claude_config: dict) ->
         plugin_root / ".claude-plugin" / "plugin.json",
         json.dumps(plugin_manifest, ensure_ascii=False, indent=2) + "\n",
     )
-    content = skill_frontmatter(c["skill_name"], config["locales"][locale]["description"], claude_explicit=True)
-    content += replace_router_links(router, config["modules"])
-    write_text(skill_root / "SKILL.md", content)
-    copy_references(locale, skill_root, config)
+    write_skill_tree(
+        skill_root,
+        name=c["skill_name"],
+        description=config["locales"][locale]["description"],
+        body=replace_router_links(router, config["modules"]),
+        references=canonical_reference_files(locale, config),
+        explicit_invocation=True,
+    )
 
     readme = (ADAPTERS / "claude-code" / locale / "README.md").read_text(encoding="utf-8")
     write_text(plugin_root / "README.md", readme.replace("{{VERSION}}", version()))
