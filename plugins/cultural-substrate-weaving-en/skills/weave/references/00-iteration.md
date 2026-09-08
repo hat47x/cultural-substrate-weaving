@@ -1,67 +1,138 @@
-# Iterative exploration, validation, and transformation
+# Framework contact and round handoff
 
-Read this when new material arrives and work moves repeatedly between KJ and cultural frameworks.
+Read this when work resumes because of new material or contact with another cultural framework.
 
-## The basic unit is a round
+This document does not implement multi-round inquiry orchestration itself. Delta-based reopening, stable artifacts, question shifts, append-only round history, and related concerns are delegated to a dedicated Method / compatible realization. CSW hands off what newly arose from framework contact with its origin intact.
 
-Representative operations available within a round include the following. A round need not perform all of them, and neither their order nor the number of passes is fixed. Select, revisit, or repeat operations according to the target, purpose, external conditions, and delegated scope.
+## Responsibility boundary
 
-- **Receive the material delta**: inspect new sources, observations, falsification, or execution results.
-- **Return to the KJ material surface**: when using KJ, place old residuals and isolated cards touched by the new material back on the same surface.
-- **See the current question**: do not repeat the previous conclusion; ask what the new material has made questionable now.
-- **Open a framework only if needed**: use only the depth required by `core/activation.md`.
-- **Return to KJ**: when both a cultural framework and KJ are in use, bring back framework-generated questions, hypotheses, compositional ideas, search targets, and residuals with provenance intact.
-- **Reflect into real work**: make explicit what is adopted into the domain artifact, decision, or research direction.
-- **Record the boundary**: record results, residuals, and reopening conditions; closing follows external conditions or delegated discretion.
+When multi-round reopening or delta management is needed, use `iterative-inquiry-synthesis` or another compatible realization satisfying the same Method Definition when available.
 
-Passing through a fixed number of frameworks, loading them in full, or executing native operations is not a completion condition.
+Delegate these concerns to the iterative layer:
 
-## Do not merge KJ and cultural frameworks
+- input delta
+- touched-artifact reopen
+- local / global reopen decision with reason
+- stable semantic IDs across rounds
+- structural delta
+- question shift
+- semantic delta vs representation delta
+- append-only history
+- residual / reopen condition
+- continue / stop / handoff reason
 
-KJ protects semantic units, evidence state, contradictions, isolates, and blanks, and allows later material to reorganize them. Cultural frameworks temporarily open different positions, paths, cycles, states, or symbols when useful.
+CSW does not independently re-implement this general round governance.
 
-Do not use KJ as a framework-reduction device, and do not mechanically fix a cultural framework as the grouping axis for KJ. When framework-derived classification or rearrangement is itself part of the task, make that purpose explicit and return the result to source material for checking. Return framework-generated material to KJ with the attribution defined in `core/principles-and-constraints.md`.
+## Hand new framework contact off as a delta
 
-## Preserve snapshots and residuals
+When a later point in the work produces a new candidate from:
 
-Do not freeze a previous grouping as the answer. At the same time, do not rebuild an existing grouping merely because new material arrived. Ask what the new material adds, what it changes, and what it leaves unchanged.
+- another cultural framework;
+- another position in the same framework;
+- another native operation;
+- a depth change from preview to full; or
+- a different question exposed by revisiting the framework,
 
-When a new grouping appears, do not overwrite the source material, earlier KJ snapshots, isolated semantic units, held relations, or unresolved questions. If an existing island still represents the material's core well and the new difference is local, a local addition may be sufficient.
+do not automatically re-synthesize all prior material.
 
-Blanks and residuals may become receptors for later material. Background them when they are irrelevant to the current question; foreground them as `reopened` when new material touches them.
+When useful, hand off at least:
 
-Do not reread the whole history every round. Use **new material, touched residuals, KJ snapshots, probes, and previews** as foregrounding examples, not a closed list.
+```text
+new material / question:
+origin / framework ref:
+possibly touched prior artifact / residual:
+framework contact change:
+```
 
-## Connect held questions to the next material
+The iterative Method decides how far reopening should extend.
 
-When continuation is expected, connect a held question to an observation, comparison, source search, or another way to examine it. For example: "This relation remains a hypothesis; inspecting this material next could distinguish support from counterexamples." If it is unclear what could distinguish them, preserve that gap too. The caller's conditions govern the method and scope of execution.
+## A framework contact may yield no useful increment
 
-When results arrive, return them to the material or KJ snapshot that raised the question. For a question mediated by a cultural framework, keep the part or operation used traceable too. Distinguish results from searches, calculations, and similar work as derivations within a framework, independent evidence about the target, interpretations of sources, or other kinds as appropriate. Internal consistency within a framework does not itself add support for the target.
+If a probe or preview produces no new question, contrast, or residual worth returning to the target, treat that as a valid result.
 
-For a handoff, select what continuation needs, such as the question, what to examine, where to return, changed relations, and remaining reservations. This is not a mandatory field list. References to source material and local differences can suffice without summarizing the whole again for the record.
+For example:
 
-## Observe longitudinal change as events
+```text
+framework contact: no_useful_increment
+material delta: none
+reopen request: none
+```
 
-When useful, record events such as the following; the record format is in `08-governance-and-records.md`.
+Do not manufacture an insight or another round merely because a framework was opened.
 
-- `question_shift`
-- `search_shift`
-- `kj_reconfiguration`
-- `artifact_adoption`
-- `artifact_withdrawal`
-- `decision_change`
-- `delayed_reactivation`
-- `repeated_transfer`
-- `framework_contact_change`
+## Preserve attribution across rounds
 
-As far as practical, these names describe what happened. Do not encode the judgment that an event was useful, harmful, or appropriate into the event type. If such an assessment needs to be recorded, keep the assessor and basis separate from the observed event.
+If later target-side material supports, refutes, or modifies a framework-generated candidate, do not erase where the original question came from.
 
-Do not collapse events into one score, and do not use framework count or trajectory length as a KPI. Look at what remained in later real work, how later material changed what could be noticed, and how adoption, withdrawal, and reuse moved over time.
+Origin and verification can remain separate.
 
-## Convergence and reopening
+```text
+meaning: <current meaning>
+origin: framework_generated
+verification: target_supported | unresolved | contradicted / weakened | other explicit state
+verification_basis: <target-side refs>
+```
 
-Record stalled movement in questions, material arrangement, artifacts, or decisions as a stop signal, not a stopping decision. Closing follows external conditions or delegated discretion. Complete explanation is not required.
+Later support does not justify rewriting the earlier round as if the candidate had been a target fact from the start.
 
-Reopening can be triggered by new material, a counterexample, environmental change, contact with an old residual, illumination from another cognitive field, or an explicit revisit. Do not treat earlier convergence as failure; reopen only what is needed.
+When target material refutes a framework reading, do not weaken the target material to protect the framework.
 
-For problem-solving work, questions such as situation, problem framing, essence, conception, concrete measures, sequencing, and validation may be useful, but they are not fixed stages of the KJ core. Move backward, skip ahead, or deepen locally when needed.
+## When no iterative realization is available
+
+Even when no compatible Layer 2 realization is available, CSW can return a one-pass exploration result containing:
+
+- newly generated framework candidates;
+- origin;
+- what needs target-side verification;
+- where later work should return; and
+- unresolved / reopen conditions.
+
+But if append-only round history, touched-artifact reopening, structural delta, and similar behaviors were not actually run, do not claim that multi-round orchestration was executed.
+
+## CSW-specific event
+
+General longitudinal event taxonomies belong to iterative / governance layers.
+
+What remains especially relevant to CSW is being able to trace that framework contact changed.
+
+When useful, record an event equivalent to `framework_contact_change`.
+
+Example:
+
+```text
+framework: FW-A -> FW-B
+change: preview position changed / native operation changed / no-useful-increment
+produced: F5, Q2
+handed_to: iterative inquiry round N
+```
+
+The event itself is not a judgment of usefulness or correctness.
+
+## Stopping and reopening
+
+Do not require a fixed number of frameworks, rounds, `full` depth, or framework-native operations as a CSW completion condition.
+
+If a framework produces a concrete new question that justifies reopening, hand that question to Layer 2.
+
+If additional framework contact does not move target-side questions, material arrangement, artifacts, or decisions, stopping with `no_useful_increment` intact is valid.
+
+Authority over stopping, adoption, and action follows the delegation boundary in `core/principles-and-constraints.md`.
+
+## Minimal handoff
+
+When handing work to iterative inquiry, include only what the current task needs, such as:
+
+- current inquiry;
+- new framework-derived material / question;
+- origin / framework ref;
+- touched candidate refs if known;
+- unresolved / verification need; and
+- return-to-target condition.
+
+Do not copy the complete text of prior rounds.
+
+## CSW canonical responsibilities
+
+Higher-level principles remain in `core/principles-and-constraints.md`.
+
+In particular, keep possibility separate from adoption, cognition separate from fact, and preservation separate from current attention.

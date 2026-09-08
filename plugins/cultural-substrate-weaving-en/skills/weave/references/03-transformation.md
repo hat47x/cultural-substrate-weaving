@@ -49,6 +49,35 @@ Separate absence detection from consistency checking.
 
 Consistency checking can also be used for a single unit.
 
+## Use target-framework tension as transformation material
+
+When applying a framework to a target, do not make filling a correspondence table the only objective. **Treat fit, misfit, resistance, reversal, absence, excess, and mutual revision as transformation material.**
+
+Ask at least:
+
+1. **Does the target actually contain the distinction the framework expects?** If not, is the lack of distinction a defect, or part of how the target functions?
+2. **Does the target actually contain the connection the framework assumes?** If the connection is absent, is it merely missing, or is another order at work?
+3. **What concrete target detail disappears when translated into the framework?** Do not discard that residual as a framework exception.
+4. **What question becomes visible only from the framework side?** The existence of the question is not target-side evidence.
+5. **Where did target-side contradiction force revision of the framework reading?** Do not treat the framework as an untouched explanatory device.
+6. **Did preserving both sides produce a third structure that was not visible before?** Record it as a new distinction, relation, stage, transformation, question, or recomposition.
+
+When such a third structure arises, preserve at least:
+
+```text
+preserved_from_target:
+preserved_from_framework:
+negated_or_revised:
+newly_recomposed:
+return_check:
+```
+
+This may resemble dialectical sublation, but it does not require a fixed `thesis -> antithesis -> synthesis` sequence. The purpose is to inspect **whether meaning structure changed while tension and consequential differences remained visible**.
+
+Do not call a simple midpoint between target and framework a third structure. The same applies to a restatement of one side, mechanical attachment of the two, or a compromise that merely blurs contradiction.
+
+A third structure may be recorded as `cross_field_emergent`, but do not promote it to `target_supported` until independent target-side material supports it.
+
 When layers of differing depth are involved, make the layer distinction explicit. Representative examples include the unspoken bodily response held by one person, the shared experience accumulated in a place or an object, and the isomorphic structure that recurs locally and across the whole. Different frameworks may be used for different layers, or different layers of one framework may be used. When multiple frameworks are used, preserve not only shared change principles but also partitions on which the frameworks do not agree.
 
 **Layering orthogonal frameworks produces structure no single framework yields. Reach for it.** Where one framework supplies the positions and another cuts the same target by a different classification principle, the intersections of the two grids hold places neither framework can name on its own.

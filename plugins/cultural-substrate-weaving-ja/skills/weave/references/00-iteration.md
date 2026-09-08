@@ -1,67 +1,140 @@
-# 探索・検証・変換と周回処理
+# Framework contactとround handoff
 
-新しい材料を受け取りながら、KJと文化体系の間を往復するときに読む。
+新しい材料や別の文化体系との接触によって作業を再開するときに読む。
 
-## 基本単位はラウンド
+この文書はmulti-round inquiry orchestrationそのものを実装しない。差分再開、stable artifact、question shift、append-only round history等は専用Method / compatible realizationへ委ね、CSWは文化体系との接触で何が新たに生じたかを由来付きで渡す。
 
-一つのラウンドで使う代表的な処理は次のとおり。毎回すべてを通す必要はなく、順序や通過回数も固定しない。対象、利用目的、外部条件、委任範囲に応じて必要な処理を選び、必要なら戻る・繰り返す。
+## 責務境界
 
-- **材料差分を受け取る**：新しい資料、観察、反証、実行結果を確認する。
-- **KJの材料面へ戻す**：KJを使う場合、新材料と関係する古い残差や孤立カードを、同じ材料面へ戻す。
-- **今回の問いを見る**：前回の結論を繰り返すのではなく、新材料によって何が問いになったのかを見る。
-- **必要なら文化体系を開く**：`core/activation.md`に従い、必要な深さまで読む。
-- **KJへ返す**：文化体系とKJを使った場合、文化体系から生じた問い、仮説、構成案、調査先、残差を、来歴を保ったまま戻す。
-- **実作業へ反映する**：領域側の成果物、判断、調査方針に何を採用するかを明確にする。
-- **境界確認**：必要な成果、残差、再開条件を記録し、終了判断は外部条件または委任裁量へ返す。
+複数roundの再開・差分管理が必要な場合は、利用可能なら `iterative-inquiry-synthesis` または同じMethod Definitionを満たすcompatible realizationを用いる。
 
-一定数の文化体系を通すこと、`full`まで読み込むこと、体系固有の操作を実行することは、完了条件ではない。
+反復探索側へ委ねるもの:
 
-## KJと文化体系を混ぜない
+- input delta
+- touched-artifact reopen
+- local / global reopen decision with reason
+- stable semantic IDs across rounds
+- structural delta
+- question shift
+- semantic delta vs representation delta
+- append-only history
+- residual / reopen condition
+- continue / stop / handoff reason
 
-KJは、材料の意味単位、証拠状態、矛盾、孤立、空白を守り、後から届く材料によって再編できる状態を保つ。文化体系は、必要なラウンドで、別の位置、経路、周期、状態、象徴を一時的な認知場として開く。
+CSWはこれらを別系統のround管理として再実装しない。
 
-KJを文化体系の候補を絞り込むためだけの道具にせず、文化体系をKJの分類軸として機械的に固定しない。文化体系に基づく分類や再配列そのものが対象になっている場合は、その利用目的を明示したうえで、結果を元材料へ戻して確かめる。文化体系から生まれたものは、`core/principles-and-constraints.md`で定めた帰属を保ったままKJへ戻す。
+## 新しいframework contactはdeltaとして渡す
 
-## 時点記録と残差を残す
+後の時点で、
 
-以前のまとまりを正解として固定しない。同時に、新しい材料が来たという理由だけで、既存のまとまりを作り直さない。新材料が既存の島に何を足し、何を変え、何を変えなかったのかを見る。
+- 別の文化体系
+- 同じ体系の別位置
+- 別のnative operation
+- previewからfullへの深度変更
+- 再照射による別の問い
 
-新しいまとまりができても、元材料、以前のKJ時点記録、孤立した意味単位、保留した関係、未解決の問いを上書きしない。既存の島がなお材料の核をよく表しており、新材料による差分が局所的であれば、その差分だけを追補してよい。
+から新しい候補が生じた場合、過去の全材料を自動的に再統合しない。
 
-空白や残差は、後から届く資料を受け取る入口になり得る。現在の問いに関係しなければ背景へ置き、新材料が触れたときに`reopened`として再び前景へ戻す。
+少なくとも必要に応じて次をdeltaとして渡す。
 
-長期履歴を毎回すべて読み直す必要はない。**新材料、触れた残差、KJ時点記録、`probe`／`preview`**は前景化の例であり、必要な範囲は現在の作業に応じて選ぶ。
+```text
+new material / question:
+origin / framework ref:
+possibly touched prior artifact / residual:
+framework contact change:
+```
 
-## 保留した問いを次の材料へつなぐ
+どこまでreopenするかは反復探索Methodへ委ねる。
 
-再開を見込むときは、保留した問いと、それを確かめるための観察・比較・資料探索などをつないでおく。たとえば「この関係はまだ仮説であり、次にこの材料を確認すると、支持と反例を見分けられる」と残す。何を見れば区別できるか自体が不明なら、その空白も保つ。確認の方法や実行範囲は呼出側の条件に従う。
+## framework contactの結果が空でもよい
 
-結果が届いたら、問いの元になった材料やKJ時点記録へ戻す。文化体系を介した問いなら、用いた部分や操作もたどれるようにする。検索・計算などで得た結果も、体系内の導出なのか、対象を独立に確かめた証拠なのか、資料の解釈なのかを区別する。体系内で整合しただけで、対象の裏付けが増えたことにはしない。
+文化体系をprobe / previewした結果、対象側へ戻す新しい問い・対比・残差が生じなかった場合、それを正常な結果として扱う。
 
-引継ぎには、問い、確認したいこと、戻り先、今回変わった関係と残った留保などから、再開に必要なものを選ぶ。これは必須項目の一覧ではない。記録のために全体を再要約せず、元材料への参照と局所的な差分を使ってよい。
+例えば:
 
-## 長期的な変化を出来事として見る
+```text
+framework contact: no_useful_increment
+material delta: none
+reopen request: none
+```
 
-必要に応じて、次のようなeventを記録する。記録形式は`08-governance-and-records.md`に従う。
+文化体系を使ったこと自体を理由に、洞察や次roundを作らない。
 
-- `question_shift`
-- `search_shift`
-- `kj_reconfiguration`
-- `artifact_adoption`
-- `artifact_withdrawal`
-- `decision_change`
-- `delayed_reactivation`
-- `repeated_transfer`
-- `framework_contact_change`
+## 帰属をround間で保つ
 
-これらのevent種別は、できるだけ**何が起きたか**を表すものにする。「有用だった」「害があった」「適切だった」といった評価はevent種別そのものに含めず、必要であれば、誰がどの根拠からそう判断したのかを別に記録する。
+文化体系由来候補が後の対象側材料で支持・反証・修正された場合も、問いがどこから生じたかの由来を消さない。
 
-出来事を一つの点数にまとめず、文化体系の利用回数や軌跡の長さもKPIにしない。後の実作業に何が残ったか、後から届いた資料によって拾えるものがどう変わったか、採用・撤回・再利用がどのように動いたかを見る。
+`origin` と `verification` を別に保持できる。
 
-## 収束と再開
+```text
+meaning: <現在の意味>
+origin: framework_generated
+verification: target_supported | unresolved | contradicted / weakened等
+verification_basis: <target-side refs>
+```
 
-抽象度や説明量だけが増え、対象側の問い、材料配置、成果物、判断が動かない状態を停止シグナルとして記録する。終了判断は外部条件または委任裁量へ返す。完全な説明に到達する必要はない。
+後から支持されたことを理由に、過去roundへ遡って「最初から対象事実だった」と書き換えない。
 
-再開の契機には、新資料、反例、環境変化、古い残差との接触、別の認知場からの再照射、明示的な再訪などがある。過去の収束を失敗扱いせず、必要な場所だけを再び開く。
+反証された場合も、体系を守るために対象側材料を弱めない。
 
-問題解決型の案件では、現状把握、問題提起、本質追及、構想、具体策、手順化、検証などの問いを使える。ただし、これらはKJコアの固定段階ではない。必要に応じて戻り、飛び、局所的に深掘りする。
+## 反復探索realizationがない場合
+
+compatible Layer 2 realizationが利用できない環境でも、CSWは一回の探索結果として、
+
+- 新しく生じたframework候補
+- 由来
+- target-sideで確認すべきこと
+- 戻り先
+- unresolved / reopen condition
+
+を返せる。
+
+ただし、append-only round history、touched-artifact reopen、structural delta等を実際に運用していないなら、multi-round orchestrationを実行済みとは称しない。
+
+## CSW側に残すevent
+
+長期履歴の一般event taxonomyは反復探索／governance側へ委ねる。
+
+CSW固有に重要なのは、文化体系との接触が変わったことを後から辿れることである。
+
+必要なら `framework_contact_change` 相当のeventを記録する。
+
+例:
+
+```text
+framework: FW-A -> FW-B
+change: preview position changed / native operation changed / no-useful-increment
+produced: F5, Q2
+handed_to: iterative inquiry round N
+```
+
+このevent自体を有用性・正しさの評価にしない。
+
+## 停止と再開
+
+CSW固有の完了条件として、一定数の文化体系、一定round数、`full` depth、体系固有操作の実行を要求しない。
+
+再開の契機として文化体系から具体的な新しい問いが生じた場合、その問いをLayer 2へ渡す。
+
+追加のframework contactが対象側の問い・材料配置・成果物・判断を動かさない場合は、`no_useful_increment`を保ったまま止まってよい。
+
+停止・採用・行動への移行の決定権は `core/principles-and-constraints.md` の委任境界に従う。
+
+## 最小handoff
+
+反復探索へ渡すときは、現在のtaskに必要な範囲で次を含める。
+
+- current inquiry
+- new framework-derived material / question
+- origin / framework ref
+- touched candidate refs if known
+- unresolved / verification need
+- return-to-target condition
+
+過去round全文を複製しない。
+
+## CSW固有の正本
+
+この接続より上位の原則は `core/principles-and-constraints.md` に置く。
+
+とくに、可能性と採用、認知と事実、保存と現在の注意を混同しない。
