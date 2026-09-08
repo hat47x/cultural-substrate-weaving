@@ -44,6 +44,29 @@ class ResearchProductionSourceProjectionPreviewTests(unittest.TestCase):
     def target(self, suffix: str) -> dict:
         return next(item for path, item in self.projected.items() if path.endswith(suffix))
 
+    @staticmethod
+    def _add_projected_file(
+        projected: dict[str, dict],
+        *,
+        research_id: str,
+        production_name: str,
+        locale: str,
+        target: str,
+        target_relative: str,
+        content: str,
+    ) -> None:
+        projected[target] = {
+            "research_id": research_id,
+            "production_name": production_name,
+            "locale": locale,
+            "source": "synthetic-fixture",
+            "target": target,
+            "target_relative": target_relative,
+            "content_transforms": [],
+            "content": content,
+            "sha256": "0" * 64,
+        }
+
     def test_current_projection_is_valid(self) -> None:
         self.assertEqual(validate_projected_contents(self.projected, self.plan), [])
         preview = build_preview()
@@ -88,7 +111,7 @@ class ResearchProductionSourceProjectionPreviewTests(unittest.TestCase):
         errors = validate_projected_contents(projected, self.plan)
         self.assertTrue(
             any(
-                "projected package runtime reference is missing after transforms" in error
+                "runtime reference is missing" in error
                 and "references/DOES-NOT-EXIST.md" in error
                 for error in errors
             ),
@@ -101,12 +124,64 @@ class ResearchProductionSourceProjectionPreviewTests(unittest.TestCase):
         errors = validate_projected_contents(projected, self.plan)
         self.assertTrue(
             any(
-                "projected package runtime reference is missing after transforms" in error
+                "runtime reference is missing" in error
                 and "references/TEMPLATE.md" in error
                 for error in errors
             ),
             errors,
         )
+
+    def test_projected_nested_markdown_link_uses_transformed_target_namespace(self) -> None:
+        projected = copy.deepcopy(self.projected)
+        method_target = (
+            "src/skills/iterative-inquiry-synthesis/en-US/references/METHOD.md"
+        )
+        projected[method_target]["content"] += "\n[Detail](DETAIL.md)\n"
+        self._add_projected_file(
+            projected,
+            research_id="iterative-inquiry-synthesis",
+            production_name="iterative-inquiry-synthesis",
+            locale="en-US",
+            target="src/skills/iterative-inquiry-synthesis/en-US/references/DETAIL.md",
+            target_relative="references/DETAIL.md",
+            content="detail\n",
+        )
+        self.assertEqual(validate_projected_contents(projected, self.plan), [])
+
+    def test_projected_nested_markdown_link_rejects_stale_en_suffix_after_normalization(self) -> None:
+        projected = copy.deepcopy(self.projected)
+        method_target = (
+            "src/skills/iterative-inquiry-synthesis/en-US/references/METHOD.md"
+        )
+        projected[method_target]["content"] += "\n[Detail](DETAIL.en.md)\n"
+        self._add_projected_file(
+            projected,
+            research_id="iterative-inquiry-synthesis",
+            production_name="iterative-inquiry-synthesis",
+            locale="en-US",
+            target="src/skills/iterative-inquiry-synthesis/en-US/references/DETAIL.md",
+            target_relative="references/DETAIL.md",
+            content="detail\n",
+        )
+        errors = validate_projected_contents(projected, self.plan)
+        self.assertTrue(
+            any(
+                "packaged Markdown link is missing" in error
+                and "references/DETAIL.en.md" in error
+                for error in errors
+            ),
+            errors,
+        )
+
+    def test_projected_nested_markdown_external_url_is_not_package_dependency(self) -> None:
+        projected = copy.deepcopy(self.projected)
+        method_target = (
+            "src/skills/iterative-inquiry-synthesis/en-US/references/METHOD.md"
+        )
+        projected[method_target]["content"] += (
+            "\n[External](https://example.com/DETAIL.en.md)\n"
+        )
+        self.assertEqual(validate_projected_contents(projected, self.plan), [])
 
     def test_layer2_method_rewrites_realization_identifier_not_method_display_term(self) -> None:
         for locale in ("ja-JP", "en-US"):
