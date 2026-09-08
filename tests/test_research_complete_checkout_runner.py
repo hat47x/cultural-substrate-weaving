@@ -11,8 +11,10 @@ if str(SCRIPTS_DIR) not in sys.path:
 
 from run_research_complete_checkout_gate import (  # noqa: E402
     COMMANDS,
+    candidate_execution_commit,
     candidate_record,
     execute_gate,
+    validate_candidate_recording_head,
     validate_preconditions,
 )
 
@@ -48,6 +50,20 @@ class ResearchCompleteCheckoutRunnerTests(unittest.TestCase):
         ):
             self.assertIn(marker, text)
         self.assertIn("candidate / not yet repository evidence", text)
+        self.assertEqual(candidate_execution_commit(text), HEAD)
+
+    def test_candidate_recording_requires_same_head_after_validation(self) -> None:
+        record = candidate_record(HEAD)
+        self.assertEqual(validate_candidate_recording_head(record, HEAD), [])
+        errors = validate_candidate_recording_head(record, OTHER_HEAD)
+        self.assertTrue(any("no longer matches current HEAD" in error for error in errors), errors)
+
+    def test_candidate_recording_requires_valid_execution_commit(self) -> None:
+        errors = validate_candidate_recording_head(
+            "execution commit: not-a-sha\n",
+            HEAD,
+        )
+        self.assertTrue(any("valid execution commit" in error for error in errors), errors)
 
     def test_clean_blocked_preconditions_are_accepted(self) -> None:
         self.assertEqual(
