@@ -3,6 +3,7 @@ from __future__ import annotations
 import copy
 import json
 import sys
+import tempfile
 import unittest
 from pathlib import Path
 
@@ -79,6 +80,73 @@ class ResearchPackageReferenceClosureTests(unittest.TestCase):
         files.remove("references/ROUND-TEMPLATE.en.md")
         self.assert_has_error(manifest, "references/ROUND-TEMPLATE.en.md")
 
+    def test_packaged_markdown_link_target_must_be_declared(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            package = root / "skill"
+            refs = package / "references"
+            refs.mkdir(parents=True)
+            (package / "SKILL.md").write_text(
+                "Read `references/METHOD.md`.\n",
+                encoding="utf-8",
+            )
+            (refs / "METHOD.md").write_text(
+                "[Detail](DETAIL.md)\n",
+                encoding="utf-8",
+            )
+            (refs / "DETAIL.md").write_text("detail\n", encoding="utf-8")
+            manifest = self._fixture_manifest(
+                ["SKILL.md", "references/METHOD.md"]
+            )
+            errors = validate_package_reference_closure(root, manifest)
+            self.assertTrue(
+                any("packaged Markdown link target is not included" in error for error in errors),
+                errors,
+            )
+
+    def test_packaged_markdown_link_cannot_escape_package_root(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            package = root / "skill"
+            refs = package / "references"
+            refs.mkdir(parents=True)
+            (package / "SKILL.md").write_text(
+                "Read `references/METHOD.md`.\n",
+                encoding="utf-8",
+            )
+            (refs / "METHOD.md").write_text(
+                "[Outside](../../outside.md)\n",
+                encoding="utf-8",
+            )
+            (root / "outside.md").write_text("outside\n", encoding="utf-8")
+            manifest = self._fixture_manifest(
+                ["SKILL.md", "references/METHOD.md"]
+            )
+            errors = validate_package_reference_closure(root, manifest)
+            self.assertTrue(
+                any("packaged Markdown link escapes package root" in error for error in errors),
+                errors,
+            )
+
+    def test_external_markdown_link_does_not_become_package_dependency(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            package = root / "skill"
+            refs = package / "references"
+            refs.mkdir(parents=True)
+            (package / "SKILL.md").write_text(
+                "Read `references/METHOD.md`.\n",
+                encoding="utf-8",
+            )
+            (refs / "METHOD.md").write_text(
+                "[External](https://example.com/detail.md)\n",
+                encoding="utf-8",
+            )
+            manifest = self._fixture_manifest(
+                ["SKILL.md", "references/METHOD.md"]
+            )
+            self.assertEqual(validate_package_reference_closure(root, manifest), [])
+
     def test_canonical_manifest_realizations_are_out_of_scope(self) -> None:
         manifest = copy.deepcopy(self.manifest)
         skill = next(
@@ -89,6 +157,27 @@ class ResearchPackageReferenceClosureTests(unittest.TestCase):
             "canonical_manifest",
         )
         self.assertEqual(validate_package_reference_closure(ROOT, manifest), [])
+
+    @staticmethod
+    def _fixture_manifest(files: list[str]) -> dict:
+        return {
+            "skills": [
+                {
+                    "id": "fixture-skill",
+                    "locale_realizations": {
+                        "ja-JP": {
+                            "status": "prototype",
+                            "runtime_entry": "skill/SKILL.md",
+                            "package_source": {
+                                "mode": "explicit_files",
+                                "root": "skill",
+                                "files": files,
+                            },
+                        }
+                    },
+                }
+            ]
+        }
 
     @staticmethod
     def _files(manifest: dict, skill_id: str, locale: str) -> list[str]:
