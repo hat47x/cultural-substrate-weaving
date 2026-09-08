@@ -15,6 +15,36 @@ def fail(errors: list[str], message: str) -> None:
     errors.append(message)
 
 
+def check_projected_reference(
+    errors: list[str],
+    *,
+    source: Path,
+    generated: Path,
+    source_label: str,
+) -> None:
+    """Check one generated reference against its already-resolved source."""
+
+    if not generated.exists():
+        fail(errors, f"Missing generated reference: {generated.relative_to(ROOT)}")
+    elif generated.read_bytes() != source.read_bytes():
+        fail(errors, f"Generated reference differs from {source_label}")
+
+
+def check_skill_entry_budget(
+    errors: list[str],
+    *,
+    skill_md: Path,
+    max_bytes: int,
+    label: str,
+) -> int:
+    """Apply one byte budget to an already-resolved Skill entry path."""
+
+    size = skill_md.stat().st_size
+    if size > max_bytes:
+        fail(errors, f"{label} exceeds budget: {size}")
+    return size
+
+
 def check_json_files(errors: list[str]) -> None:
     for path in ROOT.rglob("*.json"):
         if any(part in {".git", "dist", "__pycache__"} for part in path.parts):
@@ -179,11 +209,21 @@ def check_modules(errors: list[str]) -> None:
             if module["source"] not in router:
                 fail(errors, f"{locale}: router does not reference {module['source']}")
             for profile in ("interactive", "metered"):
-                generated = DIST / locale / "openai-skill" / profile / config["name"] / "references" / module["skill_reference"]
-                if not generated.exists():
-                    fail(errors, f"Missing generated reference: {generated.relative_to(ROOT)}")
-                elif generated.read_bytes() != source.read_bytes():
-                    fail(errors, f"Generated reference differs from {locale}/{module['source']}")
+                generated = (
+                    DIST
+                    / locale
+                    / "openai-skill"
+                    / profile
+                    / config["name"]
+                    / "references"
+                    / module["skill_reference"]
+                )
+                check_projected_reference(
+                    errors,
+                    source=source,
+                    generated=generated,
+                    source_label=f"{locale}/{module['source']}",
+                )
 
 
 def check_budgets(errors: list[str]) -> dict:
@@ -208,13 +248,32 @@ def check_budgets(errors: list[str]) -> dict:
         if corpus_bytes > budgets["corpus_max_bytes"][locale]:
             fail(errors, f"{locale}: source corpus exceeds byte budget: {corpus_bytes}")
         for profile in ("interactive", "metered"):
-            size = (DIST / locale / "openai-skill" / profile / config["name"] / "SKILL.md").stat().st_size
-            if size > budgets["openai_skill_md_max_bytes"][locale]:
-                fail(errors, f"{locale}: OpenAI {profile} SKILL.md exceeds budget: {size}")
+            check_skill_entry_budget(
+                errors,
+                skill_md=(
+                    DIST
+                    / locale
+                    / "openai-skill"
+                    / profile
+                    / config["name"]
+                    / "SKILL.md"
+                ),
+                max_bytes=budgets["openai_skill_md_max_bytes"][locale],
+                label=f"{locale}: OpenAI {profile} SKILL.md",
+            )
         c = claude_config[locale]
-        claude_size = (PLUGINS / c["plugin_name"] / "skills" / c["skill_name"] / "SKILL.md").stat().st_size
-        if claude_size > budgets["claude_skill_md_max_bytes"][locale]:
-            fail(errors, f"{locale}: Claude SKILL.md exceeds budget: {claude_size}")
+        claude_size = check_skill_entry_budget(
+            errors,
+            skill_md=(
+                PLUGINS
+                / c["plugin_name"]
+                / "skills"
+                / c["skill_name"]
+                / "SKILL.md"
+            ),
+            max_bytes=budgets["claude_skill_md_max_bytes"][locale],
+            label=f"{locale}: Claude SKILL.md",
+        )
         agent = read_json(DIST / locale / "microsoft-copilot/agent-project/appPackage/declarativeAgent.json")
         m365_chars = len(agent["instructions"])
         if m365_chars > budgets["m365_instructions_max_chars"]:
