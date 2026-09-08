@@ -15,11 +15,16 @@ DESCRIPTOR_PATH = (
     / "P4-PRODUCTION-SUITE-DESCRIPTOR-PROTOTYPE.json"
 )
 
+EVIDENCE_BINDING_PRECONDITION = (
+    "complete-checkout PASS evidence stays bound to the validated commit with at most one "
+    "evidence-only recording child"
+)
+
 REQUIRED_PRECONDITIONS = frozenset(
     {
         "translation-manifest source hashes are refreshed after the latest canonical Japanese changes",
         "complete-checkout research-skill-check passes",
-        "complete-checkout PASS evidence execution commit matches the current checkout HEAD",
+        EVIDENCE_BINDING_PRECONDITION,
         "public installable names are rechecked immediately before canonical promotion",
         "English sibling Skill realizations receive independent review",
         "research prototype metadata is promoted into production adapter paths rather than read directly by production build",
