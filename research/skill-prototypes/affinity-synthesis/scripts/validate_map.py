@@ -210,7 +210,9 @@ def validate(data: dict[str, Any]) -> tuple[list[str], list[str]]:
     for question in sections["question"]:
         qid = str(question.get("id", ""))
         for ref in question.get("arises_from", []):
-            if str(ref) not in semantic_node_ids | residual_ids | relation_ids | narrative_ids:
+            if str(ref) not in (
+                semantic_node_ids | resonance_ids | residual_ids | relation_ids | narrative_ids
+            ):
                 warnings.append(f"question {qid} arises_from ref does not resolve locally: {ref}")
 
         candidate_between = question.get("candidate_relation_between")
