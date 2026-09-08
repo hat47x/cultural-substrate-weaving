@@ -94,6 +94,14 @@ class ResearchPublicNameMigrationTests(unittest.TestCase):
             "production_explicit_skill_references_use_production_name must remain True",
         )
 
+    def test_host_visible_metadata_uses_public_identity(self) -> None:
+        contract = copy.deepcopy(self.contract)
+        contract["policy"]["production_host_visible_metadata_uses_public_identity"] = False
+        self.assert_has_error(
+            contract,
+            "production_host_visible_metadata_uses_public_identity must remain True",
+        )
+
     def test_filesystem_sibling_paths_are_forbidden_in_production_runtime(self) -> None:
         contract = copy.deepcopy(self.contract)
         contract["forbidden_production_reference_prefixes"] = [
@@ -157,9 +165,21 @@ class ResearchPublicNameMigrationTests(unittest.TestCase):
             "affinity-synthesis public_name_status must record the current collision recheck",
         )
 
+    def test_contract_note_must_cover_host_visible_metadata(self) -> None:
+        contract = copy.deepcopy(self.contract)
+        contract["note"] = (
+            "Research IDs and history remain stable; production identity and explicit "
+            "installable-Skill references use promoted public names after promotion. "
+            "Canonical promotion still requires a final immediate recheck."
+        )
+        self.assert_has_error(
+            contract,
+            "must cover host-visible adapter metadata",
+        )
+
     def test_contract_note_must_keep_final_immediate_recheck(self) -> None:
         contract = copy.deepcopy(self.contract)
-        contract["note"] = "Research IDs and history remain stable."
+        contract["note"] = "Research IDs and history remain stable. host-visible adapter metadata."
         self.assert_has_error(
             contract,
             "must preserve the final pre-promotion recheck",
