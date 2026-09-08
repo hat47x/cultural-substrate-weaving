@@ -42,6 +42,13 @@ FIXTURE = {
             "basis": ["X01"],
         }
     ],
+    "questions": [
+        {
+            "id": "Q01",
+            "text": "What would clarify this secondary resonance?",
+            "arises_from": ["X01"],
+        }
+    ],
 }
 
 
@@ -71,6 +78,13 @@ class ResearchAffinityLineageProjectionTests(unittest.TestCase):
         self.assertIn(("S01", "C001", "source → card"), graph.edges)
         self.assertIn(("C002", "G01", "membership"), graph.edges)
         self.assertIn(("S02", "C002", "source → card"), graph.edges)
+
+    def test_question_provenance_can_trace_through_secondary_resonance(self) -> None:
+        graph = self.graph("Q01")
+        self.assertIn(("X01", "Q01", "question provenance"), graph.edges)
+        self.assertIn(("C001", "X01", "secondary resonance source"), graph.edges)
+        self.assertIn(("G01", "X01", "resonance target / not membership"), graph.edges)
+        self.assertNotIn(("C001", "G01", "membership"), graph.edges)
 
     def test_mermaid_keeps_not_membership_label_visible(self) -> None:
         output = self.graph("X01").mermaid()
