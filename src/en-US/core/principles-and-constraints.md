@@ -1,71 +1,38 @@
-# Principles and constraints
+# Decision authority, provenance, and information surfaces
 
-Read this when separating what belongs to a cultural framework, what belongs to the target, what emerged from their contact, and what belongs to decision authority outside the skill.
+Read this when separating cultural-framework material, target material, structures that emerged from their contact, and the subject who makes a decision.
 
-## Location of decision authority
+## Decision authority
 
-This skill provides cognitive operations and recording forms: generating questions, integrating material, opening cultural frameworks, transforming relations, and preserving distinctions in provenance and evidence state.
+**This skill does not independently decide values, usage scope, loading depth, stopping, adoption, publication, or action.** Those decisions belong to the author or to settings, instructions, and delegations that the author gives to the generative AI outside this skill.
 
-**Static rules inside this skill do not independently decide value judgments, how much to use the skill, how much to use a framework, loading depth, adoption, stopping, publication, or transition into action.** Those decisions belong to the requester or author, the calling context, higher-level settings or instructions, or explicit delegation to the executing AI.
+When the author has delegated candidate selection, comparison, adoption, depth, stopping, or related judgments to the generative AI, the AI may decide within that delegation. Do not replace that delegated authority with values or self-restraint intrinsic to this skill.
 
-When judgment is delegated to the executing AI, act within that delegation. Keep this distinct from adding value criteria specific to this skill.
-
-Also separate:
-
-1. **Operations that preserve distinctions in information**: keep target-derived, framework-derived, and contact-derived material, evidence state, provenance, and decision actor distinguishable.
-2. **Operations that decide action from those distinctions**: decide what to adopt, say, publish, deepen, or stop.
-
-Do not treat the recording form in the first category as if it automatically owned authority in the second.
-
-## Dual fidelity
+Internal state names, provenance labels, check results, and heuristics are decision material. **Provenance labels do not automatically decide permission to adopt, state, externalize, or stop.**
 
 As an exploration and recording method, this skill keeps two forms of fidelity distinguishable.
 
 1. **Fidelity to the target**: preserve differences between target and framework, exceptions, and target specificity.
 2. **Fidelity to the framework**: preserve primary sources, lineage, positions, paths, cycles, symbols, and native operations rather than prematurely thinning them into generic operators.
 
-This distinction is an information structure that lets the requester or executing AI later examine correspondences.
-
 Dual fidelity is not complete merely because both sides are archived separately. **Keep enough of each side intact to observe how difference, resistance, or contradiction changes through contact.** Do not erase the difference by absorbing the target into the framework, and do not weaken the framework into a convenient metaphor just to make it fit.
 
-## Empty yourself before the target
+When this skill is used, the KJ posture of "emptying oneself" — **Empty yourself before the target** — can be referenced as a cognitive operation. **Treat being falsified by the target as an entrance to learning rather than a failure.** When material does not fit the explanation, examine the frame before weakening the material. How far this posture is used follows the delegation outside the skill. See `core/cognitive-stance.md`.
 
-Place the KJ posture of "emptying oneself" among the cognitive premises of this skill.
+## Record distinct information surfaces
 
-This does not mean erasing yourself, becoming neutral, abandoning judgment, or obeying the user or source material without question. It means **preserving room for the target to change your interpretation before you settle the judgment**.
+**Return structures obtained from external frameworks to the target for validation. Treat only parts independently supported by target-side material as findings that have been confirmed on the target side.** When useful, keep at least the following surfaces distinguishable:
 
-A generative AI brings knowledge, vocabulary, explanatory fluency, known theories, cultural frameworks, general rules, and memories of what worked before. These are useful resources, but they do not have the right to decide meaning before the target does. The following impulses are especially likely to move ahead of the target:
+1. **Target-side material**: sources, observations, records, execution results, and other material obtained from the target side.
+2. **Framework-side material**: primary sources, lineage, positions, relations, cycles, symbols, and framework-native operations.
+3. **Material generated through contact**: questions, hypotheses, contrasts, mapping candidates, compositional resources, and intersections across fields.
+4. **Judgments**: who made an adoption or interpretation decision, under which evidence, evaluation axis, and delegation.
 
-- producing a coherent explanation quickly;
-- classifying material into known categories;
-- resolving contradiction into harmony;
-- rewriting material into safe, agreeable, morally tidy prose;
-- rushing to return a helpful answer;
-- applying a rule that worked before directly to the present target;
-- filling what is not yet understood with a plausible reason.
+The purpose of separating these surfaces is to leave later judgments possible, not to force a particular conclusion or action.
 
-Do not prohibit these operations outright. **Move them temporarily behind the target so that they do not decide the answer before sufficient contact with the material.** Bring them back later only while checking them against what the target actually provides.
+## Provenance labels
 
-Do not measure success only by whether the first hypothesis was correct. Treat the following as important progress:
-
-- the target revised the initial hypothesis;
-- unexpected facts and counterexamples remained visible;
-- isolated fragments and unexplained unease survived without invented reasons;
-- target-specific exceptions and contradictions were preserved even at the cost of a cleaner explanation;
-- "not yet known" remained unresolved when it could not honestly be closed;
-- what came from the target, the AI, and a cultural framework remained distinguishable.
-
-**Treat being falsified by the target as an entrance to learning rather than a failure.** When material does not fit the explanation, examine the frame before weakening the material.
-
-Do not turn this posture into delayed judgment or avoidance of responsibility. After sufficient contact with the target, make judgments within the entrusted scope, compose the result, and return it to real work. The aim is not to remove the self but to **create a state in which knowledge and method can still be corrected by reality before they cover it**.
-
-## Attribution principle
-
-**Return structures obtained from external frameworks to the target for validation. Treat only parts independently supported by target-side material as findings that have been confirmed on the target side.**
-
-A statement remaining natural after framework vocabulary is removed shows that it has been de-bound from the framework's authority; it does not create new target-side evidence.
-
-Distinguish when needed:
+The following labels may be used to describe provenance or state:
 
 - `target_supported`: independently supported by target-side sources, observation, or falsification.
 - `framework_generated`: a question, hypothesis, contrast, mapping candidate, or compositional resource generated from a cultural framework.
@@ -74,13 +41,21 @@ Distinguish when needed:
 
 Do not use `cross_field_emergent` as a label that automatically declares a contradiction resolved. Use it only when it remains possible to trace what was preserved, what was negated, and what was recomposed. Simple mixture, framework-language restatement of the target, or a compromise obtained by collapsing one side into the other does not qualify.
 
-These labels preserve provenance and evidence state. They do not automatically decide adoption, publication, or stopping.
+These labels preserve provenance and evidence state. They do not automatically decide adoption, publication, or stopping. Transitions among provenance labels likewise do not automatically authorize adoption, speech, externalization, or publication.
 
-## Target specificity
+## Keep de-binding as a separate observation
 
-State the range explained by existing categories and **preserve what exceeds them as target-specific information.** Keep concreteness and exceptions before compressing toward a complete explanation.
+A statement or structure continuing to work after framework vocabulary is removed can be recorded as an observation about dependence on framework vocabulary.
+
+That is different information from having separate target-side sources, observations, or execution results. How much either counts as evidence, and whether something is called a target finding, follows the external evidence standard and decision authority.
+
+## Target-specific and framework-specific information
+
+State the range explained by existing categories and **preserve what exceeds them as target-specific information.** Keep concreteness and exceptions before compressing toward a complete explanation. Record, when useful, the framework's own source-defined content as distinguishable material too.
 
 If target-specific purposes, properties, or exceptions are rewritten, preserve that transformation in provenance. This helps later mappings distinguish the original target from a working reconstruction.
+
+Whether to emphasize fit or exceptions, simplify or load a framework richly, or generalize across cases is not fixed as a value intrinsic to this skill. Select according to the external objective and delegation.
 
 ## Entrusted scope
 
@@ -88,33 +63,40 @@ If target-specific purposes, properties, or exceptions are rewritten, preserve t
 
 Record separately the use state of each framework, the use state of this skill, and the scope of the entrusted task. Do not automatically derive a change in one scope from a change in another.
 
-## Separate preservation from attention
+A specialist domain, a move into implementation or operational work, rising work volume or cost, or weak framework fit may all be reported as decision material. They are not automatic withdrawal or reduction conditions.
 
-Separate the layer that preserves source material, KJ snapshots, framework sources and lineages, positions, paths, cycles, symbols, rejected options, and unresolved residuals from the layer foregrounded in the current round.
+## Preservation and attention
 
-> **Preserve richly; make current attention selective.**
+**Preserve richly; make current attention selective.** This skill provides operations for retaining and referencing source locations, KJ snapshots, framework resources, candidates, residuals, indexes, summaries, and related material at whatever granularity is useful. The layer that preserves source material, framework sources and lineages, positions, paths, cycles, symbols, rejected options, and unresolved residuals can be kept separate from the layer foregrounded in the current round.
 
-Keep indexes, summaries, and previews distinguishable from canonical material. Whether to delete, compress, split, delay-load, or reference material follows external use conditions and delegated discretion.
+What to preserve, compress, delete, or foreground follows the external objective, privacy constraints, resource constraints, and the author's decision. This skill does not fix preservation volume or deletion order as intrinsic values.
 
-## Delay irreversible meaning fixation
+## Record tentative, fixed, and adopted states separately
 
-Preserve intermediate states so that an obvious association, first KJ label, or first apparently fitting framework can be distinguished from structures that remain after contact with other material or regrouping.
+Associations, KJ labels, framework mappings, hypotheses, and compositional proposals can be recorded separately as tentative, adopted, withdrawn, or open to reconsideration. Indexes, summaries, and previews can likewise be kept distinguishable from canonical material.
 
-Do not turn delay itself into a value objective. Emphasize **being able to trace when and where meaning became fixed**.
+When to fix meaning, which candidate to adopt, and how much reversibility to preserve are external decisions. This skill does not uniformly require either delaying or accelerating fixation.
 
-## Separate possibility from adoption
+Preserve intermediate states so that an obvious association, first KJ label, or first apparently fitting framework can be distinguished from structures that remain after contact with other material or regrouping. Do not turn delay itself into a value objective. Emphasize **being able to trace when and where meaning became fixed**.
 
-Treat possibilities generated by opening a framework as a different state from the decision to adopt, publish, or act on those possibilities.
+## Separate cognition, value, and fact candidates
 
-Fit, misfit, stopping at preview, full, enacted, and similar states can be recorded as exploration history. What to adopt returns to external use conditions or delegated judgment.
+Cognitive styles, value criteria, and target-fact candidates supplied by a cultural framework can be recorded as different kinds of material.
 
-## Separate cognition, value, and fact
+- A **cognitive style** affects what is noticed as a question, relation, or change.
+- A **value criterion** supplies a candidate axis for what to protect, promote, or avoid.
+- A **fact candidate** is material that may be considered as a claim about the target.
 
-Do not collapse the cognitive style, value criteria, and target-fact candidates supplied by a cultural framework into the same kind of claim.
+A framework supplying a value criterion does not mean that the author or target has adopted that value. Record the subject and basis of any adoption decision separately. Treat possibilities generated by opening a framework as a different state from the decision to adopt, publish, or act on those possibilities. Fit, misfit, stopping at preview, full, enacted, and similar states can be recorded as exploration history. What to adopt returns to external use conditions or delegated judgment.
 
-- A cognitive style changes what is noticed as a question, relation, or change.
-- A value criterion is a candidate axis for what to protect, promote, or avoid.
-- Neither by itself proves a fact about the target.
+## Conditions for intrinsic value or restraint rules
+
+Do not lightly infer a need to encode values, usage suppression, scope, depth, stopping, or adoption as **commands intrinsic to this skill** and independent of the author or external delegation.
+
+By the author's direct instruction, retaining such a rule requires at least:
+
+- an external document that clearly explains the value the rule is intended to protect; and
+- sufficiently statistically valid validation results supporting the rule's validity.
 
 Whether a value criterion is used for adoption or action also belongs to external use conditions or delegated judgment.
 
@@ -124,6 +106,6 @@ For new rules about cognitive operations or recording forms, show effects observ
 
 In particular, when **value or restraint rules that weaken, stop, avoid, or reject use** are embedded as static rules specific to this skill, require a higher justification threshold than for ordinary method rules. At minimum, the value and necessity being protected must be clearly explainable in external documentation and validity must be supported by sufficient statistical validation.
 
-Do not justify an existing rule merely because it already exists, appears safe, or sounds epistemically reasonable when this basis is absent. Treat it as subject to re-review.
+Being an existing rule, appearing to be common sense, or feeling safe or reasonable to a generative AI is not justification. Existing rules are subject to the same re-audit. Do not justify an existing rule merely because it already exists, appears safe, or sounds epistemically reasonable when this basis is absent. Treat it as subject to re-review.
 
-Receive domain-specific quality standards, expert procedures, and presentation requirements from the calling context, available material, or companion domain skills.
+Receive domain-specific quality standards, expert procedures, presentation requirements, and evidence standards from the calling context, available material, or companion domain skills.

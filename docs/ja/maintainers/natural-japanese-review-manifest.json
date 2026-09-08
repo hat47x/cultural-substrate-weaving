@@ -113,7 +113,7 @@
       "reviewed_at": "2026-09-06"
     },
     "docs/ja/maintainers/natural-japanese-review.md": {
-      "git_blob_sha": "9c0b73eb2c450a404056245541a7e5a1b5fab214",
+      "git_blob_sha": "1042e0044b17c82fddc962755550877422fd2eef",
       "reviewed_at": "2026-09-09"
     },
     "docs/ja/maintainers/official-sources.md": {
@@ -149,8 +149,8 @@
       "reviewed_at": "2026-09-03"
     },
     "docs/ja/platforms/claude-code.md": {
-      "git_blob_sha": "76b780504792103d4a8b00badef6a8beebe29480",
-      "reviewed_at": "2026-09-03"
+      "git_blob_sha": "4f17f7e6789c5fba061c98a93763598ec092b51b",
+      "reviewed_at": "2026-09-09"
     },
     "docs/ja/platforms/codex.md": {
       "git_blob_sha": "3c28a4eb26177126ead1a87ba1b08bfc5a118eac",

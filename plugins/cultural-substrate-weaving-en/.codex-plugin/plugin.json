@@ -1,7 +1,7 @@
 {
   "name": "cultural-substrate-weaving-en",
   "version": "0.5.0",
-  "description": "Opens cultural frameworks as cognitive fields, preserves attribution, and returns resulting questions and structure candidates to the target for validation. Delegates material synthesis when a compatible realization is available. Explicit invocation only.",
+  "description": "Combines cultural-framework exploration with KJ integration to work with questions, relations, states, gaps, and provenance. Usage scope and adoption follow delegation outside the skill.",
   "author": {
     "name": "hat47x"
   },
@@ -18,7 +18,7 @@
   "skills": "./skills/",
   "interface": {
     "displayName": "Cultural Substrate Weaving — English",
-    "shortDescription": "Opens cultural frameworks as cognitive fields, preserves attribution, and returns resulting questions and structure candidates to the target for validation. Delegates material synthesis when a compatible realization is available. Explicit invocation only.",
+    "shortDescription": "Combines cultural-framework exploration with KJ integration to work with questions, relations, states, gaps, and provenance. Usage scope and adoption follow delegation outside the skill.",
     "developerName": "hat47x",
     "category": "Productivity"
   }

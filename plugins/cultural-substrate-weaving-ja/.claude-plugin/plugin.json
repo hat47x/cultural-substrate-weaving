@@ -1,6 +1,6 @@
 {
   "name": "cultural-substrate-weaving-ja",
-  "description": "文化的体系を認知場として開き、由来を保った問い・関係・構造候補を対象側へ戻して検証します。必要な材料統合はcompatible realizationへ委ねます。明示呼び出し専用。",
+  "description": "文化的体系による構造候補の探索とKJ法による断片統合を組み合わせ、問い・関係・状態・空白・来歴を扱います。利用範囲と採否は外部の委任に従います。",
   "version": "0.5.0",
   "author": {
     "name": "hat47x"

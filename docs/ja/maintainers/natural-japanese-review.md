@@ -169,3 +169,5 @@ KJ法由来の技能をCSWから分離する検討として、新しく七つの
 `docs/ja/maintainers/affinity-representation-existing-skill-review.md`、`docs/ja/maintainers/csw-tension-emergence-and-aufhebung-contract.md`、`docs/ja/maintainers/csw-thin-synthesis-connection-contract.md`の三文書を全文で通読した。既存Agent Skillとの表現書式照合、対象と体系の緊張・アウフヘーベンの扱い、親和統合／反復探索との最小接続契約という、それぞれ独立した論点が文の骨格へ不自然な影響を与えていないかを確認した。英語の技術用語や識別子は保持しつつ、いずれも既に自然な日本語として読めると判断し、記録のためだけの本文変更は行わなかった。方法論正本である`src/ja-JP/`はこの文書群の対象外であり、変更していない。
 
 あわせて、`README.md`、`adapters/microsoft-copilot/ja-JP/instructions.md`、`adapters/microsoft-copilot/ja-JP/package-readme.txt`、`docs/ja/platforms/microsoft-copilot.md`を、鮮度検査が要求する再確認として全文で読み直した。ブランチ統合によって前後の技術的な意味は変わっていないため、いずれも本文変更は行わず、確認日だけを更新した。
+
+`docs/ja/platforms/claude-code.md`は、決定権の所在を著者・スキル外の委任へ返す設計変更に合わせて、検索可否の扱い、Skillsアップロード後の呼び出し確認手順、明示呼び出しを標準としない旨の説明が書き換わったため、全文をあらためて通読した。検索できない範囲の扱いを証拠基準・委任へ委ねる書き方、呼び出し例が必須条件ではなく一例であることを示す書き方のいずれも、周囲の文章と自然につながっており、記録のためだけの本文変更は行わなかった。

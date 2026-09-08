@@ -38,6 +38,43 @@ class SemanticRetentionTests(unittest.TestCase):
                         f"{locale}/{relative_path} lost required semantic: {phrase}",
                     )
 
+    def test_router_and_activation_do_not_restore_autonomous_scope_suppression(self):
+        ja_router = (ROOT / "src" / "ja-JP" / "ROUTER.md").read_text(encoding="utf-8")
+        ja_activation = (ROOT / "src" / "ja-JP" / "core" / "activation.md").read_text(
+            encoding="utf-8"
+        )
+        en_router = (ROOT / "src" / "en-US" / "ROUTER.md").read_text(encoding="utf-8")
+        en_activation = (ROOT / "src" / "en-US" / "core" / "activation.md").read_text(
+            encoding="utf-8"
+        )
+
+        self.assertIn("価値判断、利用範囲、読み込み深度、停止、採否", ja_router)
+        self.assertIn("利用範囲や深度を決める決定器ではない", ja_activation)
+        self.assertNotIn("閉じた問題では通常手法を優先", ja_router)
+        self.assertNotIn("判断が拮抗する場合は、割り込みの小さい限定利用から始める", ja_activation)
+        self.assertNotIn("probeで具体的な問いが立たなければ原則として深めない", ja_activation)
+        self.assertNotIn("次のような場合は読み込み深度を縮小", ja_activation)
+
+        self.assertIn("does not independently decide values, usage scope", en_router)
+        self.assertIn("not a decision engine for scope or depth", en_activation)
+        self.assertNotIn("Prefer ordinary methods for closed problems", en_router)
+        self.assertNotIn("When the choice is close, start with limited use", en_activation)
+        self.assertNotIn("if probe produces no concrete question, normally do not deepen it", en_activation)
+        self.assertNotIn("Reduce loading depth, and if necessary activation scope", en_activation)
+
+    def test_provenance_labels_do_not_encode_action_permission(self):
+        ja = (
+            ROOT / "src" / "ja-JP" / "core" / "principles-and-constraints.md"
+        ).read_text(encoding="utf-8")
+        en = (
+            ROOT / "src" / "en-US" / "core" / "principles-and-constraints.md"
+        ).read_text(encoding="utf-8")
+
+        self.assertIn("来歴ラベルは、採用・発話・外部化・停止の許可を自動的に決めない", ja)
+        self.assertIn("既存規則も同じ基準で再審査する", ja)
+        self.assertIn("Provenance labels do not automatically decide permission", en)
+        self.assertIn("Existing rules are subject to the same re-audit", en)
+
     def test_readmes_do_not_treat_debinding_as_target_evidence(self):
         ja = (ROOT / "README.md").read_text(encoding="utf-8")
         en = (ROOT / "README.en.md").read_text(encoding="utf-8")

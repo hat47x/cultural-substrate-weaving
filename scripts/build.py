@@ -12,7 +12,7 @@ from common import (
 )
 
 
-def skill_frontmatter(name: str, description: str, claude_explicit: bool = False) -> str:
+def skill_frontmatter(name: str, description: str, *, claude_explicit: bool = False) -> str:
     lines = ["---", f"name: {name}", f"description: {description}"]
     if claude_explicit:
         lines.append("disable-model-invocation: true")
@@ -235,8 +235,8 @@ def build_m365(locale: str, config: dict) -> None:
         (adapter_root / "conversation-starters.json").read_text(encoding="utf-8")
     )
     names = {
-        "ja-JP": ("Cultural Substrate Weaving — 日本語", "文化的体系を認知場として開き、由来を保った構造候補を対象側へ戻して検証します。"),
-        "en-US": ("Cultural Substrate Weaving — English", "Opens cultural frameworks as cognitive fields, preserves attribution, and validates resulting structure candidates against the target."),
+        "ja-JP": ("Cultural Substrate Weaving — 日本語", "文化的体系とKJ法で問い・関係・状態・空白・来歴を探索・統合します。"),
+        "en-US": ("Cultural Substrate Weaving — English", "Explores and integrates questions, relations, states, gaps, and provenance with cultural frameworks and KJ."),
     }
     agent = {
         "$schema": "https://developer.microsoft.com/json-schemas/copilot/declarative-agent/v1.8/schema.json",
@@ -291,7 +291,7 @@ def write_root_marketplace(plugin_entries: list[dict]) -> None:
     marketplace = {
         "name": "cultural-substrate-weaving",
         "owner": {"name": "hat47x"},
-        "description": "Localized skills for cultural-framework exploration, attribution, and target-side validation.",
+        "description": "Localized skills for cultural-framework exploration, KJ integration, and provenance-aware structural work.",
         "version": version(),
         "plugins": plugin_entries,
     }
