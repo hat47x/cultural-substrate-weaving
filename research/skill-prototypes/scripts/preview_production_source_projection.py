@@ -5,6 +5,11 @@ This is a research-only content projection probe. It consumes the read-only
 production-source promotion plan, applies only declared content transforms in
 memory, validates promotion-sensitive runtime/Method results, and prints hashes
 and target paths. It never writes production source files.
+
+The preview also re-runs package-local runtime reference closure after all path
+and content transforms. Source-stage closure alone is insufficient because
+locale filename normalization and public-name projection can change the final
+package tree.
 """
 
 from __future__ import annotations
@@ -22,12 +27,17 @@ DESCRIPTOR_PATH = BASE / "P4-PRODUCTION-SUITE-DESCRIPTOR-PROTOTYPE.json"
 MIGRATION_PATH = BASE / "P4-PUBLIC-NAME-MIGRATION-CONTRACT.json"
 INVENTORY_PATH = BASE / "P4-PUBLIC-NAME-PROJECTION-INVENTORY.json"
 PLANNER_DIR = BASE / "scripts"
-if str(PLANNER_DIR) not in sys.path:
-    sys.path.insert(0, str(PLANNER_DIR))
+VALIDATOR_DIR = ROOT / "scripts"
+for directory in (PLANNER_DIR, VALIDATOR_DIR):
+    if str(directory) not in sys.path:
+        sys.path.insert(0, str(directory))
 
 from plan_production_source_promotion import (  # noqa: E402
     plan_production_source_promotion,
     validate_production_source_promotion_plan,
+)
+from validate_research_package_reference_closure import (  # noqa: E402
+    package_local_references,
 )
 
 PREVIEW_SCHEMA = "csw.production-source-content-preview/v1"
@@ -200,6 +210,16 @@ def validate_projected_contents(projected: dict[str, dict], plan: dict) -> list[
             target_relatives = {item["target_relative"] for item in items}
             if len(target_relatives) != len(items):
                 errors.append(f"projected target-relative collision: {research_id}/{locale}")
+
+            # Re-evaluate the runtime's direct package-local references after all
+            # filename and content transforms. This intentionally uses the same
+            # grammar as the research source-stage closure validator.
+            for relative in sorted(package_local_references(runtime["content"])):
+                if relative not in target_relatives:
+                    errors.append(
+                        "projected package runtime reference is missing after transforms: "
+                        f"{research_id}/{locale}/{runtime['source']} -> {relative}"
+                    )
 
             if locale == "en-US":
                 if any(".en.md" in relative for relative in target_relatives):
