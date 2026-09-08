@@ -217,12 +217,12 @@ make research-skill-check
    - promotion-relevant skill evidence registration
    - research metadata / checks
    - hard-dependency boundary
-2. declared-check / suite-validator wiring validator
+2. declared-check / suite-validator / planner wiring validator
    - `suite-manifest.json` のSkill-owned `checks` は `research-skill-check` で直接実行される
    - Skill source root配下でgateへ直接実行するcheckはmanifestにも登録される
    - root `scripts/validate_research_*.py` はすべて `research-skill-check` でちょうど1回直接実行される
-   - 存在しない `scripts/validate_research_*.py` をMakefileへ直書きできない
-   - plannerはこの命名規約ではなく、Makefileとplanner固有test/contractで追跡する
+   - `research/skill-prototypes/scripts/plan_*.py` はすべて `research-skill-check` でちょうど1回直接実行される
+   - 存在しないsuite validator / plannerをMakefileへ直書きできない
 3. package target / package-local reference closure
 4. distribution layout / Skill subtree / entry transform planner
 5. OpenAI per-Skill / Claude-Codex bundle adapter metadata validator
@@ -238,11 +238,11 @@ make research-skill-check
    - suite/layout/target/entry transform等
    - Layer 1 / Layer 2 promotion-relevant evidence registration
    - Skill-owned check wiringのpositive / missing / unregistered回帰
-   - suite-level validator wiringのmissing / unknown / duplicate回帰
+   - suite-level validator / planner wiringのmissing / unknown / duplicate回帰
    - Layer 2 Method parity checker自身のnegative regression
    - complete-checkout evidence binding
 
-checkの所有権と実行配線を別々の人手記憶にしない。
+check / plannerの所有権と実行配線を別々の人手記憶にしない。
 
 ```text
 Skill-owned:
@@ -250,8 +250,13 @@ Skill-owned:
       <=>
   research-skill-check direct execution
 
-Suite-level:
+Suite-level validator:
   scripts/validate_research_*.py
+      <=>
+  research-skill-check direct execution exactly once
+
+Read-only planner:
+  research/skill-prototypes/scripts/plan_*.py
       <=>
   research-skill-check direct execution exactly once
 ```
