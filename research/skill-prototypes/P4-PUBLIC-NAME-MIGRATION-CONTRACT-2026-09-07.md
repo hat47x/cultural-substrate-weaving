@@ -44,6 +44,7 @@ production promotion 時には、少なくとも次を proposed installable name
 - production package target name
 - production OpenAI companion metadata path
 - explicit runtime handoff で installable Skill を名前指定する箇所
+- productionへそのまま出るhost-visible adapter prose中のinstallable identifier
 
 Layer 1 の例:
 
@@ -144,7 +145,13 @@ adapters/openai-skill/{locale}/material-led-synthesis/openai.interactive.yaml
 adapters/openai-skill/{locale}/material-led-synthesis/openai.metered.yaml
 ```
 
-bundle metadata の `contains` / description も production name を使う。
+OpenAI sibling prototypeは現在byte-identical promotionを予定している。そのためhost-visible YAML本文にhyphenated research ID `affinity-synthesis` が入った時点で、byte-identical copyは安全ではなくなる。research pathやdisplay term `Affinity Synthesis / 親和統合` は許容するが、production host UIへ識別子として露出する研究IDは許容しない。
+
+Claude/Codex bundle prototypeでは `contains` はresearch側の構成監査情報としてresearch IDを保持してよい。production host catalogへ未知fieldとして持ち込まずdropする。productionへ昇格するhost-visible fieldはsplit-aware `description` だけであり、その本文にはhyphenated research IDを残さない。
+
+production suiteの三Skill構成そのものはproduction suite descriptorがpublic installable identityで保持する。
+
+この境界は `scripts/validate_research_adapter_public_identity.py` で独立に検査する。
 
 ## Package / release policy
 
@@ -181,6 +188,8 @@ production canonical source を作った後、validator に最低限次を追加
 5. explicit Layer 1 installable-name reference は `material-led-synthesis` に統一される。
 6. research suite / eval / migration record は research ID を保持する。
 7. display / lineage textを identifier rename と誤認して変更しない。
+8. productionへそのまま出るOpenAI metadata本文とClaude/Codex bundle descriptionに、rename対象のhyphenated research IDが残らない。
+9. research-only `contains` やresearch filesystem pathにresearch IDが残ること自体は誤検知しない。
 
 ## Promotion sequence
 
@@ -209,4 +218,5 @@ release internal-composition validation
 - rename は production projection でのみ行う。
 - display `Affinity Synthesis / 親和統合` は installable name と独立に扱う。
 - runtime handoff は role-first、name-second、filesystem-independent とする。
+- host-visible adapter proseもpublic identity境界に含めるが、research-only `contains` / pathは履歴・監査情報として保持できる。
 - research history を public-name rename で書き換えない。
