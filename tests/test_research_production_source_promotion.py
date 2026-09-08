@@ -69,6 +69,12 @@ class ResearchProductionSourcePromotionTests(unittest.TestCase):
         self.assertEqual(en["target_relative"], "SKILL.md")
         self.assertIn("normalize-locale-suffixed-filename", en["content_transforms"])
 
+    def test_layer1_japanese_progressive_support_rewrites_installable_identifier(self) -> None:
+        cases = self.mapping("affinity-synthesis", "ja-JP", "/evals/CASES.md")
+        dossier = self.mapping("affinity-synthesis", "ja-JP", "/evidence/dossier.md")
+        for item in (cases, dossier):
+            self.assertIn("rewrite-explicit-installable-name", item["content_transforms"])
+
     def test_layer2_runtime_and_method_rewrite_explicit_layer1_installable_name(self) -> None:
         ja_skill = self.mapping("iterative-inquiry-synthesis", "ja-JP", "/SKILL.md")
         en_skill = self.mapping("iterative-inquiry-synthesis", "en-US", "/SKILL.en.md")
