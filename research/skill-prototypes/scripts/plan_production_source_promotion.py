@@ -160,7 +160,8 @@ def plan_production_source_promotion(
 
         if source_mode != "locale_tree":
             raise ValueError(
-                f"production source mode is unsupported for {research_id}: {source_mode!r}"
+                "production source is not locale_tree or canonical_manifest "
+                f"for {research_id}: {source_mode!r}"
             )
 
         locale_output: dict[str, dict] = {}
@@ -255,7 +256,7 @@ def validate_production_source_promotion_plan(
     if extra_plan_ids:
         errors.append(f"production source plan has unknown Skills: {extra_plan_ids}")
 
-    mapping_by_source: dict[str, dict] = {}
+    mappings_by_source: dict[str, list[dict]] = {}
     for skill in plan.get("skills", []):
         if not isinstance(skill, dict):
             errors.append("production source promotion Skill entries must be objects")
@@ -324,9 +325,7 @@ def validate_production_source_promotion_plan(
                     continue
                 source = mapping.get("source")
                 if isinstance(source, str):
-                    if source in mapping_by_source:
-                        errors.append(f"production source mapping repeats source across locale plans: {source}")
-                    mapping_by_source[source] = mapping
+                    mappings_by_source.setdefault(source, []).append(mapping)
 
     if inventory is not None:
         source_prefixes = (
@@ -340,18 +339,19 @@ def validate_production_source_promotion_plan(
             if any(path.startswith(prefix) for prefix in source_prefixes)
         }
         for source, action in sorted(expected_actions.items()):
-            mapping = mapping_by_source.get(source)
-            if mapping is None:
+            mappings = mappings_by_source.get(source)
+            if not mappings:
                 errors.append(
                     f"promotion-sensitive source declared by projection inventory is missing from source plan: {source}"
                 )
                 continue
-            transforms = mapping.get("content_transforms")
-            if not isinstance(transforms, list) or action not in transforms:
-                errors.append(
-                    "production source mapping is missing projection-inventory transform: "
-                    f"{source} -> {action}"
-                )
+            for mapping in mappings:
+                transforms = mapping.get("content_transforms")
+                if not isinstance(transforms, list) or action not in transforms:
+                    errors.append(
+                        "production source mapping is missing projection-inventory transform: "
+                        f"{source} -> {action}"
+                    )
 
     return errors
 
