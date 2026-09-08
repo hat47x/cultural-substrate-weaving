@@ -18,6 +18,33 @@ execution commit == current checkout HEAD
 
 本contractはstale-pass防止を弱めず、**validated commitとevidence recording commitを分離する。**
 
+## Command authority
+
+production descriptorの`complete_checkout_validation.required_commands`が正本化するgate commandは次の4本である。
+
+```text
+make update-en-hashes
+make research-skill-check
+make build
+make check
+```
+
+complete-checkout runnerは、この4本に加えて次の**translation state-transition step**を`make update-en-hashes`の直後へ挟む。
+
+```text
+python scripts/mark_research_translation_refresh_synchronized.py
+```
+
+このhelperはdescriptorの`required_commands`へ追加しない。translation tracking stateをvalidation対象treeへ同期させる準備／確認stepであり、production gate commandの第二正本にはしないためである。
+
+一方で、complete-checkout execution evidenceには
+
+```text
+translation research state transition: PASS
+```
+
+markerを必須とする。したがって、**descriptor-required gate commandsは4本、canonical execution sequenceはstate-transition stepを含む5ステップ**という二層を維持する。
+
 ## Three phases
 
 ### A. Prepare a clean validation commit
@@ -40,7 +67,7 @@ V上でcommandを実行するとき、source/test/translation stateはcleanなre
 
 ### B. Execute the canonical gate on V
 
-Vをcheckoutした状態でcanonical command setを実行する。
+Vをcheckoutした状態でcanonical execution sequenceを実行する。
 
 ```bash
 make update-en-hashes
@@ -52,7 +79,7 @@ make check
 
 最初の二つはVで準備済みならidempotentでなければならない。`make update-en-hashes`後にunexpected diffが生じた場合、Vはvalidation対象として未完成なのでPASS recordへ進まない。
 
-全command成功後も、generated tracked artifactやsource fileにunexpected diffが残る場合はrecordしない。
+全command/step成功後も、generated tracked artifactやsource fileにunexpected diffが残る場合はrecordしない。
 
 execution recordの`execution commit:`にはVの40桁SHAを記録する。
 
@@ -74,7 +101,7 @@ Eのfirst parentはVでなければならない。
 ```text
 V  validated commit
 |
-|  all canonical commands PASS
+|  all canonical execution steps PASS
 |
 E  evidence-only recording commit
 ```
@@ -127,7 +154,7 @@ translation hash/state transitionはevidence recording commitへ混ぜない。
 - translation changeそのものがvalidation対象source stateだから
 - hash/stateを書き換えたtreeと、それ以前のcommitを同一execution identityにできないから
 
-したがって、translation準備をcommitしてからVでcanonical sequenceを再実行する。
+したがって、translation準備をcommitしてからVでcanonical execution sequenceを再実行する。
 
 ## Promotion boundary
 
