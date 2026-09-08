@@ -46,6 +46,31 @@ class ResearchProductionSourcePromotionAuthorityTests(unittest.TestCase):
         }
         self.assertEqual(set(prefixes), expected)
 
+    def test_current_plan_accepts_locale_neutral_source_shared_across_locales(self) -> None:
+        plan = plan_production_source_promotion(
+            self.suite,
+            self.descriptor,
+            self.migration,
+            self.inventory,
+        )
+        errors = validate_production_source_promotion_plan(
+            plan,
+            self.descriptor,
+            self.inventory,
+            suite=self.suite,
+        )
+        self.assertEqual(errors, [])
+
+        layer1 = next(item for item in plan["skills"] if item["research_id"] == "affinity-synthesis")
+        shared_source = "research/skill-prototypes/affinity-synthesis/references/affinity-map.schema.json"
+        occurrences = sum(
+            1
+            for locale_plan in layer1["locales"].values()
+            for mapping in locale_plan["mappings"]
+            if mapping["source"] == shared_source
+        )
+        self.assertEqual(occurrences, 2)
+
     def test_new_locale_tree_source_root_needs_no_python_prefix_update(self) -> None:
         suite = copy.deepcopy(self.suite)
         descriptor = copy.deepcopy(self.descriptor)
