@@ -11,10 +11,13 @@ if str(SCRIPTS_DIR) not in sys.path:
 
 from run_research_complete_checkout_gate import (  # noqa: E402
     COMMANDS,
+    REQUIRED_GATE_COMMANDS,
+    STATE_TRANSITION_LABEL,
     candidate_execution_commit,
     candidate_record,
     execute_gate,
     validate_candidate_recording_head,
+    validate_candidate_recording_state,
     validate_preconditions,
 )
 
@@ -26,12 +29,7 @@ def descriptor(status: str = "blocked-not-run") -> dict:
     return {
         "complete_checkout_validation": {
             "status": status,
-            "required_commands": [
-                "make update-en-hashes",
-                "make research-skill-check",
-                "make build",
-                "make check",
-            ],
+            "required_commands": list(REQUIRED_GATE_COMMANDS),
         }
     }
 
@@ -52,11 +50,33 @@ class ResearchCompleteCheckoutRunnerTests(unittest.TestCase):
         self.assertIn("candidate / not yet repository evidence", text)
         self.assertEqual(candidate_execution_commit(text), HEAD)
 
+    def test_runner_guard_is_not_a_descriptor_promotion_command(self) -> None:
+        labels = [label for label, _ in COMMANDS]
+        self.assertEqual(
+            [label for label in labels if label != STATE_TRANSITION_LABEL],
+            list(REQUIRED_GATE_COMMANDS),
+        )
+        self.assertNotIn(STATE_TRANSITION_LABEL, REQUIRED_GATE_COMMANDS)
+        self.assertIn(STATE_TRANSITION_LABEL, labels)
+
     def test_candidate_recording_requires_same_head_after_validation(self) -> None:
         record = candidate_record(HEAD)
         self.assertEqual(validate_candidate_recording_head(record, HEAD), [])
         errors = validate_candidate_recording_head(record, OTHER_HEAD)
         self.assertTrue(any("no longer matches current HEAD" in error for error in errors), errors)
+
+    def test_candidate_recording_requires_clean_tree_after_validation(self) -> None:
+        record = candidate_record(HEAD)
+        self.assertEqual(validate_candidate_recording_state(record, HEAD, ""), [])
+        errors = validate_candidate_recording_state(
+            record,
+            HEAD,
+            " M research/skill-prototypes/suite-manifest.json",
+        )
+        self.assertTrue(
+            any("clean working tree after validation" in error for error in errors),
+            errors,
+        )
 
     def test_candidate_recording_requires_valid_execution_commit(self) -> None:
         errors = validate_candidate_recording_head(
@@ -88,7 +108,7 @@ class ResearchCompleteCheckoutRunnerTests(unittest.TestCase):
         value = descriptor()
         value["complete_checkout_validation"]["required_commands"] = ["make check"]
         errors = validate_preconditions(ROOT, value, head=HEAD, status="")
-        self.assertTrue(any("canonical command set" in error for error in errors))
+        self.assertTrue(any("promotion command authority" in error for error in errors))
 
     def test_success_runs_all_commands_and_returns_candidate(self) -> None:
         calls: list[tuple[str, ...]] = []

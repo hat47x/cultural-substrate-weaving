@@ -3,6 +3,7 @@ from __future__ import annotations
 import copy
 import json
 import sys
+import tempfile
 import unittest
 from pathlib import Path
 
@@ -12,6 +13,7 @@ if str(SCRIPTS_DIR) not in sys.path:
     sys.path.insert(0, str(SCRIPTS_DIR))
 
 from validate_research_public_name_projection_inventory import (  # noqa: E402
+    discover_package_selected_identity_sensitive_sources,
     validate_projection_inventory,
 )
 
@@ -45,6 +47,56 @@ class ResearchPublicNameProjectionInventoryTests(unittest.TestCase):
 
     def test_current_inventory_is_valid(self) -> None:
         self.assertEqual(validate_projection_inventory(ROOT, self.inventory), [])
+
+    def test_package_selected_identity_sensitive_sources_are_auto_discovered(self) -> None:
+        discovered = discover_package_selected_identity_sensitive_sources(ROOT)
+        for expected in (
+            "research/skill-prototypes/affinity-synthesis/SKILL.md",
+            "research/skill-prototypes/affinity-synthesis/SKILL.en.md",
+            LAYER1_CASES_PATH,
+            LAYER1_DOSSIER_PATH,
+            "research/skill-prototypes/iterative-inquiry-synthesis/SKILL.md",
+            "research/skill-prototypes/iterative-inquiry-synthesis/SKILL.en.md",
+            "research/skill-prototypes/iterative-inquiry-synthesis/references/METHOD.md",
+            "research/skill-prototypes/iterative-inquiry-synthesis/references/METHOD.en.md",
+        ):
+            self.assertIn(expected, discovered)
+
+    def test_discovery_finds_future_package_file_without_static_path_list(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            base = root / "research" / "skill-prototypes"
+            skill_root = base / "future-skill"
+            skill_root.mkdir(parents=True)
+            (skill_root / "SUPPORT.md").write_text(
+                "Use `affinity-synthesis` when installed.\n",
+                encoding="utf-8",
+            )
+            suite = {
+                "skills": [
+                    {
+                        "id": "future-skill",
+                        "locale_realizations": {
+                            "ja-JP": {
+                                "status": "prototype",
+                                "package_source": {
+                                    "mode": "explicit_files",
+                                    "root": "research/skill-prototypes/future-skill",
+                                    "files": ["SUPPORT.md"],
+                                },
+                            }
+                        },
+                    }
+                ]
+            }
+            (base / "suite-manifest.json").write_text(
+                json.dumps(suite, ensure_ascii=False, indent=2) + "\n",
+                encoding="utf-8",
+            )
+            self.assertEqual(
+                discover_package_selected_identity_sensitive_sources(root),
+                {"research/skill-prototypes/future-skill/SUPPORT.md"},
+            )
 
     def test_production_name_must_remain_material_led_synthesis(self) -> None:
         inventory = copy.deepcopy(self.inventory)
