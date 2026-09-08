@@ -217,10 +217,12 @@ make research-skill-check
    - promotion-relevant skill evidence registration
    - research metadata / checks
    - hard-dependency boundary
-2. Skill-owned declared-check wiring validator
-   - `suite-manifest.json` の `checks` に宣言したものは `research-skill-check` で直接実行される
+2. declared-check / suite-validator / planner wiring validator
+   - `suite-manifest.json` のSkill-owned `checks` は `research-skill-check` で直接実行される
    - Skill source root配下でgateへ直接実行するcheckはmanifestにも登録される
-   - suite-level validator / plannerはこの双方向契約の対象外
+   - root `scripts/validate_research_*.py` はすべて `research-skill-check` でちょうど1回直接実行される
+   - `research/skill-prototypes/scripts/plan_*.py` はすべて `research-skill-check` でちょうど1回直接実行される
+   - 存在しないsuite validator / plannerをMakefileへ直書きできない
 3. package target / package-local reference closure
 4. distribution layout / Skill subtree / entry transform planner
 5. OpenAI per-Skill / Claude-Codex bundle adapter metadata validator
@@ -235,19 +237,31 @@ make research-skill-check
    - package reference closure
    - suite/layout/target/entry transform等
    - Layer 1 / Layer 2 promotion-relevant evidence registration
-   - declared check wiringのpositive / missing / unregistered回帰
+   - Skill-owned check wiringのpositive / missing / unregistered回帰
+   - suite-level validator / planner wiringのmissing / unknown / duplicate回帰
    - Layer 2 Method parity checker自身のnegative regression
-   - complete-checkout PASS evidenceのHEAD binding
+   - complete-checkout evidence binding
 
-Skill-owned checkについては、manifestへの登録とMakefile実行配線を別々の人手記憶にしない。
+check / plannerの所有権と実行配線を別々の人手記憶にしない。
 
 ```text
-suite-manifest checks
-    <=>
-research-skill-check direct execution
+Skill-owned:
+  suite-manifest checks
+      <=>
+  research-skill-check direct execution
+
+Suite-level validator:
+  scripts/validate_research_*.py
+      <=>
+  research-skill-check direct execution exactly once
+
+Read-only planner:
+  research/skill-prototypes/scripts/plan_*.py
+      <=>
+  research-skill-check direct execution exactly once
 ```
 
-またcomplete-checkout gateが `passed` になった場合、execution recordのSHAは検査中のcurrent checkout HEADと一致しなければならない。古いcommitのPASS recordを新しいHEADへ再利用しない。
+complete-checkout gateが `passed` になる場合は、現在のevidence-binding contractに従い、検証commit V上でcanonical commandsを実行し、descriptor gate遷移とexecution recordだけを含むevidence-only child Eを作る。古いcommitのPASS recordを後続のvalidation-relevant HEADへ持ち越さない。
 
 previewを実際に目視したい場合は次を使う。
 
@@ -274,7 +288,7 @@ GitHub Actionsは現在使用していない。ローカルまたは同等の実
 公開multi-skill distributionへ進む前に、少なくとも次が必要である。
 
 - complete checkoutで `make research-skill-check` が成功する
-- そのPASS recordのexecution commitがcurrent checkout HEADと一致する
+- complete-checkout evidence-binding contractに従い、PASSが検証commit Vとevidence-only child Eへ正しく束縛される
 - bilingual Skill-tree materializer testsが成功する
 - bilingual host-package materializer testsが成功する
 - materialized packageと現行production generated packageの構造差分を監査する
@@ -289,9 +303,9 @@ M365だけは、sibling Skill invocationを前提にできないため、現在�
 
 ## Current next gate
 
-現在の不足は、runtime、package source、adapter metadata、materializer source、Layer 2 external evidence、Method parity check、declared-check wiring validatorが存在しないことではない。
+現在の不足は、runtime、package source、adapter metadata、materializer source、Layer 2 external evidence、Method parity check、research-gate wiring validatorが存在しないことではない。
 
-次に必要なのは、**complete checkoutで現在HEADのresearch gateとmaterializer testsを実際に通し、生成した日英host package treeを現行production artifactと比較すること**である。
+次に必要なのは、**complete checkoutで現在のvalidation-relevant commit V上のresearch gateとmaterializer testsを実際に通し、生成した日英host package treeを現行production artifactと比較すること**である。
 
 現時点の実行環境ではrepository checkoutを取得できず、接続済み開発端末もofflineだったため、その実行証拠はまだない。
 

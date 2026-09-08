@@ -111,7 +111,9 @@ make check
 このstatus record作成後もresearch gateは強化されている。少なくとも現在のMakefileでは、従来のsuite/package/representation/Method parity checksに加えて次が含まれる。
 
 - current P4 authority asset registration
-- Skill-owned `checks` declaration <-> Makefile execution wiring consistency
+- Skill-owned `checks` declaration <-> Makefile direct-execution wiring consistency
+- root `scripts/validate_research_*.py` suite validators <-> Makefile direct-execution exactly-once consistency
+- `research/skill-prototypes/scripts/plan_*.py` read-only planners <-> Makefile direct-execution exactly-once consistency
 - production promotion precondition preservation
 - P4 prose plan <-> machine-readable descriptor/builder-contract consistency
 - public-name projection inventory and migration contract

@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
-"""Validate research check wiring into the research gate.
+"""Validate research check/planner wiring into the research gate.
 
-Two ownership rules coexist:
+Three ownership rules coexist:
 
 1. Skill-owned checks are declared in the research suite manifest and must be
    invoked directly by the `research-skill-check` Makefile target. A Skill-owned
@@ -10,10 +10,14 @@ Two ownership rules coexist:
    `scripts/validate_research_*.py`. Every such validator must be invoked
    directly by the same Makefile target, and a Makefile command using that
    convention must resolve to an existing validator file.
+3. Read-only research planners follow
+   `research/skill-prototypes/scripts/plan_*.py`. Every such planner must also
+   be invoked directly by the research gate exactly once, and an unknown
+   planner path using that convention must not be wired into the gate.
 
 This keeps the manifest authoritative for Skill-local checks while making the
-suite-level validator filename convention operational instead of relying on
-manual Makefile review.
+suite-level validator and planner filename conventions operational instead of
+relying on manual Makefile review.
 """
 
 from __future__ import annotations
@@ -31,6 +35,9 @@ MAKEFILE_PATH = ROOT / "Makefile"
 TARGET = "research-skill-check"
 SUITE_VALIDATOR_GLOB = "validate_research_*.py"
 SUITE_VALIDATOR_PREFIX = "scripts/validate_research_"
+PLANNER_DIR = "research/skill-prototypes/scripts"
+PLANNER_GLOB = "plan_*.py"
+PLANNER_PREFIX = f"{PLANNER_DIR}/plan_"
 
 
 def _normalize_path(value: str) -> str:
@@ -91,11 +98,48 @@ def _suite_validator_paths(root: Path = ROOT) -> set[str]:
     }
 
 
+def _planner_paths(root: Path = ROOT) -> set[str]:
+    scripts_dir = root / PLANNER_DIR
+    return {
+        _normalize_path(f"{PLANNER_DIR}/{path.name}")
+        for path in scripts_dir.glob(PLANNER_GLOB)
+        if path.is_file()
+    }
+
+
+def _validate_convention_wiring(
+    *,
+    label: str,
+    expected: set[str],
+    prefix: str,
+    executed: list[str],
+    errors: list[str],
+) -> None:
+    executed_set = set(executed)
+    execution_counts = Counter(executed)
+
+    for path in sorted(expected):
+        if path not in executed_set:
+            errors.append(f"{label} is not wired into {TARGET}: {path}")
+        elif execution_counts[path] != 1:
+            errors.append(
+                f"{label} must be wired exactly once into {TARGET}: "
+                f"{path} (found {execution_counts[path]})"
+            )
+
+    for path in sorted(executed_set):
+        if not path.startswith(prefix) or not path.endswith(".py"):
+            continue
+        if path not in expected:
+            errors.append(f"research gate references an unknown {label}: {path}")
+
+
 def validate_declared_checks(
     manifest: dict,
     makefile_text: str,
     *,
     suite_validator_paths: set[str] | None = None,
+    planner_paths: set[str] | None = None,
 ) -> list[str]:
     errors: list[str] = []
     recipe = _target_recipe(makefile_text)
@@ -104,7 +148,6 @@ def validate_declared_checks(
 
     executed = _direct_python_scripts(recipe)
     executed_set = set(executed)
-    execution_counts = Counter(executed)
 
     declared: set[str] = set()
     skill_roots: list[str] = []
@@ -155,24 +198,25 @@ def validate_declared_checks(
             else _suite_validator_paths()
         )
     }
-    for validator in sorted(suite_validators):
-        if validator not in executed_set:
-            errors.append(
-                f"suite-level research validator is not wired into {TARGET}: {validator}"
-            )
-        elif execution_counts[validator] != 1:
-            errors.append(
-                f"suite-level research validator must be wired exactly once into {TARGET}: "
-                f"{validator} (found {execution_counts[validator]})"
-            )
+    _validate_convention_wiring(
+        label="suite-level research validator",
+        expected=suite_validators,
+        prefix=SUITE_VALIDATOR_PREFIX,
+        executed=executed,
+        errors=errors,
+    )
 
-    for script in sorted(executed_set):
-        if not script.startswith(SUITE_VALIDATOR_PREFIX) or not script.endswith(".py"):
-            continue
-        if script not in suite_validators:
-            errors.append(
-                f"research gate references an unknown suite-level validator: {script}"
-            )
+    planners = {
+        _normalize_path(path)
+        for path in planner_paths if planner_paths is not None
+    } if planner_paths is not None else _planner_paths()
+    _validate_convention_wiring(
+        label="research planner",
+        expected=planners,
+        prefix=PLANNER_PREFIX,
+        executed=executed,
+        errors=errors,
+    )
 
     return errors
 
@@ -189,6 +233,7 @@ def main() -> int:
         manifest,
         makefile_text,
         suite_validator_paths=_suite_validator_paths(ROOT),
+        planner_paths=_planner_paths(ROOT),
     )
     if errors:
         for error in errors:
@@ -196,8 +241,8 @@ def main() -> int:
         return 1
 
     print(
-        "Research Skill-owned checks and suite-level validators are declared/wired "
-        "into research-skill-check"
+        "Research Skill-owned checks, suite-level validators, and planners are "
+        "declared/wired into research-skill-check"
     )
     return 0
 

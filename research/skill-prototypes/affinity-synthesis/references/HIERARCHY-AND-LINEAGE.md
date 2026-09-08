@@ -11,7 +11,7 @@ Status: research candidate
 この文書は、その二つを表現層で扱う。
 
 - **recursive grouping** — card / lower group を、さらに higher-order group のmemberにできる。
-- **lineage projection** — source → card → group → higher group / relation → narrative の来歴を、必要な解像度で表示する。
+- **lineage projection** — source → card → group → higher group / relation / secondary resonance → narrative の来歴を、必要な解像度で表示する。
 
 方法の目的は深い階層を作ることではない。材料から上位の意味単位が立たなければ、一層のままでよい。
 
@@ -125,6 +125,22 @@ B型的な文章化を、図の外にある追跡不能な最終文章にしな�
 
 新しく立った意味は、sourceが最初から述べていた意味へ遡及させない。
 
+### 4.4 Secondary resonance remains a traceable artifact
+
+secondary resonance `X` も、必要ならfocused lineageの起点・中継点にできる。
+
+```text
+card / semantic node
+        ↓ secondary resonance source
+X
+        ↑ resonance target / not membership
+group
+```
+
+`X.from` と `X.to` を辿れることは、`from` が `to` のmemberになったことを意味しない。lineage projectionでも `resonance target / not membership` を明示し、secondary resonanceをmembership・独立support・explicit relationへ変換しない。
+
+narrativeの `basis` が `X` を参照する場合は、`N -> X` の来歴からさらにXの両endpointへ戻れるようにする。
+
 ## 5. Multi-zoom projection
 
 大規模な材料では、一枚の図へ全情報を載せない。
@@ -168,7 +184,7 @@ G_ROOT
 
 ### Zoom 3 — focused lineage
 
-一つのrelation / narrative / residual / questionから逆向きに辿る。
+一つのrelation / secondary resonance / narrative / residual / questionから逆向きに辿る。
 
 ```text
 source
@@ -179,10 +195,12 @@ leaf group
   ↓
 higher group
   ↓
-relation
+relation / secondary resonance
   ↓
 narrative
 ```
+
+secondary resonanceを辿る場合も、その線は `not membership` のまま保持する。
 
 標準ではcardをleaf group単位でcollapsed表示してよい。
 
@@ -211,6 +229,7 @@ optional `--with-relations` を付ける場合も、membershipとsemantic relati
 
 - `--detail groups`: leaf groupの直接cardを `N cards collapsed` として畳む。
 - `--detail cards`: cardとsource refまで展開する。
+- `--focus X...`: secondary resonanceを独立artifactとして表示し、`from` / `to` の両endpointへ戻す。target側は `resonance target / not membership` と表示する。
 
 collapsed表示はsemantic recordからcardを削除しない。
 
@@ -233,6 +252,7 @@ collapsed表示はsemantic recordからcardを削除しない。
 ## 8. Failure cases
 
 - higher-order membershipを因果矢印として読む。
+- secondary resonanceをlineage上でmembership・独立support・explicit relationへ変換する。
 - 上位表札を作るために、どの系列にも入らない重要groupを強制分類する。
 - 上位groupへ入れた瞬間に下位groupの表札・差・lineageを消す。
 - `display_label` の短さをcanonical meaningへ逆流させる。
