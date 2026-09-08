@@ -18,9 +18,13 @@ DESCRIPTOR_PATH = (
 )
 EXPECTED_PACKET = (
     "research/skill-prototypes/"
-    "P4-ENGLISH-INDEPENDENT-REVIEW-PACKET-2026-09-07.md"
+    "P4-ENGLISH-INDEPENDENT-REVIEW-PACKET-2026-09-08.md"
 )
 EXPECTED_TARGETS = (
+    "research/skill-prototypes/"
+    "P4-ENGLISH-INDEPENDENT-REVIEW-TARGETS-2026-09-08-v3.json"
+)
+EXPECTED_PREVIOUS_TARGETS = (
     "research/skill-prototypes/"
     "P4-ENGLISH-INDEPENDENT-REVIEW-TARGETS-2026-09-07-v2.json"
 )
@@ -80,10 +84,8 @@ def _validate_targets(root: Path, targets_path: Path, errors: list[str]) -> None
         errors.append("English review target snapshot review_source_commit must be a 40-char SHA")
 
     supersedes = snapshot.get("supersedes")
-    if supersedes != (
-        "research/skill-prototypes/P4-ENGLISH-INDEPENDENT-REVIEW-TARGETS-2026-09-07.json"
-    ):
-        errors.append("English review target v2 must preserve the superseded snapshot reference")
+    if supersedes != EXPECTED_PREVIOUS_TARGETS:
+        errors.append("English review target v3 must preserve the v2 snapshot reference")
 
     targets = snapshot.get("targets")
     if not isinstance(targets, list):
@@ -173,7 +175,7 @@ def validate_english_review_gate(root: Path, descriptor: dict) -> list[str]:
     targets = gate.get("targets")
     if targets != EXPECTED_TARGETS:
         errors.append(
-            "english_independent_review.targets must reference the canonical v2 review target snapshot"
+            "english_independent_review.targets must reference the canonical v3 review target snapshot"
         )
     targets_path = _existing_file(root, targets)
     if targets_path is None:
@@ -227,7 +229,7 @@ def validate_english_review_gate(root: Path, descriptor: dict) -> list[str]:
                     )
             if EXPECTED_TARGETS not in review_text:
                 errors.append(
-                    "completed English review record must identify the canonical v2 target snapshot"
+                    "completed English review record must identify the canonical v3 target snapshot"
                 )
 
     if gate.get("production_promotion_authorized") is not False:
