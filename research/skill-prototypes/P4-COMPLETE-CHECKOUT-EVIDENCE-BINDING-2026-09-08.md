@@ -39,14 +39,23 @@ python scripts/mark_research_translation_refresh_synchronized.py
 
 このhelperはpromotion command authorityを増やすものではない。validated commit Vを作る前にtranslation state transitionが完了しており、V上で再実行してもtracked diffを残さないことを確認するためのguardである。
 
+V準備用の
+
+```text
+make research-translation-prepare
+```
+
+もpromotion command authorityではない。これはreview済みsource identityとpending stale setをmutation前に検証してから、hash/state preparationを行うresearch-only mutation helperである。
+
 したがって、
 
 ```text
 descriptor required_commands
+  != V preparation helper
   != runner execution steps
 ```
 
-である。前者はpromotion gateの宣言集合、後者はその宣言集合にidempotence guardを足したfail-closed実行手順である。現行runner/validatorも、descriptorの4件とexecution recordに必要なguard PASS markerを別に扱う。
+である。descriptor required commandsはpromotion gateの宣言集合、V preparation helperは検証対象commitを作るための事前mutation、runner execution stepsは宣言集合にidempotence guardを足したfail-closed実行手順である。現行runner/validatorも、descriptorの4件とexecution recordに必要なguard PASS markerを別に扱う。
 
 ## Three phases
 
@@ -54,15 +63,39 @@ descriptor required_commands
 
 translation hash/stateを含む、command実行前に必要なrepository mutationは先に完了・review・commitする。
 
-今回のtranslation準備では少なくとも:
+今回のtranslation準備は次のresearch専用入口を使う。
 
 ```bash
-make update-en-hashes
-# inspect translation-manifest diff and bilingual semantic scope
-python scripts/mark_research_translation_refresh_synchronized.py
+make research-translation-prepare
 ```
 
-を行い、その変更をcommitする。
+このtargetは順に:
+
+```text
+validate pending/synchronized translation refresh state
+validate reviewed Japanese source snapshot
+make update-en-hashes
+transition translation refresh state to synchronized
+validate synchronized translation refresh state
+validate reviewed Japanese source snapshot again
+```
+
+を行う。
+
+重要なのは最初の二つが**mutation前preflight**であることだ。pending stateでは、想定stale集合以外のcanonical source driftがなく、bilingual semantic reviewを受けた日本語source bytesが`reviewed_source_blobs`と一致することを先に確認する。したがって、review後source driftを単なるhash refreshで追認する経路を作らない。
+
+preflightが通った後にhash/stateを更新し、postflightでも同じsemantic-review snapshotを保持したまま`synchronized`であることを確認する。
+
+実行後は少なくとも:
+
+```bash
+git diff -- i18n/translation-manifest.json \
+  research/skill-prototypes/P4-CSW-TENSION-TRANSLATION-STATUS-2026-09-07.json
+```
+
+等でtranslation-manifest diffとstate transitionをreviewし、意図したhash/state変更だけをcommitする。
+
+`reviewed_source_blobs`はhash synchronizationで書き換えない。canonical日本語sourceを追加編集する必要が生じた場合は、先にbilingual semantic reviewをやり直し、そのreview identityを明示的に更新してから再度preparationへ進む。
 
 このcommitを **validated commit V** とする。
 
@@ -157,7 +190,7 @@ translation hash/state transitionはevidence recording commitへ混ぜない。
 - translation changeそのものがvalidation対象source stateだから
 - hash/stateを書き換えたtreeと、それ以前のcommitを同一execution identityにできないから
 
-したがって、translation準備をcommitしてからVでpromotion commandsとidempotence guardを再実行する。
+したがって、`make research-translation-prepare`の結果をreview・commitしてVを作ってから、Vでpromotion commandsとidempotence guardを再実行する。
 
 ## Promotion boundary
 
