@@ -45,7 +45,9 @@ class ResearchCurrentP4AssetsTests(unittest.TestCase):
     def test_current_descriptor_authorities_are_registered(self) -> None:
         self.assertEqual(validate_current_p4_assets(ROOT, self.manifest, self.descriptor), [])
         assets = set(self.manifest["suite_research_assets"])
-        for relative in current_p4_authority_paths(self.descriptor):
+        paths = current_p4_authority_paths(self.descriptor)
+        self.assertEqual(len(paths), len(set(paths)))
+        for relative in paths:
             self.assertIn(relative, assets)
 
     def test_current_complete_checkout_binding_cannot_be_left_unregistered(self) -> None:
@@ -57,6 +59,12 @@ class ResearchCurrentP4AssetsTests(unittest.TestCase):
     def test_current_complete_checkout_status_cannot_be_left_unregistered(self) -> None:
         manifest = copy.deepcopy(self.manifest)
         evidence = self.descriptor["complete_checkout_validation"]["evidence"]
+        manifest["suite_research_assets"].remove(evidence)
+        self.assert_has_error(manifest, self.descriptor, "not registered", root=ROOT)
+
+    def test_current_public_name_recheck_cannot_be_left_unregistered(self) -> None:
+        manifest = copy.deepcopy(self.manifest)
+        evidence = self.descriptor["public_name_recheck"]["evidence"]
         manifest["suite_research_assets"].remove(evidence)
         self.assert_has_error(manifest, self.descriptor, "not registered", root=ROOT)
 
@@ -72,6 +80,38 @@ class ResearchCurrentP4AssetsTests(unittest.TestCase):
         manifest["suite_research_assets"].remove(targets)
         self.assert_has_error(manifest, self.descriptor, "not registered", root=ROOT)
 
+    def test_current_technical_asset_localization_cannot_be_left_unregistered(self) -> None:
+        manifest = copy.deepcopy(self.manifest)
+        asset = self.descriptor["english_independent_review"]["technical_asset_localization"]
+        manifest["suite_research_assets"].remove(asset)
+        self.assert_has_error(manifest, self.descriptor, "not registered", root=ROOT)
+
+    def test_completed_review_becomes_current_authority_when_declared(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            manifest = copy.deepcopy(self.manifest)
+            descriptor = copy.deepcopy(self.descriptor)
+            relative = "research/skill-prototypes/P4-ENGLISH-INDEPENDENT-REVIEW-RESULT.md"
+            path = root / relative
+            path.parent.mkdir(parents=True, exist_ok=True)
+            path.write_text("review result\n", encoding="utf-8")
+            descriptor["english_independent_review"]["completed_review"] = relative
+
+            for current in current_p4_authority_paths(self.descriptor):
+                source = ROOT / current
+                target = root / current
+                target.parent.mkdir(parents=True, exist_ok=True)
+                target.write_bytes(source.read_bytes())
+
+            self.assert_has_error(
+                manifest,
+                descriptor,
+                "not registered",
+                root=root,
+            )
+            manifest["suite_research_assets"].append(relative)
+            self.assertEqual(validate_current_p4_assets(root, manifest, descriptor), [])
+
     def test_descriptor_authority_path_must_be_safe(self) -> None:
         descriptor = copy.deepcopy(self.descriptor)
         descriptor["english_independent_review"]["targets"] = "../outside.json"
@@ -86,6 +126,18 @@ class ResearchCurrentP4AssetsTests(unittest.TestCase):
             descriptor["complete_checkout_validation"]["evidence"] = missing
             manifest["suite_research_assets"].append(missing)
             self.assert_has_error(manifest, descriptor, "file is missing", root=root)
+
+    def test_one_file_cannot_silently_serve_multiple_current_authority_fields(self) -> None:
+        descriptor = copy.deepcopy(self.descriptor)
+        descriptor["public_name_recheck"]["evidence"] = descriptor[
+            "complete_checkout_validation"
+        ]["evidence"]
+        self.assert_has_error(
+            self.manifest,
+            descriptor,
+            "reused by multiple fields",
+            root=ROOT,
+        )
 
 
 if __name__ == "__main__":
