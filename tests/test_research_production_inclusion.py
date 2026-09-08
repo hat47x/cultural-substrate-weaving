@@ -5,20 +5,24 @@ import json
 import sys
 import unittest
 from pathlib import Path
+from unittest.mock import patch
 
 ROOT = Path(__file__).resolve().parents[1]
 SCRIPTS_DIR = ROOT / "scripts"
 if str(SCRIPTS_DIR) not in sys.path:
     sys.path.insert(0, str(SCRIPTS_DIR))
 
+import validate_research_production_inclusion as production_inclusion  # noqa: E402
 from validate_research_production_inclusion import validate_production_inclusion  # noqa: E402
 
 PLAN_PATH = ROOT / "research" / "skill-prototypes" / "production-inclusion-plan.json"
+SUITE_PATH = ROOT / "research" / "skill-prototypes" / "suite-manifest.json"
 
 
 class ResearchProductionInclusionTests(unittest.TestCase):
     def setUp(self) -> None:
         self.plan = json.loads(PLAN_PATH.read_text(encoding="utf-8"))
+        self.suite = json.loads(SUITE_PATH.read_text(encoding="utf-8"))
 
     def assert_has_error(self, plan: dict, fragment: str) -> None:
         errors = validate_production_inclusion(ROOT, plan)
@@ -26,6 +30,32 @@ class ResearchProductionInclusionTests(unittest.TestCase):
             any(fragment in error for error in errors),
             f"expected error containing {fragment!r}; got {errors!r}",
         )
+
+    def validate_with_suite(self, plan: dict, suite: dict) -> list[str]:
+        real_load = production_inclusion._load
+
+        def load(path: Path) -> dict:
+            if path == SUITE_PATH:
+                return suite
+            return real_load(path)
+
+        with patch.object(production_inclusion, "_load", side_effect=load):
+            return validate_production_inclusion(ROOT, plan)
+
+    def assert_has_error_with_suite(
+        self,
+        plan: dict,
+        suite: dict,
+        fragment: str,
+    ) -> None:
+        errors = self.validate_with_suite(plan, suite)
+        self.assertTrue(
+            any(fragment in error for error in errors),
+            f"expected error containing {fragment!r}; got {errors!r}",
+        )
+
+    def skill(self, suite: dict, skill_id: str) -> dict:
+        return next(skill for skill in suite["skills"] if skill["id"] == skill_id)
 
     def test_current_inclusion_plan_is_consistent(self) -> None:
         self.assertEqual(validate_production_inclusion(ROOT, self.plan), [])
@@ -43,12 +73,39 @@ class ResearchProductionInclusionTests(unittest.TestCase):
         plan["skills"]["affinity-synthesis"]["locales"]["ja-JP"] = "included"
         self.assert_has_error(plan, "locale ja-JP state 'included' != expected 'candidate'")
 
-    def test_planned_candidate_locale_must_remain_blocked(self) -> None:
+    def test_translated_draft_candidate_locale_is_candidate_not_blocked(self) -> None:
+        self.assertEqual(
+            self.skill(self.suite, "affinity-synthesis")["locale_realizations"]["en-US"]["status"],
+            "translated-draft",
+        )
+        self.assertEqual(
+            self.plan["skills"]["affinity-synthesis"]["locales"]["en-US"],
+            "candidate",
+        )
         plan = copy.deepcopy(self.plan)
-        plan["skills"]["iterative-inquiry-synthesis"]["locales"]["en-US"] = "candidate"
-        self.assert_has_error(plan, "locale en-US state 'candidate' != expected 'blocked'")
+        plan["skills"]["affinity-synthesis"]["locales"]["en-US"] = "blocked"
+        self.assert_has_error(plan, "locale en-US state 'blocked' != expected 'candidate'")
+
+    def test_planned_candidate_locale_must_remain_blocked(self) -> None:
+        suite = copy.deepcopy(self.suite)
+        iterative = self.skill(suite, "iterative-inquiry-synthesis")
+        iterative["locale_realizations"]["en-US"]["status"] = "planned"
+
+        plan = copy.deepcopy(self.plan)
+        self.assert_has_error_with_suite(
+            plan,
+            suite,
+            "locale en-US state 'candidate' != expected 'blocked'",
+        )
+
+        plan["skills"]["iterative-inquiry-synthesis"]["locales"]["en-US"] = "blocked"
+        self.assertEqual(self.validate_with_suite(plan, suite), [])
 
     def test_included_skill_cannot_have_only_planned_locale_realization(self) -> None:
+        suite = copy.deepcopy(self.suite)
+        affinity_suite = self.skill(suite, "affinity-synthesis")
+        affinity_suite["locale_realizations"]["en-US"]["status"] = "planned"
+
         plan = copy.deepcopy(self.plan)
         affinity = plan["skills"]["affinity-synthesis"]
         affinity["production_state"] = "included"
@@ -57,7 +114,11 @@ class ResearchProductionInclusionTests(unittest.TestCase):
             "manifest": "src/manifest.json",
         }
         affinity["locales"] = {"ja-JP": "included", "en-US": "included"}
-        self.assert_has_error(plan, "included locale en-US has only a planned realization")
+        self.assert_has_error_with_suite(
+            plan,
+            suite,
+            "included locale en-US has only a planned realization",
+        )
 
     def test_plan_must_keep_at_least_one_production_included_skill(self) -> None:
         plan = copy.deepcopy(self.plan)
