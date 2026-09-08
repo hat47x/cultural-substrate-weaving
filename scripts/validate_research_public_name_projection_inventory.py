@@ -5,7 +5,7 @@ from __future__ import annotations
 
 import json
 import sys
-from pathlib import Path
+from pathlib import Path, PurePosixPath
 
 ROOT = Path(__file__).resolve().parents[1]
 INVENTORY_PATH = (
@@ -14,6 +14,7 @@ INVENTORY_PATH = (
     / "skill-prototypes"
     / "P4-PUBLIC-NAME-PROJECTION-INVENTORY.json"
 )
+SUITE_PATH = ROOT / "research" / "skill-prototypes" / "suite-manifest.json"
 EXPECTED_SCHEMA = "csw.public-name-projection-inventory/v1"
 EXPECTED_RESEARCH_ID = "affinity-synthesis"
 EXPECTED_PRODUCTION_NAME = "material-led-synthesis"
@@ -36,6 +37,11 @@ REQUIRED_STRUCTURED_PROJECTION_PATHS = frozenset(
         "research/skill-prototypes/adapters/claude-codex/en-US/bundle-metadata.json",
     }
 )
+IDENTITY_SENSITIVE_MARKERS = (
+    "name: affinity-synthesis",
+    "`affinity-synthesis`",
+    "../affinity-synthesis/",
+)
 
 
 def _load_json(path: Path) -> dict:
@@ -54,6 +60,50 @@ def _repo_path(root: Path, relative: object, label: str, errors: list[str]) -> P
         errors.append(f"{label} escapes repository root: {relative}")
         return None
     return path
+
+
+def discover_package_selected_identity_sensitive_sources(root: Path) -> set[str]:
+    """Find package-selected files that require public-name projection review.
+
+    Research files keep their historical identity. This discovery is only about
+    files already selected by a sibling locale package_source. If such a file
+    contains an installable-name marker or research sibling path, production
+    projection must account for it explicitly rather than relying on a global
+    string replacement.
+    """
+
+    suite = _load_json(root / "research" / "skill-prototypes" / "suite-manifest.json")
+    discovered: set[str] = set()
+    for skill in suite.get("skills", []):
+        if not isinstance(skill, dict):
+            continue
+        realizations = skill.get("locale_realizations")
+        if not isinstance(realizations, dict):
+            continue
+        for realization in realizations.values():
+            if not isinstance(realization, dict) or realization.get("status") == "planned":
+                continue
+            package_source = realization.get("package_source")
+            if not isinstance(package_source, dict) or package_source.get("mode") != "explicit_files":
+                continue
+            package_root = package_source.get("root")
+            files = package_source.get("files")
+            if not isinstance(package_root, str) or not isinstance(files, list):
+                continue
+            for relative in files:
+                if not isinstance(relative, str):
+                    continue
+                source_repo = (PurePosixPath(package_root) / PurePosixPath(relative)).as_posix()
+                source_path = root / source_repo
+                if not source_path.is_file():
+                    continue
+                try:
+                    text = source_path.read_text(encoding="utf-8")
+                except UnicodeDecodeError:
+                    continue
+                if any(marker in text for marker in IDENTITY_SENSITIVE_MARKERS):
+                    discovered.add(source_repo)
+    return discovered
 
 
 def validate_projection_inventory(root: Path, inventory: dict) -> list[str]:
@@ -120,6 +170,18 @@ def validate_projection_inventory(root: Path, inventory: dict) -> list[str]:
             "projection inventory is missing promotion-critical content projection paths: "
             f"{missing_content}"
         )
+
+    try:
+        discovered_package_sources = discover_package_selected_identity_sensitive_sources(root)
+    except (OSError, json.JSONDecodeError, ValueError) as exc:
+        errors.append(f"cannot discover package-selected identity-sensitive sources: {exc}")
+    else:
+        missing_discovered = sorted(discovered_package_sources - seen_paths)
+        if missing_discovered:
+            errors.append(
+                "projection inventory is missing package-selected identity-sensitive sources: "
+                f"{missing_discovered}"
+            )
 
     structured_items = inventory.get("structured_projection")
     if not isinstance(structured_items, list) or not structured_items:
