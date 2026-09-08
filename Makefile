@@ -1,4 +1,4 @@
-.PHONY: build generated-artifacts-check validate test tokens package release-validate check release-check release-tag-contract release-remote-tag-contract clean update-en-hashes living-lab-check living-lab-summary japanese-docs-check repository-contracts main-contract
+.PHONY: build generated-artifacts-check validate test tokens package release-validate check release-check release-tag-contract release-remote-tag-contract clean update-en-hashes living-lab-check living-lab-summary japanese-docs-check repository-contracts main-contract research-skill-check research-skill-preview research-complete-checkout
 
 .NOTPARALLEL: check release-check
 
@@ -44,6 +44,48 @@ living-lab-check:
 
 living-lab-summary:
 	python scripts/summarize_living_lab.py
+
+research-skill-preview:
+	python research/skill-prototypes/build_preview.py --output dist/research-skill-suite --check
+
+research-complete-checkout:
+	python scripts/run_research_complete_checkout_gate.py
+
+research-skill-check:
+	python scripts/validate_research_skill_suite.py
+	python scripts/validate_research_current_p4_assets.py
+	python scripts/validate_research_declared_checks.py
+	python scripts/validate_research_package_targets.py
+	python scripts/validate_research_package_reference_closure.py
+	python scripts/validate_research_production_suite_descriptor.py
+	python scripts/validate_research_promotion_preconditions.py
+	python scripts/validate_research_production_plan_consistency.py
+	python scripts/validate_research_release_composition_plan.py
+	python scripts/validate_research_complete_checkout_gate.py
+	python scripts/validate_research_public_name_migration.py
+	python scripts/validate_research_public_name_projection_inventory.py
+	python scripts/validate_research_english_review_gate.py
+	python scripts/validate_research_technical_asset_localization.py
+	python scripts/validate_research_production_builder_contract.py
+	python scripts/validate_research_tension_emergence.py
+	python scripts/validate_research_translation_refresh_state.py
+	python research/skill-prototypes/scripts/plan_suite_layout.py >/dev/null
+	python research/skill-prototypes/scripts/plan_skill_subtrees.py >/dev/null
+	python research/skill-prototypes/scripts/plan_skill_entry_transforms.py >/dev/null
+	python research/skill-prototypes/scripts/plan_production_suite_manifest.py >/dev/null
+	python research/skill-prototypes/scripts/plan_production_source_promotion.py >/dev/null
+	python research/skill-prototypes/scripts/preview_production_source_projection.py >/dev/null
+	python research/skill-prototypes/scripts/plan_production_builder_generalization.py >/dev/null
+	python scripts/validate_research_adapter_metadata.py
+	python scripts/validate_research_adapter_public_identity.py
+	python research/skill-prototypes/scripts/plan_adapter_metadata.py >/dev/null
+	python research/skill-prototypes/scripts/plan_production_adapter_metadata_promotion.py >/dev/null
+	python research/skill-prototypes/scripts/plan_promotion_readiness.py >/dev/null
+	python research/skill-prototypes/check_split_ownership.py
+	python research/skill-prototypes/build_preview.py --check
+	python research/skill-prototypes/affinity-synthesis/scripts/check_representation.py
+	python research/skill-prototypes/iterative-inquiry-synthesis/scripts/check_method_parity.py
+	python -m unittest discover -s tests -p 'test_research_*.py'
 
 check: repository-contracts generated-artifacts-check validate japanese-docs-check test tokens living-lab-check living-lab-summary
 

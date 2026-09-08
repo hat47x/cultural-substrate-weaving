@@ -4,57 +4,56 @@ Status: research packaging contract; production build is unchanged
 
 ## Purpose
 
-P1のsuite manifestをP2 build/validator generalizationへ渡す前に、**suite-level locale readiness** と **skillごとの具体的なlocale realization availability** を分ける。
+P1では、**suite-level locale readiness** と **skillごとの具体的なlocale realization availability** を分ける。
 
-これまでの `suite-manifest.json` は、suite全体について次だけを表していた。
+この区別は、runtime artifactが存在することと、そのlocaleが独立査読・promotion・public distributionまで進んでいることを混同しないために必要である。
+
+## Current state after bilingual draft integration
+
+現在のrepository stateは次のとおり。
+
+### cultural-substrate-weaving
 
 ```text
-ja-JP: canonical
-en-US: planned
+ja-JP: existing -> src/ja-JP/ROUTER.md
+en-US: existing-translated -> src/en-US/ROUTER.md
 ```
-
-一方、実際のrepository stateはskillごとに異なる。
-
-- `cultural-substrate-weaving` は現在のcanonical runtimeとしてja-JP / en-USの両方を持つ。
-- `affinity-synthesis` research prototypeは、現在の一つのprototype realizationだけを持つ。英語realizationはまだない。
-- `iterative-inquiry-synthesis` も同様に、現在のprototype realizationだけを持つ。英語realizationはまだない。
-
-suite-level `en-US: planned` だけでは、CSW英語runtimeまで存在しないようにも、逆に三Skillすべて英語で生成可能なようにも読める。
-
-P2のdistribution plannerがこの曖昧さを引き継ぐと、**target package compositionとcurrent buildabilityを混同する**。
-
-## Contract added
-
-各skillに `locale_realizations` を持たせる。
 
 ### affinity-synthesis
 
 ```text
 ja-JP: prototype -> research/skill-prototypes/affinity-synthesis/SKILL.md
-en-US: planned
+en-US: translated-draft -> research/skill-prototypes/affinity-synthesis/SKILL.en.md
+```
+
+各localeに対応するMethod Definitionも存在する。
+
+```text
+ja-JP -> references/METHOD.md
+en-US -> references/METHOD.en.md
 ```
 
 ### iterative-inquiry-synthesis
 
 ```text
 ja-JP: prototype -> research/skill-prototypes/iterative-inquiry-synthesis/SKILL.md
-en-US: planned
+en-US: translated-draft -> research/skill-prototypes/iterative-inquiry-synthesis/SKILL.en.md
 ```
 
-### cultural-substrate-weaving
+こちらも各localeに対応するMethod Definitionを持つ。
 
-```text
-ja-JP: existing -> src/ja-JP/ROUTER.md
-en-US: existing -> src/en-US/ROUTER.md
-```
+## Status semantics
 
-ここで `prototype` / `existing` は現在状態を説明する語であり、validatorは閉じたstatus enumを所有しない。
+validatorはstatusを閉じたenumとして所有しない。
 
-特別な意味を持つのは `planned` だけである。
+特別な意味を持つのは `planned` である。
 
 - `planned`: realization artifactがまだ無くてもよい。
-- `planned` 以外: `runtime_entry` の実体が必要。
-- suiteのcanonical localeは `planned` だけにはできない。
+- `planned` 以外: 実在する `runtime_entry` が必要。
+- Method Definitionを持つskillのrealized localeでは、locale別 `method_definition` も必要。
+- canonical localeは `planned` だけにはできない。
+
+したがって `translated-draft` は、**artifactは存在するがpromotion readinessはまだ満たしていない**状態を表す。
 
 ## Suite locale vs skill realization
 
@@ -62,87 +61,71 @@ en-US: existing -> src/en-US/ROUTER.md
 
 ### Suite-level locale status
 
-> このlocaleで、suite全体を公開・比較・promotion対象として扱える段階か。
+> このlocaleで、suite全体をどの成熟段階として扱うか。
 
 現在:
 
-- ja-JP: canonical research line
-- en-US: planned until companion skills receive reviewed English realizations
+- `ja-JP`: canonical research line
+- `en-US`: translated-draft
+
+英語suiteは三Skillのruntime artifactを持つが、independent human review、ancillary research materialの扱い、production multi-skill buildの一般化などがpromotion gateとして残る。
 
 ### Per-skill locale realization
 
-> このskillについて、このlocaleで参照できる具体的runtime realization artifactが現在存在するか。
+> このskillについて、このlocaleで具体的に参照できるruntime realization artifactが存在するか。
 
-したがって、suiteの `en-US: planned` とCSW skillの `en-US: existing` は矛盾しない。
-
-CSW英語runtimeは既に存在するが、companion skillsの英語realizationがないため、三Skill suiteとしてはまだplannedである。
-
-## Distribution interpretation
-
-`distribution_prototypes.*.contains` は**目標package composition**を表す。
-
-たとえばClaude/Codexでは今後、locale bundleに次の三Skillを同梱する設計である。
-
-```text
-cultural-substrate-weaving
-affinity-synthesis
-iterative-inquiry-synthesis
-```
-
-しかし `contains` に三つ書かれていること自体は、そのlocaleで今すぐ三つを生成できる証拠ではない。
-
-P2 plannerは、各 `contains` skillの `locale_realizations[locale]` を見てbuildabilityを判定する必要がある。
-
-### Current consequence
-
-- ja-JP research bundle: 三Skillすべてにrealizationがあるため、**layout prototypeを計画できる**。これはproduction package readinessを意味しない。
-- en-US research bundle: affinity / iterative がplannedのため、**三Skill bundle generationはblocked/plannedとして扱う**。
-- en-US CSW standalone/composite: 現行CSW runtimeが存在するという事実は保持する。
+現在は三Skillともja-JP / en-USの両方でartifact availabilityがある。
 
 ## Validator boundary
 
-`validate_research_skill_suite.py` は次を検査する。
+`validate_research_skill_suite.py` をresearch suite manifestの正本validatorとする。
 
-- 各skillの `locale_realizations` がsuiteのlocale集合と一致する。
-- canonical localeはplanned-onlyではない。
-- planned以外のrealizationには実在する `runtime_entry` がある。
-- runtime entryはskill `source_root` の外へ出ない。
-- canonical locale realizationのruntime entryは従来のskill-level `runtime_entry` と一致する。
+現在のvalidatorは少なくとも次を検査する。
+
+- suite schema / `research-only` status。
+- 各skillの `locale_realizations` がsuite locale集合と一致する。
+- canonical localeがplanned-onlyでない。
+- planned以外のrealizationに実在する `runtime_entry` がある。
+- Method Definitionを持つskillのrealized localeにlocale別Method Definitionがある。
+- runtime / Method Definition / references / evidence / evals / checksがskill `source_root` の境界を守る。
+- canonical locale realizationとskill-level `runtime_entry` / `method_definition` が一致する。
+- Skill runtimeにfrontmatter `name` がある場合、`installable_name` と一致する。
+- Method Definitionがdeclared referenceとして登録される。
+- public research contractがhard dependencyを前提にしない。
+- suite-level research assetsが実在する。
+- distribution prototypeが未知skillを参照しない。
 
 validatorが判定しないもの:
 
-- translation quality。
-- method parity。
+- translation qualityそのもの。
+- method parityの実証。
 - independent evaluation readiness。
 - public release readiness。
-- hostがsibling skillをroutingできるか。
+- hostがsibling Skillをroutingできるか。
 
-## Backward-compatible role of skill-level runtime_entry
+## Ownership cleanup
 
-schema v1ではskill-level `runtime_entry` を残す。
+以前research prototype直下に置いた `validate_suite.py` の有用な検査は正式validatorへ移す。
 
-これはcanonical locale realizationのentryとして扱い、`locale_realizations[canonical_locale].runtime_entry` と一致させる。
+以後、manifest shapeの正本検査を二重実装しない。planner、tests、Makefileのresearch gateは `scripts/validate_research_skill_suite.py` を共有する。
 
-P2/P3でsuite manifest schemaを更新する場合に、skill-level fieldを廃止または別構造へ移すか再検討できる。P1でproduction readerを先回りして壊さない。
+## Distribution interpretation
 
-## P2 handoff
+`distribution_prototypes.*.contains` は目標package compositionを表す。
 
-次にproduction `scripts/build.py` を直接multi-skill化しない。
+現在、三Skillすべてに両localeのruntime artifactが存在するため、layout planner上はja-JP / en-USとも三Skill bundleを `buildable` と判定できる。
 
-まずresearch-only plannerで次を計算可能にする。
+ただしここでの `buildable` は、**layoutに必要なrealization artifactが揃っている**という意味に限る。
 
-1. localeごとのrealized / planned skill集合。
-2. OpenAI standalone-per-skillの生成可能候補。
-3. Claude/Codex locale bundleについて、target `contains` がすべてrealizedか。
-4. composite GPT/Copilotについてprimary CSW realizationがあるか。
-5. blocked packageについて、どのskill/locale realizationが不足しているか。
+次を意味しない。
 
-plannerがrepositoryを書き換えたりpackageを生成したりする必要はない。最初は**layout/buildability planを外部化するだけ**でよい。
-
-この段階を経てから、現行単一Skill `build.py` のどの関数をsuite-awareへ一般化するかを決める。
+- production `build.py` が三Skill packageを生成できる。
+- marketplace / adapterがmulti-skill対応済みである。
+- 英語版が独立査読済みである。
+- public promotion可能である。
 
 ## Decision
 
-**P1 manifest now has enough locale-specific information to design a research-only distribution planner. Production build remains unchanged.**
+**P1は「英語artifact不足を表す段階」から、「artifact availabilityとpromotion readinessを別軸で管理する段階」へ移行した。**
 
-この変更はEnglish parityを満たした証拠ではなく、むしろ現時点で不足している英語companion realizationsを機械的に区別できるようにするものである。
+production buildはまだ変更しない。次のP2/P3では、このlocale realization contractを入力としてdistribution descriptorとresearch-only assemblyを安定させてから、production build一般化へ進む。

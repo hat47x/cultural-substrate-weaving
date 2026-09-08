@@ -280,7 +280,7 @@ I11, I5
 
 ### Invariants
 
-Relationship to Affinity Synthesis / Realization boundary
+I15, Relationship to Affinity Synthesis / Realization boundary
 
 ### Prior state
 
@@ -300,6 +300,63 @@ compatible `affinity-synthesis` realizationが利用可能である。
 
 - Layer 2側で独自の別grouping algorithmを追加し、どちらが正本か分からなくする。
 - realizationを呼んだかどうかを記録せず、「統合した」とだけ書く。
+
+---
+
+## Case 10 — carry-forward stateはreopen命令でもcontinue命令でもない
+
+### Invariants
+
+I2, I4, I7, I8, I16
+
+### Prior state
+
+前roundのone-round synthesisから、次のstateが持ち越されている。
+
+- `G80`: 現在の中心group
+- `G81`: 別の安定group
+- `X80`: `C82` が `G80` にsecondary resonanceを持つ
+- `Q80`: 関係の向きがまだ判別できない問い
+- `U80`: 薄い違和感として残したresidual
+- possible next check: `Q80` に関係する一次資料が見つかれば確認する
+
+これらはすべてsemantic identity / provenance / restart可能性を保つためのcarry-forward stateである。
+
+### New delta A — 局所接触
+
+新しい一次資料 `S81` は `G80` と `Q80` にのみ直接触れる。`G81`, `X80`, `U80` について新しい情報はない。
+
+### Required behavior A
+
+- `G80`, `Q80` をreopen対象として選べる。
+- `G81`, `X80`, `U80` は持ち越したままでもよいが、今回のreopen対象・再検査済みartifactとして扱わない。
+- `G81`, `X80`, `U80` に `=` を付けるなら、別の理由で実際に再検査したことを示す。
+- `Q80` が資料で判別できた場合だけ、そのsemantic deltaを記録する。
+- possible next checkが存在したことではなく、`S81` が実際に到来したことを今回のreopen reasonとして記録する。
+
+### Invalid behavior A
+
+- carry-forward stateを受け取った時点で `G80`, `G81`, `X80`, `Q80`, `U80` を全部reopenする。
+- 触れていない `G81` を `= unchanged` として「今回確認済み」に見せる。
+- `U80` が残っていることだけを理由に、今回の局所問いとは無関係な探索を追加する。
+
+### New delta B — 接触なし
+
+その後、新しいsemantic materialはなく、rendererの表示変更だけが入った。`Q80` と `U80` はまだ残っている。
+
+### Required behavior B
+
+- `Q80`, `U80` をreopenable anchorとして保存できる。
+- semantic deltaがなく、判別可能な新材料もないならstopできる。
+- renderer変更はrepresentation-only deltaとして扱う。
+- 次に `Q80` を判別できるsourceが来たときのreopen conditionだけを残せる。
+
+### Invalid behavior B
+
+- residualがゼロでないため自動的にもう一round続ける。
+- possible next checkを「今すぐ検索せよ」という命令へ変換する。
+- round数が少ないことをcontinue理由にする。
+- renderer差を新semantic evidenceとして `Q80` 解消に使う。
 
 ---
 

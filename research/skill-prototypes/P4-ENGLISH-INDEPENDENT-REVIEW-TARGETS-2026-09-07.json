@@ -1,0 +1,58 @@
+{
+  "schema": "csw.english-independent-review-targets/v1",
+  "status": "review-target-snapshot",
+  "captured_at": "2026-09-07",
+  "branch": "research/kj-skill-delegation-v0.5",
+  "review_source_commit": "2e06c03b4b917d7a05fe22a9e5c2412e8159ce3b",
+  "note": "Pin the Japanese canonical and English translated-draft runtime / Method Definition blobs to be compared by the independent reviewer. A later edit to any listed blob requires a new review target snapshot or an explicit review delta record.",
+  "targets": [
+    {
+      "research_id": "affinity-synthesis",
+      "artifact": "runtime",
+      "ja": {
+        "path": "research/skill-prototypes/affinity-synthesis/SKILL.md",
+        "blob_sha": "70a50a03cb0f7e6969a3c784d8e600e9314ac4cb"
+      },
+      "en": {
+        "path": "research/skill-prototypes/affinity-synthesis/SKILL.en.md",
+        "blob_sha": "b901ef11b5c0f3dc975a0189fddc7565072609c7"
+      }
+    },
+    {
+      "research_id": "affinity-synthesis",
+      "artifact": "method_definition",
+      "ja": {
+        "path": "research/skill-prototypes/affinity-synthesis/references/METHOD.md",
+        "blob_sha": "51f71b7332e702db72314f356acbaedec8755d00"
+      },
+      "en": {
+        "path": "research/skill-prototypes/affinity-synthesis/references/METHOD.en.md",
+        "blob_sha": "e10e2a7246af0ac97c78d80a4df00f0e4536ea46"
+      }
+    },
+    {
+      "research_id": "iterative-inquiry-synthesis",
+      "artifact": "runtime",
+      "ja": {
+        "path": "research/skill-prototypes/iterative-inquiry-synthesis/SKILL.md",
+        "blob_sha": "c2da9718abf46ea88ad704f79c56748860f2a42d"
+      },
+      "en": {
+        "path": "research/skill-prototypes/iterative-inquiry-synthesis/SKILL.en.md",
+        "blob_sha": "226e78e9e9c6175c893e019d4705d239b03dfb21"
+      }
+    },
+    {
+      "research_id": "iterative-inquiry-synthesis",
+      "artifact": "method_definition",
+      "ja": {
+        "path": "research/skill-prototypes/iterative-inquiry-synthesis/references/METHOD.md",
+        "blob_sha": "a1522a752eecf4a77c458ec64dc0024ea544561f"
+      },
+      "en": {
+        "path": "research/skill-prototypes/iterative-inquiry-synthesis/references/METHOD.en.md",
+        "blob_sha": "e0fb661ca15589d35c32dcd5b3e2a32720934b66"
+      }
+    }
+  ]
+}

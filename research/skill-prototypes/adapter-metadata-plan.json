@@ -5,74 +5,38 @@
     "openai_skill": {
       "scope": "per_skill_per_profile",
       "profiles": {
-        "interactive": {
-          "expected_allow_implicit_invocation": true
-        },
-        "metered": {
-          "expected_allow_implicit_invocation": false
-        }
+        "interactive": {"expected_allow_implicit_invocation": true},
+        "metered": {"expected_allow_implicit_invocation": false}
       },
       "skills": {
         "affinity-synthesis": {
           "ja-JP": {
-            "interactive": {
-              "status": "prototype",
-              "source": "research/skill-prototypes/adapters/openai-skill/ja-JP/affinity-synthesis/openai.interactive.yaml"
-            },
-            "metered": {
-              "status": "prototype",
-              "source": "research/skill-prototypes/adapters/openai-skill/ja-JP/affinity-synthesis/openai.metered.yaml"
-            }
+            "interactive": {"status": "prototype", "source": "research/skill-prototypes/adapters/openai-skill/ja-JP/affinity-synthesis/openai.interactive.yaml"},
+            "metered": {"status": "prototype", "source": "research/skill-prototypes/adapters/openai-skill/ja-JP/affinity-synthesis/openai.metered.yaml"}
           },
           "en-US": {
-            "interactive": {
-              "status": "planned"
-            },
-            "metered": {
-              "status": "planned"
-            }
+            "interactive": {"status": "prototype", "source": "research/skill-prototypes/adapters/openai-skill/en-US/affinity-synthesis/openai.interactive.yaml"},
+            "metered": {"status": "prototype", "source": "research/skill-prototypes/adapters/openai-skill/en-US/affinity-synthesis/openai.metered.yaml"}
           }
         },
         "iterative-inquiry-synthesis": {
           "ja-JP": {
-            "interactive": {
-              "status": "prototype",
-              "source": "research/skill-prototypes/adapters/openai-skill/ja-JP/iterative-inquiry-synthesis/openai.interactive.yaml"
-            },
-            "metered": {
-              "status": "prototype",
-              "source": "research/skill-prototypes/adapters/openai-skill/ja-JP/iterative-inquiry-synthesis/openai.metered.yaml"
-            }
+            "interactive": {"status": "prototype", "source": "research/skill-prototypes/adapters/openai-skill/ja-JP/iterative-inquiry-synthesis/openai.interactive.yaml"},
+            "metered": {"status": "prototype", "source": "research/skill-prototypes/adapters/openai-skill/ja-JP/iterative-inquiry-synthesis/openai.metered.yaml"}
           },
           "en-US": {
-            "interactive": {
-              "status": "planned"
-            },
-            "metered": {
-              "status": "planned"
-            }
+            "interactive": {"status": "prototype", "source": "research/skill-prototypes/adapters/openai-skill/en-US/iterative-inquiry-synthesis/openai.interactive.yaml"},
+            "metered": {"status": "prototype", "source": "research/skill-prototypes/adapters/openai-skill/en-US/iterative-inquiry-synthesis/openai.metered.yaml"}
           }
         },
         "cultural-substrate-weaving": {
           "ja-JP": {
-            "interactive": {
-              "status": "existing",
-              "source": "adapters/openai-skill/ja-JP/openai.interactive.yaml"
-            },
-            "metered": {
-              "status": "existing",
-              "source": "adapters/openai-skill/ja-JP/openai.metered.yaml"
-            }
+            "interactive": {"status": "existing", "source": "adapters/openai-skill/ja-JP/openai.interactive.yaml"},
+            "metered": {"status": "existing", "source": "adapters/openai-skill/ja-JP/openai.metered.yaml"}
           },
           "en-US": {
-            "interactive": {
-              "status": "existing",
-              "source": "adapters/openai-skill/en-US/openai.interactive.yaml"
-            },
-            "metered": {
-              "status": "existing",
-              "source": "adapters/openai-skill/en-US/openai.metered.yaml"
-            }
+            "interactive": {"status": "existing", "source": "adapters/openai-skill/en-US/openai.interactive.yaml"},
+            "metered": {"status": "existing", "source": "adapters/openai-skill/en-US/openai.metered.yaml"}
           }
         }
       }
@@ -87,7 +51,8 @@
           "prototype_source": "research/skill-prototypes/adapters/claude-codex/ja-JP/bundle-metadata.json"
         },
         "en-US": {
-          "status": "existing-baseline"
+          "status": "prototype",
+          "prototype_source": "research/skill-prototypes/adapters/claude-codex/en-US/bundle-metadata.json"
         }
       },
       "review_required_for_multi_skill": true
@@ -102,7 +67,8 @@
           "prototype_source": "research/skill-prototypes/adapters/claude-codex/ja-JP/bundle-metadata.json"
         },
         "en-US": {
-          "status": "existing-baseline"
+          "status": "prototype",
+          "prototype_source": "research/skill-prototypes/adapters/claude-codex/en-US/bundle-metadata.json"
         }
       },
       "review_required_for_multi_skill": true

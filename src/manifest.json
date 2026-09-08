@@ -6,13 +6,13 @@
     "ja-JP": {
       "label": "日本語",
       "status": "canonical",
-      "description": "対象から自分の読みを修正され得る認知姿勢を土台に、文化的体系による構造候補の供給とKJ法による断片統合・空白探索を組み合わせ、対象側で成立する増分を検証する補助AIスキル。領域固有の専門知識は、呼び出し側のコンテキスト、利用可能な資料、または併用スキルから受け取る。"
+      "description": "対象から自分の読みを修正され得る認知姿勢を土台に、文化的体系を一時的な認知場として開き、対象側で成立する増分だけを検証する補助AIスキル。多数・異種材料の親和統合や複数roundの差分再開が必要な場合は、利用可能なcompatible realizationへ委ねつつ、文化体系由来の問い・仮説・対応候補の帰属を保持する。領域固有の専門知識は、呼び出し側のコンテキスト、利用可能な資料、または併用スキルから受け取る。"
     },
     "en-US": {
       "label": "English",
       "status": "translated",
-      "review_note": "Initial English translation is usable, but independent human review is recommended before authoritative publication.",
-      "description": "A complementary AI skill that stays revisable by the target while combining cultural-framework structure supply with KJ-method integration and gap discovery, validating only target-side increments. Domain expertise comes from the calling context, available materials, or companion skills."
+      "review_note": "The thin-CSW ownership migration is translated on this research branch. Initial English SKILL/Method Definition drafts now also exist for affinity-synthesis and iterative-inquiry-synthesis as separate research realizations. Independent human review and ancillary research-material localization remain pending; this does not imply public three-Skill distribution parity.",
+      "description": "A complementary AI skill that keeps its interpretation revisable by the target, opens cultural frameworks as temporary cognitive fields, preserves attribution of framework-generated candidates, and returns them to target-side material for validation. When compatible realizations are available, one-round material synthesis and multi-round delta/reopen orchestration are delegated rather than owned by CSW. Domain expertise comes from the calling context, available materials, or companion skills."
     }
   },
   "router": "ROUTER.md",

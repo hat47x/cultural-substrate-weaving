@@ -38,14 +38,23 @@ def _source_mappings(root: Path, skill: dict, locale: str) -> list[dict]:
 
     if mode == "explicit_files":
         source_root = package_source["root"]
-        return [
-            {
-                "source": _posix_join(source_root, relative),
-                "target_relative": PurePosixPath(relative).as_posix(),
-                "operation": "copy",
-            }
-            for relative in package_source["files"]
-        ]
+        runtime_entry = PurePosixPath(realization["runtime_entry"]).as_posix()
+        mappings = []
+        for relative in package_source["files"]:
+            source = _posix_join(source_root, relative)
+            target_relative = (
+                "SKILL.md"
+                if PurePosixPath(source).as_posix() == runtime_entry
+                else PurePosixPath(relative).as_posix()
+            )
+            mappings.append(
+                {
+                    "source": source,
+                    "target_relative": target_relative,
+                    "operation": "copy",
+                }
+            )
+        return mappings
 
     if mode == "canonical_manifest":
         manifest_path = root / package_source["manifest"]
@@ -123,7 +132,12 @@ def _collisions(subtrees: list[dict]) -> list[dict]:
     ]
 
 
-def _subtree_state(layout_state: str, subtrees: list[dict], missing: list[str], collisions: list[dict]) -> str:
+def _subtree_state(
+    layout_state: str,
+    subtrees: list[dict],
+    missing: list[str],
+    collisions: list[dict],
+) -> str:
     if collisions:
         return "collision"
     if layout_state == "buildable" and not missing:

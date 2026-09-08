@@ -102,20 +102,22 @@ def validate(data: dict[str, Any]) -> tuple[list[str], list[str]]:
     source_ids = set(ids(sections["source"]))
     card_ids = set(ids(sections["card"]))
     group_ids = set(ids(sections["group"]))
+    resonance_ids = set(ids(sections["resonance"]))
     relation_ids = set(ids(sections["relation"]))
     narrative_ids = set(ids(sections["narrative"]))
     residual_ids = set(ids(sections["residual"]))
     question_ids = set(ids(sections["question"]))
     semantic_node_ids = card_ids | group_ids
-    local_artifact_ids = (
-        source_ids
-        | card_ids
+    semantic_artifact_ids = (
+        card_ids
         | group_ids
+        | resonance_ids
         | relation_ids
         | narrative_ids
         | residual_ids
         | question_ids
     )
+    local_artifact_ids = source_ids | semantic_artifact_ids
 
     for card in sections["card"]:
         cid = str(card.get("id", ""))
@@ -210,6 +212,59 @@ def validate(data: dict[str, Any]) -> tuple[list[str], list[str]]:
         for ref in question.get("arises_from", []):
             if str(ref) not in semantic_node_ids | residual_ids | relation_ids | narrative_ids:
                 warnings.append(f"question {qid} arises_from ref does not resolve locally: {ref}")
+
+        candidate_between = question.get("candidate_relation_between")
+        if candidate_between is not None:
+            if not isinstance(candidate_between, list) or len(candidate_between) != 2:
+                errors.append(
+                    f"question {qid} candidate_relation_between must contain exactly two semantic-node refs"
+                )
+            else:
+                endpoints = [str(ref) for ref in candidate_between]
+                if endpoints[0] == endpoints[1]:
+                    errors.append(
+                        f"question {qid} candidate_relation_between must refer to two distinct semantic nodes"
+                    )
+                for ref in endpoints:
+                    if ref not in semantic_node_ids:
+                        errors.append(
+                            f"question {qid} candidate relation endpoint does not resolve to card/group: {ref}"
+                        )
+
+        for ref in question.get("would_clarify_refs", []):
+            if str(ref) not in local_artifact_ids:
+                warnings.append(
+                    f"question {qid} would_clarify_ref does not resolve locally: {ref}"
+                )
+
+    handoff = data.get("handoff")
+    if handoff is not None and not isinstance(handoff, dict):
+        errors.append("handoff must be an object when present")
+    elif isinstance(handoff, dict):
+        for ref in handoff.get("semantic_refs", []):
+            if str(ref) not in semantic_artifact_ids:
+                errors.append(f"handoff semantic_ref does not resolve locally: {ref}")
+        for ref in handoff.get("residual_refs", []):
+            if str(ref) not in card_ids | residual_ids | question_ids:
+                errors.append(
+                    f"handoff residual_ref must resolve to a card, residual, or question: {ref}"
+                )
+        for ref in handoff.get("source_refs_to_preserve", []):
+            if str(ref) not in source_ids:
+                errors.append(f"handoff source_ref_to_preserve does not resolve: {ref}")
+        candidates = handoff.get("next_check_candidates", [])
+        if isinstance(candidates, list):
+            for index, candidate in enumerate(candidates):
+                if not isinstance(candidate, dict):
+                    errors.append(f"handoff next_check_candidate[{index}] must be an object")
+                    continue
+                if not str(candidate.get("text", "")).strip():
+                    errors.append(f"handoff next_check_candidate[{index}] must have text")
+                for ref in candidate.get("refs", []):
+                    if str(ref) not in local_artifact_ids:
+                        errors.append(
+                            f"handoff next_check_candidate[{index}] ref does not resolve locally: {ref}"
+                        )
 
     layout = data.get("layout")
     if isinstance(layout, dict):

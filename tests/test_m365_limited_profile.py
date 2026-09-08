@@ -34,7 +34,7 @@ class M365LimitedProfileTests(unittest.TestCase):
                 (ROOT / "adapters" / "microsoft-copilot" / locale / "instructions.md").is_file()
             )
 
-    def test_m365_profile_is_explicitly_limited_in_both_locales(self) -> None:
+    def test_m365_profile_is_explicitly_composite_and_limited_in_both_locales(self) -> None:
         ja = (
             ROOT / "adapters/microsoft-copilot/ja-JP/instructions.md"
         ).read_text(encoding="utf-8")
@@ -42,10 +42,15 @@ class M365LimitedProfileTests(unittest.TestCase):
             ROOT / "adapters/microsoft-copilot/en-US/instructions.md"
         ).read_text(encoding="utf-8")
 
-        self.assertIn("CSW全体を再現するものではありません", ja)
-        self.assertIn("This profile does not reproduce the full CSW runtime", en)
+        self.assertIn("親和統合コアの最小互換手順を埋め込んでいます", ja)
+        self.assertIn("This limited profile embeds a minimal compatible material-synthesis fallback", en)
+        self.assertIn("完全なmulti-round orchestrationではありません", ja)
+        self.assertIn("This is not complete multi-round orchestration", en)
         self.assertIn("AI解釈を混ぜない", ja)
         self.assertIn("AI interpretation", en)
+
+        self.assertNotIn("文化的体系による構造探索とKJ法による統合の中核だけを扱います", ja)
+        self.assertNotIn("It keeps the core of cultural-framework exploration and KJ integration", en)
 
 
 if __name__ == "__main__":

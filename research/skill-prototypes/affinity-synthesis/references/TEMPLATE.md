@@ -11,6 +11,37 @@
 - **Source set:**
 - **What must not be flattened:**
 
+## 1A. Reader-facing Overview — fill last
+
+この節は**最初に書かない**。cards / groups / relations / narrative / return-to-source checkを行った後に、下位成果物から作るreader-facing projectionである。
+
+### What the material currently says
+
+[3–5文程度。主要な表札と関係を、必要なら `G / R / U / Q` IDを添えて述べる。結論を滑らかにするためにresidualや対立を消さない。]
+
+### Overview table
+
+| Group | Label | Contribution to the current reading | Member count | Anchor refs | Current caution / residual |
+|---|---|---|---:|---|---|
+| G01 | | | | C001, C004 | |
+| G02 | | | | C008 | |
+
+**この表の読み方:**
+
+- **Member count** は現在のworking geometryでの記述値であり、truth、importance、independent supportの強さを意味しない。
+- **Anchor refs** は読者が詳細へ降りるためのnavigation用であり、代表例だけを証拠として残すためのものではない。完全なmembershipとlineageは後続節へ残す。
+- 強い少数派、singleton、conflict、薄い違和感を、overviewに入れにくいという理由で落とさない。
+- summaryが詳細map / narrativeと矛盾した場合、summaryを正本にせずsemantic recordへ戻す。
+
+### Residuals that change the reading
+
+- **Singleton / outlier:**
+- **Conflict / tension:**
+- **Unresolved question:**
+- **Borderline grouping or relation:**
+
+読者がoverviewだけ読んでも、「何がまだ分からないか」「何を無理に束ねなかったか」が見える状態を目指す。
+
 ## 2. Source and Lineage Notes
 
 必要な範囲だけ記載する。
@@ -82,23 +113,46 @@ X01: C007 ~> G01 :: "別group主配置のままG01にも響く理由"
 
 ### Relation inventory
 
-| Relation | From | Predicate | To | Direction | State | Basis |
-|---|---|---|---|---|---|---|
-| R01 | G01 | ... | G02 | -> | supported / tentative / ... | C001, C004 |
+| Relation | From | Predicate | To | Direction | State | Basis | Read-back audit |
+|---|---|---|---|---|---|---|---|
+| R01 | G01 | ... | G02 | -> | supported / tentative / ... | C001, C004 | survives / revise / withdraw |
 
 `Predicate` は自由な自然言語を基本とし、固定edge taxonomyへ縮めない。
+
+`Read-back audit` はrelationの意味を別fieldへ複製保存するための欄ではない。`From + Predicate + To` を自然な一文として読み返し、directionとbasisへ戻してもその関係が維持できるかを記録する。
 
 向きの最小記法:
 
 - `A -> B`: AからBへの方向を主張する。因果を自動では意味しない。
 - `A <-> B`: 相互方向を主張する。
-- `A -- B`: 関係は主張するが方向は主張しない。
+- `A -- B`: 関係は主張するが方向を主張しない。
 
 compact notation:
 
 ```text
 R01: G01 -> G02 :: "relation predicate" @basis[C001,C004] @state["tentative"]
 ```
+
+read-back例:
+
+```text
+G01「表札A」は、[relation predicate] という意味で、G02「表札B」へ向く。
+```
+
+この文が不自然、過剰、または材料へ戻すと支持できない場合、predicateを作文して線を維持しない。`state`を弱める、`R`を撤回する、または次のquestionable relation candidateへ戻す。
+
+### Questionable relation / missing-link candidates
+
+| Question | Between / arises from | Why it looks connected | What would support / refute | Current handling |
+|---|---|---|---|---|
+| Q07 | G02, G05 | ... | ... | keep as question / promote after return-check / dissolve |
+
+ここにあるものは `R` ではない。「線がありそう」という違和感・空白を問いとして外在化する欄である。
+
+- proximityやcross-linkがあるだけでrelationへ昇格させない。
+- missing linkが実在すると断定しない。
+- supporting materialが得られた場合も、predicate / direction / basisを作って元材料へ戻した後にのみ `R` へ昇格する。
+- 何も支持しなければcandidateを解消・撤回してよい。
 
 ### Group-level text view
 
@@ -152,6 +206,7 @@ Mermaidはtopology projectionとして使う。近接・離隔・空白など**�
 - 図だけに新しい線・包含・順序が増えていないか。
 - proximityを、元にないrelationへ読み替えていないか。
 - secondary resonanceがmembershipや独立supportに見えていないか。
+- questionable relation candidateが、確定relationと同じ線に見えていないか。
 
 ## 8. Narrative Synthesis
 
@@ -175,6 +230,8 @@ Mermaidはtopology projectionとして使う。近接・離隔・空白など**�
 - 評価方向の変化:
 - 確度の変化:
 - 行為者・責任方向の脱落:
+- explicit relationをread-backしたとき、source / target / predicate / directionが噛み合わない箇所:
+- questionable relation candidateをreturn-checkなしにrelationへ昇格した箇所:
 - external exploration inputをtarget-side supportへ無言で昇格させた箇所:
 - emergent meaningをsource由来へ遡及させた箇所:
 - その他の違和感:
@@ -191,8 +248,49 @@ Mermaidはtopology projectionとして使う。近接・離隔・空白など**�
 - **Singletons kept:**
 - **Conflicts kept:**
 - **Unresolved questions:**
+- **Questionable / missing relation candidates still open:**
 - **External exploration inputs still not target-supported:**
 - **Intentionally omitted differences:**
 - **Possible next-round inputs:**
 
 `Possible next-round inputs` は引継ぎ情報であり、このSkill自身が次ラウンドを開始する指示ではない。
+
+## 11. Optional Round Handoff Capsule
+
+反復探索へ渡す必要がある場合だけ作る。これは**現在の統合成果物から作るhandoff projection**であり、次roundの開始命令ではない。
+
+- **Semantic refs to preserve:** C... / G... / X... / R... / N... / U... / Q...
+- **Residual / reopenable anchor refs:**
+- **Source refs whose provenance / incoming status must survive:**
+- **Possible next check candidates:**
+- **Do not silently assume:**
+
+### Handoff rules
+
+1. `Semantic refs to preserve` は、後のroundでも意味同一性を追跡できるよう持ち越すhandleである。**すべてを次roundでreopenするという意味ではない。**
+2. `Residual / reopenable anchor refs` は、後の新材料が実際に触れた場合に再開できるanchorである。残っているだけで探索継続を義務づけない。
+3. `Possible next check candidates` は候補であり、Layer 1自身が次の問い・検索・実験を決定したことを意味しない。
+4. question / hypothesis / correspondence等のincoming statusは、handoffによってobservation / factへ昇格しない。
+5. stable IDがある場合、文言調整だけでIDを振り直さない。split / mergeで意味同一性が失われる場合はderivationを残す。
+6. handoff capsuleが不要な単発利用では省略してよい。
+
+machine-readable `affinity-map` では、同じ情報をoptionalな `handoff` objectへ置ける。
+
+```json
+{
+  "handoff": {
+    "semantic_refs": ["G03", "R05", "X02"],
+    "residual_refs": ["U04", "Q08"],
+    "source_refs_to_preserve": ["S11"],
+    "next_check_candidates": [
+      {"text": "Q08を区別できる新材料が得られたら再検査する", "refs": ["Q08", "G03"], "status": "candidate"}
+    ],
+    "do_not_assume": [
+      "Q08が示唆する関係はまだRとして支持されていない",
+      "S11由来の仮説はtarget-side observationではない"
+    ]
+  }
+}
+```
+
+このcapsuleを受け取ったLayer 2は、新しいdeltaが実際に触れたsubsetだけを `Reopened prior artifacts` として選ぶ。
