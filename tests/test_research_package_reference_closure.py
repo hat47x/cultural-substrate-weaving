@@ -12,6 +12,7 @@ if str(SCRIPTS_DIR) not in sys.path:
     sys.path.insert(0, str(SCRIPTS_DIR))
 
 from validate_research_package_reference_closure import (  # noqa: E402
+    package_local_references,
     validate_package_reference_closure,
 )
 
@@ -35,6 +36,18 @@ class ResearchPackageReferenceClosureTests(unittest.TestCase):
 
     def test_current_explicit_package_references_are_closed(self) -> None:
         self.assertEqual(validate_package_reference_closure(ROOT, self.manifest), [])
+
+    def test_shared_parser_normalizes_and_deduplicates_package_local_refs(self) -> None:
+        text = (
+            "Read `references/METHOD.md` and "
+            "[the same method](references/METHOD.md#invariants). "
+            "Also inspect `evals/CASES.md`. "
+            "Ignore `https://example.com/references/REMOTE.md` and `src/manifest.json`."
+        )
+        self.assertEqual(
+            package_local_references(text),
+            {"references/METHOD.md", "evals/CASES.md"},
+        )
 
     def test_affinity_template_reference_must_be_packaged(self) -> None:
         manifest = copy.deepcopy(self.manifest)
