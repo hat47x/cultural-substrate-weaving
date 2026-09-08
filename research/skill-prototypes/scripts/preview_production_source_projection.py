@@ -41,8 +41,6 @@ from validate_research_package_reference_closure import (  # noqa: E402
 )
 
 PREVIEW_SCHEMA = "csw.production-source-content-preview/v1"
-RESEARCH_LAYER1_ID = "affinity-synthesis"
-PRODUCTION_LAYER1_NAME = "material-led-synthesis"
 FRONTMATTER_NAME_RE = re.compile(r"(?m)^name:\s*([^\n]+)$")
 
 
@@ -57,15 +55,43 @@ def _replace_required(text: str, old: str, new: str, action: str, source: str) -
     return text.replace(old, new)
 
 
-def _rewrite_frontmatter_name(text: str, production_name: str, source: str) -> str:
+def _rename_pair(plan: dict) -> tuple[str, str]:
+    pairs: list[tuple[str, str]] = []
+    for skill in plan.get("skills", []):
+        if not isinstance(skill, dict):
+            continue
+        research_id = skill.get("research_id")
+        production_name = skill.get("production_name")
+        if (
+            isinstance(research_id, str)
+            and isinstance(production_name, str)
+            and research_id
+            and production_name
+            and research_id != production_name
+        ):
+            pairs.append((research_id, production_name))
+    if len(pairs) != 1:
+        raise ProjectionError(
+            "production source preview requires exactly one declared renamed Skill identity; "
+            f"found {pairs!r}"
+        )
+    return pairs[0]
+
+
+def _rewrite_frontmatter_name(
+    text: str,
+    research_id: str,
+    production_name: str,
+    source: str,
+) -> str:
     match = FRONTMATTER_NAME_RE.search(text)
     if match is None:
         raise ProjectionError(f"rewrite-frontmatter-name-only: frontmatter name missing in {source}")
     current = match.group(1).strip().strip("\"'")
-    if current != RESEARCH_LAYER1_ID:
+    if current != research_id:
         raise ProjectionError(
             "rewrite-frontmatter-name-only: unexpected source name "
-            f"in {source}: {current!r}"
+            f"in {source}: {current!r} != {research_id!r}"
         )
     start, end = match.span()
     return text[:start] + f"name: {production_name}" + text[end:]
@@ -76,45 +102,50 @@ def apply_content_transforms(
     transforms: list[str],
     *,
     source: str,
+    research_id: str,
     production_name: str,
 ) -> str:
     projected = text
     for action in transforms:
         if action == "rewrite-frontmatter-name-only":
-            projected = _rewrite_frontmatter_name(projected, production_name, source)
+            projected = _rewrite_frontmatter_name(
+                projected,
+                research_id,
+                production_name,
+                source,
+            )
         elif action == "rewrite-explicit-installable-name":
             projected = _replace_required(
                 projected,
-                f"`{RESEARCH_LAYER1_ID}`",
-                f"`{PRODUCTION_LAYER1_NAME}`",
+                f"`{research_id}`",
+                f"`{production_name}`",
                 action,
                 source,
             )
         elif action == "rewrite-explicit-installable-name-and-remove-sibling-filesystem-reference":
             projected = _replace_required(
                 projected,
-                "sibling prototype `../affinity-synthesis/`",
-                "companion Skill `material-led-synthesis`",
+                f"sibling prototype `../{research_id}/`",
+                f"companion Skill `{production_name}`",
                 action,
                 source,
             )
             projected = _replace_required(
                 projected,
-                f"`{RESEARCH_LAYER1_ID}`",
-                f"`{PRODUCTION_LAYER1_NAME}`",
+                f"`{research_id}`",
+                f"`{production_name}`",
                 action,
                 source,
             )
         elif action == "rewrite-realization-identifier-not-method-role":
             projected = _replace_required(
                 projected,
-                f"`{RESEARCH_LAYER1_ID}`",
-                f"`{PRODUCTION_LAYER1_NAME}`",
+                f"`{research_id}`",
+                f"`{production_name}`",
                 action,
                 source,
             )
         elif action == "normalize-locale-suffixed-filename":
-            # Target filename projection is handled by the planner; content is unchanged here.
             continue
         elif action == "rewrite-package-local-locale-suffix-references":
             if ".en.md" not in projected:
@@ -136,6 +167,7 @@ def _frontmatter_name(text: str) -> str | None:
 
 def project_production_source_contents(plan: dict, root: Path = ROOT) -> dict[str, dict]:
     projected: dict[str, dict] = {}
+    rename_research_id, rename_production_name = _rename_pair(plan)
     for skill in plan.get("skills", []):
         if not isinstance(skill, dict) or skill.get("research_id") == "cultural-substrate-weaving":
             continue
@@ -151,7 +183,8 @@ def project_production_source_contents(plan: dict, root: Path = ROOT) -> dict[st
                     text,
                     transforms,
                     source=source,
-                    production_name=production_name,
+                    research_id=rename_research_id,
+                    production_name=rename_production_name,
                 )
                 if target in projected:
                     raise ProjectionError(f"duplicate projected production target: {target}")
@@ -171,18 +204,19 @@ def project_production_source_contents(plan: dict, root: Path = ROOT) -> dict[st
 
 def validate_projected_contents(projected: dict[str, dict], plan: dict) -> list[str]:
     errors: list[str] = []
+    rename_research_id, _ = _rename_pair(plan)
     by_skill_locale: dict[tuple[str, str], list[dict]] = {}
     for item in projected.values():
         key = (item["research_id"], item["locale"])
         by_skill_locale.setdefault(key, []).append(item)
 
         content = item.get("content", "")
-        if f"`{RESEARCH_LAYER1_ID}`" in content:
+        if f"`{rename_research_id}`" in content:
             errors.append(
                 "projected production package content retains research installable identifier: "
                 f"{item['target']}"
             )
-        if "../affinity-synthesis/" in content:
+        if f"../{rename_research_id}/" in content:
             errors.append(
                 "projected production package content retains research sibling filesystem path: "
                 f"{item['target']}"
@@ -230,9 +264,6 @@ def validate_projected_contents(projected: dict[str, dict], plan: dict) -> list[
                     errors.append(f"English projected filenames retain .en suffix: {research_id}")
                 if ".en.md" in runtime["content"]:
                     errors.append(f"English projected runtime retains package-local .en.md reference: {research_id}")
-
-            if research_id == "affinity-synthesis" and frontmatter_name != PRODUCTION_LAYER1_NAME:
-                errors.append("Layer 1 projected runtime must use material-led-synthesis frontmatter name")
 
     return errors
 
