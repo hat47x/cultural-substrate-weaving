@@ -12,6 +12,14 @@
     "methods/integration.md",
     "methods/transformation.md"
   ],
+  "reviewed_source_blobs": {
+    "ROUTER.md": "ca70206a6a2cf26f33b5daf3c269a8130dd5c799",
+    "core/cognitive-stance.md": "df76328e2a0e22845a37aa6480f9e6b908a7a311",
+    "core/principles-and-constraints.md": "770daff9235e65e4c09e4c313d3e11300a46ae49",
+    "governance/evaluation.md": "3b8d9fb93b39bff11b93563998511e134a1f029d",
+    "methods/integration.md": "33db14e79033f3121cc5235a856b3652cb5cf5d7",
+    "methods/transformation.md": "c0cffe78b5da089627d5d90970f65a4947a56b35"
+  },
   "expected_stale_files": [
     "ROUTER.md",
     "core/cognitive-stance.md",
@@ -58,6 +66,7 @@
   "invariants": [
     "do not guess or hand-enter translation hashes",
     "scope_files preserves the bilingual semantic-edit scope after hash synchronization",
+    "reviewed_source_blobs pins the exact Japanese source bytes that received bilingual semantic review and must not be refreshed by translation hash synchronization",
     "pending status must identify the exact canonical files whose current Japanese bytes differ from translation-manifest tracking",
     "English counterparts must exist and contain the declared tension/emergence boundary markers for every scope file",
     "files outside expected_stale_files must remain synchronized with the translation manifest",
