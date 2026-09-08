@@ -14,6 +14,7 @@ if str(PLANNER_DIR) not in sys.path:
 from plan_production_source_promotion import plan_production_source_promotion  # noqa: E402
 from preview_production_source_projection import (  # noqa: E402
     ProjectionError,
+    _rename_pair,
     apply_content_transforms,
     build_preview,
     project_production_source_contents,
@@ -133,9 +134,7 @@ class ResearchProductionSourceProjectionPreviewTests(unittest.TestCase):
 
     def test_projected_nested_markdown_link_uses_transformed_target_namespace(self) -> None:
         projected = copy.deepcopy(self.projected)
-        method_target = (
-            "src/skills/iterative-inquiry-synthesis/en-US/references/METHOD.md"
-        )
+        method_target = "src/skills/iterative-inquiry-synthesis/en-US/references/METHOD.md"
         projected[method_target]["content"] += "\n[Detail](DETAIL.md)\n"
         self._add_projected_file(
             projected,
@@ -150,9 +149,7 @@ class ResearchProductionSourceProjectionPreviewTests(unittest.TestCase):
 
     def test_projected_nested_markdown_link_rejects_stale_en_suffix_after_normalization(self) -> None:
         projected = copy.deepcopy(self.projected)
-        method_target = (
-            "src/skills/iterative-inquiry-synthesis/en-US/references/METHOD.md"
-        )
+        method_target = "src/skills/iterative-inquiry-synthesis/en-US/references/METHOD.md"
         projected[method_target]["content"] += "\n[Detail](DETAIL.en.md)\n"
         self._add_projected_file(
             projected,
@@ -175,12 +172,8 @@ class ResearchProductionSourceProjectionPreviewTests(unittest.TestCase):
 
     def test_projected_nested_markdown_external_url_is_not_package_dependency(self) -> None:
         projected = copy.deepcopy(self.projected)
-        method_target = (
-            "src/skills/iterative-inquiry-synthesis/en-US/references/METHOD.md"
-        )
-        projected[method_target]["content"] += (
-            "\n[External](https://example.com/DETAIL.en.md)\n"
-        )
+        method_target = "src/skills/iterative-inquiry-synthesis/en-US/references/METHOD.md"
+        projected[method_target]["content"] += "\n[External](https://example.com/DETAIL.en.md)\n"
         self.assertEqual(validate_projected_contents(projected, self.plan), [])
 
     def test_layer2_method_rewrites_realization_identifier_not_method_display_term(self) -> None:
@@ -219,13 +212,38 @@ class ResearchProductionSourceProjectionPreviewTests(unittest.TestCase):
         self.assertFalse((ROOT / "src/skills/material-led-synthesis").exists())
         self.assertFalse((ROOT / "src/skills/iterative-inquiry-synthesis").exists())
 
+    def test_transform_uses_supplied_rename_authority_and_preserves_display_text(self) -> None:
+        text = "---\nname: old-skill\n---\n# Friendly Display\nUse `old-skill`.\n"
+        projected = apply_content_transforms(
+            text,
+            ["rewrite-frontmatter-name-only", "rewrite-explicit-installable-name"],
+            source="sample.md",
+            research_id="old-skill",
+            production_name="new-skill",
+        )
+        self.assertIn("name: new-skill", projected)
+        self.assertIn("`new-skill`", projected)
+        self.assertNotIn("name: old-skill", projected)
+        self.assertIn("# Friendly Display", projected)
+
+    def test_rename_pair_fails_closed_when_plan_declares_multiple_renames(self) -> None:
+        plan = {
+            "skills": [
+                {"research_id": "old-a", "production_name": "new-a"},
+                {"research_id": "old-b", "production_name": "new-b"},
+            ]
+        }
+        with self.assertRaisesRegex(ProjectionError, "exactly one declared renamed Skill identity"):
+            _rename_pair(plan)
+
     def test_unknown_transform_is_rejected(self) -> None:
         with self.assertRaisesRegex(ProjectionError, "unsupported production source content transform"):
             apply_content_transforms(
                 "sample",
                 ["unknown-transform"],
                 source="sample.md",
-                production_name="material-led-synthesis",
+                research_id="old-skill",
+                production_name="new-skill",
             )
 
     def test_required_transform_marker_cannot_silently_disappear(self) -> None:
@@ -234,7 +252,8 @@ class ResearchProductionSourceProjectionPreviewTests(unittest.TestCase):
                 "no installable reference here",
                 ["rewrite-explicit-installable-name"],
                 source="sample.md",
-                production_name="iterative-inquiry-synthesis",
+                research_id="old-skill",
+                production_name="new-skill",
             )
 
 
