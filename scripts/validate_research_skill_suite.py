@@ -23,6 +23,8 @@ REQUIRED_SUITE_RESEARCH_ASSETS = frozenset(
         "research/skill-prototypes/P4-PUBLIC-NAME-MIGRATION-CONTRACT.json",
         "research/skill-prototypes/P4-PUBLIC-NAME-PROJECTION-INVENTORY.json",
         "research/skill-prototypes/P4-PRODUCTION-SUITE-DESCRIPTOR-PROTOTYPE.json",
+        "research/skill-prototypes/P4-PRODUCTION-SOURCE-CONTRACT-CONSOLIDATION-2026-09-08.md",
+        "research/skill-prototypes/P4-PROMOTION-READINESS-OBSERVER-2026-09-08.md",
         "research/skill-prototypes/evals/L1-L2-HANDOFF-CAPSULE-2026-09-07.md",
     }
 )
