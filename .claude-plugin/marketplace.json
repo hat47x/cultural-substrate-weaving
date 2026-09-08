@@ -3,13 +3,13 @@
   "owner": {
     "name": "hat47x"
   },
-  "description": "Localized skills for cultural-framework exploration, attribution, and target-side validation.",
+  "description": "Localized skills for cultural-framework exploration, KJ integration, and provenance-aware structural work.",
   "version": "0.5.0",
   "plugins": [
     {
       "name": "cultural-substrate-weaving-ja",
       "source": "./plugins/cultural-substrate-weaving-ja",
-      "description": "文化的体系を認知場として開き、由来を保った問い・関係・構造候補を対象側へ戻して検証します。必要な材料統合はcompatible realizationへ委ねます。明示呼び出し専用。",
+      "description": "文化的体系による構造候補の探索とKJ法による断片統合を組み合わせ、問い・関係・状態・空白・来歴を扱います。利用範囲と採否は外部の委任に従います。",
       "version": "0.5.0",
       "category": "productivity",
       "tags": [
@@ -23,7 +23,7 @@
     {
       "name": "cultural-substrate-weaving-en",
       "source": "./plugins/cultural-substrate-weaving-en",
-      "description": "Opens cultural frameworks as cognitive fields, preserves attribution, and returns resulting questions and structure candidates to the target for validation. Delegates material synthesis when a compatible realization is available. Explicit invocation only.",
+      "description": "Combines cultural-framework exploration with KJ integration to work with questions, relations, states, gaps, and provenance. Usage scope and adoption follow delegation outside the skill.",
       "version": "0.5.0",
       "category": "productivity",
       "tags": [
