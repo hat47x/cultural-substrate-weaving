@@ -61,6 +61,17 @@ class ResearchPromotionReadinessObserverTests(unittest.TestCase):
             self.descriptor["english_independent_review"]["status"],
         )
 
+    def test_execution_observation_does_not_mix_binding_contract_with_execution_evidence(self) -> None:
+        item = self.by_id["complete_checkout_execution"]
+        binding = self.descriptor["complete_checkout_validation"].get("binding_contract")
+        self.assertIsInstance(binding, str)
+        self.assertNotIn(binding, item["evidence"])
+        self.assertEqual(item["evidence_kind"], "execution-gate")
+        self.assertIn(
+            "Static repository inspection is not command-execution evidence.",
+            item["notes"],
+        )
+
     def test_translation_refresh_mirrors_own_authority(self) -> None:
         status = json.loads((ROOT / TRANSLATION_STATUS).read_text(encoding="utf-8"))
         item = self.by_id["translation_refresh_state"]
