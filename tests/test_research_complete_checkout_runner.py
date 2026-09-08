@@ -15,6 +15,7 @@ from run_research_complete_checkout_gate import (  # noqa: E402
     candidate_record,
     execute_gate,
     validate_candidate_recording_head,
+    validate_candidate_recording_state,
     validate_preconditions,
 )
 
@@ -57,6 +58,19 @@ class ResearchCompleteCheckoutRunnerTests(unittest.TestCase):
         self.assertEqual(validate_candidate_recording_head(record, HEAD), [])
         errors = validate_candidate_recording_head(record, OTHER_HEAD)
         self.assertTrue(any("no longer matches current HEAD" in error for error in errors), errors)
+
+    def test_candidate_recording_requires_clean_tree_after_validation(self) -> None:
+        record = candidate_record(HEAD)
+        self.assertEqual(validate_candidate_recording_state(record, HEAD, ""), [])
+        errors = validate_candidate_recording_state(
+            record,
+            HEAD,
+            " M research/skill-prototypes/suite-manifest.json",
+        )
+        self.assertTrue(
+            any("clean working tree after validation" in error for error in errors),
+            errors,
+        )
 
     def test_candidate_recording_requires_valid_execution_commit(self) -> None:
         errors = validate_candidate_recording_head(
