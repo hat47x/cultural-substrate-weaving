@@ -164,6 +164,37 @@ class ResearchPackageReferenceClosureTests(unittest.TestCase):
             ].append("references/ROUND-TEMPLATE.md")
             self.assertEqual(validate_package_reference_closure(root, manifest), [])
 
+    def test_package_directory_mention_is_not_a_file_dependency(self) -> None:
+        with tempfile.TemporaryDirectory() as temp_dir:
+            root = Path(temp_dir)
+            package_root = root / "research" / "skill"
+            (package_root / "references").mkdir(parents=True)
+            (package_root / "SKILL.md").write_text(
+                "Optional supporting material may live under `references/`.\n",
+                encoding="utf-8",
+            )
+
+            manifest = {
+                "skills": [
+                    {
+                        "id": "example",
+                        "locale_realizations": {
+                            "ja-JP": {
+                                "status": "prototype",
+                                "runtime_entry": "research/skill/SKILL.md",
+                                "package_source": {
+                                    "mode": "explicit_files",
+                                    "root": "research/skill",
+                                    "files": ["SKILL.md"],
+                                },
+                            }
+                        },
+                    }
+                ]
+            }
+
+            self.assertEqual(validate_package_reference_closure(root, manifest), [])
+
     def test_canonical_manifest_realizations_are_out_of_scope(self) -> None:
         manifest = copy.deepcopy(self.manifest)
         skill = next(
