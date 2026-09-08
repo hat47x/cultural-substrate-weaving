@@ -26,10 +26,6 @@ from validate_research_production_suite_descriptor import validate_production_su
 from validate_research_skill_suite import validate_suite  # noqa: E402
 
 PLAN_SCHEMA = "csw.production-source-promotion-plan/v1"
-SKILL_PROJECTION_PREFIXES = (
-    "research/skill-prototypes/affinity-synthesis/",
-    "research/skill-prototypes/iterative-inquiry-synthesis/",
-)
 
 
 def _target_relative(source_relative: str, locale: str) -> str:
@@ -61,17 +57,73 @@ def _skill_metadata_paths(skill: dict) -> set[str]:
     return paths
 
 
+def _descriptor_by_id(descriptor: dict) -> dict[str, dict]:
+    return {
+        item["research_id"]: item
+        for item in descriptor.get("skills", [])
+        if isinstance(item, dict) and isinstance(item.get("research_id"), str)
+    }
+
+
+def _locale_tree_source_prefixes(suite: dict, descriptor: dict) -> tuple[str, ...]:
+    """Return research source roots whose production authority is locale_tree."""
+
+    descriptor_by_id = _descriptor_by_id(descriptor)
+    prefixes: set[str] = set()
+    for skill in suite.get("skills", []):
+        if not isinstance(skill, dict):
+            continue
+        research_id = skill.get("id")
+        source_root = skill.get("source_root")
+        descriptor_skill = descriptor_by_id.get(research_id)
+        if not isinstance(source_root, str) or not source_root:
+            continue
+        if not isinstance(descriptor_skill, dict):
+            continue
+        production_source = descriptor_skill.get("production_source")
+        if not isinstance(production_source, dict):
+            continue
+        if production_source.get("mode") == "locale_tree":
+            prefixes.add(source_root.rstrip("/") + "/")
+    return tuple(sorted(prefixes))
+
+
+def _planned_source_prefixes(plan: dict) -> tuple[str, ...]:
+    """Compatibility fallback for callers that do not provide the research suite."""
+
+    prefixes: set[str] = set()
+    for skill in plan.get("skills", []):
+        if not isinstance(skill, dict) or skill.get("state") != "planned-locale-tree-promotion":
+            continue
+        locales = skill.get("locales")
+        if not isinstance(locales, dict):
+            continue
+        for locale_plan in locales.values():
+            if not isinstance(locale_plan, dict):
+                continue
+            mappings = locale_plan.get("mappings")
+            if not isinstance(mappings, list):
+                continue
+            for mapping in mappings:
+                if not isinstance(mapping, dict):
+                    continue
+                source = mapping.get("source")
+                relative = mapping.get("source_relative")
+                if not isinstance(source, str) or not isinstance(relative, str) or not relative:
+                    continue
+                suffix = "/" + relative
+                if source.endswith(suffix):
+                    prefixes.add(source[: -len(relative)].rstrip("/") + "/")
+    return tuple(sorted(prefixes))
+
+
 def plan_production_source_promotion(
     suite: dict,
     descriptor: dict,
     migration: dict,
     inventory: dict,
 ) -> dict:
-    descriptor_by_id = {
-        item["research_id"]: item
-        for item in descriptor["skills"]
-        if isinstance(item, dict) and isinstance(item.get("research_id"), str)
-    }
+    descriptor_by_id = _descriptor_by_id(descriptor)
     name_map = migration["research_to_production_name"]
     inventory_actions = _projection_actions(inventory)
 
@@ -91,22 +143,25 @@ def plan_production_source_promotion(
         research_id = skill["id"]
         descriptor_skill = descriptor_by_id[research_id]
         production_name = name_map[research_id]
+        production_source = descriptor_skill["production_source"]
+        source_mode = production_source.get("mode")
 
-        if research_id == "cultural-substrate-weaving":
+        if source_mode == "canonical_manifest":
             output["skills"].append(
                 {
                     "research_id": research_id,
                     "production_name": production_name,
                     "state": "existing-canonical-manifest",
-                    "source": descriptor_skill["production_source"],
+                    "source": production_source,
                     "locales": {},
                 }
             )
             continue
 
-        production_source = descriptor_skill["production_source"]
-        if production_source.get("mode") != "locale_tree":
-            raise ValueError(f"sibling {research_id} production source is not locale_tree")
+        if source_mode != "locale_tree":
+            raise ValueError(
+                f"production source mode is unsupported for {research_id}: {source_mode!r}"
+            )
 
         locale_output: dict[str, dict] = {}
         promoted_repo_sources: set[str] = set()
@@ -114,7 +169,7 @@ def plan_production_source_promotion(
             package_source = realization["package_source"]
             if package_source.get("mode") != "explicit_files":
                 raise ValueError(
-                    f"research sibling {research_id}/{locale} package source must be explicit_files"
+                    f"research locale_tree source {research_id}/{locale} must use explicit_files"
                 )
             research_root = PurePosixPath(package_source["root"])
             production_root = production_source["root_pattern"].format(locale=locale)
@@ -175,6 +230,8 @@ def validate_production_source_promotion_plan(
     plan: dict,
     descriptor: dict,
     inventory: dict | None = None,
+    *,
+    suite: dict | None = None,
 ) -> list[str]:
     errors: list[str] = []
     if plan.get("schema") != PLAN_SCHEMA:
@@ -184,28 +241,54 @@ def validate_production_source_promotion_plan(
     if plan.get("selection_basis") != "research locale package_source.files":
         errors.append("production source promotion selection must remain package_source.files based")
 
-    descriptor_by_id = {
-        item["research_id"]: item
-        for item in descriptor.get("skills", [])
+    descriptor_by_id = _descriptor_by_id(descriptor)
+    descriptor_ids = set(descriptor_by_id)
+    plan_ids = {
+        item.get("research_id")
+        for item in plan.get("skills", [])
         if isinstance(item, dict) and isinstance(item.get("research_id"), str)
     }
+    missing_plan_ids = sorted(descriptor_ids - plan_ids)
+    extra_plan_ids = sorted(plan_ids - descriptor_ids)
+    if missing_plan_ids:
+        errors.append(f"production source plan is missing descriptor Skills: {missing_plan_ids}")
+    if extra_plan_ids:
+        errors.append(f"production source plan has unknown Skills: {extra_plan_ids}")
+
     mapping_by_source: dict[str, dict] = {}
     for skill in plan.get("skills", []):
         if not isinstance(skill, dict):
             errors.append("production source promotion Skill entries must be objects")
             continue
         research_id = skill.get("research_id")
-        if research_id == "cultural-substrate-weaving":
-            if skill.get("state") != "existing-canonical-manifest":
-                errors.append("CSW source promotion state must remain existing-canonical-manifest")
+        descriptor_skill = descriptor_by_id.get(research_id)
+        if not isinstance(descriptor_skill, dict):
             continue
 
-        descriptor_skill = descriptor_by_id.get(research_id, {})
+        production_source = descriptor_skill.get("production_source")
+        if not isinstance(production_source, dict):
+            errors.append(f"production source authority missing for {research_id}")
+            continue
+        source_mode = production_source.get("mode")
+
         expected_name = descriptor_skill.get("proposed_installable_name")
         if skill.get("production_name") != expected_name:
             errors.append(f"production source plan name mismatch for {research_id}")
-        if research_id == "affinity-synthesis" and skill.get("production_name") != "material-led-synthesis":
-            errors.append("Layer 1 production source name must be material-led-synthesis")
+
+        if source_mode == "canonical_manifest":
+            if skill.get("state") != "existing-canonical-manifest":
+                errors.append(
+                    f"canonical_manifest source state must remain existing-canonical-manifest: {research_id}"
+                )
+            if skill.get("locales") != {}:
+                errors.append(f"canonical_manifest source must not declare locale_tree mappings: {research_id}")
+            continue
+
+        if source_mode != "locale_tree":
+            errors.append(f"unsupported production source mode for {research_id}: {source_mode!r}")
+            continue
+        if skill.get("state") != "planned-locale-tree-promotion":
+            errors.append(f"locale_tree source state must remain planned-locale-tree-promotion: {research_id}")
 
         locales = skill.get("locales")
         if not isinstance(locales, dict):
@@ -246,10 +329,15 @@ def validate_production_source_promotion_plan(
                     mapping_by_source[source] = mapping
 
     if inventory is not None:
+        source_prefixes = (
+            _locale_tree_source_prefixes(suite, descriptor)
+            if suite is not None
+            else _planned_source_prefixes(plan)
+        )
         expected_actions = {
             path: action
             for path, action in _projection_actions(inventory).items()
-            if path.startswith(SKILL_PROJECTION_PREFIXES)
+            if any(path.startswith(prefix) for prefix in source_prefixes)
         }
         for source, action in sorted(expected_actions.items()):
             mapping = mapping_by_source.get(source)
@@ -291,7 +379,12 @@ def main() -> int:
         print(f"production source promotion planning failed: {exc}", file=sys.stderr)
         return 1
 
-    errors = validate_production_source_promotion_plan(plan, descriptor, inventory)
+    errors = validate_production_source_promotion_plan(
+        plan,
+        descriptor,
+        inventory,
+        suite=suite,
+    )
     if errors:
         for error in errors:
             print(f"ERROR: {error}", file=sys.stderr)
