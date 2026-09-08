@@ -44,6 +44,7 @@ production promotion 時には、少なくとも次を proposed installable name
 - production package target name
 - production OpenAI companion metadata path
 - explicit runtime handoff で installable Skill を名前指定する箇所
+- production packageへ選択されたsupport copy中のexplicit installable identifier
 - productionへそのまま出るhost-visible adapter prose中のinstallable identifier
 
 Layer 1 の例:
@@ -67,6 +68,10 @@ Layer 2 から明示的に sibling Skill 名を挙げる場合も、production r
 - research artifact の stable ID
 
 これらは再現性と履歴追跡のため `affinity-synthesis` を保持する。
+
+ここでいう「保持」は **research原本を変更しない** という意味である。現在のruntimeがpackage-local progressive supportとして直接参照し、production locale treeへcopyするeval / evidence等は、production-facing copy内のexplicit installable identifierだけをpublic nameへ投影できる。research側の元file、research path、commit historyは書き換えない。
+
+したがって、たとえば日本語Layer 1の `evals/CASES.md` / `evidence/dossier.md` はresearch原本では `affinity-synthesis` を保持してよいが、production packageへ投影したcopyではinstallable identifierとして `material-led-synthesis` を使う。表示名 `Affinity Synthesis / 親和統合` や方法系譜の語は別である。
 
 ### Display / explanatory terms
 
@@ -186,10 +191,11 @@ production canonical source を作った後、validator に最低限次を追加
 3. production runtime / adapter metadata に `research/skill-prototypes/` path がない。
 4. Layer 2 production runtime に sibling filesystem path がない。
 5. explicit Layer 1 installable-name reference は `material-led-synthesis` に統一される。
-6. research suite / eval / migration record は research ID を保持する。
-7. display / lineage textを identifier rename と誤認して変更しない。
-8. productionへそのまま出るOpenAI metadata本文とClaude/Codex bundle descriptionに、rename対象のhyphenated research IDが残らない。
-9. research-only `contains` やresearch filesystem pathにresearch IDが残ること自体は誤検知しない。
+6. research suite / eval / migration record の原本は research ID を保持する。
+7. production packageへ選択されたsupport copyは、installable identifierとして旧 `affinity-synthesis` を残さない。
+8. display / lineage textを identifier rename と誤認して変更しない。
+9. productionへそのまま出るOpenAI metadata本文とClaude/Codex bundle descriptionに、rename対象のhyphenated research IDが残らない。
+10. research-only `contains` やresearch filesystem pathにresearch IDが残ること自体は誤検知しない。
 
 ## Promotion sequence
 
@@ -202,7 +208,7 @@ independent English review
         ↓
 production canonical sourceを別pathへ作成
         ↓
-identity / handoff referencesだけpublic nameへ投影
+identity / handoff / packaged-support referencesだけpublic nameへ投影
         ↓
 production build / validator generalization
         ↓
@@ -216,6 +222,7 @@ release internal-composition validation
 - research ID `affinity-synthesis` は維持する。
 - production candidate は `material-led-synthesis`。
 - rename は production projection でのみ行う。
+- research原本の履歴ID保持と、production-facing support copyのpublic-name投影を両立させる。
 - display `Affinity Synthesis / 親和統合` は installable name と独立に扱う。
 - runtime handoff は role-first、name-second、filesystem-independent とする。
 - host-visible adapter proseもpublic identity境界に含めるが、research-only `contains` / pathは履歴・監査情報として保持できる。
