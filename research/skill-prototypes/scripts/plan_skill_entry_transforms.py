@@ -30,12 +30,7 @@ OPENAI_DISTRIBUTIONS = {"openai_skill"}
 
 
 def split_skill_frontmatter(text: str) -> tuple[list[tuple[str, str]], str]:
-    """Parse the simple scalar YAML frontmatter used by prototype SKILL.md files.
-
-    The research prototype intentionally supports only one-line scalar values.
-    Rejecting richer YAML avoids silently changing semantics before a production
-    frontmatter parser/renderer is chosen.
-    """
+    """Parse the simple scalar YAML frontmatter used by prototype SKILL.md files."""
 
     lines = text.splitlines(keepends=True)
     if not lines or lines[0].rstrip("\r\n") != "---":

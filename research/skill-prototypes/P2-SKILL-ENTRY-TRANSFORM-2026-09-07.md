@@ -1,247 +1,130 @@
 # Research Skill Suite — P2 Skill Entry Transform Audit 2026-09-07
 
-Status: research adapter-transform contract; production build remains unchanged
+Status: research host-entry contract; production build unchanged
 
 ## Purpose
 
-P2ではここまでに、次の三つを分離した。
+Skill subtreeのsource→target pathが決まっても、`SKILL.md` はhostごとに同じbyte列を置けばよいとは限らない。
 
-1. locale realizationが存在するか。
-2. runtime packageを構成するsource boundaryが分かっているか。
-3. distribution内でどのSkill名へ置くか。
-
-さらにSkill subtree plannerによって、source→target pathも計算できるようになった。
-
-しかし `SKILL.md` は、単純なbyte copyだけではhostごとの差を吸収できない。
-
-現行production builderは、OpenAI SkillとClaude/Codex共有Skill treeでfrontmatterを変えている。
-
-```python
-skill_frontmatter(name, description, claude_explicit=False)
-```
-
-OpenAIでは、
-
-```yaml
----
-name: cultural-substrate-weaving
-description: ...
----
-```
-
-Claude/Codex共有treeでは、
-
-```yaml
----
-name: weave
-description: ...
-disable-model-invocation: true
----
-```
-
-となる。
-
-一方、companion prototypesの `SKILL.md` は既に `name` / `description` frontmatterを持つ。
-
-したがってmulti-Skill化では、CSWのようにrouterからSkill entryを生成するケースと、既にSkill entryであるcompanionを正規化するケースを分ける必要がある。
-
-## Current transform boundary
-
-### Canonical CSW
-
-CSWについては新しいrendererを作らない。
-
-Skill-subtree planではruntime entry mappingを、
+現行production buildではOpenAIとClaude/Codexでfrontmatter policyが異なるため、path planningとentry renderingを分離する。
 
 ```text
-operation = render_runtime_entry
+realization
+  -> package source
+  -> package target
+  -> Skill subtree mapping
+  -> Skill entry transform
 ```
 
-として残している。
+Method DefinitionやSkill本文の意味をhost adapter policyへ吸収しない。
 
-entry-transform planではこれを、
+## Canonical CSW
+
+CSWのruntime entryは `render_runtime_entry` であり、research側に第二のrendererを作らない。
 
 ```text
 transform_mode = existing_canonical_builder_render
 ```
 
-として扱う。
+現行 `scripts/build.py` が持つ次の責務を維持する。
 
-つまり `scripts/build.py` が現在持つ、
-
-- locale descriptionの採用
-- distribution target nameの採用
+- locale description
+- target Skill name
 - router link rewrite
-- Claude明示呼び出しflag
+- Claude explicit-invocation flag
 
-をresearch prototype側で再実装しない。
+research plannerは、この既存rendererを使うべきことだけを外部化する。
 
-この境界は、production移行前に二つのrendererが同じCSW entryを別々に生成する状態を避けるためである。
+## Explicit sibling Skill
 
-### Explicit companion Skill entries
+Affinity / Iterativeはsource自体がfrontmatter付きSkill entryであるため、次の限定transformを使う。
 
-Affinity / Iterativeはsourceそのものが `SKILL.md` である。
+```text
+transform_mode = normalize_explicit_skill_frontmatter
+```
 
-この場合は `normalize_explicit_skill_frontmatter` を使う。
+責務:
 
-責務は限定する。
+- source `description` を保持
+- `name` をdistribution target `skill_name` に正規化
+- bodyを意味変更しない
+- 古い `disable-model-invocation` を二重化しない
 
-- source `description` を保持する。
-- `name` はsourceの値を盲信せず、distribution target contractの `skill_name` へ揃える。
-- OpenAI Skillでは `disable-model-invocation` を付けない。
-- Claude/Codex共有Skill treeでは `disable-model-invocation: true` を一度だけ付ける。
-- 既に古いflagがあっても二重化しない。
-- bodyは意味変更しない。
-
-このtransformは方法論、routing、Skill activation判断を所有しない。
-
-## Why a deliberately small frontmatter parser
-
-research helperはprototype entryで現在使われている一行scalar frontmatterだけを扱う。
-
-現時点でYAML parser一般化を行わない。
-
-複雑なnested YAML、multiline scalar、anchor等へ自動対応すると、「production parserを選ぶ」という別の設計判断をresearch helperが先取りするためである。
-
-対応外frontmatterはfail-closedにする。
-
-production migrationへ進む段階では、host仕様と依存関係を確認して正式なparser/rendererを決める。
-
-## Distribution policies
-
-### OpenAI Skill
+### OpenAI
 
 ```text
 entry_policy = openai_skill
 disable_model_invocation = false
 ```
 
-sourceがexplicit Skill entryならfrontmatterを正規化する。
-
-CSWはexisting builder renderのまま。
-
-この段階では `agents/openai.yaml` を生成しない。
-
-OpenAIのinteractive / metered profile差もentry transformの責務ではない。
-
-### Claude plugin
+### Claude / Codex shared tree
 
 ```text
 entry_policy = claude_codex_shared_skill_tree
 disable_model_invocation = true
 ```
 
-明示呼び出し専用という現行CSW pluginの境界をcompanionへも適用する。
+これは一般方法論ではなく、現在のlocale pluginが明示呼び出し型であることに由来するhost packaging policyである。
 
-これは「companionが常に自動呼び出し禁止であるべき」という一般方法論ではない。
+## Bilingual source boundary
 
-現行suite distribution prototypeが、CSWと同じ明示呼び出し型plugin内へ三Skillを置く設計だからである。
+英語siblingのsource entryは `SKILL.en.md` だが、subtree plannerがtarget-relative entryを `SKILL.md` に正規化する。
 
-### Codex plugin
-
-現行production structureではClaudeとCodexが同じplugin directoryの `skills/<name>/SKILL.md` を共有する。
-
-そのためresearch planでも同じentry policyを使う。
-
-これは将来不変とは限らない。
-
-Codex側のSkill entry仕様がClaudeと分岐する場合、`codex_plugin` policyを独立させる。
-
-「同じ今のtreeを共有している」ことと「両hostの仕様が永久に同じ」であることを混同しない。
-
-## What the plan now exposes
-
-各planned entryについて少なくとも次を外部化する。
+したがってentry transformは日英とも同じtarget contractを扱える。
 
 ```text
-skill_id
-target_name
-source
-target
-input_operation
-transform_mode
-entry_policy
-disable_model_invocation
+affinity-synthesis/SKILL.en.md
+  -> affinity-synthesis/SKILL.md
+
+iterative-inquiry-synthesis/SKILL.en.md
+  -> iterative-inquiry-synthesis/SKILL.md
 ```
 
-これにより、たとえばAffinity ja-JPは、
+元source filenameとlocaleはplan上に残る。
+
+## Frontmatter parser boundary
+
+research helperは現在のprototypeが使う一行scalar frontmatterだけを扱う。
+
+複雑なYAMLを推測して処理せず、対応外はfail-closedとする。production一般化時にはhost仕様と依存関係を確認して正式parser/rendererを選ぶ。
+
+## Composite surfaces
+
+ChatGPT GPT / Microsoft Copilotは現在Skill subtreeをmaterializeする契約を持たないため、entry transformも作らない。
 
 ```text
-OpenAI:
-  source = research/skill-prototypes/affinity-synthesis/SKILL.md
-  target = affinity-synthesis/SKILL.md
-  transform = normalize_explicit_skill_frontmatter
-  explicit flag = false
-
-Claude/Codex:
-  source = same
-  target = skills/affinity-synthesis/SKILL.md
-  transform = normalize_explicit_skill_frontmatter
-  explicit flag = true
+state = not-applicable
+entries = []
 ```
 
-と区別できる。
+## Tests
 
-## Boundaries still unresolved
+`tests/test_research_skill_entry_transforms.py` は日英について次を固定する。
 
-この段階では次を扱わない。
+- OpenAI explicit siblingにClaude flagを入れない
+- Claude/Codex siblingにflagを一度だけ入れる
+- target nameはsource frontmatterではなくpackage target contractから取る
+- English sourceは `SKILL.en.md` のまま追跡し、targetは `SKILL.md`
+- CSWは日英ともexisting builder render boundaryを保つ
+- bodyを保つ
+- duplicate key / missing descriptionはfail-closed
+- composite surfaceでentry transformを捏造しない
 
-### OpenAI agent metadata
+## Still out of scope
 
-現行OpenAI packageはSkill subtreeに加えて、
-
-```text
-agents/openai.yaml
-```
-
-をprofile別adapterから持つ。
-
-companion Skillで、
-
-- 同じadapter templateを使うか
-- Skillごとのdescriptionをどう反映するか
-- interactive / meteredの差をどう持たせるか
-
-は未設計である。
-
-### Plugin metadata
-
-Claude/Codex bundleでは、Skill entryだけでなく、
-
+- `agents/openai.yaml`
 - `.claude-plugin/plugin.json`
 - `.codex-plugin/plugin.json`
-- locale README
-- marketplace entry
+- marketplace metadata
+- plugin-level description / keywords
+- actual artifact write
+- host routing behavior
+- release readiness
 
-が必要である。
-
-三Skill bundleへ拡張したときのplugin description / keywords / catalog wordingは未設計である。
-
-### Relative references after rendering
-
-companion Skill bodyのrelative referenceは、explicit-files subtreeで現在の構造を保つため、path自体は保存できる。
-
-しかしhost側がentry bodyを追加変換する場合、relative linksの再検証は別途必要である。
-
-### Actual artifact rendering
-
-このresearch helperはpure transformを提供するが、repositoryのgenerated artifactを書き換えない。
-
-`plugins/`、`.agents/`、`dist/`をmulti-Skillへ変更していない。
+これらはSkill entryより一段外側のadapter metadataである。
 
 ## Decision
 
-P2 packaging contract now distinguishes four layers:
+**P2 packaging contractは、realization availability / source boundary / target name+path / Skill-entry transformを別々に保持する。**
 
-1. realization availability
-2. package source boundary
-3. distribution target name and subtree path
-4. Skill-entry frontmatter transform
-
-この四層が揃ったことで、次に検討できるのはhost adapter metadataのplannerである。
-
-ただしproduction `scripts/build.py` のgeneralizationはまだ行わない。
-
-先にOpenAI agent metadataとClaude/Codex plugin metadataについて、**既存CSW adapterを正本として何をbundle-levelへ引き上げ、何をSkill-levelに残すか**を切り分ける。
-
-complete checkoutで実 `make check` を通すrelease gateも未通過のままである。
+次はhost adapter metadataを同じ考え方で分離するかを検討できるが、実行環境でresearch gateを通すまではproduction build一般化を急がない。

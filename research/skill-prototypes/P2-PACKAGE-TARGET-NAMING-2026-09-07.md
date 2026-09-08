@@ -4,22 +4,15 @@ Status: research packaging contract; production build remains unchanged
 
 ## Purpose
 
-`package_source` によって「何をpackageへ持っていくか」は記述できるようになった。
+`package_source` が「何を持っていくか」を表すのに対し、`package_targets` は **そのSkillを各distributionのどこへ、何という名前で置くか** を表す。
 
-しかし、source boundaryだけでは「そのSkillをdistribution内のどこへ、何という名前で置くか」は決まらない。
-
-この差は現行Cultural Substrate Weavingですでに具体的に存在する。
-
-- OpenAI Skillではsource manifestのinstallable name `cultural-substrate-weaving` を使う。
-- Claude/Codexのlocale pluginでは既存adapterがSkill名を `weave` としている。
-
-したがって `installable_name` を全distributionのdirectory / Skill名へ機械的に流用すると、現行package contractと不一致になる。
-
-P2では、locale realizationごとにdistribution別 `package_targets` を持たせる。
+Method Definition、Skill identity、source boundary、host上のtarget nameを同一視しない。
 
 ## Current target names
 
-### Affinity Synthesis / ja-JP
+現在は日英とも三Skillのruntime artifactが存在する。英語siblingは `translated-draft` でありpromotion readyではないが、package topologyを検証するためのtarget nameは明示できる。
+
+### Affinity Synthesis — ja-JP / en-US
 
 ```text
 openai_skill   -> affinity-synthesis
@@ -27,7 +20,7 @@ claude_plugin  -> affinity-synthesis
 codex_plugin   -> affinity-synthesis
 ```
 
-### Iterative Inquiry Synthesis / ja-JP
+### Iterative Inquiry Synthesis — ja-JP / en-US
 
 ```text
 openai_skill   -> iterative-inquiry-synthesis
@@ -35,7 +28,7 @@ claude_plugin  -> iterative-inquiry-synthesis
 codex_plugin   -> iterative-inquiry-synthesis
 ```
 
-### Cultural Substrate Weaving / ja-JP and en-US
+### Cultural Substrate Weaving — ja-JP / en-US
 
 ```text
 openai_skill   -> cultural-substrate-weaving
@@ -43,117 +36,71 @@ claude_plugin  -> weave
 codex_plugin   -> weave
 ```
 
-CSWのClaude target `weave` は新しく命名したものではない。既存 `adapters/claude-code/locales.json` の `skill_name` をresearch suite側へ明示したものである。
+CSWの `weave` は新規命名ではなく、既存 `adapters/claude-code/locales.json` のcontractを明示したもの。Codexも現在はClaude pluginの `skills/` treeを共有するため同じtarget名を使う。
 
-Codexも現行production buildではClaude plugin directoryの `skills/` treeを共有するため、同じtarget名を使う。
+## Why target name belongs to realization packaging metadata
 
-## Why target name is realization metadata
+同じMethod・同じruntimeでもhostによってdirectory名や公開名が異なり得る。したがって `package_targets` はMethod Definitionではなくlocale realizationのpackaging metadataとして持つ。
 
-package target nameはMethod Definitionの性質ではない。
+`installable_name` は安定したSkill candidate identityだが、それだけから全host targetを推測しない。
 
-同じ方法・同じruntime entryでも、hostやdistributionによって公開名・directory名が異なり得る。
+## Scope
 
-したがってskill top-levelの恒久的identityではなく、locale realizationのpackaging metadataとして持つ。
-
-`installable_name` はskill candidateの安定した公開候補名として維持するが、それだけからすべてのhost targetを推測しない。
-
-## Scope of package targets
-
-現在 `package_targets` を要求するのは、Skill subtreeをmaterializeするdistributionだけである。
+`package_targets` を要求するのはSkill subtreeをmaterializeするdistributionだけ。
 
 - `standalone_per_skill`
 - `locale_bundle`
 
-現在のmanifestでは次の三つに対応する。
-
-- `openai_skill`
-- `claude_plugin`
-- `codex_plugin`
-
-`chatgpt_gpt` と `microsoft_copilot` は現段階ではcomposite agent realizationであり、sibling Skill directoryを作る設計をまだ確定していない。
-
-そのためP2でtarget Skill名を捏造しない。composite plannerはprimary CSW source availabilityだけを限定的に扱う。
+現在は `openai_skill`, `claude_plugin`, `codex_plugin` が対象。`chatgpt_gpt` と `microsoft_copilot` はcomposite realizationなので、sibling Skill subtree名をこの段階では要求しない。
 
 ## Validator
 
-`validate_research_package_targets.py` はbase suite validationとは別にpackage topology固有の契約を検査する。
+`scripts/validate_research_package_targets.py` はbase suite validatorと分ける。
 
-### Realized vs planned
+base validator:
+- runtime / Method Definition
+- `package_source`
+- source-root boundary
+- research metadata
 
-- realized locale: 対象となるSkill-tree distributionの `package_targets` を過不足なく持つ。
-- planned locale: staleな `package_targets` を持たない。
+package-target validator:
+- realized localeが必要targetを過不足なく持つ
+- planned localeにstale targetを残さない
+- target `skill_name` が単一の安全なpath componentである
+- 同一locale / distribution namespace内でtarget nameが衝突しない
 
-English companion Skillはまだplannedなので、英語target nameを先に予約・捏造しない。
-
-### Path-component safety
-
-`skill_name` は単一のpackage path componentとして扱えることを要求する。
-
-少なくとも次を拒否する。
-
-- empty / surrounding whitespace
-- `.` / `..`
-- `/`
-- `\\`
-- NUL
-
-ホスト名の文字種を閉じたASCII enumへ固定しない。ここで守るのはpath traversal / accidental nestingを起こさない境界である。
-
-### Collision
-
-同じlocale・同じdistribution namespace内で、複数のrealized Skillが同じtarget `skill_name` を持つ場合はfail-closedにする。
-
-たとえばClaude ja-JP bundleでAffinityとIterativeが両方 `affinity-synthesis` を名乗れば、同じ `skills/affinity-synthesis/` subtreeへ衝突するため許可しない。
-
-異なるdistribution間で同じ名前を使うこと自体は衝突ではない。
-
-## Existing adapter synchronization
-
-CSWだけは既存production adapterがすでにtarget名を所有している。
-
-回帰testは `adapters/claude-code/locales.json` を読み、ja-JP / en-USそれぞれについて
+拒否例:
 
 ```text
-suite CSW claude_plugin skill_name == adapter skill_name
-suite CSW codex_plugin  skill_name == adapter skill_name
+""
+" affinity-synthesis"
+"."
+".."
+"../other"
+"a/b"
+"a\\b"
 ```
 
-を確認する。
+## Adapter synchronization
 
-これによりresearch manifest側の `weave` が将来単独で漂流しないようにする。
-
-OpenAIについては現行の全realized Skillで、research target nameとskill `installable_name` が一致することを現在状態の回帰として固定する。
+CSWのClaude/Codex targetは既存adapterの `skill_name` と一致させる。OpenAIについては現在、全realized Skillで `skill_name == installable_name` を回帰testとして固定する。
 
 ## Planner consequence
 
-`plan_suite_layout.py` はsource readinessとdistribution target readinessを分ける。
+Skill-tree distributionで `buildable` とするには次が必要。
 
-### Skill-tree distribution
+1. status != planned
+2. runtime entry
+3. package source
+4. 当該distributionのpackage target
 
-OpenAI standalone、Claude/Codex bundleでは、次がそろったときだけそのSkillをそのdistributionでbuildableとする。
+したがってClaude targetだけ欠ければ、OpenAI/CodexはbuildableのままClaudeだけblockedにできる。
 
-1. statusがplannedではない。
-2. runtime entryがある。
-3. package sourceがある。
-4. そのdistributionのpackage targetがある。
+composite realizationはprimary CSWのruntime/package-source availabilityだけを見る。target subtree名やinternal Method parityはassertしない。
 
-したがってsourceが完全でもClaude targetだけ欠けていれば、OpenAI/Codexはbuildableのまま、Claudeだけblockedにできる。
+## Current planned bundle topology
 
-### Composite realization
-
-GPT/Copilotはtarget Skill subtree名をまだ要求しない。
-
-primary CSWのruntime/package source availabilityのみを見て、scopeに
-
-> no sibling Skill-tree target name is required here
-
-と残す。
-
-これはcomposite Method parityや将来の三Skill内部構成を保証しない。
-
-## Current layout implication
-
-ja-JP Claude/Codex bundleのtarget Skill名は次になる。
+日英ともClaude/CodexのSkill subtree候補は次になる。
 
 ```text
 skills/
@@ -162,26 +109,10 @@ skills/
   iterative-inquiry-synthesis/
 ```
 
-この段階では予定treeであり、実packageを生成した証拠ではない。
-
-en-USはcompanion realizationsがplannedなので、現時点で配置可能なのはCSW `weave` だけであり、三Skill bundle全体はblockedのままである。
-
-## Next P2 step
-
-source descriptorとtarget namingの両方が明示されたため、次はread-only package subtree plannerで具体的なtarget pathsを計算できる。
-
-次段階で確認するもの:
-
-1. `explicit_files` の相対構造がtarget subtreeへ保存されるか。
-2. `canonical_manifest` のrouterがtarget `SKILL.md`、modulesが`references/<skill_reference>`へ写る既存OpenAI/Claude shapeを表現できるか。
-3. 同一target path collisionがないか。
-4. source fileからの相対Markdown referenceがplanned tree内で切れないか。
-5. Claude/Codexで共用するSkill subtreeが二重に別規約へ分岐していないか。
-
-ここが安定するまでproduction `scripts/build.py` は変更しない。
+これは**source/target metadata上でtreeを計画できる**という意味であり、production builderが実生成できること、host routingが確認済みであること、英語版が査読済みであることを意味しない。
 
 ## Decision
 
-**P2 now distinguishes skill identity, package source boundary, and distribution-specific target name.**
+**P2は、Skill identity・package source boundary・distribution-specific target nameを別契約として保持する。**
 
-これにより「sourceがあるからどこかへ置けるはず」「installable nameを全hostへそのまま使えばよい」という暗黙前提を外し、既存CSW `weave` contractを保ったままcompanion Skillの配置を計画できる。
+次はP3でsourceとtargetの双方から予定package treeを作り、relative structure・collision・link topologyをresearch-onlyに検査する。

@@ -136,7 +136,7 @@ metadata一文だけで証拠境界を保証したと扱ってはいけない。
 
 ### 4. explicit invocationはhost上で未観測
 
-prototypeはexplicit invocationを宣言しているが、実package materializationもClaude/Codex host executionもまだ行っていない。
+prototypeはexplicit invocationを宣言しているが、実Claude/Codex host executionはまだ行っていない。
 
 したがって「暗黙起動されない」と実証したわけではない。
 
@@ -161,7 +161,7 @@ prototypeはexplicit invocationを宣言しているが、実package materializa
 - 実Claude Code / Codex host未使用
 - Skill一覧・marketplace UIとの組み合わせ未観測
 - implicit/explicit invocation実挙動未観測
-- en-US未実装
+- en-US bundle専用metadata未設計
 
 したがってmetadata statusは`prototype`のままとし、`reviewed`へ上げない。
 

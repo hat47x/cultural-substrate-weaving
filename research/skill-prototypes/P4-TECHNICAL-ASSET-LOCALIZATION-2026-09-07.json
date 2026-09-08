@@ -1,0 +1,66 @@
+{
+  "schema": "csw.technical-asset-localization/v1",
+  "status": "research-only",
+  "locale": "en-US",
+  "assets": [
+    {
+      "research_id": "affinity-synthesis",
+      "role": "representation_grammar",
+      "ja": "research/skill-prototypes/affinity-synthesis/references/REPRESENTATION.md",
+      "en": "research/skill-prototypes/affinity-synthesis/references/REPRESENTATION.en.md",
+      "localization_status": "translated-draft",
+      "english_runtime_reference": true,
+      "english_package_required": true,
+      "independent_review_required_for_public_parity": true
+    },
+    {
+      "research_id": "affinity-synthesis",
+      "role": "machine_readable_schema",
+      "shared": "research/skill-prototypes/affinity-synthesis/references/affinity-map.schema.json",
+      "localization_status": "language-neutral-shared",
+      "english_runtime_reference": true,
+      "english_package_required": true,
+      "independent_review_required_for_public_parity": false
+    },
+    {
+      "research_id": "iterative-inquiry-synthesis",
+      "role": "round_template",
+      "ja": "research/skill-prototypes/iterative-inquiry-synthesis/references/ROUND-TEMPLATE.md",
+      "en": "research/skill-prototypes/iterative-inquiry-synthesis/references/ROUND-TEMPLATE.en.md",
+      "localization_status": "translated-draft",
+      "english_runtime_reference": true,
+      "english_package_required": true,
+      "independent_review_required_for_public_parity": true
+    }
+  ],
+  "classified_non_runtime_or_not_required_in_english_package": [
+    {
+      "path": "research/skill-prototypes/affinity-synthesis/references/TEMPLATE.md",
+      "reason": "optional Japanese research output template; the English runtime output contract is self-contained and does not reference this file"
+    },
+    {
+      "path": "research/skill-prototypes/affinity-synthesis/references/HIERARCHY-AND-LINEAGE.md",
+      "reason": "research/lineage representation note, not an English runtime dependency"
+    },
+    {
+      "path": "research/skill-prototypes/affinity-synthesis/evidence/",
+      "reason": "evidence and lineage research, not runtime instruction"
+    },
+    {
+      "path": "research/skill-prototypes/affinity-synthesis/evals/",
+      "reason": "evaluation fixtures and application records; locale applicability is checked separately from runtime packaging"
+    },
+    {
+      "path": "research/skill-prototypes/iterative-inquiry-synthesis/evals/",
+      "reason": "evaluation fixtures and application records; not runtime instruction"
+    }
+  ],
+  "invariants": [
+    "an English runtime must not directly depend on Japanese explanatory technical prose when a localized counterpart is declared package-required",
+    "language-neutral schema assets may be shared across locales",
+    "translated technical assets remain distinct from Method Definition parity and independent review",
+    "untranslated evidence, eval, migration, or maintainer prose is not implicit English runtime instruction",
+    "technical localization does not authorize production promotion"
+  ],
+  "production_promotion_authorized": false
+}

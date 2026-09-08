@@ -94,6 +94,21 @@ evidence/dossier.md
 
 全research eval、全example、authoring scriptをpackageへ入れるという意味ではない。
 
+### Affinity Synthesis / en-US
+
+英語realizationでは、英語runtimeが実際に参照するものだけを明示する。
+
+```text
+SKILL.en.md
+references/METHOD.en.md
+references/REPRESENTATION.md
+references/affinity-map.schema.json
+```
+
+`REPRESENTATION.md` は共有technical assetとして扱う。日本語説明が残っていても、それを英語runtimeの追加指示として暗黙に読むことはしない。
+
+日本語 `METHOD.md`、`TEMPLATE.md`、`HIERARCHY-AND-LINEAGE.md` は英語packageへ自動混入させない。
+
 ### Iterative Inquiry Synthesis / ja-JP
 
 package source:
@@ -106,13 +121,13 @@ references/ROUND-TEMPLATE.md
 
 Layer 1はhard dependencyではないため、Affinity tree全体をIterative standaloneへ埋め込まない。
 
-今回の監査で、Iterative `SKILL.md` のProgressive Referencesが
+監査で、Iterative `SKILL.md` のProgressive Referencesが
 
 ```text
 sibling prototype ../affinity-synthesis/
 ```
 
-というfilesystem配置を前提にしていることを発見した。
+というfilesystem配置を前提にしていたことを確認した。
 
 これはOpenAI等のstandalone-per-skill targetと、`hard_dependency: false` の方法境界に合わない。
 
@@ -123,6 +138,16 @@ sibling prototype ../affinity-synthesis/
 へ変更した。
 
 方法上の依存関係は変えていない。package topologyだけを方法契約へ漏らさない修正である。
+
+### Iterative Inquiry Synthesis / en-US
+
+```text
+SKILL.en.md
+references/METHOD.en.md
+references/ROUND-TEMPLATE.md
+```
+
+`ROUND-TEMPLATE.md` は英語Skill本文で日本語研究templateとして明示され、その未翻訳本文を英語runtimeの追加指示とは扱わない。
 
 ### Cultural Substrate Weaving / ja-JP and en-US
 
@@ -137,29 +162,30 @@ CSWをcompanion prototypeと同じexplicit file listへ写し直さない。現�
 
 ## Research metadata vs package source
 
-suite manifestには既に次のresearch metadataがある。
+suite manifestには次のresearch metadataがある。
 
 - `references`
 - `evidence`
 - `evals`
+- `checks`
 
 これらと `package_source` は別の問いに答える。
 
 ### Research metadata
 
-> どのMethod Definition、evidence、evaluation recordが、このresearch candidateの監査・根拠・履歴を構成するか。
+> どのMethod Definition、evidence、evaluation record、checkが、このresearch candidateの監査・根拠・履歴を構成するか。
 
 ### Package source
 
 > このlocale realizationを一つのruntime package inputとして扱う場合、どのsource boundaryから何を取得するか。
 
-したがって全evalをpackage sourceへ入れる必要はなく、逆にruntime-facing schemaがresearch `references` の分類方法だけから自動的に同梱されるとも限らない。
+したがって全evalをpackage sourceへ入れる必要はない。逆にruntime-facing schemaがresearch metadataの分類だけから自動的に同梱されるとも限らない。
 
-今回、Affinity `references` metadataにも `REPRESENTATION.md` と `affinity-map.schema.json` を登録し、存在するreference artifactを明示した。
+package sourceに列挙するexplicit fileは、runtime entryまたはdeclared research metadataとして追跡可能であることもvalidatorで確認する。
 
 ## Planner consequence
 
-`plan_suite_layout.py` の `realized` は今後、少なくとも次を同時に要求する。
+`plan_suite_layout.py` の `realized` は次を同時に要求する。
 
 1. statusがplannedではない。
 2. runtime entryが宣言される。
@@ -183,29 +209,14 @@ planner outputにもpackage sourceを残す。後続のresearch builderは、こ
 
 まず必要なのは、production関数へ渡せるsource descriptorが安定しているかを見ることである。
 
-次に安全に進められる研究段階は、repositoryを書き換えないpure planner/rendererで、descriptorから**予定package tree**を計算することである。
+次に安全に進められる研究段階は、repositoryを書き換えないplanner/rendererで、descriptorから予定package treeを計算・構築し、relative reference preservationとtarget collisionを確認することである。
 
-例:
-
-```text
-OpenAI ja-JP
-  affinity-synthesis/
-    SKILL.md
-    references/...
-    evals/CASES.md
-    evidence/dossier.md
-
-  iterative-inquiry-synthesis/
-    SKILL.md
-    references/...
-```
-
-CSWについては既存buildのtarget namingをそのまま参照し、research builderが別の正本を作らない。
+CSWについては既存buildのtarget namingとcanonical manifestを参照し、research builderが別の方法正本を作らない。
 
 ## Decision
 
 **P2 now has an explicit source boundary between “a realization exists” and “the files needed to construct its runtime package are known.”**
 
-次はdescriptorからpackage tree planを生成し、relative reference preservationとtarget collisionを静的に確認する。
+次はdescriptorからpackage treeを生成し、relative reference preservationとtarget collisionを静的に確認する。
 
-その結果が安定するまで、canonical `src/` のKJ分離、production `build.py` のmulti-skill化、公開asset変更には進まない。
+その結果が安定するまで、production `build.py` のmulti-skill化や公開asset変更には進まない。

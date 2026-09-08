@@ -19,6 +19,8 @@ ja-JPでは次の三Skill realizationがresearch上存在する。
 
 Claude/Codexは現行production pluginで同じ `skills/` treeを共有するため、三Skillを同一locale pluginへ収録する予定である。一方、既存 `adapters/claude-code/locales.json` のdescriptionはCSW単体を前提としている。
 
+research branchではen-USにも三Skill runtime draftが存在するが、この文書はja-JP bundle metadata prototypeだけを対象とする。英語bundle metadataは別の成熟度として残す。
+
 ## Prototype metadata
 
 research source:
@@ -77,15 +79,31 @@ OpenAI metadata routing reviewでは、複合ケースは一つの万能Skillへ
 - `contains` がsuite manifestのbundle compositionと一致する。
 - invocation policyがexplicitである。
 - existing production catalogのplugin nameを維持する。
-- multi-Skill bundleではreview-requiredを外さない。
+- multi-Skill bundleではreview-required flagを外さない。
 
 文言品質やhost挙動はvalidatorで判定しない。
 
 ## Coverage planner
 
-ja-JP Claude/Codexは `prototype` と表示する。
+ja-JP Claude/Codexは、
 
-en-USはcompanion runtime自体がplannedのため、既存single-Skill locale catalogを `review-required` baselineとして維持する。
+```text
+runtime_state  = buildable
+metadata_state = prototype
+source_kind    = research-prototype
+```
+
+と表示する。
+
+en-USは三Skill runtime/package source/target自体はresearch上buildableであるが、bundle専用metadataは未作成である。したがって既存single-Skill locale catalogを、
+
+```text
+runtime_state  = buildable
+metadata_state = review-required
+source_kind    = locale-catalog
+```
+
+として維持する。
 
 これにより、次を混同しない。
 
@@ -99,19 +117,20 @@ en-USはcompanion runtime自体がplannedのため、既存single-Skill locale c
 
 - Claude Code上のSkill発見・表示・明示呼び出し挙動
 - Codex plugin上のSkill一覧・interface表示
-- 三Skillbundle説明が実際のUIで長すぎないか
+- 三Skill bundle説明が実際のUIで長すぎないか
 - plugin identityをCSW名のまま維持すべきか
 - bundle-level descriptionから個別Skill routingへの誤誘導が起きないか
-- en-US companion metadata parity
+- en-US bundle metadata parity
 - production builder generalization
 - generated artifact freshness
-- `make check` / `make release-check`
+- full checkoutでの `make research-skill-check` / `make check` / `make release-check`
 
 ## 次の実作業
 
 1. 同じ4種類程度のrouting taskを使い、bundle-level descriptionが三Skillの責務境界を歪めないかauthoring-level reviewする。
 2. 問題がなければja-JP bundle metadataを`prototype`のまま保持し、host executionで観察可能になるまで`reviewed`へ上げない。
-3. その後、research-only package materializerへ進むか、production builder generalizationへ進むかをmigration gateに照らして判断する。
+3. en-US bundle metadataは英語runtimeの存在と切り分け、専用metadata設計・reviewを別gateとして進める。
+4. その後、research-only package materializerへ進むか、production builder generalizationへ進むかをmigration gateに照らして判断する。
 
 ## 結論
 

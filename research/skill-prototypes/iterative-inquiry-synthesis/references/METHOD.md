@@ -57,6 +57,8 @@ Autonomous research / autoresearch系Skillから、次の運用上の長所を�
 
 本方法は探索・創作・分析・設計など、単一metricへ還元できないinquiryも扱う。
 
+外部Skillとの詳細な採否比較はresearch evidenceとして別管理し、runtime packageの必須参照にはしない。
+
 ## Inputs
 
 - current inquiry / question
@@ -211,12 +213,32 @@ one-round synthesisが必要なroundでcompatible realizationを利用できな�
 
 利用不能を自動的な失敗や永続停止とは扱わない。後からcompatible realizationが利用可能になれば、未実行のinput deltaとreopen対象へ戻れる。
 
+### I16. Carry-forward state is not reopen or continuation authority
+
+前roundからsemantic identity、provenance、residual、possible check等を持ち越すことと、次roundでそれらを再開することを同一視しない。
+
+次roundではまずcurrent deltaを読み、持ち越したstateのうちdeltaが実際に触れたsubsetだけをreopenする。触れていないartifactを、持ち越されているという理由だけで「再検査済み」「unchanged」とは記録しない。
+
+同様に、residualやpossible next checkが存在すること自体はcontinuation reasonではない。
+
+```text
+preserve / carry forward
+    !=
+reopen now
+    !=
+continue another round
+```
+
+この原則は特定のhandoff schemaやID形式を要求しない。
+
 ## Round Kernel
 
 ```text
 receive delta
   ↓
-locate touched artifacts / stable semantic IDs
+receive prior carried state when available
+  ↓
+locate only touched artifacts / stable semantic IDs
   ↓
 state current inquiry
   ↓
@@ -234,7 +256,7 @@ separate semantic delta from representation-only delta
   ↓
 record new / changed / unchanged / withdrawn / residual
   ↓
-continue | stop | handoff
+continue | stop | handoff for an explicit reason
   ↓
 append round snapshot
 ```
@@ -251,8 +273,11 @@ append round snapshot
 - 完了感を得るためにresidualを消す。
 - 終わらない探索を「深さ」と誤認する。
 - rendererやlayoutの変化をmeaning changeと取り違える。
+- 持ち越した全stateを毎round再活性化し、局所差分を全体再生成へ膨らませる。
 
 本方法は、**再計算能力を全面再生成ではなく差分再開へ使う**ことを生成AI向けの中心補正とする。
+
+反復回数そのものをtruth、confidence、independent supportの増加へ変換しない。
 
 ## Relationship to Affinity Synthesis
 
@@ -265,6 +290,8 @@ Layer 2が独自のgrouping / labeling algorithmを再実装しない。
 compatible one-round synthesis realizationが利用できない場合も、この所有境界は変えない。必要な統合を実行済みと称さず、未実行のinput / reopen refs / handoff reasonを残す。
 
 `affinity-map` 等のmachine-readable semantic recordがある場合は、そのstable IDsとrelation / resonance distinctionをround deltaで再利用できる。
+
+そのrecordがhandoff用のcarry-forward stateを持つ場合も、Layer 2はそれをreopen命令として扱わず、current deltaとの接触を見て局所再開対象を決める。
 
 ## Relationship to Cultural Substrate Weaving
 
@@ -287,6 +314,8 @@ Layer 2はその由来を保ったまま次round materialへ接続する。
 - 外部探索routeの仮説をsource factへ昇格させる。
 - wording / renderer / layout changeをsemantic discoveryとして数える。
 - 既存IDを毎round振り直し、局所reopenやhistory comparisonを不可能にする。
+- carried refsをすべてreopenし、未接触artifactまで毎round「確認済み」にする。
+- residualが残っていることだけを理由にroundを継続する。
 
 ## Realization boundary
 

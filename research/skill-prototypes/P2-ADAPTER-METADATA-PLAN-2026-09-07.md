@@ -4,7 +4,7 @@ Status: research adapter metadata contract; production build remains unchanged
 
 ## Purpose
 
-P2ではここまでに、runtime/package側について次を分離した。
+P2 packagingでは、runtime/package側について次を分離した。
 
 1. locale realization availability
 2. package source boundary
@@ -12,245 +12,168 @@ P2ではここまでに、runtime/package側について次を分離した。
 4. source→target Skill subtree path
 5. Skill entry frontmatter transform
 
-しかし実際のhost packageには、Skill subtreeの外側または横にadapter metadataがある。
+この文書では、その外側にあるhost adapter metadataを独立した成熟度軸として扱う。
 
-現行productionでは特に二種類がある。
-
-### OpenAI Skill
-
-各standalone Skill packageは、
+重要な境界は次である。
 
 ```text
-agents/openai.yaml
+runtime exists
+  != package target is known
+  != host metadata exists
+  != host wording is reviewed
+  != production distribution is approved
 ```
 
-を持つ。
+## Descriptor
 
-現行CSWではprofileごとに、
-
-- `interactive`: `allow_implicit_invocation: true`
-- `metered`: `allow_implicit_invocation: false`
-
-を使い分ける。
-
-`display_name`、`short_description`、`default_prompt`もSkill package固有のmetadataである。
-
-### Claude / Codex plugin
-
-ClaudeとCodexは、現行構造では同じlocale plugin directoryと `skills/` treeを共有する。
-
-plugin-level metadataはSkillごとではなくbundleに一つある。
-
-- Claude: `.claude-plugin/plugin.json`
-- Codex: `.codex-plugin/plugin.json`
-- locale catalog / marketplace metadata
-
-現行builderでは両方とも `adapters/claude-code/locales.json` をbaselineとして使う。
-
-したがってOpenAIのper-Skill metadataと、Claude/Codexのbundle metadataを一つの「Skill metadata」へ潰さない。
-
-## Separate research descriptor
-
-adapter metadataは `suite-manifest.json` のruntime/package contractへ直接混ぜず、
+adapter metadataは `suite-manifest.json` のruntime/package contractへ直接混ぜず、次で管理する。
 
 ```text
 research/skill-prototypes/adapter-metadata-plan.json
 ```
 
-で管理する。
+理由は、Skill runtime realizationが存在することと、host固有metadataが完成していることを独立に追跡するためである。
 
-理由は、runtime realizationが完成していることとhost metadataが完成していることを独立に追跡するためである。
+## OpenAI Skill metadata
 
-## OpenAI metadata states
-
-`openai_skill` は、
-
-```text
-scope = per_skill_per_profile
-```
-
-とする。
-
-profiles:
+OpenAI Skillは `per_skill_per_profile` とし、profilesは次の二つとする。
 
 ```text
 interactive
 metered
 ```
 
-各Skill × locale × profileについて、
+各 Skill × locale × profile のstatusは次の三状態を取る。
 
 ```text
-status = existing | planned
+planned | prototype | existing
 ```
 
-を宣言する。
+- `planned`: metadata source未作成。source pathを宣言しない。
+- `prototype`: research-only sourceが存在し、構文・policy検証対象だがproduction採用済みではない。
+- `existing`: production adapter sourceが存在する。
 
-`existing` ならsource fileを必須とする。
-
-`planned` ならsourceを持たせない。
-
-この差は「まだ書いていないmetadata」を既存adapterの暗黙流用で済ませないためである。
-
-### Current CSW
-
-CSW ja-JP / en-USは既存adapterをそのままsourceとして登録する。
+profile差は、現段階では方法論を二重化せず、implicit invocation policyだけに限定する。
 
 ```text
-adapters/openai-skill/<locale>/openai.interactive.yaml
-adapters/openai-skill/<locale>/openai.metered.yaml
+interactive: allow_implicit_invocation = true
+metered:     allow_implicit_invocation = false
 ```
 
-validatorはexisting sourceについて少なくとも次を確認する。
+## Current OpenAI state
 
-- fileが実在する。
-- `interface:` がある。
-- `display_name:` がある。
-- `short_description:` がある。
-- `default_prompt:` がある。
-- `policy:` がある。
-- profileに対応する `allow_implicit_invocation` 値を持つ。
+ja-JP / en-USとも、三Skillのruntime/package source/targetはresearch上buildableである。
 
-### Current companion Skills
-
-Affinity / Iterativeは、ja-JP runtime prototypeは既にある。
-
-しかしOpenAI用の、
-
-- display name
-- short description
-- default prompt
-- interactive / metered profile metadata
-
-はまだ設計していない。
-
-そのためja-JPでもmetadata statusは `planned` とする。
-
-これはruntime subtree plannerの `buildable` と矛盾しない。
-
-`buildable` は「runtime source + target pathが分かる」という限定された意味だった。
-
-host packageとして完成しているという意味ではない。
-
-## Claude / Codex bundle metadata states
-
-Claude/Codexは、
+CSWは既存production adapterを使い、Affinity / Iterativeはlocaleごとのresearch-only prototypeを使う。
 
 ```text
-scope = locale_bundle
-source_mode = locale_catalog
-source = adapters/claude-code/locales.json
+cultural-substrate-weaving = existing
+affinity-synthesis          = prototype
+iterative-inquiry-synthesis = prototype
 ```
 
-とする。
-
-現行locale catalogには、
-
-- `plugin_name`
-- `skill_name`
-- `description`
-- `display`
-
-がある。
-
-CSW単独pluginを生成してきたbaselineとしては利用可能である。
-
-ただし三Skill bundleへ拡張した後、そのuser-facing wordingを未確認のまま「review済み」と扱わない。
-
-現在は、
+したがって両localeのcoverageは、
 
 ```text
-status = existing-baseline
-review_required_for_multi_skill = true
+runtime_state     = buildable
+metadata_coverage = prototype-for-realized
 ```
 
-とする。
+となる。
 
-これはmetadataが壊れているという意味ではない。
+英語側がこの状態へ進んだのは、英語runtime draftの存在に加えて、companion OpenAI metadata sourceを実体化したためである。ただし、英語runtime自体がtranslated draftであること、metadata wordingが独立レビュー済みではないことは変わらない。
 
-単独CSW向けの表現を、三Skill bundle全体の説明としてそのまま公開してよいかを未判断として残す。
+## Companion OpenAI prototypes
 
-## Planner result dimensions
-
-`plan_adapter_metadata.py` はruntime状態とmetadata状態を別に出す。
-
-### ja-JP / OpenAI
-
-runtime:
+research-only sourceとして次を置く。
 
 ```text
-buildable
+research/skill-prototypes/adapters/openai-skill/
+  ja-JP/
+    affinity-synthesis/
+      openai.interactive.yaml
+      openai.metered.yaml
+    iterative-inquiry-synthesis/
+      openai.interactive.yaml
+      openai.metered.yaml
+  en-US/
+    affinity-synthesis/
+      openai.interactive.yaml
+      openai.metered.yaml
+    iterative-inquiry-synthesis/
+      openai.interactive.yaml
+      openai.metered.yaml
 ```
 
-三Skillともruntime/package source/targetは研究上揃っている。
+Affinity metadataは、一回のmaterial-led synthesisに留める。
 
-metadata:
+- 先に分類体系を置かない。
+- 元材料の来歴と認識状態を保つ。
+- 意味単位・束・関係・残差を立ち上げる。
+- multi-round orchestrationや文化体系探索を所有しない。
+
+英語側でも同じ境界を保ち、`one round of affinity synthesis` と `avoid predefined categories` を入口に置く。文化体系やprevious roundの語彙は持ち込まない。
+
+Iterative metadataは、round間の差分再開に留める。
+
+- 前roundを上書きしない。
+- touched regionだけをreopenする。
+- 必要な一回統合を互換realizationへ委ねる。
+- 残差・次の問い・停止理由を追跡する。
+- Layer 1 grouping/labelingを自前所有しない。
+
+英語側でも `delegate any needed one-round synthesis to an available compatible realization` と明記し、Layer 2がLayer 1のalgorithmを所有する読みを避ける。
+
+## Claude / Codex bundle metadata
+
+Claude/Codexは `locale_bundle` であり、per-Skill metadataではなくbundle-level metadataを持つ。
+
+production baselineは、
 
 ```text
-incomplete-for-realized
+adapters/claude-code/locales.json
 ```
 
-CSWはexistingだが、Affinity / Iterativeはplannedである。
+である。
 
-### en-US / OpenAI
-
-runtime:
+既存CSW単体向けcatalogを三Skill bundleの説明として暗黙流用せず、日英それぞれにresearch-only prototypeを置く。
 
 ```text
-partial
+research/skill-prototypes/adapters/claude-codex/ja-JP/bundle-metadata.json
+research/skill-prototypes/adapters/claude-codex/en-US/bundle-metadata.json
 ```
 
-CSWのみrealized。Affinity / Iterativeは英語runtime自体がplannedである。
-
-metadata:
+prototypeは既存plugin identityを保つ。
 
 ```text
-complete-for-realized
+ja-JP plugin_name = cultural-substrate-weaving-ja
+ja-JP display     = Cultural Substrate Weaving — 日本語
+
+en-US plugin_name = cultural-substrate-weaving-en
+en-US display     = Cultural Substrate Weaving — English
+
+invocation_policy = explicit
 ```
 
-現在realizedなCSWについてはinteractive / metered metadataが既にある。
+両localeとも `contains` に三Skillを明示する。descriptionでは、
 
-これは「英語OpenAI suiteが完成した」という意味ではない。
+- 文化的体系による探索 / cultural-framework exploration
+- 材料主導の一回統合 / one-round material-led synthesis
+- 複数ラウンドの探索継続 / multi-round inquiry continuation
 
-runtime gapとmetadata gapを分離した結果である。
+を責務の異なるSkillとして説明し、必要なhandoff、帰属・残差・未解決の保持、一つの万能手順へ混ぜないことを示す。
 
-### ja-JP / Claude and Codex
-
-runtime:
+planner上は両localeとも、
 
 ```text
-buildable
+runtime_state  = buildable
+metadata_state = prototype
+source_kind    = research-prototype
 ```
 
-metadata:
+となる。
 
-```text
-review-required
-```
-
-既存locale catalogをbaselineとして使えるが、三Skill bundle向けuser-facing wordingのreviewが残る。
-
-### en-US / Claude and Codex
-
-runtime:
-
-```text
-blocked
-```
-
-Affinity / Iterative英語runtimeが未実体であるため。
-
-metadata baseline自体は存在するが、runtimeが揃うまでbundle生成可能とは扱わない。
-
-## Why metadata completion is not auto-generated
-
-companion Skillのdescriptionから、OpenAI `short_description` や `default_prompt` を自動要約して埋めることはしない。
-
-それらはhost上の利用者導線とactivation behaviorへ影響する。
-
-特に `default_prompt` は方法の入口を実質的に規定し得るため、単純な生成補助文として扱わない。
-
-同様にClaude/Codex bundle descriptionも、三Skillのrole分離が利用者にどう見えるべきかを確認してから決める。
+`prototype` は reviewed / production-approved を意味しない。multi-Skill bundleなので `review_required_for_multi_skill = true` も維持する。
 
 ## Validator boundary
 
@@ -260,46 +183,84 @@ companion Skillのdescriptionから、OpenAI `short_description` や `default_pr
 - suite manifest参照
 - Skill-tree distribution集合との一致
 - OpenAI Skill / locale / profile集合の一致
-- planned / existing stateの整合
-- existing source fileと必須marker
+- planned / prototype / existing stateの整合
+- prototype / existing source fileの存在
+- OpenAI metadata必須marker
 - interactive / metered implicit invocation policy
-- Claude/Codex locale catalogの必須field
-- multi-Skill bundleでexisting-baselineを使う場合のreview-required保持
+- Claude/Codex locale catalog必須field
+- bundle prototypeのschema / locale / status
+- bundle prototypeの `contains` とsuite compositionの一致
+- bundle prototypeのexplicit invocation
+- bundle prototypeが既存plugin nameを保持すること
+- multi-Skill bundleでexisting-baselineまたはprototypeを使う場合のreview-required保持
 
-ただし文章品質や公開可否は判定しない。
+ただし、文章品質、host routing精度、公開可否、release readinessは判定しない。
 
-## Still unresolved
+## Coverage planner boundary
 
-### Companion OpenAI metadata wording
+`plan_adapter_metadata.py` は、runtime状態とmetadata状態を別々に出す。
 
-ja-JP Affinity / Iterativeについて、profile metadataそのものを設計する必要がある。
+現在の期待値は次である。
 
-まずは既存CSWから機械的に複製せず、それぞれのroleに合うdisplay / promptを決める。
+```text
+ja-JP OpenAI       buildable / prototype-for-realized
+ja-JP Claude       buildable / prototype
+ja-JP Codex        buildable / prototype
 
-### Bundle-level description review
+en-US OpenAI       buildable / prototype-for-realized
+en-US Claude        buildable / prototype
+en-US Codex         buildable / prototype
+```
 
-Claude/Codex locale bundleの名称をCSWのまま維持するか、suiteとして別名を与えるかは未決定である。
+これにより、英語側でもruntimeとmetadataの両方がresearch materializerの最低条件を満たす。したがってmetadata不足を理由にen-US Skill tree materializationを拒否する段階は終わる。
 
-既存 `cultural-substrate-weaving-ja/en` を維持すればrelease asset互換性は高いが、Skill分離後の概念境界をどこまで名前に出すかは別判断である。
+ただし、materializeできることはhost packageが完成したこと、host上で正しくroutingされること、英語表現が独立レビュー済みであることを意味しない。
 
-### Marketplace catalog composition
+## Package reference closure
 
-plugin manifest baselineが決まっても、root marketplaceで三Skill bundleをどの説明・tagで掲載するかは別に残る。
+Skill treeを実体化できても、runtime entryが参照する `references/`、`evals/`、`evidence/` が `package_source.files` から落ちていればpackageは内部的に壊れる。
 
-### GPT / Microsoft Copilot
+そのため `make research-skill-check` では、
 
-composite agent surfacesはこのadapter metadata descriptorの対象外である。
+```text
+python scripts/validate_research_package_reference_closure.py
+```
 
-それらはsibling Skill subtreeを直接materializeする設計ではなく、内部Method compositionの表現方法が別だからである。
+も実行する。
+
+この検査は日英の `explicit_files` realizationについて、runtimeから見えるpackage-local参照が宣言済みfile集合に閉じていることを確認する。CSWの `canonical_manifest` realizationは別の既存builder contractで扱うため、このvalidatorの対象外である。
+
+## Why metadata is not auto-generated from SKILL.md
+
+OpenAI `short_description` / `default_prompt` やClaude/Codex bundle descriptionは、host上の入口・routing・activation behaviorへ影響する。
+
+そのためSkill本文から機械的に要約して埋めない。
+
+特に `default_prompt` はMethodの入口を実質的に規定し得るため、runtime本文の単なる派生表示ではない。
+
+同様にbundle descriptionも、「三Skillを同梱する」ことを「三Skillを一つの方法へ混ぜる」ことへ変えてはならない。
+
+## Current unresolved items
+
+1. ja-JP / en-US companion OpenAI prototype metadataの実host routing観測または独立評価。
+2. ja-JP / en-US Claude/Codex bundle prototypeのhost表示・routing観測または独立評価。
+3. 英語runtime / Method Definition draftの独立レビュー。
+4. canonical CSW split後のCSW自身のOpenAI wording再監査。
+5. marketplace-level catalog composition。
+6. production builder generalization。
+7. complete checkoutでのresearch gate / repository gate実行。
 
 ## Decision
 
-P2 packaging contract now distinguishes runtime/package readiness from host adapter metadata coverage.
+P2 packaging contractでは、host adapter metadataをruntime/package topologyとは別の層として維持する。
 
-次の安全な研究段階は、ja-JP companion OpenAI metadataを実際に設計して、interactive / metered双方の差を持たせたうえで、既存CSW adapterとのpaired reviewを行うことである。
+現在のresearch stateは、
 
-Claude/Codexについては、三Skill bundle向けdescription/displayを先にレビューし、`existing-baseline` から `reviewed` へ上げられるかを判断する。
+- ja-JP companion OpenAI metadata: `prototype`
+- en-US companion OpenAI metadata: `prototype`
+- ja-JP Claude/Codex bundle metadata: `prototype`
+- en-US Claude/Codex bundle metadata: `prototype`
 
-その前にproduction `scripts/build.py` をmulti-Skill化しない。
+とする。
 
-complete checkoutでの実 `make check` release gateも未通過のままである。
+日英ともSkill treeをresearch-only materializerへ渡せる条件は揃ったが、production `scripts/build.py`、production adapter directory、release assetはまだmulti-Skill化しない。

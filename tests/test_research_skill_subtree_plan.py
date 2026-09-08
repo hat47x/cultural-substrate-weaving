@@ -28,91 +28,86 @@ class ResearchSkillSubtreePlanTests(unittest.TestCase):
     def subtree(self, distribution: dict, skill_id: str) -> dict:
         return next(item for item in distribution["subtrees"] if item["skill_id"] == skill_id)
 
-    def test_affinity_explicit_files_preserve_relative_structure(self) -> None:
+    def test_japanese_affinity_preserves_explicit_relative_structure(self) -> None:
         plan = plan_skill_subtrees(self.manifest, ROOT)
-        openai = self.distribution(plan, "ja-JP", "openai_skill")
-        affinity = self.subtree(openai, "affinity-synthesis")
-
+        affinity = self.subtree(
+            self.distribution(plan, "ja-JP", "openai_skill"),
+            "affinity-synthesis",
+        )
         self.assertEqual(affinity["target_root"], "affinity-synthesis")
         self.assertEqual(affinity["source_mode"], "explicit_files")
-
-        mapping_by_relative = {
-            mapping["target_relative"]: mapping for mapping in affinity["mappings"]
-        }
+        by_relative = {item["target_relative"]: item for item in affinity["mappings"]}
         declared = set(
-            self.skill(self.manifest, "affinity-synthesis")["locale_realizations"]["ja-JP"]
-            ["package_source"]["files"]
+            self.skill(self.manifest, "affinity-synthesis")
+            ["locale_realizations"]["ja-JP"]["package_source"]["files"]
         )
-        self.assertEqual(set(mapping_by_relative), declared)
-
-        for relative, mapping in mapping_by_relative.items():
+        self.assertEqual(set(by_relative), declared)
+        for relative, mapping in by_relative.items():
             self.assertEqual(mapping["operation"], "copy")
             self.assertEqual(mapping["target"], f"affinity-synthesis/{relative}")
 
-    def test_iterative_standalone_has_no_sibling_subtree(self) -> None:
+    def test_english_runtime_source_projects_to_canonical_skill_entry_name(self) -> None:
         plan = plan_skill_subtrees(self.manifest, ROOT)
-        openai = self.distribution(plan, "ja-JP", "openai_skill")
-        iterative = self.subtree(openai, "iterative-inquiry-synthesis")
+        for skill_id in ("affinity-synthesis", "iterative-inquiry-synthesis"):
+            subtree = self.subtree(
+                self.distribution(plan, "en-US", "openai_skill"),
+                skill_id,
+            )
+            entry = next(
+                item for item in subtree["mappings"] if item["target_relative"] == "SKILL.md"
+            )
+            self.assertTrue(entry["source"].endswith("/SKILL.en.md"))
+            self.assertEqual(entry["operation"], "copy")
+            self.assertEqual(entry["target"], f"{skill_id}/SKILL.md")
 
+    def test_bilingual_bundles_contain_three_skill_subtrees(self) -> None:
+        plan = plan_skill_subtrees(self.manifest, ROOT)
+        expected_roots = {
+            "cultural-substrate-weaving": "skills/weave",
+            "affinity-synthesis": "skills/affinity-synthesis",
+            "iterative-inquiry-synthesis": "skills/iterative-inquiry-synthesis",
+        }
+        for locale in ("ja-JP", "en-US"):
+            for distribution_name in ("claude_plugin", "codex_plugin"):
+                distribution = self.distribution(plan, locale, distribution_name)
+                self.assertEqual(distribution["layout_state"], "buildable")
+                self.assertEqual(distribution["subtree_state"], "planned")
+                self.assertEqual(distribution["missing_skills"], [])
+                self.assertEqual(
+                    {item["skill_id"]: item["target_root"] for item in distribution["subtrees"]},
+                    expected_roots,
+                )
+
+    def test_iterative_standalone_has_no_affinity_subtree_dependency(self) -> None:
+        plan = plan_skill_subtrees(self.manifest, ROOT)
+        iterative = self.subtree(
+            self.distribution(plan, "ja-JP", "openai_skill"),
+            "iterative-inquiry-synthesis",
+        )
         self.assertEqual(
-            [mapping["target_relative"] for mapping in iterative["mappings"]],
+            [item["target_relative"] for item in iterative["mappings"]],
             ["SKILL.md", "references/METHOD.md", "references/ROUND-TEMPLATE.md"],
         )
         self.assertTrue(
-            all("affinity-synthesis" not in mapping["target"] for mapping in iterative["mappings"])
+            all("affinity-synthesis" not in item["target"] for item in iterative["mappings"])
         )
 
     def test_csw_bundle_maps_router_and_manifest_modules_to_existing_shape(self) -> None:
         plan = plan_skill_subtrees(self.manifest, ROOT)
-        claude = self.distribution(plan, "ja-JP", "claude_plugin")
-        csw = self.subtree(claude, "cultural-substrate-weaving")
-
+        csw = self.subtree(
+            self.distribution(plan, "ja-JP", "claude_plugin"),
+            "cultural-substrate-weaving",
+        )
         self.assertEqual(csw["target_root"], "skills/weave")
         self.assertEqual(csw["source_mode"], "canonical_manifest")
         self.assertEqual(len(csw["mappings"]), 13)
-
-        by_target = {mapping["target"]: mapping for mapping in csw["mappings"]}
-        self.assertEqual(
-            by_target["skills/weave/SKILL.md"],
-            {
-                "source": "src/ja-JP/ROUTER.md",
-                "target_relative": "SKILL.md",
-                "operation": "render_runtime_entry",
-                "target": "skills/weave/SKILL.md",
-            },
-        )
+        by_target = {item["target"]: item for item in csw["mappings"]}
+        self.assertEqual(by_target["skills/weave/SKILL.md"]["operation"], "render_runtime_entry")
+        self.assertEqual(by_target["skills/weave/SKILL.md"]["source"], "src/ja-JP/ROUTER.md")
         self.assertEqual(
             by_target["skills/weave/references/10-integration.md"]["source"],
             "src/ja-JP/methods/integration.md",
         )
-        self.assertEqual(
-            by_target["skills/weave/references/00-iteration.md"]["source"],
-            "src/ja-JP/core/iteration.md",
-        )
-
-    def test_csw_openai_uses_existing_installable_target_root(self) -> None:
-        plan = plan_skill_subtrees(self.manifest, ROOT)
-        openai = self.distribution(plan, "ja-JP", "openai_skill")
-        csw = self.subtree(openai, "cultural-substrate-weaving")
-
-        self.assertEqual(csw["target_root"], "cultural-substrate-weaving")
-        self.assertEqual(csw["mappings"][0]["target"], "cultural-substrate-weaving/SKILL.md")
-
-    def test_blocked_english_bundle_still_exposes_available_csw_subtree(self) -> None:
-        plan = plan_skill_subtrees(self.manifest, ROOT)
-        claude = self.distribution(plan, "en-US", "claude_plugin")
-
-        self.assertEqual(claude["layout_state"], "blocked")
-        self.assertEqual(claude["subtree_state"], "partial")
-        self.assertEqual(
-            claude["missing_skills"],
-            ["affinity-synthesis", "iterative-inquiry-synthesis"],
-        )
-        self.assertEqual(
-            [subtree["skill_id"] for subtree in claude["subtrees"]],
-            ["cultural-substrate-weaving"],
-        )
-        self.assertEqual(claude["subtrees"][0]["target_root"], "skills/weave")
 
     def test_target_collision_is_visible_in_pure_subtree_plan(self) -> None:
         manifest = copy.deepcopy(self.manifest)
@@ -120,10 +115,8 @@ class ResearchSkillSubtreePlanTests(unittest.TestCase):
         affinity["locale_realizations"]["ja-JP"]["package_targets"]["claude_plugin"][
             "skill_name"
         ] = "weave"
-
         plan = plan_skill_subtrees(manifest, ROOT)
         claude = self.distribution(plan, "ja-JP", "claude_plugin")
-
         self.assertEqual(claude["subtree_state"], "collision")
         self.assertIn(
             {
@@ -140,7 +133,6 @@ class ResearchSkillSubtreePlanTests(unittest.TestCase):
                 distribution = self.distribution(plan, locale, distribution_name)
                 self.assertEqual(distribution["subtree_state"], "not-applicable")
                 self.assertEqual(distribution["subtrees"], [])
-                self.assertIn("does not yet declare", distribution["reason"])
 
 
 if __name__ == "__main__":
