@@ -16,7 +16,8 @@ Package-root paths are strict references. Explicit ``./`` / ``../`` paths and
 Markdown links are also strict. A bare filename inside inline code is treated
 as a reference only when it resolves to an existing sibling file; this avoids
 mistaking conceptual mentions such as ``SKILL.md`` in an evidence dossier for
-package dependencies.
+package dependencies. A bare package directory mention such as ``references/``
+is likewise not a file dependency.
 """
 
 from __future__ import annotations
@@ -74,6 +75,11 @@ def _reference_candidate(
         return None
 
     if pure.parts[0] in PACKAGE_REFERENCE_PREFIXES:
+        # package_source.files declares files, not directory concepts. Text such
+        # as ``references/`` in an evidence dossier describes package layout
+        # and must not become a missing-file dependency.
+        if len(pure.parts) == 1:
+            return None
         candidate = (package_root / Path(pure.as_posix())).resolve()
         strict = True
     elif token.startswith(("./", "../")) or from_markdown_link:
