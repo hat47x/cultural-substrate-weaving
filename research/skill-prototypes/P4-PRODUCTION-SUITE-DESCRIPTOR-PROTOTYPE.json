@@ -8,6 +8,7 @@
   "complete_checkout_validation": {
     "status": "blocked-not-run",
     "evidence": "research/skill-prototypes/P4-COMPLETE-CHECKOUT-EXECUTION-STATUS-2026-09-07.md",
+    "binding_contract": "research/skill-prototypes/P4-COMPLETE-CHECKOUT-EVIDENCE-BINDING-2026-09-08.md",
     "required_commands": ["make update-en-hashes", "make research-skill-check", "make build", "make check"],
     "production_promotion_authorized": false
   },
@@ -146,7 +147,7 @@
   "promotion_preconditions": [
     "translation-manifest source hashes are refreshed after the latest canonical Japanese changes",
     "complete-checkout research-skill-check passes",
-    "complete-checkout PASS evidence execution commit matches the current checkout HEAD",
+    "complete-checkout PASS evidence stays bound to the validated commit with at most one evidence-only recording child",
     "public installable names are rechecked immediately before canonical promotion",
     "English sibling Skill realizations receive independent review",
     "research prototype metadata is promoted into production adapter paths rather than read directly by production build",
