@@ -62,6 +62,17 @@ class ResearchCurrentP4AssetsTests(unittest.TestCase):
         manifest["suite_research_assets"].remove(evidence)
         self.assert_has_error(manifest, self.descriptor, "not registered", root=ROOT)
 
+    def test_current_translation_state_cannot_be_left_unregistered(self) -> None:
+        manifest = copy.deepcopy(self.manifest)
+        state = self.descriptor["translation_refresh"]["state"]
+        manifest["suite_research_assets"].remove(state)
+        self.assert_has_error(manifest, self.descriptor, "not registered", root=ROOT)
+
+    def test_translation_refresh_pointer_remains_non_authorizing(self) -> None:
+        translation = self.descriptor["translation_refresh"]
+        self.assertIs(translation["production_promotion_authorized"], False)
+        self.assertIn(translation["state"], current_p4_authority_paths(self.descriptor))
+
     def test_current_public_name_recheck_cannot_be_left_unregistered(self) -> None:
         manifest = copy.deepcopy(self.manifest)
         evidence = self.descriptor["public_name_recheck"]["evidence"]
@@ -111,6 +122,15 @@ class ResearchCurrentP4AssetsTests(unittest.TestCase):
             )
             manifest["suite_research_assets"].append(relative)
             self.assertEqual(validate_current_p4_assets(root, manifest, descriptor), [])
+
+    def test_descriptor_requires_translation_refresh_authority(self) -> None:
+        descriptor = copy.deepcopy(self.descriptor)
+        descriptor.pop("translation_refresh")
+        self.assert_has_error(
+            manifest=self.manifest,
+            descriptor=descriptor,
+            fragment="must declare translation_refresh",
+        )
 
     def test_descriptor_authority_path_must_be_safe(self) -> None:
         descriptor = copy.deepcopy(self.descriptor)
