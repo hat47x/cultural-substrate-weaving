@@ -83,6 +83,22 @@ def validate_production_suite_descriptor(descriptor: dict) -> list[str]:
                 f"{gate_name}.production_promotion_authorized must remain False while descriptor is design-only"
             )
 
+    translation_refresh = descriptor.get("translation_refresh")
+    if isinstance(translation_refresh, dict):
+        if set(translation_refresh) != {"state", "production_promotion_authorized"}:
+            errors.append(
+                "translation_refresh must contain only state and production_promotion_authorized"
+            )
+        state = translation_refresh.get("state")
+        if not _safe_repo_relative(state):
+            errors.append(
+                "translation_refresh.state must be a safe repository-relative path"
+            )
+        elif not _is_research_path(state):
+            errors.append(
+                "translation_refresh.state must remain under research/skill-prototypes until promotion"
+            )
+
     first_wave = descriptor.get("first_wave_distributions")
     if not isinstance(first_wave, list) or set(first_wave) != FIRST_WAVE or len(first_wave) != 3:
         errors.append(
