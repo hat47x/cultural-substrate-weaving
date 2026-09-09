@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Validate research check/planner wiring into the research gate.
 
-Three ownership rules coexist:
+Four ownership rules coexist:
 
 1. Skill-owned checks are declared in the research suite manifest and must be
    invoked directly by the `research-skill-check` Makefile target. A Skill-owned
@@ -10,14 +10,18 @@ Three ownership rules coexist:
    `scripts/validate_research_*.py`. Every such validator must be invoked
    directly by the same Makefile target, and a Makefile command using that
    convention must resolve to an existing validator file.
-3. Read-only research planners follow
+3. Cross-lane research validators follow
+   `research/skill-prototypes/scripts/validate_*.py`. Every such validator must
+   also be invoked directly by the research gate exactly once, and an unknown
+   validator path using that convention must not be wired into the gate.
+4. Read-only research planners follow
    `research/skill-prototypes/scripts/plan_*.py`. Every such planner must also
    be invoked directly by the research gate exactly once, and an unknown
    planner path using that convention must not be wired into the gate.
 
 This keeps the manifest authoritative for Skill-local checks while making the
-suite-level validator and planner filename conventions operational instead of
-relying on manual Makefile review.
+suite-level validator, cross-lane validator, and planner filename conventions
+operational instead of relying on manual Makefile review.
 """
 
 from __future__ import annotations
@@ -35,7 +39,10 @@ MAKEFILE_PATH = ROOT / "Makefile"
 TARGET = "research-skill-check"
 SUITE_VALIDATOR_GLOB = "validate_research_*.py"
 SUITE_VALIDATOR_PREFIX = "scripts/validate_research_"
-PLANNER_DIR = "research/skill-prototypes/scripts"
+RESEARCH_SCRIPT_DIR = "research/skill-prototypes/scripts"
+RESEARCH_VALIDATOR_GLOB = "validate_*.py"
+RESEARCH_VALIDATOR_PREFIX = f"{RESEARCH_SCRIPT_DIR}/validate_"
+PLANNER_DIR = RESEARCH_SCRIPT_DIR
 PLANNER_GLOB = "plan_*.py"
 PLANNER_PREFIX = f"{PLANNER_DIR}/plan_"
 
@@ -98,6 +105,15 @@ def _suite_validator_paths(root: Path = ROOT) -> set[str]:
     }
 
 
+def _research_validator_paths(root: Path = ROOT) -> set[str]:
+    scripts_dir = root / RESEARCH_SCRIPT_DIR
+    return {
+        _normalize_path(f"{RESEARCH_SCRIPT_DIR}/{path.name}")
+        for path in scripts_dir.glob(RESEARCH_VALIDATOR_GLOB)
+        if path.is_file()
+    }
+
+
 def _planner_paths(root: Path = ROOT) -> set[str]:
     scripts_dir = root / PLANNER_DIR
     return {
@@ -139,6 +155,7 @@ def validate_declared_checks(
     makefile_text: str,
     *,
     suite_validator_paths: set[str] | None = None,
+    research_validator_paths: set[str] | None = None,
     planner_paths: set[str] | None = None,
 ) -> list[str]:
     errors: list[str] = []
@@ -206,6 +223,22 @@ def validate_declared_checks(
         errors=errors,
     )
 
+    research_validators = {
+        _normalize_path(path)
+        for path in (
+            research_validator_paths
+            if research_validator_paths is not None
+            else _research_validator_paths()
+        )
+    }
+    _validate_convention_wiring(
+        label="research cross-lane validator",
+        expected=research_validators,
+        prefix=RESEARCH_VALIDATOR_PREFIX,
+        executed=executed,
+        errors=errors,
+    )
+
     planners = {
         _normalize_path(path)
         for path in planner_paths if planner_paths is not None
@@ -233,6 +266,7 @@ def main() -> int:
         manifest,
         makefile_text,
         suite_validator_paths=_suite_validator_paths(ROOT),
+        research_validator_paths=_research_validator_paths(ROOT),
         planner_paths=_planner_paths(ROOT),
     )
     if errors:
@@ -241,8 +275,8 @@ def main() -> int:
         return 1
 
     print(
-        "Research Skill-owned checks, suite-level validators, and planners are "
-        "declared/wired into research-skill-check"
+        "Research Skill-owned checks, suite-level validators, cross-lane validators, "
+        "and planners are declared/wired into research-skill-check"
     )
     return 0
 
