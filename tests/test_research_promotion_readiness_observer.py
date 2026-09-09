@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import copy
 import json
 import sys
 import unittest
@@ -20,8 +21,8 @@ from plan_promotion_readiness import (  # noqa: E402
     RELEASE_VALIDATOR,
     SOURCE_PROJECTION_PREVIEW,
     SOURCE_PROJECTION_TEST,
-    TRANSLATION_STATUS,
     _declared_field,
+    _translation_status_path,
     observe_promotion_readiness,
 )
 
@@ -83,16 +84,37 @@ class ResearchPromotionReadinessObserverTests(unittest.TestCase):
             item["notes"],
         )
 
-    def test_translation_refresh_mirrors_own_authority(self) -> None:
-        status = json.loads((ROOT / TRANSLATION_STATUS).read_text(encoding="utf-8"))
+    def test_translation_refresh_mirrors_descriptor_selected_authority(self) -> None:
+        translation_path = _translation_status_path(self.descriptor)
+        self.assertIsNotNone(translation_path)
+        assert translation_path is not None
+        status = json.loads((ROOT / translation_path).read_text(encoding="utf-8"))
         item = self.by_id["translation_refresh_state"]
+
         self.assertEqual(item["state"], status["status"])
+        self.assertEqual(item["authority"], translation_path.as_posix())
+        self.assertEqual(
+            item["details"]["authority_pointer"],
+            translation_path.as_posix(),
+        )
+        self.assertIn(translation_path.as_posix(), item["evidence"])
         self.assertEqual(
             item["details"]["expected_stale_files"],
             status["expected_stale_files"],
         )
         self.assertEqual(item["evidence_kind"], "translation-source-tracking-gate")
         self.assertNotEqual(item["evidence_kind"], "independent-review-gate")
+
+    def test_translation_authority_path_follows_descriptor_pointer(self) -> None:
+        descriptor = copy.deepcopy(self.descriptor)
+        alternate = Path("research/skill-prototypes/alternate-translation-state.json")
+        descriptor["translation_refresh"]["state"] = alternate.as_posix()
+        self.assertEqual(_translation_status_path(descriptor), alternate)
+
+    def test_translation_authority_path_rejects_unsafe_pointer(self) -> None:
+        descriptor = copy.deepcopy(self.descriptor)
+        descriptor["translation_refresh"]["state"] = "../outside.json"
+        self.assertIsNone(_translation_status_path(descriptor))
 
     def test_method_evaluation_uses_declared_metadata_field(self) -> None:
         paired = (ROOT / PAIRED_RUN).read_text(encoding="utf-8")
