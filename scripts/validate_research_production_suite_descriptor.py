@@ -134,6 +134,12 @@ def validate_production_suite_descriptor(descriptor: dict) -> list[str]:
                     errors.append(f"skill {research_id} production root must not point into research")
                 if isinstance(root_pattern, str) and "{locale}" not in root_pattern:
                     errors.append(f"skill {research_id} production root_pattern must include {{locale}}")
+                if public_name is not None:
+                    expected_root = f"src/skills/{public_name}/{{locale}}"
+                    if root_pattern != expected_root:
+                        errors.append(
+                            f"skill {research_id} sibling production root must follow proposed_installable_name: expected {expected_root}"
+                        )
                 if source.get("runtime_entry") != "SKILL.md":
                     errors.append(f"skill {research_id} production runtime_entry must be SKILL.md")
 
@@ -162,6 +168,16 @@ def validate_production_suite_descriptor(descriptor: dict) -> list[str]:
                 claude_targets.append(claude)
             if codex:
                 codex_targets.append(codex)
+            if research_id != "cultural-substrate-weaving" and public_name is not None:
+                for distribution, target in (
+                    ("openai_skill", openai),
+                    ("claude_plugin", claude),
+                    ("codex_plugin", codex),
+                ):
+                    if target is not None and target != public_name:
+                        errors.append(
+                            f"skill {research_id} {distribution} target must follow proposed_installable_name {public_name!r}"
+                        )
 
         adapter_metadata = skill.get("adapter_metadata")
         if not isinstance(adapter_metadata, dict) or set(adapter_metadata) != declared_first_wave:
@@ -182,6 +198,14 @@ def validate_production_suite_descriptor(descriptor: dict) -> list[str]:
                     errors.append(
                         f"skill {research_id} production adapter metadata must not point into research"
                     )
+                if public_name is not None:
+                    expected_pattern = (
+                        f"adapters/openai-skill/{{locale}}/{public_name}/openai.{{profile}}.yaml"
+                    )
+                    if source_pattern != expected_pattern:
+                        errors.append(
+                            f"skill {research_id} promoted OpenAI metadata path must follow proposed_installable_name: expected {expected_pattern}"
+                        )
 
     if len(public_names) != len(set(public_names)):
         errors.append("proposed_installable_name values must be unique")
