@@ -43,7 +43,7 @@ The other four files in `scope_files` still match their previously reviewed Japa
 - `ROUTER.md`: `14c0a772591a566d473379b29117e821207d3952`
 - `core/principles-and-constraints.md`: `c8d5e31c2208d21d3bc54bc4c9fc851099b524d4`
 
-This re-review does not synchronize `i18n/translation-manifest.json`, clear `expected_stale_files`, or authorize production promotion. The pending hash-refresh boundary below remains unchanged.
+The author-decision-authority integration had already refreshed the translation-manifest entries for these two bilingual pairs. They are therefore no longer part of the pending stale set. The remaining pending refresh covers four files: `core/cognitive-stance.md`, `governance/evaluation.md`, `methods/integration.md`, and `methods/transformation.md`. This partial synchronization does not authorize production promotion.
 
 ## Machine-readable state contract
 
@@ -57,23 +57,23 @@ The explanatory record in this file is paired with:
 The JSON contract separates two concepts:
 
 - `scope_files`: the six bilingual files changed by this semantic edit; this remains as history after synchronization;
-- `expected_stale_files`: files whose current Japanese bytes are intentionally not yet reflected in `translation-manifest.json`; this becomes empty after synchronization.
+- `expected_stale_files`: the subset of `scope_files` whose current Japanese bytes are not yet reflected in `translation-manifest.json`; this may shrink during a pending partial refresh and becomes empty only through the explicit synchronization transition after all entries are current.
 
-English semantic markers remain attached to `scope_files`, including after hash synchronization. The state transition therefore does not erase what semantic boundary was reviewed.
+English semantic markers remain attached to `scope_files`, including after individual manifest entries or the whole scope are synchronized. Refresh progress therefore does not erase what semantic boundary was reviewed.
 
 While status is pending, the validator requires:
 
-1. the actual stale set to equal the complete six-file scope;
-2. no other translation-manifest entry to have unexpected source-hash drift;
+1. the actual stale set to equal `expected_stale_files`, which remains a nonempty subset of `scope_files` until the explicit synchronization transition;
+2. no translation-manifest entry outside `expected_stale_files` to have unexpected source-hash drift;
 3. every declared English counterpart to exist;
-4. the English tension/emergence markers to be present;
+4. the English tension/emergence markers to be present across the full semantic-review scope;
 5. the normal refresh command to remain `make update-en-hashes`.
 
-This allows the research gate to distinguish **explicitly pending translation tracking** from an unnoticed translation regression.
+This allows the research gate to distinguish **explicitly pending translation tracking** from an unnoticed translation regression while also tolerating legitimate partial synchronization of already reviewed pairs.
 
 ## Why hashes are not updated in this record
 
-`i18n/translation-manifest.json` stores SHA-256 values computed from canonical Japanese bytes. The current connected execution environment is unavailable, so the normal repository command has not been run:
+`i18n/translation-manifest.json` stores SHA-256 values computed from canonical Japanese bytes. The remaining four stale entries have not been refreshed through the normal repository command in a complete checkout:
 
 ```text
 make update-en-hashes
@@ -98,9 +98,9 @@ make check
 
 The synchronization helper refuses to change state unless all tracked Japanese/source hashes are already synchronized and every declared English tension marker remains present. It changes only the research status JSON; it does not write translation hashes.
 
-After that transition, `scope_files` and `english_markers` remain, while `expected_stale_files` becomes empty. Do not rewrite this historical explanation to imply the hashes were already synchronized during the current research step.
+After that transition, `scope_files` and `english_markers` remain, while `expected_stale_files` becomes empty. Do not rewrite this historical explanation to imply that the remaining hashes were synchronized before the complete-checkout refresh actually occurred.
 
-The translation manifest should be considered **stale for the files above until the refresh and state transition are performed**. This is not evidence that the English text is absent; it means the byte-level source tracking has not yet been refreshed and acknowledged by the research state machine.
+The translation manifest should be considered **stale only for the files currently named in `expected_stale_files` until the refresh and state transition are performed**. This is not evidence that the English text is absent; it means byte-level source tracking for those remaining files has not yet been refreshed and acknowledged by the research state machine.
 
 ## Promotion boundary
 
