@@ -12,7 +12,6 @@ if str(PLANNER_DIR) not in sys.path:
     sys.path.insert(0, str(PLANNER_DIR))
 
 from materialize_host_package import (  # noqa: E402
-    OPENAI_PROFILES,
     READY_BUNDLE_METADATA,
     READY_OPENAI_METADATA,
     materialize_host_package,
@@ -37,6 +36,17 @@ def suite() -> dict:
 
 def metadata_plan() -> dict:
     return json.loads(METADATA_PATH.read_text(encoding="utf-8"))
+
+
+def declared_openai_profiles(metadata: dict | None = None) -> tuple[str, ...]:
+    source = metadata_plan() if metadata is None else metadata
+    config = source.get("distributions", {}).get("openai_skill")
+    if not isinstance(config, dict):
+        raise AssertionError("adapter metadata plan must declare openai_skill")
+    profiles = config.get("profiles")
+    if not isinstance(profiles, dict) or not profiles:
+        raise AssertionError("OpenAI adapter metadata plan must declare profiles")
+    return tuple(profiles)
 
 
 def target_mappings(locale: str, distribution: str) -> tuple[tuple[str, str], ...]:
@@ -88,7 +98,7 @@ def host_metadata_ready(locale: str, distribution: str) -> bool:
             locale_entry = declared.get(skill_id, {}).get(locale)
             if not isinstance(locale_entry, dict):
                 return False
-            for profile in OPENAI_PROFILES:
+            for profile in declared_openai_profiles(metadata):
                 entry = locale_entry.get(profile)
                 if not isinstance(entry, dict) or entry.get("status") not in READY_OPENAI_METADATA:
                     return False
@@ -153,7 +163,7 @@ class ResearchHostPackageCrossSurfaceParityTests(unittest.TestCase):
         return output, temp
 
     def test_openai_profiles_share_identical_skill_tree_except_host_metadata(self) -> None:
-        profiles = sorted(OPENAI_PROFILES)
+        profiles = sorted(declared_openai_profiles())
         for locale in materializable_locales("openai_skill"):
             outputs: dict[str, Path] = {}
             for profile in profiles:
@@ -183,7 +193,7 @@ class ResearchHostPackageCrossSurfaceParityTests(unittest.TestCase):
         declared = metadata["distributions"]["openai_skill"]["skills"]
 
         for locale in materializable_locales("openai_skill"):
-            for profile in sorted(OPENAI_PROFILES):
+            for profile in sorted(declared_openai_profiles(metadata)):
                 output, temp = self.materialize(
                     locale,
                     "openai_skill",
