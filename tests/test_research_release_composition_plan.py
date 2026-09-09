@@ -65,9 +65,58 @@ class ResearchReleaseCompositionPlanTests(unittest.TestCase):
             plan_text=plan_text,
         )
 
+    def test_openai_skill_directory_follows_descriptor_target_authority(self) -> None:
+        descriptor = copy.deepcopy(self.descriptor)
+        layer1 = next(
+            item for item in descriptor["skills"] if item["research_id"] == "affinity-synthesis"
+        )
+        layer1["targets"]["openai_skill"] = "material-led-release"
+        plan_text = self.plan_text + "\nmaterial-led-release/\n"
+        errors = self.errors(descriptor=descriptor, plan_text=plan_text)
+        self.assertFalse(
+            any("missing OpenAI Skill directory: material-led-release" in error for error in errors),
+            errors,
+        )
+
+    def test_claude_skill_subtree_follows_descriptor_target_authority(self) -> None:
+        descriptor = copy.deepcopy(self.descriptor)
+        csw = next(
+            item
+            for item in descriptor["skills"]
+            if item["research_id"] == "cultural-substrate-weaving"
+        )
+        csw["targets"]["claude_plugin"] = "weave-next"
+        csw["targets"]["codex_plugin"] = "weave-next"
+        plan_text = self.plan_text.replace("    weave/", "    weave-next/")
+        self.assertEqual(self.errors(descriptor=descriptor, plan_text=plan_text), [])
+
+    def test_codex_targets_must_match_claude_subtree_targets(self) -> None:
+        descriptor = copy.deepcopy(self.descriptor)
+        layer1 = next(
+            item for item in descriptor["skills"] if item["research_id"] == "affinity-synthesis"
+        )
+        layer1["targets"]["codex_plugin"] = "material-led-codex-only"
+        self.assert_has_error(
+            "Codex release Skill targets must match Claude subtree targets",
+            descriptor=descriptor,
+        )
+
     def test_research_layer1_id_cannot_reenter_as_installable_release_directory(self) -> None:
         plan_text = self.plan_text + "\naffinity-synthesis/\n  SKILL.md\n"
         self.assert_has_error("stale/forbidden marker", plan_text=plan_text)
+
+    def test_renamed_research_id_forbidden_marker_follows_descriptor_authority(self) -> None:
+        descriptor = copy.deepcopy(self.descriptor)
+        layer1 = next(
+            item for item in descriptor["skills"] if item["research_id"] == "affinity-synthesis"
+        )
+        layer1["research_id"] = "legacy-affinity-research"
+        plan_text = self.plan_text + "\nlegacy-affinity-research/\n  SKILL.md\n"
+        self.assert_has_error(
+            "stale/forbidden marker",
+            descriptor=descriptor,
+            plan_text=plan_text,
+        )
 
     def test_current_openai_package_filename_family_cannot_change_silently(self) -> None:
         package_text = self.package_text.replace(
