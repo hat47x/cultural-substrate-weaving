@@ -99,6 +99,49 @@ def _bundle_catalog_source(adapter_plan: dict) -> str:
     return source
 
 
+def _bundle_prototype_sources(adapter_plan: dict) -> dict[str, str]:
+    """Return the one shared prototype wording source per locale."""
+
+    distributions = adapter_plan["distributions"]
+    names = _bundle_distribution_names(adapter_plan)
+    first_name = names[0]
+    first_locales = distributions[first_name].get("locales")
+    if not isinstance(first_locales, dict) or not first_locales:
+        raise ValueError(f"locale_bundle distribution {first_name} must declare locales")
+
+    sources: dict[str, str] = {}
+    for locale, entry in first_locales.items():
+        if not isinstance(entry, dict):
+            raise ValueError(f"locale_bundle metadata entry must be an object: {first_name}/{locale}")
+        source = entry.get("prototype_source")
+        if not isinstance(source, str) or not _safe_repo_path(source):
+            raise ValueError(
+                f"locale_bundle prototype source is invalid: {first_name}/{locale}: {source!r}"
+            )
+        sources[locale] = source
+
+    expected_locales = set(sources)
+    for name in names[1:]:
+        locale_map = distributions[name].get("locales")
+        if not isinstance(locale_map, dict) or set(locale_map) != expected_locales:
+            actual = set(locale_map) if isinstance(locale_map, dict) else set()
+            raise ValueError(
+                "locale_bundle distributions must share one locale set: "
+                f"{name}: missing={sorted(expected_locales - actual)}, "
+                f"extra={sorted(actual - expected_locales)}"
+            )
+        for locale, expected_source in sources.items():
+            entry = locale_map.get(locale)
+            actual_source = entry.get("prototype_source") if isinstance(entry, dict) else None
+            if actual_source != expected_source:
+                raise ValueError(
+                    "locale_bundle distributions must share prototype source per locale: "
+                    f"{name}/{locale}: {actual_source!r} != {expected_source!r}"
+                )
+
+    return sources
+
+
 def plan_production_adapter_metadata_promotion(
     adapter_plan: dict,
     descriptor: dict,
@@ -169,14 +212,12 @@ def plan_production_adapter_metadata_promotion(
                     }
                 )
 
-    distributions = adapter_plan["distributions"]
     bundle_distribution_names = _bundle_distribution_names(adapter_plan)
-    bundle_plan = distributions[bundle_distribution_names[0]]
     bundle_catalog_source = _bundle_catalog_source(adapter_plan)
+    bundle_prototype_sources = _bundle_prototype_sources(adapter_plan)
     bundle_promotions: list[dict] = []
     public_skill_set = [item["proposed_installable_name"] for item in descriptor["skills"]]
-    for locale, locale_info in bundle_plan["locales"].items():
-        prototype_source = locale_info["prototype_source"]
+    for locale, prototype_source in bundle_prototype_sources.items():
         prototype = json.loads((root / prototype_source).read_text(encoding="utf-8"))
         description = prototype["description"]
         for research_id, descriptor_skill in descriptor_by_id.items():
@@ -350,13 +391,16 @@ def validate_production_adapter_metadata_promotion_plan(
         try:
             expected_shared_by = list(_bundle_distribution_names(adapter_plan))
             expected_catalog = _bundle_catalog_source(adapter_plan)
+            expected_prototype_sources = _bundle_prototype_sources(adapter_plan)
         except (KeyError, TypeError, ValueError) as exc:
             errors.append(f"bundle adapter promotion authority is invalid: {exc}")
             expected_shared_by = None
             expected_catalog = None
+            expected_prototype_sources = None
     else:
         expected_shared_by = None
         expected_catalog = None
+        expected_prototype_sources = None
 
     for item in bundle:
         if not isinstance(item, dict):
@@ -386,6 +430,10 @@ def validate_production_adapter_metadata_promotion_plan(
             errors.append(f"locale-bundle wording promotion distribution set mismatch: {locale}")
         if expected_catalog is not None and item.get("production_catalog") != expected_catalog:
             errors.append(f"locale-bundle production catalog mismatch: {locale}")
+        if expected_prototype_sources is not None and isinstance(locale, str):
+            expected_source = expected_prototype_sources.get(locale)
+            if item.get("prototype_source") != expected_source:
+                errors.append(f"locale-bundle prototype source mismatch: {locale}")
         dropped = item.get("drop_prototype_fields_from_host_catalog")
         if not isinstance(dropped, list) or "contains" not in dropped or "status" not in dropped:
             errors.append(f"prototype-only bundle fields must not enter production locale catalog: {locale}")
