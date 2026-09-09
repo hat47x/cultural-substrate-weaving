@@ -35,6 +35,7 @@ PREVIOUS_TARGETS_RELATIVE = Path(
 LOCALIZATION_RELATIVE = Path(
     "research/skill-prototypes/P4-TECHNICAL-ASSET-LOCALIZATION-2026-09-07.json"
 )
+SUITE_RELATIVE = Path("research/skill-prototypes/suite-manifest.json")
 
 
 class ResearchEnglishReviewGateTests(unittest.TestCase):
@@ -50,7 +51,12 @@ class ResearchEnglishReviewGateTests(unittest.TestCase):
         )
 
     def prepare_review_root(self, root: Path) -> None:
-        for relative in (PACKET_RELATIVE, TARGETS_RELATIVE, LOCALIZATION_RELATIVE):
+        for relative in (
+            PACKET_RELATIVE,
+            TARGETS_RELATIVE,
+            LOCALIZATION_RELATIVE,
+            SUITE_RELATIVE,
+        ):
             source = ROOT / relative
             target = root / relative
             target.parent.mkdir(parents=True, exist_ok=True)
@@ -142,6 +148,43 @@ class ResearchEnglishReviewGateTests(unittest.TestCase):
             errors = validate_english_review_gate(root, self.descriptor)
             self.assertTrue(
                 any("blob changed since snapshot" in error for error in errors),
+                errors,
+            )
+
+    def test_snapshot_must_cover_future_packaged_english_markdown(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            self.prepare_review_root(root)
+
+            suite_path = root / SUITE_RELATIVE
+            suite = json.loads(suite_path.read_text(encoding="utf-8"))
+            affinity = next(
+                skill for skill in suite["skills"] if skill["id"] == "affinity-synthesis"
+            )
+            files = affinity["locale_realizations"]["en-US"]["package_source"]["files"]
+            files.append("references/FUTURE.en.md")
+            suite_path.write_text(
+                json.dumps(suite, ensure_ascii=False, indent=2) + "\n",
+                encoding="utf-8",
+            )
+
+            future_relative = Path(
+                "research/skill-prototypes/affinity-synthesis/references/FUTURE.en.md"
+            )
+            future = root / future_relative
+            future.parent.mkdir(parents=True, exist_ok=True)
+            future.write_text(
+                "# Future packaged English review asset\n",
+                encoding="utf-8",
+            )
+
+            errors = validate_english_review_gate(root, self.descriptor)
+            self.assertTrue(
+                any(
+                    "missing packaged English Markdown review targets" in error
+                    and str(future_relative) in error
+                    for error in errors
+                ),
                 errors,
             )
 
