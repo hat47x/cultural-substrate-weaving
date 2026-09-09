@@ -220,10 +220,27 @@ def validate_projected_production_suite(manifest: dict, descriptor: dict) -> lis
         if isinstance(value, str) and value == "planned-promotion-from-research-prototype":
             errors.append("projected production suite must not retain research promotion adapter state")
 
-    if "affinity-synthesis" in actual_ids:
-        errors.append("Layer 1 research ID affinity-synthesis must not become a production Skill id")
-    if "material-led-synthesis" not in actual_ids:
-        errors.append("Layer 1 production Skill id must be material-led-synthesis")
+    for source_skill in descriptor.get("skills", []):
+        if not isinstance(source_skill, dict):
+            continue
+        research_id = source_skill.get("research_id")
+        production_id = source_skill.get("proposed_installable_name")
+        if (
+            not isinstance(research_id, str)
+            or not isinstance(production_id, str)
+            or not research_id
+            or not production_id
+            or research_id == production_id
+        ):
+            continue
+        if research_id in actual_ids:
+            errors.append(
+                f"renamed research ID {research_id} must not become a production Skill id"
+            )
+        if production_id not in actual_ids:
+            errors.append(
+                f"renamed production Skill id must be {production_id}"
+            )
 
     return errors
 
