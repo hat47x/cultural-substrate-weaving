@@ -93,6 +93,17 @@ class ResearchTechnicalAssetLocalizationTests(unittest.TestCase):
         self.assertEqual(schema["localization_status"], "language-neutral-shared")
         self.assertTrue(schema["english_package_required"])
 
+    def test_future_non_markdown_package_asset_requires_contract_classification(self) -> None:
+        suite = copy.deepcopy(self.suite)
+        skill = next(item for item in suite["skills"] if item["id"] == "affinity-synthesis")
+        files = skill["locale_realizations"]["en-US"]["package_source"]["files"]
+        files.append("references/FUTURE.schema.json")
+        self.assert_has_error(
+            self.contract,
+            suite,
+            "English package non-Markdown asset is not classified by technical localization contract",
+        )
+
 
 if __name__ == "__main__":
     unittest.main()
