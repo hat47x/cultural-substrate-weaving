@@ -42,6 +42,11 @@ class ResearchProductionSuiteDescriptorTests(unittest.TestCase):
     def test_current_descriptor_is_valid(self) -> None:
         self.assertEqual(validate_production_suite_descriptor(self.descriptor), [])
 
+    def test_translation_refresh_pointer_is_required(self) -> None:
+        descriptor = copy.deepcopy(self.descriptor)
+        descriptor.pop("translation_refresh")
+        self.assert_has_error(descriptor, "translation_refresh must be an object")
+
     def test_translation_refresh_does_not_duplicate_selected_state(self) -> None:
         descriptor = copy.deepcopy(self.descriptor)
         descriptor["translation_refresh"]["status"] = "synchronized"
