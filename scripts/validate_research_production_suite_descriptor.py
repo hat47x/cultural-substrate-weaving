@@ -29,6 +29,12 @@ EXPECTED_SKILLS = {
 FIRST_WAVE = {"openai_skill", "claude_plugin", "codex_plugin"}
 DEFERRED_COMPOSITE = {"chatgpt_gpt", "microsoft_copilot"}
 SKILL_NAME_RE = re.compile(r"^[a-z0-9]+(?:-[a-z0-9]+)*$")
+PROMOTION_GATES = (
+    "complete_checkout_validation",
+    "translation_refresh",
+    "public_name_recheck",
+    "english_independent_review",
+)
 
 
 def _safe_repo_relative(value: object) -> bool:
@@ -66,6 +72,16 @@ def validate_production_suite_descriptor(descriptor: dict) -> list[str]:
         errors.append("production promotion descriptor canonical_locale must remain ja-JP")
     if descriptor.get("locales") != ["ja-JP", "en-US"]:
         errors.append("production promotion descriptor locales must remain [ja-JP, en-US]")
+
+    for gate_name in PROMOTION_GATES:
+        gate = descriptor.get(gate_name)
+        if not isinstance(gate, dict):
+            errors.append(f"{gate_name} must be an object")
+            continue
+        if gate.get("production_promotion_authorized") is not False:
+            errors.append(
+                f"{gate_name}.production_promotion_authorized must remain False while descriptor is design-only"
+            )
 
     first_wave = descriptor.get("first_wave_distributions")
     if not isinstance(first_wave, list) or set(first_wave) != FIRST_WAVE or len(first_wave) != 3:

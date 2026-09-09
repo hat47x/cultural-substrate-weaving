@@ -150,6 +150,29 @@ class ResearchProductionSuiteDescriptorTests(unittest.TestCase):
             "release_shape.add_new_codex_release_zip_kind must remain False",
         )
 
+    def test_design_only_descriptor_rejects_gate_authorization(self) -> None:
+        for gate_name in (
+            "complete_checkout_validation",
+            "translation_refresh",
+            "public_name_recheck",
+            "english_independent_review",
+        ):
+            with self.subTest(gate_name=gate_name):
+                descriptor = copy.deepcopy(self.descriptor)
+                descriptor[gate_name]["production_promotion_authorized"] = True
+                self.assert_has_error(
+                    descriptor,
+                    f"{gate_name}.production_promotion_authorized must remain False",
+                )
+
+    def test_design_only_descriptor_requires_explicit_false_gate_authorization(self) -> None:
+        descriptor = copy.deepcopy(self.descriptor)
+        descriptor["translation_refresh"].pop("production_promotion_authorized")
+        self.assert_has_error(
+            descriptor,
+            "translation_refresh.production_promotion_authorized must remain False",
+        )
+
     def test_descriptor_must_remain_design_only(self) -> None:
         descriptor = copy.deepcopy(self.descriptor)
         descriptor["status"] = "production"
