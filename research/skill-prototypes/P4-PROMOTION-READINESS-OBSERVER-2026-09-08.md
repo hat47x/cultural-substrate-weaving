@@ -115,7 +115,9 @@ production inclusion descriptorはlegacy filenameをhard-codeせず、builder co
 
 ### current authorityの世代管理をobserverへ複製しない
 
-complete-checkout status、binding contract、public-name recheck evidence、English review packet / target snapshot / technical-asset localization、将来のcompleted reviewについて、current authorityの選択はproduction descriptorを正本とする。
+complete-checkout status、binding contract、translation refresh state、public-name recheck evidence、English review packet / target snapshot / technical-asset localization、将来のcompleted reviewについて、current authorityの選択はproduction descriptorを正本とする。
+
+translationでは、descriptorの`translation_refresh.state`が**どのstatus JSONをcurrent authorityとして読むか**を選び、選ばれたstatus JSONが`status`、`expected_stale_files`等の**状態値そのもの**を所有する。observerへdated translation status filenameを別の正本として埋め込まない。
 
 `scripts/validate_research_current_p4_assets.py` は、descriptorが現在指しているauthority fileが存在し、suite research assetとして登録されていることを検査する。過去のdated packetやstatus recordはresearch historyとして残してよい。
 
@@ -197,7 +199,7 @@ reportには`ready` / `promotion_ready` booleanを置かない。全observation�
 observerはPR lifecycleや別branchの進捗を手入力しない。
 
 - execution gate → P4 production-suite descriptor / execution record
-- translation refresh → dedicated translation status JSON
+- translation refresh → P4 descriptorの`translation_refresh.state`が選ぶdedicated translation status JSON
 - public name / English review → P4 descriptorと各evidence authority
 - current P4 authority registration → descriptor + current-P4 asset validator
 - Method parity check → suite manifestのdeclared checks

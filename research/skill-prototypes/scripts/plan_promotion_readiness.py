@@ -4,13 +4,12 @@
 from __future__ import annotations
 
 import json
-from pathlib import Path
+from pathlib import Path, PurePosixPath
 
 ROOT = Path(__file__).resolve().parents[3]
 DESCRIPTOR = Path("research/skill-prototypes/P4-PRODUCTION-SUITE-DESCRIPTOR-PROTOTYPE.json")
 BUILDER_CONTRACT = Path("research/skill-prototypes/P4-PRODUCTION-BUILDER-GENERALIZATION-CONTRACT.json")
 SUITE_MANIFEST = Path("research/skill-prototypes/suite-manifest.json")
-TRANSLATION_STATUS = Path("research/skill-prototypes/P4-CSW-TENSION-TRANSLATION-STATUS-2026-09-07.json")
 PAIRED_RUN = Path("research/skill-prototypes/evals/THREE-LAYER-PAIRED-RUN-2026-09-06.md")
 HANDOFF_CASES = Path("research/skill-prototypes/evals/CSW-HANDOFF-CASES.md")
 HANDOFF_CAPSULE = Path("research/skill-prototypes/evals/L1-L2-HANDOFF-CAPSULE-2026-09-07.md")
@@ -67,6 +66,19 @@ def _text(root: Path, relative: Path) -> str | None:
 
 def _exists(root: Path, relative: Path) -> bool:
     return (root / relative).is_file()
+
+
+def _translation_status_path(descriptor: dict) -> Path | None:
+    translation = descriptor.get("translation_refresh")
+    if not isinstance(translation, dict):
+        return None
+    value = translation.get("state")
+    if not isinstance(value, str) or not value or "\\" in value:
+        return None
+    path = PurePosixPath(value)
+    if path.is_absolute() or ".." in path.parts:
+        return None
+    return Path(value)
 
 
 def _declared_field(text: str | None, field: str) -> str | None:
@@ -184,31 +196,48 @@ def observe_promotion_readiness(root: Path = ROOT) -> dict:
         )
     )
 
-    translation = _optional_json(root, TRANSLATION_STATUS)
-    if translation is None:
-        translation_state = "not-observed-in-this-branch"
-        translation_evidence: list[str] = []
-        translation_details: dict = {}
+    translation_path = _translation_status_path(descriptor)
+    translation_pointer = (
+        descriptor.get("translation_refresh", {}).get("state")
+        if isinstance(descriptor.get("translation_refresh"), dict)
+        else None
+    )
+    if translation_path is None:
+        translation = None
+        translation_state = "current-authority-pointer-missing-or-unsafe"
+        translation_authority = DESCRIPTOR.as_posix()
+        translation_evidence = [DESCRIPTOR.as_posix()]
+        translation_details = {"authority_pointer": translation_pointer}
     else:
-        translation_state = str(translation.get("status", "invalid"))
-        translation_evidence = [TRANSLATION_STATUS.as_posix()]
-        human_record = translation.get("human_record")
-        if isinstance(human_record, str):
-            translation_evidence.append(human_record)
-        translation_details = {
-            "locale": translation.get("locale"),
-            "expected_stale_files": translation.get("expected_stale_files", []),
-            "refresh_command": translation.get("refresh_command"),
-            "followup_commands": translation.get("followup_commands", []),
-        }
+        translation = _optional_json(root, translation_path)
+        if translation is None:
+            translation_state = "current-authority-file-missing"
+            translation_authority = DESCRIPTOR.as_posix()
+            translation_evidence = [DESCRIPTOR.as_posix()]
+            translation_details = {"authority_pointer": translation_path.as_posix()}
+        else:
+            translation_state = str(translation.get("status", "invalid"))
+            translation_authority = translation_path.as_posix()
+            translation_evidence = [translation_path.as_posix()]
+            human_record = translation.get("human_record")
+            if isinstance(human_record, str):
+                translation_evidence.append(human_record)
+            translation_details = {
+                "authority_pointer": translation_path.as_posix(),
+                "locale": translation.get("locale"),
+                "expected_stale_files": translation.get("expected_stale_files", []),
+                "refresh_command": translation.get("refresh_command"),
+                "followup_commands": translation.get("followup_commands", []),
+            }
     observations.append(
         _obs(
             "translation_refresh_state",
             translation_state,
-            authority=TRANSLATION_STATUS.as_posix() if translation is not None else None,
+            authority=translation_authority,
             evidence=translation_evidence,
             evidence_kind="translation-source-tracking-gate",
             notes=[
+                "The descriptor selects the current translation-state authority; the selected status JSON owns the state value.",
                 "Hash synchronization records source tracking; it is not independent translation review.",
                 "Translation refresh state never authorizes production promotion by itself.",
             ],
