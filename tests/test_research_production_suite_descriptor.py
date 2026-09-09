@@ -93,6 +93,30 @@ class ResearchProductionSuiteDescriptorTests(unittest.TestCase):
         descriptor["first_wave_distributions"].append("chatgpt_gpt")
         self.assert_has_error(descriptor, "first_wave_distributions must contain exactly")
 
+    def test_per_skill_surfaces_follow_declared_first_wave_even_when_contract_rejects_change(self) -> None:
+        descriptor = copy.deepcopy(self.descriptor)
+        descriptor["first_wave_distributions"] = ["openai_skill", "claude_plugin"]
+        for skill in descriptor["skills"]:
+            skill["targets"].pop("codex_plugin")
+            skill["adapter_metadata"].pop("codex_plugin")
+
+        errors = validate_production_suite_descriptor(descriptor)
+        self.assertTrue(
+            any("first_wave_distributions must contain exactly" in error for error in errors),
+            errors,
+        )
+        self.assertFalse(
+            any("targets must declare exactly the first-wave distributions" in error for error in errors),
+            errors,
+        )
+        self.assertFalse(
+            any(
+                "adapter_metadata must declare exactly the first-wave distributions" in error
+                for error in errors
+            ),
+            errors,
+        )
+
     def test_codex_does_not_become_a_new_release_zip_kind_in_first_wave(self) -> None:
         descriptor = copy.deepcopy(self.descriptor)
         descriptor["release_shape"]["add_new_codex_release_zip_kind"] = True
