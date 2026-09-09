@@ -16,6 +16,7 @@ DESCRIPTOR_PATH = (
     / "skill-prototypes"
     / "P4-PRODUCTION-SUITE-DESCRIPTOR-PROTOTYPE.json"
 )
+SUITE_PATH = ROOT / "research" / "skill-prototypes" / "suite-manifest.json"
 EXPECTED_PACKET = (
     "research/skill-prototypes/"
     "P4-ENGLISH-INDEPENDENT-REVIEW-PACKET-2026-09-08.md"
@@ -43,6 +44,7 @@ EXPECTED_PAIRS = {
     ("iterative-inquiry-synthesis", "method_definition"),
     ("iterative-inquiry-synthesis", "round_template"),
 }
+SIBLING_RESEARCH_IDS = {research_id for research_id, _ in EXPECTED_PAIRS}
 
 
 def _safe_repo_relative(value: object) -> bool:
@@ -63,6 +65,88 @@ def _git_blob_sha(path: Path) -> str:
     data = path.read_bytes()
     header = f"blob {len(data)}\0".encode("ascii")
     return hashlib.sha1(header + data).hexdigest()
+
+
+def _packaged_english_markdown_paths(root: Path, errors: list[str]) -> set[str]:
+    """Return English Markdown files selected by sibling package authority.
+
+    The independent-review snapshot does not own package composition. It must
+    cover the English Markdown that the research suite already selected for the
+    two sibling runtime packages. Language-neutral non-Markdown assets remain
+    governed by their technical-asset contracts rather than being pulled into
+    language review merely because they are packaged.
+    """
+
+    suite_path = root / SUITE_PATH.relative_to(ROOT)
+    try:
+        suite = json.loads(suite_path.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError) as exc:
+        errors.append(f"cannot read research suite for English review coverage: {exc}")
+        return set()
+
+    if not isinstance(suite, dict):
+        errors.append("research suite for English review coverage must be a JSON object")
+        return set()
+
+    skills = suite.get("skills")
+    if not isinstance(skills, list):
+        errors.append("research suite skills must be a list for English review coverage")
+        return set()
+
+    found_ids: set[str] = set()
+    packaged: set[str] = set()
+    for skill in skills:
+        if not isinstance(skill, dict):
+            continue
+        research_id = skill.get("id")
+        if research_id not in SIBLING_RESEARCH_IDS:
+            continue
+        found_ids.add(research_id)
+
+        realizations = skill.get("locale_realizations")
+        english = realizations.get("en-US") if isinstance(realizations, dict) else None
+        if not isinstance(english, dict) or english.get("status") == "planned":
+            errors.append(
+                f"English review package authority is missing realized en-US sibling: {research_id}"
+            )
+            continue
+
+        package_source = english.get("package_source")
+        if not isinstance(package_source, dict) or package_source.get("mode") != "explicit_files":
+            errors.append(
+                f"English review package authority must use explicit_files for sibling: {research_id}"
+            )
+            continue
+        package_root = package_source.get("root")
+        files = package_source.get("files")
+        if not isinstance(package_root, str) or not _safe_repo_relative(package_root):
+            errors.append(
+                f"English review package root is missing or unsafe for sibling: {research_id}"
+            )
+            continue
+        if not isinstance(files, list) or not all(isinstance(item, str) for item in files):
+            errors.append(
+                f"English review package files must be a string list for sibling: {research_id}"
+            )
+            continue
+
+        for relative in files:
+            if PurePosixPath(relative).suffix.lower() != ".md":
+                continue
+            source = (PurePosixPath(package_root) / PurePosixPath(relative)).as_posix()
+            if not _safe_repo_relative(source):
+                errors.append(
+                    f"English review package Markdown path is unsafe for {research_id}: {source}"
+                )
+                continue
+            packaged.add(source)
+
+    missing_ids = sorted(SIBLING_RESEARCH_IDS - found_ids)
+    if missing_ids:
+        errors.append(
+            f"research suite is missing sibling Skills required by English review: {missing_ids}"
+        )
+    return packaged
 
 
 def _validate_targets(root: Path, targets_path: Path, errors: list[str]) -> None:
@@ -93,6 +177,7 @@ def _validate_targets(root: Path, targets_path: Path, errors: list[str]) -> None
         return
 
     actual_pairs: set[tuple[str, str]] = set()
+    targeted_english_paths: set[str] = set()
     for item in targets:
         if not isinstance(item, dict):
             errors.append("English review target entry must be an object")
@@ -111,6 +196,8 @@ def _validate_targets(root: Path, targets_path: Path, errors: list[str]) -> None
                 errors.append(f"English review target {research_id}/{artifact} missing {locale} side")
                 continue
             relative = side.get("path")
+            if locale == "en" and isinstance(relative, str):
+                targeted_english_paths.add(relative)
             expected_sha = side.get("blob_sha")
             path = _existing_file(root, relative)
             if path is None:
@@ -133,6 +220,14 @@ def _validate_targets(root: Path, targets_path: Path, errors: list[str]) -> None
     if actual_pairs != EXPECTED_PAIRS:
         errors.append(
             "English review target snapshot must contain exactly runtime, method_definition, and directly referenced explanatory technical-asset pairs for both sibling Skills"
+        )
+
+    packaged_english_paths = _packaged_english_markdown_paths(root, errors)
+    missing_packaged_targets = sorted(packaged_english_paths - targeted_english_paths)
+    if missing_packaged_targets:
+        errors.append(
+            "English review target snapshot is missing packaged English Markdown review targets: "
+            f"{missing_packaged_targets}"
         )
 
 
