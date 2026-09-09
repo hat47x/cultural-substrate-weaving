@@ -12,7 +12,7 @@ if str(PLANNER_DIR) not in sys.path:
 
 from plan_promotion_readiness import (  # noqa: E402
     DESCRIPTOR,
-    TRANSLATION_STATUS,
+    _translation_status_path,
     observe_promotion_readiness,
 )
 
@@ -22,7 +22,10 @@ class ResearchPromotionTranslationExecutionSeparationTests(unittest.TestCase):
         report = observe_promotion_readiness(ROOT)
         by_id = {item["id"]: item for item in report["observations"]}
         descriptor = json.loads((ROOT / DESCRIPTOR).read_text(encoding="utf-8"))
-        translation = json.loads((ROOT / TRANSLATION_STATUS).read_text(encoding="utf-8"))
+        translation_path = _translation_status_path(descriptor)
+        self.assertIsNotNone(translation_path)
+        assert translation_path is not None
+        translation = json.loads((ROOT / translation_path).read_text(encoding="utf-8"))
 
         translation_obs = by_id["translation_refresh_state"]
         execution_obs = by_id["complete_checkout_execution"]
@@ -30,6 +33,7 @@ class ResearchPromotionTranslationExecutionSeparationTests(unittest.TestCase):
         self.assertEqual(translation["status"], "synchronized")
         self.assertEqual(translation["expected_stale_files"], [])
         self.assertEqual(translation_obs["state"], "synchronized")
+        self.assertEqual(translation_obs["authority"], translation_path.as_posix())
         self.assertEqual(translation_obs["details"]["expected_stale_files"], [])
 
         self.assertEqual(
