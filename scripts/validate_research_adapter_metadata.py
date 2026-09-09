@@ -427,10 +427,11 @@ def validate_adapter_metadata(root: Path, plan: dict) -> list[str]:
     if isinstance(openai, dict):
         _validate_openai(root, openai, skill_ids, locales, errors)
 
-    for distribution_name in ("claude_plugin", "codex_plugin"):
-        config = metadata_distributions.get(distribution_name)
+    for distribution_name, config in metadata_distributions.items():
+        if not isinstance(config, dict) or config.get("scope") != "locale_bundle":
+            continue
         suite_distribution = distributions.get(distribution_name)
-        if isinstance(config, dict) and isinstance(suite_distribution, dict):
+        if isinstance(suite_distribution, dict):
             _validate_locale_bundle(
                 root,
                 distribution_name,
