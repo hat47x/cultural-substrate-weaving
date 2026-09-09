@@ -33,7 +33,6 @@ from materialize_skill_tree import (  # noqa: E402
 )
 
 SUPPORTED_DISTRIBUTIONS = {"openai_skill", "claude_plugin", "codex_plugin"}
-OPENAI_PROFILES = {"interactive", "metered"}
 READY_OPENAI_METADATA = {"existing", "prototype"}
 READY_BUNDLE_METADATA = {"prototype", "reviewed"}
 REPOSITORY_URL = "https://github.com/hat47x/cultural-substrate-weaving"
@@ -41,6 +40,19 @@ REPOSITORY_URL = "https://github.com/hat47x/cultural-substrate-weaving"
 
 def _load_json(path: Path) -> dict:
     return json.loads(path.read_text(encoding="utf-8"))
+
+
+def _openai_profile_names(metadata: dict) -> tuple[str, ...]:
+    distribution = metadata.get("distributions", {}).get("openai_skill")
+    if not isinstance(distribution, dict):
+        raise ValueError("adapter metadata plan must declare openai_skill")
+    profiles = distribution.get("profiles")
+    if not isinstance(profiles, dict) or not profiles:
+        raise ValueError("OpenAI adapter metadata plan must declare profiles")
+    names = tuple(profile for profile in profiles if isinstance(profile, str) and profile)
+    if len(names) != len(profiles):
+        raise ValueError("OpenAI adapter metadata profile names must be non-empty strings")
+    return names
 
 
 def _repository_version(root: Path) -> str:
@@ -99,8 +111,11 @@ def _prepare_openai_metadata(
     locale: str,
     profile: str | None,
 ) -> list[dict]:
-    if profile not in OPENAI_PROFILES:
-        raise ValueError("openai_skill host materialization requires profile=interactive or metered")
+    profiles = _openai_profile_names(metadata)
+    if profile not in profiles:
+        raise ValueError(
+            "openai_skill host materialization requires profile declared in adapter metadata"
+        )
 
     declared = metadata["distributions"]["openai_skill"]["skills"]
     mappings: list[dict] = []
@@ -341,6 +356,12 @@ def materialize_host_package(
 
 
 def main() -> int:
+    try:
+        cli_profiles = _openai_profile_names(_load_json(METADATA_PATH))
+    except (OSError, json.JSONDecodeError, TypeError, ValueError) as exc:
+        print(f"research host-package metadata authority failed: {exc}", file=sys.stderr)
+        return 1
+
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--locale", required=True)
     parser.add_argument(
@@ -348,7 +369,7 @@ def main() -> int:
         required=True,
         choices=sorted(SUPPORTED_DISTRIBUTIONS),
     )
-    parser.add_argument("--profile", choices=sorted(OPENAI_PROFILES))
+    parser.add_argument("--profile", choices=sorted(cli_profiles))
     parser.add_argument("--output", required=True, type=Path)
     args = parser.parse_args()
 
