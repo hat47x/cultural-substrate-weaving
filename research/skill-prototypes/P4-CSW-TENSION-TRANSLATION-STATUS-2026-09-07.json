@@ -21,9 +21,7 @@
     "methods/transformation.md": "c0cffe78b5da089627d5d90970f65a4947a56b35"
   },
   "expected_stale_files": [
-    "ROUTER.md",
     "core/cognitive-stance.md",
-    "core/principles-and-constraints.md",
     "governance/evaluation.md",
     "methods/integration.md",
     "methods/transformation.md"
