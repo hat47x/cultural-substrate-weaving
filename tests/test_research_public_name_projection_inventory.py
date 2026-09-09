@@ -98,6 +98,42 @@ class ResearchPublicNameProjectionInventoryTests(unittest.TestCase):
                 {"research/skill-prototypes/future-skill/SUPPORT.md"},
             )
 
+    def test_discovery_finds_bare_research_identity_without_markup(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            base = root / "research" / "skill-prototypes"
+            skill_root = base / "future-skill"
+            skill_root.mkdir(parents=True)
+            (skill_root / "SUPPORT.md").write_text(
+                "Compatible realization: affinity-synthesis.\n",
+                encoding="utf-8",
+            )
+            suite = {
+                "skills": [
+                    {
+                        "id": "future-skill",
+                        "locale_realizations": {
+                            "ja-JP": {
+                                "status": "prototype",
+                                "package_source": {
+                                    "mode": "explicit_files",
+                                    "root": "research/skill-prototypes/future-skill",
+                                    "files": ["SUPPORT.md"],
+                                },
+                            }
+                        },
+                    }
+                ]
+            }
+            (base / "suite-manifest.json").write_text(
+                json.dumps(suite, ensure_ascii=False, indent=2) + "\n",
+                encoding="utf-8",
+            )
+            self.assertEqual(
+                discover_package_selected_identity_sensitive_sources(root),
+                {"research/skill-prototypes/future-skill/SUPPORT.md"},
+            )
+
     def test_production_name_must_remain_material_led_synthesis(self) -> None:
         inventory = copy.deepcopy(self.inventory)
         inventory["production_name"] = "affinity-synthesis"
