@@ -72,6 +72,8 @@ def validate_production_suite_descriptor(descriptor: dict) -> list[str]:
         errors.append(
             "first_wave_distributions must contain exactly openai_skill, claude_plugin, codex_plugin"
         )
+    declared_first_wave = set(first_wave) if isinstance(first_wave, list) else set()
+
     deferred = descriptor.get("deferred_composite_distributions")
     if (
         not isinstance(deferred, list)
@@ -136,7 +138,7 @@ def validate_production_suite_descriptor(descriptor: dict) -> list[str]:
                     errors.append(f"skill {research_id} production runtime_entry must be SKILL.md")
 
         targets = skill.get("targets")
-        if not isinstance(targets, dict) or set(targets) != FIRST_WAVE:
+        if not isinstance(targets, dict) or set(targets) != declared_first_wave:
             errors.append(f"skill {research_id} targets must declare exactly the first-wave distributions")
         else:
             openai = _validate_name(
@@ -162,7 +164,7 @@ def validate_production_suite_descriptor(descriptor: dict) -> list[str]:
                 codex_targets.append(codex)
 
         adapter_metadata = skill.get("adapter_metadata")
-        if not isinstance(adapter_metadata, dict) or set(adapter_metadata) != FIRST_WAVE:
+        if not isinstance(adapter_metadata, dict) or set(adapter_metadata) != declared_first_wave:
             errors.append(
                 f"skill {research_id} adapter_metadata must declare exactly the first-wave distributions"
             )
