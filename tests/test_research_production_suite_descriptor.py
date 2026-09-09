@@ -42,6 +42,43 @@ class ResearchProductionSuiteDescriptorTests(unittest.TestCase):
     def test_current_descriptor_is_valid(self) -> None:
         self.assertEqual(validate_production_suite_descriptor(self.descriptor), [])
 
+    def test_translation_refresh_pointer_is_required(self) -> None:
+        descriptor = copy.deepcopy(self.descriptor)
+        descriptor.pop("translation_refresh")
+        self.assert_has_error(descriptor, "translation_refresh must be an object")
+
+    def test_translation_refresh_does_not_duplicate_selected_state(self) -> None:
+        descriptor = copy.deepcopy(self.descriptor)
+        descriptor["translation_refresh"]["status"] = "synchronized"
+        self.assert_has_error(
+            descriptor,
+            "translation_refresh must contain only state and production_promotion_authorized",
+        )
+
+    def test_translation_refresh_state_must_be_safe_repo_relative(self) -> None:
+        descriptor = copy.deepcopy(self.descriptor)
+        descriptor["translation_refresh"]["state"] = "../outside.json"
+        self.assert_has_error(
+            descriptor,
+            "translation_refresh.state must be a safe repository-relative path",
+        )
+
+    def test_translation_refresh_state_must_remain_research_authority(self) -> None:
+        descriptor = copy.deepcopy(self.descriptor)
+        descriptor["translation_refresh"]["state"] = "src/translation-status.json"
+        self.assert_has_error(
+            descriptor,
+            "translation_refresh.state must remain under research/skill-prototypes until promotion",
+        )
+
+    def test_translation_refresh_cannot_authorize_production(self) -> None:
+        descriptor = copy.deepcopy(self.descriptor)
+        descriptor["translation_refresh"]["production_promotion_authorized"] = True
+        self.assert_has_error(
+            descriptor,
+            "translation_refresh must not authorize production promotion",
+        )
+
     def test_research_id_and_layer1_public_name_are_intentionally_distinct(self) -> None:
         layer1 = self.skill(self.descriptor, "affinity-synthesis")
         self.assertEqual(layer1["research_id"], "affinity-synthesis")
