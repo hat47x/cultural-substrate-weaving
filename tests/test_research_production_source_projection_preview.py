@@ -198,6 +198,16 @@ class ResearchProductionSourceProjectionPreviewTests(unittest.TestCase):
             errors,
         )
 
+    def test_any_projected_package_file_rejects_bare_research_installable_id(self) -> None:
+        projected = copy.deepcopy(self.projected)
+        target = "src/skills/material-led-synthesis/ja-JP/evals/CASES.md"
+        projected[target]["content"] += "\nlegacy realization affinity-synthesis remains\n"
+        errors = validate_projected_contents(projected, self.plan)
+        self.assertTrue(
+            any("retains research installable identifier" in error for error in errors),
+            errors,
+        )
+
     def test_any_projected_package_file_rejects_research_sibling_path(self) -> None:
         projected = copy.deepcopy(self.projected)
         target = "src/skills/material-led-synthesis/ja-JP/evidence/dossier.md"
