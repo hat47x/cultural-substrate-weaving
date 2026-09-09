@@ -23,6 +23,28 @@ The English files were edited in the same work sequence to preserve the same met
 - Layer 1 does not acquire CSW-specific dialectical ownership;
 - evaluation does not reward correspondence count or force a third structure when tension remains unresolved.
 
+## Snapshot re-review — 2026-09-09
+
+A later author-decision-authority refactor changed two bilingual pairs after the original semantic-review snapshot:
+
+- `src/ja-JP/ROUTER.md` / `src/en-US/ROUTER.md`
+- `src/ja-JP/core/principles-and-constraints.md` / `src/en-US/core/principles-and-constraints.md`
+
+Both current Japanese/English pairs were re-read semantically rather than accepting a hash-only refresh. The revised texts remain aligned on these boundaries:
+
+- values, usage scope, loading depth, stopping, adoption, publication, and action are not independently decided by the skill;
+- author decisions and explicit delegation outside the skill remain the authority for those judgments;
+- provenance and state labels remain information surfaces rather than automatic action permissions;
+- informative misfit, resistance, and cross-field emergence remain available as cognitive material;
+- `cross_field_emergent` still does not declare contradiction resolved, and third structures are not promoted to target-side fact without independent support.
+
+The other four files in `scope_files` still match their previously reviewed Japanese source blobs. Accordingly, `reviewed_source_blobs` is advanced only for the two re-reviewed Japanese files:
+
+- `ROUTER.md`: `14c0a772591a566d473379b29117e821207d3952`
+- `core/principles-and-constraints.md`: `c8d5e31c2208d21d3bc54bc4c9fc851099b524d4`
+
+This re-review does not synchronize `i18n/translation-manifest.json`, clear `expected_stale_files`, or authorize production promotion. The pending hash-refresh boundary below remains unchanged.
+
 ## Machine-readable state contract
 
 The explanatory record in this file is paired with:
