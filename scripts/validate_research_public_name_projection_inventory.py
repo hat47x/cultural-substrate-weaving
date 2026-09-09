@@ -37,11 +37,7 @@ REQUIRED_STRUCTURED_PROJECTION_PATHS = frozenset(
         "research/skill-prototypes/adapters/claude-codex/en-US/bundle-metadata.json",
     }
 )
-IDENTITY_SENSITIVE_MARKERS = (
-    "name: affinity-synthesis",
-    "`affinity-synthesis`",
-    "../affinity-synthesis/",
-)
+IDENTITY_SENSITIVE_MARKERS = (EXPECTED_RESEARCH_ID,)
 
 
 def _load_json(path: Path) -> dict:
@@ -67,9 +63,9 @@ def discover_package_selected_identity_sensitive_sources(root: Path) -> set[str]
 
     Research files keep their historical identity. This discovery is only about
     files already selected by a sibling locale package_source. If such a file
-    contains an installable-name marker or research sibling path, production
-    projection must account for it explicitly rather than relying on a global
-    string replacement.
+    contains the research installable identity anywhere in its content,
+    production projection must account for it explicitly rather than relying on
+    a particular Markdown/YAML spelling or a global string replacement.
     """
 
     suite = _load_json(root / "research" / "skill-prototypes" / "suite-manifest.json")
