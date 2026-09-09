@@ -6,13 +6,22 @@ Status: **blocked / not run**
 
 complete checkout上のcanonical command executionは、現在も完了していない。
 
+一方、checked-in treeのtranslation状態は2026-09-10時点で同期済みである。ここはcommand execution evidenceと分けて扱う。
+
+```text
+checked-in translation refresh state: SYNCHRONIZED
+checked-in expected_stale_files: []
+```
+
+これは`make research-translation-prepare`やcomplete-checkout commandを実行したという意味ではない。現在のtreeでtranslation source hash/stateの準備差分が残っていない、というrepository stateだけを表す。
+
 確認済みの実行経路:
 
 - authorized Remote Desktop target: offline
 - isolated container -> GitHub: DNS resolution unavailable
 - GitHub Actions: repository policy上、現在は使用しない
 
-したがってsource/test/validatorがGitHub上に存在することやPRがmergeableであることを、command PASSとして扱わない。
+したがってsource/test/validatorがGitHub上に存在することやPRがmergeableであること、checked-in translation stateが同期済みであることを、complete-checkout command PASSとして扱わない。
 
 ## Current evidence-binding contract
 
@@ -66,6 +75,8 @@ translation state -> synchronized
 
 を行い、その後もう一度refresh stateとreviewed-source snapshotを検査する。
 
+現在のchecked-in treeはすでに`status=synchronized`かつ`expected_stale_files=[]`であり、canonical Japanese source hashもtranslation manifestと一致している。したがって次回の完全checkoutでは、このtargetが**差分を生まないこと（idempotence）を実行で確認する**のがV準備の主目的になる。
+
 実行後は少なくとも:
 
 ```bash
@@ -73,11 +84,11 @@ git diff -- i18n/translation-manifest.json \
   research/skill-prototypes/P4-CSW-TENSION-TRANSLATION-STATUS-2026-09-07.json
 ```
 
-等でtranslation-manifest diffとstate transitionをreviewし、意図したhash/state変更だけをcommitする。
+等でtranslation-manifestとstateにunexpected diffがないことをreviewする。差分が出た場合は、その時点でV準備を止め、source/review/stateのどこが変わったかを確認する。
 
 `reviewed_source_blobs`はhash synchronizationで書き換えない。canonical日本語sourceへ追加編集が必要なら、bilingual semantic reviewとreview identityの更新を先に行う。
 
-この準備commitを含むclean HEADをVとして固定する。
+この準備確認を含むclean HEADをVとして固定する。
 
 `make research-translation-prepare`はVを作るためのresearch-only mutation helperであり、production descriptorの`required_commands`へ追加しない。
 
@@ -149,7 +160,11 @@ recordは`research/skill-prototypes/execution/`配下へ新規作成し、Vに�
 
 ## Gate state
 
+repository stateとcommand execution stateを混同しない。
+
 ```text
+checked-in translation refresh state: SYNCHRONIZED
+checked-in expected_stale_files: []
 translation V preparation:              NOT RUN
 translation-manifest hash refresh:       NOT RUN
 translation research state transition:  NOT RUN
@@ -158,6 +173,8 @@ production build regeneration:          NOT RUN
 full repository make check:             NOT RUN
 production promotion authorization:     NO
 ```
+
+ここで`translation-manifest hash refresh: NOT RUN`と`translation research state transition: NOT RUN`は、V上でcanonical executionとしてまだ実行・記録されていないという意味である。checked-in treeが同期済みであることとは両立する。
 
 ## What remains separate
 
@@ -176,7 +193,8 @@ complete-checkout PASSだけでは次を満たしたことにならない。
 
 ```text
 make research-translation-prepare
-  -> review/commit V
+  -> confirm no preparation diff / fix and commit if needed
+  -> fix clean V
   -> make research-complete-checkout
   -> E evidence recording
 ```
