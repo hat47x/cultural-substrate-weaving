@@ -13,21 +13,62 @@ DESCRIPTOR_PATH = BASE / "P4-PRODUCTION-SUITE-DESCRIPTOR-PROTOTYPE.json"
 PLAN_PATH = BASE / "P4-RELEASE-INTERNAL-COMPOSITION-PLAN-2026-09-07.md"
 PACKAGE_PATH = ROOT / "scripts" / "package.py"
 
-OPENAI_SKILLS = (
-    "cultural-substrate-weaving",
-    "material-led-synthesis",
-    "iterative-inquiry-synthesis",
-)
-CLAUDE_SKILLS = (
-    "weave",
-    "material-led-synthesis",
-    "iterative-inquiry-synthesis",
-)
 EXPECTED_PACKAGE_PATTERNS = (
     "cultural-substrate-weaving-openai-interactive-{suffix}-v{v}.zip",
     "cultural-substrate-weaving-openai-metered-{suffix}-v{v}.zip",
     "cultural-substrate-weaving-claude-plugin-{suffix}-v{v}.zip",
 )
+
+
+def _declared_target_names(
+    descriptor: dict,
+    distribution: str,
+    errors: list[str],
+) -> tuple[str, ...]:
+    skills = descriptor.get("skills")
+    if not isinstance(skills, list):
+        errors.append("production descriptor skills must be a list")
+        return ()
+
+    names: list[str] = []
+    for item in skills:
+        if not isinstance(item, dict):
+            errors.append("production descriptor Skill entries must be objects")
+            continue
+        research_id = item.get("research_id")
+        targets = item.get("targets")
+        if not isinstance(targets, dict):
+            errors.append(f"production descriptor targets missing for {research_id}")
+            continue
+        target = targets.get(distribution)
+        if not isinstance(target, str) or not target:
+            errors.append(
+                f"production descriptor target missing for {research_id}/{distribution}"
+            )
+            continue
+        names.append(target)
+
+    if len(names) != len(set(names)):
+        errors.append(f"production descriptor has duplicate {distribution} Skill targets")
+    return tuple(names)
+
+
+def _renamed_research_ids(descriptor: dict) -> tuple[str, ...]:
+    renamed: list[str] = []
+    for item in descriptor.get("skills", []):
+        if not isinstance(item, dict):
+            continue
+        research_id = item.get("research_id")
+        production_name = item.get("proposed_installable_name")
+        if (
+            isinstance(research_id, str)
+            and isinstance(production_name, str)
+            and research_id
+            and production_name
+            and research_id != production_name
+        ):
+            renamed.append(research_id)
+    return tuple(renamed)
 
 
 def validate_release_composition_plan(
@@ -52,11 +93,22 @@ def validate_release_composition_plan(
             if release_shape.get(key) is not expected:
                 errors.append(f"release_shape.{key} must remain {expected!r}")
 
-    for skill_name in OPENAI_SKILLS:
+    openai_skills = _declared_target_names(descriptor, "openai_skill", errors)
+    claude_skills = _declared_target_names(descriptor, "claude_plugin", errors)
+    codex_skills = _declared_target_names(descriptor, "codex_plugin", errors)
+
+    if len(openai_skills) != 3:
+        errors.append("three-Skill release must declare exactly three OpenAI Skill targets")
+    if len(claude_skills) != 3:
+        errors.append("three-Skill release must declare exactly three Claude Skill targets")
+    if codex_skills != claude_skills:
+        errors.append("Codex release Skill targets must match Claude subtree targets")
+
+    for skill_name in openai_skills:
         marker = f"{skill_name}/"
         if marker not in plan_text:
             errors.append(f"release composition plan missing OpenAI Skill directory: {skill_name}")
-    for skill_name in CLAUDE_SKILLS:
+    for skill_name in claude_skills:
         marker = f"    {skill_name}/"
         if marker not in plan_text:
             errors.append(f"release composition plan missing Claude Skill subtree: {skill_name}")
@@ -75,11 +127,16 @@ def validate_release_composition_plan(
         if marker not in plan_text:
             errors.append(f"release composition plan missing required marker: {marker}")
 
-    forbidden_plan_markers = (
-        "affinity-synthesis/\n  SKILL.md",
-        "skills/\n    affinity-synthesis/",
-    "cultural-substrate-weaving-codex-plugin-<locale>-v<version>.zip",
-    )
+    forbidden_plan_markers = [
+        "cultural-substrate-weaving-codex-plugin-<locale>-v<version>.zip",
+    ]
+    for research_id in _renamed_research_ids(descriptor):
+        forbidden_plan_markers.extend(
+            (
+                f"{research_id}/\n  SKILL.md",
+                f"skills/\n    {research_id}/",
+            )
+        )
     for marker in forbidden_plan_markers:
         if marker in plan_text:
             errors.append(f"release composition plan contains stale/forbidden marker: {marker}")
