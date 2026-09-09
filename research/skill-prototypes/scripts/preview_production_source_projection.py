@@ -211,14 +211,14 @@ def validate_projected_contents(projected: dict[str, dict], plan: dict) -> list[
         by_skill_locale.setdefault(key, []).append(item)
 
         content = item.get("content", "")
-        if f"`{rename_research_id}`" in content:
-            errors.append(
-                "projected production package content retains research installable identifier: "
-                f"{item['target']}"
-            )
         if f"../{rename_research_id}/" in content:
             errors.append(
                 "projected production package content retains research sibling filesystem path: "
+                f"{item['target']}"
+            )
+        elif rename_research_id in content:
+            errors.append(
+                "projected production package content retains research installable identifier: "
                 f"{item['target']}"
             )
 
