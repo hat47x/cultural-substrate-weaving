@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import copy
 import json
 import sys
 import tempfile
@@ -12,7 +13,14 @@ PLANNER_DIR = ROOT / "research" / "skill-prototypes" / "scripts"
 if str(PLANNER_DIR) not in sys.path:
     sys.path.insert(0, str(PLANNER_DIR))
 
-from materialize_host_package import materialize_host_package  # noqa: E402
+from materialize_host_package import (  # noqa: E402
+    _openai_profile_names,
+    _prepare_openai_metadata,
+    materialize_host_package,
+)
+
+SUITE_PATH = ROOT / "research" / "skill-prototypes" / "suite-manifest.json"
+METADATA_PATH = ROOT / "research" / "skill-prototypes" / "adapter-metadata-plan.json"
 
 
 class ResearchHostPackageMaterializerTests(unittest.TestCase):
@@ -79,6 +87,36 @@ class ResearchHostPackageMaterializerTests(unittest.TestCase):
                     output / skill_name / "agents" / "openai.yaml"
                 ).read_text(encoding="utf-8")
                 self.assertIn("allow_implicit_invocation: false", text)
+
+    def test_openai_profiles_follow_adapter_metadata_authority(self) -> None:
+        suite = json.loads(SUITE_PATH.read_text(encoding="utf-8"))
+        metadata = json.loads(METADATA_PATH.read_text(encoding="utf-8"))
+        openai = metadata["distributions"]["openai_skill"]
+        openai["profiles"]["audit"] = {"expected_allow_implicit_invocation": False}
+        for skill_metadata in openai["skills"].values():
+            for locale_profiles in skill_metadata.values():
+                locale_profiles["audit"] = copy.deepcopy(locale_profiles["interactive"])
+
+        self.assertIn("audit", _openai_profile_names(metadata))
+        mappings = _prepare_openai_metadata(
+            root=ROOT,
+            suite=suite,
+            metadata=metadata,
+            locale="ja-JP",
+            profile="audit",
+        )
+        self.assertEqual(len(mappings), len(suite["skills"]))
+
+    def test_openai_rejects_undeclared_profile(self) -> None:
+        with tempfile.TemporaryDirectory() as temp_dir:
+            with self.assertRaisesRegex(ValueError, "requires profile declared"):
+                materialize_host_package(
+                    locale="ja-JP",
+                    distribution_name="openai_skill",
+                    output_root=Path(temp_dir) / "package",
+                    profile="audit",
+                    root=ROOT,
+                )
 
     def test_openai_requires_profile(self) -> None:
         with tempfile.TemporaryDirectory() as temp_dir:
