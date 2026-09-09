@@ -37,9 +37,9 @@
         "既存規則も同じ基準で再審査する。"
       ],
       "core/iteration.md": [
-        "基本単位はラウンド",
-        "空白や残差は、後から届く資料を受け取る入口になり得る。",
-        "文化体系の利用回数や軌跡の長さもKPIにしない。"
+        "CSWはこれらを別系統のround管理として再実装しない。",
+        "possibly touched prior artifact / residual:",
+        "一定数の文化体系、一定round数、`full` depth、体系固有操作の実行を要求しない。"
       ],
       "methods/system-selection.md": [
         "探索利用から帰属利用へ無言で切り替えない。",
@@ -94,9 +94,9 @@
         "Existing rules are subject to the same re-audit."
       ],
       "core/iteration.md": [
-        "The basic unit is a round",
-        "Blanks and residuals may become receptors for later material.",
-        "do not use framework count or trajectory length as a KPI."
+        "CSW does not independently re-implement this general round governance.",
+        "possibly touched prior artifact / residual:",
+        "Do not require a fixed number of frameworks, rounds, `full` depth, or framework-native operations as a CSW completion condition."
       ],
       "methods/system-selection.md": [
         "Do not silently switch from exploration to attribution.",
