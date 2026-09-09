@@ -30,10 +30,12 @@ def _safe_repo_relative(value: object) -> bool:
 
 def current_p4_authority_paths(descriptor: dict) -> list[str]:
     complete = descriptor.get("complete_checkout_validation")
+    translation = descriptor.get("translation_refresh")
     public_name = descriptor.get("public_name_recheck")
     english = descriptor.get("english_independent_review")
     if (
         not isinstance(complete, dict)
+        or not isinstance(translation, dict)
         or not isinstance(public_name, dict)
         or not isinstance(english, dict)
     ):
@@ -42,6 +44,7 @@ def current_p4_authority_paths(descriptor: dict) -> list[str]:
     values = [
         complete.get("evidence"),
         complete.get("binding_contract"),
+        translation.get("state"),
         public_name.get("evidence"),
         english.get("packet"),
         english.get("targets"),
@@ -55,10 +58,14 @@ def validate_current_p4_assets(root: Path, manifest: dict, descriptor: dict) -> 
     errors: list[str] = []
 
     complete = descriptor.get("complete_checkout_validation")
+    translation = descriptor.get("translation_refresh")
     public_name = descriptor.get("public_name_recheck")
     english = descriptor.get("english_independent_review")
     if not isinstance(complete, dict):
         errors.append("production descriptor must declare complete_checkout_validation")
+        return errors
+    if not isinstance(translation, dict):
+        errors.append("production descriptor must declare translation_refresh")
         return errors
     if not isinstance(public_name, dict):
         errors.append("production descriptor must declare public_name_recheck")
@@ -70,6 +77,7 @@ def validate_current_p4_assets(root: Path, manifest: dict, descriptor: dict) -> 
     required_fields = {
         "complete_checkout_validation.evidence": complete.get("evidence"),
         "complete_checkout_validation.binding_contract": complete.get("binding_contract"),
+        "translation_refresh.state": translation.get("state"),
         "public_name_recheck.evidence": public_name.get("evidence"),
         "english_independent_review.packet": english.get("packet"),
         "english_independent_review.targets": english.get("targets"),
