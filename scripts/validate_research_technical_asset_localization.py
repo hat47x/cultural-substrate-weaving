@@ -21,6 +21,7 @@ EXPECTED_ASSETS = {
     ("affinity-synthesis", "machine_readable_schema"),
     ("iterative-inquiry-synthesis", "round_template"),
 }
+SIBLING_RESEARCH_IDS = {research_id for research_id, _ in EXPECTED_ASSETS}
 
 
 def _safe_repo_relative(value: object) -> bool:
@@ -35,6 +36,76 @@ def _file(relative: object) -> Path | None:
         return None
     path = ROOT / str(relative)
     return path if path.is_file() else None
+
+
+def _packaged_non_markdown_paths(suite: dict, errors: list[str]) -> set[str]:
+    """Return non-Markdown files selected for sibling en-US runtime packages.
+
+    English Markdown prose is governed by the independent-review snapshot. Any
+    other packaged file must still be explicitly classified by the technical
+    localization contract so language-neutral schemas/scripts/assets cannot
+    silently enter the English package outside both gates.
+    """
+
+    skills = suite.get("skills")
+    if not isinstance(skills, list):
+        errors.append("research suite skills must be a list for technical localization coverage")
+        return set()
+
+    found_ids: set[str] = set()
+    packaged: set[str] = set()
+    for skill in skills:
+        if not isinstance(skill, dict):
+            continue
+        research_id = skill.get("id")
+        if research_id not in SIBLING_RESEARCH_IDS:
+            continue
+        found_ids.add(research_id)
+
+        realizations = skill.get("locale_realizations")
+        english = realizations.get("en-US") if isinstance(realizations, dict) else None
+        if not isinstance(english, dict) or english.get("status") == "planned":
+            errors.append(
+                f"technical localization package authority is missing realized en-US sibling: {research_id}"
+            )
+            continue
+
+        package_source = english.get("package_source")
+        if not isinstance(package_source, dict) or package_source.get("mode") != "explicit_files":
+            errors.append(
+                f"technical localization package authority must use explicit_files for sibling: {research_id}"
+            )
+            continue
+        package_root = package_source.get("root")
+        files = package_source.get("files")
+        if not isinstance(package_root, str) or not _safe_repo_relative(package_root):
+            errors.append(
+                f"technical localization package root is missing or unsafe for sibling: {research_id}"
+            )
+            continue
+        if not isinstance(files, list) or not all(isinstance(item, str) for item in files):
+            errors.append(
+                f"technical localization package files must be a string list for sibling: {research_id}"
+            )
+            continue
+
+        for relative in files:
+            if PurePosixPath(relative).suffix.lower() == ".md":
+                continue
+            source = (PurePosixPath(package_root) / PurePosixPath(relative)).as_posix()
+            if not _safe_repo_relative(source):
+                errors.append(
+                    f"technical localization package asset path is unsafe for {research_id}: {source}"
+                )
+                continue
+            packaged.add(source)
+
+    missing_ids = sorted(SIBLING_RESEARCH_IDS - found_ids)
+    if missing_ids:
+        errors.append(
+            f"research suite is missing sibling Skills required by technical localization: {missing_ids}"
+        )
+    return packaged
 
 
 def validate_localization(contract: dict, suite: dict) -> list[str]:
@@ -54,6 +125,7 @@ def validate_localization(contract: dict, suite: dict) -> list[str]:
         return errors + ["technical localization assets must be a list"]
 
     actual_pairs: set[tuple[str, str]] = set()
+    covered_english_package_paths: set[str] = set()
     for item in assets:
         if not isinstance(item, dict):
             errors.append("technical localization asset entry must be an object")
@@ -65,20 +137,27 @@ def validate_localization(contract: dict, suite: dict) -> list[str]:
 
         status = item.get("localization_status")
         if status == "translated-draft":
-            ja = _file(item.get("ja"))
-            en = _file(item.get("en"))
+            ja_relative = item.get("ja")
+            en_relative = item.get("en")
+            ja = _file(ja_relative)
+            en = _file(en_relative)
             if ja is None:
-                errors.append(f"localized technical asset missing Japanese source: {item.get('ja')}")
+                errors.append(f"localized technical asset missing Japanese source: {ja_relative}")
             if en is None:
-                errors.append(f"localized technical asset missing English draft: {item.get('en')}")
+                errors.append(f"localized technical asset missing English draft: {en_relative}")
+            if _safe_repo_relative(en_relative):
+                covered_english_package_paths.add(str(en_relative))
             if item.get("english_runtime_reference") is not True:
                 errors.append(f"translated runtime technical asset must be runtime-referenced: {research_id}/{role}")
             if item.get("english_package_required") is not True:
                 errors.append(f"translated runtime technical asset must be package-required: {research_id}/{role}")
         elif status == "language-neutral-shared":
-            shared = _file(item.get("shared"))
+            shared_relative = item.get("shared")
+            shared = _file(shared_relative)
             if shared is None:
-                errors.append(f"shared technical asset missing: {item.get('shared')}")
+                errors.append(f"shared technical asset missing: {shared_relative}")
+            if _safe_repo_relative(shared_relative):
+                covered_english_package_paths.add(str(shared_relative))
             if item.get("english_package_required") is not True:
                 errors.append(f"shared runtime technical asset must be package-required: {research_id}/{role}")
         else:
@@ -86,6 +165,16 @@ def validate_localization(contract: dict, suite: dict) -> list[str]:
 
     if actual_pairs != EXPECTED_ASSETS:
         errors.append("technical localization asset set has drifted")
+
+    packaged_non_markdown = _packaged_non_markdown_paths(suite, errors)
+    missing_technical_classification = sorted(
+        packaged_non_markdown - covered_english_package_paths
+    )
+    if missing_technical_classification:
+        errors.append(
+            "English package non-Markdown asset is not classified by technical localization contract: "
+            f"{missing_technical_classification}"
+        )
 
     skill_by_id = {
         skill.get("id"): skill
