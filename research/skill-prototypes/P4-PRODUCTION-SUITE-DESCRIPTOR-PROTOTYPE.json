@@ -12,6 +12,10 @@
     "required_commands": ["make update-en-hashes", "make research-skill-check", "make build", "make check"],
     "production_promotion_authorized": false
   },
+  "translation_refresh": {
+    "state": "research/skill-prototypes/P4-CSW-TENSION-TRANSLATION-STATUS-2026-09-07.json",
+    "production_promotion_authorized": false
+  },
   "public_name_recheck": {
     "date": "2026-09-07",
     "evidence": "research/skill-prototypes/P4-PUBLIC-NAME-RECHECK-2026-09-07.md",
