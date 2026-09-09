@@ -169,7 +169,7 @@ def project_production_source_contents(plan: dict, root: Path = ROOT) -> dict[st
     projected: dict[str, dict] = {}
     rename_research_id, rename_production_name = _rename_pair(plan)
     for skill in plan.get("skills", []):
-        if not isinstance(skill, dict) or skill.get("research_id") == "cultural-substrate-weaving":
+        if not isinstance(skill, dict) or skill.get("state") != "planned-locale-tree-promotion":
             continue
         production_name = skill.get("production_name")
         for locale, locale_plan in skill.get("locales", {}).items():
@@ -223,7 +223,7 @@ def validate_projected_contents(projected: dict[str, dict], plan: dict) -> list[
             )
 
     for skill in plan.get("skills", []):
-        if not isinstance(skill, dict) or skill.get("research_id") == "cultural-substrate-weaving":
+        if not isinstance(skill, dict) or skill.get("state") != "planned-locale-tree-promotion":
             continue
         research_id = skill["research_id"]
         production_name = skill["production_name"]
