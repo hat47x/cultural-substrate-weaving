@@ -34,11 +34,16 @@ class ResearchProductionAdapterMetadataPromotionTests(unittest.TestCase):
             self.locale_catalog,
         )
 
-    def errors(self, plan: dict | None = None) -> list[str]:
+    def errors(
+        self,
+        plan: dict | None = None,
+        adapter_plan: dict | None = None,
+    ) -> list[str]:
         return validate_production_adapter_metadata_promotion_plan(
             self.plan if plan is None else plan,
             self.descriptor,
             self.locale_catalog,
+            adapter_plan=self.adapter_plan if adapter_plan is None else adapter_plan,
         )
 
     def openai_item(self, research_id: str, locale: str, profile: str, plan: dict | None = None) -> dict:
@@ -60,6 +65,47 @@ class ResearchProductionAdapterMetadataPromotionTests(unittest.TestCase):
         self.assertFalse(self.plan["writes_production_metadata"])
         self.assertEqual(len(self.plan["openai_profile_promotions"]), 12)
         self.assertEqual(len(self.plan["locale_bundle_promotions"]), 2)
+
+    def test_openai_profiles_follow_adapter_plan_authority(self) -> None:
+        adapter_plan = copy.deepcopy(self.adapter_plan)
+        openai = adapter_plan["distributions"]["openai_skill"]
+        openai["profiles"]["audit"] = {"expected_allow_implicit_invocation": False}
+        for research_id, skill_metadata in openai["skills"].items():
+            for locale, locale_profiles in skill_metadata.items():
+                audit = copy.deepcopy(locale_profiles["interactive"])
+                if research_id == "cultural-substrate-weaving":
+                    audit["source"] = f"adapters/openai-skill/{locale}/openai.audit.yaml"
+                locale_profiles["audit"] = audit
+
+        plan = plan_production_adapter_metadata_promotion(
+            adapter_plan,
+            self.descriptor,
+            self.locale_catalog,
+        )
+        self.assertEqual(
+            {item["profile"] for item in plan["openai_profile_promotions"]},
+            {"interactive", "metered", "audit"},
+        )
+        self.assertEqual(len(plan["openai_profile_promotions"]), 18)
+        self.assertEqual(self.errors(plan, adapter_plan), [])
+
+    def test_locale_bundle_distributions_follow_adapter_plan_authority(self) -> None:
+        adapter_plan = copy.deepcopy(self.adapter_plan)
+        adapter_plan["distributions"]["future_plugin"] = copy.deepcopy(
+            adapter_plan["distributions"]["claude_plugin"]
+        )
+
+        plan = plan_production_adapter_metadata_promotion(
+            adapter_plan,
+            self.descriptor,
+            self.locale_catalog,
+        )
+        for item in plan["locale_bundle_promotions"]:
+            self.assertEqual(
+                item["shared_by"],
+                ["claude_plugin", "codex_plugin", "future_plugin"],
+            )
+        self.assertEqual(self.errors(plan, adapter_plan), [])
 
     def test_claude_and_codex_research_bundle_sources_are_shared_per_locale(self) -> None:
         distributions = self.adapter_plan["distributions"]
