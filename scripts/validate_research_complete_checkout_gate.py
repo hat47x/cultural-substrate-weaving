@@ -285,6 +285,8 @@ def validate_complete_checkout_gate(
                 )
             for marker in (
                 "Status: **blocked / not run**",
+                "checked-in translation refresh state: SYNCHRONIZED",
+                "checked-in expected_stale_files: []",
                 "translation-manifest hash refresh:       NOT RUN",
                 "translation research state transition:  NOT RUN",
                 "complete-checkout research-skill-check: NOT RUN",
