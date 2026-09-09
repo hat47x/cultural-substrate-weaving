@@ -36,44 +36,59 @@ class ResearchTranslationRefreshStateTests(unittest.TestCase):
             self.manifest if manifest is None else manifest,
         )
 
-    def assert_has_error(self, status: dict, fragment: str) -> None:
-        errors = self.errors(status=status)
+    def assert_has_error(
+        self,
+        status: dict,
+        fragment: str,
+        *,
+        manifest: dict | None = None,
+    ) -> None:
+        errors = self.errors(status=status, manifest=manifest)
         self.assertTrue(
             any(fragment in error for error in errors),
             f"expected error containing {fragment!r}; got {errors!r}",
         )
 
-    def test_current_pending_refresh_state_is_valid(self) -> None:
+    def test_current_synchronized_refresh_state_is_valid(self) -> None:
         self.assertEqual(self.errors(), [])
-        expected_stale = set(self.status["expected_stale_files"])
-        scope = set(self.status["scope_files"])
-        self.assertEqual(
-            expected_stale,
-            {
-                "core/cognitive-stance.md",
-                "governance/evaluation.md",
-                "methods/integration.md",
-                "methods/transformation.md",
-            },
-        )
-        self.assertLess(expected_stale, scope)
+        self.assertEqual(self.status["status"], "synchronized")
+        self.assertEqual(self.status["expected_stale_files"], [])
+        self.assertEqual(len(self.status["scope_files"]), 6)
+
+    def test_partial_pending_refresh_state_can_remain_valid(self) -> None:
+        status = copy.deepcopy(self.status)
+        status["status"] = "pending-review-hash-refresh"
+        status["expected_stale_files"] = ["governance/evaluation.md"]
+
+        manifest = copy.deepcopy(self.manifest)
+        old = "0" * 64
+        manifest["files"]["governance/evaluation.md"]["ja_sha256"] = old
+        manifest["files"]["governance/evaluation.md"]["en_source_ja_sha256"] = old
+
+        self.assertEqual(self.errors(status=status, manifest=manifest), [])
 
     def test_pending_scope_cannot_hide_a_stale_file(self) -> None:
         status = copy.deepcopy(self.status)
-        status["expected_stale_files"].remove("governance/evaluation.md")
-        self.assert_has_error(status, "undeclared stale files")
+        status["status"] = "pending-review-hash-refresh"
+        status["expected_stale_files"] = ["core/cognitive-stance.md"]
+
+        manifest = copy.deepcopy(self.manifest)
+        old = "0" * 64
+        manifest["files"]["governance/evaluation.md"]["ja_sha256"] = old
+        manifest["files"]["governance/evaluation.md"]["en_source_ja_sha256"] = old
+
+        self.assert_has_error(status, "undeclared stale files", manifest=manifest)
 
     def test_pending_state_requires_a_remaining_stale_file(self) -> None:
         status = copy.deepcopy(self.status)
+        status["status"] = "pending-review-hash-refresh"
         status["expected_stale_files"] = []
         self.assert_has_error(status, "must keep at least one expected_stale_file")
 
     def test_pending_scope_cannot_claim_an_unchanged_file_is_stale(self) -> None:
         status = copy.deepcopy(self.status)
-        extra = "core/activation.md"
-        status["scope_files"].append(extra)
-        status["expected_stale_files"].append(extra)
-        status["english_markers"][extra] = ["#"]
+        status["status"] = "pending-review-hash-refresh"
+        status["expected_stale_files"] = ["core/cognitive-stance.md"]
         self.assert_has_error(status, "already synchronized or did not change")
 
     def test_english_marker_must_exist_in_translated_file(self) -> None:
@@ -88,14 +103,14 @@ class ResearchTranslationRefreshStateTests(unittest.TestCase):
         status["english_markers"].pop("ROUTER.md")
         self.assert_has_error(status, "english_markers must cover exactly scope_files")
 
-    def test_pending_state_cannot_authorize_production(self) -> None:
+    def test_translation_state_cannot_authorize_production(self) -> None:
         status = copy.deepcopy(self.status)
         status["production_promotion_authorized"] = True
         self.assert_has_error(status, "must not authorize production promotion")
 
     def test_synchronized_state_cannot_keep_expected_stale_files(self) -> None:
         status = copy.deepcopy(self.status)
-        status["status"] = "synchronized"
+        status["expected_stale_files"] = ["governance/evaluation.md"]
         self.assert_has_error(status, "must have no expected_stale_files")
 
     def test_refresh_command_cannot_be_replaced_by_manual_hash_edit(self) -> None:
