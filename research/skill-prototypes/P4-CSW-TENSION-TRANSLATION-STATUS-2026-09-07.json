@@ -1,6 +1,6 @@
 {
   "schema": "csw.translation-refresh-status/v1",
-  "status": "pending-review-hash-refresh",
+  "status": "synchronized",
   "locale": "en-US",
   "human_record": "research/skill-prototypes/P4-CSW-TENSION-TRANSLATION-STATUS-2026-09-07.md",
   "manifest": "i18n/translation-manifest.json",
@@ -20,12 +20,7 @@
     "methods/integration.md": "33db14e79033f3121cc5235a856b3652cb5cf5d7",
     "methods/transformation.md": "c0cffe78b5da089627d5d90970f65a4947a56b35"
   },
-  "expected_stale_files": [
-    "core/cognitive-stance.md",
-    "governance/evaluation.md",
-    "methods/integration.md",
-    "methods/transformation.md"
-  ],
+  "expected_stale_files": [],
   "english_markers": {
     "ROUTER.md": [
       "misfit, resistance, reversal, or excess",
