@@ -11,6 +11,7 @@ sys.path.insert(0, str(ROOT / "scripts"))
 
 from validate_research_declared_checks import (  # noqa: E402
     _planner_paths,
+    _research_validator_paths,
     _suite_validator_paths,
     validate_declared_checks,
 )
@@ -25,6 +26,7 @@ class ResearchDeclaredCheckWiringTests(unittest.TestCase):
         self.manifest = json.loads(MANIFEST_PATH.read_text(encoding="utf-8"))
         self.makefile = MAKEFILE_PATH.read_text(encoding="utf-8")
         self.suite_validators = _suite_validator_paths(ROOT)
+        self.research_validators = _research_validator_paths(ROOT)
         self.planners = _planner_paths(ROOT)
 
     def validate(self, manifest: dict, makefile: str) -> list[str]:
@@ -32,6 +34,7 @@ class ResearchDeclaredCheckWiringTests(unittest.TestCase):
             manifest,
             makefile,
             suite_validator_paths=self.suite_validators,
+            research_validator_paths=self.research_validators,
             planner_paths=self.planners,
         )
 
@@ -42,7 +45,7 @@ class ResearchDeclaredCheckWiringTests(unittest.TestCase):
             f"expected error containing {fragment!r}; got {errors!r}",
         )
 
-    def test_current_declared_checks_suite_validators_and_planners_are_wired(self) -> None:
+    def test_current_declared_checks_validators_and_planners_are_wired(self) -> None:
         self.assertEqual(self.validate(self.manifest, self.makefile), [])
 
     def test_meta_validator_itself_is_wired_into_research_gate(self) -> None:
@@ -122,6 +125,39 @@ class ResearchDeclaredCheckWiringTests(unittest.TestCase):
             self.manifest,
             makefile,
             "suite-level research validator must be wired exactly once",
+        )
+
+    def test_research_cross_lane_validator_cannot_disappear_from_research_gate(self) -> None:
+        validator = "research/skill-prototypes/scripts/validate_production_projection.py"
+        self.assertIn(validator, self.research_validators)
+        makefile = self.makefile.replace(f"\tpython {validator}\n", "")
+        self.assert_has_error(
+            self.manifest,
+            makefile,
+            f"research cross-lane validator is not wired into research-skill-check: {validator}",
+        )
+
+    def test_unknown_research_cross_lane_validator_cannot_be_wired(self) -> None:
+        injected = "\tpython research/skill-prototypes/scripts/validate_does_not_exist.py\n"
+        makefile = self.makefile.replace(
+            "\tpython -m unittest discover -s tests -p 'test_research_*.py'\n",
+            injected + "\tpython -m unittest discover -s tests -p 'test_research_*.py'\n",
+        )
+        self.assert_has_error(
+            self.manifest,
+            makefile,
+            "research gate references an unknown research cross-lane validator",
+        )
+
+    def test_research_cross_lane_validator_cannot_be_wired_twice(self) -> None:
+        validator = "research/skill-prototypes/scripts/validate_production_projection.py"
+        command = f"\tpython {validator}\n"
+        self.assertIn(command, self.makefile)
+        makefile = self.makefile.replace(command, command + command, 1)
+        self.assert_has_error(
+            self.manifest,
+            makefile,
+            "research cross-lane validator must be wired exactly once",
         )
 
     def test_planner_cannot_disappear_from_research_gate(self) -> None:
