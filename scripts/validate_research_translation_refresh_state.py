@@ -87,9 +87,9 @@ def validate_translation_refresh_state(
         errors.append("expected_stale_files must be a subset of scope_files")
     if state == "synchronized" and expected_stale:
         errors.append("synchronized translation refresh state must have no expected_stale_files")
-    if state == "pending-review-hash-refresh" and expected_stale != scope_files:
+    if state == "pending-review-hash-refresh" and not expected_stale:
         errors.append(
-            "pending translation refresh state must mark the complete semantic-edit scope stale"
+            "pending translation refresh state must keep at least one expected_stale_file"
         )
 
     files = manifest.get("files")

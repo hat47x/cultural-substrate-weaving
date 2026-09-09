@@ -45,16 +45,28 @@ class ResearchTranslationRefreshStateTests(unittest.TestCase):
 
     def test_current_pending_refresh_state_is_valid(self) -> None:
         self.assertEqual(self.errors(), [])
+        expected_stale = set(self.status["expected_stale_files"])
+        scope = set(self.status["scope_files"])
         self.assertEqual(
-            set(self.status["scope_files"]),
-            set(self.status["expected_stale_files"]),
+            expected_stale,
+            {
+                "core/cognitive-stance.md",
+                "governance/evaluation.md",
+                "methods/integration.md",
+                "methods/transformation.md",
+            },
         )
+        self.assertLess(expected_stale, scope)
 
     def test_pending_scope_cannot_hide_a_stale_file(self) -> None:
         status = copy.deepcopy(self.status)
         status["expected_stale_files"].remove("governance/evaluation.md")
-        self.assert_has_error(status, "must mark the complete semantic-edit scope stale")
         self.assert_has_error(status, "undeclared stale files")
+
+    def test_pending_state_requires_a_remaining_stale_file(self) -> None:
+        status = copy.deepcopy(self.status)
+        status["expected_stale_files"] = []
+        self.assert_has_error(status, "must keep at least one expected_stale_file")
 
     def test_pending_scope_cannot_claim_an_unchanged_file_is_stale(self) -> None:
         status = copy.deepcopy(self.status)

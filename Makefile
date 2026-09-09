@@ -72,6 +72,7 @@ research-skill-check:
 	python scripts/validate_research_package_targets.py
 	python scripts/validate_research_package_reference_closure.py
 	python scripts/validate_research_production_suite_descriptor.py
+	python scripts/validate_research_production_inclusion.py
 	python scripts/validate_research_promotion_preconditions.py
 	python scripts/validate_research_production_plan_consistency.py
 	python scripts/validate_research_release_composition_plan.py
@@ -84,6 +85,7 @@ research-skill-check:
 	python scripts/validate_research_tension_emergence.py
 	python scripts/validate_research_translation_refresh_state.py
 	python scripts/validate_research_translation_review_snapshot.py
+	python research/skill-prototypes/scripts/validate_production_projection.py
 	python research/skill-prototypes/scripts/plan_suite_layout.py >/dev/null
 	python research/skill-prototypes/scripts/plan_skill_subtrees.py >/dev/null
 	python research/skill-prototypes/scripts/plan_skill_entry_transforms.py >/dev/null
