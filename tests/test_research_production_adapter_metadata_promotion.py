@@ -5,6 +5,7 @@ import json
 import sys
 import unittest
 from pathlib import Path
+from unittest.mock import patch
 
 ROOT = Path(__file__).resolve().parents[1]
 PLANNER_DIR = ROOT / "research" / "skill-prototypes" / "scripts"
@@ -135,6 +136,42 @@ class ResearchProductionAdapterMetadataPromotionTests(unittest.TestCase):
         item["target"] = "adapters/openai-skill/ja-JP/affinity-synthesis/openai.interactive.yaml"
         errors = self.errors(plan)
         self.assertTrue(any("must use material-led-synthesis" in error for error in errors), errors)
+
+    def test_renamed_openai_byte_identical_source_cannot_expose_research_id(self) -> None:
+        adapter_plan = copy.deepcopy(self.adapter_plan)
+        adapter_plan["distributions"]["openai_skill"]["skills"]["affinity-synthesis"][
+            "ja-JP"
+        ]["interactive"]["source"] = "research/skill-prototypes/suite-manifest.json"
+        with self.assertRaisesRegex(ValueError, "retains renamed research identity"):
+            plan_production_adapter_metadata_promotion(
+                adapter_plan,
+                self.descriptor,
+                self.locale_catalog,
+            )
+
+    def test_bundle_description_cannot_expose_renamed_research_id(self) -> None:
+        real_loads = json.loads
+
+        def loads_with_research_id(text: str, *args: object, **kwargs: object) -> object:
+            value = real_loads(text, *args, **kwargs)
+            if (
+                isinstance(value, dict)
+                and value.get("schema") == "csw.research-locale-bundle-metadata/v1"
+            ):
+                value = copy.deepcopy(value)
+                value["description"] += " affinity-synthesis"
+            return value
+
+        with patch(
+            "plan_production_adapter_metadata_promotion.json.loads",
+            side_effect=loads_with_research_id,
+        ):
+            with self.assertRaisesRegex(ValueError, "retains renamed research identity"):
+                plan_production_adapter_metadata_promotion(
+                    self.adapter_plan,
+                    self.descriptor,
+                    self.locale_catalog,
+                )
 
     def test_sibling_openai_metadata_cannot_gain_content_rewrite(self) -> None:
         plan = copy.deepcopy(self.plan)

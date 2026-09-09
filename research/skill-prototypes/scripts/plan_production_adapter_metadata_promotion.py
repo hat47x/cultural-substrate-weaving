@@ -39,6 +39,24 @@ def _sha256_text(text: str) -> str:
     return hashlib.sha256(text.encode("utf-8")).hexdigest()
 
 
+def _assert_public_identity_safe(
+    text: str,
+    *,
+    research_id: str,
+    production_name: str,
+    label: str,
+) -> None:
+    """Reject host-visible text that would expose a renamed research identity."""
+
+    if research_id == production_name:
+        return
+    if research_id in text:
+        raise ValueError(
+            f"{label} retains renamed research identity {research_id!r}; "
+            f"public promotion target is {production_name!r}"
+        )
+
+
 def _descriptor_by_id(descriptor: dict) -> dict[str, dict]:
     return {
         item["research_id"]: item
@@ -131,6 +149,12 @@ def plan_production_adapter_metadata_promotion(
                     continue
 
                 text = (root / source).read_text(encoding="utf-8")
+                _assert_public_identity_safe(
+                    text,
+                    research_id=research_id,
+                    production_name=production_name,
+                    label=f"OpenAI metadata source {source}",
+                )
                 openai.append(
                     {
                         "research_id": research_id,
@@ -154,6 +178,14 @@ def plan_production_adapter_metadata_promotion(
     for locale, locale_info in bundle_plan["locales"].items():
         prototype_source = locale_info["prototype_source"]
         prototype = json.loads((root / prototype_source).read_text(encoding="utf-8"))
+        description = prototype["description"]
+        for research_id, descriptor_skill in descriptor_by_id.items():
+            _assert_public_identity_safe(
+                description,
+                research_id=research_id,
+                production_name=descriptor_skill["proposed_installable_name"],
+                label=f"locale-bundle description {prototype_source}",
+            )
         current = locale_catalog[locale]
         bundle_promotions.append(
             {
@@ -166,7 +198,7 @@ def plan_production_adapter_metadata_promotion(
                     "skill_name": current["skill_name"],
                     "display": current["display"],
                 },
-                "update": {"description": prototype["description"]},
+                "update": {"description": description},
                 "prototype_research_contains": prototype["contains"],
                 "production_suite_contains": public_skill_set,
                 "drop_prototype_fields_from_host_catalog": [
