@@ -59,6 +59,31 @@ class ResearchProductionSuiteDescriptorTests(unittest.TestCase):
         }
         self.assert_has_error(descriptor, "must remain material-led-synthesis")
 
+    def test_sibling_production_root_follows_proposed_installable_name(self) -> None:
+        descriptor = copy.deepcopy(self.descriptor)
+        layer1 = self.skill(descriptor, "affinity-synthesis")
+        layer1["production_source"]["root_pattern"] = (
+            "src/skills/affinity-synthesis/{locale}"
+        )
+        self.assert_has_error(descriptor, "production root must follow proposed_installable_name")
+
+    def test_sibling_first_wave_targets_follow_proposed_installable_name(self) -> None:
+        descriptor = copy.deepcopy(self.descriptor)
+        layer1 = self.skill(descriptor, "affinity-synthesis")
+        layer1["targets"]["claude_plugin"] = "affinity-synthesis"
+        self.assert_has_error(descriptor, "claude_plugin target must follow proposed_installable_name")
+
+    def test_sibling_openai_metadata_path_follows_proposed_installable_name(self) -> None:
+        descriptor = copy.deepcopy(self.descriptor)
+        layer1 = self.skill(descriptor, "affinity-synthesis")
+        layer1["adapter_metadata"]["openai_skill"]["source_pattern"] = (
+            "adapters/openai-skill/{locale}/affinity-synthesis/openai.{profile}.yaml"
+        )
+        self.assert_has_error(
+            descriptor,
+            "promoted OpenAI metadata path must follow proposed_installable_name",
+        )
+
     def test_sibling_production_source_cannot_point_back_into_research(self) -> None:
         descriptor = copy.deepcopy(self.descriptor)
         layer1 = self.skill(descriptor, "affinity-synthesis")
