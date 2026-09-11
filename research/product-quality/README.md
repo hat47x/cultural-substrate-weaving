@@ -28,7 +28,7 @@
 3. **natural-work evidence** — Living Lab等の自然な実作業から得た観測
 4. **interpretation** — 人間・AI・外部評価者による解釈
 
-この区別を崩さず、static checkが通ったことをモデル行動の保証とみなさず、単発の良いモデル出力を方法論全体の有効性ともみなしません。
+static checkが通ったことをモデル行動の保証とみなさず、単発の良いモデル出力を方法論全体の有効性ともみなしません。
 
 ## 命名
 
@@ -41,8 +41,15 @@
 ## 現在の入口
 
 - [`2026-09-11-quality-evidence-audit.md`](2026-09-11-quality-evidence-audit.md) — E0: 現行品質証拠の初回監査
-- [`experiment-001-handoff-integrity.md`](experiment-001-handoff-integrity.md) — E3: CSW → affinity synthesis → iterative inquiryのhandoff integrity
+- [`experiment-001-handoff-integrity.md`](experiment-001-handoff-integrity.md) — E3: CSW → affinity synthesis → iterative inquiryのhandoff integrity protocol
+- [`experiment-001-run-2026-09-11-engineering.md`](experiment-001-run-2026-09-11-engineering.md) — E3 Run 001: 同一contextでのengineering trial
 - [`../../docs/ja/maintainers/product-quality-program.md`](../../docs/ja/maintainers/product-quality-program.md) — 品質要件・検証層・実験ポートフォリオ全体
+
+## 現在の実験状態
+
+Run 001ではH1〜H6を外部artifactとして検査でき、明白なMethod contract違反は観測されませんでした。ただしprotocol作成・実行・評価が同じAI contextにあるため、behavioral reliabilityの強い証拠とは扱いません。
+
+Run 001から得た具体的なprotocol補正は、`carried-untouched`と`=`（touched and explicitly checked, but semantically unchanged）を分けることです。次はfresh execution / separate evaluationのRun 002を優先します。
 
 ## 改善へ反映するとき
 
