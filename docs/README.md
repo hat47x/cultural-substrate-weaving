@@ -15,6 +15,7 @@
 | 方法論そのものを確認する | [`src/ja-JP/ROUTER.md`](../src/ja-JP/ROUTER.md) | [`src/ja-JP/core/`](../src/ja-JP/core/) |
 | 英語の方法論を確認する | [`src/en-US/ROUTER.md`](../src/en-US/ROUTER.md) | [`src/en-US/core/`](../src/en-US/core/) |
 | 改善方針・認知機能分析を読む | [スキルの全体理解と改善方針](ja/maintainers/skill-improvement-direction.md) | [長期的認知機能の分析](ja/maintainers/longitudinal-cognitive-functions.md) |
+| プロダクト品質の要件・実験方針を確認する | [プロダクト品質プログラム](ja/maintainers/product-quality-program.md) | [`research/product-quality/`](../research/product-quality/) |
 | 実使用での観測を見る | [Web Chat Living Lab](ja/experiments/web-chat-living-lab.md) | [`research/living-lab/observations/`](../research/living-lab/observations/) |
 | 開発・リリースを行う | [開発手順](ja/maintainers/development.md) | [リリース手順](ja/maintainers/release.md) |
 | 多言語・リリース内部契約を保守する | [Multilingual maintenance](maintainers/multilingual.md) | [Release internals](maintainers/release.md) |
@@ -52,9 +53,11 @@ The English methodology under `src/en-US/` follows the Japanese semantic source.
 - [スキルの全体理解と改善方針](ja/maintainers/skill-improvement-direction.md)
 - [文化体系とKJ法による認知機能の定性的解析と再現設計](ja/maintainers/longitudinal-cognitive-functions.md)
 - [v0.5.0の段階的なプロンプト改善](ja/maintainers/v05-cognitive-prompt-roadmap.md)
+- [プロダクト品質を育てるための要件・設計・実験プログラム](ja/maintainers/product-quality-program.md)
 - [Web Chat Living Lab — 日本語](ja/experiments/web-chat-living-lab.md)
 - [Web Chat Living Lab — English](en/experiments/web-chat-living-lab.md)
 - [公開観測記録](../research/living-lab/observations/)
+- [プロダクト品質の監査・実験記録](../research/product-quality/)
 
 研究・観測文書では、`prospective` / `retrospective`、対象側の証拠、未測定の効果などの区別を保持します。観測記録が存在することだけで、本スキル全体の有効性が確立したとは扱いません。
 
