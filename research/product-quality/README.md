@@ -47,6 +47,8 @@ static checkが通ったことをモデル行動の保証とみなさず、単�
 - [`experiment-001-run-002-evaluation-sheet.md`](experiment-001-run-002-evaluation-sheet.md) — E3 Run 002: execution後に別contextまたは人間が使う評価sheet
 - [`experiment-002-authority-provenance-adversarial.md`](experiment-002-authority-provenance-adversarial.md) — E1: authority / provenance adversarial probe
 - [`experiment-002-run-2026-09-14-engineering.md`](experiment-002-run-2026-09-14-engineering.md) — E1 Run 001: 同一contextでのengineering trial
+- [`experiment-003-delayed-reactivation.md`](experiment-003-delayed-reactivation.md) — E4: stop snapshotからのdelayed reactivation protocol
+- [`experiment-003-run-2026-09-14-engineering.md`](experiment-003-run-2026-09-14-engineering.md) — E4 Run 001: 外部snapshotからの局所再開engineering trial
 - [`../../docs/ja/maintainers/product-quality-program.md`](../../docs/ja/maintainers/product-quality-program.md) — 品質要件・検証層・実験ポートフォリオ全体
 
 ## 現在の実験状態
@@ -67,13 +69,30 @@ Run 002は、execution packetとevaluation sheetを分離した状態まで準�
 
 診断上は、`target_supported / framework_generated`等の**origin**と、`公開前要承認`等の**delivery / approval state**を外部artifact上で別々に見せると監査しやすいことを確認しました。現行CSWには「来歴ラベルは外部化許可を自動決定しない」という契約がすでにあるため、この結果だけでruntime ruleは追加していません。
 
+### E4 — delayed reactivation
+
+2026-09-14に、prior inquiry、stable semantic ID、residual、author-pending、stop reasonを固定したsnapshotから、6週間後を模したdeltaだけで再開するprotocolを追加し、engineering Run 001を実施しました。
+
+このrunではL1〜L10の明白な契約違反は観測されませんでした。特に次を外部artifactで区別できました。
+
+- 旧`Q01`を履歴として残し、新しい問い`Q03`を追加するquestion shift
+- deltaが触れたartifactだけのreopen
+- 未接触`C02`のcarryと、明示的に再検査した`=`の分離
+- `F01`のframework由来履歴と、後から得たtarget-side supportの分離
+- 残差を残したまま再びstop / handoffできるcontinuation boundary
+
+診断上は、問いのshiftをcompact deltaへ無理に押し込まず`Question Shift`欄を使うこと、またprior artifactだけでなく**prior stop reason**をsnapshotへ残すことが再開品質の監査に有効でした。どちらも現行`iterative-inquiry-synthesis`の契約ですでに表現できるため、Method Definitionは変更していません。
+
+このrunの「6週間後」は合成packet上の設定です。実時間をまたいだモデル記憶性能やfresh-context再現性の証拠ではありません。
+
 ## 次に強める証拠
 
-現時点では、行動試行の件数を増やすことより、同じケースの証拠強度を一段ずつ上げます。
+独立性を必要とするrunは、この会話の中で擬似的に済ませません。並行して、同一contextでも設計・記録形式を検証できるengineering trialは進めます。
 
-1. E3 Run 002をfresh execution / separate evaluationで実施する。
-2. E1を別contextまたは別評価者で再実行し、engineering Run 001の出力を見せずにauthority / provenance圧力を再現する。
-3. そこで再現するfailureがあれば最小fixtureへ落とす。再現しない場合は、E4 delayed reactivationへ進む。
+1. **E3 Run 002** — fresh execution / separate evaluationを実施する。
+2. **E1 independent rerun** — engineering Run 001の出力を見せず、別contextまたは別評価者でauthority / provenance圧力を再現する。
+3. **E4 Run 002** — Run 001の出力を見ていないfresh contextから同じstop snapshotを再開し、別評価者がL1〜L10を確認する。
+4. 上記で同じfailureが再現した場合は最小fixtureへ落とす。再現failureがなければ、次のengineering workとしてE2 activation calibrationを進める。
 
 この順序はrelease gateではありません。重大なnatural-work failureが見つかった場合は、その再現とfixture化を優先します。
 
