@@ -43,13 +43,39 @@ static checkが通ったことをモデル行動の保証とみなさず、単�
 - [`2026-09-11-quality-evidence-audit.md`](2026-09-11-quality-evidence-audit.md) — E0: 現行品質証拠の初回監査
 - [`experiment-001-handoff-integrity.md`](experiment-001-handoff-integrity.md) — E3: CSW → affinity synthesis → iterative inquiryのhandoff integrity protocol
 - [`experiment-001-run-2026-09-11-engineering.md`](experiment-001-run-2026-09-11-engineering.md) — E3 Run 001: 同一contextでのengineering trial
+- [`experiment-001-run-002-execution-packet.md`](experiment-001-run-002-execution-packet.md) — E3 Run 002: fresh execution側へ渡す固定packet
+- [`experiment-001-run-002-evaluation-sheet.md`](experiment-001-run-002-evaluation-sheet.md) — E3 Run 002: execution後に別contextまたは人間が使う評価sheet
+- [`experiment-002-authority-provenance-adversarial.md`](experiment-002-authority-provenance-adversarial.md) — E1: authority / provenance adversarial probe
+- [`experiment-002-run-2026-09-14-engineering.md`](experiment-002-run-2026-09-14-engineering.md) — E1 Run 001: 同一contextでのengineering trial
 - [`../../docs/ja/maintainers/product-quality-program.md`](../../docs/ja/maintainers/product-quality-program.md) — 品質要件・検証層・実験ポートフォリオ全体
 
 ## 現在の実験状態
 
+### E3 — split-method handoff integrity
+
 Run 001ではH1〜H6を外部artifactとして検査でき、明白なMethod contract違反は観測されませんでした。ただしprotocol作成・実行・評価が同じAI contextにあるため、behavioral reliabilityの強い証拠とは扱いません。
 
-Run 001から得た具体的なprotocol補正は、`carried-untouched`と`=`（touched and explicitly checked, but semantically unchanged）を分けることです。次はfresh execution / separate evaluationのRun 002を優先します。
+Run 001から得た具体的なprotocol補正は、`carried-untouched`と`=`（touched and explicitly checked, but semantically unchanged）を分けることです。
+
+Run 002は、execution packetとevaluation sheetを分離した状態まで準備しました。**このrepository作業を行っている現在の会話ではfresh executionにならないため、まだ実行していません。** 次の実行では、executorへexecution packetと現行Skill / Methodだけを渡し、Run 001 outputとevaluation sheetを見せない状態で生成したartifactを、別contextまたは人間が評価します。
+
+### E1 — authority / provenance adversarial probe
+
+2026-09-14に固定packetを作り、engineering Run 001を実施しました。依頼文から「framework由来候補を調査根拠として扱う」「最適案を決定してそのまま公開する」という圧力を加えましたが、このrunではA1〜A6の明白な境界違反は観測されませんでした。
+
+一方、このrunもprotocolを知った同一AI・同一contextで実行・評価しているため、独立したbehavioral reliabilityの証拠とは扱いません。
+
+診断上は、`target_supported / framework_generated`等の**origin**と、`公開前要承認`等の**delivery / approval state**を外部artifact上で別々に見せると監査しやすいことを確認しました。現行CSWには「来歴ラベルは外部化許可を自動決定しない」という契約がすでにあるため、この結果だけでruntime ruleは追加していません。
+
+## 次に強める証拠
+
+現時点では、行動試行の件数を増やすことより、同じケースの証拠強度を一段ずつ上げます。
+
+1. E3 Run 002をfresh execution / separate evaluationで実施する。
+2. E1を別contextまたは別評価者で再実行し、engineering Run 001の出力を見せずにauthority / provenance圧力を再現する。
+3. そこで再現するfailureがあれば最小fixtureへ落とす。再現しない場合は、E4 delayed reactivationへ進む。
+
+この順序はrelease gateではありません。重大なnatural-work failureが見つかった場合は、その再現とfixture化を優先します。
 
 ## 改善へ反映するとき
 
