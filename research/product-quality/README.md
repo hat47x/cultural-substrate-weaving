@@ -49,6 +49,8 @@ static checkが通ったことをモデル行動の保証とみなさず、単�
 - [`experiment-002-run-2026-09-14-engineering.md`](experiment-002-run-2026-09-14-engineering.md) — E1 Run 001: 同一contextでのengineering trial
 - [`experiment-003-delayed-reactivation.md`](experiment-003-delayed-reactivation.md) — E4: stop snapshotからのdelayed reactivation protocol
 - [`experiment-003-run-2026-09-14-engineering.md`](experiment-003-run-2026-09-14-engineering.md) — E4 Run 001: 外部snapshotからの局所再開engineering trial
+- [`experiment-004-activation-calibration.md`](experiment-004-activation-calibration.md) — E2: 同一taskで外部委任だけを変えるactivation calibration protocol
+- [`experiment-004-run-2026-09-14-engineering.md`](experiment-004-run-2026-09-14-engineering.md) — E2 Run 001: paired engineering trial
 - [`../../docs/ja/maintainers/product-quality-program.md`](../../docs/ja/maintainers/product-quality-program.md) — 品質要件・検証層・実験ポートフォリオ全体
 
 ## 現在の実験状態
@@ -85,16 +87,33 @@ Run 002は、execution packetとevaluation sheetを分離した状態まで準�
 
 このrunの「6週間後」は合成packet上の設定です。実時間をまたいだモデル記憶性能やfresh-context再現性の証拠ではありません。
 
+### E2 — activation calibration
+
+2026-09-14に、同じtaskを保ったままactivationに関する**外部委任だけを変えるpaired protocol**を固定し、engineering Run 001を実施しました。
+
+このrunではK1〜K10について、観測した範囲で明白なactivation contract違反は見つかりませんでした。特に次を確認しました。
+
+- 明確な技術課題でも、明示された限定利用に従えば`limited / not_loaded`になり得る。
+- 曖昧な公共サービス課題でも、明示的に使わない委任なら`non_activation / not_loaded`のまま扱える。
+- `probe`で探索目的を満たした場合、`full / enacted`へ進むことを品質向上とみなさない。
+- one-roundの親和統合が必要でも、それ自体をCSWの発動理由にせず、`affinity-synthesis`またはcompatible realizationへ責務を残せる。
+- activationに関する外部条件がpacketにない場合、課題種別から勝手に補わず`external_or_delegated`として扱える。
+
+同時に、`evals/activation-cases.json`のlimited / exploratory例がv0.5以前の「CSW自身がKJ材料統合を行う」責務を残していることを確認しました。これはruntime failureではなく**eval fixtureのresponsibility drift**です。fixtureを現在のsplit ownershipへ合わせ、affinity-onlyの材料統合をCSW自動発動理由にしないcaseを追加しました。
+
+Pair Cの固定packetは8件の元メモ本文を列挙していないため、このrunで確認できたのはrouting / ownership境界までです。実際のgrouping behaviorを評価する場合は、元メモ本文を固定した別runが必要です。
+
 ## 次に強める証拠
 
-独立性を必要とするrunは、この会話の中で擬似的に済ませません。並行して、同一contextでも設計・記録形式を検証できるengineering trialは進めます。
+独立性を必要とするrunは、この会話の中で擬似的に済ませません。現在のengineering trialは、protocolと観測形式を整え、fresh executionで検査すべき境界を明確にするために使います。
 
 1. **E3 Run 002** — fresh execution / separate evaluationを実施する。
 2. **E1 independent rerun** — engineering Run 001の出力を見せず、別contextまたは別評価者でauthority / provenance圧力を再現する。
 3. **E4 Run 002** — Run 001の出力を見ていないfresh contextから同じstop snapshotを再開し、別評価者がL1〜L10を確認する。
-4. 上記で同じfailureが再現した場合は最小fixtureへ落とす。再現failureがなければ、次のengineering workとしてE2 activation calibrationを進める。
+4. **E2 Run 002** — paired packetをfresh contextで再実行し、特にactivation/depthとsplit ownershipを別評価する。Pair Cでgrouping behaviorまで扱う場合は、元メモ本文を先に固定する。
+5. 上記で同じfailureが再現した場合は最小fixtureへ落とす。natural-workで重大なfailureが見つかった場合は、その再現を優先する。
 
-この順序はrelease gateではありません。重大なnatural-work failureが見つかった場合は、その再現とfixture化を優先します。
+この順序はrelease gateではありません。行動試行の件数やactivation率を増やすこと自体も目標にしません。
 
 ## 改善へ反映するとき
 
