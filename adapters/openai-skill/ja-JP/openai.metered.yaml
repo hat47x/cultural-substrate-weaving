@@ -1,6 +1,6 @@
 interface:
   display_name: "Cultural Substrate Weaving — 日本語"
   short_description: "文化的体系とKJ法で問い・関係・状態・空白・来歴を探索・統合する"
-  default_prompt: "著者またはスキル外の委任範囲を確認し、文化的体系とKJ法を使って問い・関係・状態・空白・来歴を探索・統合してください。採否や価値判断はその委任に従ってください。"
+  default_prompt: "著者またはスキル外の委任範囲を確認し、必要な範囲で文化的体系による探索やcompatibleな親和統合への接続を使って、問い・関係・状態・空白・来歴を扱ってください。採否や価値判断はその委任に従ってください。"
 policy:
   allow_implicit_invocation: false
