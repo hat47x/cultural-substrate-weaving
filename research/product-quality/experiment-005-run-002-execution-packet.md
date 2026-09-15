@@ -8,7 +8,7 @@
 
 ## このpacketの目的
 
-同じCSW taskを複数の実surfaceで実行し、文章の一致ではなく、surface包装後も中核的な意味境界が保たれるかを後から比較できるartifactを作る。
+同じCSW taskを複数の実surfaceで実行し、文章の一致ではなく、surface固有の包装を通った後も中核的な意味境界が保たれるかを比較できるartifactを作る。
 
 executorは**出力生成だけ**を担当する。P1〜P8の採点、他surfaceとの比較、Run 001との比較は行わない。
 
@@ -28,7 +28,7 @@ executorは**出力生成だけ**を担当する。P1〜P8の採点、他surface
 - 他surfaceのRun 002出力
 - 「どのsurfaceで何が失敗しやすいか」という事前説明
 
-これはexecutorを無知にするためではなく、repository固有の評価rubricを出力へ直接混入させないためである。
+これはexecutorから必要な実行情報まで隠すためではなく、repository固有の評価rubricを出力へ直接混入させないためである。
 
 ## 実行surface
 
