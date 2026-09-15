@@ -15,7 +15,7 @@ E7では、見つかった知見をすべてtestへ昇格させない。修正�
 
 この監査の対象は、2026-09-16時点の`research/product-quality/`で記録しているE1〜E5である。リポジトリの全履歴に存在したすべてのbugを網羅する台帳ではない。
 
-## E7へ上げる条件
+## E7の回帰対象にする条件
 
 既知failureとして扱うには、少なくとも次を満たす。
 
@@ -25,18 +25,18 @@ E7では、見つかった知見をすべてtestへ昇格させない。修正�
 4. 同じfailure modeを、過度に実装詳細へ固定せず再検出できる。
 5. behavioralな非決定性を静的testへ偽装しない。
 
-満たさない診断知見は、protocolやrun記録に残しても自動回帰fixtureへは昇格させない。
+満たさない診断知見はprotocolやrun記録に残しても、回帰fixtureへは昇格させない。
 
 ## 現在のknown-failure inventory
 
 | source | observed failure | failure class | repair | regression status |
 |---|---|---|---|---|
-| E2 Run 001 | `evals/activation-cases.json`のlimited / exploratory例が、v0.5以前の「CSW自身がKJ材料統合を行う」責務を残していた | eval fixture responsibility drift | affinity synthesisを`affinity-synthesis`またはcompatible realizationへ戻し、affinity-onlyでCSWを発動しないcaseを追加 | **gap** — fixture自体は修正済みだが、再発を直接検出するtestがない |
+| E2 Run 001 | `evals/activation-cases.json`のlimited / exploratory例が、v0.5以前の「CSW自身がKJ材料統合を行う」責務を残していた | eval fixture responsibility drift | affinity synthesisを`affinity-synthesis`またはcompatible realizationへ戻し、affinity-onlyでCSWを発動しないcaseを追加 | **covered in this change** — 監査開始時はgap。`tests/test_activation_fixture_semantic_contract.py`を追加 |
 | E5 Run 001 | OpenAI Skillの`default_prompt`が、外部委任にかかわらず文化体系とKJの利用を常時要求していた | adapter semantic drift | ja/en × interactive/meteredのpromptを外部委任・必要範囲・compatible realizationに整合 | **covered** — `tests/test_openai_adapter_semantic_contract.py` |
 
 ### E2 failureの最小不変条件
 
-E2の修正を回帰fixtureへ落とす場合、文面全体を固定しない。少なくとも次だけを守る。
+E2の修正を回帰fixtureへ落とす際、文面全体は固定しない。少なくとも次だけを守る。
 
 - 明示的なlimited caseでは、文化体系を開かない限定利用が成立する。
 - one-round affinity synthesisが必要な場合、CSW内部のKJ統合責務として記述せず、`affinity-synthesis`またはcompatible realizationへ委ねる。
@@ -74,7 +74,7 @@ Run 002は未実施である。未実施surfaceやmodel/context差をfailureへ�
 
 ## 今回の変更判断
 
-E2 responsibility driftは、修正前の具体的fixtureと修正後の状態を特定でき、静的に再検出できる。そのため、最小のunit testを追加する。
+E2 responsibility driftは、修正前の具体的fixtureと修正後の状態を特定でき、静的に再検出できる。そのため、`tests/test_activation_fixture_semantic_contract.py`へ最小のunit testを追加した。
 
 一方、E1/E3/E4の診断知見を「重要そうだから」という理由でtestへ昇格させない。これによりPQ-12を、規則数の増加ではなく**実際に起きた欠陥の再発防止**として運用する。
 
