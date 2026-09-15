@@ -51,6 +51,10 @@ static checkが通ったことをモデル行動の保証とみなさず、単�
 - [`experiment-003-run-2026-09-14-engineering.md`](experiment-003-run-2026-09-14-engineering.md) — E4 Run 001: 外部snapshotからの局所再開engineering trial
 - [`experiment-004-activation-calibration.md`](experiment-004-activation-calibration.md) — E2: 同一taskで外部委任だけを変えるactivation calibration protocol
 - [`experiment-004-run-2026-09-14-engineering.md`](experiment-004-run-2026-09-14-engineering.md) — E2 Run 001: paired engineering trial
+- [`experiment-005-cross-platform-semantic-parity.md`](experiment-005-cross-platform-semantic-parity.md) — E5: cross-platform semantic parity protocol
+- [`experiment-005-run-2026-09-16-engineering.md`](experiment-005-run-2026-09-16-engineering.md) — E5 Run 001: Layer A packaging preflight
+- [`experiment-005-run-002-execution-packet.md`](experiment-005-run-002-execution-packet.md) — E5 Run 002: 各実surfaceへ渡す固定packet
+- [`experiment-005-run-002-evaluation-sheet.md`](experiment-005-run-002-evaluation-sheet.md) — E5 Run 002: surface出力生成後に使う評価sheet
 - [`../../docs/ja/maintainers/product-quality-program.md`](../../docs/ja/maintainers/product-quality-program.md) — 品質要件・検証層・実験ポートフォリオ全体
 
 ## 現在の実験状態
@@ -103,6 +107,18 @@ Run 002は、execution packetとevaluation sheetを分離した状態まで準�
 
 Pair Cの固定packetは8件の元メモ本文を列挙していないため、このrunで確認できたのはrouting / ownership境界までです。実際のgrouping behaviorを評価する場合は、元メモ本文を固定した別runが必要です。
 
+### E5 — cross-platform semantic parity
+
+2026-09-16にLayer A packaging preflightを行い、Claude Code / Codex / OpenAI Skill / ChatGPT GPT / Microsoft 365の包装経路を比較しました。
+
+この監査では、OpenAI Skillの`default_prompt`だけが、文化体系とKJ法の利用を常時要求する形で正本より強い方法命令を持っていました。ja-JP / en-US × interactive / meteredの4 profileで、外部委任を読み、必要な範囲だけ文化体系探索やcompatibleな親和統合への接続を使う表現へ修正しました。
+
+このfailureは`tests/test_openai_adapter_semantic_contract.py`へ最小の静的回帰fixtureとして落としています。固定しているのは、method depthを外部委任から奪わないこと、interactive / meteredでdefault promptの意味を変えないこと、implicit invocation policyの差は維持することです。これは新しい方法論規則ではなく、既存契約をwrapperが上書きした既知failureの再発防止です。
+
+Layer Bについては、Run 002のexecution packetとevaluation sheetを分離しました。各surfaceは他surfaceの出力や評価rubricを見ずにraw outputと実行metadataだけを作り、その後にP1〜P8を評価します。異なるmodel / reasoning mode / context freshnessはplatform差と混同せず、confounderとして別記します。
+
+**このrepository作業の会話では実surfaceを擬似実行しないため、E5 Run 002はまだ未実施です。** E5全体も完了扱いにはしていません。
+
 ## 次に強める証拠
 
 独立性を必要とするrunは、この会話の中で擬似的に済ませません。現在のengineering trialは、protocolと観測形式を整え、fresh executionで検査すべき境界を明確にするために使います。
@@ -111,7 +127,8 @@ Pair Cの固定packetは8件の元メモ本文を列挙していないため、�
 2. **E1 independent rerun** — engineering Run 001の出力を見せず、別contextまたは別評価者でauthority / provenance圧力を再現する。
 3. **E4 Run 002** — Run 001の出力を見ていないfresh contextから同じstop snapshotを再開し、別評価者がL1〜L10を確認する。
 4. **E2 Run 002** — paired packetをfresh contextで再実行し、特にactivation/depthとsplit ownershipを別評価する。Pair Cでgrouping behaviorまで扱う場合は、元メモ本文を先に固定する。
-5. 上記で同じfailureが再現した場合は最小fixtureへ落とす。natural-workで重大なfailureが見つかった場合は、その再現を優先する。
+5. **E5 Run 002** — 固定packetを実surfaceへ個別に渡し、raw output生成後にP1〜P8を別評価する。model / product mode差はplatform効果と即断しない。
+6. 上記で同じfailureが再現した場合は最小fixtureへ落とす。natural-workで重大なfailureが見つかった場合は、その再現を優先する。
 
 この順序はrelease gateではありません。行動試行の件数やactivation率を増やすこと自体も目標にしません。
 
