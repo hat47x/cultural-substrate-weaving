@@ -55,6 +55,7 @@ static checkが通ったことをモデル行動の保証とみなさず、単�
 - [`experiment-005-run-2026-09-16-engineering.md`](experiment-005-run-2026-09-16-engineering.md) — E5 Run 001: Layer A packaging preflight
 - [`experiment-005-run-002-execution-packet.md`](experiment-005-run-002-execution-packet.md) — E5 Run 002: 各実surfaceへ渡す固定packet
 - [`experiment-005-run-002-evaluation-sheet.md`](experiment-005-run-002-evaluation-sheet.md) — E5 Run 002: surface出力生成後に使う評価sheet
+- [`experiment-006-known-failure-regression.md`](experiment-006-known-failure-regression.md) — E7: 実際に再現した欠陥だけを対象にした回帰coverage監査
 - [`../../docs/ja/maintainers/product-quality-program.md`](../../docs/ja/maintainers/product-quality-program.md) — 品質要件・検証層・実験ポートフォリオ全体
 
 ## 現在の実験状態
@@ -69,7 +70,7 @@ Run 002は、execution packetとevaluation sheetを分離した状態まで準�
 
 ### E1 — authority / provenance adversarial probe
 
-2026-09-14に固定packetを作り、engineering Run 001を実施しました。依頼文から「framework由来候補を調査根拠として扱う」「最適案を決定してそのまま公開する」という圧力を加えましたが、このrunではA1〜A6の明白な境界違反は観測されませんでした。
+2026-09-14に固定packetを作り、engineering Run 001を実施しました。依頼文から「framework由来候補を調査根拠として扱う」「最適案を決めてそのまま公開する」という圧力を加えましたが、このrunではA1〜A6の明白な境界違反は観測されませんでした。
 
 一方、このrunもprotocolを知った同一AI・同一contextで実行・評価しているため、独立したbehavioral reliabilityの証拠とは扱いません。
 
@@ -105,6 +106,8 @@ Run 002は、execution packetとevaluation sheetを分離した状態まで準�
 
 同時に、`evals/activation-cases.json`のlimited / exploratory例がv0.5以前の「CSW自身がKJ材料統合を行う」責務を残していることを確認しました。これはruntime failureではなく**eval fixtureのresponsibility drift**です。fixtureを現在のsplit ownershipへ合わせ、affinity-onlyの材料統合をCSW自動発動理由にしないcaseを追加しました。
 
+この既知failureは、`tests/test_activation_fixture_semantic_contract.py`でsplit ownershipの最小不変条件へ縮約して回帰検出するようにしました。case全文や順序は固定せず、limited / affinity-only / exploratoryの意味境界だけを検査します。
+
 Pair Cの固定packetは8件の元メモ本文を列挙していないため、このrunで確認できたのはrouting / ownership境界までです。実際のgrouping behaviorを評価する場合は、元メモ本文を固定した別runが必要です。
 
 ### E5 — cross-platform semantic parity
@@ -119,6 +122,19 @@ Layer Bについては、Run 002のexecution packetとevaluation sheetを分離�
 
 **このrepository作業の会話では実surfaceを擬似実行しないため、E5 Run 002はまだ未実施です。** E5全体も完了扱いにはしていません。
 
+### E7 — known-failure regression
+
+2026-09-16に、E1〜E5で得た知見を「実際に再現した欠陥」と「診断知見・未測定事項」に分けて初回監査しました。
+
+現在、E7で回帰対象とするknown failureは2件です。
+
+- E2のactivation fixture responsibility drift — `tests/test_activation_fixture_semantic_contract.py`
+- E5のOpenAI adapter `default_prompt` semantic drift — `tests/test_openai_adapter_semantic_contract.py`
+
+E3の`carry`と`=`の区別、E4のquestion shiftやprior stop reasonは重要な知見ですが、既存Method契約で正しく処理できており、修正前failureは再現していません。このため、規則数を増やす目的でfixture化しません。E1もengineering Run 001では明白なfailureがありません。
+
+E7には件数目標を置きません。今後、実利用やprobeで具体的なfailureが再現した場合に、そのfailureを最小化できる範囲で追加します。
+
 ## 次に強める証拠
 
 独立性を必要とするrunは、この会話の中で擬似的に済ませません。現在のengineering trialは、protocolと観測形式を整え、fresh executionで検査すべき境界を明確にするために使います。
@@ -129,6 +145,8 @@ Layer Bについては、Run 002のexecution packetとevaluation sheetを分離�
 4. **E2 Run 002** — paired packetをfresh contextで再実行し、特にactivation/depthとsplit ownershipを別評価する。Pair Cでgrouping behaviorまで扱う場合は、元メモ本文を先に固定する。
 5. **E5 Run 002** — 固定packetを実surfaceへ個別に渡し、raw output生成後にP1〜P8を別評価する。model / product mode差はplatform効果と即断しない。
 6. 上記で同じfailureが再現した場合は最小fixtureへ落とす。natural-workで重大なfailureが見つかった場合は、その再現を優先する。
+
+E7はこの順序とは別に、具体的なfailureが再現した時点で割り込みます。回帰fixtureの件数を増やすこと自体は目標にしません。
 
 この順序はrelease gateではありません。行動試行の件数やactivation率を増やすこと自体も目標にしません。
 
