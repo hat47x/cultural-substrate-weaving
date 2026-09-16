@@ -47,10 +47,16 @@ static checkが通ったことをモデル行動の保証とみなさず、単�
 - [`experiment-001-run-002-evaluation-sheet.md`](experiment-001-run-002-evaluation-sheet.md) — E3 Run 002: execution後に別contextまたは人間が使う評価sheet
 - [`experiment-002-authority-provenance-adversarial.md`](experiment-002-authority-provenance-adversarial.md) — E1: authority / provenance adversarial probe
 - [`experiment-002-run-2026-09-14-engineering.md`](experiment-002-run-2026-09-14-engineering.md) — E1 Run 001: 同一contextでのengineering trial
+- [`experiment-002-run-002-execution-packet.md`](experiment-002-run-002-execution-packet.md) — E1 Run 002: adversarial依頼をfresh executorへ渡す固定packet
+- [`experiment-002-run-002-evaluation-sheet.md`](experiment-002-run-002-evaluation-sheet.md) — E1 Run 002: A1〜A6をexecution後に確認する評価sheet
 - [`experiment-003-delayed-reactivation.md`](experiment-003-delayed-reactivation.md) — E4: stop snapshotからのdelayed reactivation protocol
 - [`experiment-003-run-2026-09-14-engineering.md`](experiment-003-run-2026-09-14-engineering.md) — E4 Run 001: 外部snapshotからの局所再開engineering trial
+- [`experiment-003-run-002-execution-packet.md`](experiment-003-run-002-execution-packet.md) — E4 Run 002: prior snapshotとdelayed deltaだけを渡すfresh restart packet
+- [`experiment-003-run-002-evaluation-sheet.md`](experiment-003-run-002-evaluation-sheet.md) — E4 Run 002: L1〜L10をexecution後に確認する評価sheet
 - [`experiment-004-activation-calibration.md`](experiment-004-activation-calibration.md) — E2: 同一taskで外部委任だけを変えるactivation calibration protocol
 - [`experiment-004-run-2026-09-14-engineering.md`](experiment-004-run-2026-09-14-engineering.md) — E2 Run 001: paired engineering trial
+- [`experiment-004-run-002-execution-packet.md`](experiment-004-run-002-execution-packet.md) — E2 Run 002: 期待ラベルを見せずpaired taskを渡すfixed packet
+- [`experiment-004-run-002-evaluation-sheet.md`](experiment-004-run-002-evaluation-sheet.md) — E2 Run 002: K1〜K10をexecution後に確認する評価sheet
 - [`experiment-005-cross-platform-semantic-parity.md`](experiment-005-cross-platform-semantic-parity.md) — E5: cross-platform semantic parity protocol
 - [`experiment-005-run-2026-09-16-engineering.md`](experiment-005-run-2026-09-16-engineering.md) — E5 Run 001: Layer A packaging preflight
 - [`experiment-005-run-002-execution-packet.md`](experiment-005-run-002-execution-packet.md) — E5 Run 002: 各実surfaceへ渡す固定packet
@@ -77,6 +83,8 @@ Run 002は、execution packetとevaluation sheetを分離した状態まで準�
 
 診断上は、`target_supported / framework_generated`等の**origin**と、`公開前要承認`等の**delivery / approval state**を外部artifact上で別々に見せると監査しやすいことを確認しました。現行CSWには「来歴ラベルは外部化許可を自動決定しない」という契約がすでにあるため、この結果だけでruntime ruleは追加していません。
 
+Run 002用には、source packetとadversarial requestだけを渡すexecutor packetと、A1〜A6を後から確認するevaluator sheetを分離しました。Run 001 outputや評価rubricはexecutorへ渡しません。**この会話ではすでにRun 001と評価基準を見ているため、Run 002自体は実行しません。**
+
 ### E4 — delayed reactivation
 
 2026-09-14に、prior inquiry、stable semantic ID、residual、author-pending、stop reasonを固定したsnapshotから、6週間後を模したdeltaだけで再開するprotocolを追加し、engineering Run 001を実施しました。
@@ -92,6 +100,8 @@ Run 002は、execution packetとevaluation sheetを分離した状態まで準�
 診断上は、問いのshiftをcompact deltaへ無理に押し込まず`Question Shift`欄を使うこと、またprior artifactだけでなく**prior stop reason**をsnapshotへ残すことが再開品質の監査に有効でした。どちらも現行`iterative-inquiry-synthesis`の契約ですでに表現できるため、Method Definitionは変更していません。
 
 このrunの「6週間後」は合成packet上の設定です。実時間をまたいだモデル記憶性能やfresh-context再現性の証拠ではありません。
+
+Run 002用には、prior snapshotとdelayed deltaだけを渡すexecutor packetと、L1〜L10を後から確認するevaluator sheetを分離しました。Run 001で観測した問いの動かし方や`carry`の具体例を模範出力としてexecutorへ見せません。**この会話ではfresh restartにならないため、Run 002自体は実行しません。**
 
 ### E2 — activation calibration
 
@@ -110,6 +120,8 @@ Run 002は、execution packetとevaluation sheetを分離した状態まで準�
 この既知failureは、`tests/test_activation_fixture_semantic_contract.py`でsplit ownershipの最小不変条件へ縮約して回帰検出するようにしました。case全文や順序は固定せず、limited / affinity-only / exploratoryの意味境界だけを検査します。
 
 Pair Cの固定packetは8件の元メモ本文を列挙していないため、このrunで確認できたのはrouting / ownership境界までです。実際のgrouping behaviorを評価する場合は、元メモ本文を固定した別runが必要です。
+
+Run 002用には、A/B/Cのpaired taskとControl Uを期待ラベルなしで渡すexecutor packetと、K1〜K10を後から確認するevaluator sheetを分離しました。Pair Cの8件本文は今回も新たに捏造せず、routing / ownershipまでを観測範囲と明記しています。可能ならvariant同士の出力を見せずに実行し、そうできない場合は順序をconfounderとして残します。**この会話ではRun 002自体は実行しません。**
 
 ### E5 — cross-platform semantic parity
 
@@ -154,12 +166,12 @@ E7には件数目標を置きません。今後、実利用やprobeで具体的�
 
 ## 次に強める証拠
 
-独立性を必要とするrunは、この会話の中で擬似的に済ませません。現在のengineering trialは、protocolと観測形式を整え、fresh executionで検査すべき境界を明確にするために使います。
+独立性を必要とするrunは、この会話の中で擬似的に済ませません。E1/E2/E3/E4/E5は、executorへ評価rubricや前run出力を渡さず、その後に別contextまたは人間が評価できる形まで準備しています。
 
-1. **E3 Run 002** — fresh execution / separate evaluationを実施する。
-2. **E1 independent rerun** — engineering Run 001の出力を見せず、別contextまたは別評価者でauthority / provenance圧力を再現する。
-3. **E4 Run 002** — Run 001の出力を見ていないfresh contextから同じstop snapshotを再開し、別評価者がL1〜L10を確認する。
-4. **E2 Run 002** — paired packetをfresh contextで再実行し、特にactivation/depthとsplit ownershipを別評価する。Pair Cでgrouping behaviorまで扱う場合は、元メモ本文を先に固定する。
+1. **E3 Run 002** — prepared execution packetをfresh contextへ渡し、別contextまたは人間がH1〜H6を評価する。
+2. **E1 Run 002** — adversarial packetをfresh contextへ渡し、別評価者がA1〜A6を確認する。
+3. **E4 Run 002** — prior snapshotとdelayed deltaをfresh contextから再開し、別評価者がL1〜L10を確認する。
+4. **E2 Run 002** — paired packetをfresh contextで再実行し、別評価者がactivation / depth / split ownershipを確認する。Pair Cのgrouping behaviorまで扱う場合は、8件の元メモ本文を別protocolとして先に固定する。
 5. **E5 Run 002** — 固定packetを実surfaceへ個別に渡し、raw output生成後にP1〜P8を別評価する。model / product mode差はplatform効果と即断しない。
 6. **E6 Run 001** — 自然作業が本来の目的で発生し、artifact / judgment / residual reuse等の証拠が有機的に残った時だけ評価する。E6のために作業を発生させない。
 7. 上記で同じfailureが再現した場合は最小fixtureへ落とす。natural-workで重大なfailureが見つかった場合は、その再現を優先する。
