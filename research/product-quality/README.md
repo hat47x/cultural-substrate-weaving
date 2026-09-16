@@ -41,6 +41,7 @@ static checkが通ったことをモデル行動の保証とみなさず、単�
 ## 現在の入口
 
 - [`2026-09-11-quality-evidence-audit.md`](2026-09-11-quality-evidence-audit.md) — E0: 現行品質証拠の初回監査
+- [`2026-09-16-quality-evidence-reaudit.md`](2026-09-16-quality-evidence-reaudit.md) — E0再監査: E1〜E7整備後の証拠強度と未充足点を再評価
 - [`experiment-001-handoff-integrity.md`](experiment-001-handoff-integrity.md) — E3: CSW → affinity synthesis → iterative inquiryのhandoff integrity protocol
 - [`experiment-001-run-2026-09-11-engineering.md`](experiment-001-run-2026-09-11-engineering.md) — E3 Run 001: 同一contextでのengineering trial
 - [`experiment-001-run-002-execution-packet.md`](experiment-001-run-002-execution-packet.md) — E3 Run 002: fresh execution側へ渡す固定packet
@@ -66,6 +67,14 @@ static checkが通ったことをモデル行動の保証とみなさず、単�
 - [`../../docs/ja/maintainers/product-quality-program.md`](../../docs/ja/maintainers/product-quality-program.md) — 品質要件・検証層・実験ポートフォリオ全体
 
 ## 現在の実験状態
+
+### E0 — evidence coverage re-audit
+
+2026-09-16に、初回E0以降に追加されたE1〜E7のprotocol、engineering trial、fresh rerun packet、known-failure fixtureを含めて品質証拠を再監査しました。
+
+初回監査で大きかった「実験設計面の空白」は縮小し、現在の主要な未充足点は、**独立behavioral再現**、**実surfaceでの再現**、**natural-workでの実測**の三群へ収束しています。
+
+E1〜E5はfresh execution / separate evaluationへ進める準備が整っていますが、この会話ではすでに前runや評価基準を見ているため、独立runを擬似実行しません。E6も観測のために仕事を作らず、本来の自然作業で評価可能な証拠が残った時だけ開始します。
 
 ### E3 — split-method handoff integrity
 
