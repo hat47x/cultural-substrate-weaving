@@ -33,6 +33,7 @@ FORBIDDEN_OUTPUT_KEYS = {
     "public_name_status",
     "promotion_preconditions",
     "complete_checkout_validation",
+    "translation_refresh",
     "public_name_recheck",
     "english_independent_review",
     "forbidden_production_inputs",
