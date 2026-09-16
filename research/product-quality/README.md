@@ -56,6 +56,7 @@ static checkが通ったことをモデル行動の保証とみなさず、単�
 - [`experiment-005-run-002-execution-packet.md`](experiment-005-run-002-execution-packet.md) — E5 Run 002: 各実surfaceへ渡す固定packet
 - [`experiment-005-run-002-evaluation-sheet.md`](experiment-005-run-002-evaluation-sheet.md) — E5 Run 002: surface出力生成後に使う評価sheet
 - [`experiment-006-known-failure-regression.md`](experiment-006-known-failure-regression.md) — E7: 実際に再現した欠陥だけを対象にした回帰coverage監査
+- [`experiment-007-natural-work-utility-overhead.md`](experiment-007-natural-work-utility-overhead.md) — E6: 自然作業を増やさずutility / overheadを読むevidence extraction protocol
 - [`../../docs/ja/maintainers/product-quality-program.md`](../../docs/ja/maintainers/product-quality-program.md) — 品質要件・検証層・実験ポートフォリオ全体
 
 ## 現在の実験状態
@@ -122,6 +123,22 @@ Layer Bについては、Run 002のexecution packetとevaluation sheetを分離�
 
 **このrepository作業の会話では実surfaceを擬似実行しないため、E5 Run 002はまだ未実施です。** E5全体も完了扱いにはしていません。
 
+### E6 — natural-work utility / overhead
+
+2026-09-16に、Living Lab schema 0.2、event schema 0.2、ローカル運用を監査し、E6のevidence extraction protocolを固定しました。
+
+現行`natural_work` roundにはartifact、residual、reopening condition、provenance付きinterpretationを残す経路があり、eventではartifact adoption / withdrawal、decision change、delayed reactivation等を参照付きで記録できます。一方、数値`measurements`は`paired_check`のcomparison側にあり、自然作業へ必須化されていません。
+
+この境界を維持し、E6のためにLiving Lab schemaやvalidatorへ新しい必須fieldは追加していません。特に次を守ります。
+
+- event件数、framework contact数、activation件数をutility / overheadの代理KPIにしない。
+- 明示的なoverhead測定がないことを`0`とせず、`not measured`として扱う。
+- retrospectiveに、当時測っていない時間やturn数を精密値として復元しない。
+- artifact差分、利用者の採用・訂正・撤回、残差の後日再利用を優先して読む。
+- このrepository保守作業をnatural-work実績として数えない。
+
+E6 Run 001は、別の本来目的で行われた自然作業に評価可能なrecordまたはartifact参照が有機的に残った場合だけ開始します。観測のために仕事や追加roundを作りません。
+
 ### E7 — known-failure regression
 
 2026-09-16に、E1〜E5で得た知見を「実際に再現した欠陥」と「診断知見・未測定事項」に分けて初回監査しました。
@@ -144,7 +161,8 @@ E7には件数目標を置きません。今後、実利用やprobeで具体的�
 3. **E4 Run 002** — Run 001の出力を見ていないfresh contextから同じstop snapshotを再開し、別評価者がL1〜L10を確認する。
 4. **E2 Run 002** — paired packetをfresh contextで再実行し、特にactivation/depthとsplit ownershipを別評価する。Pair Cでgrouping behaviorまで扱う場合は、元メモ本文を先に固定する。
 5. **E5 Run 002** — 固定packetを実surfaceへ個別に渡し、raw output生成後にP1〜P8を別評価する。model / product mode差はplatform効果と即断しない。
-6. 上記で同じfailureが再現した場合は最小fixtureへ落とす。natural-workで重大なfailureが見つかった場合は、その再現を優先する。
+6. **E6 Run 001** — 自然作業が本来の目的で発生し、artifact / judgment / residual reuse等の証拠が有機的に残った時だけ評価する。E6のために作業を発生させない。
+7. 上記で同じfailureが再現した場合は最小fixtureへ落とす。natural-workで重大なfailureが見つかった場合は、その再現を優先する。
 
 E7はこの順序とは別に、具体的なfailureが再現した時点で割り込みます。回帰fixtureの件数を増やすこと自体は目標にしません。
 
