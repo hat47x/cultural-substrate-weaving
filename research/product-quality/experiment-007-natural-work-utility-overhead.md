@@ -9,9 +9,9 @@
 
 ## 目的
 
-E6では、CSWや分離したMethodが**実際の仕事の中で何を残したか**と、方法適用・観測が**本来の仕事へどの程度の負荷を加えたか**を読む。
+E6では、CSWや分離したMethodが**実際の仕事の中で何を残したか**と、方法適用・観測が**本来の仕事にどの程度の負荷を加えたか**を読む。
 
-ただし、品質観測のために仕事を作らない。記録を埋めるために利用者へ追加操作を要求せず、自然な作業で既に生じたartifact、Living Lab round / event、利用者判断、明示的に残った測定だけを証拠にする。
+ただし、品質観測のために仕事を作らない。記録を埋めるために利用者へ追加操作を要求せず、自然な作業の中ですでに生じたartifact、Living Lab round / event、利用者の判断、明示的に残った測定だけを証拠にする。
 
 このprotocolを作成しているrepository保守作業そのものを、E6の`natural_work`事例として数えない。
 
@@ -44,7 +44,7 @@ event schema 0.2では、自然に観測されたときに次の変化を記録�
 
 見ること:
 
-- CSW / Method適用後に、実成果物へ何が残ったか
+- CSW / Method適用後に、実際の成果物へ何が残ったか
 - 後で採用・撤回・修正されたものは何か
 - 方法説明だけが増え、成果物へ何も戻らなかったか
 
@@ -144,7 +144,7 @@ interpretations:
 known_limits:
 ```
 
-空欄を埋めるために追加質問をしない。元recordにない精密値を後付けしない。
+空欄を埋めるために追加質問をしない。元のrecordにない精密な値を後付けしない。
 
 ## must-pass invariants
 
@@ -170,11 +170,11 @@ event件数、framework contact数、activation件数を有用性や負荷の代
 
 ### U6 — artifact return
 
-有用性を主張する場合、可能な範囲で実成果物・判断・残差再利用のいずれかへ戻れる証拠を示す。
+有用性を主張する場合、可能な範囲で実際の成果物・判断・残差再利用のいずれかへ戻れる証拠を示す。
 
 ### U7 — retrospective honesty
 
-retrospective observationはそのままretrospectiveとし、当時測っていない時間・turn数を精密値へ復元しない。
+retrospective observationはそのままretrospectiveとし、当時測っていない時間・turn数を精密な値として復元しない。
 
 ### U8 — user correction priority
 
@@ -207,7 +207,7 @@ E6 Run 001は、**別の本来目的で行われた自然作業**に、評価可
 
 新しいfieldを検討するのは、実際のnatural-work runで次を満たした場合に限る。
 
-1. 同じ重要な証拠gapが複数回生じる。
+1. 同種の重要な証拠gapが複数回生じる。
 2. 既存の`artifacts`、event、`interpretations`、opaque refsでは十分に表現できない。
 3. 追加fieldを記録する負荷が、得られる観測価値に見合う。
 4. optional fieldではなく必須化する必要性を別途説明できる。
