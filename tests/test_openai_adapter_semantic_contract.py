@@ -33,7 +33,7 @@ class OpenAIAdapterSemanticContractTests(unittest.TestCase):
 
             en = self.default_prompt("en-US", profile)
             self.assertIn("where needed", en)
-            self.assertIn("compatible affinity synthesis", en)
+            self.assertIn("compatible affinity-synthesis realization", en)
             self.assertIn("Follow that delegation", en)
             self.assertNotIn("use cultural frameworks and KJ to explore and integrate", en)
 
