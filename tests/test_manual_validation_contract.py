@@ -14,14 +14,34 @@ class ManualValidationContractTests(unittest.TestCase):
 
     def test_make_check_owns_ordinary_local_validation(self) -> None:
         makefile = (ROOT / "Makefile").read_text(encoding="utf-8")
-        self.assertIn(
-            "check: repository-contracts generated-artifacts-check validate japanese-docs-check test tokens living-lab-check living-lab-summary",
-            makefile,
+
+        check_line = next(
+            line for line in makefile.splitlines() if line.startswith("check:")
+        )
+        prerequisites = check_line.split(":", 1)[1].split()
+        required = (
+            "repository-contracts",
+            "production-skill-set-legacy-parity",
+            "generated-artifacts-check",
+            "validate",
+            "japanese-docs-check",
+            "test",
+            "tokens",
+            "living-lab-check",
+            "living-lab-summary",
+        )
+        for target in required:
+            self.assertIn(target, prerequisites)
+
+        self.assertEqual(
+            [target for target in prerequisites if target in required],
+            list(required),
         )
         self.assertIn("repository-contracts:", makefile)
         self.assertIn("scripts/check_branch_version.py", makefile)
         self.assertIn("generated-artifacts-check: build", makefile)
         self.assertIn("scripts/check_generated_artifacts.py", makefile)
+        self.assertIn("test: build", makefile)
         self.assertIn("python -m unittest discover -s tests", makefile)
 
     def test_living_lab_check_validates_examples_and_public_record_set(self) -> None:
