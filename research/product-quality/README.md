@@ -134,7 +134,7 @@ Pair CのRun 001 / Run 002 packetは8件の元メモ本文を列挙していな�
 
 Run 002用には、A/B/Cのpaired taskとControl Uを期待ラベルなしで渡すexecutor packetと、K1〜K10を後から確認するevaluator sheetを分離しました。Pair Cはrouting / ownershipまでを観測範囲とし、可能ならvariant同士の出力を見せずに実行します。そうできない場合は順序をconfounderとして残します。**この会話ではRun 002自体は実行しません。**
 
-2026-09-18には、Pair Cだけを対象にしたRun 003を追加しました。N01〜N08の8件を固定source materialとして明示し、C0ではaffinity synthesisのみ、C1ではCSWから一つだけframework-generated questionを渡してから同じone-round synthesisを行います。正解clusterは定義せず、material-led grouping、source return、残差、framework questionの非権威化、split ownershipを別sheetで評価します。**Run 003もfresh execution用に準備しただけで、この会話では実行していません。**
+2026-09-18には、Pair Cだけを対象にしたRun 003を追加しました。N01〜N08の8件をcontrolled comparison用の合成source materialとして固定し、C0ではaffinity synthesisのみ、C1ではCSWから一つだけframework-generated questionを渡してから同じone-round synthesisを行います。正解clusterは定義せず、material-led grouping、source return、残差、framework questionの非権威化、split ownershipを別sheetで評価します。**Run 003もfresh execution用に準備しただけで、この会話では実行していません。**
 
 ### E5 — cross-platform semantic parity
 
