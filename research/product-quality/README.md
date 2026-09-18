@@ -144,6 +144,8 @@ Run 002用には、A/B/Cのpaired taskとControl Uを期待ラベルなしで渡
 
 このfailureは`tests/test_openai_adapter_semantic_contract.py`へ最小の静的回帰fixtureとして落としています。固定しているのは、method depthを外部委任から奪わないこと、interactive / meteredでdefault promptの意味を変えないこと、implicit invocation policyの差は維持することです。これは新しい方法論規則ではなく、既存契約をwrapperが上書きした既知failureの再発防止です。
 
+OpenAI Skillの`dist/`はGit管理外で、`build_openai()`がcanonical adapter YAMLを生成先`agents/openai.yaml`へそのままコピーします。このsource→generated境界は`tests/test_openai_build_adapter_parity.py`でja-JP / en-US × interactive / meteredについて固定し、adapter側の修正がbuild時に取りこぼされる回帰を検出します。
+
 Layer Bについては、Run 002のexecution packetとevaluation sheetを分離しました。各surfaceは他surfaceの出力や評価rubricを見ずにraw outputと実行metadataだけを作り、その後にP1〜P8を評価します。異なるmodel / reasoning mode / context freshnessはplatform差と混同せず、confounderとして別記します。
 
 **このrepository作業の会話では実surfaceを擬似実行しないため、E5 Run 002はまだ未実施です。** E5全体も完了扱いにはしていません。
