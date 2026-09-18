@@ -34,7 +34,7 @@ E7では、見つかった知見をすべてtestへ昇格させない。修正�
 |---|---|---|---|---|
 | E2 Run 001 | `evals/activation-cases.json`のlimited / exploratory例が、v0.5以前の「CSW自身がKJ材料統合を行う」責務を残していた | eval fixture responsibility drift | affinity synthesisを`affinity-synthesis`またはcompatible realizationへ戻し、affinity-onlyでCSWを発動しないcaseを追加 | **covered in this change** — 監査開始時はgap。`tests/test_activation_fixture_semantic_contract.py`を追加 |
 | E5 Run 001 | OpenAI Skillの`default_prompt`が、外部委任にかかわらず文化体系とKJの利用を常時要求していた | adapter semantic drift | ja/en × interactive/meteredのpromptを外部委任・必要範囲・compatible realizationに整合 | **covered** — `tests/test_openai_adapter_semantic_contract.py` |
-| E7 follow-up (2026-09-17) | `tests/test_openai_adapter_semantic_contract.py`が英語promptの意味境界ではなく`as needed` / `compatible affinity synthesis`という特定語句へ固定され、同義のcanonical promptを誤ってFAILにした | regression fixture over-specification | conditionality・delegation・compatible affinity-synthesisという意味上の不変条件だけを検査し、同義表現を許容する | **covered in 2026-09-18 follow-up** — 同testをsemantic predicateへ縮約 |
+| E7 follow-up (2026-09-17) | `tests/test_openai_adapter_semantic_contract.py`が英語promptの意味境界ではなく`as needed` / `compatible affinity synthesis`という特定語句へ固定され、意味上は同等のcanonical promptを誤ってFAILにした | regression fixture over-specification | 条件付き適用・外部委任・compatibleなaffinity-synthesisへの接続という意味上の不変条件だけを検査し、同義表現を許容する | **covered in 2026-09-18 follow-up** — 同testをsemantic predicateへ縮約 |
 
 ### E2 failureの最小不変条件
 
@@ -54,13 +54,13 @@ activation caseの文章そのものやcase順序は契約にしない。
 
 修正後のtestでは、次の意味境界だけを固定する。
 
-- 方法の深度が「必要な範囲」「必要に応じて」等の条件付きであり、常時深く適用する命令になっていない。
+- 方法の深度を「必要な範囲」「必要に応じて」など依頼に応じた条件付きで扱い、常時深く適用する命令にしない。
 - compatibleな`affinity-synthesis`への接続可能性を保ち、CSW自身へone-round synthesisを戻さない。
-- method depthと採否・価値判断が外部の委任へ結び付いている。
+- 方法の深度と採否・価値判断が外部の委任に結び付いている。
 - 旧promptの「文化体系とKJを常に使う」命令へ戻らない。
 - interactive / metered間ではdefault promptの意味を変えず、implicit invocation policyだけを分ける。
 
-英語の`where needed`と`as needed`、また`needed`と`necessary`のような同義差はfailureとしない。日本語側も同様に、一つの定型句ではなく条件性・委任・split ownershipを検査する。
+英語では`where needed`と`as needed`、`needed`と`necessary`といった意味上同等の言い換えをfailureとしない。日本語側も同様に、一つの定型句ではなく、条件付き適用・委任・split ownershipを検査する。
 
 ## fixtureへ上げない診断知見
 
