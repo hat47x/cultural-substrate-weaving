@@ -14,7 +14,7 @@ Product Quality Programで実施したE1〜E5のengineering trialと包装監査
 
 E7では、見つかった知見をすべてtestへ昇格させない。修正前にrepositoryまたは実行artifact上で存在したfailure modeだけを対象にし、既存契約の言い換えや「念のため」の規則増加を避ける。
 
-この監査の対象は、2026-09-16時点の`research/product-quality/`で記録しているE1〜E5である。リポジトリの全履歴に存在したすべてのbugを網羅する台帳ではない。
+初回監査の対象は、2026-09-16時点の`research/product-quality/`で記録していたE1〜E5である。その後は、同じ品質プログラムの運用中に具体的なfailureを再現した場合だけfollow-upとして追記する。リポジトリの全履歴に存在したすべてのbugを網羅する台帳ではない。
 
 ## E7の回帰対象にする条件
 
