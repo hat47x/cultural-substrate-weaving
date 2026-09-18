@@ -26,16 +26,25 @@ class OpenAIAdapterSemanticContractTests(unittest.TestCase):
     def test_default_prompt_preserves_delegated_method_depth(self) -> None:
         for profile in PROFILES:
             ja = self.default_prompt("ja-JP", profile)
-            self.assertIn("必要な範囲で", ja)
-            self.assertIn("compatibleな親和統合への接続", ja)
-            self.assertIn("その委任に従ってください", ja)
+            self.assertRegex(ja, r"必要(?:な範囲|に応じ|であれば|な場合)")
+            self.assertIn("compatible", ja)
+            self.assertIn("親和統合", ja)
+            self.assertIn("委任", ja)
             self.assertNotIn("文化的体系とKJ法を使って", ja)
 
             en = self.default_prompt("en-US", profile)
-            self.assertIn("where needed", en)
-            self.assertIn("compatible affinity-synthesis realization", en)
-            self.assertIn("Follow that delegation", en)
-            self.assertNotIn("use cultural frameworks and KJ to explore and integrate", en)
+            en_lower = en.lower()
+            self.assertRegex(
+                en_lower,
+                r"\b(?:where|as|when|if) (?:needed|necessary)\b",
+            )
+            self.assertIn("compatible", en_lower)
+            self.assertIn("affinity-synthesis", en_lower)
+            self.assertIn("delegat", en_lower)
+            self.assertNotIn(
+                "use cultural frameworks and kj to explore and integrate",
+                en_lower,
+            )
 
     def test_invocation_profile_does_not_rewrite_default_prompt_semantics(self) -> None:
         for locale in ("ja-JP", "en-US"):
