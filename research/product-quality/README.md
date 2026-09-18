@@ -172,11 +172,13 @@ E6 Run 001は、別の本来目的で行われた自然作業に評価可能なr
 
 2026-09-16に、E1〜E5で得た知見を「実際に再現した欠陥」と「診断知見・未測定事項」に分けて初回監査しました。
 
-現在、E7で追跡しているknown failureは3件です。
+現在、E7で**修正済み・回帰可能**として追跡しているknown failureは3件です。
 
 - E2のactivation fixture responsibility drift — `tests/test_activation_fixture_semantic_contract.py`
 - E5のOpenAI adapter `default_prompt` semantic drift — `tests/test_openai_adapter_semantic_contract.py`
 - E5回帰fixtureの語句過剰固定 — adapterが意味契約を満たしていても意味上同等の言い換えでFAILしたため、同testを意味上の不変条件を検査する形へ縮約
+
+これとは別に、2026-09-18の監査で**production metadata split ownership drift**をopen known failureとして確認しました。CSW単体のdescription / wrapper prefixの一部が、split ownership前の「CSW自身がKJ統合を行う」表現を残しています。repairにはcanonical input変更とtracked generated artifactの正規buildが必要なため、現在は`2026-09-18-production-metadata-split-ownership-audit.md`へ影響範囲と完了条件を固定し、未修正・未fixture化のまま保持しています。
 
 E3の`carry`と`=`の区別、E4のquestion shiftやprior stop reasonは重要な知見ですが、既存Method契約で正しく処理できており、修正前failureは再現していません。このため、規則数を増やす目的でfixture化しません。E1もengineering Run 001では明白なfailureがありません。
 
