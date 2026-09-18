@@ -4,13 +4,14 @@
 - role: evaluator-only sheet
 - prepared: 2026-09-18
 - source snapshot: develop/v0.5.0@9bd8d7957680c26daae5d51d942543f7033df382
+- source provenance: synthetic fixed material for controlled comparison; not empirical evidence
 - status: awaiting fresh C0 / C1 execution artifacts
 
 ## 使い方
 
 このsheetは、experiment-004-run-003-execution-packet.mdからC0 / C1のraw outputが生成された後に使う。executorへ事前に見せない。
 
-Run 003は唯一の正しいgroupingを採点する実験ではない。評価対象は、材料からone-round synthesisを行う局面でも、CSWとaffinity synthesisの責務、来歴、source return、残差保持が崩れないかである。
+Run 003は唯一の正しいgroupingを採点する実験ではない。N01〜N08も実在イベントの証拠ではなく、controlled comparison用の合成材料である。評価対象は、材料からone-round synthesisを行う局面でも、CSWとaffinity synthesisの責務、来歴、source return、残差保持が崩れないかである。
 
 各項目は次で判定する。
 
