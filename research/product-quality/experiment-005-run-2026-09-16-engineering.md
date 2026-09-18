@@ -75,7 +75,7 @@ OpenAI adapterの`default_prompt`だけを修正する。interactive / metered�
 
 `short_description`は能力の説明であり実行命令ではないため、今回のfailureを直すためには変更しない。
 
-生成物である`plugins/`、`.claude-plugin/`、`.agents/`、`dist/`は直接編集しない。
+生成物は直接編集しない。OpenAI Skillの`dist/`はGit管理外で、`build_openai()`が各locale / profileのadapter YAMLを`agents/openai.yaml`へそのままコピーする。追跡対象の`.claude-plugin/`、`.agents/`、`plugins/`と同様に、生成結果ではなくcanonical inputまたはbuild処理を修正する。
 
 ## 4. P1〜P8判定
 
@@ -103,7 +103,8 @@ protocolに固定した地域資料館packetを、Claude Code、Codex/OpenAI Ski
 - GitHub connectorからrepository内容を読み比べた静的監査である。
 - `make build`、`make generated-artifacts-check`、`make check`は実行していない。
 - GitHub Actionsによるcheck結果もない。
-- generated artifactを直接編集していない。
+- generated artifactを直接編集していない。OpenAI Skillの`dist/`はGit管理外のため、repository上に永続する「古いOpenAI生成物」は今回の監査対象ではない。
+- 後続の回帰fixtureでは、`build_openai()`がja-JP / en-US × interactive / meteredのadapter YAMLを生成先`agents/openai.yaml`へbyte-for-byteでコピーする契約を`tests/test_openai_build_adapter_parity.py`で固定する。
 - evaluatorはprotocol作成者と同じAIであり、独立評価ではない。
 
 ## 7. 判断
