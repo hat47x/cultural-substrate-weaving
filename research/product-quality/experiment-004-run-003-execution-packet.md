@@ -6,6 +6,7 @@
 - source snapshot: `develop/v0.5.0@9bd8d7957680c26daae5d51d942543f7033df382`
 - status: prepared / not executed in the repository-working conversation
 - scope: Pair C only — material synthesis / CSW responsibility boundary
+- source provenance: synthetic fixed material for controlled comparison; not a Living Lab or empirical observation
 
 ## このpacketの目的
 
@@ -49,7 +50,7 @@ Web検索や外部調査でsource materialを増補しない。
 
 ## 固定source material
 
-以下の8件を、書かれている順序をtaxonomyや重要度とみなさず、同じsource materialとして使う。IDはsource returnのための安定参照であり、分類ラベルではない。
+以下の8件は、controlled comparisonのために作成した合成source materialであり、実在イベントの観測記録ではない。書かれている順序をtaxonomyや重要度とみなさず、C0 / C1で同じ材料として使う。IDはsource returnのための安定参照であり、分類ラベルではない。
 
 ### N01
 
@@ -61,7 +62,7 @@ Web検索や外部調査でsource materialを増補しない。
 
 ### N03
 
-廊下のベンチを休憩用に残していたが、昼前には資料箱と上着が置かれ、座れない時間があった。足の悪い参加者が壁際でしばらく立っていたことを、終了後になってスタッフが知った。
+廊下のベンチを休憩用に残していたが、昼前には資料箱と上着が置かれ、座れない時間があった。歩行に不安のある参加者が壁際でしばらく立っていたことを、終了後になってスタッフが知った。
 
 ### N04
 
