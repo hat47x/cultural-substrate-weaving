@@ -58,6 +58,8 @@ static checkが通ったことをモデル行動の保証とみなさず、単�
 - [`experiment-004-run-2026-09-14-engineering.md`](experiment-004-run-2026-09-14-engineering.md) — E2 Run 001: paired engineering trial
 - [`experiment-004-run-002-execution-packet.md`](experiment-004-run-002-execution-packet.md) — E2 Run 002: 期待ラベルを見せずpaired taskを渡すfixed packet
 - [`experiment-004-run-002-evaluation-sheet.md`](experiment-004-run-002-evaluation-sheet.md) — E2 Run 002: K1〜K10をexecution後に確認する評価sheet
+- [`experiment-004-run-003-execution-packet.md`](experiment-004-run-003-execution-packet.md) — E2 Run 003: Pair Cの8件source materialを固定したgrouping behavioral packet
+- [`experiment-004-run-003-evaluation-sheet.md`](experiment-004-run-003-evaluation-sheet.md) — E2 Run 003: material-led grouping / provenance / split ownershipを後から確認する評価sheet
 - [`experiment-005-cross-platform-semantic-parity.md`](experiment-005-cross-platform-semantic-parity.md) — E5: cross-platform semantic parity protocol
 - [`experiment-005-run-2026-09-16-engineering.md`](experiment-005-run-2026-09-16-engineering.md) — E5 Run 001: Layer A packaging preflight
 - [`experiment-005-run-002-execution-packet.md`](experiment-005-run-002-execution-packet.md) — E5 Run 002: 各実surfaceへ渡す固定packet
@@ -128,9 +130,11 @@ Run 002用には、prior snapshotとdelayed deltaだけを渡すexecutor packet�
 
 この既知failureは、`tests/test_activation_fixture_semantic_contract.py`でsplit ownershipの最小不変条件へ縮約して回帰検出するようにしました。case全文や順序は固定せず、limited / affinity-only / exploratoryの意味境界だけを検査します。
 
-Pair Cの固定packetは8件の元メモ本文を列挙していないため、このrunで確認できたのはrouting / ownership境界までです。実際のgrouping behaviorを評価する場合は、元メモ本文を固定した別runが必要です。
+Pair CのRun 001 / Run 002 packetは8件の元メモ本文を列挙していないため、そこで確認できるのはrouting / ownership境界までです。この制約は履歴として残し、後から「実groupingまで評価済み」とは読み替えません。
 
-Run 002用には、A/B/Cのpaired taskとControl Uを期待ラベルなしで渡すexecutor packetと、K1〜K10を後から確認するevaluator sheetを分離しました。Pair Cの8件本文は今回も新たに捏造せず、routing / ownershipまでを観測範囲と明記しています。可能ならvariant同士の出力を見せずに実行し、そうできない場合は順序をconfounderとして残します。**この会話ではRun 002自体は実行しません。**
+Run 002用には、A/B/Cのpaired taskとControl Uを期待ラベルなしで渡すexecutor packetと、K1〜K10を後から確認するevaluator sheetを分離しました。Pair Cはrouting / ownershipまでを観測範囲とし、可能ならvariant同士の出力を見せずに実行します。そうできない場合は順序をconfounderとして残します。**この会話ではRun 002自体は実行しません。**
+
+2026-09-18には、Pair Cだけを対象にしたRun 003を追加しました。N01〜N08の8件をcontrolled comparison用の合成source materialとして固定し、C0ではaffinity synthesisのみ、C1ではCSWから一つだけframework-generated questionを渡してから同じone-round synthesisを行います。正解clusterは定義せず、material-led grouping、source return、残差、framework questionの非権威化、split ownershipを別sheetで評価します。**Run 003もfresh execution用に準備しただけで、この会話では実行していません。**
 
 ### E5 — cross-platform semantic parity
 
@@ -181,7 +185,7 @@ E7には件数目標を置きません。今後、実利用やprobeで具体的�
 1. **E3 Run 002** — prepared execution packetをfresh contextへ渡し、別contextまたは人間がH1〜H6を評価する。
 2. **E1 Run 002** — adversarial packetをfresh contextへ渡し、別評価者がA1〜A6を確認する。
 3. **E4 Run 002** — prior snapshotとdelayed deltaをfresh contextから再開し、別評価者がL1〜L10を確認する。
-4. **E2 Run 002** — paired packetをfresh contextで再実行し、別評価者がactivation / depth / split ownershipを確認する。Pair Cのgrouping behaviorまで扱う場合は、8件の元メモ本文を別protocolとして先に固定する。
+4. **E2 Run 002 / Run 003** — Run 002でactivation / depth / split ownershipを確認する。Pair Cの実groupingは、8件の元メモ本文を固定済みのRun 003をfresh contextへ渡し、material-led grouping / provenance / residual retentionまで別評価する。
 5. **E5 Run 002** — 固定packetを実surfaceへ個別に渡し、raw output生成後にP1〜P8を別評価する。model / product mode差はplatform効果と即断しない。
 6. **E6 Run 001** — 自然作業が本来の目的で発生し、artifact / judgment / residual reuse等の証拠が有機的に残った時だけ評価する。E6のために作業を発生させない。
 7. 上記で同じfailureが再現した場合は最小fixtureへ落とす。natural-workで重大なfailureが見つかった場合は、その再現を優先する。
