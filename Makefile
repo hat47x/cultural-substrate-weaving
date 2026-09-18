@@ -32,7 +32,7 @@ validate:
 japanese-docs-check:
 	python scripts/check_natural_japanese_review.py
 
-test:
+test: build
 	python -m unittest discover -s tests
 
 tokens:
