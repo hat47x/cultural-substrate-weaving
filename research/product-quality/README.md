@@ -42,6 +42,7 @@ static checkが通ったことをモデル行動の保証とみなさず、単�
 
 - [`2026-09-11-quality-evidence-audit.md`](2026-09-11-quality-evidence-audit.md) — E0: 現行品質証拠の初回監査
 - [`2026-09-16-quality-evidence-reaudit.md`](2026-09-16-quality-evidence-reaudit.md) — E0再監査: E1〜E7整備後の証拠強度と未充足点を再評価
+- [`2026-09-18-production-metadata-split-ownership-audit.md`](2026-09-18-production-metadata-split-ownership-audit.md) — split ownership後も残るproduction metadata responsibility driftの影響範囲と修正条件
 - [`experiment-001-handoff-integrity.md`](experiment-001-handoff-integrity.md) — E3: CSW → affinity synthesis → iterative inquiryのhandoff integrity protocol
 - [`experiment-001-run-2026-09-11-engineering.md`](experiment-001-run-2026-09-11-engineering.md) — E3 Run 001: 同一contextでのengineering trial
 - [`experiment-001-run-002-execution-packet.md`](experiment-001-run-002-execution-packet.md) — E3 Run 002: fresh execution側へ渡す固定packet
