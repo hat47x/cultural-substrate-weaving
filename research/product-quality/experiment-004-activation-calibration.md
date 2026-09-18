@@ -131,7 +131,7 @@ CSWの利用範囲や文化体系の読み込み深度は、課題が技術的�
 
 - CSW: `limited`または外部委任の範囲を説明できる同等の限定状態
 - cultural framework depth: `probe`または`preview`等の必要最小限。固定値を成功条件にしない。
-- framework-generated questionは材料にはなれるが、grouping geometryや独立support数を決めない。
+- framework-generated questionは検討材料にはなれるが、target-sideのsource supportとして数えず、grouping geometryや独立support数を決めない。
 
 ### Pair C grouping follow-up
 
