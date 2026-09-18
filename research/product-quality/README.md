@@ -78,6 +78,8 @@ static checkが通ったことをモデル行動の保証とみなさず、単�
 
 E1〜E5はfresh execution / separate evaluationへ進める準備が整っていますが、この会話ではすでに前runや評価基準を見ているため、独立runを擬似実行しません。E6も観測のために仕事を作らず、本来の自然作業で評価可能な証拠が残った時だけ開始します。
 
+2026-09-18のfollow-upでは、E2 Pair Cの固定8件を持つRun 003を追加し、grouping behaviorをfresh contextへ渡せる準備まで進めました。また、E7のknown failureは回帰fixture自身の語句過剰固定を含む3件になりました。いずれも「準備済み」と「独立run済み」を分けて扱います。詳細は[`2026-09-16-quality-evidence-reaudit.md`](2026-09-16-quality-evidence-reaudit.md)末尾のfollow-upを参照してください。
+
 ### E3 — split-method handoff integrity
 
 Run 001ではH1〜H6を外部artifactとして検査でき、明白なMethod contract違反は観測されませんでした。ただしprotocol作成・実行・評価が同じAI contextにあるため、behavioral reliabilityの強い証拠とは扱いません。

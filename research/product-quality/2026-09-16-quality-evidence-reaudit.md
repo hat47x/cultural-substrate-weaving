@@ -280,3 +280,64 @@ paired activationをfresh contextで再実行する。Pair Cはrouting / ownersh
 この段階で大規模な新eval frameworkを追加する必要はない。すでに準備したpacketを独立条件で実行し、実際に再現したfailureだけをE7へ戻す方が価値が高い。
 
 次のrepository内作業では、独立runをこのconversationで擬似実行するのではなく、**実行可能な外部条件が整うまで、静的契約の重複追加を抑える**。自然作業についても、観測のために仕事を作らない。
+
+## 9. 2026-09-18 follow-up
+
+この節は、2026-09-16時点の再監査結果を上書きせず、その後に増えた**準備資産と再現済みfailure**だけを追記する。
+
+### 9.1 E2 Pair Cは、routing-onlyの履歴を残したままgrouping評価へ進める状態になった
+
+Run 001 / Run 002については、当時8件の元メモ本文を固定していなかったため、Pair Cの観測範囲をrouting / ownershipまでとした記録を維持する。後からgrouping qualityまで評価済みだったとは読み替えない。
+
+2026-09-18に、Pair C専用のRun 003を追加した。
+
+- `experiment-004-run-003-execution-packet.md`
+- `experiment-004-run-003-evaluation-sheet.md`
+
+Run 003では、N01〜N08をcontrolled comparison用の**合成source material**として固定した。C0はaffinity synthesisのみ、C1はCSWからframework-generated questionを一つだけ渡した後に同じone-round synthesisを行う。正解clusterは事前定義せず、material-led grouping、source return、残差・緊張の保持、framework questionの非権威化、split ownershipを後から評価する。
+
+この変更で「Pair Cのgrouping behaviorを評価するためのsource materialが未固定」という準備上の空白は解消した。ただし、**Run 003はまだ実行していない**。したがってPQ-03 / PQ-04 / PQ-05 / PQ-11のbehavioral evidenceが増えたとは扱わない。増えたのはindependent-readyな実行条件である。
+
+### 9.2 E7 known failureは3件になった
+
+2026-09-16再監査時点では、回帰fixtureへ固定したknown failureを2件としていた。その後、E5の回帰test自体に語句過剰固定があり、意味上同等のcanonical promptを誤ってFAILさせるfailureを隔離実行で再現した。
+
+現在E7で追跡するknown failureは次の3件である。
+
+1. E2 activation fixture responsibility drift
+2. E5 OpenAI adapter `default_prompt` semantic drift
+3. E5 regression fixture over-specification — 同義表現差をsemantic driftとして誤検出
+
+3件目は、testを特定語句ではなく、条件付き適用、外部委任、compatible affinity-synthesisへの接続、旧来の無条件prompt不在という意味上の不変条件へ縮約して修正した。
+
+この追加もMethod Definitionの新規則ではない。**既に存在する契約を回帰testが過剰に狭く解釈したfailure**として扱う。
+
+### 9.3 repository contractの修正はbehavioral evidenceと分ける
+
+同じ期間に、repository validationでは次の静的不整合も修正した。
+
+- standalone `make test`でもbuildを先行させるようにし、clean checkoutで生成物不足によるfalse failureが混ざりにくい入口へ整えた。
+- `make check`のprerequisite列を旧文字列へ固定していたrepository / manual-validation testを、必要targetの存在と順序を検査する形へ修正した。
+- natural-Japanese reviewのscope / manifest / blob SHAを再照合し、45件についてmissing 0 / out-of-scope 0 / stale 0 / invalid 0を静的に確認した。
+- `product-quality-program.md`はmanifest上ではレビュー済みだったが、人間向けreview index本文から漏れていたため同期した。
+- OpenAI Skillでは、canonical adapter YAMLがbuild時に生成先`agents/openai.yaml`へそのまま反映される契約を単体回帰testへ固定した。
+
+これらはPQ-10等の方法論的なbehavioral evidenceではなく、**repository verification surfaceの整合性改善**である。test infrastructureを直したことを、CSWの有効性やbehavioral reliabilityの証拠へ読み替えない。
+
+### 9.4 証拠取得順序の更新
+
+2026-09-16時点のPriority 1〜3は変えない。
+
+1. E3 Run 002
+2. E1 independent rerun
+3. E4 Run 002
+
+E2については次の二段階に分ける。
+
+4. **E2 Run 002** — activation / depth / split ownershipをfresh contextで確認する。Pair Cは当時のpacket仕様どおりrouting / ownershipまでとする。
+5. **E2 Run 003** — Pair Cの固定8件を使い、実groupingでmaterial-led synthesis / provenance / residual retention / split ownershipを別評価する。
+6. **E5 Run 002** — 各実surfaceでLayer Bを実行する。
+
+E6 / E7は従来どおりevent-drivenとする。
+
+この更新でも、fresh packetの準備完了とfresh run完了を区別する。Run 003を追加したこと自体は、独立behavioral再現の空白を埋めない。
