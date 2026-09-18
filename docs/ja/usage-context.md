@@ -2,7 +2,7 @@
 
 ## このスキルが提供する能力
 
-cultural-substrate-weavingは、**文化的体系を一時的な認知場として開き、問い・関係・状態・遷移・空白の候補を得る探索**と、**その候補の来歴を保って対象側へ戻すための接続**を提供します。多数・異種の材料そのものを一回の親和統合でまとめる必要がある場合は、利用可能なら`affinity-synthesis`またはcompatible realizationへ委ねます。複数roundの差分再開は、同様に`iterative-inquiry-synthesis`またはcompatible realizationへ委ねます。
+cultural-substrate-weavingは、**文化的体系を一時的な認知場として開き、問い・関係・状態・遷移・空白の候補を得る探索**と、**その候補の来歴を保ちながら対象側へ戻し、検証につなげること**を提供します。多数・異種の材料そのものを一回の親和統合でまとめる必要がある場合は、利用可能なら`affinity-synthesis`またはcompatibleなrealizationへ委ねます。複数roundの差分再開は、同様に`iterative-inquiry-synthesis`またはcompatible realizationへ委ねます。
 
 本スキルは、執筆、経営、ソフトウェア開発、法務などに必要な専門知識や領域スキルを代替しません。専門的な正確性、品質基準、実装方法、成果物の形式は、呼ぶ側のコンテキストまたは併用する領域スキルで指定してください。
 
