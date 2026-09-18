@@ -54,6 +54,7 @@ Microsoft 365向けのこの2ファイルは、生成物そのものではなく
 - `docs/ja/maintainers/kj-atlas-cognitive-coevolution.md`
 - `docs/ja/maintainers/kj-atlas-merge-semantics-boundary.md`
 - `docs/ja/maintainers/natural-japanese-review.md`
+- `docs/ja/maintainers/product-quality-program.md`
 - `docs/ja/maintainers/official-sources.md`
 - `docs/ja/maintainers/release.md`
 - `docs/ja/maintainers/troubleshooting.md`
@@ -171,3 +172,7 @@ KJ法由来の技能をCSWから分離する検討として、新しく七つの
 あわせて、`README.md`、`adapters/microsoft-copilot/ja-JP/instructions.md`、`adapters/microsoft-copilot/ja-JP/package-readme.txt`、`docs/ja/platforms/microsoft-copilot.md`を、鮮度検査が要求する再確認として全文で読み直した。ブランチ統合によって前後の技術的な意味は変わっていないため、いずれも本文変更は行わず、確認日だけを更新した。
 
 `docs/ja/platforms/claude-code.md`は、決定権の所在を著者・スキル外の委任へ返す設計変更に合わせて、検索可否の扱い、Skillsアップロード後の呼び出し確認手順、明示呼び出しを標準としない旨の説明が書き換わったため、全文をあらためて通読した。検索できない範囲の扱いを証拠基準・委任へ委ねる書き方、呼び出し例が必須条件ではなく一例であることを示す書き方のいずれも、周囲の文章と自然につながっており、記録のためだけの本文変更は行わなかった。
+
+## 2026-09-17の追加レビュー
+
+`docs/ja/maintainers/product-quality-program.md`を全文で通読した。品質要求、証拠層、実験ポートフォリオ、変更判断の境界を確認し、識別に必要な英語ラベルや実験IDを保ったまま自然な日本語として読めると判断したため、記録のためだけの本文変更は行わなかった。対象文書を本索引にも追加し、鮮度管理manifestとの対象範囲を一致させた。
