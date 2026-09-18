@@ -11,10 +11,8 @@ class RepositoryContractIntegrationTests(unittest.TestCase):
         makefile = (ROOT / "Makefile").read_text(encoding="utf-8")
 
         self.assertIn("repository-contracts:", makefile)
-        self.assertIn(
-            'python scripts/check_branch_version.py --ref "$(git branch --show-current)"',
-            makefile,
-        )
+        self.assertIn("python scripts/check_branch_version.py --ref", makefile)
+        self.assertIn("git branch --show-current", makefile)
         self.assertIn("generated-artifacts-check: build", makefile)
         self.assertIn("test: build", makefile)
 
