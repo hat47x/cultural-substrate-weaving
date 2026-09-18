@@ -78,7 +78,7 @@ static checkが通ったことをモデル行動の保証とみなさず、単�
 
 E1〜E5はfresh execution / separate evaluationへ進める準備が整っていますが、この会話ではすでに前runや評価基準を見ているため、独立runを擬似実行しません。E6も観測のために仕事を作らず、本来の自然作業で評価可能な証拠が残った時だけ開始します。
 
-2026-09-18のfollow-upでは、E2 Pair Cの固定8件を持つRun 003を追加し、grouping behaviorをfresh contextへ渡せる準備まで進めました。また、E7のknown failureは回帰fixture自身の語句過剰固定を含む3件になりました。いずれも「準備済み」と「独立run済み」を分けて扱います。詳細は[`2026-09-16-quality-evidence-reaudit.md`](2026-09-16-quality-evidence-reaudit.md)末尾のfollow-upを参照してください。
+2026-09-18のfollow-upでは、E2 Pair Cの固定8件を持つRun 003を追加し、grouping behaviorをfresh contextへ渡せる準備まで進めました。また、E7では修正済み・回帰可能なknown failureが3件となり、その後の追加監査でproduction metadata split ownership driftをopen failureとして1件確認しました。いずれも「準備済み」と「独立run済み」、「修正済み」と「未修正」を分けて扱います。詳細は[`2026-09-16-quality-evidence-reaudit.md`](2026-09-16-quality-evidence-reaudit.md)末尾のfollow-upを参照してください。
 
 ### E3 — split-method handoff integrity
 
