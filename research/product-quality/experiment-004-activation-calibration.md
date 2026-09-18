@@ -133,6 +133,17 @@ CSWの利用範囲や文化体系の読み込み深度は、課題が技術的�
 - cultural framework depth: `probe`または`preview`等の必要最小限。固定値を成功条件にしない。
 - framework-generated questionは材料にはなれるが、grouping geometryや独立support数を決めない。
 
+### Pair C grouping follow-up
+
+Run 001 / Run 002では、8件の元メモ本文を固定していないため、Pair Cで確認できるのはrouting / ownership境界までとする。この制約は後から埋めたことにせず、そのまま履歴として保持する。
+
+実際のgrouping behaviorは、2026-09-18に別途固定したRun 003で扱う。
+
+- execution packet: `experiment-004-run-003-execution-packet.md`
+- evaluation sheet: `experiment-004-run-003-evaluation-sheet.md`
+
+Run 003ではN01〜N08のsource materialを固定し、C0 / C1のone-round synthesisをfresh executionへ渡せるようにした。ただし正解clusterは事前定義せず、material-led grouping、source return、残差保持、framework questionの非権威化、split ownershipを評価する。Run 003自体はこのrepository作業の会話では実行しない。
+
 ## 6. Control U — 外部委任が未確定
 
 Task:
