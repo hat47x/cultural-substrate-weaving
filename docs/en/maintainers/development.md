@@ -27,6 +27,20 @@ It currently runs the local repository contract check, rebuilds the generated di
 
 When that check fails, review and commit the intended generated changes. If the output is not intended, fix the canonical source, manifest, adapters, or generation logic that produced it rather than editing generated files to make the check pass.
 
+## Branch lifecycle
+
+Small repository-maintenance changes may be committed directly to the active `develop/vX.Y.Z` when appropriate. Substantial method changes, experiments, or isolated implementation work should use a short-lived `feature/*`, `research/*`, or `fix/*` branch created from the active develop branch and return through a pull request targeting that develop branch.
+
+When a short-lived branch is used, treat the following as one completion contract:
+
+- Keep one coherent task on one short-lived branch and one pull request.
+- Do not create sibling or successor branches merely because the work continues in another session or context.
+- Immediately before merging, refetch both base and head and verify that concurrent work has either not changed the base or has been reconciled.
+- After merging the pull request back into its originating branch, refetch the base and verify that the result is actually present before marking the task complete.
+- If merging is genuinely blocked, keep the same branch and pull request as the single continuation point, record the blocker, and do not create a successor branch for the same task.
+
+This is a repository workflow rule rather than a GitHub branch-protection guarantee. Its purpose is to keep task history coherent and prevent parallel work from being silently skipped or overwritten.
+
 The `main` merge-commit shape check is deliberately separate from normal feature-branch checks. After a pull request has been merged, run the following on `main` when that local contract needs to be verified:
 
 ```bash
