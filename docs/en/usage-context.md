@@ -2,7 +2,7 @@
 
 ## What this skill provides
 
-cultural-substrate-weaving provides two capabilities: **structure candidates from cultural frameworks** and **KJ-method integration/gap discovery**.
+cultural-substrate-weaving provides **exploration through cultural frameworks opened as temporary cognitive fields** and **provenance-preserving return of questions, relations, states, transitions, and gaps to the target**. When numerous or heterogeneous materials need one-round affinity synthesis, delegate that work to `affinity-synthesis` or another compatible realization when available. Likewise, delegate multi-round delta/reopen orchestration to `iterative-inquiry-synthesis` or a compatible realization.
 
 It does not replace the domain expertise or domain-specific skills required for writing, management, software engineering, law, or other fields. Domain accuracy, quality criteria, implementation practice, and output form belong to the caller's context or to a companion domain skill.
 
@@ -16,7 +16,7 @@ Provide the target, sources, and constraints.
 First analyze with the domain skill or ordinary domain method.
 
 [Role of cultural-substrate-weaving]
-Use cultural frameworks and KJ integration to search for questions, relations, states, transitions, gaps, and compositional candidates absent from the baseline.
+Use cultural frameworks to search for questions, relations, states, transitions, gaps, and compositional candidates absent from the baseline, while preserving whether each candidate came from the target, a framework, or their contact. When heterogeneous source material needs affinity synthesis, do not silently treat that as an internal CSW procedure; connect to a compatible `affinity-synthesis` realization.
 
 [Purpose-specific exit]
 For research and diagnosis, validate candidates against professional knowledge, sources, standards, and operating conditions before treating them as findings about the target. For generation and composition, framework-generated structure may be adopted as a compositional resource, but it remains distinct from facts about the target.
@@ -24,19 +24,21 @@ For research and diagnosis, validate candidates against professional knowledge, 
 
 Where multiple skills can be used, prefer **domain skill + cultural-substrate-weaving**, not replacement of the domain skill.
 
-## Suitable problems
+## Situations where it often adds value
 
 - open problem spaces whose destination is itself unsettled;
 - heterogeneous material, actors, time scales, and relations;
 - situations where ordinary analysis has converged on one path and another search direction may matter; and
 - tasks where candidates can be validated against target-side evidence or conditions for research and diagnosis, or retained with provenance as compositional resources for generation and composition.
 
-## Unsuitable problems
+## Situations where CSW alone often adds little
 
 - closed problems whose candidates can be enumerated;
 - simple proofreading, translation, calculation, or format conversion;
 - bounded local bugs and known procedures; and
 - research or diagnostic tasks that require findings about the target but provide no material capable of validating structural hypotheses.
+
+These are not automatic non-activation rules. Whether to use CSW, and how deeply to use it, follows the author's request or settings and delegation outside the skill rather than task category alone. When use is explicitly requested, perform at least a limited pass against the baseline.
 
 ## Taiheki
 
