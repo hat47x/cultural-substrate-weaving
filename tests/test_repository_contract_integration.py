@@ -7,19 +7,37 @@ ROOT = Path(__file__).resolve().parents[1]
 
 
 class RepositoryContractIntegrationTests(unittest.TestCase):
-    def test_make_check_runs_versioned_branch_contract(self) -> None:
+    def test_make_check_runs_versioned_branch_and_build_contracts(self) -> None:
         makefile = (ROOT / "Makefile").read_text(encoding="utf-8")
 
         self.assertIn("repository-contracts:", makefile)
         self.assertIn(
-            'python scripts/check_branch_version.py --ref "$$(git branch --show-current)"',
-            makefile,
-        )
-        self.assertIn(
-            "check: repository-contracts generated-artifacts-check validate",
+            'python scripts/check_branch_version.py --ref "$(git branch --show-current)"',
             makefile,
         )
         self.assertIn("generated-artifacts-check: build", makefile)
+        self.assertIn("test: build", makefile)
+
+        check_line = next(
+            line for line in makefile.splitlines() if line.startswith("check:")
+        )
+        prerequisites = check_line.split(":", 1)[1].split()
+        for required in (
+            "repository-contracts",
+            "generated-artifacts-check",
+            "validate",
+            "test",
+        ):
+            self.assertIn(required, prerequisites)
+
+        self.assertLess(
+            prerequisites.index("repository-contracts"),
+            prerequisites.index("generated-artifacts-check"),
+        )
+        self.assertLess(
+            prerequisites.index("generated-artifacts-check"),
+            prerequisites.index("test"),
+        )
 
     def test_main_contract_is_explicit_and_not_part_of_normal_feature_checks(self) -> None:
         makefile = (ROOT / "Makefile").read_text(encoding="utf-8")
