@@ -2,10 +2,11 @@
 
 - experiment id: `PQ-E7-006`
 - program: E7 — known-failure regression
-- audit date: 2026-09-16
+- initial audit date: 2026-09-16
+- last follow-up: 2026-09-18
 - source baseline: `develop/v0.5.0@34234c8bf4a502c812c09cb6b81520c9571f6b47`
 - primary requirements: PQ-12、関連してPQ-01〜PQ-08、PQ-11
-- status: initial regression coverage audit
+- status: maintained regression coverage audit
 
 ## 目的
 
@@ -33,6 +34,7 @@ E7では、見つかった知見をすべてtestへ昇格させない。修正�
 |---|---|---|---|---|
 | E2 Run 001 | `evals/activation-cases.json`のlimited / exploratory例が、v0.5以前の「CSW自身がKJ材料統合を行う」責務を残していた | eval fixture responsibility drift | affinity synthesisを`affinity-synthesis`またはcompatible realizationへ戻し、affinity-onlyでCSWを発動しないcaseを追加 | **covered in this change** — 監査開始時はgap。`tests/test_activation_fixture_semantic_contract.py`を追加 |
 | E5 Run 001 | OpenAI Skillの`default_prompt`が、外部委任にかかわらず文化体系とKJの利用を常時要求していた | adapter semantic drift | ja/en × interactive/meteredのpromptを外部委任・必要範囲・compatible realizationに整合 | **covered** — `tests/test_openai_adapter_semantic_contract.py` |
+| E7 follow-up (2026-09-17) | `tests/test_openai_adapter_semantic_contract.py`が英語promptの意味境界ではなく`as needed` / `compatible affinity synthesis`という特定語句へ固定され、同義のcanonical promptを誤ってFAILにした | regression fixture over-specification | conditionality・delegation・compatible affinity-synthesisという意味上の不変条件だけを検査し、同義表現を許容する | **covered in 2026-09-18 follow-up** — 同testをsemantic predicateへ縮約 |
 
 ### E2 failureの最小不変条件
 
@@ -45,6 +47,20 @@ E2の修正を回帰fixtureへ落とす際、文面全体は固定しない。�
 - ja-JP / en-USで同型の責務境界を持つ。
 
 activation caseの文章そのものやcase順序は契約にしない。
+
+### E5回帰fixture自体のfailureと最小不変条件
+
+2026-09-17の隔離実行では、OpenAI adapter本体が現行契約を満たしているにもかかわらず、回帰test側が英語promptの特定語句へ固定されていたためFAILした。これはadapter semantic driftの再発ではなく、**回帰fixtureの過剰指定**である。
+
+修正後のtestでは、次の意味境界だけを固定する。
+
+- 方法の深度が「必要な範囲」「必要に応じて」等の条件付きであり、常時深く適用する命令になっていない。
+- compatibleな`affinity-synthesis`への接続可能性を保ち、CSW自身へone-round synthesisを戻さない。
+- method depthと採否・価値判断が外部の委任へ結び付いている。
+- 旧promptの「文化体系とKJを常に使う」命令へ戻らない。
+- interactive / metered間ではdefault promptの意味を変えず、implicit invocation policyだけを分ける。
+
+英語の`where needed`と`as needed`、また`needed`と`necessary`のような同義差はfailureとしない。日本語側も同様に、一つの定型句ではなく条件性・委任・split ownershipを検査する。
 
 ## fixtureへ上げない診断知見
 
