@@ -42,6 +42,7 @@ static checkが通ったことをモデル行動の保証とみなさず、単�
 
 - [`2026-09-11-quality-evidence-audit.md`](2026-09-11-quality-evidence-audit.md) — E0: 現行品質証拠の初回監査
 - [`2026-09-16-quality-evidence-reaudit.md`](2026-09-16-quality-evidence-reaudit.md) — E0再監査: E1〜E7整備後の証拠強度と未充足点を再評価
+- [`2026-09-18-production-metadata-split-ownership-audit.md`](2026-09-18-production-metadata-split-ownership-audit.md) — split ownership後も残るproduction metadata responsibility driftの影響範囲と修正条件
 - [`experiment-001-handoff-integrity.md`](experiment-001-handoff-integrity.md) — E3: CSW → affinity synthesis → iterative inquiryのhandoff integrity protocol
 - [`experiment-001-run-2026-09-11-engineering.md`](experiment-001-run-2026-09-11-engineering.md) — E3 Run 001: 同一contextでのengineering trial
 - [`experiment-001-run-002-execution-packet.md`](experiment-001-run-002-execution-packet.md) — E3 Run 002: fresh execution側へ渡す固定packet
@@ -78,7 +79,7 @@ static checkが通ったことをモデル行動の保証とみなさず、単�
 
 E1〜E5はfresh execution / separate evaluationへ進める準備が整っていますが、この会話ではすでに前runや評価基準を見ているため、独立runを擬似実行しません。E6も観測のために仕事を作らず、本来の自然作業で評価可能な証拠が残った時だけ開始します。
 
-2026-09-18のfollow-upでは、E2 Pair Cの固定8件を持つRun 003を追加し、grouping behaviorをfresh contextへ渡せる準備まで進めました。また、E7のknown failureは回帰fixture自身の語句過剰固定を含む3件になりました。いずれも「準備済み」と「独立run済み」を分けて扱います。詳細は[`2026-09-16-quality-evidence-reaudit.md`](2026-09-16-quality-evidence-reaudit.md)末尾のfollow-upを参照してください。
+2026-09-18のfollow-upでは、E2 Pair Cの固定8件を持つRun 003を追加し、grouping behaviorをfresh contextへ渡せる準備まで進めました。また、E7では修正済み・回帰可能なknown failureが3件となり、その後の追加監査でproduction metadata split ownership driftをopen failureとして1件確認しました。いずれも「準備済み」と「独立run済み」、「修正済み」と「未修正」を分けて扱います。詳細は[`2026-09-16-quality-evidence-reaudit.md`](2026-09-16-quality-evidence-reaudit.md)末尾のfollow-upを参照してください。
 
 ### E3 — split-method handoff integrity
 
@@ -172,11 +173,13 @@ E6 Run 001は、別の本来目的で行われた自然作業に評価可能なr
 
 2026-09-16に、E1〜E5で得た知見を「実際に再現した欠陥」と「診断知見・未測定事項」に分けて初回監査しました。
 
-現在、E7で追跡しているknown failureは3件です。
+現在、E7で**修正済み・回帰可能**として追跡しているknown failureは3件です。
 
 - E2のactivation fixture responsibility drift — `tests/test_activation_fixture_semantic_contract.py`
 - E5のOpenAI adapter `default_prompt` semantic drift — `tests/test_openai_adapter_semantic_contract.py`
 - E5回帰fixtureの語句過剰固定 — adapterが意味契約を満たしていても意味上同等の言い換えでFAILしたため、同testを意味上の不変条件を検査する形へ縮約
+
+これとは別に、2026-09-18の監査で**production metadata split ownership drift**をopen known failureとして確認しました。CSW単体のdescription / wrapper prefixの一部が、split ownership前の「CSW自身がKJ統合を行う」表現を残しています。repairにはcanonical input変更とtracked generated artifactの正規buildが必要なため、現在は`2026-09-18-production-metadata-split-ownership-audit.md`へ影響範囲と完了条件を固定し、未修正・未fixture化のまま保持しています。
 
 E3の`carry`と`=`の区別、E4のquestion shiftやprior stop reasonは重要な知見ですが、既存Method契約で正しく処理できており、修正前failureは再現していません。このため、規則数を増やす目的でfixture化しません。E1もengineering Run 001では明白なfailureがありません。
 

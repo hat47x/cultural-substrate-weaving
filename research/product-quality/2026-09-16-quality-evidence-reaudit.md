@@ -324,6 +324,16 @@ Run 003では、N01〜N08をcontrolled comparison用の**合成source material**
 
 これらはPQ-10等の方法論的なbehavioral evidenceではなく、**repository verification surfaceの整合性改善**である。test infrastructureを直したことを、CSWの有効性やbehavioral reliabilityの証拠へ読み替えない。
 
+### 9.5 open known failure — production metadata split ownership drift
+
+同日の追加監査で、CSW単体を説明するproduction metadataの一部が、split ownership前の「CSW自身がKJ統合を行う」説明を残していることを確認した。
+
+これはE5の`default_prompt` driftとは別で、prompt自体は既にcompatible affinity-synthesisへの接続へ修正されている一方、manifest description、Claude/Codex metadata、OpenAI short description、ChatGPT prefix、root marketplace descriptionに旧責務表現が残るというfailureである。
+
+詳細は`2026-09-18-production-metadata-split-ownership-audit.md`へ固定した。Microsoft 365 limited compositeはsurface-specific fallbackを明示する別契約なので同一failureへ含めない。
+
+このfailureは**未修正**である。canonical metadataを直すとtracked generated artifactの再buildが必要になるため、正規buildできない現在の環境では入力だけを先行変更しない。したがって、E7のcovered known failureは引き続き3件であり、この1件はopenとして別管理する。
+
 ### 9.4 証拠取得順序の更新
 
 2026-09-16時点のPriority 1〜3は変えない。

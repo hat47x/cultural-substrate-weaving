@@ -14,7 +14,7 @@ Product Quality Programで実施したE1〜E5のengineering trialと包装監査
 
 E7では、見つかった知見をすべてtestへ昇格させない。修正前にrepositoryまたは実行artifact上で存在したfailure modeだけを対象にし、既存契約の言い換えや「念のため」の規則増加を避ける。
 
-この監査の対象は、2026-09-16時点の`research/product-quality/`で記録しているE1〜E5である。リポジトリの全履歴に存在したすべてのbugを網羅する台帳ではない。
+初回監査の対象は、2026-09-16時点の`research/product-quality/`で記録していたE1〜E5である。その後は、同じ品質プログラムの運用中に具体的なfailureを再現した場合だけfollow-upとして追記する。リポジトリの全履歴に存在したすべてのbugを網羅する台帳ではない。
 
 ## E7の回帰対象にする条件
 
@@ -35,6 +35,7 @@ E7では、見つかった知見をすべてtestへ昇格させない。修正�
 | E2 Run 001 | `evals/activation-cases.json`のlimited / exploratory例が、v0.5以前の「CSW自身がKJ材料統合を行う」責務を残していた | eval fixture responsibility drift | affinity synthesisを`affinity-synthesis`またはcompatible realizationへ戻し、affinity-onlyでCSWを発動しないcaseを追加 | **covered in this change** — 監査開始時はgap。`tests/test_activation_fixture_semantic_contract.py`を追加 |
 | E5 Run 001 | OpenAI Skillの`default_prompt`が、外部委任にかかわらず文化体系とKJの利用を常時要求していた | adapter semantic drift | ja/en × interactive/meteredのpromptを外部委任・必要範囲・compatible realizationに整合 | **covered** — `tests/test_openai_adapter_semantic_contract.py` |
 | E7 follow-up (2026-09-17) | `tests/test_openai_adapter_semantic_contract.py`が英語promptの意味境界ではなく`as needed` / `compatible affinity synthesis`という特定語句へ固定され、意味上は同等のcanonical promptを誤ってFAILにした | regression fixture over-specification | 条件付き適用・外部委任・compatibleなaffinity-synthesisへの接続という意味上の不変条件だけを検査し、同義表現を許容する | **covered in 2026-09-18 follow-up** — 同testをsemantic predicateへ縮約 |
+| E7 follow-up (2026-09-18) | production metadataの一部がsplit ownership前の「CSW自身がKJ統合を行う」説明を保持している | production metadata responsibility drift | canonical input・build hard-code・generated artifactの修正範囲を監査済み。正規build可能環境で一括修正する | **open / not fixtureized** — `2026-09-18-production-metadata-split-ownership-audit.md` |
 
 ### E2 failureの最小不変条件
 
@@ -61,6 +62,25 @@ activation caseの文章そのものやcase順序は契約にしない。
 - interactive / metered間ではdefault promptの意味を変えず、implicit invocation policyだけを分ける。
 
 英語では`where needed`と`as needed`、`needed`と`necessary`といった意味上同等の言い換えをfailureとしない。日本語側も同様に、一つの定型句ではなく、条件付き適用・委任・split ownershipを検査する。
+
+## open known failure — production metadata split ownership drift
+
+2026-09-18の追加監査で、CSW単体を説明するproduction metadataの一部に、split ownership前の「文化体系探索とKJ統合をCSW自身が組み合わせる」という責務表現が残っていることを確認した。
+
+影響範囲には、少なくとも次が含まれる。
+
+- `src/manifest.json`のja-JP / en-US description
+- `adapters/claude-code/locales.json`のdescription
+- OpenAI Skillのja-JP / en-US short_description
+- ChatGPT GPTのja-JP / en-US instructions prefix
+- `scripts/build.py`のroot Claude marketplace description
+- そこから生成されるtracked plugin / marketplace metadata
+
+Microsoft 365 limited compositeは、surface制約のため最小compatible material-synthesis fallbackを明示的に埋め込み、CSW本体の所有責務ではないことも説明しているため、同じfailureへ自動的に含めない。
+
+詳細な影響範囲、修正対象、生成先、完了条件は`2026-09-18-production-metadata-split-ownership-audit.md`へ固定した。
+
+**判定:** failure自体は実在するが未修正。canonical inputを変えるとtracked generated artifactも正規buildする必要があるため、build不能な現在の環境ではrepairを開始しない。修正完了前にpassing regression fixtureだけを追加することもしない。
 
 ## fixtureへ上げない診断知見
 
