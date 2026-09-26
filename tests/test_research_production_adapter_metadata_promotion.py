@@ -333,6 +333,36 @@ class ResearchProductionAdapterMetadataPromotionTests(unittest.TestCase):
             errors,
         )
 
+    def test_bundle_promotion_requires_prototype_status(self) -> None:
+        adapter_plan = copy.deepcopy(self.adapter_plan)
+        adapter_plan["distributions"]["claude_plugin"]["locales"]["ja-JP"][
+            "status"
+        ] = "reviewed"
+        with self.assertRaisesRegex(
+            ValueError,
+            "must remain prototype",
+        ):
+            plan_production_adapter_metadata_promotion(
+                adapter_plan,
+                self.descriptor,
+                self.locale_catalog,
+            )
+
+    def test_bundle_promotion_requires_multi_skill_review_gate(self) -> None:
+        adapter_plan = copy.deepcopy(self.adapter_plan)
+        adapter_plan["distributions"]["codex_plugin"][
+            "review_required_for_multi_skill"
+        ] = False
+        with self.assertRaisesRegex(
+            ValueError,
+            "must require review for multi-Skill promotion",
+        ):
+            plan_production_adapter_metadata_promotion(
+                adapter_plan,
+                self.descriptor,
+                self.locale_catalog,
+            )
+
     def test_bundle_description_must_match_prototype_source(self) -> None:
         plan = copy.deepcopy(self.plan)
         item = self.bundle_item("ja-JP", plan)

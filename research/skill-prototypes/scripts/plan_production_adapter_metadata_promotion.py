@@ -104,6 +104,14 @@ def _bundle_prototype_sources(adapter_plan: dict) -> dict[str, str]:
 
     distributions = adapter_plan["distributions"]
     names = _bundle_distribution_names(adapter_plan)
+
+    for name in names:
+        config = distributions[name]
+        if config.get("review_required_for_multi_skill") is not True:
+            raise ValueError(
+                f"locale_bundle distribution {name} must require review for multi-Skill promotion"
+            )
+
     first_name = names[0]
     first_locales = distributions[first_name].get("locales")
     if not isinstance(first_locales, dict) or not first_locales:
@@ -113,6 +121,11 @@ def _bundle_prototype_sources(adapter_plan: dict) -> dict[str, str]:
     for locale, entry in first_locales.items():
         if not isinstance(entry, dict):
             raise ValueError(f"locale_bundle metadata entry must be an object: {first_name}/{locale}")
+        if entry.get("status") != "prototype":
+            raise ValueError(
+                f"locale_bundle metadata {first_name}/{locale} must remain prototype "
+                "while promotion uses prototype wording source"
+            )
         source = entry.get("prototype_source")
         if not isinstance(source, str) or not _safe_repo_path(source):
             raise ValueError(
@@ -132,7 +145,14 @@ def _bundle_prototype_sources(adapter_plan: dict) -> dict[str, str]:
             )
         for locale, expected_source in sources.items():
             entry = locale_map.get(locale)
-            actual_source = entry.get("prototype_source") if isinstance(entry, dict) else None
+            if not isinstance(entry, dict):
+                raise ValueError(f"locale_bundle metadata entry must be an object: {name}/{locale}")
+            if entry.get("status") != "prototype":
+                raise ValueError(
+                    f"locale_bundle metadata {name}/{locale} must remain prototype "
+                    "while promotion uses prototype wording source"
+                )
+            actual_source = entry.get("prototype_source")
             if actual_source != expected_source:
                 raise ValueError(
                     "locale_bundle distributions must share prototype source per locale: "
