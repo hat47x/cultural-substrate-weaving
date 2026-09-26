@@ -15,13 +15,11 @@ if str(SCRIPTS_DIR) not in sys.path:
 from validate_research_complete_checkout_gate import (  # noqa: E402
     DESCRIPTOR_RELATIVE,
     EXPECTED_BINDING_CONTRACT,
+    EXPECTED_BLOCKED_EVIDENCE,
     validate_complete_checkout_gate,
 )
 
 DESCRIPTOR_PATH = ROOT / DESCRIPTOR_RELATIVE
-BLOCKED_EVIDENCE = Path(
-    "research/skill-prototypes/P4-COMPLETE-CHECKOUT-EXECUTION-STATUS-2026-09-07.md"
-)
 PASS_COMMIT = "0123456789abcdef0123456789abcdef01234567"
 RECORD_COMMIT = "1111111111111111111111111111111111111111"
 OTHER_COMMIT = "89abcdef0123456789abcdef0123456789abcdef"
@@ -110,6 +108,7 @@ class ResearchCompleteCheckoutGateTests(unittest.TestCase):
         self.assertEqual(validate_complete_checkout_gate(ROOT, self.descriptor), [])
         gate = self.descriptor["complete_checkout_validation"]
         self.assertEqual(gate["status"], "blocked-not-run")
+        self.assertEqual(gate["evidence"], EXPECTED_BLOCKED_EVIDENCE)
         self.assertEqual(gate["binding_contract"], EXPECTED_BINDING_CONTRACT)
         self.assertEqual(
             gate["required_commands"],
