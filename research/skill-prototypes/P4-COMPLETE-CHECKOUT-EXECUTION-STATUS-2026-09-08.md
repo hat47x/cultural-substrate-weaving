@@ -15,13 +15,14 @@ checked-in expected_stale_files: []
 
 これは`make research-translation-prepare`やcomplete-checkout commandを実行したという意味ではない。現在のtreeでtranslation source hash/stateの準備差分が残っていない、というrepository stateだけを表す。
 
-確認済みの実行経路:
+Current execution evidence:
 
-- authorized Remote Desktop target: offline
-- isolated container -> GitHub: DNS resolution unavailable
-- GitHub Actions: repository policy上、現在は使用しない
+- production descriptor status: `blocked-not-run`
+- canonical evidence: this blocked execution-status record
+- durable PASS execution record: not registered
+- execution-environment availability is operational state, not promotion evidence, and is not recorded as current authority here
 
-したがってsource/test/validatorがGitHub上に存在することやPRがmergeableであること、checked-in translation stateが同期済みであることを、complete-checkout command PASSとして扱わない。
+したがってsource/test/validatorがGitHub上に存在すること、PRがmergeableであること、checked-in translation stateが同期済みであること、または特定の実行環境が利用可能・利用不能であることを、complete-checkout command PASSとして扱わない。complete-checkoutの状態はdescriptor、execution record、evidence-binding contract、Git commit graphから判定する。
 
 ## Current evidence-binding contract
 
