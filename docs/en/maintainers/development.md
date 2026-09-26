@@ -38,7 +38,8 @@ When a short-lived branch is used, treat the following as one completion contrac
 - Keep one coherent task on one short-lived branch and one pull request.
 - Do not create sibling or successor branches merely because the work continues in another session or context.
 - Immediately before merging, refetch both base and head and verify that concurrent work has either not changed the base or has been reconciled.
-- After merging the pull request back into its originating branch, refetch the base and verify that the result is actually present before marking the task complete.
+- After merging the pull request back into its originating branch, refetch the base and verify that the result is actually present.
+- Once the merge is verified, delete the short-lived branch before marking the task complete. Do not reuse a merged branch as the continuation point for a different task.
 - If merging is genuinely blocked, keep the same branch and pull request as the single continuation point, record the blocker, and do not create a successor branch for the same task.
 
 This is a repository workflow rule rather than a GitHub branch-protection guarantee. Its purpose is to keep task history coherent and prevent parallel work from being silently skipped or overwritten.
