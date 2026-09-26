@@ -170,9 +170,22 @@ def plan_production_adapter_metadata_promotion(
         if not isinstance(source_pattern, str):
             raise ValueError(f"OpenAI production metadata source pattern missing for {research_id}")
 
+        expected_research_status = (
+            "existing"
+            if metadata_mode == "existing-per-locale-profile"
+            else "prototype"
+        )
+
         for locale, locale_profiles in skill_metadata.items():
             for profile in profiles:
                 research_item = locale_profiles[profile]
+                research_status = research_item.get("status")
+                if research_status != expected_research_status:
+                    raise ValueError(
+                        "OpenAI adapter metadata status does not match production metadata mode: "
+                        f"{research_id}/{locale}/{profile}: "
+                        f"{research_status!r} != {expected_research_status!r}"
+                    )
                 source = research_item["source"]
                 target = source_pattern.format(locale=locale, profile=profile)
 
@@ -298,6 +311,31 @@ def _expected_openai_keys(adapter_plan: dict) -> set[tuple[str, str, str]]:
     return set(_expected_openai_sources(adapter_plan))
 
 
+def _expected_openai_statuses(
+    adapter_plan: dict,
+) -> dict[tuple[str, str, str], str]:
+    profiles = _openai_profile_names(adapter_plan)
+    skills = adapter_plan["distributions"]["openai_skill"]["skills"]
+    statuses: dict[tuple[str, str, str], str] = {}
+    for research_id, skill_metadata in skills.items():
+        for locale, locale_profiles in skill_metadata.items():
+            for profile in profiles:
+                entry = locale_profiles.get(profile)
+                if not isinstance(entry, dict):
+                    raise ValueError(
+                        "OpenAI adapter metadata entry must be an object: "
+                        f"{research_id}/{locale}/{profile}"
+                    )
+                status = entry.get("status")
+                if not isinstance(status, str):
+                    raise ValueError(
+                        "OpenAI adapter metadata status is invalid: "
+                        f"{research_id}/{locale}/{profile}: {status!r}"
+                    )
+                statuses[(research_id, locale, profile)] = status
+    return statuses
+
+
 def validate_production_adapter_metadata_promotion_plan(
     plan: dict,
     descriptor: dict,
@@ -321,16 +359,20 @@ def validate_production_adapter_metadata_promotion_plan(
         openai = []
 
     expected_openai_sources: dict[tuple[str, str, str], str] | None
+    expected_openai_statuses: dict[tuple[str, str, str], str] | None
     if adapter_plan is not None:
         try:
             expected_openai_sources = _expected_openai_sources(adapter_plan)
+            expected_openai_statuses = _expected_openai_statuses(adapter_plan)
             expected_openai_keys = set(expected_openai_sources)
         except (KeyError, TypeError, ValueError) as exc:
             errors.append(f"OpenAI adapter promotion authority is invalid: {exc}")
             expected_openai_sources = None
+            expected_openai_statuses = None
             expected_openai_keys = set()
     else:
         expected_openai_sources = None
+        expected_openai_statuses = None
         observed_profiles = {
             item.get("profile")
             for item in openai
@@ -376,6 +418,23 @@ def validate_production_adapter_metadata_promotion_plan(
         production_meta = descriptor_skill.get("adapter_metadata", {}).get("openai_skill", {})
         metadata_mode = production_meta.get("mode")
         source_pattern = production_meta.get("source_pattern")
+        expected_research_status = (
+            "existing"
+            if metadata_mode == "existing-per-locale-profile"
+            else "prototype"
+            if metadata_mode == "planned-promotion-from-research-prototype"
+            else None
+        )
+        if expected_openai_statuses is not None:
+            declared_status = expected_openai_statuses.get(key)
+            if (
+                expected_research_status is not None
+                and declared_status != expected_research_status
+            ):
+                errors.append(
+                    "OpenAI adapter metadata status does not match production metadata mode: "
+                    f"{key}: {declared_status!r} != {expected_research_status!r}"
+                )
         target = item.get("target")
         if not isinstance(target, str) or not _safe_repo_path(target) or not target.startswith("adapters/openai-skill/"):
             errors.append(f"unsafe OpenAI production metadata target: {target!r}")
