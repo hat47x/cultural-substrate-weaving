@@ -62,6 +62,8 @@ class ResearchCompleteCheckoutGateTests(unittest.TestCase):
             "validated commit V\n"
             "evidence-only recording commit E\n"
             "Eのfirst parentはV\n"
+            "V must already be present on the originating branch before evidence recording PR\n"
+            "delete the short-lived evidence branch\n"
             "translation hash/state transitionはevidence recording commitへ混ぜない\n"
             "production promotionを単独承認しない\n",
             encoding="utf-8",
@@ -136,6 +138,44 @@ class ResearchCompleteCheckoutGateTests(unittest.TestCase):
             descriptor,
             "must reference the canonical evidence-binding contract",
         )
+
+    def test_binding_contract_requires_evidence_branch_lifecycle(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            self.prepare_binding_contract(root)
+            binding_path = root / EXPECTED_BINDING_CONTRACT
+            binding_path.write_text(
+                binding_path.read_text(encoding="utf-8").replace(
+                    "V must already be present on the originating branch before evidence recording PR\n",
+                    "",
+                ),
+                encoding="utf-8",
+            )
+
+            self.assert_has_error(
+                self.descriptor,
+                "V must already be present on the originating branch before evidence recording PR",
+                root=root,
+            )
+
+    def test_binding_contract_requires_merged_branch_cleanup(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            self.prepare_binding_contract(root)
+            binding_path = root / EXPECTED_BINDING_CONTRACT
+            binding_path.write_text(
+                binding_path.read_text(encoding="utf-8").replace(
+                    "delete the short-lived evidence branch\n",
+                    "",
+                ),
+                encoding="utf-8",
+            )
+
+            self.assert_has_error(
+                self.descriptor,
+                "delete the short-lived evidence branch",
+                root=root,
+            )
 
     def test_command_set_cannot_silently_drop_translation_refresh(self) -> None:
         descriptor = copy.deepcopy(self.descriptor)
