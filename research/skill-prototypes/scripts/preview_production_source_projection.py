@@ -274,7 +274,12 @@ def build_preview() -> dict:
     migration = json.loads(MIGRATION_PATH.read_text(encoding="utf-8"))
     inventory = json.loads(INVENTORY_PATH.read_text(encoding="utf-8"))
     plan = plan_production_source_promotion(suite, descriptor, migration, inventory)
-    plan_errors = validate_production_source_promotion_plan(plan, descriptor, inventory)
+    plan_errors = validate_production_source_promotion_plan(
+        plan,
+        descriptor,
+        inventory,
+        suite=suite,
+    )
     if plan_errors:
         raise ProjectionError("; ".join(plan_errors))
     projected = project_production_source_contents(plan)
