@@ -9,7 +9,7 @@ from __future__ import annotations
 
 import json
 import sys
-from pathlib import Path
+from pathlib import Path, PurePosixPath
 
 ROOT = Path(__file__).resolve().parents[1]
 PLAN_PATH = ROOT / "research/skill-prototypes/adapter-metadata-plan.json"
@@ -18,6 +18,10 @@ EXPECTED_BUNDLE_PROTOTYPE_SCHEMA = "csw.research-locale-bundle-metadata/v1"
 ALLOWED_SOURCE_STATUS = {"planned", "prototype", "existing"}
 ALLOWED_BUNDLE_STATUS = {"planned", "existing-baseline", "prototype", "reviewed"}
 SKILL_TREE_MODES = {"standalone_per_skill", "locale_bundle"}
+RESEARCH_OPENAI_ROOT = PurePosixPath("research/skill-prototypes/adapters/openai-skill")
+PRODUCTION_OPENAI_ROOT = PurePosixPath("adapters/openai-skill")
+RESEARCH_BUNDLE_ROOT = PurePosixPath("research/skill-prototypes/adapters/claude-codex")
+PRODUCTION_ADAPTER_ROOT = PurePosixPath("adapters")
 
 
 def _repo_path(root: Path, relative: object, field: str, errors: list[str]) -> Path | None:
@@ -46,6 +50,15 @@ def _load_json(path: Path, field: str, errors: list[str]) -> dict | None:
 
 def _set_mismatch(expected: set[str], actual: set[str]) -> str:
     return f"missing={sorted(expected - actual)}, extra={sorted(actual - expected)}"
+
+
+def _path_under(value: object, root: PurePosixPath) -> bool:
+    if not isinstance(value, str) or not value or "\\" in value:
+        return False
+    path = PurePosixPath(value)
+    if path.is_absolute() or ".." in path.parts:
+        return False
+    return path.parts[: len(root.parts)] == root.parts
 
 
 def _validate_openai(
@@ -137,6 +150,21 @@ def _validate_openai(
                         )
                     continue
 
+                if status == "prototype":
+                    expected_root = RESEARCH_OPENAI_ROOT / locale / skill_id
+                    if not _path_under(source_relative, expected_root):
+                        errors.append(
+                            f"prototype openai_skill metadata {skill_id}/{locale}/{profile} "
+                            f"must use research-only source under {expected_root.as_posix()}/"
+                        )
+                elif status == "existing":
+                    expected_root = PRODUCTION_OPENAI_ROOT / locale
+                    if not _path_under(source_relative, expected_root):
+                        errors.append(
+                            f"existing openai_skill metadata {skill_id}/{locale}/{profile} "
+                            f"must use production adapter source under {expected_root.as_posix()}/"
+                        )
+
                 source = _repo_path(
                     root,
                     source_relative,
@@ -186,6 +214,12 @@ def _validate_bundle_prototype(
     errors: list[str],
 ) -> None:
     source_relative = entry.get("prototype_source")
+    expected_root = RESEARCH_BUNDLE_ROOT / locale
+    if not _path_under(source_relative, expected_root):
+        errors.append(
+            f"{distribution_name} prototype metadata source {locale} must use research-only "
+            f"source under {expected_root.as_posix()}/"
+        )
     source = _repo_path(
         root,
         source_relative,
@@ -281,6 +315,11 @@ def _validate_locale_bundle(
         errors.append(f"{distribution_name} adapter metadata source_mode must be locale_catalog")
 
     source_relative = config.get("source")
+    if not _path_under(source_relative, PRODUCTION_ADAPTER_ROOT):
+        errors.append(
+            f"{distribution_name} adapter metadata source must use production adapter path "
+            f"under {PRODUCTION_ADAPTER_ROOT.as_posix()}/"
+        )
     source = _repo_path(
         root,
         source_relative,
