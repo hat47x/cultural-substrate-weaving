@@ -156,6 +156,37 @@ class ResearchProductionSourcePromotionTests(unittest.TestCase):
             errors,
         )
 
+    def test_mapping_target_relative_must_follow_source_normalization(self) -> None:
+        plan = copy.deepcopy(self.plan)
+        mapping = self.mapping(
+            "affinity-synthesis",
+            "ja-JP",
+            "/references/TEMPLATE.md",
+            plan,
+        )
+        mapping["target_relative"] = "references/RENAMED.md"
+        mapping["target"] = "src/skills/material-led-synthesis/ja-JP/references/RENAMED.md"
+        errors = self.validate(plan)
+        self.assertTrue(
+            any("target_relative does not match source normalization" in error for error in errors),
+            errors,
+        )
+
+    def test_mapping_target_must_stay_under_declared_production_root(self) -> None:
+        plan = copy.deepcopy(self.plan)
+        mapping = self.mapping(
+            "affinity-synthesis",
+            "ja-JP",
+            "/references/TEMPLATE.md",
+            plan,
+        )
+        mapping["target"] = "src/skills/other/ja-JP/references/TEMPLATE.md"
+        errors = self.validate(plan)
+        self.assertTrue(
+            any("target does not match production root" in error for error in errors),
+            errors,
+        )
+
     def test_english_locale_suffixes_are_normalized_in_canonical_targets(self) -> None:
         for research_id in ("affinity-synthesis", "iterative-inquiry-synthesis"):
             mappings = self.skill(research_id)["locales"]["en-US"]["mappings"]

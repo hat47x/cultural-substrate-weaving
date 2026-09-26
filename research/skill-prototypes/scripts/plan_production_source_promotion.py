@@ -389,6 +389,26 @@ def validate_production_source_promotion_plan(
                     errors.append(f"production source mapping must be an object: {research_id}/{locale}")
                     continue
                 source = mapping.get("source")
+                source_relative = mapping.get("source_relative")
+                target_relative = mapping.get("target_relative")
+                target = mapping.get("target")
+                if isinstance(source_relative, str):
+                    expected_target_relative = _target_relative(source_relative, locale)
+                    if target_relative != expected_target_relative:
+                        errors.append(
+                            "production source mapping target_relative does not match source normalization: "
+                            f"{research_id}/{locale}: {source_relative!r} -> {target_relative!r}; "
+                            f"expected {expected_target_relative!r}"
+                        )
+                    if isinstance(production_root, str):
+                        expected_target = (
+                            PurePosixPath(production_root) / expected_target_relative
+                        ).as_posix()
+                        if target != expected_target:
+                            errors.append(
+                                "production source mapping target does not match production root: "
+                                f"{research_id}/{locale}: {target!r}; expected {expected_target!r}"
+                            )
                 if isinstance(source, str):
                     mappings_by_source.setdefault(source, []).append(mapping)
 
