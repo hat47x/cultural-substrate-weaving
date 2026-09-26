@@ -219,6 +219,48 @@ class ResearchProductionAdapterMetadataPromotionTests(unittest.TestCase):
                     self.locale_catalog,
                 )
 
+    def test_planned_promotion_requires_prototype_research_status(self) -> None:
+        adapter_plan = copy.deepcopy(self.adapter_plan)
+        adapter_plan["distributions"]["openai_skill"]["skills"]["affinity-synthesis"][
+            "ja-JP"
+        ]["interactive"]["status"] = "existing"
+        with self.assertRaisesRegex(
+            ValueError,
+            "status does not match production metadata mode",
+        ):
+            plan_production_adapter_metadata_promotion(
+                adapter_plan,
+                self.descriptor,
+                self.locale_catalog,
+            )
+
+        errors = self.errors(self.plan, adapter_plan)
+        self.assertTrue(
+            any("status does not match production metadata mode" in error for error in errors),
+            errors,
+        )
+
+    def test_existing_production_metadata_requires_existing_research_status(self) -> None:
+        adapter_plan = copy.deepcopy(self.adapter_plan)
+        adapter_plan["distributions"]["openai_skill"]["skills"][
+            "cultural-substrate-weaving"
+        ]["en-US"]["metered"]["status"] = "prototype"
+        with self.assertRaisesRegex(
+            ValueError,
+            "status does not match production metadata mode",
+        ):
+            plan_production_adapter_metadata_promotion(
+                adapter_plan,
+                self.descriptor,
+                self.locale_catalog,
+            )
+
+        errors = self.errors(self.plan, adapter_plan)
+        self.assertTrue(
+            any("status does not match production metadata mode" in error for error in errors),
+            errors,
+        )
+
     def test_sibling_openai_metadata_cannot_gain_content_rewrite(self) -> None:
         plan = copy.deepcopy(self.plan)
         item = self.openai_item("affinity-synthesis", "en-US", "metered", plan)
