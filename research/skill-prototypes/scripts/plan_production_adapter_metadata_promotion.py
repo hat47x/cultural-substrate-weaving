@@ -269,15 +269,33 @@ def plan_production_adapter_metadata_promotion(
     }
 
 
-def _expected_openai_keys(adapter_plan: dict) -> set[tuple[str, str, str]]:
+def _expected_openai_sources(
+    adapter_plan: dict,
+) -> dict[tuple[str, str, str], str]:
     profiles = _openai_profile_names(adapter_plan)
     skills = adapter_plan["distributions"]["openai_skill"]["skills"]
-    return {
-        (research_id, locale, profile)
-        for research_id, skill_metadata in skills.items()
-        for locale in skill_metadata
-        for profile in profiles
-    }
+    sources: dict[tuple[str, str, str], str] = {}
+    for research_id, skill_metadata in skills.items():
+        for locale, locale_profiles in skill_metadata.items():
+            for profile in profiles:
+                entry = locale_profiles.get(profile)
+                if not isinstance(entry, dict):
+                    raise ValueError(
+                        "OpenAI adapter metadata entry must be an object: "
+                        f"{research_id}/{locale}/{profile}"
+                    )
+                source = entry.get("source")
+                if not isinstance(source, str) or not _safe_repo_path(source):
+                    raise ValueError(
+                        "OpenAI adapter metadata source is invalid: "
+                        f"{research_id}/{locale}/{profile}: {source!r}"
+                    )
+                sources[(research_id, locale, profile)] = source
+    return sources
+
+
+def _expected_openai_keys(adapter_plan: dict) -> set[tuple[str, str, str]]:
+    return set(_expected_openai_sources(adapter_plan))
 
 
 def validate_production_adapter_metadata_promotion_plan(
@@ -286,6 +304,7 @@ def validate_production_adapter_metadata_promotion_plan(
     locale_catalog: dict,
     *,
     adapter_plan: dict | None = None,
+    root: Path = ROOT,
 ) -> list[str]:
     errors: list[str] = []
     if plan.get("schema") != PLAN_SCHEMA:
@@ -301,13 +320,17 @@ def validate_production_adapter_metadata_promotion_plan(
         errors.append("OpenAI adapter promotion plan must be a list")
         openai = []
 
+    expected_openai_sources: dict[tuple[str, str, str], str] | None
     if adapter_plan is not None:
         try:
-            expected_openai_keys = _expected_openai_keys(adapter_plan)
+            expected_openai_sources = _expected_openai_sources(adapter_plan)
+            expected_openai_keys = set(expected_openai_sources)
         except (KeyError, TypeError, ValueError) as exc:
             errors.append(f"OpenAI adapter promotion authority is invalid: {exc}")
+            expected_openai_sources = None
             expected_openai_keys = set()
     else:
+        expected_openai_sources = None
         observed_profiles = {
             item.get("profile")
             for item in openai
@@ -339,6 +362,17 @@ def validate_production_adapter_metadata_promotion_plan(
         if item.get("production_name") != production_name:
             errors.append(f"OpenAI adapter promotion production name mismatch: {research_id}")
 
+        expected_source = (
+            expected_openai_sources.get(key)
+            if expected_openai_sources is not None
+            else None
+        )
+        if expected_source is not None and item.get("source") != expected_source:
+            errors.append(
+                "OpenAI adapter promotion source mismatch: "
+                f"{key}: {item.get('source')!r} != {expected_source!r}"
+            )
+
         production_meta = descriptor_skill.get("adapter_metadata", {}).get("openai_skill", {})
         metadata_mode = production_meta.get("mode")
         source_pattern = production_meta.get("source_pattern")
@@ -363,6 +397,21 @@ def validate_production_adapter_metadata_promotion_plan(
             digest = item.get("sha256")
             if not isinstance(digest, str) or len(digest) != 64:
                 errors.append(f"sibling OpenAI metadata must retain source sha256: {key}")
+            elif expected_source is not None:
+                try:
+                    expected_digest = _sha256_text(
+                        (root / expected_source).read_text(encoding="utf-8")
+                    )
+                except (OSError, UnicodeError) as exc:
+                    errors.append(
+                        "OpenAI adapter promotion source could not be read: "
+                        f"{key}: {exc}"
+                    )
+                else:
+                    if digest != expected_digest:
+                        errors.append(
+                            f"OpenAI adapter promotion source sha256 mismatch: {key}"
+                        )
         elif metadata_mode == "existing-per-locale-profile":
             if item.get("state") != "existing-production-source":
                 errors.append(f"existing OpenAI metadata must remain existing production source: {key}")
@@ -449,6 +498,27 @@ def validate_production_adapter_metadata_promotion_plan(
             expected_source = expected_prototype_sources.get(locale)
             if item.get("prototype_source") != expected_source:
                 errors.append(f"locale-bundle prototype source mismatch: {locale}")
+            if isinstance(expected_source, str):
+                try:
+                    prototype = json.loads(
+                        (root / expected_source).read_text(encoding="utf-8")
+                    )
+                except (OSError, json.JSONDecodeError, UnicodeError) as exc:
+                    errors.append(
+                        f"locale-bundle prototype source could not be read: {locale}: {exc}"
+                    )
+                else:
+                    if (
+                        isinstance(update, dict)
+                        and update.get("description") != prototype.get("description")
+                    ):
+                        errors.append(
+                            f"locale-bundle description must match prototype source: {locale}"
+                        )
+                    if item.get("prototype_research_contains") != prototype.get("contains"):
+                        errors.append(
+                            f"locale-bundle research composition must match prototype source: {locale}"
+                        )
         dropped = item.get("drop_prototype_fields_from_host_catalog")
         if not isinstance(dropped, list) or "contains" not in dropped or "status" not in dropped:
             errors.append(f"prototype-only bundle fields must not enter production locale catalog: {locale}")
