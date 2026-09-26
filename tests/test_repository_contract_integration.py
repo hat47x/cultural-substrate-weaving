@@ -37,6 +37,24 @@ class RepositoryContractIntegrationTests(unittest.TestCase):
             prerequisites.index("test"),
         )
 
+    def test_short_lived_branch_cleanup_contract_is_consistent(self) -> None:
+        agents = (ROOT / "AGENTS.md").read_text(encoding="utf-8")
+        ja = (ROOT / "docs" / "ja" / "maintainers" / "development.md").read_text(
+            encoding="utf-8"
+        )
+        en = (ROOT / "docs" / "en" / "maintainers" / "development.md").read_text(
+            encoding="utf-8"
+        )
+
+        self.assertIn("delete the short-lived branch", agents)
+        self.assertIn("do not reuse a merged branch", agents.lower())
+
+        self.assertIn("短期branchを削除", ja)
+        self.assertIn("merge済みbranchを次の別タスクの継続点として使い回さない", ja)
+
+        self.assertIn("delete the short-lived branch", en)
+        self.assertIn("do not reuse a merged branch", en.lower())
+
     def test_main_contract_is_explicit_and_not_part_of_normal_feature_checks(self) -> None:
         makefile = (ROOT / "Makefile").read_text(encoding="utf-8")
 
