@@ -19,9 +19,11 @@ Use the integrated check for normal pre-PR validation:
 make check
 ```
 
-It currently runs the local repository contract check, rebuilds the generated distribution artifacts and verifies their Git freshness, then runs validation, Japanese-document review checks, unit tests, token-budget checks, Living Lab validation, and Living Lab summary generation. Individual Make targets may be used while diagnosing a narrower problem.
+It currently runs the local repository contract check, verifies production Skill-set parity with the current legacy single-Skill build contract, rebuilds the generated distribution artifacts and verifies their Git freshness, then runs validation, Japanese-document review checks, unit tests, token-budget checks, Living Lab validation, and Living Lab summary generation. Individual Make targets may be used while diagnosing a narrower problem.
 
 `make repository-contracts`, which is part of `make check`, compares the current local branch name with `VERSION` when the branch is `develop/vX.Y.Z` or `release/vX.Y.Z`. Short-lived branches such as `feature/*`, `fix/*`, and `research/*` are not subject to that version contract.
+
+`make production-skill-set-legacy-parity` verifies that the production Skill-set authority still matches the current legacy single-Skill build contract. When multi-Skill production wiring is intentionally introduced, update the Skill-set and build-side contract together rather than weakening this guard in isolation.
 
 `make generated-artifacts-check`, also part of `make check`, runs the build first and then checks the Git status of `.claude-plugin/`, `.agents/`, and `plugins/`. It fails on modified or deleted tracked output and on new untracked generated files. This catches changes to canonical source or adapters that were rebuilt locally but whose corresponding generated artifacts were not committed.
 

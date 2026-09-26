@@ -24,6 +24,7 @@ make check
 `make check`は、現在次をまとめて実行します。
 
 - `make repository-contracts`
+- `make production-skill-set-legacy-parity`
 - `make generated-artifacts-check`（先に`make build`を実行します）
 - `make validate`
 - `make japanese-docs-check`
@@ -33,6 +34,8 @@ make check
 - `make living-lab-summary`
 
 `repository-contracts`では、現在のローカルブランチが`develop/vX.Y.Z`または`release/vX.Y.Z`の場合に、ブランチ名の版と`VERSION`が一致することを確認します。`feature/*`、`fix/*`、`research/*`などの短期ブランチには、この版契約を適用しません。
+
+`production-skill-set-legacy-parity`では、production Skill-set authorityが、現在の単一Skill向けlegacy build contractと一致していることを確認します。複数Skillへの移行を始めるときは、この検査を黙って弱めるのではなく、production Skill-setとbuild側の契約を同じ変更として更新します。
 
 `generated-artifacts-check`では、まず現在の入力から配布用成果物を再生成し、その後に`.claude-plugin/`、`.agents/`、`plugins/`のGit上の状態を確認します。追跡中の生成物に変更や削除が残っている場合だけでなく、新しい未追跡の生成物が生じた場合も検査は失敗します。これにより、正本やadapterを更新したのに、対応する生成物をコミットし忘れた状態を通常の`make check`で検出できます。
 
