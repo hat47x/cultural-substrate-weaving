@@ -307,6 +307,6 @@ M365だけは、sibling Skill invocationを前提にできないため、現在�
 
 次に必要なのは、**complete checkoutで現在のvalidation-relevant commit V上のresearch gateとmaterializer testsを実際に通し、生成した日英host package treeを現行production artifactと比較すること**である。
 
-現時点の実行環境ではrepository checkoutを取得できず、接続済み開発端末もofflineだったため、その実行証拠はまだない。
+current descriptor / execution record authority上ではcomplete-checkout PASS evidenceがまだ存在しない。実行環境の利用可否はoperational stateであり、このpromotion evidenceの代替にも阻害理由の正本にも置かない。
 
 その証拠が得られるまで、production `scripts/build.py` のmulti-Skill一般化、marketplace変更、release asset変更には進まない。
