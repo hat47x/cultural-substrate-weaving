@@ -243,6 +243,15 @@ def validate_production_source_promotion_plan(
         errors.append("production source promotion selection must remain package_source.files based")
 
     descriptor_by_id = _descriptor_by_id(descriptor)
+    suite_by_id = (
+        {
+            item["id"]: item
+            for item in suite.get("skills", [])
+            if isinstance(item, dict) and isinstance(item.get("id"), str)
+        }
+        if suite is not None
+        else {}
+    )
     descriptor_ids = set(descriptor_by_id)
     plan_ids = {
         item.get("research_id")
@@ -312,6 +321,62 @@ def validate_production_source_promotion_plan(
             if not isinstance(mappings, list) or not mappings:
                 errors.append(f"production source mappings missing: {research_id}/{locale}")
                 continue
+
+            if suite is not None:
+                suite_skill = suite_by_id.get(research_id)
+                realization = (
+                    suite_skill.get("locale_realizations", {}).get(locale)
+                    if isinstance(suite_skill, dict)
+                    else None
+                )
+                package_source = (
+                    realization.get("package_source")
+                    if isinstance(realization, dict)
+                    else None
+                )
+                if (
+                    not isinstance(package_source, dict)
+                    or package_source.get("mode") != "explicit_files"
+                    or not isinstance(package_source.get("root"), str)
+                    or not isinstance(package_source.get("files"), list)
+                ):
+                    errors.append(
+                        "suite package-source authority missing for locale_tree promotion: "
+                        f"{research_id}/{locale}"
+                    )
+                else:
+                    package_root = PurePosixPath(package_source["root"])
+                    expected_pairs = {
+                        ((package_root / relative).as_posix(), relative)
+                        for relative in package_source["files"]
+                        if isinstance(relative, str)
+                    }
+                    actual_pairs = [
+                        (mapping.get("source"), mapping.get("source_relative"))
+                        for mapping in mappings
+                        if isinstance(mapping, dict)
+                        and isinstance(mapping.get("source"), str)
+                        and isinstance(mapping.get("source_relative"), str)
+                    ]
+                    actual_pair_set = set(actual_pairs)
+                    if len(actual_pairs) != len(actual_pair_set):
+                        errors.append(
+                            "production source plan repeats package-selected source mapping: "
+                            f"{research_id}/{locale}"
+                        )
+                    missing_pairs = sorted(expected_pairs - actual_pair_set)
+                    extra_pairs = sorted(actual_pair_set - expected_pairs)
+                    if missing_pairs:
+                        errors.append(
+                            "production source plan is missing package-selected source mappings: "
+                            f"{research_id}/{locale}: {missing_pairs}"
+                        )
+                    if extra_pairs:
+                        errors.append(
+                            "production source plan contains undeclared source mappings: "
+                            f"{research_id}/{locale}: {extra_pairs}"
+                        )
+
             targets = [item.get("target_relative") for item in mappings if isinstance(item, dict)]
             if "SKILL.md" not in targets:
                 errors.append(f"production source mappings must contain SKILL.md: {research_id}/{locale}")
