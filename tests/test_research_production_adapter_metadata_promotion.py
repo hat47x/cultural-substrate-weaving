@@ -226,6 +226,29 @@ class ResearchProductionAdapterMetadataPromotionTests(unittest.TestCase):
         errors = self.errors(plan)
         self.assertTrue(any("promote byte-identically" in error for error in errors), errors)
 
+    def test_sibling_openai_source_must_match_adapter_plan_authority(self) -> None:
+        plan = copy.deepcopy(self.plan)
+        item = self.openai_item("affinity-synthesis", "ja-JP", "interactive", plan)
+        item["source"] = (
+            "research/skill-prototypes/adapters/openai-skill/ja-JP/"
+            "iterative-inquiry-synthesis/openai.interactive.yaml"
+        )
+        errors = self.errors(plan)
+        self.assertTrue(
+            any("OpenAI adapter promotion source mismatch" in error for error in errors),
+            errors,
+        )
+
+    def test_sibling_openai_sha256_must_match_source_content(self) -> None:
+        plan = copy.deepcopy(self.plan)
+        item = self.openai_item("affinity-synthesis", "en-US", "metered", plan)
+        item["sha256"] = "0" * 64
+        errors = self.errors(plan)
+        self.assertTrue(
+            any("OpenAI adapter promotion source sha256 mismatch" in error for error in errors),
+            errors,
+        )
+
     def test_bundle_locale_coverage_rejects_duplicate_that_hides_missing_locale(self) -> None:
         plan = copy.deepcopy(self.plan)
         en = self.bundle_item("en-US", plan)
@@ -265,6 +288,28 @@ class ResearchProductionAdapterMetadataPromotionTests(unittest.TestCase):
                 and "en-US" in error
                 for error in errors
             ),
+            errors,
+        )
+
+    def test_bundle_description_must_match_prototype_source(self) -> None:
+        plan = copy.deepcopy(self.plan)
+        item = self.bundle_item("ja-JP", plan)
+        item["update"]["description"] += " modified"
+        errors = self.errors(plan)
+        self.assertTrue(
+            any("description must match prototype source" in error for error in errors),
+            errors,
+        )
+
+    def test_bundle_research_composition_must_match_prototype_source(self) -> None:
+        plan = copy.deepcopy(self.plan)
+        item = self.bundle_item("en-US", plan)
+        item["prototype_research_contains"] = list(
+            reversed(item["prototype_research_contains"])
+        )
+        errors = self.errors(plan)
+        self.assertTrue(
+            any("research composition must match prototype source" in error for error in errors),
             errors,
         )
 
