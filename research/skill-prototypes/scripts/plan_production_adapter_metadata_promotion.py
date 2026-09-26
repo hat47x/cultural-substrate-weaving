@@ -402,11 +402,26 @@ def validate_production_adapter_metadata_promotion_plan(
         expected_catalog = None
         expected_prototype_sources = None
 
+    expected_bundle_locales = (
+        set(expected_prototype_sources)
+        if expected_prototype_sources is not None
+        else {
+            locale
+            for locale in descriptor.get("locales", [])
+            if isinstance(locale, str)
+        }
+    )
+    seen_bundle_locales: set[str] = set()
+
     for item in bundle:
         if not isinstance(item, dict):
             errors.append("bundle metadata promotion entries must be objects")
             continue
         locale = item.get("locale")
+        if isinstance(locale, str):
+            if locale in seen_bundle_locales:
+                errors.append(f"duplicate locale-bundle promotion entry: {locale}")
+            seen_bundle_locales.add(locale)
         current = locale_catalog.get(locale)
         if not isinstance(current, dict):
             errors.append(f"bundle promotion references unknown locale: {locale}")
@@ -437,6 +452,19 @@ def validate_production_adapter_metadata_promotion_plan(
         dropped = item.get("drop_prototype_fields_from_host_catalog")
         if not isinstance(dropped, list) or "contains" not in dropped or "status" not in dropped:
             errors.append(f"prototype-only bundle fields must not enter production locale catalog: {locale}")
+
+    missing_bundle_locales = sorted(expected_bundle_locales - seen_bundle_locales)
+    extra_bundle_locales = sorted(seen_bundle_locales - expected_bundle_locales)
+    if missing_bundle_locales:
+        errors.append(
+            "bundle metadata promotion plan is missing declared locales: "
+            f"{missing_bundle_locales}"
+        )
+    if extra_bundle_locales:
+        errors.append(
+            "bundle metadata promotion plan has undeclared locales: "
+            f"{extra_bundle_locales}"
+        )
 
     return errors
 
