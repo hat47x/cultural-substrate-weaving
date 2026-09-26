@@ -226,6 +226,48 @@ class ResearchProductionAdapterMetadataPromotionTests(unittest.TestCase):
         errors = self.errors(plan)
         self.assertTrue(any("promote byte-identically" in error for error in errors), errors)
 
+    def test_bundle_locale_coverage_rejects_duplicate_that_hides_missing_locale(self) -> None:
+        plan = copy.deepcopy(self.plan)
+        en = self.bundle_item("en-US", plan)
+        en["locale"] = "ja-JP"
+
+        errors = self.errors(plan)
+        self.assertTrue(
+            any("duplicate locale-bundle promotion entry: ja-JP" in error for error in errors),
+            errors,
+        )
+        self.assertTrue(
+            any(
+                "bundle metadata promotion plan is missing declared locales" in error
+                and "en-US" in error
+                for error in errors
+            ),
+            errors,
+        )
+
+    def test_bundle_locale_coverage_rejects_undeclared_locale(self) -> None:
+        plan = copy.deepcopy(self.plan)
+        en = self.bundle_item("en-US", plan)
+        en["locale"] = "fr-FR"
+
+        errors = self.errors(plan)
+        self.assertTrue(
+            any(
+                "bundle metadata promotion plan has undeclared locales" in error
+                and "fr-FR" in error
+                for error in errors
+            ),
+            errors,
+        )
+        self.assertTrue(
+            any(
+                "bundle metadata promotion plan is missing declared locales" in error
+                and "en-US" in error
+                for error in errors
+            ),
+            errors,
+        )
+
     def test_bundle_identity_cannot_be_replaced_by_prototype_identity(self) -> None:
         plan = copy.deepcopy(self.plan)
         item = self.bundle_item("ja-JP", plan)
