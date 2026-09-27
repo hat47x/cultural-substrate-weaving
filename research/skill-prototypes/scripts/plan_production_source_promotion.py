@@ -225,13 +225,17 @@ def plan_production_source_promotion(
             f"extra={sorted(suite_ids - descriptor_ids)}"
         )
 
-    descriptor_locales = {
-        locale
-        for locale in descriptor.get("locales", [])
-        if isinstance(locale, str)
-    }
-    if not descriptor_locales:
-        raise ValueError("production descriptor must declare locales")
+    declared_locales = descriptor.get("locales")
+    if (
+        not isinstance(declared_locales, list)
+        or not declared_locales
+        or not all(isinstance(locale, str) and locale for locale in declared_locales)
+        or len(declared_locales) != len(set(declared_locales))
+    ):
+        raise ValueError(
+            "production descriptor locales must be a non-empty unique string list"
+        )
+    descriptor_locales = set(declared_locales)
 
     for research_id, skill in suite_by_id.items():
         realizations = skill.get("locale_realizations")
@@ -423,6 +427,18 @@ def validate_production_source_promotion_plan(
         ]
         if len(suite_research_ids) != len(set(suite_research_ids)):
             errors.append("research suite contains duplicate Skills")
+
+    declared_locales = descriptor.get("locales")
+    descriptor_locales_valid = (
+        isinstance(declared_locales, list)
+        and bool(declared_locales)
+        and all(isinstance(locale, str) and locale for locale in declared_locales)
+        and len(declared_locales) == len(set(declared_locales))
+    )
+    if not descriptor_locales_valid:
+        errors.append(
+            "production descriptor locales must be a non-empty unique string list"
+        )
 
     descriptor_by_id = _descriptor_by_id(descriptor)
     inventory_actions = _projection_actions(inventory) if inventory is not None else {}
