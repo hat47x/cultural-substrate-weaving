@@ -475,9 +475,6 @@ def validate_production_source_promotion_plan(
                 errors.append(f"research id leaked into production source root: {research_id}/{locale}")
             if locale_plan.get("runtime_entry") != f"{production_root}/SKILL.md":
                 errors.append(f"production runtime entry must normalize to SKILL.md: {research_id}/{locale}")
-            if locale_plan.get("target_collision") is not False:
-                errors.append(f"production source target collision detected: {research_id}/{locale}")
-
             mappings = locale_plan.get("mappings")
             if not isinstance(mappings, list) or not mappings:
                 errors.append(f"production source mappings missing: {research_id}/{locale}")
@@ -539,6 +536,21 @@ def validate_production_source_promotion_plan(
                         )
 
             targets = [item.get("target_relative") for item in mappings if isinstance(item, dict)]
+            normalized_targets = [
+                target for target in targets if isinstance(target, str)
+            ]
+            computed_target_collision = (
+                len(normalized_targets) != len(set(normalized_targets))
+            )
+            if locale_plan.get("target_collision") != computed_target_collision:
+                errors.append(
+                    "production source target collision metadata mismatch: "
+                    f"{research_id}/{locale}"
+                )
+            if computed_target_collision:
+                errors.append(
+                    f"production source target collision detected: {research_id}/{locale}"
+                )
             if "SKILL.md" not in targets:
                 errors.append(f"production source mappings must contain SKILL.md: {research_id}/{locale}")
             if locale == "en-US":
