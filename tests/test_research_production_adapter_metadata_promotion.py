@@ -218,6 +218,41 @@ class ResearchProductionAdapterMetadataPromotionTests(unittest.TestCase):
                 self.locale_catalog,
             )
 
+    def test_planner_rejects_safe_but_wrong_prototype_source_class(self) -> None:
+        adapter_plan = copy.deepcopy(self.adapter_plan)
+        adapter_plan["distributions"]["openai_skill"]["skills"][
+            "iterative-inquiry-synthesis"
+        ]["en-US"]["interactive"]["source"] = (
+            "research/skill-prototypes/affinity-synthesis/SKILL.md"
+        )
+        with self.assertRaisesRegex(
+            ValueError,
+            "OpenAI adapter metadata source is outside declared source class",
+        ):
+            plan_production_adapter_metadata_promotion(
+                adapter_plan,
+                self.descriptor,
+                self.locale_catalog,
+            )
+
+    def test_planner_rejects_existing_source_outside_production_adapter_tree(self) -> None:
+        adapter_plan = copy.deepcopy(self.adapter_plan)
+        adapter_plan["distributions"]["openai_skill"]["skills"][
+            "cultural-substrate-weaving"
+        ]["ja-JP"]["interactive"]["source"] = (
+            "research/skill-prototypes/adapters/openai-skill/ja-JP/"
+            "cultural-substrate-weaving/openai.interactive.yaml"
+        )
+        with self.assertRaisesRegex(
+            ValueError,
+            "OpenAI adapter metadata source is outside declared source class",
+        ):
+            plan_production_adapter_metadata_promotion(
+                adapter_plan,
+                self.descriptor,
+                self.locale_catalog,
+            )
+
     def test_planner_rejects_unsafe_openai_target(self) -> None:
         descriptor = copy.deepcopy(self.descriptor)
         layer1 = next(

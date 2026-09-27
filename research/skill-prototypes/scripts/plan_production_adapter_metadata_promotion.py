@@ -36,6 +36,13 @@ def _safe_repo_path(value: str) -> bool:
     return bool(value) and not path.is_absolute() and ".." not in path.parts and "\\" not in value
 
 
+def _path_under(value: str, root: PurePosixPath) -> bool:
+    if not _safe_repo_path(value):
+        return False
+    path = PurePosixPath(value)
+    return path.parts[: len(root.parts)] == root.parts
+
+
 def _sha256_text(text: str) -> str:
     return hashlib.sha256(text.encode("utf-8")).hexdigest()
 
@@ -342,6 +349,21 @@ def plan_production_adapter_metadata_promotion(
                     raise ValueError(
                         "OpenAI adapter metadata source is invalid: "
                         f"{research_id}/{locale}/{profile}: {source!r}"
+                    )
+                expected_source_root = (
+                    PurePosixPath("adapters/openai-skill") / locale
+                    if expected_research_status == "existing"
+                    else PurePosixPath(
+                        "research/skill-prototypes/adapters/openai-skill"
+                    )
+                    / locale
+                    / research_id
+                )
+                if not _path_under(source, expected_source_root):
+                    raise ValueError(
+                        "OpenAI adapter metadata source is outside declared source class: "
+                        f"{research_id}/{locale}/{profile}: {source!r}; "
+                        f"expected under {expected_source_root.as_posix()!r}"
                     )
                 target = source_pattern.format(locale=locale, profile=profile)
                 if (
