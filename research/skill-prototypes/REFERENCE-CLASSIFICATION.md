@@ -155,3 +155,32 @@ Method Definition parityについては、numbered invariant surfaceの静的che
 - canonical Japaneseを変更した場合、translation-manifestのsource hashを正規の更新scriptで再計算する。
 
 この分類は、翻訳量を増やすための規則ではない。**実行契約・方法定義・表現技術・研究根拠を混同しないための境界**である。
+
+## 付録A. `sei.cognitive-method`との対応（参考情報）
+
+追記日: 2026-09-27
+
+SEI Cognition（`hat47x/sei-cognition`、旧称SOZA）のCognitive Method Contract（`sei.cognitive-method` v1alpha1、`hat47x/sei-cognition:contracts/cognitive-method/SEI_COGNITIVE_METHOD_v1alpha1.md`）は、Method Definition、Realization、Method Applicationを別のものとして扱い（`Method Definition != Realization != Method Application`）、さらにApplicationをRecommendation、Decision、Assuranceとも分けている。本書と研究suiteのREADMEが置いている区分は、これと同じ向きの分離である。
+
+この付録では、両者の対応を参考情報として記録する。CSWにとっての正本は引き続き本書の分類であり、SEIの契約には依存しない。CSWのruntimeは変えず、SEIの記録を出力する仕組みも持たない。
+
+| CSW側の区分 | 例 | `sei.cognitive-method`での読み | 注意 |
+|---|---|---|---|
+| Method Definition | `affinity-synthesis/references/METHOD.md`、`iterative-inquiry-synthesis/references/METHOD.md`。CSWでは`src/ja-JP/`が方法の意味上の正本を兼ねる | `method_definition` | SEIはMethodのidentityを、Promptやmodelのidentityと分ける。CSWの正本がruntimeの文でもあるからといって、正本をPromptと同じものとみなさない |
+| Agent Skill realization | sibling Skillの`SKILL.md` / `SKILL.en.md`、CSWの生成済み`plugins/<plugin>/skills/weave/SKILL.md`、各platformのadapter | `method_realization`（Skillファイルは`implementation_refs`で参照する） | localeごとのrealizationは、同じMethodの別々のRealizationとして読む。`translated-draft`を独立査読済みと読み替えない |
+| Representation / technical asset | `REPRESENTATION*.md`、`affinity-map.schema.json`、`ROUND-TEMPLATE*.md` | Realizationが使う実装artifact、またはApplicationの出力の表現 | 表現を変えただけでMethod Definitionを変えたことにはしない。「Realizationを交換しても、Method Definitionを別のMethodへ読み替えない」というSEIの境界と同じである |
+| Application record | Web Chat Living Labのround / event、cross-layer paired runの実行記録 | `method_application`（input / output / residualを参照する。Realizationへの参照は任意） | 適用の記録があることを、推奨、決定、方法の有効性へ格上げしない。Realizationを特定できない古い記録でも、方法を適用しなかったとはみなさない。Living Labの既存の記録は観測した時点の公開版に対するものとして読み、後の三層分離を遡って当てはめない |
+| Evaluation fixture | `affinity-synthesis/evals/`、`evals/CSW-TENSION-AND-SUBLATION-CASES-2026-09-07.md` | 対応するrecord typeはない。fixtureで確かめた結果は、Realizationについての証拠として別に参照する | SEIの契約も`Method fixture PASS != Method is good`としている |
+| Evidence / lineage material | `evidence/dossier.md`、外部Skillとの比較記録 | Method Definitionのcontext / specificationへの参照 | 毎回読むruntimeの指示にはしない |
+
+### SEIの側ですでに起きていること
+
+SEIのISSUE-000058（E3a、`hat47x/sei-cognition:plan/issue/ISSUE-000058-materialize-version-pinned-external-artifact-integration.md`）は、CSWの日本語版`weave` Skillを固定したrevisionで取得し、source identityとbytesを検証したうえで、既存のMethod Realizationに結び付けた。対象は`plugins/cultural-substrate-weaving-ja/skills/weave/SKILL.md`（Git blob `4d1cd77a3561c4da58bc030936f28ae2386a81ce`）である。
+
+上の表でいえば、SEIが固定したのはCSWのRealizationの一つにあたる。CSWの意味上の正本は`src/ja-JP/`にあり、固定されたファイルはそこから生成した配布物である。SEIの記録も、SkillをLLM上で実行してMethod Applicationを得たとは主張しておらず、実行品質の評価は範囲外としている。
+
+本リポジトリのローカル履歴では、このblobが`af7aa55`（2026-09-02）で導入されたことを確認した。一方、SEIの記録が挙げるcommit `aa3651f3460a6db7dc70bd848f93b600f149ffe8`には、確認に使ったcloneの参照からはたどり着けなかった。
+
+現在の`develop/v0.5.0`では、同じパスの`SKILL.md`は別のblobになっている。SEIが固定したRealizationは、現在の`weave`と同じものではない。過去に固定した参照を現在版へ黙って差し替えないというSEIの原則は、CSWがCase 001の比較のために古いsnapshotを凍結しているのと同じ考え方である。
+
+兄弟リポジトリとの対応の全体は、[`docs/ja/maintainers/sibling-product-semantic-correspondence.md`](../../docs/ja/maintainers/sibling-product-semantic-correspondence.md)に記録している。

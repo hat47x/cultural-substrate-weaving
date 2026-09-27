@@ -157,3 +157,32 @@ Arm C/Dでは、最終叙述を元カードまで戻し、次を確認する。
 この文書は評価プロトコルであり、現時点では方法論の正本`src/ja-JP/`を変更しない。
 
 実験結果が得られる前に、「KJ Atlasと併用するための専用規則」や「ソフトウェア開発用規則」をスキルへ追加しない。これらはcaller / domain contextへ置き、スキル固有の増分だけを後から正本へ返す。
+
+## 2026-09-27の追記：SUI Sensemakingへの改名と、Case 001の実行
+
+### 名称
+
+KJ Atlasは`hat47x/sui-sensemaking`（SUI Sensemaking）へ改名された。2026-09-11にAcceptedとなったSUI側のADR-0083による改名である。本書は当時の名称のまま残すので、本文の「KJ Atlas」はSUI Sensemakingと読み替える。C/Dの外部表象も、現在はSUI Sensemakingのキャンバスである。
+
+凍結した比較条件は、この改名では変わらない。`kj-atlas-case-portfolio-freeze.md`に記録したproduct snapshotとCSW snapshotのcommit hashは、リポジトリ名が変わっても同じcommitを指す。SUI側の記録によれば、凍結した分析snapshotは中身を変えずにファイル名だけを改め、凍結したsource manifestは改名していない。
+
+### SUI側の`COGNITIVE-EVAL-01`は同じ比較である
+
+SUI側の`COGNITIVE-EVAL-01`（`hat47x/sui-sensemaking:01_Plans/issues/issue-COGNITIVE-EVAL-01-factorial-human-ai-cognitive-control-evaluation.md`）は、本書と同じ4条件の比較である。同じ未解決の課題と資料snapshotを使い、外部表象（通常のチャットか、SUI Sensemakingのキャンバスか）とCSWの有無を組み合わせたA〜Dを比べる。Case 001〜003の問い、snapshot、各armの条件、必須出力は凍結済みで、実行順も`C → D → B → A`として事前登録されている。
+
+2026-09-27時点では、CSWの側にもSUIの側にも、A〜Dの生の実行記録はまだない。SUI側の索引が示す現在地も「Case 001 Arm C 実行可能 / 生の実行記録は未取得」である。言えるのは比較の準備が整ったところまでであり、CSWの増分についての結果はまだない。
+
+### 次に最も情報量の大きい一歩
+
+次に最も多くの情報をもたらすのは、手順や指標をさらに足すことではなく、**凍結した条件のままCase 001を実際に一度走らせること**である。
+
+Case 001を一度走らせると、その生の実行記録が、二つのリポジトリの証拠を同時に前へ進める。CSWの側では、BとA、DとCの差から、スキル単体の増分と、キャンバスと組み合わせたときの増分を読める。SUIの側では、CとA、DとBの差から、外部表象の増分を読める。
+
+実行するときは、次を守る。
+
+- B/Dには、`kj-atlas-case-portfolio-freeze.md`で凍結したCSW snapshotを使う。現在の`develop/v0.5.0`や、その後に追加した保守文書を入力に加えない。
+- SUI側の記録では、各armの起動用artifactの保持期限が2026-09-13前後とされていた。実行前に、SUI側の現在の実行入口（`cognitive-dogfood-index.md`、`cognitive-dogfood-execution-plan.md`、runbook）を確かめる。
+- 生の実行記録が得られる前に、新しいKPI、別のschema、追加の事前検証を増やして、実走の代わりにしない。SUI側も同じ方針をとっている。
+- Case 001の一件だけで`src/<locale>/`を変更しない。方法論正本の変更を検討するのは、本書の帰属ゲートを通し、Case 001〜003を横断して同じ欠陥が再現した場合に限る。
+
+SEI Cognition（`hat47x/sei-cognition`）による製品群全体の分析でも、このCase 001の実行が、早い段階で取り組む一歩として挙がっている。ただし、それはsei-cognitionの未mergeブランチ`docs/family-apex-backflow-20260927`上の提案である。Case 001を走らせることはSEIへの依存を生まず、SEIで記録するかどうかも任意である。兄弟リポジトリとの意味の対応は、`sibling-product-semantic-correspondence.md`にまとめている。
