@@ -196,12 +196,19 @@ class ResearchCompleteCheckoutGateTests(unittest.TestCase):
         self.assert_has_error(descriptor, "must remain the canonical command set")
 
     def test_passed_status_rejects_blocked_not_run_evidence(self) -> None:
-        descriptor = copy.deepcopy(self.descriptor)
-        descriptor["complete_checkout_validation"]["status"] = "passed"
-        self.assert_has_error(
-            descriptor,
-            "passed complete-checkout evidence missing required marker",
-        )
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            evidence_relative = self.write_pass_record(root)
+            evidence_path = root / evidence_relative
+            evidence_path.write_text(
+                evidence_path.read_text(encoding="utf-8").replace("make check: PASS\n", ""),
+                encoding="utf-8",
+            )
+            self.assert_has_error(
+                self.passed_descriptor(evidence_relative),
+                "passed complete-checkout evidence missing required marker",
+                root=root,
+            )
 
     def test_passed_status_accepts_transient_record_for_current_execution_head(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:

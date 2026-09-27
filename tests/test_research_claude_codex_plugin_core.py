@@ -96,16 +96,15 @@ class ResearchClaudeCodexPluginCoreTests(unittest.TestCase):
         self.assertFalse((plugin_root / "marketplace.json").exists())
         self.assertFalse((plugin_root / ".claude-plugin" / "marketplace.json").exists())
 
-    def test_en_bundle_is_blocked_and_leaves_requested_output_absent(self) -> None:
-        with tempfile.TemporaryDirectory() as temp_dir:
-            output = Path(temp_dir) / "blocked"
-            with self.assertRaisesRegex(ValueError, "blocked"):
-                materialize_claude_codex_plugin_core(
-                    locale="en-US",
-                    output_root=output,
-                    root=ROOT,
-                )
-            self.assertFalse(output.exists())
+    def test_en_bundle_materializes_as_research_prototype(self) -> None:
+        _, plugin_root, result, temp = self.materialize("en-US")
+        self.addCleanup(temp.cleanup)
+
+        self.assertTrue(result["shared_skill_tree"])
+        self.assertEqual(result["metadata_state"], "prototype")
+        self.assertEqual(result["claude_subtree_state"], "planned")
+        self.assertEqual(result["codex_subtree_state"], "planned")
+        self.assertTrue((plugin_root / "skills" / "weave" / "SKILL.md").is_file())
 
     def test_materializer_refuses_repository_output(self) -> None:
         with self.assertRaisesRegex(ValueError, "outside the repository"):

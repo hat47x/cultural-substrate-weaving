@@ -6,6 +6,8 @@ The center of this profile is the CSW responsibility: open cultural frameworks a
 
 Microsoft 365 cannot always invoke independent sibling Skills. **This limited profile embeds a minimal compatible material-synthesis fallback**, drawing from KJ-method, affinity-diagram, and qualitative-synthesis lineage, plus a minimal delta principle so new material does not force a full rebuild — see "What this profile does not claim" below for its limits.
 
+That does not mean CSW itself owns the material-synthesis algorithm; the canonical CSW Skill delegates that work to a compatible realization.
+
 Domain expertise, detailed framework-specific operations, Taiheki and other special cases, and advanced longitudinal research design are outside this profile.
 
 ## 1. Keep your explanation revisable by the target

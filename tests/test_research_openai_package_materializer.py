@@ -114,28 +114,25 @@ class ResearchOpenAIPackageMaterializerTests(unittest.TestCase):
             self.assertIn("allow_implicit_invocation: true", interactive)
             self.assertIn("allow_implicit_invocation: false", metered)
 
-    def test_en_requires_explicit_partial_probe_and_materializes_only_csw(self) -> None:
-        with tempfile.TemporaryDirectory() as temp_dir:
-            blocked = Path(temp_dir) / "blocked"
-            with self.assertRaisesRegex(ValueError, "allow_partial=True"):
-                materialize_openai_packages(
-                    locale="en-US",
-                    output_root=blocked,
-                    root=ROOT,
-                )
-            self.assertFalse(blocked.exists())
-
-        output, result, temp = self.materialize("en-US", allow_partial=True)
+    def test_en_materializes_translated_draft_trees_as_research_prototypes(self) -> None:
+        output, result, temp = self.materialize("en-US")
         self.addCleanup(temp.cleanup)
-        self.assertTrue(result["partial"])
-        self.assertEqual(len(result["packages"]), 2)
+        self.assertFalse(result["partial"])
+        self.assertEqual(result["runtime_state"], "buildable")
+        self.assertEqual(result["metadata_coverage"], "prototype-for-realized")
+        self.assertEqual(len(result["packages"]), 6)
 
         for profile in ("interactive", "metered"):
-            self.assertTrue(
-                (output / profile / "cultural-substrate-weaving" / "SKILL.md").is_file()
-            )
-            self.assertFalse((output / profile / "affinity-synthesis").exists())
-            self.assertFalse((output / profile / "iterative-inquiry-synthesis").exists())
+            for skill_name in (
+                "cultural-substrate-weaving",
+                "affinity-synthesis",
+                "iterative-inquiry-synthesis",
+            ):
+                self.assertTrue((output / profile / skill_name / "SKILL.md").is_file())
+        self.assertEqual(
+            {item["metadata_state"] for item in result["packages"]},
+            {"existing", "prototype"},
+        )
 
     def test_materializer_refuses_repository_output(self) -> None:
         with self.assertRaisesRegex(ValueError, "outside the repository"):

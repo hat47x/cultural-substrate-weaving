@@ -123,8 +123,11 @@ class ResearchAdapterMetadataTests(unittest.TestCase):
     def test_locale_catalog_must_declare_required_fields(self) -> None:
         metadata = copy.deepcopy(self.metadata)
         metadata["distributions"]["claude_plugin"]["source"] = (
-            "research/skill-prototypes/adapter-metadata-plan.json"
+            "adapters/microsoft-copilot/en-US/manifest.template.json"
         )
+        entry = metadata["distributions"]["claude_plugin"]["locales"]["en-US"]
+        entry["status"] = "existing-baseline"
+        entry.pop("prototype_source", None)
         self.assert_has_error(metadata, "locale catalog does not declare metadata")
 
     def test_bundle_prototype_source_must_exist(self) -> None:

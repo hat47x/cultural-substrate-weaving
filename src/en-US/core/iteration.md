@@ -2,6 +2,8 @@
 
 Read this when work resumes because of new material or contact with another cultural framework.
 
+Treat new contact as a **round delta** when useful, and hand it to a **compatible iterative realization** when one is available.
+
 This document does not implement multi-round inquiry orchestration itself. Delta-based reopening, stable artifacts, question shifts, append-only round history, and related concerns are delegated to a dedicated Method / compatible realization. CSW hands off what newly arose from framework contact with its origin intact.
 
 ## Responsibility boundary
