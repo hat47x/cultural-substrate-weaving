@@ -154,6 +154,38 @@ class ResearchProductionSourcePromotionTests(unittest.TestCase):
             errors,
         )
 
+    def test_projection_mapping_cannot_add_undeclared_transform(self) -> None:
+        plan = copy.deepcopy(self.plan)
+        mapping = self.mapping(
+            "affinity-synthesis",
+            "ja-JP",
+            "/references/TEMPLATE.md",
+            plan,
+        )
+        self.assertEqual(mapping["content_transforms"], [])
+        mapping["content_transforms"].append("normalize-locale-suffixed-filename")
+        errors = self.validate(plan)
+        self.assertTrue(
+            any("content transforms do not match declared authorities" in error for error in errors),
+            errors,
+        )
+
+    def test_projection_mapping_transform_order_is_authoritative(self) -> None:
+        plan = copy.deepcopy(self.plan)
+        mapping = self.mapping(
+            "affinity-synthesis",
+            "en-US",
+            "/SKILL.en.md",
+            plan,
+        )
+        self.assertGreaterEqual(len(mapping["content_transforms"]), 2)
+        mapping["content_transforms"] = list(reversed(mapping["content_transforms"]))
+        errors = self.validate(plan)
+        self.assertTrue(
+            any("content transforms do not match declared authorities" in error for error in errors),
+            errors,
+        )
+
     def test_projection_inventory_source_cannot_be_silently_dropped_from_plan(self) -> None:
         plan = copy.deepcopy(self.plan)
         locale_plan = self.skill("iterative-inquiry-synthesis", plan)["locales"]["en-US"]
