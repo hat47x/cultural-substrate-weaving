@@ -58,6 +58,7 @@ Microsoft 365向けのこの2ファイルは、生成物そのものではなく
 - `docs/ja/maintainers/product-quality-program.md`
 - `docs/ja/maintainers/official-sources.md`
 - `docs/ja/maintainers/release.md`
+- `docs/ja/maintainers/sibling-product-semantic-correspondence.md`
 - `docs/ja/maintainers/troubleshooting.md`
 - `docs/ja/maintainers/v39-deepseek-api-validation.md`
 - `docs/ja/maintainers/versioning.md`
@@ -185,3 +186,7 @@ KJ法由来の技能をCSWから分離する検討として、新しく七つの
 `README.md`は、冒頭の説明と「根幹価値」節を追加し、「なぜ外部体系を使うのか」に触媒の比喩を加えたため、全文を読み直した。触媒の比喩が前の文から唐突に始まっていたので、体系が触媒として働くことを先に述べる一文を補った。`docs/README.md`は案内表と研究文書一覧への項目追加だけであり、全文を通読したうえで追加分以外の本文は変更していない。
 
 方法論正本である`src/ja-JP/`は本記録の鮮度管理対象外だが、同じ変更で書き換えたROUTER、`core/discovery-pathway.md`ほかの日本語も通読し、読点の不足、「構造の遠い」のような係り方の曖昧な表現、「と置いたうえで」のような硬い言い回しを直した。
+
+製品群全体の分析をCSWの文書へ反映する作業として、`docs/ja/maintainers/sibling-product-semantic-correspondence.md`を新設し、`docs/ja/maintainers/kj-atlas-cognitive-coevolution.md`には2026-09-27付の追記を加えた。どちらも、名称の変更、来歴ラベルとSEIの意味の対応、Living Labの記録を書き出せるかという未決の問い、Case 001の実行状況について、事実、識別子、証拠の境界を確定させた後、独立した工程として全文を通読した。英語の型名や識別子が文の骨格を決めていた箇所、兄弟リポジトリの用語をそのまま持ち込んだ「家族」という語、主語の抜けた文、同じ年月を重ねて書いた文を直した。兄弟リポジトリの未mergeの提案を採用済みとは書かず、Case 001の結果も主張していないことを確認した。
+
+鮮度管理の対象外である`research/skill-prototypes/REFERENCE-CLASSIFICATION.md`にも、SEIの`sei.cognitive-method`との対応を示す付録Aを加えた。同じ基準で付録を通読し、`!=`の連鎖をそのまま文の目的語にしていた箇所を日本語の文へ改めた。方法論正本である`src/ja-JP/`は変更していない。

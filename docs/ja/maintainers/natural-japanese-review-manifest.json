@@ -89,8 +89,8 @@
       "reviewed_at": "2026-09-04"
     },
     "docs/ja/maintainers/kj-atlas-cognitive-coevolution.md": {
-      "git_blob_sha": "5ef61a99e76d5cefd71958d7e467e31d005576f3",
-      "reviewed_at": "2026-08-31"
+      "git_blob_sha": "8d9cf7f87b5a7a1f5139af059bb02b1fbd461c9f",
+      "reviewed_at": "2026-09-27"
     },
     "docs/ja/maintainers/kj-atlas-merge-semantics-boundary.md": {
       "git_blob_sha": "9d2a36a5f8ad809542dd51d0ec6217b8d6d10f2f",
@@ -117,7 +117,7 @@
       "reviewed_at": "2026-09-06"
     },
     "docs/ja/maintainers/natural-japanese-review.md": {
-      "git_blob_sha": "9918c053e350c699f5cb30d63ae03d9c8e75f450",
+      "git_blob_sha": "b3ac439eedb1cf8f4f08022765bbdcfc7726dbfa",
       "reviewed_at": "2026-09-27"
     },
     "docs/ja/maintainers/official-sources.md": {
@@ -131,6 +131,10 @@
     "docs/ja/maintainers/release.md": {
       "git_blob_sha": "da1fac4a48be0c477dfedf92b03a26a839e77653",
       "reviewed_at": "2026-09-05"
+    },
+    "docs/ja/maintainers/sibling-product-semantic-correspondence.md": {
+      "git_blob_sha": "2441fe67afa05bc1b7120102860f96c16adc166d",
+      "reviewed_at": "2026-09-27"
     },
     "docs/ja/maintainers/skill-improvement-direction.md": {
       "git_blob_sha": "18920649ee682a515dd23ffd8c312f2df70b7eb4",
