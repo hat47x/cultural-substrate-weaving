@@ -124,6 +124,40 @@ def plan_production_source_promotion(
     inventory: dict,
 ) -> dict:
     descriptor_by_id = _descriptor_by_id(descriptor)
+    suite_by_id = {
+        item["id"]: item
+        for item in suite.get("skills", [])
+        if isinstance(item, dict) and isinstance(item.get("id"), str)
+    }
+    descriptor_ids = set(descriptor_by_id)
+    suite_ids = set(suite_by_id)
+    if suite_ids != descriptor_ids:
+        raise ValueError(
+            "research suite Skill set must match production descriptor: "
+            f"missing={sorted(descriptor_ids - suite_ids)}, "
+            f"extra={sorted(suite_ids - descriptor_ids)}"
+        )
+
+    descriptor_locales = {
+        locale
+        for locale in descriptor.get("locales", [])
+        if isinstance(locale, str)
+    }
+    if not descriptor_locales:
+        raise ValueError("production descriptor must declare locales")
+
+    for research_id, skill in suite_by_id.items():
+        realizations = skill.get("locale_realizations")
+        if not isinstance(realizations, dict):
+            raise ValueError(f"research suite locale realizations missing for {research_id}")
+        realization_locales = set(realizations)
+        if realization_locales != descriptor_locales:
+            raise ValueError(
+                "research suite locale realizations must match production descriptor: "
+                f"{research_id}: missing={sorted(descriptor_locales - realization_locales)}, "
+                f"extra={sorted(realization_locales - descriptor_locales)}"
+            )
+
     name_map = migration["research_to_production_name"]
     inventory_actions = _projection_actions(inventory)
 
@@ -304,6 +338,31 @@ def validate_production_source_promotion_plan(
         if not isinstance(locales, dict):
             errors.append(f"production source plan locales missing for {research_id}")
             continue
+
+        expected_locales = None
+        if suite is not None:
+            suite_skill = suite_by_id.get(research_id)
+            realizations = (
+                suite_skill.get("locale_realizations")
+                if isinstance(suite_skill, dict)
+                else None
+            )
+            if isinstance(realizations, dict):
+                expected_locales = set(realizations)
+        if expected_locales is None:
+            expected_locales = {
+                locale
+                for locale in descriptor.get("locales", [])
+                if isinstance(locale, str)
+            }
+        actual_locales = set(locales)
+        if actual_locales != expected_locales:
+            errors.append(
+                "production source plan locale set mismatch: "
+                f"{research_id}: missing={sorted(expected_locales - actual_locales)}, "
+                f"extra={sorted(actual_locales - expected_locales)}"
+            )
+
         for locale, locale_plan in locales.items():
             if locale_plan.get("production_source_mode") != "locale_tree":
                 errors.append(f"production source mode must remain locale_tree: {research_id}/{locale}")

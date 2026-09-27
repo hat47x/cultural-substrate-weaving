@@ -55,6 +55,51 @@ class ResearchProductionSourcePromotionTests(unittest.TestCase):
     def test_current_plan_is_valid(self) -> None:
         self.assertEqual(self.validate(), [])
 
+    def test_suite_skill_set_must_match_production_descriptor(self) -> None:
+        suite = copy.deepcopy(self.suite)
+        suite["skills"] = [
+            item
+            for item in suite["skills"]
+            if item["id"] != "iterative-inquiry-synthesis"
+        ]
+        with self.assertRaisesRegex(
+            ValueError,
+            "Skill set must match production descriptor",
+        ):
+            plan_production_source_promotion(
+                suite,
+                self.descriptor,
+                self.migration,
+                self.inventory,
+            )
+
+    def test_suite_locales_must_match_production_descriptor(self) -> None:
+        suite = copy.deepcopy(self.suite)
+        layer1 = next(
+            item for item in suite["skills"] if item["id"] == "affinity-synthesis"
+        )
+        del layer1["locale_realizations"]["en-US"]
+        with self.assertRaisesRegex(
+            ValueError,
+            "locale realizations must match production descriptor",
+        ):
+            plan_production_source_promotion(
+                suite,
+                self.descriptor,
+                self.migration,
+                self.inventory,
+            )
+
+    def test_plan_locale_set_cannot_drop_declared_realization(self) -> None:
+        plan = copy.deepcopy(self.plan)
+        layer1 = self.skill("affinity-synthesis", plan)
+        del layer1["locales"]["en-US"]
+        errors = self.validate(plan)
+        self.assertTrue(
+            any("production source plan locale set mismatch" in error for error in errors),
+            errors,
+        )
+
     def test_layer1_uses_public_name_and_never_research_id_in_production_root(self) -> None:
         layer1 = self.skill("affinity-synthesis")
         self.assertEqual(layer1["production_name"], "material-led-synthesis")
