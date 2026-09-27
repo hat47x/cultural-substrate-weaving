@@ -78,6 +78,33 @@ def _skill_metadata_paths(skill: dict) -> set[str]:
     return paths
 
 
+def _expected_excluded_research_metadata(skill: dict) -> list[str]:
+    """Derive research metadata intentionally left outside production package sources."""
+
+    promoted_sources: set[str] = set()
+    realizations = skill.get("locale_realizations")
+    if isinstance(realizations, dict):
+        for realization in realizations.values():
+            package_source = (
+                realization.get("package_source")
+                if isinstance(realization, dict)
+                else None
+            )
+            if not isinstance(package_source, dict):
+                continue
+            root = package_source.get("root")
+            files = package_source.get("files")
+            if not isinstance(root, str) or not isinstance(files, list):
+                continue
+            root_path = PurePosixPath(root)
+            promoted_sources.update(
+                (root_path / relative).as_posix()
+                for relative in files
+                if isinstance(relative, str)
+            )
+    return sorted(_skill_metadata_paths(skill) - promoted_sources)
+
+
 def _descriptor_by_id(descriptor: dict) -> dict[str, dict]:
     return {
         item["research_id"]: item
@@ -334,6 +361,11 @@ def validate_production_source_promotion_plan(
             continue
         source_mode = production_source.get("mode")
 
+        if skill.get("source") != production_source:
+            errors.append(
+                f"production source plan source snapshot mismatch for {research_id}"
+            )
+
         expected_name = descriptor_skill.get("proposed_installable_name")
         if skill.get("production_name") != expected_name:
             errors.append(f"production source plan name mismatch for {research_id}")
@@ -382,7 +414,28 @@ def validate_production_source_promotion_plan(
                 f"extra={sorted(actual_locales - expected_locales)}"
             )
 
+        if suite is not None:
+            suite_skill = suite_by_id.get(research_id)
+            if isinstance(suite_skill, dict):
+                expected_excluded = _expected_excluded_research_metadata(suite_skill)
+                if skill.get("excluded_research_metadata") != expected_excluded:
+                    errors.append(
+                        "production source plan excluded research metadata mismatch: "
+                        f"{research_id}"
+                    )
+
         for locale, locale_plan in locales.items():
+            if locale_plan.get("research_package_mode") != "explicit_files":
+                errors.append(
+                    f"research package mode must remain explicit_files: {research_id}/{locale}"
+                )
+            if (
+                locale_plan.get("copy_scope")
+                != "declared-research-package-files-into-future-package-closed-tree"
+            ):
+                errors.append(
+                    f"production source copy scope mismatch: {research_id}/{locale}"
+                )
             if locale_plan.get("production_source_mode") != "locale_tree":
                 errors.append(f"production source mode must remain locale_tree: {research_id}/{locale}")
             production_root = locale_plan.get("production_root")

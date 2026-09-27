@@ -100,6 +100,36 @@ class ResearchProductionSourcePromotionTests(unittest.TestCase):
             errors,
         )
 
+    def test_plan_source_snapshot_must_match_descriptor_authority(self) -> None:
+        plan = copy.deepcopy(self.plan)
+        layer1 = self.skill("affinity-synthesis", plan)
+        layer1["source"]["root_pattern"] = "src/skills/other/{locale}"
+        errors = self.validate(plan)
+        self.assertTrue(
+            any("source snapshot mismatch" in error for error in errors),
+            errors,
+        )
+
+    def test_locale_plan_research_package_mode_must_remain_explicit_files(self) -> None:
+        plan = copy.deepcopy(self.plan)
+        layer1 = self.skill("affinity-synthesis", plan)
+        layer1["locales"]["ja-JP"]["research_package_mode"] = "directory"
+        errors = self.validate(plan)
+        self.assertTrue(
+            any("research package mode must remain explicit_files" in error for error in errors),
+            errors,
+        )
+
+    def test_locale_plan_copy_scope_is_authoritative(self) -> None:
+        plan = copy.deepcopy(self.plan)
+        layer1 = self.skill("affinity-synthesis", plan)
+        layer1["locales"]["en-US"]["copy_scope"] = "all-research-files"
+        errors = self.validate(plan)
+        self.assertTrue(
+            any("production source copy scope mismatch" in error for error in errors),
+            errors,
+        )
+
     def test_layer1_uses_public_name_and_never_research_id_in_production_root(self) -> None:
         layer1 = self.skill("affinity-synthesis")
         self.assertEqual(layer1["production_name"], "material-led-synthesis")
@@ -293,6 +323,16 @@ class ResearchProductionSourcePromotionTests(unittest.TestCase):
             self.assertFalse(
                 any(item["target_relative"].startswith("evidence/") for item in locale_plan["mappings"])
             )
+
+    def test_excluded_research_metadata_must_match_suite_authority(self) -> None:
+        plan = copy.deepcopy(self.plan)
+        layer2 = self.skill("iterative-inquiry-synthesis", plan)
+        layer2["excluded_research_metadata"] = []
+        errors = self.validate(plan)
+        self.assertTrue(
+            any("excluded research metadata mismatch" in error for error in errors),
+            errors,
+        )
 
     def test_target_collision_is_rejected(self) -> None:
         plan = copy.deepcopy(self.plan)
