@@ -28,6 +28,7 @@ from validate_research_production_suite_descriptor import (  # noqa: E402
 )
 
 PLAN_SCHEMA = "csw.production-adapter-metadata-promotion-plan/v1"
+BUNDLE_PROMOTION_STATE = "planned-locale-catalog-wording-update"
 
 
 def _safe_repo_path(value: str) -> bool:
@@ -104,6 +105,74 @@ def _bundle_catalog_source(adapter_plan: dict) -> str:
     if not isinstance(source, str) or not _safe_repo_path(source):
         raise ValueError(f"locale_bundle production catalog path is invalid: {source!r}")
     return source
+
+
+def _assert_descriptor_adapter_metadata_authority(
+    descriptor_by_id: dict[str, dict],
+    *,
+    bundle_catalog_source: str,
+) -> None:
+    """Keep planner inputs bound to descriptor-owned production metadata topology."""
+
+    for research_id, descriptor_skill in descriptor_by_id.items():
+        production_name = descriptor_skill.get("proposed_installable_name")
+        adapter_metadata = descriptor_skill.get("adapter_metadata")
+        if not isinstance(adapter_metadata, dict):
+            raise ValueError(
+                f"production descriptor adapter_metadata missing for {research_id}"
+            )
+
+        openai_meta = adapter_metadata.get("openai_skill")
+        if not isinstance(openai_meta, dict):
+            raise ValueError(
+                f"production descriptor OpenAI adapter metadata missing for {research_id}"
+            )
+        if research_id == "cultural-substrate-weaving":
+            expected_openai_mode = "existing-per-locale-profile"
+            expected_openai_pattern = (
+                "adapters/openai-skill/{locale}/openai.{profile}.yaml"
+            )
+            expected_bundle_mode = "existing-locale-catalog-to-update"
+        else:
+            expected_openai_mode = "planned-promotion-from-research-prototype"
+            expected_openai_pattern = (
+                f"adapters/openai-skill/{{locale}}/{production_name}/"
+                "openai.{profile}.yaml"
+            )
+            expected_bundle_mode = "bundle-via-locale-catalog"
+
+        if openai_meta.get("mode") != expected_openai_mode:
+            raise ValueError(
+                "production descriptor OpenAI adapter metadata mode mismatch: "
+                f"{research_id}: {openai_meta.get('mode')!r} != "
+                f"{expected_openai_mode!r}"
+            )
+        if openai_meta.get("source_pattern") != expected_openai_pattern:
+            raise ValueError(
+                "production descriptor OpenAI adapter metadata path mismatch: "
+                f"{research_id}: {openai_meta.get('source_pattern')!r} != "
+                f"{expected_openai_pattern!r}"
+            )
+
+        for distribution in ("claude_plugin", "codex_plugin"):
+            bundle_meta = adapter_metadata.get(distribution)
+            if not isinstance(bundle_meta, dict):
+                raise ValueError(
+                    "production descriptor locale-bundle adapter metadata missing: "
+                    f"{research_id}/{distribution}"
+                )
+            if bundle_meta.get("mode") != expected_bundle_mode:
+                raise ValueError(
+                    "production descriptor locale-bundle adapter metadata mode mismatch: "
+                    f"{research_id}/{distribution}: {bundle_meta.get('mode')!r} != "
+                    f"{expected_bundle_mode!r}"
+                )
+            if bundle_meta.get("source") != bundle_catalog_source:
+                raise ValueError(
+                    "production descriptor locale-bundle adapter metadata source mismatch: "
+                    f"{research_id}/{distribution}: {bundle_meta.get('source')!r} != "
+                    f"{bundle_catalog_source!r}"
+                )
 
 
 def _bundle_prototype_sources(adapter_plan: dict) -> dict[str, str]:
@@ -296,6 +365,10 @@ def plan_production_adapter_metadata_promotion(
 
     bundle_distribution_names = _bundle_distribution_names(adapter_plan)
     bundle_catalog_source = _bundle_catalog_source(adapter_plan)
+    _assert_descriptor_adapter_metadata_authority(
+        descriptor_by_id,
+        bundle_catalog_source=bundle_catalog_source,
+    )
     bundle_prototype_sources = _bundle_prototype_sources(adapter_plan)
     bundle_locales = set(bundle_prototype_sources)
     if bundle_locales != descriptor_locales:
@@ -320,7 +393,7 @@ def plan_production_adapter_metadata_promotion(
         bundle_promotions.append(
             {
                 "locale": locale,
-                "state": "planned-locale-catalog-wording-update",
+                "state": BUNDLE_PROMOTION_STATE,
                 "prototype_source": prototype_source,
                 "production_catalog": bundle_catalog_source,
                 "preserve": {
@@ -604,6 +677,11 @@ def validate_production_adapter_metadata_promotion_plan(
         if not isinstance(current, dict):
             errors.append(f"bundle promotion references unknown locale: {locale}")
             continue
+        if item.get("state") != BUNDLE_PROMOTION_STATE:
+            errors.append(
+                "locale-bundle promotion state must match planned wording-update mode: "
+                f"{locale}"
+            )
         preserve = item.get("preserve")
         if preserve != {
             "plugin_name": current.get("plugin_name"),

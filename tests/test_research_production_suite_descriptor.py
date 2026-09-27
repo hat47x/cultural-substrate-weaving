@@ -113,6 +113,68 @@ class ResearchProductionSuiteDescriptorTests(unittest.TestCase):
             "promoted OpenAI metadata path must follow proposed_installable_name",
         )
 
+    def test_csw_openai_metadata_mode_and_path_remain_existing_production_sources(self) -> None:
+        descriptor = copy.deepcopy(self.descriptor)
+        csw = self.skill(descriptor, "cultural-substrate-weaving")
+        csw["adapter_metadata"]["openai_skill"]["mode"] = (
+            "planned-promotion-from-research-prototype"
+        )
+        self.assert_has_error(
+            descriptor,
+            "OpenAI adapter metadata mode must remain existing-per-locale-profile",
+        )
+
+        descriptor = copy.deepcopy(self.descriptor)
+        csw = self.skill(descriptor, "cultural-substrate-weaving")
+        csw["adapter_metadata"]["openai_skill"]["source_pattern"] = (
+            "adapters/openai-skill/{locale}/cultural-substrate-weaving/"
+            "openai.{profile}.yaml"
+        )
+        self.assert_has_error(
+            descriptor,
+            "cultural-substrate-weaving OpenAI adapter metadata path must remain",
+        )
+
+    def test_sibling_openai_metadata_mode_remains_planned_prototype_promotion(self) -> None:
+        descriptor = copy.deepcopy(self.descriptor)
+        layer1 = self.skill(descriptor, "affinity-synthesis")
+        layer1["adapter_metadata"]["openai_skill"]["mode"] = "existing-per-locale-profile"
+        self.assert_has_error(
+            descriptor,
+            "OpenAI adapter metadata mode must remain planned-promotion-from-research-prototype",
+        )
+
+    def test_csw_bundle_metadata_mode_remains_existing_catalog_update(self) -> None:
+        descriptor = copy.deepcopy(self.descriptor)
+        csw = self.skill(descriptor, "cultural-substrate-weaving")
+        csw["adapter_metadata"]["claude_plugin"]["mode"] = "bundle-via-locale-catalog"
+        self.assert_has_error(
+            descriptor,
+            "claude_plugin adapter metadata mode must remain existing-locale-catalog-to-update",
+        )
+
+    def test_sibling_bundle_metadata_mode_remains_bundle_via_locale_catalog(self) -> None:
+        descriptor = copy.deepcopy(self.descriptor)
+        layer1 = self.skill(descriptor, "affinity-synthesis")
+        layer1["adapter_metadata"]["codex_plugin"]["mode"] = (
+            "existing-locale-catalog-to-update"
+        )
+        self.assert_has_error(
+            descriptor,
+            "codex_plugin adapter metadata mode must remain bundle-via-locale-catalog",
+        )
+
+    def test_bundle_metadata_source_remains_production_locale_catalog(self) -> None:
+        descriptor = copy.deepcopy(self.descriptor)
+        iterative = self.skill(descriptor, "iterative-inquiry-synthesis")
+        iterative["adapter_metadata"]["claude_plugin"]["source"] = (
+            "research/skill-prototypes/adapters/claude-codex/ja-JP/bundle-metadata.json"
+        )
+        self.assert_has_error(
+            descriptor,
+            "claude_plugin adapter metadata source must remain adapters/claude-code/locales.json",
+        )
+
     def test_sibling_production_source_cannot_point_back_into_research(self) -> None:
         descriptor = copy.deepcopy(self.descriptor)
         layer1 = self.skill(descriptor, "affinity-synthesis")

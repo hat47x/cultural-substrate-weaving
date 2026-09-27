@@ -160,6 +160,67 @@ class ResearchProductionAdapterMetadataPromotionTests(unittest.TestCase):
                 self.locale_catalog,
             )
 
+    def test_planner_rejects_csw_openai_descriptor_path_drift(self) -> None:
+        descriptor = copy.deepcopy(self.descriptor)
+        csw = next(
+            item
+            for item in descriptor["skills"]
+            if item["research_id"] == "cultural-substrate-weaving"
+        )
+        csw["adapter_metadata"]["openai_skill"]["source_pattern"] = (
+            "adapters/openai-skill/{locale}/cultural-substrate-weaving/"
+            "openai.{profile}.yaml"
+        )
+        with self.assertRaisesRegex(
+            ValueError,
+            "OpenAI adapter metadata path mismatch",
+        ):
+            plan_production_adapter_metadata_promotion(
+                self.adapter_plan,
+                descriptor,
+                self.locale_catalog,
+            )
+
+    def test_planner_rejects_bundle_descriptor_source_drift(self) -> None:
+        descriptor = copy.deepcopy(self.descriptor)
+        layer1 = next(
+            item
+            for item in descriptor["skills"]
+            if item["research_id"] == "affinity-synthesis"
+        )
+        layer1["adapter_metadata"]["claude_plugin"]["source"] = (
+            "adapters/claude-code/other-locales.json"
+        )
+        with self.assertRaisesRegex(
+            ValueError,
+            "locale-bundle adapter metadata source mismatch",
+        ):
+            plan_production_adapter_metadata_promotion(
+                self.adapter_plan,
+                descriptor,
+                self.locale_catalog,
+            )
+
+    def test_planner_rejects_bundle_descriptor_mode_drift(self) -> None:
+        descriptor = copy.deepcopy(self.descriptor)
+        iterative = next(
+            item
+            for item in descriptor["skills"]
+            if item["research_id"] == "iterative-inquiry-synthesis"
+        )
+        iterative["adapter_metadata"]["codex_plugin"]["mode"] = (
+            "existing-locale-catalog-to-update"
+        )
+        with self.assertRaisesRegex(
+            ValueError,
+            "locale-bundle adapter metadata mode mismatch",
+        ):
+            plan_production_adapter_metadata_promotion(
+                self.adapter_plan,
+                descriptor,
+                self.locale_catalog,
+            )
+
     def test_claude_and_codex_research_bundle_sources_are_shared_per_locale(self) -> None:
         distributions = self.adapter_plan["distributions"]
         claude = distributions["claude_plugin"]
@@ -455,6 +516,16 @@ class ResearchProductionAdapterMetadataPromotionTests(unittest.TestCase):
         errors = self.errors(plan)
         self.assertTrue(
             any("research composition must match prototype source" in error for error in errors),
+            errors,
+        )
+
+    def test_bundle_promotion_state_must_match_wording_update_mode(self) -> None:
+        plan = copy.deepcopy(self.plan)
+        item = self.bundle_item("en-US", plan)
+        item["state"] = "ready-for-production"
+        errors = self.errors(plan)
+        self.assertTrue(
+            any("promotion state must match planned wording-update mode" in error for error in errors),
             errors,
         )
 
