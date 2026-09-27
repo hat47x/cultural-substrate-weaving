@@ -57,6 +57,13 @@ def _assert_public_identity_safe(
         )
 
 
+def _bundle_drop_fields(prototype: dict) -> list[str]:
+    """Return prototype-only fields that must not enter the host locale catalog."""
+
+    host_visible_or_preserved = {"plugin_name", "display", "description"}
+    return [field for field in prototype if field not in host_visible_or_preserved]
+
+
 def _descriptor_by_id(descriptor: dict) -> dict[str, dict]:
     return {
         item["research_id"]: item
@@ -396,13 +403,7 @@ def plan_production_adapter_metadata_promotion(
                 "update": {"description": description},
                 "prototype_research_contains": prototype["contains"],
                 "production_suite_contains": public_skill_set,
-                "drop_prototype_fields_from_host_catalog": [
-                    "schema",
-                    "locale",
-                    "contains",
-                    "invocation_policy",
-                    "status",
-                ],
+                "drop_prototype_fields_from_host_catalog": _bundle_drop_fields(prototype),
                 "shared_by": list(bundle_distribution_names),
             }
         )
@@ -719,9 +720,23 @@ def validate_production_adapter_metadata_promotion_plan(
                         errors.append(
                             f"locale-bundle research composition must match prototype source: {locale}"
                         )
+                    expected_dropped = _bundle_drop_fields(prototype)
+                    if item.get("drop_prototype_fields_from_host_catalog") != expected_dropped:
+                        errors.append(
+                            "locale-bundle prototype drop-field set must match prototype source: "
+                            f"{locale}"
+                        )
         dropped = item.get("drop_prototype_fields_from_host_catalog")
-        if not isinstance(dropped, list) or "contains" not in dropped or "status" not in dropped:
-            errors.append(f"prototype-only bundle fields must not enter production locale catalog: {locale}")
+        if not isinstance(dropped, list):
+            errors.append(
+                f"prototype-only bundle fields must not enter production locale catalog: {locale}"
+            )
+        elif expected_prototype_sources is None and (
+            "contains" not in dropped or "status" not in dropped
+        ):
+            errors.append(
+                f"prototype-only bundle fields must not enter production locale catalog: {locale}"
+            )
 
     missing_bundle_locales = sorted(expected_bundle_locales - seen_bundle_locales)
     extra_bundle_locales = sorted(seen_bundle_locales - expected_bundle_locales)
