@@ -229,6 +229,26 @@ class ResearchProductionAdapterMetadataPromotionTests(unittest.TestCase):
             self.assertIn("contains", item["drop_prototype_fields_from_host_catalog"])
             self.assertIn("status", item["drop_prototype_fields_from_host_catalog"])
 
+    def test_bundle_drop_fields_must_match_prototype_source(self) -> None:
+        plan = copy.deepcopy(self.plan)
+        item = self.bundle_item("en-US", plan)
+        item["drop_prototype_fields_from_host_catalog"].remove("invocation_policy")
+        errors = self.errors(plan)
+        self.assertTrue(
+            any("drop-field set must match prototype source" in error for error in errors),
+            errors,
+        )
+
+    def test_bundle_host_visible_field_cannot_be_added_to_drop_fields(self) -> None:
+        plan = copy.deepcopy(self.plan)
+        item = self.bundle_item("ja-JP", plan)
+        item["drop_prototype_fields_from_host_catalog"].append("description")
+        errors = self.errors(plan)
+        self.assertTrue(
+            any("drop-field set must match prototype source" in error for error in errors),
+            errors,
+        )
+
     def test_layer1_research_id_cannot_leak_into_openai_production_target(self) -> None:
         plan = copy.deepcopy(self.plan)
         item = self.openai_item("affinity-synthesis", "ja-JP", "interactive", plan)
