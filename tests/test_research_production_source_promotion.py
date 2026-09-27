@@ -119,6 +119,53 @@ class ResearchProductionSourcePromotionTests(unittest.TestCase):
             errors,
         )
 
+    def test_planner_rejects_unsafe_research_package_file(self) -> None:
+        suite = copy.deepcopy(self.suite)
+        layer1 = next(
+            item for item in suite["skills"] if item["id"] == "affinity-synthesis"
+        )
+        layer1["locale_realizations"]["ja-JP"]["package_source"]["files"].append(
+            "../outside.md"
+        )
+        with self.assertRaisesRegex(ValueError, "research package files are unsafe"):
+            plan_production_source_promotion(
+                suite,
+                self.descriptor,
+                self.migration,
+                self.inventory,
+            )
+
+    def test_validator_rejects_unsafe_mapping_paths(self) -> None:
+        plan = copy.deepcopy(self.plan)
+        mapping = self.mapping(
+            "affinity-synthesis",
+            "ja-JP",
+            "/references/TEMPLATE.md",
+            plan,
+        )
+        mapping["source"] = "research/skill-prototypes/affinity-synthesis/../outside.md"
+        mapping["source_relative"] = "../outside.md"
+        mapping["target_relative"] = "../outside.md"
+        mapping["target"] = "src/skills/material-led-synthesis/ja-JP/../outside.md"
+
+        errors = self.validate(plan)
+        self.assertTrue(
+            any("source path is unsafe" in error for error in errors),
+            errors,
+        )
+        self.assertTrue(
+            any("source_relative is unsafe" in error for error in errors),
+            errors,
+        )
+        self.assertTrue(
+            any("target_relative is unsafe" in error for error in errors),
+            errors,
+        )
+        self.assertTrue(
+            any("target path is unsafe" in error for error in errors),
+            errors,
+        )
+
     def test_planner_rejects_unsafe_descriptor_production_root(self) -> None:
         descriptor = copy.deepcopy(self.descriptor)
         layer1 = next(

@@ -259,7 +259,25 @@ def plan_production_source_promotion(
                 raise ValueError(
                     f"research locale_tree source {research_id}/{locale} must use explicit_files"
                 )
-            research_root = PurePosixPath(package_source["root"])
+            package_root = package_source.get("root")
+            package_files = package_source.get("files")
+            if not isinstance(package_root, str) or not _safe_repo_path(package_root):
+                raise ValueError(
+                    f"research package root is unsafe for {research_id}/{locale}: "
+                    f"{package_root!r}"
+                )
+            if (
+                not isinstance(package_files, list)
+                or not package_files
+                or any(
+                    not isinstance(relative, str) or not _safe_repo_path(relative)
+                    for relative in package_files
+                )
+            ):
+                raise ValueError(
+                    f"research package files are unsafe for {research_id}/{locale}"
+                )
+            research_root = PurePosixPath(package_root)
             production_root = production_source["root_pattern"].format(locale=locale)
             if (
                 not _safe_repo_path(production_root)
@@ -585,6 +603,36 @@ def validate_production_source_promotion_plan(
                 source_relative = mapping.get("source_relative")
                 target_relative = mapping.get("target_relative")
                 target = mapping.get("target")
+                if not isinstance(source, str) or not _safe_repo_path(source):
+                    errors.append(
+                        f"production source mapping source path is unsafe: "
+                        f"{research_id}/{locale}: {source!r}"
+                    )
+                if (
+                    not isinstance(source_relative, str)
+                    or not _safe_repo_path(source_relative)
+                ):
+                    errors.append(
+                        f"production source mapping source_relative is unsafe: "
+                        f"{research_id}/{locale}: {source_relative!r}"
+                    )
+                if (
+                    not isinstance(target_relative, str)
+                    or not _safe_repo_path(target_relative)
+                ):
+                    errors.append(
+                        f"production source mapping target_relative is unsafe: "
+                        f"{research_id}/{locale}: {target_relative!r}"
+                    )
+                if (
+                    not isinstance(target, str)
+                    or not _safe_repo_path(target)
+                    or not target.startswith("src/skills/")
+                ):
+                    errors.append(
+                        f"production source mapping target path is unsafe: "
+                        f"{research_id}/{locale}: {target!r}"
+                    )
                 if isinstance(source_relative, str):
                     expected_target_relative = _target_relative(source_relative, locale)
                     if target_relative != expected_target_relative:
