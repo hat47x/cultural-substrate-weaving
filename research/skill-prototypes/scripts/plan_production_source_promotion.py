@@ -48,6 +48,27 @@ def _projection_actions(inventory: dict) -> dict[str, str]:
     return actions
 
 
+def _expected_content_transforms(
+    source_repo: str,
+    source_relative: str,
+    locale: str,
+    inventory_actions: dict[str, str],
+) -> list[str]:
+    """Derive the exact ordered transform sequence from declared authorities."""
+
+    transforms: list[str] = []
+    inventory_action = inventory_actions.get(source_repo)
+    if inventory_action:
+        transforms.append(inventory_action)
+
+    target_relative = _target_relative(source_relative, locale)
+    if locale == "en-US" and target_relative != source_relative:
+        transforms.append("normalize-locale-suffixed-filename")
+        if source_relative.endswith("SKILL.en.md"):
+            transforms.append("rewrite-package-local-locale-suffix-references")
+    return transforms
+
+
 def _skill_metadata_paths(skill: dict) -> set[str]:
     paths: set[str] = set()
     for field in ("references", "evidence", "evals", "checks"):
@@ -215,15 +236,12 @@ def plan_production_source_promotion(
                 promoted_repo_sources.add(source_repo)
                 target_relative = _target_relative(relative, locale)
                 target_repo = (PurePosixPath(production_root) / target_relative).as_posix()
-                transforms: list[str] = []
-
-                inventory_action = inventory_actions.get(source_repo)
-                if inventory_action:
-                    transforms.append(inventory_action)
-                if locale == "en-US" and target_relative != relative:
-                    transforms.append("normalize-locale-suffixed-filename")
-                    if relative.endswith("SKILL.en.md"):
-                        transforms.append("rewrite-package-local-locale-suffix-references")
+                transforms = _expected_content_transforms(
+                    source_repo,
+                    relative,
+                    locale,
+                    inventory_actions,
+                )
 
                 mappings.append(
                     {
@@ -277,6 +295,7 @@ def validate_production_source_promotion_plan(
         errors.append("production source promotion selection must remain package_source.files based")
 
     descriptor_by_id = _descriptor_by_id(descriptor)
+    inventory_actions = _projection_actions(inventory) if inventory is not None else {}
     suite_by_id = (
         {
             item["id"]: item
@@ -470,6 +489,24 @@ def validate_production_source_promotion_plan(
                             )
                 if isinstance(source, str):
                     mappings_by_source.setdefault(source, []).append(mapping)
+                if (
+                    inventory is not None
+                    and isinstance(source, str)
+                    and isinstance(source_relative, str)
+                ):
+                    expected_transforms = _expected_content_transforms(
+                        source,
+                        source_relative,
+                        locale,
+                        inventory_actions,
+                    )
+                    actual_transforms = mapping.get("content_transforms")
+                    if actual_transforms != expected_transforms:
+                        errors.append(
+                            "production source mapping content transforms do not match declared authorities: "
+                            f"{research_id}/{locale}: {source_relative!r}: "
+                            f"{actual_transforms!r} != {expected_transforms!r}"
+                        )
 
     if inventory is not None:
         source_prefixes = (
