@@ -119,6 +119,56 @@ class ResearchProductionSourcePromotionTests(unittest.TestCase):
             errors,
         )
 
+    def test_planner_rejects_unsafe_descriptor_production_root(self) -> None:
+        descriptor = copy.deepcopy(self.descriptor)
+        layer1 = next(
+            item for item in descriptor["skills"] if item["research_id"] == "affinity-synthesis"
+        )
+        layer1["production_source"]["root_pattern"] = (
+            "src/skills/material-led-synthesis/{locale}/../../research"
+        )
+        with self.assertRaisesRegex(ValueError, "production source root is unsafe"):
+            plan_production_source_promotion(
+                self.suite,
+                descriptor,
+                self.migration,
+                self.inventory,
+            )
+
+    def test_validator_rejects_coordinated_unsafe_production_root(self) -> None:
+        descriptor = copy.deepcopy(self.descriptor)
+        descriptor_skill = next(
+            item for item in descriptor["skills"] if item["research_id"] == "affinity-synthesis"
+        )
+        descriptor_skill["production_source"]["root_pattern"] = (
+            "src/skills/material-led-synthesis/{locale}/../../research"
+        )
+
+        plan = copy.deepcopy(self.plan)
+        layer1 = self.skill("affinity-synthesis", plan)
+        layer1["source"] = copy.deepcopy(descriptor_skill["production_source"])
+        for locale, locale_plan in layer1["locales"].items():
+            unsafe_root = descriptor_skill["production_source"]["root_pattern"].format(
+                locale=locale
+            )
+            locale_plan["production_root"] = unsafe_root
+            locale_plan["runtime_entry"] = f"{unsafe_root}/SKILL.md"
+            for mapping in locale_plan["mappings"]:
+                mapping["target"] = (
+                    f"{unsafe_root}/{mapping['target_relative']}"
+                )
+
+        errors = validate_production_source_promotion_plan(
+            plan,
+            descriptor,
+            self.inventory,
+            suite=self.suite,
+        )
+        self.assertTrue(
+            any("production source root must be a safe path" in error for error in errors),
+            errors,
+        )
+
     def test_locale_plan_production_root_must_match_descriptor_authority(self) -> None:
         plan = copy.deepcopy(self.plan)
         layer1 = self.skill("affinity-synthesis", plan)
