@@ -195,6 +195,38 @@ class ResearchProductionSourcePromotionTests(unittest.TestCase):
                 self.inventory,
             )
 
+    def test_planner_rejects_duplicate_descriptor_locale(self) -> None:
+        descriptor = copy.deepcopy(self.descriptor)
+        descriptor["locales"].append("ja-JP")
+        with self.assertRaisesRegex(
+            ValueError,
+            "production descriptor locales must be a non-empty unique string list",
+        ):
+            plan_production_source_promotion(
+                self.suite,
+                descriptor,
+                self.migration,
+                self.inventory,
+            )
+
+    def test_validator_rejects_non_string_descriptor_locale(self) -> None:
+        descriptor = copy.deepcopy(self.descriptor)
+        descriptor["locales"].append(None)
+        errors = validate_production_source_promotion_plan(
+            self.plan,
+            descriptor,
+            self.inventory,
+            suite=self.suite,
+        )
+        self.assertTrue(
+            any(
+                "production descriptor locales must be a non-empty unique string list"
+                in error
+                for error in errors
+            ),
+            errors,
+        )
+
     def test_suite_locales_must_match_production_descriptor(self) -> None:
         suite = copy.deepcopy(self.suite)
         layer1 = next(
