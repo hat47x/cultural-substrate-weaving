@@ -1,8 +1,8 @@
-# KJ Atlasのdogfoodを用いて認知上の増分とスキルの共進化を評価する
+# SUI Sensemakingのdogfoodを用いて認知上の増分とスキルの共進化を評価する
 
 ## 目的
 
-KJ Atlas自身のプロダクト設計やソフトウェア上の課題を、KJ Atlasのキャンバスと生成AIで実際に検討するdogfoodを、`cultural-substrate-weaving`の比較検証の場として利用する。
+SUI Sensemaking自身のプロダクト設計やソフトウェア上の課題を、SUI Sensemakingのキャンバスと生成AIで実際に検討するdogfoodを、`cultural-substrate-weaving`の比較検証の場として利用する。
 
 ここで確かめたいのは、「文化体系を使うと深く見える」という印象ではない。通常の領域分析と比べて、文化体系による構造探索とKJ統合が、対象へ戻した後にも残る問い、関係、反証、空白を増やし、人間とAIの認知制御を改善するかを観察する。
 
@@ -16,8 +16,8 @@ KJ Atlas自身のプロダクト設計やソフトウェア上の課題を、KJ 
 |---|---|---|---|
 | A | 通常チャット/文書 | なし | 基準線 |
 | B | 通常チャット/文書 | あり | スキル単体の増分 |
-| C | KJ Atlas | なし | KJ/キャンバスという外部表象の増分 |
-| D | KJ Atlas | あり | 組合せによる増分と相互作用 |
+| C | SUI Sensemaking | なし | KJ/キャンバスという外部表象の増分 |
+| D | SUI Sensemaking | あり | 組合せによる増分と相互作用 |
 
 必要な代表ケースに限り、人間のみの参照条件を追加してよい。
 
@@ -110,7 +110,7 @@ Arm C/Dでは、最終叙述を元カードまで戻し、次を確認する。
 - 依頼文が結論を誘導していたことによる問題。
 - 生成AI一般の文体、追従性、過剰要約を補正する一般ルール。
 
-### 3. KJ Atlasに属する
+### 3. SUI Sensemakingに属する
 
 - カード、出典、異論、履歴、再配置などをUI / APIが保持できない。
 - 外部表象が利用者の注意を誤った方向へ誘導する。
@@ -143,7 +143,7 @@ Arm C/Dでは、最終叙述を元カードまで戻し、次を確認する。
 
 初期候補:
 
-- KJ Atlasのプロダクト価値と一次利用仕事。
+- SUI Sensemakingのプロダクト価値と一次利用仕事。
 - AIによる束ね、表札、反対視点の責任境界。
 - offline / self-hostとcloud collaborationの製品境界。
 - 複雑性と初回利用時の分かりやすさをどう両立するか。
@@ -156,15 +156,15 @@ Arm C/Dでは、最終叙述を元カードまで戻し、次を確認する。
 
 この文書は評価プロトコルであり、現時点では方法論の正本`src/ja-JP/`を変更しない。
 
-実験結果が得られる前に、「KJ Atlasと併用するための専用規則」や「ソフトウェア開発用規則」をスキルへ追加しない。これらはcaller / domain contextへ置き、スキル固有の増分だけを後から正本へ返す。
+実験結果が得られる前に、「SUI Sensemakingと併用するための専用規則」や「ソフトウェア開発用規則」をスキルへ追加しない。これらはcaller / domain contextへ置き、スキル固有の増分だけを後から正本へ返す。
 
-## 2026-09-27の追記：SUI Sensemakingへの改名と、Case 001の実行
+## 2026-09-27の追記：Case 001の実行
 
-### 名称
+### 対象プロダクト
 
-KJ Atlasは`hat47x/sui-sensemaking`（SUI Sensemaking）へ改名された。2026-09-11にAcceptedとなったSUI側のADR-0083による改名である。本書は当時の名称のまま残すので、本文の「KJ Atlas」はSUI Sensemakingと読み替える。C/Dの外部表象も、現在はSUI Sensemakingのキャンバスである。
+Arm C/Dの外部表象には、`hat47x/sui-sensemaking`のキャンバスを用いる。
 
-凍結した比較条件は、この改名では変わらない。`kj-atlas-case-portfolio-freeze.md`に記録したproduct snapshotとCSW snapshotのcommit hashは、リポジトリ名が変わっても同じcommitを指す。SUI側の記録によれば、凍結した分析snapshotは中身を変えずにファイル名だけを改め、凍結したsource manifestは改名していない。
+凍結した比較条件は、リポジトリ名の変更では変わらない。`sui-sensemaking-case-portfolio-freeze.md`に記録したproduct snapshotとCSW snapshotのcommit hashは、それぞれの固定した内容を指す。
 
 ### SUI側の`COGNITIVE-EVAL-01`は同じ比較である
 
@@ -180,7 +180,7 @@ Case 001を一度走らせると、その生の実行記録が、二つのリポ
 
 実行するときは、次を守る。
 
-- B/Dには、`kj-atlas-case-portfolio-freeze.md`で凍結したCSW snapshotを使う。現在の`develop/v0.5.0`や、その後に追加した保守文書を入力に加えない。
+- B/Dには、`sui-sensemaking-case-portfolio-freeze.md`で凍結したCSW snapshotを使う。現在の`develop/v0.5.0`や、その後に追加した保守文書を入力に加えない。
 - SUI側の記録では、各armの起動用artifactの保持期限が2026-09-13前後とされていた。実行前に、SUI側の現在の実行入口（`cognitive-dogfood-index.md`、`cognitive-dogfood-execution-plan.md`、runbook）を確かめる。
 - 生の実行記録が得られる前に、新しいKPI、別のschema、追加の事前検証を増やして、実走の代わりにしない。SUI側も同じ方針をとっている。
 - Case 001の一件だけで`src/<locale>/`を変更しない。方法論正本の変更を検討するのは、本書の帰属ゲートを通し、Case 001〜003を横断して同じ欠陥が再現した場合に限る。

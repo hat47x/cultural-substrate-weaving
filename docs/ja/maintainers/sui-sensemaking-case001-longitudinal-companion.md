@@ -1,14 +1,14 @@
-# KJ Atlas Case 001の長期継続チャット観察
+# SUI Sensemaking Case 001の長期継続チャット観察
 
 - Status: Prospective observational companion / not an experimental arm
 - Date started: 2026-08-30
 - Updated: 2026-09-04
-- Related target case: `hat47x/kj-atlas` Case 001 — KJ Atlasの存在目的と一次利用仕事
-- Related: `kj-atlas-cognitive-coevolution.md`, `framework-loading-depth-observation.md`, `framework-use-lifecycle-trace.md`, `v39-deepseek-api-validation.md`
+- Related target case: `hat47x/sui-sensemaking` Case 001 — SUI Sensemakingの存在目的と一次利用仕事
+- Related: `sui-sensemaking-cognitive-coevolution.md`, `framework-loading-depth-observation.md`, `framework-use-lifecycle-trace.md`, `v39-deepseek-api-validation.md`
 
 ## 目的
 
-KJ Atlas Case 001のA〜D比較とは別に、長期間継続している実作業チャットの中で、`cultural-substrate-weaving`が生み出した問い、残差、KJ再編が、時間をまたいでどのように働くかを観察する。
+SUI Sensemaking Case 001のA〜D比較とは別に、長期間継続している実作業チャットの中で、`cultural-substrate-weaving`が生み出した問い、残差、KJ再編が、時間をまたいでどのように働くかを観察する。
 
 この観察線は、比較実験のarmではない。
 
@@ -16,7 +16,7 @@ KJ Atlas Case 001のA〜D比較とは別に、長期間継続している実作�
 
 - v39 API検証の結果。
 - その診断から生じた方法改訂。
-- KJ Atlasの価値仮説やdogfoodの来歴。
+- SUI Sensemakingの価値仮説やdogfoodの来歴。
 - 過去ラウンドから持ち越した未解決事項。
 
 さらに、`cultural-substrate-weaving`自身も継続的に更新される。
@@ -43,7 +43,7 @@ Case 001のA〜Dは、同じsnapshotと独立したcontextを使う比較条件�
 
 Case 001と同じ中心問いを参照する。
 
-> KJ Atlasは、既存のAIチャット、ホワイトボード、質的分析ツール、文書/issue管理では十分に満たしにくい、どの利用仕事のために存在するべきか。現在の設計・実装・dogfoodは、その価値をどこまで実現し、何をまだ実証できていないか。
+> SUI Sensemakingは、既存のAIチャット、ホワイトボード、質的分析ツール、文書/issue管理では十分に満たしにくい、どの利用仕事のために存在するべきか。現在の設計・実装・dogfoodは、その価値をどこまで実現し、何をまだ実証できていないか。
 
 ただし、長期観察ではこの問いだけに固定しない。後から入った資料によって、問いそのものが変形、分岐、縮小することを許す。
 

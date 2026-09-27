@@ -6,7 +6,7 @@
 
 2026-08-30〜09-04の最近の会話履歴から、CSWやKJ法に近い認知操作が実作業の中でどのように現れたかを再走査した。
 
-対象には、長期の社会調査、私的な創作作業、KJ Atlasのドッグフーディング、SOZAのMethod連携、TEIの上流設計が含まれる。
+対象には、長期の社会調査、私的な創作作業、SUI Sensemakingのドッグフーディング、SOZAのMethod連携、TEIの上流設計が含まれる。
 
 ただし、会話にCSWやKJ法という語が現れたこと自体を利用実績にはしない。材料として優先するのは次である。
 
@@ -103,7 +103,7 @@
 
 ## HC-025――AIが出した候補と、人間が受理した候補を同じ状態にしない
 
-KJ Atlasのドッグフーディングでは、merge候補を通常の変更時には保持せず、人間が明示的にaccept/applyした場合にだけ保持する実装が採用された。
+SUI Sensemakingのドッグフーディングでは、merge候補を通常の変更時には保持せず、人間が明示的にaccept/applyした場合にだけ保持する実装が採用された。
 
 候補生成、受理、適用、保存を一つの状態へ潰さない。
 
@@ -117,7 +117,7 @@ AIが候補を生成した事実は、まだ人間が採用した事実ではな
 
 ## HC-026――Method出力を、検証状態を飛び越えてDecisionへ昇格させない
 
-SOZAとKJ Atlasの連携では、KJ groupingの出力をSOZAへ取り込む際に、opaqueなMethod outputとして保持し、`not_verified`とProvenanceを付ける構成が実装された。
+SOZAとSUI Sensemakingの連携では、KJ groupingの出力をSOZAへ取り込む際に、opaqueなMethod outputとして保持し、`not_verified`とProvenanceを付ける構成が実装された。
 
 そこで得たgrouping候補は、RecommendationやDecisionへ自動昇格しない。
 

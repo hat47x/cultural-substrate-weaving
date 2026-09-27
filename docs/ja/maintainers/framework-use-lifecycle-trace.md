@@ -3,7 +3,7 @@
 - Status: Research observation template / no runtime rule change
 - Date: 2026-08-30
 - Updated: 2026-09-04
-- Related: `framework-loading-depth-observation.md`, `kj-atlas-case001-longitudinal-companion.md`, `v39-deepseek-api-validation.md`
+- Related: `framework-loading-depth-observation.md`, `sui-sensemaking-case001-longitudinal-companion.md`, `v39-deepseek-api-validation.md`
 
 ## 目的
 
@@ -137,7 +137,7 @@ reopen_condition: 遷移の時系列資料が追加されたとき再検討す�
 
 ここで重要なのは、当時の停止判断を正解として再確認することではなく、**観測された履歴と、その時点で誰がどう解釈したかを分けたまま時間を追うこと**である。
 
-## KJ Atlas Case 001での扱い
+## SUI Sensemaking Case 001での扱い
 
 独立A〜D比較のarmや処置を増やさない。
 

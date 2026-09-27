@@ -49,11 +49,11 @@ Microsoft 365向けのこの2ファイルは、生成物そのものではなく
 - `docs/ja/maintainers/development.md`
 - `docs/ja/maintainers/framework-loading-depth-observation.md`
 - `docs/ja/maintainers/framework-use-lifecycle-trace.md`
-- `docs/ja/maintainers/kj-atlas-case-portfolio-freeze.md`
-- `docs/ja/maintainers/kj-atlas-case000-lessons.md`
-- `docs/ja/maintainers/kj-atlas-case001-longitudinal-companion.md`
-- `docs/ja/maintainers/kj-atlas-cognitive-coevolution.md`
-- `docs/ja/maintainers/kj-atlas-merge-semantics-boundary.md`
+- `docs/ja/maintainers/sui-sensemaking-case-portfolio-freeze.md`
+- `docs/ja/maintainers/sui-sensemaking-case000-lessons.md`
+- `docs/ja/maintainers/sui-sensemaking-case001-longitudinal-companion.md`
+- `docs/ja/maintainers/sui-sensemaking-cognitive-coevolution.md`
+- `docs/ja/maintainers/sui-sensemaking-merge-semantics-boundary.md`
 - `docs/ja/maintainers/natural-japanese-review.md`
 - `docs/ja/maintainers/product-quality-program.md`
 - `docs/ja/maintainers/official-sources.md`
@@ -95,7 +95,7 @@ Issue #96の再設計では、Microsoft 365版を無理に完全対応とせず�
 
 GitHub Actions無効化後のローカル検査を再点検し、旧workflowにだけ残っていたGit管理生成物の鮮度検査を`make check`へ戻した。この変更に合わせて`docs/ja/maintainers/development.md`を全文で読み直し、`.claude-plugin/`、`.agents/`、`plugins/`が生成・Git管理する配布成果物であること、再生成後に変更・削除・未追跡の差分が残れば検査が失敗すること、意図しない差分は生成物を直接直さず入力側へ戻って修正することを、前後の流れを含めて自然な日本語へ整えた。
 
-また、`docs/ja/maintainers/kj-atlas-merge-semantics-boundary.md`を全文で読み直した。KJ Atlas固有の実装語彙とCSWの方法論正本を分ける技術的な意味を確認したうえで、日本語本文はそのままで自然に読めると判断し、記録のためだけの本文変更は行わなかった。鮮度管理対象への登録だけを追加した。
+また、`docs/ja/maintainers/sui-sensemaking-merge-semantics-boundary.md`を全文で読み直した。SUI Sensemaking固有の実装語彙とCSWの方法論正本を分ける技術的な意味を確認したうえで、日本語本文はそのままで自然に読めると判断し、記録のためだけの本文変更は行わなかった。鮮度管理対象への登録だけを追加した。
 
 Living Labの公開記録がprospectiveな観測だけでなく、自然な実作業を後から匿名化・抽象化したretrospectiveな記録も含むようになったことに合わせ、`.github/release-validation-note.md`も全文を読み直した。公開時の検証状況説明が両者を区別し、技術的なrelease checkやpackage検証を方法論の有効性証拠へ読み替えないことを確認したうえで、同ファイルを鮮度管理対象へ追加した。
 
@@ -187,6 +187,10 @@ KJ法由来の技能をCSWから分離する検討として、新しく七つの
 
 方法論正本である`src/ja-JP/`は本記録の鮮度管理対象外だが、同じ変更で書き換えたROUTER、`core/discovery-pathway.md`ほかの日本語も通読し、読点の不足、「構造の遠い」のような係り方の曖昧な表現、「と置いたうえで」のような硬い言い回しを直した。
 
-製品群全体の分析をCSWの文書へ反映する作業として、`docs/ja/maintainers/sibling-product-semantic-correspondence.md`を新設し、`docs/ja/maintainers/kj-atlas-cognitive-coevolution.md`には2026-09-27付の追記を加えた。どちらも、名称の変更、来歴ラベルとSEIの意味の対応、Living Labの記録を書き出せるかという未決の問い、Case 001の実行状況について、事実、識別子、証拠の境界を確定させた後、独立した工程として全文を通読した。英語の型名や識別子が文の骨格を決めていた箇所、兄弟リポジトリの用語をそのまま持ち込んだ「家族」という語、主語の抜けた文、同じ年月を重ねて書いた文を直した。兄弟リポジトリの未mergeの提案を採用済みとは書かず、Case 001の結果も主張していないことを確認した。
+製品群全体の分析をCSWの文書へ反映する作業として、`docs/ja/maintainers/sibling-product-semantic-correspondence.md`を新設し、`docs/ja/maintainers/sui-sensemaking-cognitive-coevolution.md`には2026-09-27付の追記を加えた。どちらも、製品名、来歴ラベルとSEIの意味の対応、Living Labの記録を書き出せるかという未決の問い、Case 001の実行状況について、事実、識別子、証拠の境界を確定させた後、独立した工程として全文を通読した。英語の型名や識別子が文の骨格を決めていた箇所、兄弟リポジトリの用語をそのまま持ち込んだ「家族」という語、主語の抜けた文、同じ年月を重ねて書いた文を直した。兄弟リポジトリの未mergeの提案を採用済みとは書かず、Case 001の結果も主張していないことを確認した。
+
+### 2026-09-27 SUI Sensemaking表記の統一
+
+SUI Sensemakingに関する保守者向け文書の本文、見出し、参照先、ファイル名を一括して現行表記へ揃えた。変更した日本語文書を通読し、製品名の置換によって同じ語を重ねた文や、過去の名称変更を説明する不要な記述を整理した。KJ法を方法の系譜として述べる箇所はそのまま保った。研究索引とLiving Lab以外の記録についても、名称と参照先の文脈を読み直した。
 
 鮮度管理の対象外である`research/skill-prototypes/REFERENCE-CLASSIFICATION.md`にも、SEIの`sei.cognitive-method`との対応を示す付録Aを加えた。同じ基準で付録を通読し、`!=`の連鎖をそのまま文の目的語にしていた箇所を日本語の文へ改めた。方法論正本である`src/ja-JP/`は変更していない。

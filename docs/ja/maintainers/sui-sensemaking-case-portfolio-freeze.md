@@ -1,23 +1,23 @@
-# KJ Atlas Case 001〜003の比較条件を凍結する
+# SUI Sensemaking Case 001〜003の比較条件を凍結する
 
 - Status: Research synchronization / no runtime rule change
 - Date: 2026-08-30
-- Related: `kj-atlas-cognitive-coevolution.md`, `kj-atlas-case001-longitudinal-companion.md`, `framework-use-lifecycle-trace.md`
-- External experiment: `hat47x/kj-atlas` PR #2805
+- Related: `sui-sensemaking-cognitive-coevolution.md`, `sui-sensemaking-case001-longitudinal-companion.md`, `framework-use-lifecycle-trace.md`
+- External experiment: `hat47x/sui-sensemaking` PR #2805
 
 ## 目的
 
-KJ Atlas側で事前登録し、すでに凍結したCase 001〜003の比較条件を、cultural-substrate-weaving側からも追跡できるようにする。
+SUI Sensemaking側で事前登録し、すでに凍結したCase 001〜003の比較条件を、cultural-substrate-weaving側からも追跡できるようにする。
 
 この文書は実験結果を記すものではない。Caseの選定、source snapshot、skill snapshot、arm treatment、review順序が**最初の有効なCase 001 runより前に固定されたこと**を記録するためのmaintainer文書である。後から現在のCSW方法論を比較条件へ逆流させないことが主な目的となる。
 
 ## 凍結したCaseの構成
 
-KJ Atlas側では、性質の異なる少なくとも3つの開発課題を、同じ4-arm構造で比較する。
+SUI Sensemaking側では、性質の異なる少なくとも3つの開発課題を、同じ4-arm構造で比較する。
 
 | Case | 主領域 | 固定した問いの中心 |
 |---|---|---|
-| 001 | Product / value | KJ Atlasの存在目的と一次利用仕事 |
+| 001 | Product / value | SUI Sensemakingの存在目的と一次利用仕事 |
 | 002 | AI governance / product behavior | AI提案・自動化と、人間の判断・確認・有益な摩擦との境界 |
 | 003 | Architecture / operations / adoption | local/offline/self-hostによるデータ統制とcollaborationの境界 |
 
@@ -27,7 +27,7 @@ Case 001の結果を見た後で、Case 002/003を都合のよい問題へ差し
 
 Cases 001〜003では、次を共通条件として固定している。
 
-- KJ Atlas product snapshot: `hat47x/kj-atlas@2232b3bb26647e5c4a083f55bdbf83c161698649`
+- SUI Sensemaking product snapshot: `hat47x/sui-sensemaking@2232b3bb26647e5c4a083f55bdbf83c161698649`
 - B/D用CSW snapshot: `hat47x/cultural-substrate-weaving@3988e12e5f7f316f377d3391e9486c8467a111d5`
 - B/Dへ渡すCSW source: frozen manifestで指定したcanonical `src/ja-JP`のみ
 - A/CにはCSW sourceを渡さない
@@ -44,10 +44,10 @@ CSWのfrozen commit `3988e12e...` は、`VERSION 0.2.0`時点の比較条件で�
 |---|---|---|
 | A | 通常チャット/文書 | なし |
 | B | 通常チャット/文書 | frozen skill snapshot |
-| C | KJ Atlas | なし |
-| D | KJ Atlas | frozen skill snapshot |
+| C | SUI Sensemaking | なし |
+| D | SUI Sensemaking | frozen skill snapshot |
 
-KJ Atlas側のfreeze registerでは、armの実行順序を`C → D → B → A`としている。この順序も、途中結果を見て変更しない。
+SUI Sensemaking側のfreeze registerでは、armの実行順序を`C → D → B → A`としている。この順序も、途中結果を見て変更しない。
 
 ## raw resultとreviewを分ける
 
@@ -94,7 +94,7 @@ Case 001〜003を横断した時点で、少なくとも次を確認する。
 
 - case固有の観察
 - caller/domain context
-- KJ Atlas product/UI
+- SUI Sensemaking product/UI
 - model挙動
 - experiment design
 - 未決
@@ -103,7 +103,7 @@ Case 001〜003を横断した時点で、少なくとも次を確認する。
 
 ## 現時点の状態
 
-KJ Atlas PR #2805では、Case 001〜003の問い、source manifest、starter、launch packet、shared validator、blind-review infrastructure、portfolio freezeまで準備されている。
+SUI Sensemaking PR #2805では、Case 001〜003の問い、source manifest、starter、launch packet、shared validator、blind-review infrastructure、portfolio freezeまで準備されている。
 
 一方、現時点のPR差分には、A〜Dの実run recordはまだ含まれていない。そのため、ここから言えるのは「比較条件がより強く固定された」という実験設計上の更新だけであり、CSWの効果や方法上の欠陥について新しい実証結果はまだない。
 

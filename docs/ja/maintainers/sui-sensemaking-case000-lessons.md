@@ -1,13 +1,13 @@
-# KJ Atlas Case 000から得た初期教訓と帰属判定
+# SUI Sensemaking Case 000から得た初期教訓と帰属判定
 
 - Status: Observational / no skill change
 - Date: 2026-08-29
-- Source: `hat47x/kj-atlas`の既存dogfood `doc_kj_atlas_dogfood_r1.json`〜`r5.json`
-- Related: `kj-atlas-cognitive-coevolution.md`
+- Source: `hat47x/sui-sensemaking`の既存dogfood `doc_sui_sensemaking_dogfood_r1.json`〜`r5.json`
+- Related: `sui-sensemaking-cognitive-coevolution.md`
 
 ## 目的
 
-KJ Atlasでは、本比較プロトコルを作る以前から、KJ Atlas自身の開発課題をキャンバス上で扱うR1〜R5のdogfoodが行われていた。
+SUI Sensemakingでは、本比較プロトコルを作る以前から、SUI Sensemaking自身の開発課題をキャンバス上で扱うR1〜R5のdogfoodが行われていた。
 
 この既存実践を「方法が成功した証拠」として後付けで利用するのではなく、比較実験以前のCase 000として読み直し、何を観測でき、何をまだ帰属できないのかを整理する。
 
@@ -21,7 +21,7 @@ R1の問題提起、R2の現状把握、R3の本質追求、R4の構想、R5の�
 
 これは、後から再訪できる外部表象に価値がある可能性を示している。
 
-**帰属:** 現時点では主としてKJ Atlas / 外部表象。スキル固有の増分とは判定しない。
+**帰属:** 現時点では主としてSUI Sensemaking / 外部表象。スキル固有の増分とは判定しない。
 
 ### 2. カードにsourceを残す実践が広く行われた
 
@@ -29,19 +29,19 @@ ADR、issue、設計文書、コード、セッション観察などが、カー
 
 ただし、自由記述のsourceは、必ずしも不変のcommit、行番号、識別子へ解決できるとは限らない。
 
-**帰属:** provenanceを保持すべきという方法原則はスキル中核と整合する。一方、不変参照をどの形式で表すかはKJ Atlasや領域実装の責務である。現時点ではスキル変更なし。
+**帰属:** provenanceを保持すべきという方法原則はスキル中核と整合する。一方、不変参照をどの形式で表すかはSUI Sensemakingや領域実装の責務である。現時点ではスキル変更なし。
 
 ### 3. 一部のdogfood論点が後続の開発契約へ変換された
 
-たとえばR3では、「三要素の整合をissueテンプレートが要求していない」ことが問題として挙がっていた。現在のKJ Atlas issue templateでは、ADR-0067に基づいてBusiness / Data / Function欄が追加されている。
+たとえばR3では、「三要素の整合をissueテンプレートが要求していない」ことが問題として挙がっていた。現在のSUI Sensemaking issue templateでは、ADR-0067に基づいてBusiness / Data / Function欄が追加されている。
 
-**帰属:** 対象側の判断が、実行可能な形へ変換された例。ただし、KJ Atlasとスキルのどちらが因果的に必要だったかは、対照条件がないため判定できない。
+**帰属:** 対象側の判断が、実行可能な形へ変換された例。ただし、SUI Sensemakingとスキルのどちらが因果的に必要だったかは、対照条件がないため判定できない。
 
 ## Case 000で見つかった評価上の欠落
 
 ### E1. 対照条件がない
 
-同じ問いを通常チャットや通常文書だけで扱った比較がないため、R1〜R5で得た所見を、KJ Atlasまたは本スキル固有の増分へ帰属できない。
+同じ問いを通常チャットや通常文書だけで扱った比較がないため、R1〜R5で得た所見を、SUI Sensemakingまたは本スキル固有の増分へ帰属できない。
 
 **帰属:** experiment design。
 
@@ -65,7 +65,7 @@ ADR、issue、設計文書、コード、セッション観察などが、カー
 
 そのため、AIへの依存をどの程度適切に校正できたかは評価できない。
 
-**帰属:** KJ Atlas product / experiment instrumentation。
+**帰属:** SUI Sensemaking product / experiment instrumentation。
 
 **Skill change:** なし。AI一般の提案ログ仕様を本スキルへ追加しない。
 
@@ -98,11 +98,11 @@ Case 000だけを根拠に、次を`src/<locale>/`へ追加しない。
 - ソフトウェアissue / ADR固有のprovenance形式。
 - Git commit / line参照を必須とする規則。
 - AI proposal ledgerの一般仕様。
-- KJ Atlas専用のR1〜R5段階。
+- SUI Sensemaking専用のR1〜R5段階。
 - ソフトウェア設計品質の評価軸。
 - 「古いissue記述を常に後段まで読む」といったGitHub固有の規則。
 
-これらはcaller、domain、KJ Atlas、experiment側に置く。
+これらはcaller、domain、SUI Sensemaking、experiment側に置く。
 
 ## Case 001へ持ち込む教訓
 
@@ -118,6 +118,6 @@ Case 000だけを根拠に、次を`src/<locale>/`へ追加しない。
 
 ## 現時点の判定
 
-Case 000からは、KJ Atlasと生成AIを組み合わせた自己参照的な開発dogfoodに**実用可能性の兆候**があることは読み取れる。ただし、`cultural-substrate-weaving`固有の増分も、KJ Atlas固有の認知上の増分も証明できない。
+Case 000からは、SUI Sensemakingと生成AIを組み合わせた自己参照的な開発dogfoodに**実用可能性の兆候**があることは読み取れる。ただし、`cultural-substrate-weaving`固有の増分も、SUI Sensemaking固有の認知上の増分も証明できない。
 
 今回スキルを変更しないことは、「成果がなかった」という意味ではない。観察を適切な層へ帰属し、方法論へ不要な規則を取り込まないこと自体が、共進化の過程で過適合を防ぐ最初の制御結果である。

@@ -134,9 +134,9 @@ frameworkを採用しても、全要素、全解釈語、全遷移を使い切�
 
 ### 3. 長期dogfood評価
 
-KJ Atlas dogfoodの評価プロトコルでは、通常AI / +skill × 通常チャット / KJ Atlasの比較と、探索、意味保持、根拠、反証、再訪、停止などの制御を分けて観測する。
+SUI Sensemaking dogfoodの評価プロトコルでは、通常AI / +skill × 通常チャット / SUI Sensemakingの比較と、探索、意味保持、根拠、反証、再訪、停止などの制御を分けて観測する。
 
-実験結果はskill、caller / domain context、KJ Atlas、model / experimentへ帰属する。帰属できない場合は、方法論の正本を変更しない。
+実験結果はskill、caller / domain context、SUI Sensemaking、model / experimentへ帰属する。帰属できない場合は、方法論の正本を変更しない。
 
 ## 現時点ではスキルへ追加しないもの
 

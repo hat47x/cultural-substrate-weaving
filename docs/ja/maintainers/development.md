@@ -124,11 +124,11 @@ make check
 主な記録は次のとおりです。
 
 - `v39-deepseek-api-validation.md`: fresh-context API検証で得られた負の結果、実験装置上の限界、そこから現行方法論へ実際に帰属した変更。
-- `kj-atlas-cognitive-coevolution.md`: KJ Atlasのdogfoodを用いた長期4-arm比較と、skill / caller / product / experimentを分ける帰属ゲート。
-- `kj-atlas-case-portfolio-freeze.md`: KJ Atlas Case 001〜003について、問い、product/skill snapshot、arm treatment、review順序をどの時点で固定したか、および現行CSWを比較条件へ逆流させないための境界。
-- `kj-atlas-case000-lessons.md`: 比較プロトコル以前の既存dogfoodを遡及的に読み直して得た初期教訓。
+- `sui-sensemaking-cognitive-coevolution.md`: SUI Sensemakingのdogfoodを用いた長期4-arm比較と、skill / caller / product / experimentを分ける帰属ゲート。
+- `sui-sensemaking-case-portfolio-freeze.md`: SUI Sensemaking Case 001〜003について、問い、product/skill snapshot、arm treatment、review順序をどの時点で固定したか、および現行CSWを比較条件へ逆流させないための境界。
+- `sui-sensemaking-case000-lessons.md`: 比較プロトコル以前の既存dogfoodを遡及的に読み直して得た初期教訓。
 - `framework-loading-depth-observation.md`: 文化体系をどこまで作業コンテキストへ読み込んだかと、有用な増分、anchoring、early stopとの関係を長期的に観察する補助プロトコル。
 - `framework-use-lifecycle-trace.md`: 文化体系が候補に上がった段階、実際に読んだ範囲、体系固有の操作、対象側への採用を分けて追跡する研究用の来歴記録。
-- `kj-atlas-case001-longitudinal-companion.md`: 独立4-arm比較を汚さず、継続チャットの中で問いの遅延効果、再活性化、KJ再編、実際の採用を追う前向き（prospective）な観察線。
+- `sui-sensemaking-case001-longitudinal-companion.md`: 独立4-arm比較を汚さず、継続チャットの中で問いの遅延効果、再活性化、KJ再編、実際の採用を追う前向き（prospective）な観察線。
 
 これらの研究文書は、現行方法論の根拠と限界を後から追えるようにするための履歴です。方法論の正本と同じ規範力は持ちません。

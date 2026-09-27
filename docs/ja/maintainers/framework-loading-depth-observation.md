@@ -3,7 +3,7 @@
 - Status: Research protocol / no runtime rule change
 - Date: 2026-08-30
 - Updated: 2026-09-04
-- Related: `v39-deepseek-api-validation.md`, `kj-atlas-cognitive-coevolution.md`, `framework-use-lifecycle-trace.md`
+- Related: `v39-deepseek-api-validation.md`, `sui-sensemaking-cognitive-coevolution.md`, `framework-use-lifecycle-trace.md`
 
 ## 目的
 
@@ -116,7 +116,7 @@ Living Labの`framework_contacts`へ記録する場合、接触がなかった`n
 
 文化体系との接触後に生じた構造が、設計、文章、判断などへ採用され、その後に維持、撤回、再利用されたか。
 
-## KJ Atlasのdogfoodで使う場合
+## SUI Sensemakingのdogfoodで使う場合
 
 既存の4-arm比較を5-arm、6-armへ増やさない。
 
@@ -125,7 +125,7 @@ Arm B/Dで文化体系へ接触した場合に、この文書で定義した読�
 これにより、
 
 - skillを使ったかどうか。
-- KJ Atlasを使ったかどうか。
+- SUI Sensemakingを使ったかどうか。
 
 という主比較を維持したまま、同じskill armの中で実際の`framework_contacts`と読み込み深度を後から診断できる。
 

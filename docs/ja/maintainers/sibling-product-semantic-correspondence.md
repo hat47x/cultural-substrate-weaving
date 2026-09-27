@@ -2,7 +2,7 @@
 
 - Status: Maintainer cross-repository note / informative only / no runtime change
 - Date: 2026-09-27
-- Related: `kj-atlas-cognitive-coevolution.md`, `kj-atlas-merge-semantics-boundary.md`, `research/skill-prototypes/REFERENCE-CLASSIFICATION.md`（付録A）, `docs/ja/experiments/web-chat-living-lab.md`
+- Related: `sui-sensemaking-cognitive-coevolution.md`, `sui-sensemaking-merge-semantics-boundary.md`, `research/skill-prototypes/REFERENCE-CLASSIFICATION.md`（付録A）, `docs/ja/experiments/web-chat-living-lab.md`
 
 ## この文書の位置づけ
 
@@ -16,12 +16,12 @@ hat47xの兄弟リポジトリでは、CSWの帰属の規律と来歴ラベル�
 
 また、兄弟リポジトリの記録をCSWの有効性の証拠としては扱わない。兄弟リポジトリがCSWの語彙で比喩を分類したことも、CSWのSkillファイルを取得して検証したことも、CSWを対象へ適用した記録ではない。
 
-## 名称の変更
+## 兄弟製品の名称
 
-- KJ Atlasは、`hat47x/sui-sensemaking`（SUI Sensemaking）へ改名された。SUI側のADR-0083（2026-09-11にAccepted）が記録している。改名の目的はKJ法の商標を製品名から外すことにあり、SUI側ではKJ法を出典として言及するだけにとどめている。
-- SOZA（綜座）は、`hat47x/sei-cognition`（SEI Cognition）へ改名された。SEI側の記録によれば、改名は2026-09-11である。
+- SUI Sensemaking: `hat47x/sui-sensemaking`
+- SEI Cognition: `hat47x/sei-cognition`
 
-本リポジトリの`kj-atlas-*.md`は、書いた時点の名称のまま残す。`kj-atlas-merge-semantics-boundary.md`にある「SOZA」は現在のSEI Cognitionを、「KJ Atlas」は現在のSUI Sensemakingを指す。凍結したcommit hashは、リポジトリ名が変わっても同じcommitを指す。
+凍結したcommit hashは、リポジトリ名が変わっても同じcommitを指す。
 
 ## 1. 兄弟リポジトリが帰属の規律を比喩の扱いに使っている
 
@@ -96,7 +96,7 @@ Living Labのschema 0.2（`evals/living-lab-round.schema.json`と`evals/living-l
 少なくとも次のいずれかが起きたときに、この問いを開き直す。
 
 1. SEIの側で、観察の出所の区別（人による観察、AIの生成、AIの要約など）や、`sei.semantic-interchange`の安定化が進んだとき。観察の出所を区別する案は、2026-09-27時点ではSEIの未mergeブランチ上の提案である。
-2. CSWとSUI Sensemakingの比較（`kj-atlas-cognitive-coevolution.md`）や、一つの実際の判断を製品群の複数の製品で扱うdogfoodの中で、Living Labの記録をSEIで読み直す具体的な必要が生じたとき。
+2. CSWとSUI Sensemakingの比較（`sui-sensemaking-cognitive-coevolution.md`）や、一つの実際の判断を製品群の複数の製品で扱うdogfoodの中で、Living Labの記録をSEIで読み直す具体的な必要が生じたとき。
 3. 公開してよい記録だけを使い、来歴の分離を失わずに書き出せることを示せる見込みが立ったとき。
 
 ## 本書で行わないこと
