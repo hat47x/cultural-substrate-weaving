@@ -26,18 +26,18 @@ compatible realizationがない環境でも、CSW自体の文化体系探索、�
 
 これは知識や仮説を捨てることではない。十分に材料へ触れた後は大胆に考えてよいが、新しく生じた意味を元材料が最初から語っていた事実へ書き換えない。
 
-詳細は `../../../src/ja-JP/references/00-cognitive-stance.md` を読む。
+詳細は `../../../src/ja-JP/core/cognitive-stance.md` を読む。
 
 ## 最小実行手順
 
 1. **外部利用条件を受け取る**：依頼範囲、目的、判断の留保先、実行AIへ委ねられた裁量を確認する。
-2. **認知姿勢を置く**：`../../../src/ja-JP/references/00-cognitive-stance.md` に従い、自分の説明を対象より上位へ固定しない。
+2. **認知姿勢を置く**：`../../../src/ja-JP/core/cognitive-stance.md` に従い、自分の説明を対象より上位へ固定しない。
 3. **基準線と保持事項を置く**：元材料、対象固有の事実・例外、領域固有手法だけの出力を確認する。
-4. **必要なら材料統合へ委ねる**：多数・異種の材料から構造を立ち上げる必要があれば、`../../../src/ja-JP/references/10-integration.md` の接続契約からcompatible synthesis realizationへ渡す。
+4. **必要なら材料統合へ委ねる**：多数・異種の材料から構造を立ち上げる必要があれば、`../../../src/ja-JP/methods/integration.md` の接続契約からcompatible synthesis realizationへ渡す。
 5. **文化体系を開く**：外部利用条件と委任範囲に応じて `not_loaded / probe / preview / full / enacted` 等を使い分ける。
 6. **探索する**：文化体系から問い・関係・状態・遷移・対応候補を得る。体系固有構造を汎用語へ早く薄めない。
 7. **対象へ返す**：`target_supported / framework_generated / cross_field_emergent / unresolved` を混同せず保持する。
-8. **必要ならround deltaへ渡す**：新しいframework contactが旧artifactや残差へ触れるなら、`../../../src/ja-JP/references/00-iteration.md` の接続契約からcompatible iterative realizationへ渡す。
+8. **必要ならround deltaへ渡す**：新しいframework contactが旧artifactや残差へ触れるなら、`../../../src/ja-JP/core/iteration.md` の接続契約からcompatible iterative realizationへ渡す。
 9. **実作業へ反映する**：成果物、判断材料、調査方針、残差、再開条件へ反映する。区切りや採否は外部利用条件に従う。
 
 文化体系の利用数、全文読解、体系固有操作の実行量を、それ自体で成功度とする規則は置かない。
@@ -56,25 +56,25 @@ compatible realizationがない環境でも、CSW自体の文化体系探索、�
 
 | 判断・処理 | 読むファイル |
 |---|---|
-| 対象へ入る認知姿勢 | [00-cognitive-stance.md](../../../src/ja-JP/references/00-cognitive-stance.md) |
-| 利用範囲、読み込み深度 | [00-activation.md](../../../src/ja-JP/references/00-activation.md) |
-| 決定権、帰属、二重の忠実性、保存原則 | [00-principles-and-constraints.md](../../../src/ja-JP/references/00-principles-and-constraints.md) |
-| 新framework contactをround deltaへ渡す | [00-iteration.md](../../../src/ja-JP/references/00-iteration.md) |
-| 対象範囲、基準線、事実整理 | [01-scope-and-facts.md](../../../src/ja-JP/references/01-scope-and-facts.md) |
-| 体系の選定、探索／帰属利用 | [02-system-selection.md](../../../src/ja-JP/references/02-system-selection.md) |
-| 割当、遷移、採用後検査、出口 | [02a-framework-application.md](../../../src/ja-JP/references/02a-framework-application.md) |
-| 関係種別、欠落と接続、複数体系 | [03-transformation.md](../../../src/ja-JP/references/03-transformation.md) |
-| 人間の身体反応をTaihekiで探索 | [05-human-and-taiheki.md](../../../src/ja-JP/references/05-human-and-taiheki.md) |
-| 判断来歴、長期event | [08-governance-and-records.md](../../../src/ja-JP/references/08-governance-and-records.md) |
-| 最終評価 | [09-evaluation.md](../../../src/ja-JP/references/09-evaluation.md) |
-| 多数・異種材料の親和統合への接続 | [10-integration.md](../../../src/ja-JP/references/10-integration.md) |
+| 対象へ入る認知姿勢 | [00-cognitive-stance.md](../../../src/ja-JP/core/cognitive-stance.md) |
+| 利用範囲、読み込み深度 | [00-activation.md](../../../src/ja-JP/core/activation.md) |
+| 決定権、帰属、二重の忠実性、保存原則 | [00-principles-and-constraints.md](../../../src/ja-JP/core/principles-and-constraints.md) |
+| 新framework contactをround deltaへ渡す | [00-iteration.md](../../../src/ja-JP/core/iteration.md) |
+| 対象範囲、基準線、事実整理 | [01-scope-and-facts.md](../../../src/ja-JP/methods/scope-and-facts.md) |
+| 体系の選定、探索／帰属利用 | [02-system-selection.md](../../../src/ja-JP/methods/system-selection.md) |
+| 割当、遷移、採用後検査、出口 | [02a-framework-application.md](../../../src/ja-JP/methods/framework-application.md) |
+| 関係種別、欠落と接続、複数体系 | [03-transformation.md](../../../src/ja-JP/methods/transformation.md) |
+| 人間の身体反応をTaihekiで探索 | [05-human-and-taiheki.md](../../../src/ja-JP/domains/human-and-taiheki.md) |
+| 判断来歴、長期event | [08-governance-and-records.md](../../../src/ja-JP/governance/governance-and-records.md) |
+| 最終評価 | [09-evaluation.md](../../../src/ja-JP/governance/evaluation.md) |
+| 多数・異種材料の親和統合への接続 | [10-integration.md](../../../src/ja-JP/methods/integration.md) |
 
 ## 読み込み方
 
 一括読み込みを前提にしない。
 
-- 認知姿勢が必要なら `../../../src/ja-JP/references/00-cognitive-stance.md`。
-- 利用深度を扱うなら `../../../src/ja-JP/references/00-activation.md`。
+- 認知姿勢が必要なら `../../../src/ja-JP/core/cognitive-stance.md`。
+- 利用深度を扱うなら `../../../src/ja-JP/core/activation.md`。
 - cultural frameworkの候補選択・native operationが必要なら該当methodを読む。
 - one-round synthesisが必要なら接続契約からcompatible realizationへ委ねる。
 - multi-round再開が必要なら接続契約からcompatible iterative realizationへ委ねる。
