@@ -216,10 +216,28 @@ def validate_production_suite_descriptor(descriptor: dict) -> list[str]:
             errors.append(
                 f"skill {research_id} adapter_metadata must declare exactly the first-wave distributions"
             )
-        elif research_id != "cultural-substrate-weaving":
+        else:
             openai_meta = adapter_metadata.get("openai_skill")
-            if isinstance(openai_meta, dict):
+            if not isinstance(openai_meta, dict):
+                errors.append(f"skill {research_id} OpenAI adapter_metadata must be an object")
+            else:
                 source_pattern = openai_meta.get("source_pattern")
+                if research_id == "cultural-substrate-weaving":
+                    expected_openai_mode = "existing-per-locale-profile"
+                    expected_pattern = "adapters/openai-skill/{locale}/openai.{profile}.yaml"
+                else:
+                    expected_openai_mode = "planned-promotion-from-research-prototype"
+                    expected_pattern = (
+                        f"adapters/openai-skill/{{locale}}/{public_name}/openai.{{profile}}.yaml"
+                        if public_name is not None
+                        else None
+                    )
+
+                if openai_meta.get("mode") != expected_openai_mode:
+                    errors.append(
+                        f"skill {research_id} OpenAI adapter metadata mode must remain "
+                        f"{expected_openai_mode}"
+                    )
                 if not isinstance(source_pattern, str) or not source_pattern.startswith(
                     "adapters/openai-skill/"
                 ):
@@ -230,14 +248,40 @@ def validate_production_suite_descriptor(descriptor: dict) -> list[str]:
                     errors.append(
                         f"skill {research_id} production adapter metadata must not point into research"
                     )
-                if public_name is not None:
-                    expected_pattern = (
-                        f"adapters/openai-skill/{{locale}}/{public_name}/openai.{{profile}}.yaml"
-                    )
-                    if source_pattern != expected_pattern:
+                if expected_pattern is not None and source_pattern != expected_pattern:
+                    if research_id == "cultural-substrate-weaving":
                         errors.append(
-                            f"skill {research_id} promoted OpenAI metadata path must follow proposed_installable_name: expected {expected_pattern}"
+                            "cultural-substrate-weaving OpenAI adapter metadata path must remain "
+                            f"{expected_pattern}"
                         )
+                    else:
+                        errors.append(
+                            f"skill {research_id} promoted OpenAI metadata path must follow "
+                            f"proposed_installable_name: expected {expected_pattern}"
+                        )
+
+            expected_bundle_mode = (
+                "existing-locale-catalog-to-update"
+                if research_id == "cultural-substrate-weaving"
+                else "bundle-via-locale-catalog"
+            )
+            for distribution in ("claude_plugin", "codex_plugin"):
+                bundle_meta = adapter_metadata.get(distribution)
+                if not isinstance(bundle_meta, dict):
+                    errors.append(
+                        f"skill {research_id} {distribution} adapter_metadata must be an object"
+                    )
+                    continue
+                if bundle_meta.get("mode") != expected_bundle_mode:
+                    errors.append(
+                        f"skill {research_id} {distribution} adapter metadata mode must remain "
+                        f"{expected_bundle_mode}"
+                    )
+                if bundle_meta.get("source") != "adapters/claude-code/locales.json":
+                    errors.append(
+                        f"skill {research_id} {distribution} adapter metadata source must remain "
+                        "adapters/claude-code/locales.json"
+                    )
 
     if len(public_names) != len(set(public_names)):
         errors.append("proposed_installable_name values must be unique")
