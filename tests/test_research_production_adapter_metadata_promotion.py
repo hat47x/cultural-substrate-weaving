@@ -519,6 +519,16 @@ class ResearchProductionAdapterMetadataPromotionTests(unittest.TestCase):
             errors,
         )
 
+    def test_bundle_promotion_state_must_match_wording_update_mode(self) -> None:
+        plan = copy.deepcopy(self.plan)
+        item = self.bundle_item("en-US", plan)
+        item["state"] = "ready-for-production"
+        errors = self.errors(plan)
+        self.assertTrue(
+            any("promotion state must match planned wording-update mode" in error for error in errors),
+            errors,
+        )
+
     def test_bundle_identity_cannot_be_replaced_by_prototype_identity(self) -> None:
         plan = copy.deepcopy(self.plan)
         item = self.bundle_item("ja-JP", plan)
