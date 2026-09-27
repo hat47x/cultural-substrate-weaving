@@ -28,6 +28,7 @@ from validate_research_production_suite_descriptor import (  # noqa: E402
 )
 
 PLAN_SCHEMA = "csw.production-adapter-metadata-promotion-plan/v1"
+BUNDLE_PROMOTION_STATE = "planned-locale-catalog-wording-update"
 
 
 def _safe_repo_path(value: str) -> bool:
@@ -392,7 +393,7 @@ def plan_production_adapter_metadata_promotion(
         bundle_promotions.append(
             {
                 "locale": locale,
-                "state": "planned-locale-catalog-wording-update",
+                "state": BUNDLE_PROMOTION_STATE,
                 "prototype_source": prototype_source,
                 "production_catalog": bundle_catalog_source,
                 "preserve": {
@@ -676,6 +677,11 @@ def validate_production_adapter_metadata_promotion_plan(
         if not isinstance(current, dict):
             errors.append(f"bundle promotion references unknown locale: {locale}")
             continue
+        if item.get("state") != BUNDLE_PROMOTION_STATE:
+            errors.append(
+                "locale-bundle promotion state must match planned wording-update mode: "
+                f"{locale}"
+            )
         preserve = item.get("preserve")
         if preserve != {
             "plugin_name": current.get("plugin_name"),
