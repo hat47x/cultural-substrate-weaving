@@ -244,17 +244,30 @@ def plan_production_adapter_metadata_promotion(
     locale_catalog: dict,
     root: Path = ROOT,
 ) -> dict:
+    descriptor_research_ids = [
+        item.get("research_id")
+        for item in descriptor.get("skills", [])
+        if isinstance(item, dict) and isinstance(item.get("research_id"), str)
+    ]
+    if len(descriptor_research_ids) != len(set(descriptor_research_ids)):
+        raise ValueError("production descriptor contains duplicate research Skills")
+
+    declared_locales = descriptor.get("locales")
+    if (
+        not isinstance(declared_locales, list)
+        or not declared_locales
+        or not all(isinstance(locale, str) and locale for locale in declared_locales)
+        or len(declared_locales) != len(set(declared_locales))
+    ):
+        raise ValueError(
+            "production descriptor locales must be a non-empty unique string list"
+        )
+
     descriptor_by_id = _descriptor_by_id(descriptor)
     descriptor_skill_ids = set(descriptor_by_id)
-    descriptor_locales = {
-        locale
-        for locale in descriptor.get("locales", [])
-        if isinstance(locale, str)
-    }
+    descriptor_locales = set(declared_locales)
     if not descriptor_skill_ids:
         raise ValueError("production descriptor must declare Skills")
-    if not descriptor_locales:
-        raise ValueError("production descriptor must declare locales")
 
     openai_distribution = adapter_plan["distributions"]["openai_skill"]
     openai_research = openai_distribution["skills"]
@@ -494,6 +507,25 @@ def validate_production_adapter_metadata_promotion_plan(
         errors.append("adapter metadata promotion plan must remain design-only")
     if plan.get("writes_production_metadata") is not False:
         errors.append("adapter metadata promotion plan must not write production metadata")
+
+    descriptor_research_ids = [
+        item.get("research_id")
+        for item in descriptor.get("skills", [])
+        if isinstance(item, dict) and isinstance(item.get("research_id"), str)
+    ]
+    if len(descriptor_research_ids) != len(set(descriptor_research_ids)):
+        errors.append("production descriptor contains duplicate research Skills")
+
+    declared_locales = descriptor.get("locales")
+    if (
+        not isinstance(declared_locales, list)
+        or not declared_locales
+        or not all(isinstance(locale, str) and locale for locale in declared_locales)
+        or len(declared_locales) != len(set(declared_locales))
+    ):
+        errors.append(
+            "production descriptor locales must be a non-empty unique string list"
+        )
 
     descriptor_by_id = _descriptor_by_id(descriptor)
     openai = plan.get("openai_profile_promotions")

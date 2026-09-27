@@ -107,6 +107,49 @@ class ResearchProductionAdapterMetadataPromotionTests(unittest.TestCase):
             )
         self.assertEqual(self.errors(plan, adapter_plan), [])
 
+    def test_planner_rejects_duplicate_descriptor_skill(self) -> None:
+        descriptor = copy.deepcopy(self.descriptor)
+        descriptor["skills"].append(copy.deepcopy(descriptor["skills"][0]))
+        with self.assertRaisesRegex(
+            ValueError,
+            "production descriptor contains duplicate research Skills",
+        ):
+            plan_production_adapter_metadata_promotion(
+                self.adapter_plan,
+                descriptor,
+                self.locale_catalog,
+            )
+
+    def test_validator_rejects_duplicate_descriptor_skill(self) -> None:
+        descriptor = copy.deepcopy(self.descriptor)
+        descriptor["skills"].append(copy.deepcopy(descriptor["skills"][0]))
+        errors = validate_production_adapter_metadata_promotion_plan(
+            self.plan,
+            descriptor,
+            self.locale_catalog,
+            adapter_plan=self.adapter_plan,
+        )
+        self.assertTrue(
+            any(
+                "production descriptor contains duplicate research Skills" in error
+                for error in errors
+            ),
+            errors,
+        )
+
+    def test_planner_rejects_duplicate_descriptor_locale(self) -> None:
+        descriptor = copy.deepcopy(self.descriptor)
+        descriptor["locales"].append("ja-JP")
+        with self.assertRaisesRegex(
+            ValueError,
+            "production descriptor locales must be a non-empty unique string list",
+        ):
+            plan_production_adapter_metadata_promotion(
+                self.adapter_plan,
+                descriptor,
+                self.locale_catalog,
+            )
+
     def test_openai_skill_set_must_match_production_descriptor(self) -> None:
         adapter_plan = copy.deepcopy(self.adapter_plan)
         del adapter_plan["distributions"]["openai_skill"]["skills"]["iterative-inquiry-synthesis"]
