@@ -90,6 +90,15 @@ class ResearchProductionSourcePromotionTests(unittest.TestCase):
                 self.inventory,
             )
 
+    def test_plan_cannot_repeat_descriptor_skill(self) -> None:
+        plan = copy.deepcopy(self.plan)
+        plan["skills"].append(copy.deepcopy(self.skill("affinity-synthesis", plan)))
+        errors = self.validate(plan)
+        self.assertTrue(
+            any("production source plan repeats descriptor Skills" in error for error in errors),
+            errors,
+        )
+
     def test_plan_locale_set_cannot_drop_declared_realization(self) -> None:
         plan = copy.deepcopy(self.plan)
         layer1 = self.skill("affinity-synthesis", plan)
