@@ -57,7 +57,7 @@
       "class": "maintainer-production-projection",
       "action": "keep-production-path-examples-on-production-name",
       "required_markers": [
-        "src/skills/material-led-synthesis/",
+        "src/skills/<public-name>/<locale>/",
         "adapters/openai-skill/<locale>/material-led-synthesis/"
       ],
       "forbidden_markers": [

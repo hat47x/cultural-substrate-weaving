@@ -1,6 +1,6 @@
 # Framework contactとround handoff
 
-新しい材料や別の文化体系との接触によって作業を再開するときに読む。
+新しい材料や別の文化体系との接触によって作業を再開するときに読む。新しい接触は必要に応じて **round delta** として扱い、利用可能な **compatible iterative realization** へ渡す。
 
 この文書はmulti-round inquiry orchestrationそのものを実装しない。差分再開、stable artifact、question shift、append-only round history等は専用Method / compatible realizationへ委ね、CSWは文化体系との接触で何が新たに生じたかを由来付きで渡す。
 

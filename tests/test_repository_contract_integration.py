@@ -49,8 +49,8 @@ class RepositoryContractIntegrationTests(unittest.TestCase):
         self.assertIn("delete the short-lived branch", agents)
         self.assertIn("do not reuse a merged branch", agents.lower())
 
-        self.assertIn("短期branchを削除", ja)
-        self.assertIn("merge済みbranchを次の別タスクの継続点として使い回さない", ja)
+        self.assertIn("役目を終えた短期ブランチを削除", ja)
+        self.assertIn("merge済みブランチを次の別タスクの継続点として使い回さない", ja)
 
         self.assertIn("delete the short-lived branch", en)
         self.assertIn("do not reuse a merged branch", en.lower())

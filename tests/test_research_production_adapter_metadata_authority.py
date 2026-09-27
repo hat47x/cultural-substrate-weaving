@@ -96,8 +96,10 @@ class ResearchProductionAdapterMetadataAuthorityTests(unittest.TestCase):
                 "claude_plugin": {
                     "scope": "locale_bundle",
                     "source": "adapters/claude-code/locales.json",
+                    "review_required_for_multi_skill": True,
                     "locales": {
                         "ja-JP": {
+                            "status": "prototype",
                             "prototype_source": prototype_source,
                         }
                     },

@@ -70,7 +70,7 @@ def check_relation_readback_contract() -> None:
         "representation grammar must keep proposition read-back for explicit semantic relations",
     )
     assert_true(
-        "read-backは監査操作" in representation,
+        "read-backは**監査操作**" in representation,
         "relation read-back must remain an audit operation rather than duplicated canonical meaning",
     )
     assert_true(

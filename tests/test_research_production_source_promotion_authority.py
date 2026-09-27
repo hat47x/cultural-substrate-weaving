@@ -161,6 +161,7 @@ class ResearchProductionSourcePromotionAuthorityTests(unittest.TestCase):
                                     "source": "research/skill-prototypes/affinity-synthesis/SKILL.md",
                                     "source_relative": "SKILL.md",
                                     "target_relative": "SKILL.md",
+                                    "target": "src/skills/different-valid-name/ja-JP/SKILL.md",
                                     "content_transforms": [],
                                 }
                             ],
