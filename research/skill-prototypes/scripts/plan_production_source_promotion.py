@@ -194,6 +194,22 @@ def plan_production_source_promotion(
     migration: dict,
     inventory: dict,
 ) -> dict:
+    descriptor_research_ids = [
+        item.get("research_id")
+        for item in descriptor.get("skills", [])
+        if isinstance(item, dict) and isinstance(item.get("research_id"), str)
+    ]
+    if len(descriptor_research_ids) != len(set(descriptor_research_ids)):
+        raise ValueError("production descriptor contains duplicate research Skills")
+
+    suite_research_ids = [
+        item.get("id")
+        for item in suite.get("skills", [])
+        if isinstance(item, dict) and isinstance(item.get("id"), str)
+    ]
+    if len(suite_research_ids) != len(set(suite_research_ids)):
+        raise ValueError("research suite contains duplicate Skills")
+
     descriptor_by_id = _descriptor_by_id(descriptor)
     suite_by_id = {
         item["id"]: item
@@ -390,6 +406,23 @@ def validate_production_source_promotion_plan(
         errors.append("production source promotion plan must remain design-only")
     if plan.get("selection_basis") != "research locale package_source.files":
         errors.append("production source promotion selection must remain package_source.files based")
+
+    descriptor_research_ids = [
+        item.get("research_id")
+        for item in descriptor.get("skills", [])
+        if isinstance(item, dict) and isinstance(item.get("research_id"), str)
+    ]
+    if len(descriptor_research_ids) != len(set(descriptor_research_ids)):
+        errors.append("production descriptor contains duplicate research Skills")
+
+    if suite is not None:
+        suite_research_ids = [
+            item.get("id")
+            for item in suite.get("skills", [])
+            if isinstance(item, dict) and isinstance(item.get("id"), str)
+        ]
+        if len(suite_research_ids) != len(set(suite_research_ids)):
+            errors.append("research suite contains duplicate Skills")
 
     descriptor_by_id = _descriptor_by_id(descriptor)
     inventory_actions = _projection_actions(inventory) if inventory is not None else {}
