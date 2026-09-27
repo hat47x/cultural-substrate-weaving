@@ -211,7 +211,28 @@ def plan_production_source_promotion(
                 f"extra={sorted(realization_locales - descriptor_locales)}"
             )
 
-    name_map = migration["research_to_production_name"]
+    name_map = migration.get("research_to_production_name")
+    if not isinstance(name_map, dict):
+        raise ValueError("public-name migration must declare research_to_production_name")
+    migration_ids = {
+        research_id
+        for research_id in name_map
+        if isinstance(research_id, str)
+    }
+    if migration_ids != descriptor_ids:
+        raise ValueError(
+            "public-name migration Skill set must match production descriptor: "
+            f"missing={sorted(descriptor_ids - migration_ids)}, "
+            f"extra={sorted(migration_ids - descriptor_ids)}"
+        )
+    for research_id, descriptor_skill in descriptor_by_id.items():
+        expected_name = descriptor_skill.get("proposed_installable_name")
+        if name_map.get(research_id) != expected_name:
+            raise ValueError(
+                "public-name migration must match descriptor installable name: "
+                f"{research_id}: {name_map.get(research_id)!r} != {expected_name!r}"
+            )
+
     inventory_actions = _projection_actions(inventory)
 
     output = {

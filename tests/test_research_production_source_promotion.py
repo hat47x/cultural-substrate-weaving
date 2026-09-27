@@ -73,6 +73,36 @@ class ResearchProductionSourcePromotionTests(unittest.TestCase):
                 self.inventory,
             )
 
+    def test_public_name_migration_skill_set_must_match_descriptor(self) -> None:
+        migration = copy.deepcopy(self.migration)
+        del migration["research_to_production_name"]["affinity-synthesis"]
+        with self.assertRaisesRegex(
+            ValueError,
+            "public-name migration Skill set must match production descriptor",
+        ):
+            plan_production_source_promotion(
+                self.suite,
+                self.descriptor,
+                migration,
+                self.inventory,
+            )
+
+    def test_public_name_migration_name_must_match_descriptor(self) -> None:
+        migration = copy.deepcopy(self.migration)
+        migration["research_to_production_name"]["affinity-synthesis"] = (
+            "stale-material-synthesis"
+        )
+        with self.assertRaisesRegex(
+            ValueError,
+            "public-name migration must match descriptor installable name",
+        ):
+            plan_production_source_promotion(
+                self.suite,
+                self.descriptor,
+                migration,
+                self.inventory,
+            )
+
     def test_suite_locales_must_match_production_descriptor(self) -> None:
         suite = copy.deepcopy(self.suite)
         layer1 = next(
