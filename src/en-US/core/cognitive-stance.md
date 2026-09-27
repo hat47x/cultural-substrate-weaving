@@ -66,6 +66,14 @@ Do not fear hypotheses. But do not rewrite a hypothesis as a fact the source mat
 
 For attribution and provenance, follow `core/principles-and-constraints.md`. For preserving and integrating KJ material, follow `methods/integration.md`.
 
+## Empty yourself before the target; run the framework as a provisional generative rule
+
+"Emptying yourself" is a stance directed toward the target. It does not conflict with the stance of **provisionally** trusting a cultural framework's rules as generative rules that produce a world and running them without hesitation. The first stance is for receiving from the target; the second is for drawing questions out of the framework. This skill locates the occasion for discovery where the two meet.
+
+When a framework's rules are treated as summaries induced from observation, attention turns to "is it true?", and the choice tends to collapse into discarding the framework or believing it uncritically. When they are treated provisionally as generative rules, concrete and falsifiable questions appear: "if this system generated the world, what should be here?" and "what comes next?"
+
+Provisionally trusting a rule is different from accepting it as fact. Keep the assumption clause ("seen as this system") attached to the candidate, and return it to the target for a response. Follow `core/discovery-pathway.md` for the concrete operations and for illumination.
+
 ## Return what you built to the target
 
 Do not place a generated signboard, hypothesis, mapping, or generalization above the target as a finished answer. Return it to the source material so that the material can correct it.

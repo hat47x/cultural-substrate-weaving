@@ -13,10 +13,10 @@
     "methods/transformation.md"
   ],
   "reviewed_source_blobs": {
-    "ROUTER.md": "a9279fbcbc4e649ce485fa15f522a9042afc6b64",
-    "core/cognitive-stance.md": "df76328e2a0e22845a37aa6480f9e6b908a7a311",
-    "core/principles-and-constraints.md": "c8d5e31c2208d21d3bc54bc4c9fc851099b524d4",
-    "governance/evaluation.md": "3b8d9fb93b39bff11b93563998511e134a1f029d",
+    "ROUTER.md": "332abf3eb5de93d5d287026e6b1ff6fa7134d19e",
+    "core/cognitive-stance.md": "ac4edb81b0c5c1931654eae9038bd454a3eee0e3",
+    "core/principles-and-constraints.md": "13b380a07df8bd9375b0dd9d34e83823df0e649c",
+    "governance/evaluation.md": "d228f46207ac1a99670973d8c1cc3bf318b51b42",
     "methods/integration.md": "4e48d953676e95c0529ca3a01d73bb27c014b60a",
     "methods/transformation.md": "c0cffe78b5da089627d5d90970f65a4947a56b35"
   },

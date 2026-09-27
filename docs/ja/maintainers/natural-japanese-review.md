@@ -43,6 +43,7 @@ Microsoft 365向けのこの2ファイルは、生成物そのものではなく
 
 - `docs/ja/architecture.md`
 - `docs/ja/maintainers/affinity-representation-existing-skill-review.md`
+- `docs/ja/maintainers/core-value-and-embodiment-policy.md`
 - `docs/ja/maintainers/csw-tension-emergence-and-aufhebung-contract.md`
 - `docs/ja/maintainers/csw-thin-synthesis-connection-contract.md`
 - `docs/ja/maintainers/development.md`
@@ -176,3 +177,11 @@ KJ法由来の技能をCSWから分離する検討として、新しく七つの
 ## 2026-09-17の追加レビュー
 
 `docs/ja/maintainers/product-quality-program.md`を全文で通読した。品質要求、証拠層、実験ポートフォリオ、変更判断の境界を確認し、識別に必要な英語ラベルや実験IDを保ったまま自然な日本語として読めると判断したため、記録のためだけの本文変更は行わなかった。対象文書を本索引にも追加し、鮮度管理manifestとの対象範囲を一致させた。
+
+## 2026-09-27の追加レビュー
+
+新設した`docs/ja/maintainers/core-value-and-embodiment-policy.md`は、根幹価値、構造核、生成規則としての構え、経路、毒と照明、配置、仮説の各節の内容と識別子を確定させた後、独立した工程として全文を通読した。因果のつながりが読み取りにくかった文を二文に分けた。あわせて、「後からたどれる何が」のように語順の硬い箇所と、「遠さが触媒の力になる」のように主張が強すぎた箇所を直し、系譜の記述は一次資料で確認できていない範囲へ踏み込まない表現に改めた。英語の識別子やスキーマ名は保持している。
+
+`README.md`は、冒頭の説明と「根幹価値」節を追加し、「なぜ外部体系を使うのか」に触媒の比喩を加えたため、全文を読み直した。触媒の比喩が前の文から唐突に始まっていたので、体系が触媒として働くことを先に述べる一文を補った。`docs/README.md`は案内表と研究文書一覧への項目追加だけであり、全文を通読したうえで追加分以外の本文は変更していない。
+
+方法論正本である`src/ja-JP/`は本記録の鮮度管理対象外だが、同じ変更で書き換えたROUTER、`core/discovery-pathway.md`ほかの日本語も通読し、読点の不足、「構造の遠い」のような係り方の曖昧な表現、「と置いたうえで」のような硬い言い回しを直した。
