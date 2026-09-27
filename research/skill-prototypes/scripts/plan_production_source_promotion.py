@@ -333,11 +333,23 @@ def validate_production_source_promotion_plan(
         else {}
     )
     descriptor_ids = set(descriptor_by_id)
-    plan_ids = {
+    plan_research_ids = [
         item.get("research_id")
         for item in plan.get("skills", [])
         if isinstance(item, dict) and isinstance(item.get("research_id"), str)
-    }
+    ]
+    plan_ids = set(plan_research_ids)
+    seen_plan_ids: set[str] = set()
+    duplicate_plan_ids: set[str] = set()
+    for research_id in plan_research_ids:
+        if research_id in seen_plan_ids:
+            duplicate_plan_ids.add(research_id)
+        seen_plan_ids.add(research_id)
+    if duplicate_plan_ids:
+        errors.append(
+            "production source plan repeats descriptor Skills: "
+            f"{sorted(duplicate_plan_ids)}"
+        )
     missing_plan_ids = sorted(descriptor_ids - plan_ids)
     extra_plan_ids = sorted(plan_ids - descriptor_ids)
     if missing_plan_ids:
