@@ -203,6 +203,41 @@ class ResearchProductionAdapterMetadataPromotionTests(unittest.TestCase):
                 self.locale_catalog,
             )
 
+    def test_planner_rejects_unsafe_openai_source_before_read(self) -> None:
+        adapter_plan = copy.deepcopy(self.adapter_plan)
+        adapter_plan["distributions"]["openai_skill"]["skills"]["affinity-synthesis"][
+            "ja-JP"
+        ]["interactive"]["source"] = "../outside.yaml"
+        with self.assertRaisesRegex(
+            ValueError,
+            "OpenAI adapter metadata source is invalid",
+        ):
+            plan_production_adapter_metadata_promotion(
+                adapter_plan,
+                self.descriptor,
+                self.locale_catalog,
+            )
+
+    def test_planner_rejects_unsafe_openai_target(self) -> None:
+        descriptor = copy.deepcopy(self.descriptor)
+        layer1 = next(
+            item
+            for item in descriptor["skills"]
+            if item["research_id"] == "affinity-synthesis"
+        )
+        layer1["adapter_metadata"]["openai_skill"]["source_pattern"] = (
+            "adapters/openai-skill/{locale}/../../outside/openai.{profile}.yaml"
+        )
+        with self.assertRaisesRegex(
+            ValueError,
+            "OpenAI production metadata target is invalid",
+        ):
+            plan_production_adapter_metadata_promotion(
+                self.adapter_plan,
+                descriptor,
+                self.locale_catalog,
+            )
+
     def test_planner_rejects_csw_openai_descriptor_path_drift(self) -> None:
         descriptor = copy.deepcopy(self.descriptor)
         csw = next(
