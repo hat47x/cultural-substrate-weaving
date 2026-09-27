@@ -14,6 +14,7 @@ if str(PLANNER_DIR) not in sys.path:
 from plan_production_source_promotion import (  # noqa: E402
     plan_production_source_promotion,
     validate_production_source_promotion_plan,
+    validate_source_promotion_authorities,
 )
 
 BASE = ROOT / "research" / "skill-prototypes"
@@ -54,6 +55,55 @@ class ResearchProductionSourcePromotionTests(unittest.TestCase):
 
     def test_current_plan_is_valid(self) -> None:
         self.assertEqual(self.validate(), [])
+
+    def test_current_authorities_are_valid(self) -> None:
+        self.assertEqual(
+            validate_source_promotion_authorities(
+                ROOT,
+                self.suite,
+                self.descriptor,
+                self.migration,
+                self.inventory,
+            ),
+            [],
+        )
+
+    def test_cli_authorities_reject_migration_policy_drift(self) -> None:
+        migration = copy.deepcopy(self.migration)
+        migration["policy"]["production_frontmatter_uses_production_name"] = False
+        errors = validate_source_promotion_authorities(
+            ROOT,
+            self.suite,
+            self.descriptor,
+            migration,
+            self.inventory,
+        )
+        self.assertTrue(
+            any(
+                "production_frontmatter_uses_production_name must remain True" in error
+                for error in errors
+            ),
+            errors,
+        )
+
+    def test_cli_authorities_reject_projection_inventory_drift(self) -> None:
+        inventory = copy.deepcopy(self.inventory)
+        inventory["content_projection"] = inventory["content_projection"][1:]
+        errors = validate_source_promotion_authorities(
+            ROOT,
+            self.suite,
+            self.descriptor,
+            self.migration,
+            inventory,
+        )
+        self.assertTrue(
+            any(
+                "missing promotion-critical content projection paths" in error
+                for error in errors
+            ),
+            errors,
+        )
+
 
     def test_suite_skill_set_must_match_production_descriptor(self) -> None:
         suite = copy.deepcopy(self.suite)

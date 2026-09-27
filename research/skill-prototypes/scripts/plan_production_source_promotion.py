@@ -23,6 +23,8 @@ if str(VALIDATOR_DIR) not in sys.path:
     sys.path.insert(0, str(VALIDATOR_DIR))
 
 from validate_research_production_suite_descriptor import validate_production_suite_descriptor  # noqa: E402
+from validate_research_public_name_migration import validate_public_name_migration  # noqa: E402
+from validate_research_public_name_projection_inventory import validate_projection_inventory  # noqa: E402
 from validate_research_skill_suite import validate_suite  # noqa: E402
 
 PLAN_SCHEMA = "csw.production-source-promotion-plan/v1"
@@ -168,6 +170,22 @@ def _planned_source_prefixes(plan: dict) -> tuple[str, ...]:
                 if source.endswith(suffix):
                     prefixes.add(source[: -len(relative)].rstrip("/") + "/")
     return tuple(sorted(prefixes))
+
+
+def validate_source_promotion_authorities(
+    root: Path,
+    suite: dict,
+    descriptor: dict,
+    migration: dict,
+    inventory: dict,
+) -> list[str]:
+    """Validate every source-promotion authority used by the CLI entrypoint."""
+
+    errors = validate_suite(root, suite)
+    errors.extend(validate_production_suite_descriptor(descriptor))
+    errors.extend(validate_public_name_migration(root, migration))
+    errors.extend(validate_projection_inventory(root, inventory))
+    return errors
 
 
 def plan_production_source_promotion(
@@ -731,8 +749,13 @@ def main() -> int:
         print(f"production source promotion planning failed: {exc}", file=sys.stderr)
         return 1
 
-    errors = validate_suite(ROOT, suite)
-    errors.extend(validate_production_suite_descriptor(descriptor))
+    errors = validate_source_promotion_authorities(
+        ROOT,
+        suite,
+        descriptor,
+        migration,
+        inventory,
+    )
     if errors:
         for error in errors:
             print(f"ERROR: {error}", file=sys.stderr)
