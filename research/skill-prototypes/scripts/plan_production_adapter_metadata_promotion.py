@@ -169,12 +169,43 @@ def plan_production_adapter_metadata_promotion(
     root: Path = ROOT,
 ) -> dict:
     descriptor_by_id = _descriptor_by_id(descriptor)
+    descriptor_skill_ids = set(descriptor_by_id)
+    descriptor_locales = {
+        locale
+        for locale in descriptor.get("locales", [])
+        if isinstance(locale, str)
+    }
+    if not descriptor_skill_ids:
+        raise ValueError("production descriptor must declare Skills")
+    if not descriptor_locales:
+        raise ValueError("production descriptor must declare locales")
+
     openai_distribution = adapter_plan["distributions"]["openai_skill"]
     openai_research = openai_distribution["skills"]
+    if not isinstance(openai_research, dict):
+        raise ValueError("OpenAI adapter metadata plan must declare a skills object")
+    openai_skill_ids = set(openai_research)
+    if openai_skill_ids != descriptor_skill_ids:
+        raise ValueError(
+            "OpenAI adapter metadata skill set must match production descriptor: "
+            f"missing={sorted(descriptor_skill_ids - openai_skill_ids)}, "
+            f"extra={sorted(openai_skill_ids - descriptor_skill_ids)}"
+        )
+
     profiles = _openai_profile_names(adapter_plan)
+    expected_profiles = set(profiles)
 
     openai: list[dict] = []
     for research_id, skill_metadata in openai_research.items():
+        if not isinstance(skill_metadata, dict):
+            raise ValueError(f"OpenAI adapter metadata Skill entry must be an object: {research_id}")
+        locale_names = set(skill_metadata)
+        if locale_names != descriptor_locales:
+            raise ValueError(
+                "OpenAI adapter metadata locales must match production descriptor: "
+                f"{research_id}: missing={sorted(descriptor_locales - locale_names)}, "
+                f"extra={sorted(locale_names - descriptor_locales)}"
+            )
         descriptor_skill = descriptor_by_id[research_id]
         production_name = descriptor_skill["proposed_installable_name"]
         production_meta = descriptor_skill["adapter_metadata"]["openai_skill"]
@@ -197,6 +228,17 @@ def plan_production_adapter_metadata_promotion(
         )
 
         for locale, locale_profiles in skill_metadata.items():
+            if not isinstance(locale_profiles, dict):
+                raise ValueError(
+                    f"OpenAI adapter metadata locale entry must be an object: {research_id}/{locale}"
+                )
+            profile_names = set(locale_profiles)
+            if profile_names != expected_profiles:
+                raise ValueError(
+                    "OpenAI adapter metadata profiles must match declared profiles: "
+                    f"{research_id}/{locale}: missing={sorted(expected_profiles - profile_names)}, "
+                    f"extra={sorted(profile_names - expected_profiles)}"
+                )
             for profile in profiles:
                 research_item = locale_profiles[profile]
                 research_status = research_item.get("status")
@@ -248,6 +290,13 @@ def plan_production_adapter_metadata_promotion(
     bundle_distribution_names = _bundle_distribution_names(adapter_plan)
     bundle_catalog_source = _bundle_catalog_source(adapter_plan)
     bundle_prototype_sources = _bundle_prototype_sources(adapter_plan)
+    bundle_locales = set(bundle_prototype_sources)
+    if bundle_locales != descriptor_locales:
+        raise ValueError(
+            "locale_bundle metadata locales must match production descriptor: "
+            f"missing={sorted(descriptor_locales - bundle_locales)}, "
+            f"extra={sorted(bundle_locales - descriptor_locales)}"
+        )
     bundle_promotions: list[dict] = []
     public_skill_set = [item["proposed_installable_name"] for item in descriptor["skills"]]
     for locale, prototype_source in bundle_prototype_sources.items():
