@@ -107,6 +107,59 @@ class ResearchProductionAdapterMetadataPromotionTests(unittest.TestCase):
             )
         self.assertEqual(self.errors(plan, adapter_plan), [])
 
+    def test_openai_skill_set_must_match_production_descriptor(self) -> None:
+        adapter_plan = copy.deepcopy(self.adapter_plan)
+        del adapter_plan["distributions"]["openai_skill"]["skills"]["iterative-inquiry-synthesis"]
+        with self.assertRaisesRegex(
+            ValueError,
+            "skill set must match production descriptor",
+        ):
+            plan_production_adapter_metadata_promotion(
+                adapter_plan,
+                self.descriptor,
+                self.locale_catalog,
+            )
+
+    def test_openai_locales_must_match_production_descriptor(self) -> None:
+        adapter_plan = copy.deepcopy(self.adapter_plan)
+        del adapter_plan["distributions"]["openai_skill"]["skills"]["affinity-synthesis"]["en-US"]
+        with self.assertRaisesRegex(
+            ValueError,
+            "locales must match production descriptor",
+        ):
+            plan_production_adapter_metadata_promotion(
+                adapter_plan,
+                self.descriptor,
+                self.locale_catalog,
+            )
+
+    def test_openai_profiles_must_match_declared_profiles(self) -> None:
+        adapter_plan = copy.deepcopy(self.adapter_plan)
+        del adapter_plan["distributions"]["openai_skill"]["skills"]["affinity-synthesis"]["ja-JP"]["metered"]
+        with self.assertRaisesRegex(
+            ValueError,
+            "profiles must match declared profiles",
+        ):
+            plan_production_adapter_metadata_promotion(
+                adapter_plan,
+                self.descriptor,
+                self.locale_catalog,
+            )
+
+    def test_bundle_locales_must_match_production_descriptor(self) -> None:
+        adapter_plan = copy.deepcopy(self.adapter_plan)
+        for distribution_name in ("claude_plugin", "codex_plugin"):
+            del adapter_plan["distributions"][distribution_name]["locales"]["en-US"]
+        with self.assertRaisesRegex(
+            ValueError,
+            "locale_bundle metadata locales must match production descriptor",
+        ):
+            plan_production_adapter_metadata_promotion(
+                adapter_plan,
+                self.descriptor,
+                self.locale_catalog,
+            )
+
     def test_claude_and_codex_research_bundle_sources_are_shared_per_locale(self) -> None:
         distributions = self.adapter_plan["distributions"]
         claude = distributions["claude_plugin"]
