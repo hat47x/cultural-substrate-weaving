@@ -80,6 +80,8 @@ class ResearchSkillTreeMaterializerTests(unittest.TestCase):
                 .is_file()
             )
         else:
+            expected_representation = "REPRESENTATION.en.md"
+            expected_round_template = "ROUND-TEMPLATE.en.md"
             self.assertTrue(
                 (output / "cultural-substrate-weaving" / "references" / "10-integration.md").is_file()
             )
@@ -87,7 +89,7 @@ class ResearchSkillTreeMaterializerTests(unittest.TestCase):
                 (output / "affinity-synthesis" / "references" / "METHOD.en.md").is_file()
             )
             self.assertTrue(
-                (output / "affinity-synthesis" / "references" / "REPRESENTATION.md").is_file()
+                (output / "affinity-synthesis" / "references" / expected_representation).is_file()
             )
             self.assertTrue(
                 output
@@ -96,11 +98,13 @@ class ResearchSkillTreeMaterializerTests(unittest.TestCase):
             )
             self.assertTrue(
                 output
-                .joinpath("iterative-inquiry-synthesis", "references", "ROUND-TEMPLATE.md")
+                .joinpath("iterative-inquiry-synthesis", "references", expected_round_template)
                 .is_file()
             )
 
-        self.assertNotIn("../affinity-synthesis/", iterative)
+        if locale == "en-US":
+            self.assertIn("../affinity-synthesis/", iterative)
+        self.assertTrue((output / "affinity-synthesis" / "SKILL.md").is_file())
 
     def assert_bundle_three_skill_tree(self, locale: str, distribution: str) -> None:
         output, result, temp = self.materialize(locale, distribution)
@@ -117,13 +121,14 @@ class ResearchSkillTreeMaterializerTests(unittest.TestCase):
         self.assertTrue(
             (output / "skills" / "weave" / "references" / "00-iteration.md").is_file()
         )
+        expected_representation = "REPRESENTATION.md" if locale == "ja-JP" else "REPRESENTATION.en.md"
         self.assertTrue(
             (
                 output
                 / "skills"
                 / "affinity-synthesis"
                 / "references"
-                / "REPRESENTATION.md"
+                / expected_representation
             ).is_file()
         )
 

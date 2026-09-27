@@ -264,6 +264,8 @@ def validate_complete_checkout_gate(
             "validated commit V",
             "evidence-only recording commit E",
             "Eのfirst parentはV",
+            "V must already be present on the originating branch before evidence recording PR",
+            "delete the short-lived evidence branch",
             "translation hash/state transitionはevidence recording commitへ混ぜない",
             "production promotionを単独承認しない",
         ):

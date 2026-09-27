@@ -67,6 +67,10 @@ class ResearchProductionSuiteManifestProjectionTests(unittest.TestCase):
         claude = layer1["adapter_metadata"]["claude_plugin"]
         self.assertEqual(claude["mode"], "locale_catalog")
 
+    def test_projection_strips_translation_refresh_state(self) -> None:
+        self.assertIn("translation_refresh", self.descriptor)
+        self.assertNotIn("translation_refresh", self.projected)
+
     def test_projection_rejects_reintroduced_research_id(self) -> None:
         projected = copy.deepcopy(self.projected)
         projected["skills"][1]["id"] = "affinity-synthesis"
@@ -94,6 +98,16 @@ class ResearchProductionSuiteManifestProjectionTests(unittest.TestCase):
         )
         self.assert_has_error(projected, "source mismatch")
         self.assert_has_error(projected, "must not contain research path")
+
+    def test_projection_rejects_translation_refresh_state(self) -> None:
+        projected = copy.deepcopy(self.projected)
+        projected["translation_refresh"] = copy.deepcopy(
+            self.descriptor["translation_refresh"]
+        )
+        self.assert_has_error(
+            projected,
+            "research/promotion key: translation_refresh",
+        )
 
     def test_codex_projection_keeps_shared_claude_tree(self) -> None:
         codex = self.projected["distributions"]["codex_plugin"]

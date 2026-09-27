@@ -1,5 +1,7 @@
 # Connection to material synthesis
 
+This document defines the connection contract between CSW and material synthesis.
+
 Read this when numerous or heterogeneous materials need structure to emerge without imposing a prior classification axis.
 
 This document does not implement affinity synthesis itself. CSW owns cultural-framework exploration and attribution; internal material-synthesis procedures are delegated to a dedicated Method / compatible realization.

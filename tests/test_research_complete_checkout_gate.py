@@ -15,13 +15,11 @@ if str(SCRIPTS_DIR) not in sys.path:
 from validate_research_complete_checkout_gate import (  # noqa: E402
     DESCRIPTOR_RELATIVE,
     EXPECTED_BINDING_CONTRACT,
+    EXPECTED_BLOCKED_EVIDENCE,
     validate_complete_checkout_gate,
 )
 
 DESCRIPTOR_PATH = ROOT / DESCRIPTOR_RELATIVE
-BLOCKED_EVIDENCE = Path(
-    "research/skill-prototypes/P4-COMPLETE-CHECKOUT-EXECUTION-STATUS-2026-09-07.md"
-)
 PASS_COMMIT = "0123456789abcdef0123456789abcdef01234567"
 RECORD_COMMIT = "1111111111111111111111111111111111111111"
 OTHER_COMMIT = "89abcdef0123456789abcdef0123456789abcdef"
@@ -64,6 +62,8 @@ class ResearchCompleteCheckoutGateTests(unittest.TestCase):
             "validated commit V\n"
             "evidence-only recording commit E\n"
             "Eのfirst parentはV\n"
+            "V must already be present on the originating branch before evidence recording PR\n"
+            "delete the short-lived evidence branch\n"
             "translation hash/state transitionはevidence recording commitへ混ぜない\n"
             "production promotionを単独承認しない\n",
             encoding="utf-8",
@@ -110,6 +110,7 @@ class ResearchCompleteCheckoutGateTests(unittest.TestCase):
         self.assertEqual(validate_complete_checkout_gate(ROOT, self.descriptor), [])
         gate = self.descriptor["complete_checkout_validation"]
         self.assertEqual(gate["status"], "blocked-not-run")
+        self.assertEqual(gate["evidence"], EXPECTED_BLOCKED_EVIDENCE)
         self.assertEqual(gate["binding_contract"], EXPECTED_BINDING_CONTRACT)
         self.assertEqual(
             gate["required_commands"],
@@ -138,6 +139,44 @@ class ResearchCompleteCheckoutGateTests(unittest.TestCase):
             "must reference the canonical evidence-binding contract",
         )
 
+    def test_binding_contract_requires_evidence_branch_lifecycle(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            self.prepare_binding_contract(root)
+            binding_path = root / EXPECTED_BINDING_CONTRACT
+            binding_path.write_text(
+                binding_path.read_text(encoding="utf-8").replace(
+                    "V must already be present on the originating branch before evidence recording PR\n",
+                    "",
+                ),
+                encoding="utf-8",
+            )
+
+            self.assert_has_error(
+                self.descriptor,
+                "V must already be present on the originating branch before evidence recording PR",
+                root=root,
+            )
+
+    def test_binding_contract_requires_merged_branch_cleanup(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            self.prepare_binding_contract(root)
+            binding_path = root / EXPECTED_BINDING_CONTRACT
+            binding_path.write_text(
+                binding_path.read_text(encoding="utf-8").replace(
+                    "delete the short-lived evidence branch\n",
+                    "",
+                ),
+                encoding="utf-8",
+            )
+
+            self.assert_has_error(
+                self.descriptor,
+                "delete the short-lived evidence branch",
+                root=root,
+            )
+
     def test_command_set_cannot_silently_drop_translation_refresh(self) -> None:
         descriptor = copy.deepcopy(self.descriptor)
         descriptor["complete_checkout_validation"]["required_commands"] = [
@@ -157,12 +196,19 @@ class ResearchCompleteCheckoutGateTests(unittest.TestCase):
         self.assert_has_error(descriptor, "must remain the canonical command set")
 
     def test_passed_status_rejects_blocked_not_run_evidence(self) -> None:
-        descriptor = copy.deepcopy(self.descriptor)
-        descriptor["complete_checkout_validation"]["status"] = "passed"
-        self.assert_has_error(
-            descriptor,
-            "passed complete-checkout evidence missing required marker",
-        )
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            evidence_relative = self.write_pass_record(root)
+            evidence_path = root / evidence_relative
+            evidence_path.write_text(
+                evidence_path.read_text(encoding="utf-8").replace("make check: PASS\n", ""),
+                encoding="utf-8",
+            )
+            self.assert_has_error(
+                self.passed_descriptor(evidence_relative),
+                "passed complete-checkout evidence missing required marker",
+                root=root,
+            )
 
     def test_passed_status_accepts_transient_record_for_current_execution_head(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:

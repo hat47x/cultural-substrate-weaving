@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+## 0.5.0 — 2026-09-27
+
 - Aligned public README and usage-context guidance with the canonical attribution and purpose-specific exits: de-binding is no longer described as target-side evidence, research and diagnosis require independent target-side support before framework-generated candidates become findings, generation and composition may retain framework-generated structure as compositional resources, baseline or observation counts are not treated as proof of method effectiveness, and Living Lab guidance distinguishes prospective observations from retrospective records without conflating record provenance with `natural_work` / `paired_check` work modes.
 - Restored generated-artifact freshness to ordinary local validation after GitHub Actions removal: `make check` now rebuilds and then fails when `.claude-plugin/`, `.agents/`, or `plugins/` contains modified, deleted, or untracked generated output, so source or adapter changes cannot pass locally while their Git-tracked distribution artifacts remain stale or uncommitted.
 - Extended natural-Japanese prose review freshness from development/maintainer material to the public Japanese README, getting-started and usage guides, platform guides, and the Japanese Microsoft 365 runtime prose; refreshed the reviewed prose without changing canonical runtime method semantics, and added the current GitHub-marketplace workspace import path to the Codex guide.

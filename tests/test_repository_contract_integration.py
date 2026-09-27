@@ -7,19 +7,53 @@ ROOT = Path(__file__).resolve().parents[1]
 
 
 class RepositoryContractIntegrationTests(unittest.TestCase):
-    def test_make_check_runs_versioned_branch_contract(self) -> None:
+    def test_make_check_runs_versioned_branch_and_build_contracts(self) -> None:
         makefile = (ROOT / "Makefile").read_text(encoding="utf-8")
 
         self.assertIn("repository-contracts:", makefile)
-        self.assertIn(
-            'python scripts/check_branch_version.py --ref "$$(git branch --show-current)"',
-            makefile,
-        )
-        self.assertIn(
-            "check: repository-contracts generated-artifacts-check validate",
-            makefile,
-        )
+        self.assertIn("python scripts/check_branch_version.py --ref", makefile)
+        self.assertIn("git branch --show-current", makefile)
         self.assertIn("generated-artifacts-check: build", makefile)
+        self.assertIn("test: build", makefile)
+
+        check_line = next(
+            line for line in makefile.splitlines() if line.startswith("check:")
+        )
+        prerequisites = check_line.split(":", 1)[1].split()
+        for required in (
+            "repository-contracts",
+            "generated-artifacts-check",
+            "validate",
+            "test",
+        ):
+            self.assertIn(required, prerequisites)
+
+        self.assertLess(
+            prerequisites.index("repository-contracts"),
+            prerequisites.index("generated-artifacts-check"),
+        )
+        self.assertLess(
+            prerequisites.index("generated-artifacts-check"),
+            prerequisites.index("test"),
+        )
+
+    def test_short_lived_branch_cleanup_contract_is_consistent(self) -> None:
+        agents = (ROOT / "AGENTS.md").read_text(encoding="utf-8")
+        ja = (ROOT / "docs" / "ja" / "maintainers" / "development.md").read_text(
+            encoding="utf-8"
+        )
+        en = (ROOT / "docs" / "en" / "maintainers" / "development.md").read_text(
+            encoding="utf-8"
+        )
+
+        self.assertIn("delete the short-lived branch", agents)
+        self.assertIn("do not reuse a merged branch", agents.lower())
+
+        self.assertIn("役目を終えた短期ブランチを削除", ja)
+        self.assertIn("merge済みブランチを次の別タスクの継続点として使い回さない", ja)
+
+        self.assertIn("delete the short-lived branch", en)
+        self.assertIn("do not reuse a merged branch", en.lower())
 
     def test_main_contract_is_explicit_and_not_part_of_normal_feature_checks(self) -> None:
         makefile = (ROOT / "Makefile").read_text(encoding="utf-8")

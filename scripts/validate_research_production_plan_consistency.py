@@ -36,7 +36,7 @@ DOCUMENT_RULES = {
             "`locale_tree` mode",
             "package-closed source boundary",
             "builder側で除外する」設計にはしない",
-            "src/skills/material-led-synthesis/",
+            "src/skills/<public-name>/<locale>/",
             "adapters/openai-skill/<locale>/material-led-synthesis/",
         ),
         "forbidden": (
@@ -51,7 +51,7 @@ DOCUMENT_RULES = {
             "`canonical_manifest`",
             "`locale_tree`",
             "public candidate: material-led-synthesis",
-            "src/skills/material-led-synthesis/{locale}",
+            "src/skills/<installable-name>/{locale}",
         ),
         "forbidden": COMMON_FORBIDDEN_MARKERS,
     },

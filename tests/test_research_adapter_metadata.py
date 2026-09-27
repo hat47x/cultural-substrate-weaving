@@ -86,6 +86,25 @@ class ResearchAdapterMetadataTests(unittest.TestCase):
         entry["source"] = "research/skill-prototypes/DOES-NOT-EXIST.yaml"
         self.assert_has_error(metadata, "metadata source is missing")
 
+    def test_prototype_openai_metadata_must_use_research_source_class(self) -> None:
+        metadata = copy.deepcopy(self.metadata)
+        entry = metadata["distributions"]["openai_skill"]["skills"][
+            "affinity-synthesis"
+        ]["ja-JP"]["interactive"]
+        entry["source"] = "adapters/openai-skill/ja-JP/openai.interactive.yaml"
+        self.assert_has_error(metadata, "must use research-only source")
+
+    def test_existing_openai_metadata_must_use_production_source_class(self) -> None:
+        metadata = copy.deepcopy(self.metadata)
+        entry = metadata["distributions"]["openai_skill"]["skills"][
+            "cultural-substrate-weaving"
+        ]["ja-JP"]["interactive"]
+        entry["source"] = (
+            "research/skill-prototypes/adapters/openai-skill/ja-JP/"
+            "affinity-synthesis/openai.interactive.yaml"
+        )
+        self.assert_has_error(metadata, "must use production adapter source")
+
     def test_openai_profile_policy_is_checked_against_source(self) -> None:
         metadata = copy.deepcopy(self.metadata)
         entry = metadata["distributions"]["openai_skill"]["skills"][
@@ -104,8 +123,11 @@ class ResearchAdapterMetadataTests(unittest.TestCase):
     def test_locale_catalog_must_declare_required_fields(self) -> None:
         metadata = copy.deepcopy(self.metadata)
         metadata["distributions"]["claude_plugin"]["source"] = (
-            "research/skill-prototypes/adapter-metadata-plan.json"
+            "adapters/microsoft-copilot/en-US/manifest.template.json"
         )
+        entry = metadata["distributions"]["claude_plugin"]["locales"]["en-US"]
+        entry["status"] = "existing-baseline"
+        entry.pop("prototype_source", None)
         self.assert_has_error(metadata, "locale catalog does not declare metadata")
 
     def test_bundle_prototype_source_must_exist(self) -> None:
@@ -114,6 +136,20 @@ class ResearchAdapterMetadataTests(unittest.TestCase):
             "prototype_source"
         ] = "research/skill-prototypes/DOES-NOT-EXIST.json"
         self.assert_has_error(metadata, "prototype metadata source is missing")
+
+    def test_bundle_prototype_must_use_research_source_class(self) -> None:
+        metadata = copy.deepcopy(self.metadata)
+        metadata["distributions"]["claude_plugin"]["locales"]["en-US"][
+            "prototype_source"
+        ] = "adapters/claude-code/locales.json"
+        self.assert_has_error(metadata, "must use research-only source")
+
+    def test_bundle_catalog_must_use_production_source_class(self) -> None:
+        metadata = copy.deepcopy(self.metadata)
+        metadata["distributions"]["claude_plugin"]["source"] = (
+            "research/skill-prototypes/adapters/claude-codex/en-US/bundle-metadata.json"
+        )
+        self.assert_has_error(metadata, "must use production adapter path")
 
     def test_bundle_prototype_skill_composition_must_match_suite(self) -> None:
         metadata = copy.deepcopy(self.metadata)

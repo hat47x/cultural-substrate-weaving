@@ -58,6 +58,10 @@ No replacement translation hashes were guessed or hand-entered, and `i18n/transl
 
 This reconciliation does not claim that `make research-translation-prepare`, `make research-skill-check`, `make build`, or `make check` was executed in this connected environment. It only removes a state record that contradicted the already synchronized checked-in bytes. In a complete checkout, `make research-translation-prepare` remains the canonical preparation path and should now be idempotent if no later source drift exists.
 
+## Split-ownership re-review — 2026-09-27
+
+The Japanese and English versions of `ROUTER.md` and `methods/integration.md` were read together after the split-ownership regression check exposed stale CSW wording. The Router now assigns material-synthesis procedures to a compatible realization, and the integration reference states the handoff contract. The English text was aligned with the same responsibility boundary. The reviewed Japanese source blobs are recorded in the JSON status file; the other scoped files remain unchanged.
+
 ## Machine-readable state contract
 
 The explanatory record in this file is paired with:

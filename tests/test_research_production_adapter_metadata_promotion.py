@@ -219,12 +219,171 @@ class ResearchProductionAdapterMetadataPromotionTests(unittest.TestCase):
                     self.locale_catalog,
                 )
 
+    def test_planned_promotion_requires_prototype_research_status(self) -> None:
+        adapter_plan = copy.deepcopy(self.adapter_plan)
+        adapter_plan["distributions"]["openai_skill"]["skills"]["affinity-synthesis"][
+            "ja-JP"
+        ]["interactive"]["status"] = "existing"
+        with self.assertRaisesRegex(
+            ValueError,
+            "status does not match production metadata mode",
+        ):
+            plan_production_adapter_metadata_promotion(
+                adapter_plan,
+                self.descriptor,
+                self.locale_catalog,
+            )
+
+        errors = self.errors(self.plan, adapter_plan)
+        self.assertTrue(
+            any("status does not match production metadata mode" in error for error in errors),
+            errors,
+        )
+
+    def test_existing_production_metadata_requires_existing_research_status(self) -> None:
+        adapter_plan = copy.deepcopy(self.adapter_plan)
+        adapter_plan["distributions"]["openai_skill"]["skills"][
+            "cultural-substrate-weaving"
+        ]["en-US"]["metered"]["status"] = "prototype"
+        with self.assertRaisesRegex(
+            ValueError,
+            "status does not match production metadata mode",
+        ):
+            plan_production_adapter_metadata_promotion(
+                adapter_plan,
+                self.descriptor,
+                self.locale_catalog,
+            )
+
+        errors = self.errors(self.plan, adapter_plan)
+        self.assertTrue(
+            any("status does not match production metadata mode" in error for error in errors),
+            errors,
+        )
+
     def test_sibling_openai_metadata_cannot_gain_content_rewrite(self) -> None:
         plan = copy.deepcopy(self.plan)
         item = self.openai_item("affinity-synthesis", "en-US", "metered", plan)
         item["content_operation"] = "rewrite-display-name"
         errors = self.errors(plan)
         self.assertTrue(any("promote byte-identically" in error for error in errors), errors)
+
+    def test_sibling_openai_source_must_match_adapter_plan_authority(self) -> None:
+        plan = copy.deepcopy(self.plan)
+        item = self.openai_item("affinity-synthesis", "ja-JP", "interactive", plan)
+        item["source"] = (
+            "research/skill-prototypes/adapters/openai-skill/ja-JP/"
+            "iterative-inquiry-synthesis/openai.interactive.yaml"
+        )
+        errors = self.errors(plan)
+        self.assertTrue(
+            any("OpenAI adapter promotion source mismatch" in error for error in errors),
+            errors,
+        )
+
+    def test_sibling_openai_sha256_must_match_source_content(self) -> None:
+        plan = copy.deepcopy(self.plan)
+        item = self.openai_item("affinity-synthesis", "en-US", "metered", plan)
+        item["sha256"] = "0" * 64
+        errors = self.errors(plan)
+        self.assertTrue(
+            any("OpenAI adapter promotion source sha256 mismatch" in error for error in errors),
+            errors,
+        )
+
+    def test_bundle_locale_coverage_rejects_duplicate_that_hides_missing_locale(self) -> None:
+        plan = copy.deepcopy(self.plan)
+        en = self.bundle_item("en-US", plan)
+        en["locale"] = "ja-JP"
+
+        errors = self.errors(plan)
+        self.assertTrue(
+            any("duplicate locale-bundle promotion entry: ja-JP" in error for error in errors),
+            errors,
+        )
+        self.assertTrue(
+            any(
+                "bundle metadata promotion plan is missing declared locales" in error
+                and "en-US" in error
+                for error in errors
+            ),
+            errors,
+        )
+
+    def test_bundle_locale_coverage_rejects_undeclared_locale(self) -> None:
+        plan = copy.deepcopy(self.plan)
+        en = self.bundle_item("en-US", plan)
+        en["locale"] = "fr-FR"
+
+        errors = self.errors(plan)
+        self.assertTrue(
+            any(
+                "bundle metadata promotion plan has undeclared locales" in error
+                and "fr-FR" in error
+                for error in errors
+            ),
+            errors,
+        )
+        self.assertTrue(
+            any(
+                "bundle metadata promotion plan is missing declared locales" in error
+                and "en-US" in error
+                for error in errors
+            ),
+            errors,
+        )
+
+    def test_bundle_promotion_requires_prototype_status(self) -> None:
+        adapter_plan = copy.deepcopy(self.adapter_plan)
+        adapter_plan["distributions"]["claude_plugin"]["locales"]["ja-JP"][
+            "status"
+        ] = "reviewed"
+        with self.assertRaisesRegex(
+            ValueError,
+            "must remain prototype",
+        ):
+            plan_production_adapter_metadata_promotion(
+                adapter_plan,
+                self.descriptor,
+                self.locale_catalog,
+            )
+
+    def test_bundle_promotion_requires_multi_skill_review_gate(self) -> None:
+        adapter_plan = copy.deepcopy(self.adapter_plan)
+        adapter_plan["distributions"]["codex_plugin"][
+            "review_required_for_multi_skill"
+        ] = False
+        with self.assertRaisesRegex(
+            ValueError,
+            "must require review for multi-Skill promotion",
+        ):
+            plan_production_adapter_metadata_promotion(
+                adapter_plan,
+                self.descriptor,
+                self.locale_catalog,
+            )
+
+    def test_bundle_description_must_match_prototype_source(self) -> None:
+        plan = copy.deepcopy(self.plan)
+        item = self.bundle_item("ja-JP", plan)
+        item["update"]["description"] += " modified"
+        errors = self.errors(plan)
+        self.assertTrue(
+            any("description must match prototype source" in error for error in errors),
+            errors,
+        )
+
+    def test_bundle_research_composition_must_match_prototype_source(self) -> None:
+        plan = copy.deepcopy(self.plan)
+        item = self.bundle_item("en-US", plan)
+        item["prototype_research_contains"] = list(
+            reversed(item["prototype_research_contains"])
+        )
+        errors = self.errors(plan)
+        self.assertTrue(
+            any("research composition must match prototype source" in error for error in errors),
+            errors,
+        )
 
     def test_bundle_identity_cannot_be_replaced_by_prototype_identity(self) -> None:
         plan = copy.deepcopy(self.plan)

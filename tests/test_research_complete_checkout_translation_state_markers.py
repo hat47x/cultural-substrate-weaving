@@ -33,6 +33,8 @@ class ResearchCompleteCheckoutTranslationStateMarkerTests(unittest.TestCase):
             "validated commit V\n"
             "evidence-only recording commit E\n"
             "Eのfirst parentはV\n"
+            "V must already be present on the originating branch before evidence recording PR\n"
+            "delete the short-lived evidence branch\n"
             "translation hash/state transitionはevidence recording commitへ混ぜない\n"
             "production promotionを単独承認しない\n",
             encoding="utf-8",

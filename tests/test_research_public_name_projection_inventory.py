@@ -167,7 +167,7 @@ class ResearchPublicNameProjectionInventoryTests(unittest.TestCase):
 
     def test_promotion_plan_is_guarded_against_stale_production_paths(self) -> None:
         item = self.content_item(self.inventory, PROMOTION_PLAN_PATH)
-        self.assertIn("src/skills/material-led-synthesis/", item["required_markers"])
+        self.assertIn("src/skills/<public-name>/<locale>/", item["required_markers"])
         self.assertIn("src/skills/affinity-synthesis/", item["forbidden_markers"])
         self.assertIn(
             "adapters/openai-skill/<locale>/affinity-synthesis/",
@@ -177,7 +177,7 @@ class ResearchPublicNameProjectionInventoryTests(unittest.TestCase):
     def test_forbidden_projection_marker_requires_audit(self) -> None:
         inventory = copy.deepcopy(self.inventory)
         item = self.content_item(inventory, PROMOTION_PLAN_PATH)
-        item["forbidden_markers"] = ["src/skills/material-led-synthesis/"]
+        item["forbidden_markers"] = ["src/skills/<public-name>/<locale>/"]
         self.assert_has_error(inventory, "forbidden marker requires audit")
 
     def test_forbidden_projection_markers_must_be_strings(self) -> None:

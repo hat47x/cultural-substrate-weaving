@@ -24,6 +24,7 @@ make check
 `make check`は、現在次をまとめて実行します。
 
 - `make repository-contracts`
+- `make production-skill-set-legacy-parity`
 - `make generated-artifacts-check`（先に`make build`を実行します）
 - `make validate`
 - `make japanese-docs-check`
@@ -34,9 +35,26 @@ make check
 
 `repository-contracts`では、現在のローカルブランチが`develop/vX.Y.Z`または`release/vX.Y.Z`の場合に、ブランチ名の版と`VERSION`が一致することを確認します。`feature/*`、`fix/*`、`research/*`などの短期ブランチには、この版契約を適用しません。
 
+`production-skill-set-legacy-parity`では、production Skill-set authorityが、現在の単一Skill向けlegacy build contractと一致していることを確認します。複数Skillへの移行を始めるときは、この検査を黙って弱めるのではなく、production Skill-setとbuild側の契約を同じ変更として更新します。
+
 `generated-artifacts-check`では、まず現在の入力から配布用成果物を再生成し、その後に`.claude-plugin/`、`.agents/`、`plugins/`のGit上の状態を確認します。追跡中の生成物に変更や削除が残っている場合だけでなく、新しい未追跡の生成物が生じた場合も検査は失敗します。これにより、正本やadapterを更新したのに、対応する生成物をコミットし忘れた状態を通常の`make check`で検出できます。
 
 この検査に失敗した場合は、差分を確認して必要な生成結果をコミットします。意図しない生成結果であれば、生成物を手作業で合わせるのではなく、正本・manifest・adapter・生成処理など、差分を生んだ入力側へ戻って修正します。
+
+## ブランチ運用
+
+小規模なリポジトリ保守は、状況に応じて現在の`develop/vX.Y.Z`へ直接コミットしてかまいません。方法変更、実験、独立した実装など、まとまりのある作業は、現在のdevelopから`feature/*`、`research/*`、`fix/*`などの短期ブランチを作り、そのdevelopをbaseとするPRで戻します。
+
+短期ブランチを使う場合は、次を一つの完了条件として扱います。
+
+- 一つのまとまりあるタスクは、原則として一つの短期ブランチと一つのPRで継続する。
+- 会話や作業セッションが変わっただけでは、同じタスクを兄弟ブランチや後継ブランチへ分割しない。
+- merge直前にbaseとheadを再取得し、並行作業が入っていないこと、または必要な調整が済んでいることを確認する。
+- PRを起点ブランチへmergeした後、baseを再取得し、結果が実際に取り込まれたことを確認する。
+- baseへの反映を確認したら、役目を終えた短期ブランチを削除してからタスク完了とする。merge済みブランチを次の別タスクの継続点として使い回さない。
+- mergeが本当に阻害されている場合は、同じブランチとPRを継続点として残し、阻害要因を明記する。同じタスクの後継ブランチを増やして回避しない。
+
+この運用は、GitHub側のbranch protectionによる強制ではなく、作業履歴を断片化させず、並行作業の取りこぼしを防ぐためのリポジトリ運用規則です。
 
 `main`については、通常の短期ブランチ上では「mainへどのように統合されるか」を判定できないため、この確認は`make check`には組み込んでいません。PRをマージした後、`main`のHEADが、リポジトリ運用で想定する「2つの親を持つマージコミット」になっているかを確認するときは、`main`上で次を実行します。
 

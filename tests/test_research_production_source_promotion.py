@@ -49,6 +49,7 @@ class ResearchProductionSourcePromotionTests(unittest.TestCase):
             self.plan if plan is None else plan,
             self.descriptor,
             self.inventory,
+            suite=self.suite,
         )
 
     def test_current_plan_is_valid(self) -> None:
@@ -119,6 +120,70 @@ class ResearchProductionSourcePromotionTests(unittest.TestCase):
         errors = self.validate(plan)
         self.assertTrue(
             any("promotion-sensitive source declared by projection inventory is missing" in error for error in errors),
+            errors,
+        )
+
+    def test_non_projection_sensitive_package_source_cannot_be_dropped_from_plan(self) -> None:
+        plan = copy.deepcopy(self.plan)
+        locale_plan = self.skill("affinity-synthesis", plan)["locales"]["ja-JP"]
+        locale_plan["mappings"] = [
+            item
+            for item in locale_plan["mappings"]
+            if not item["source_relative"].endswith("references/TEMPLATE.md")
+        ]
+        errors = self.validate(plan)
+        self.assertTrue(
+            any("missing package-selected source mappings" in error for error in errors),
+            errors,
+        )
+
+    def test_undeclared_package_source_cannot_be_added_to_plan(self) -> None:
+        plan = copy.deepcopy(self.plan)
+        locale_plan = self.skill("affinity-synthesis", plan)["locales"]["ja-JP"]
+        injected = copy.deepcopy(locale_plan["mappings"][0])
+        injected["source"] = (
+            "research/skill-prototypes/affinity-synthesis/references/UNDECLARED.md"
+        )
+        injected["source_relative"] = "references/UNDECLARED.md"
+        injected["target"] = (
+            "src/skills/material-led-synthesis/ja-JP/references/UNDECLARED.md"
+        )
+        injected["target_relative"] = "references/UNDECLARED.md"
+        locale_plan["mappings"].append(injected)
+        errors = self.validate(plan)
+        self.assertTrue(
+            any("contains undeclared source mappings" in error for error in errors),
+            errors,
+        )
+
+    def test_mapping_target_relative_must_follow_source_normalization(self) -> None:
+        plan = copy.deepcopy(self.plan)
+        mapping = self.mapping(
+            "affinity-synthesis",
+            "ja-JP",
+            "/references/TEMPLATE.md",
+            plan,
+        )
+        mapping["target_relative"] = "references/RENAMED.md"
+        mapping["target"] = "src/skills/material-led-synthesis/ja-JP/references/RENAMED.md"
+        errors = self.validate(plan)
+        self.assertTrue(
+            any("target_relative does not match source normalization" in error for error in errors),
+            errors,
+        )
+
+    def test_mapping_target_must_stay_under_declared_production_root(self) -> None:
+        plan = copy.deepcopy(self.plan)
+        mapping = self.mapping(
+            "affinity-synthesis",
+            "ja-JP",
+            "/references/TEMPLATE.md",
+            plan,
+        )
+        mapping["target"] = "src/skills/other/ja-JP/references/TEMPLATE.md"
+        errors = self.validate(plan)
+        self.assertTrue(
+            any("target does not match production root" in error for error in errors),
             errors,
         )
 

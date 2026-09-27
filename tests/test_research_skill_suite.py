@@ -204,7 +204,7 @@ class ResearchSkillSuiteTests(unittest.TestCase):
         manifest = copy.deepcopy(self.manifest)
         affinity = self.skill(manifest, "affinity-synthesis")
         affinity["locale_realizations"]["en-US"]["package_source"]["files"].append(
-            "references/HIERARCHY-AND-LINEAGE.md"
+            "scripts/README.md"
         )
         self.assert_has_error(manifest, "package file is not runtime or declared research metadata")
 

@@ -150,6 +150,34 @@ V -> E -> F
 
 となり、Vはcurrent HEADのdirect parentではなくなるためPASS evidenceはstaleとして拒否する。必要ならF上で再実行する。
 
+## PR / short-lived branch integration contract
+
+repositoryの短期branch運用とこのevidence bindingを両立させるため、**V preparationとE recordingを同じ未統合branchへ積み、最後にまとめてsquashしない。**
+
+V must already be present on the originating branch before evidence recording PR.
+
+具体的には:
+
+1. translation preparation等でtracked mutationが必要なら、それを先に通常の短期branch / PRとしてoriginating branchへmergeし、merge後のoriginating branch HEADをrefetchする。
+2. そのmerge済みHEADをVとして固定し、V上でcomplete-checkout commandsを実行する。command実行後にoriginating branchがVから進んだ場合、そのPASSはそのままrecordせず、新しいHEADで再実行する。
+3. PASS時は**exact Vから**evidence-only短期branchを切り、descriptorのcomplete-checkout `status/evidence`遷移と新規execution recordだけをcommitする。V preparationの変更をこのbranchへ再び混ぜない。
+4. PR merge直前にbase/headをrefetchし、baseがまだVであることを確認する。
+5. merge methodの名前ではなく、merge後のGit graphとdiffをauthorityにする。originating branchのcurrent HEADがVをfirst parentとして持ち、Vからcurrent HEADまでの変更pathがdescriptor + execution recordだけなら、single-commit squash/rebase/merge結果でもbindingを満たし得る。baseがVから進んだ状態へmergeした結果や、V preparation + Eを一つにsquashした結果は満たさない。
+6. merge後にoriginating branchをrefetchし、`python scripts/validate_research_complete_checkout_gate.py`でdirect-parent / changed-path bindingを再確認する。
+7. merge結果を確認したら、repository branch lifecycleに従って**delete the short-lived evidence branch** before marking the task complete. merge済みevidence branchを別タスクへ使い回さない。
+
+この順序により:
+
+```text
+originating branch
+        |
+        V  validated commit already merged / fixed
+        |
+        E' evidence-only merged result
+```
+
+を保ち、PR workflowを使ってもexecution recordの`execution commit: V`とcurrent Git graphの対応を壊さない。
+
 ## Why this is stricter than timestamped prose
 
 次は証拠bindingとして使わない。
