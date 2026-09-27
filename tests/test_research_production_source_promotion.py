@@ -105,6 +105,48 @@ class ResearchProductionSourcePromotionTests(unittest.TestCase):
         )
 
 
+    def test_planner_rejects_duplicate_suite_skill(self) -> None:
+        suite = copy.deepcopy(self.suite)
+        suite["skills"].append(copy.deepcopy(suite["skills"][0]))
+        with self.assertRaisesRegex(ValueError, "research suite contains duplicate Skills"):
+            plan_production_source_promotion(
+                suite,
+                self.descriptor,
+                self.migration,
+                self.inventory,
+            )
+
+    def test_planner_rejects_duplicate_descriptor_skill(self) -> None:
+        descriptor = copy.deepcopy(self.descriptor)
+        descriptor["skills"].append(copy.deepcopy(descriptor["skills"][0]))
+        with self.assertRaisesRegex(
+            ValueError,
+            "production descriptor contains duplicate research Skills",
+        ):
+            plan_production_source_promotion(
+                self.suite,
+                descriptor,
+                self.migration,
+                self.inventory,
+            )
+
+    def test_validator_rejects_duplicate_descriptor_skill(self) -> None:
+        descriptor = copy.deepcopy(self.descriptor)
+        descriptor["skills"].append(copy.deepcopy(descriptor["skills"][0]))
+        errors = validate_production_source_promotion_plan(
+            self.plan,
+            descriptor,
+            self.inventory,
+            suite=self.suite,
+        )
+        self.assertTrue(
+            any(
+                "production descriptor contains duplicate research Skills" in error
+                for error in errors
+            ),
+            errors,
+        )
+
     def test_suite_skill_set_must_match_production_descriptor(self) -> None:
         suite = copy.deepcopy(self.suite)
         suite["skills"] = [
