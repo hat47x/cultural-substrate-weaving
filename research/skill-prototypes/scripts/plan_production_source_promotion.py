@@ -28,6 +28,11 @@ from validate_research_skill_suite import validate_suite  # noqa: E402
 PLAN_SCHEMA = "csw.production-source-promotion-plan/v1"
 
 
+def _safe_repo_path(value: str) -> bool:
+    path = PurePosixPath(value)
+    return bool(value) and not path.is_absolute() and ".." not in path.parts and "\\" not in value
+
+
 def _target_relative(source_relative: str, locale: str) -> str:
     path = PurePosixPath(source_relative)
     name = path.name
@@ -256,6 +261,14 @@ def plan_production_source_promotion(
                 )
             research_root = PurePosixPath(package_source["root"])
             production_root = production_source["root_pattern"].format(locale=locale)
+            if (
+                not _safe_repo_path(production_root)
+                or not production_root.startswith("src/skills/")
+            ):
+                raise ValueError(
+                    f"production source root is unsafe for {research_id}/{locale}: "
+                    f"{production_root!r}"
+                )
             mappings = []
 
             for relative in package_source["files"]:
@@ -469,8 +482,15 @@ def validate_production_source_promotion_plan(
                     f"{research_id}/{locale}: {production_root!r} != "
                     f"{expected_production_root!r}"
                 )
-            if not isinstance(production_root, str) or not production_root.startswith("src/skills/"):
-                errors.append(f"production source root must stay under src/skills: {research_id}/{locale}")
+            if (
+                not isinstance(production_root, str)
+                or not _safe_repo_path(production_root)
+                or not production_root.startswith("src/skills/")
+            ):
+                errors.append(
+                    f"production source root must be a safe path under src/skills: "
+                    f"{research_id}/{locale}"
+                )
             if isinstance(production_root, str) and research_id in production_root and research_id != expected_name:
                 errors.append(f"research id leaked into production source root: {research_id}/{locale}")
             if locale_plan.get("runtime_entry") != f"{production_root}/SKILL.md":
