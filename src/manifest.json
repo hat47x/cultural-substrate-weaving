@@ -23,6 +23,11 @@
       "skill_reference": "00-cognitive-stance.md"
     },
     {
+      "id": "discovery-pathway",
+      "source": "core/discovery-pathway.md",
+      "skill_reference": "00-discovery-pathway.md"
+    },
+    {
       "id": "activation",
       "source": "core/activation.md",
       "skill_reference": "00-activation.md"
@@ -81,6 +86,7 @@
   "knowledge_groups": {
     "00-core.md": [
       "core/cognitive-stance.md",
+      "core/discovery-pathway.md",
       "core/activation.md",
       "core/principles-and-constraints.md",
       "core/iteration.md"

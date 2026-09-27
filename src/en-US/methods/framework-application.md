@@ -8,14 +8,17 @@ In **exploratory use**, treat positions, paths, cycles, symbols, and relation vo
 
 In **attribution use**, the claim is that the target itself has a framework-shaped position, state, transition, or gap. Then use the assignment, transition, and post-use checks below.
 
+In exploratory use, a framework may be run as a provisional generative rule. For deriving placement, vacancies, transitions, complementary positions, and practice, and for handling the assumption clause, follow `core/discovery-pathway.md`.
+
 Do not silently switch from exploration to attribution.
 
 ## 3a. Fix the assignment
 
-When attribution use involves assigning positions, distinguish at least two functions.
+When attribution use involves assigning positions, distinguish at least the following functions.
 
 - **Position layer**: a structure of positions or states defined before seeing the target. A discrete framework may define a position set or count; a continuous framework may instead define axes, order, ranges, or related positional structure. This layer can be used for assignment.
 - **Interpretive-language layer**: judgments, imagery, correspondences, and character descriptions that can be broadly applied through analyst similarity judgments. Do not use this layer as the classifier.
+- **Practice layer**: where attention belongs in each state, what actions fit, what to avoid, and how the state connects to reality. Do not use this layer as the classifier.
 
 Distinguish predicates that decide assignment.
 
@@ -60,9 +63,9 @@ A position system may contain parts regenerable from rules and parts preserved o
 
 When a derivable component does not match validation, do not use it unchanged **as a correct framework derivation in attribution use.** Investigate whether the mismatch lies in calculation, implementation, source material, or lineage; if unresolved, it may remain `unresolved`. If the mismatch itself generates an exploratory question, preserve its provenance and keep it distinct from the framework's canonical structure. Do not invent analyst-defined transitions and then attribute them to a framework that has no transition rule.
 
-### Keep interpretive language available
+### Keep interpretive language and the practice layer available
 
-The interpretive-language layer is not used for assignment, but in exploration it can generate secondary-effect questions, counter-hypotheses, sensitivity checks, inspection items, conflict structures, and expression candidates.
+The interpretive-language layer is not used for assignment, but in exploration it can generate secondary-effect questions, counter-hypotheses, sensitivity checks, inspection items, conflict structures, and expression candidates. The practice layer generates candidate points of attention and actions to try in exploration, and serves as a foothold when landing in reality.
 
 Do not suppress framework-generated ideas. Keep enough provenance to tell which framework, part, or operation generated them.
 
@@ -106,6 +109,10 @@ For writing, art, design concepts, or worldbuilding, `framework_generated` struc
 Do not confuse compositional adoption with a historical fact about the tradition, a causal law of the real world, or an empirical finding about the target.
 
 A third structure arising from contact among frameworks remains `cross_field_emergent`; do not write it back into the canonical framework itself.
+
+### Landing in practice and action
+
+Make points of attention and candidate actions from the practice layer concrete step by step through questions, observations, small trials, composition, and judgments. Follow `core/discovery-pathway.md` for the steps of concretization and for illumination. Receive domain quality and safety standards and decisions about execution from the caller's context or domain skills; do not replace them with the framework's practical wisdom.
 
 ## 3d. Placement, adoption judgment, and over-application
 

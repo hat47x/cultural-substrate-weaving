@@ -62,6 +62,34 @@ This reconciliation does not claim that `make research-translation-prepare`, `ma
 
 The Japanese and English versions of `ROUTER.md` and `methods/integration.md` were read together after the split-ownership regression check exposed stale CSW wording. The Router now assigns material-synthesis procedures to a compatible realization, and the integration reference states the handoff contract. The English text was aligned with the same responsibility boundary. The reviewed Japanese source blobs are recorded in the JSON status file; the other scoped files remain unchanged.
 
+## Core-value refinement re-review — 2026-09-27
+
+The author-directed core-value refinement (catalytic discovery pathway, structural-core priority, provisional generative-rule stance, practice layer, and illumination without gates) changed four bilingual pairs inside `scope_files`:
+
+- `src/ja-JP/ROUTER.md` / `src/en-US/ROUTER.md`
+- `src/ja-JP/core/cognitive-stance.md` / `src/en-US/core/cognitive-stance.md`
+- `src/ja-JP/core/principles-and-constraints.md` / `src/en-US/core/principles-and-constraints.md`
+- `src/ja-JP/governance/evaluation.md` / `src/en-US/governance/evaluation.md`
+
+The same change also edited `methods/system-selection.md` and `methods/framework-application.md` and added `core/discovery-pathway.md`; those files are outside this record's `scope_files` and are tracked only by the translation manifest.
+
+Each Japanese/English pair was read together after the Japanese prose pass, rather than accepting a hash-only refresh. The pairs remain aligned on the boundaries this record protects:
+
+- attending to misfit, resistance, reversal, or excess, and asking whether tension produces a third structure, is retained verbatim in both Router texts;
+- `Correspondence != synthesis` / `対応 ≠ 統合` and the rule against promoting a third structure to target-side fact without independent target-side support are retained;
+- the cognitive stance still treats sublation as neither a fixed stage model nor a success quota; the added section pairs emptying oneself before the target with provisionally running a framework as a generative rule, and keeps the assumption clause attached until the target responds;
+- the dual-fidelity text still requires observing how difference, resistance, or contradiction changes through contact; framework fidelity is now layered as structural core, lineage, and lower-priority cultural variation;
+- evaluation still refuses to reward fit or force a third structure; the added item keeps illumination from becoming a pass/fail gate or form field.
+
+`reviewed_source_blobs` was advanced only for the four re-read Japanese files:
+
+- `ROUTER.md`: `332abf3eb5de93d5d287026e6b1ff6fa7134d19e`
+- `core/cognitive-stance.md`: `ac4edb81b0c5c1931654eae9038bd454a3eee0e3`
+- `core/principles-and-constraints.md`: `13b380a07df8bd9375b0dd9d34e83823df0e649c`
+- `governance/evaluation.md`: `d228f46207ac1a99670973d8c1cc3bf318b51b42`
+
+`methods/integration.md` and `methods/transformation.md` are unchanged. The translation manifest was refreshed with `make update-en-hashes` after this reading, so the status remains `synchronized` with no `expected_stale_files`. This re-review was performed by the AI that authored the change in the same session; it is a bilingual alignment check, not independent English review, and it does not authorize production promotion.
+
 ## Machine-readable state contract
 
 The explanatory record in this file is paired with:

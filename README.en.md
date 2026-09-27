@@ -2,7 +2,7 @@
 
 [日本語](README.md) | [English](README.en.md)
 
-A complementary AI skill that **opens cultural, philosophical, and traditional frameworks as temporary cognitive fields, then returns the questions, relations, states, and transition candidates they produce to the target for validation**. Cultural frameworks are not treated as answers or classifiers. Only portions independently supported by target-side material are treated as findings about the target.
+Researchers sometimes encounter an unfamiliar concept in everyday life and use it as a catalyst for deep discovery. This is **a complementary AI skill for approximating that experience within generative AI cognition**. It opens time-tested cultural, philosophical, and traditional frameworks as temporary cognitive fields, then returns the questions, relations, states, and transition candidates they produce to the target for validation. Cultural frameworks are not treated as answers or classifiers. Only portions independently supported by target-side material are treated as findings about the target.
 
 > **This research branch is testing a method split.** Both the Japanese canonical source and the English CSW runtime now use the thin-CSW boundary: one-round material synthesis is delegated to `affinity-synthesis`, while multi-round delta/reopen orchestration is delegated to `iterative-inquiry-synthesis`. The two sibling prototypes now also have initial English `SKILL.en.md` and `METHOD.en.md` drafts alongside their Japanese research realizations. This does not mean that a three-Skill distribution has already been publicly released. Multi-skill distribution generation/rebuild, independent review of the English prototype realizations, and classification or translation of ancillary research references/evals remain incomplete.
 
@@ -98,6 +98,14 @@ GitHub Actions are currently disabled. Validation is performed in a local or equ
 - `plugins/`: generated and Git-tracked artifacts
 - `dist/`: release artifacts; not tracked by Git
 
+## Core value
+
+> **Approximate, within generative AI cognition, the experience of a researcher who encounters concepts in everyday life and uses them as catalysts for deep discovery.**
+
+From cultural frameworks, the skill mainly extracts typologies that divide the whole world as one system, transitions and topology between states, and practical wisdom about where to direct attention in each state and how to connect it to reality. Lineage is shown, but cultural variation and ornament receive one step lower priority. Framework rules are treated provisionally as generative rules that produce a world, not as summaries induced from observation, and are run boldly while the assumption stays explicit.
+
+The pathway for bringing resulting candidates into real use is still a hypothesis. Rather than installing uniform safety gates, the skill illuminates candidates through a sequence of shifting viewpoints: origin, assumption, complementary positions within the whole framework, pushback from the target, and concretization. It is testing a design in which refinement happens naturally within the flow, so that candidates that have lost their marks do not erode reality. The Japanese design policy is **[根幹価値と具現化方針](docs/ja/maintainers/core-value-and-embodiment-policy.md)**.
+
 ## Core principles
 
 The CSW boundary is:
@@ -112,7 +120,7 @@ KJ Method is a registered trademark of Kawakita Research Institute. This prototy
 
 ## Why use an external framework? A hypothesis
 
-The method does not claim that cultural frameworks are true. It treats their pre-existing positions, relations, and transitions as prior structure that may open search directions ordinary analysis does not produce.
+The method does not claim that cultural frameworks are true. It treats their pre-existing positions, relations, and transitions as prior structure that may open search directions ordinary analysis does not produce. Here the framework acts as a catalyst. A catalyst promotes a reaction without becoming part of the product. In research and diagnosis, a framework is a catalyst for discovery, not grounds for a finding.
 
 Questions, hypotheses, or descriptions may remain meaningful after framework names and correspondence tables are removed. That only shows that they have been de-bound from the framework's authority; it does not create additional target-side evidence. In research and diagnosis, only parts independently supported by target-side sources, observations, or falsification are treated as findings. In generation and composition, framework-generated structure may be adopted as a compositional resource, but it remains distinct from facts about the target.
 

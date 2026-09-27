@@ -100,7 +100,7 @@ class ResearchSkillSubtreePlanTests(unittest.TestCase):
         )
         self.assertEqual(csw["target_root"], "skills/weave")
         self.assertEqual(csw["source_mode"], "canonical_manifest")
-        self.assertEqual(len(csw["mappings"]), 13)
+        self.assertEqual(len(csw["mappings"]), 14)
         by_target = {item["target"]: item for item in csw["mappings"]}
         self.assertEqual(by_target["skills/weave/SKILL.md"]["operation"], "render_runtime_entry")
         self.assertEqual(by_target["skills/weave/SKILL.md"]["source"], "src/ja-JP/ROUTER.md")

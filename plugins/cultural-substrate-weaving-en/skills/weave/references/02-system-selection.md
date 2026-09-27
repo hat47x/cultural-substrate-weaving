@@ -17,7 +17,7 @@ Normally, search for candidate frameworks from target-side structures that are s
 
 ### Do not leave candidate recall to the model's spontaneous associations
 
-In exploratory use, do not end candidate search with frameworks already close to the target's current vocabulary. Give **high recall/search priority** to frameworks that offer structures different from the target's present partitioning, such as state grids, cycles and calendars, paths and flows, directions, layers, and paths between layers.
+In exploratory use, do not end candidate search with frameworks already close to the target's current vocabulary. Give **high recall/search priority** to frameworks that offer structures different from the target's present partitioning, such as state grids, cycles and calendars, paths and flows, directions, layers, and paths between layers. Structural distance can become the catalytic force that reorganizes how a question looks.
 
 The following names are search anchors for reaching different structural families, not adoption recommendations or a complete candidate list.
 
@@ -27,13 +27,21 @@ The following names are search anchors for reaching different structural familie
 
 One framework may appear under more than one exploration family. Do not treat these groupings as traditional classifications or claims that the frameworks are equivalent. Prefer raising a small number of candidates from structurally different families rather than accumulating many near-duplicates from one family.
 
-These names are not substitutes for framework knowledge. When a framework is actually used, return to sources to confirm its element count, correspondences, transition rules, historical meaning, lineage differences, variants, and limits. Do not fill missing details from model memory alone.
+These names are not substitutes for framework knowledge. When a framework is actually used, return to sources to confirm its element count, correspondences, transition rules, historical meaning, lineage differences, variants that bear on the structural core, and limits. Do not fill missing details from model memory alone.
 
 Do not rush adoption or rejection during candidate recall. A local mismatch or a probe that initially produces no question does not by itself negate the framework's broader exploratory value. Preview its main cognitive structure and limits, then ask whether it generates questions, contrasts, or research targets worth returning to the target.
 
 In exploratory use, external use conditions and delegated discretion may instead lead into a framework-led preview. Do not first cut the framework down to what already fits the current question. Before mapping it to the target, inspect the framework's main overall distinctions—what it treats as positions, paths, cycles, relations, transitions, and boundaries.
 
-Whichever entry is used, inspect the candidate framework's elements and classification principles, relations, time/cycle/stage structure, original domain of use, historical context, variants, and limits.
+### Extract the structural core first
+
+Whichever entry is used, extract the following structural core from the framework first.
+
+1. **Partition of the whole**: the partitioning principle that tries to divide the whole world as one system without gaps or overlaps, and the closed position set. The more closed the set, the more directly an empty position becomes a question.
+2. **Transitions and topology**: adjacency, opposition, cycles, generation and restraint, center and periphery, reversibility and irreversibility, and unreachable positions.
+3. **Practical wisdom for each state**: where attention belongs in each state, what actions fit, what to avoid, and how the state connects to reality.
+
+Also confirm the original domain of use, lineage, and limits. Show lineage well enough that the tradition, source, or line of transmission can be traced later. Among cultural variation, ornament, and variant readings, check first those that change the structural core; open the rest when, for example, generation or composition needs cultural texture. Do not assume that every framework has all three layers. When the analyst supplies a missing layer, keep it distinct from the framework's canonical structure.
 
 Do not collapse candidates into one fit score. On the target-led path, ask what different way of seeing the unresolved target structure the framework can supply. On the framework-led path, ask what distinctions or questions appear that the current problem framing does not yet contain. Do not turn this into unlimited enumeration of unrelated frameworks, or discard parts of a framework merely because one use case did not foreground them.
 

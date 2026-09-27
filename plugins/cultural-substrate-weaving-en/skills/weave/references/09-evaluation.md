@@ -17,6 +17,7 @@ Read this before finalizing an application result to check skill-specific increm
 11. Reposts, derivatives, and rediscovery through multiple frameworks were not double-counted as independent support.
 12. Observable differences, user judgments, AI evaluations, and measurements were not treated as the same thing.
 13. Domain-specific correctness, quality, and feasibility were not replaced by this skill's own evaluation.
+14. Illumination was not turned into pass/fail judgment, deletion, or a form field. Candidates that had lost their marks of origin, assumption, and reach were not circulated as fact, as the truth about the whole, or as the target's own voice.
 
 ## Look for traceable change
 
@@ -28,6 +29,7 @@ Look at target-side or real-work changes rather than framework count or mapping 
 - New findings gained support from target-side material.
 - Target/framework misfit produced a distinction, relation, or recomposition candidate that had not been visible before.
 - Target-side contradiction caused the framework reading itself to be narrowed or revised.
+- Points of attention or small trials obtained from a framework's practice layer were actually carried out in real work.
 - Something was actually adopted into an artifact, research plan, design, or decision.
 - Something previously adopted was later withdrawn, transformed, or reused elsewhere.
 - An old residual was reactivated by later material.
@@ -82,6 +84,7 @@ If the user later corrects or withdraws a judgment, preserve that later history 
 - Producing a third structure becomes a goal in itself and unsupported synthesis prose is added to satisfy it.
 - Explanation volume grows while artifacts, research, or decisions do not move.
 - Observation overhead becomes heavier than the real task.
+- Illumination turns into form-filling or excessive hedging and thins out generative richness.
 
 When these signs appear, return to target-side material and inspect loading depth, use mode, attribution, and application scope.
 
