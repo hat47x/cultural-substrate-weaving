@@ -439,6 +439,24 @@ def validate_production_source_promotion_plan(
             if locale_plan.get("production_source_mode") != "locale_tree":
                 errors.append(f"production source mode must remain locale_tree: {research_id}/{locale}")
             production_root = locale_plan.get("production_root")
+            root_pattern = production_source.get("root_pattern")
+            expected_production_root = None
+            if isinstance(root_pattern, str) and isinstance(locale, str):
+                try:
+                    expected_production_root = root_pattern.format(locale=locale)
+                except (KeyError, ValueError):
+                    errors.append(
+                        f"production source root pattern is invalid: {research_id}/{locale}"
+                    )
+            if (
+                expected_production_root is not None
+                and production_root != expected_production_root
+            ):
+                errors.append(
+                    "production source root does not match descriptor authority: "
+                    f"{research_id}/{locale}: {production_root!r} != "
+                    f"{expected_production_root!r}"
+                )
             if not isinstance(production_root, str) or not production_root.startswith("src/skills/"):
                 errors.append(f"production source root must stay under src/skills: {research_id}/{locale}")
             if isinstance(production_root, str) and research_id in production_root and research_id != expected_name:

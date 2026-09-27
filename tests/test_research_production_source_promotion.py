@@ -110,6 +110,26 @@ class ResearchProductionSourcePromotionTests(unittest.TestCase):
             errors,
         )
 
+    def test_locale_plan_production_root_must_match_descriptor_authority(self) -> None:
+        plan = copy.deepcopy(self.plan)
+        layer1 = self.skill("affinity-synthesis", plan)
+        locale_plan = layer1["locales"]["ja-JP"]
+        drifted_root = "src/skills/material-led-synthesis/ja-JP-drift"
+        locale_plan["production_root"] = drifted_root
+        locale_plan["runtime_entry"] = f"{drifted_root}/SKILL.md"
+        for mapping in locale_plan["mappings"]:
+            mapping["target"] = (
+                f"{drifted_root}/{mapping['target_relative']}"
+            )
+        errors = self.validate(plan)
+        self.assertTrue(
+            any(
+                "production source root does not match descriptor authority" in error
+                for error in errors
+            ),
+            errors,
+        )
+
     def test_locale_plan_research_package_mode_must_remain_explicit_files(self) -> None:
         plan = copy.deepcopy(self.plan)
         layer1 = self.skill("affinity-synthesis", plan)
