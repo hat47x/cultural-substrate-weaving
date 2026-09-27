@@ -337,8 +337,21 @@ def plan_production_adapter_metadata_promotion(
                         f"{research_id}/{locale}/{profile}: "
                         f"{research_status!r} != {expected_research_status!r}"
                     )
-                source = research_item["source"]
+                source = research_item.get("source")
+                if not isinstance(source, str) or not _safe_repo_path(source):
+                    raise ValueError(
+                        "OpenAI adapter metadata source is invalid: "
+                        f"{research_id}/{locale}/{profile}: {source!r}"
+                    )
                 target = source_pattern.format(locale=locale, profile=profile)
+                if (
+                    not _safe_repo_path(target)
+                    or not target.startswith("adapters/openai-skill/")
+                ):
+                    raise ValueError(
+                        "OpenAI production metadata target is invalid: "
+                        f"{research_id}/{locale}/{profile}: {target!r}"
+                    )
 
                 if metadata_mode == "existing-per-locale-profile":
                     openai.append(
