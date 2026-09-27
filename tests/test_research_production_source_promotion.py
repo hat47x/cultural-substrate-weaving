@@ -363,6 +363,37 @@ class ResearchProductionSourcePromotionTests(unittest.TestCase):
             errors,
         )
 
+    def test_false_collision_flag_cannot_hide_normalized_target_collision(self) -> None:
+        suite = copy.deepcopy(self.suite)
+        layer1 = next(
+            item for item in suite["skills"] if item["id"] == "affinity-synthesis"
+        )
+        package_source = layer1["locale_realizations"]["en-US"]["package_source"]
+        package_source["files"].append("SKILL.md")
+
+        plan = plan_production_source_promotion(
+            suite,
+            self.descriptor,
+            self.migration,
+            self.inventory,
+        )
+        locale_plan = next(
+            item for item in plan["skills"] if item["research_id"] == "affinity-synthesis"
+        )["locales"]["en-US"]
+        self.assertTrue(locale_plan["target_collision"])
+        locale_plan["target_collision"] = False
+
+        errors = validate_production_source_promotion_plan(
+            plan,
+            self.descriptor,
+            self.inventory,
+            suite=suite,
+        )
+        self.assertTrue(
+            any("production source target collision detected" in error for error in errors),
+            errors,
+        )
+
     def test_target_collision_is_rejected(self) -> None:
         plan = copy.deepcopy(self.plan)
         layer1 = self.skill("affinity-synthesis", plan)
