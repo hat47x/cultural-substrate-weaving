@@ -413,6 +413,11 @@ def validate_production_source_promotion_plan(
     suite: dict | None = None,
     migration: dict | None = None,
 ) -> list[str]:
+    if not isinstance(plan, dict):
+        return ["production source promotion plan must be an object"]
+    if not isinstance(descriptor, dict):
+        return ["production promotion descriptor authority must be an object"]
+
     errors: list[str] = []
     errors.extend(validate_production_suite_descriptor(descriptor))
     if plan.get("schema") != PLAN_SCHEMA:
