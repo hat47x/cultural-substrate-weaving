@@ -404,6 +404,7 @@ def validate_production_source_promotion_plan(
     suite: dict | None = None,
 ) -> list[str]:
     errors: list[str] = []
+    errors.extend(validate_production_suite_descriptor(descriptor))
     if plan.get("schema") != PLAN_SCHEMA:
         errors.append(f"production source promotion plan schema must be {PLAN_SCHEMA}")
     if plan.get("status") != "design-only":
