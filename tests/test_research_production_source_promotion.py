@@ -56,6 +56,38 @@ class ResearchProductionSourcePromotionTests(unittest.TestCase):
     def test_current_plan_is_valid(self) -> None:
         self.assertEqual(self.validate(), [])
 
+    def test_validator_requires_research_suite_authority(self) -> None:
+        errors = validate_production_source_promotion_plan(
+            self.plan,
+            self.descriptor,
+            self.inventory,
+        )
+        self.assertTrue(
+            any(
+                "production source promotion validation requires research suite authority"
+                in error
+                for error in errors
+            ),
+            errors,
+        )
+
+    def test_validator_requires_projection_inventory_authority(self) -> None:
+        errors = validate_production_source_promotion_plan(
+            self.plan,
+            self.descriptor,
+            None,
+            suite=self.suite,
+        )
+        self.assertTrue(
+            any(
+                "production source promotion validation requires projection-inventory authority"
+                in error
+                for error in errors
+            ),
+            errors,
+        )
+
+
     def test_current_authorities_are_valid(self) -> None:
         self.assertEqual(
             validate_source_promotion_authorities(
