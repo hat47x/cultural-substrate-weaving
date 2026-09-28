@@ -216,6 +216,15 @@ def plan_production_source_promotion(
     migration: dict,
     inventory: dict,
 ) -> dict:
+    if not isinstance(suite, dict):
+        raise ValueError("research suite authority must be an object")
+    if not isinstance(descriptor, dict):
+        raise ValueError("production promotion descriptor authority must be an object")
+    if not isinstance(migration, dict):
+        raise ValueError("public-name migration authority must be an object")
+    if not isinstance(inventory, dict):
+        raise ValueError("projection-inventory authority must be an object")
+
     descriptor_research_ids = [
         item.get("research_id")
         for item in descriptor.get("skills", [])

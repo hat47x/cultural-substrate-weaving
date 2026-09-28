@@ -260,6 +260,21 @@ class ResearchProductionAdapterMetadataPromotionTests(unittest.TestCase):
             )
         self.assertEqual(self.errors(plan, adapter_plan), [])
 
+    def test_planner_rejects_non_object_authority_roots(self) -> None:
+        cases = (
+            ("adapter_plan", [], self.descriptor, self.locale_catalog, "adapter metadata plan authority must be an object"),
+            ("descriptor", self.adapter_plan, [], self.locale_catalog, "production promotion descriptor authority must be an object"),
+            ("locale_catalog", self.adapter_plan, self.descriptor, [], "production locale catalog must be an object"),
+        )
+        for label, adapter_plan, descriptor, locale_catalog, expected in cases:
+            with self.subTest(label=label):
+                with self.assertRaisesRegex(ValueError, expected):
+                    plan_production_adapter_metadata_promotion(
+                        adapter_plan,
+                        descriptor,
+                        locale_catalog,
+                    )
+
     def test_planner_rejects_duplicate_descriptor_skill(self) -> None:
         descriptor = copy.deepcopy(self.descriptor)
         descriptor["skills"].append(copy.deepcopy(descriptor["skills"][0]))
