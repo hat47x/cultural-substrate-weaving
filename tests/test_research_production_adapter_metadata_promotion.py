@@ -684,6 +684,20 @@ class ResearchProductionAdapterMetadataPromotionTests(unittest.TestCase):
             errors,
         )
 
+    def test_planner_rejects_unhashable_bundle_catalog_source(self) -> None:
+        adapter_plan = copy.deepcopy(self.adapter_plan)
+        for distribution_name in ("claude_plugin", "codex_plugin"):
+            adapter_plan["distributions"][distribution_name]["source"] = []
+        with self.assertRaisesRegex(
+            ValueError,
+            "locale_bundle production catalog path is invalid",
+        ):
+            plan_production_adapter_metadata_promotion(
+                adapter_plan,
+                self.descriptor,
+                self.locale_catalog,
+            )
+
     def test_planner_rejects_bundle_catalog_outside_production_source_class(self) -> None:
         adapter_plan = copy.deepcopy(self.adapter_plan)
         for distribution_name in ("claude_plugin", "codex_plugin"):
@@ -984,6 +998,20 @@ class ResearchProductionAdapterMetadataPromotionTests(unittest.TestCase):
         errors = self.errors(plan)
         self.assertTrue(
             any("description must match prototype source" in error for error in errors),
+            errors,
+        )
+
+    def test_bundle_research_composition_rejects_unhashable_values_without_crashing(self) -> None:
+        plan = copy.deepcopy(self.plan)
+        item = self.bundle_item("ja-JP", plan)
+        item["prototype_research_contains"] = [
+            "cultural-substrate-weaving",
+            "affinity-synthesis",
+            {"id": "iterative-inquiry-synthesis"},
+        ]
+        errors = self.errors(plan)
+        self.assertTrue(
+            any("bundle prototype research composition mismatch" in error for error in errors),
             errors,
         )
 
