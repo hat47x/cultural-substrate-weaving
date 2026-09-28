@@ -45,6 +45,12 @@ class ResearchPublicNameProjectionInventoryTests(unittest.TestCase):
     def content_item(self, inventory: dict, path: str) -> dict:
         return next(item for item in inventory["content_projection"] if item["path"] == path)
 
+    def test_validator_rejects_non_object_inventory_without_crashing(self) -> None:
+        self.assertEqual(
+            validate_projection_inventory(ROOT, []),
+            ["projection inventory must be an object"],
+        )
+
     def test_current_inventory_is_valid(self) -> None:
         self.assertEqual(validate_projection_inventory(ROOT, self.inventory), [])
 
