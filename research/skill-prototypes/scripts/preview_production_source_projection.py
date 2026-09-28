@@ -18,7 +18,7 @@ import hashlib
 import json
 import re
 import sys
-from pathlib import Path
+from pathlib import Path, PurePosixPath
 
 ROOT = Path(__file__).resolve().parents[3]
 BASE = ROOT / "research" / "skill-prototypes"
@@ -48,6 +48,13 @@ class ProjectionError(ValueError):
     pass
 
 
+def _safe_repo_relative(value: object) -> bool:
+    if not isinstance(value, str) or not value or "\\" in value:
+        return False
+    path = PurePosixPath(value)
+    return not path.is_absolute() and ".." not in path.parts
+
+
 def _replace_required(text: str, old: str, new: str, action: str, source: str) -> str:
     count = text.count(old)
     if count == 0:
@@ -56,8 +63,14 @@ def _replace_required(text: str, old: str, new: str, action: str, source: str) -
 
 
 def _rename_pair(plan: dict) -> tuple[str, str]:
+    if not isinstance(plan, dict):
+        raise ProjectionError("production source promotion plan must be an object")
+    skills = plan.get("skills")
+    if not isinstance(skills, list):
+        raise ProjectionError("production source promotion plan skills must be a list")
+
     pairs: list[tuple[str, str]] = []
-    for skill in plan.get("skills", []):
+    for skill in skills:
         if not isinstance(skill, dict):
             continue
         research_id = skill.get("research_id")
@@ -168,17 +181,69 @@ def _frontmatter_name(text: str) -> str | None:
 def project_production_source_contents(plan: dict, root: Path = ROOT) -> dict[str, dict]:
     projected: dict[str, dict] = {}
     rename_research_id, rename_production_name = _rename_pair(plan)
-    for skill in plan.get("skills", []):
+    skills = plan["skills"]
+    for skill in skills:
         if not isinstance(skill, dict) or skill.get("state") != "planned-locale-tree-promotion":
             continue
+        research_id = skill.get("research_id")
         production_name = skill.get("production_name")
-        for locale, locale_plan in skill.get("locales", {}).items():
-            for mapping in locale_plan.get("mappings", []):
-                source = mapping["source"]
-                target = mapping["target"]
+        if not isinstance(research_id, str) or not research_id:
+            raise ProjectionError("planned production Skill research_id must be a non-empty string")
+        if not isinstance(production_name, str) or not production_name:
+            raise ProjectionError(
+                f"planned production Skill production_name must be a non-empty string: {research_id}"
+            )
+        locales = skill.get("locales")
+        if not isinstance(locales, dict):
+            raise ProjectionError(
+                f"planned production Skill locales must be an object: {research_id}"
+            )
+        for locale, locale_plan in locales.items():
+            if not isinstance(locale, str) or not locale:
+                raise ProjectionError(
+                    f"planned production Skill locale key must be a non-empty string: {research_id}"
+                )
+            if not isinstance(locale_plan, dict):
+                raise ProjectionError(
+                    f"planned production locale entry must be an object: {research_id}/{locale}"
+                )
+            mappings = locale_plan.get("mappings")
+            if not isinstance(mappings, list):
+                raise ProjectionError(
+                    f"planned production mappings must be a list: {research_id}/{locale}"
+                )
+            for index, mapping in enumerate(mappings):
+                if not isinstance(mapping, dict):
+                    raise ProjectionError(
+                        f"planned production mapping must be an object: {research_id}/{locale}/{index}"
+                    )
+                source = mapping.get("source")
+                target = mapping.get("target")
+                target_relative = mapping.get("target_relative")
+                if not _safe_repo_relative(source):
+                    raise ProjectionError(
+                        f"planned production source path is unsafe: {research_id}/{locale}: {source!r}"
+                    )
+                if not _safe_repo_relative(target):
+                    raise ProjectionError(
+                        f"planned production target path is unsafe: {research_id}/{locale}: {target!r}"
+                    )
+                if not _safe_repo_relative(target_relative):
+                    raise ProjectionError(
+                        "planned production target_relative path is unsafe: "
+                        f"{research_id}/{locale}: {target_relative!r}"
+                    )
+                transforms = mapping.get("content_transforms")
+                if (
+                    not isinstance(transforms, list)
+                    or not all(isinstance(action, str) and action for action in transforms)
+                ):
+                    raise ProjectionError(
+                        f"planned production content_transforms must be a string list: "
+                        f"{research_id}/{locale}/{target_relative}"
+                    )
                 source_path = root / source
                 text = source_path.read_text(encoding="utf-8")
-                transforms = mapping.get("content_transforms", [])
                 result = apply_content_transforms(
                     text,
                     transforms,
@@ -189,12 +254,12 @@ def project_production_source_contents(plan: dict, root: Path = ROOT) -> dict[st
                 if target in projected:
                     raise ProjectionError(f"duplicate projected production target: {target}")
                 projected[target] = {
-                    "research_id": skill["research_id"],
+                    "research_id": research_id,
                     "production_name": production_name,
                     "locale": locale,
                     "source": source,
                     "target": target,
-                    "target_relative": mapping["target_relative"],
+                    "target_relative": target_relative,
                     "content_transforms": transforms,
                     "content": result,
                     "sha256": hashlib.sha256(result.encode("utf-8")).hexdigest(),
@@ -203,8 +268,14 @@ def project_production_source_contents(plan: dict, root: Path = ROOT) -> dict[st
 
 
 def validate_projected_contents(projected: dict[str, dict], plan: dict) -> list[str]:
+    if not isinstance(projected, dict):
+        return ["projected production contents must be an object"]
+
     errors: list[str] = []
-    rename_research_id, _ = _rename_pair(plan)
+    try:
+        rename_research_id, _ = _rename_pair(plan)
+    except ProjectionError as exc:
+        return [f"invalid production source promotion plan: {exc}"]
     by_skill_locale: dict[tuple[str, str], list[dict]] = {}
     for item in projected.values():
         key = (item["research_id"], item["locale"])
