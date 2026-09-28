@@ -430,18 +430,27 @@ def validate_production_source_promotion_plan(
         errors.append(
             "production source promotion validation requires research suite authority"
         )
+    elif not isinstance(suite, dict):
+        errors.append("research suite authority must be an object")
+        suite = None
     else:
         errors.extend(validate_suite(ROOT, suite))
     if inventory is None:
         errors.append(
             "production source promotion validation requires projection-inventory authority"
         )
+    elif not isinstance(inventory, dict):
+        errors.append("projection-inventory authority must be an object")
+        inventory = None
     else:
         errors.extend(validate_projection_inventory(ROOT, inventory))
     if migration is None:
         errors.append(
             "production source promotion validation requires public-name migration authority"
         )
+    elif not isinstance(migration, dict):
+        errors.append("public-name migration authority must be an object")
+        migration = None
     else:
         errors.extend(validate_public_name_migration(ROOT, migration))
 
