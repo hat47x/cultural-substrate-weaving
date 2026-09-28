@@ -390,6 +390,10 @@ def plan_production_source_promotion(
                 raise ValueError(
                     f"research package files are unsafe for {research_id}/{locale}"
                 )
+            if len(package_files) != len(set(package_files)):
+                raise ValueError(
+                    f"skill {research_id}: locale realization {locale} explicit_files contains duplicate paths"
+                )
             research_root = PurePosixPath(package_root)
             root_pattern = production_source.get("root_pattern")
             if not isinstance(root_pattern, str):
