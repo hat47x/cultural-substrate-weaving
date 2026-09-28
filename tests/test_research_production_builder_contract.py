@@ -188,6 +188,28 @@ class ResearchProductionBuilderContractTests(unittest.TestCase):
             "deferred composite microsoft_copilot must remain outside the first builder change",
         )
 
+    def test_planner_rejects_invalid_authority_roots_without_crashing(self) -> None:
+        with self.assertRaisesRegex(
+            ValueError,
+            "production promotion descriptor must be an object",
+        ):
+            plan_production_builder([], self.contract)
+
+        with self.assertRaisesRegex(
+            ValueError,
+            "production builder contract must be an object",
+        ):
+            plan_production_builder(self.descriptor, [])
+
+    def test_planner_composes_builder_contract_authority(self) -> None:
+        contract = copy.deepcopy(self.contract)
+        contract["production_promotion_authorized"] = True
+        with self.assertRaisesRegex(
+            ValueError,
+            "builder contract must not authorize production promotion",
+        ):
+            plan_production_builder(self.descriptor, contract)
+
     def test_planner_projects_layer1_public_name_not_research_id(self) -> None:
         plan = plan_production_builder(self.descriptor, self.contract)
         for locale in self.descriptor["locales"]:

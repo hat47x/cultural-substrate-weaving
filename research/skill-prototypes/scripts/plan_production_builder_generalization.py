@@ -102,6 +102,14 @@ def _collisions(items: list[dict], target_key: str) -> list[dict]:
 
 
 def plan_production_builder(descriptor: dict, contract: dict) -> dict:
+    errors = validate_production_suite_descriptor(descriptor)
+    errors.extend(validate_production_builder_contract(ROOT, contract, descriptor))
+    if errors:
+        raise ValueError(
+            "production builder authority validation failed: "
+            f"{errors[0]}"
+        )
+
     output = {
         "schema": PLAN_SCHEMA,
         "status": "design-only",
