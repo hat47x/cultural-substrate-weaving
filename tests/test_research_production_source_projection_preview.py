@@ -76,6 +76,66 @@ class ResearchProductionSourceProjectionPreviewTests(unittest.TestCase):
         self.assertTrue(preview["files"])
         self.assertTrue(all("content" not in item for item in preview["files"]))
 
+    def test_rename_pair_rejects_malformed_plan_root_without_crashing(self) -> None:
+        with self.assertRaisesRegex(
+            ProjectionError,
+            "production source promotion plan must be an object",
+        ):
+            _rename_pair([])
+
+        with self.assertRaisesRegex(
+            ProjectionError,
+            "production source promotion plan skills must be a list",
+        ):
+            _rename_pair({"skills": None})
+
+    def test_projection_rejects_unsafe_mapping_paths_before_file_read(self) -> None:
+        cases = (
+            ("source", "../outside.md", "source path is unsafe"),
+            ("target", "/tmp/outside.md", "target path is unsafe"),
+            ("target_relative", "../outside.md", "target_relative path is unsafe"),
+        )
+        for field, value, expected in cases:
+            plan = copy.deepcopy(self.plan)
+            skill = next(
+                item
+                for item in plan["skills"]
+                if item.get("state") == "planned-locale-tree-promotion"
+            )
+            locale_plan = next(iter(skill["locales"].values()))
+            locale_plan["mappings"][0][field] = value
+            with self.subTest(field=field), self.assertRaisesRegex(
+                ProjectionError,
+                expected,
+            ):
+                project_production_source_contents(plan)
+
+    def test_projection_rejects_malformed_mapping_collection_without_crashing(self) -> None:
+        plan = copy.deepcopy(self.plan)
+        skill = next(
+            item
+            for item in plan["skills"]
+            if item.get("state") == "planned-locale-tree-promotion"
+        )
+        locale_plan = next(iter(skill["locales"].values()))
+        locale_plan["mappings"] = None
+        with self.assertRaisesRegex(
+            ProjectionError,
+            "planned production mappings must be a list",
+        ):
+            project_production_source_contents(plan)
+
+    def test_projected_validator_rejects_malformed_roots_without_crashing(self) -> None:
+        self.assertEqual(
+            validate_projected_contents([], self.plan),
+            ["projected production contents must be an object"],
+        )
+        errors = validate_projected_contents(self.projected, [])
+        self.assertTrue(
+            any("production source promotion plan must be an object" in error for error in errors),
+            errors,
+        )
+
     def test_layer1_frontmatter_changes_but_display_title_remains_affinity_synthesis(self) -> None:
         ja = self.projected["src/skills/material-led-synthesis/ja-JP/SKILL.md"]["content"]
         en = self.projected["src/skills/material-led-synthesis/en-US/SKILL.md"]["content"]
