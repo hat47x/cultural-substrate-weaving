@@ -39,6 +39,63 @@ class ResearchProductionSuiteDescriptorTests(unittest.TestCase):
             skill for skill in descriptor["skills"] if skill["research_id"] == research_id
         )
 
+    def test_validator_rejects_non_object_descriptor_without_crashing(self) -> None:
+        self.assertEqual(
+            validate_production_suite_descriptor([]),
+            ["production promotion descriptor must be an object"],
+        )
+
+    def test_distribution_lists_reject_unhashable_values_without_crashing(self) -> None:
+        descriptor = copy.deepcopy(self.descriptor)
+        descriptor["first_wave_distributions"] = [
+            "openai_skill",
+            "claude_plugin",
+            {"name": "codex_plugin"},
+        ]
+        self.assert_has_error(
+            descriptor,
+            "first_wave_distributions must contain exactly",
+        )
+
+        descriptor = copy.deepcopy(self.descriptor)
+        descriptor["deferred_composite_distributions"] = [
+            "chatgpt_gpt",
+            {"name": "microsoft_copilot"},
+        ]
+        self.assert_has_error(
+            descriptor,
+            "deferred_composite_distributions must contain exactly",
+        )
+
+    def test_malformed_skill_identity_does_not_crash_set_validation(self) -> None:
+        descriptor = copy.deepcopy(self.descriptor)
+        descriptor["skills"][0]["research_id"] = {"id": "cultural-substrate-weaving"}
+        self.assert_has_error(
+            descriptor,
+            "research_id must be a non-empty string",
+        )
+        self.assert_has_error(
+            descriptor,
+            "descriptor research_id set must contain exactly",
+        )
+
+    def test_per_skill_distribution_mapping_keys_must_be_strings(self) -> None:
+        descriptor = copy.deepcopy(self.descriptor)
+        layer1 = self.skill(descriptor, "affinity-synthesis")
+        layer1["targets"][1] = layer1["targets"].pop("openai_skill")
+        self.assert_has_error(
+            descriptor,
+            "targets must declare exactly the first-wave distributions",
+        )
+
+        descriptor = copy.deepcopy(self.descriptor)
+        layer1 = self.skill(descriptor, "affinity-synthesis")
+        layer1["adapter_metadata"][1] = layer1["adapter_metadata"].pop("openai_skill")
+        self.assert_has_error(
+            descriptor,
+            "adapter_metadata must declare exactly the first-wave distributions",
+        )
+
     def test_current_descriptor_is_valid(self) -> None:
         self.assertEqual(validate_production_suite_descriptor(self.descriptor), [])
 
