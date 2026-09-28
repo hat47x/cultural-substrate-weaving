@@ -147,7 +147,7 @@ def _planned_source_prefixes(plan: dict) -> tuple[str, ...]:
     """Compatibility fallback for callers that do not provide the research suite."""
 
     prefixes: set[str] = set()
-    for skill in plan_skills:
+    for skill in plan.get("skills", []):
         if not isinstance(skill, dict) or skill.get("state") != "planned-locale-tree-promotion":
             continue
         locales = skill.get("locales")
