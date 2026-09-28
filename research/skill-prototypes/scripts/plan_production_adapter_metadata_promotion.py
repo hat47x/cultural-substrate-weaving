@@ -28,6 +28,8 @@ from validate_research_production_suite_descriptor import (  # noqa: E402
 )
 
 PLAN_SCHEMA = "csw.production-adapter-metadata-promotion-plan/v1"
+ADAPTER_PLAN_SCHEMA = "csw.research-adapter-metadata-plan/v1"
+CANONICAL_SUITE_MANIFEST = "research/skill-prototypes/suite-manifest.json"
 BUNDLE_PROMOTION_STATE = "planned-locale-catalog-wording-update"
 RESEARCH_BUNDLE_ROOT = PurePosixPath("research/skill-prototypes/adapters/claude-codex")
 PRODUCTION_ADAPTER_ROOT = PurePosixPath("adapters")
@@ -102,6 +104,16 @@ def _bundle_distribution_names(adapter_plan: dict) -> tuple[str, ...]:
 
 
 def _assert_adapter_plan_distribution_modes(adapter_plan: dict) -> None:
+    if adapter_plan.get("schema") != ADAPTER_PLAN_SCHEMA:
+        raise ValueError(
+            f"adapter metadata plan schema must remain {ADAPTER_PLAN_SCHEMA}"
+        )
+    if adapter_plan.get("suite_manifest") != CANONICAL_SUITE_MANIFEST:
+        raise ValueError(
+            "adapter metadata suite_manifest must remain canonical: "
+            f"{adapter_plan.get('suite_manifest')!r} != {CANONICAL_SUITE_MANIFEST!r}"
+        )
+
     distributions = adapter_plan.get("distributions")
     if not isinstance(distributions, dict):
         raise ValueError("adapter metadata plan must declare distributions")
