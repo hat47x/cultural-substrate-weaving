@@ -147,7 +147,7 @@ def _planned_source_prefixes(plan: dict) -> tuple[str, ...]:
     """Compatibility fallback for callers that do not provide the research suite."""
 
     prefixes: set[str] = set()
-    for skill in plan.get("skills", []):
+    for skill in plan_skills:
         if not isinstance(skill, dict) or skill.get("state") != "planned-locale-tree-promotion":
             continue
         locales = skill.get("locales")
@@ -462,6 +462,10 @@ def validate_production_source_promotion_plan(
 
     descriptor_by_id = _descriptor_by_id(descriptor)
     inventory_actions = _projection_actions(inventory) if inventory is not None else {}
+    plan_skills = plan.get("skills")
+    if not isinstance(plan_skills, list):
+        errors.append("production source promotion plan Skills must be a list")
+        plan_skills = []
     suite_by_id = (
         {
             item["id"]: item
@@ -474,7 +478,7 @@ def validate_production_source_promotion_plan(
     descriptor_ids = set(descriptor_by_id)
     plan_research_ids = [
         item.get("research_id")
-        for item in plan.get("skills", [])
+        for item in plan_skills
         if isinstance(item, dict) and isinstance(item.get("research_id"), str)
     ]
     plan_ids = set(plan_research_ids)
@@ -576,6 +580,16 @@ def validate_production_source_promotion_plan(
                     )
 
         for locale, locale_plan in locales.items():
+            if not isinstance(locale, str):
+                errors.append(
+                    f"production source plan locale keys must be strings: {research_id}: {locale!r}"
+                )
+                continue
+            if not isinstance(locale_plan, dict):
+                errors.append(
+                    f"production source plan locale entries must be objects: {research_id}/{locale}"
+                )
+                continue
             if locale_plan.get("research_package_mode") != "explicit_files":
                 errors.append(
                     f"research package mode must remain explicit_files: {research_id}/{locale}"
