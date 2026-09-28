@@ -56,6 +56,23 @@ class ResearchProductionSourcePromotionTests(unittest.TestCase):
     def test_current_plan_is_valid(self) -> None:
         self.assertEqual(self.validate(), [])
 
+    def test_validator_composes_full_descriptor_status_authority(self) -> None:
+        descriptor = copy.deepcopy(self.descriptor)
+        descriptor["status"] = "promotion-ready"
+        errors = validate_production_source_promotion_plan(
+            self.plan,
+            descriptor,
+            self.inventory,
+            suite=self.suite,
+        )
+        self.assertTrue(
+            any(
+                "production promotion descriptor must remain status=design-only" in error
+                for error in errors
+            ),
+            errors,
+        )
+
     def test_validator_requires_research_suite_authority(self) -> None:
         errors = validate_production_source_promotion_plan(
             self.plan,
