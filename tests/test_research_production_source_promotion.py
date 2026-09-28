@@ -425,6 +425,20 @@ class ResearchProductionSourcePromotionTests(unittest.TestCase):
                 self.inventory,
             )
 
+    def test_planner_rejects_malformed_descriptor_skill_entry(self) -> None:
+        descriptor = copy.deepcopy(self.descriptor)
+        descriptor["skills"].append([])
+        with self.assertRaisesRegex(
+            ValueError,
+            "production descriptor Skill entry must declare research_id",
+        ):
+            plan_production_source_promotion(
+                self.suite,
+                descriptor,
+                self.migration,
+                self.inventory,
+            )
+
     def test_planner_rejects_non_object_authority_roots(self) -> None:
         cases = (
             ("suite", [], self.descriptor, self.migration, self.inventory, "research suite authority must be an object"),
