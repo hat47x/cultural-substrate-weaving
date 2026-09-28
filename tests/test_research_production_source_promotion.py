@@ -51,6 +51,7 @@ class ResearchProductionSourcePromotionTests(unittest.TestCase):
             self.descriptor,
             self.inventory,
             suite=self.suite,
+            migration=self.migration,
         )
 
     def test_current_plan_is_valid(self) -> None:
@@ -64,6 +65,7 @@ class ResearchProductionSourcePromotionTests(unittest.TestCase):
             descriptor,
             self.inventory,
             suite=self.suite,
+            migration=self.migration,
         )
         self.assertTrue(
             any(
@@ -96,6 +98,7 @@ class ResearchProductionSourcePromotionTests(unittest.TestCase):
             self.descriptor,
             self.inventory,
             suite=suite,
+            migration=self.migration,
         )
         self.assertTrue(
             any(
@@ -114,9 +117,45 @@ class ResearchProductionSourcePromotionTests(unittest.TestCase):
             self.descriptor,
             inventory,
             suite=self.suite,
+            migration=self.migration,
         )
         self.assertTrue(
             any("projection inventory must remain status=design-only" in error for error in errors),
+            errors,
+        )
+
+    def test_validator_requires_public_name_migration_authority(self) -> None:
+        errors = validate_production_source_promotion_plan(
+            self.plan,
+            self.descriptor,
+            self.inventory,
+            suite=self.suite,
+        )
+        self.assertTrue(
+            any(
+                "production source promotion validation requires public-name migration authority"
+                in error
+                for error in errors
+            ),
+            errors,
+        )
+
+    def test_validator_composes_full_public_name_migration_authority(self) -> None:
+        migration = copy.deepcopy(self.migration)
+        migration["policy"]["production_frontmatter_uses_production_name"] = False
+        errors = validate_production_source_promotion_plan(
+            self.plan,
+            self.descriptor,
+            self.inventory,
+            suite=self.suite,
+            migration=migration,
+        )
+        self.assertTrue(
+            any(
+                "production_frontmatter_uses_production_name must remain True"
+                in error
+                for error in errors
+            ),
             errors,
         )
 
@@ -126,6 +165,7 @@ class ResearchProductionSourcePromotionTests(unittest.TestCase):
             self.descriptor,
             None,
             suite=self.suite,
+            migration=self.migration,
         )
         self.assertTrue(
             any(
@@ -219,6 +259,7 @@ class ResearchProductionSourcePromotionTests(unittest.TestCase):
             descriptor,
             self.inventory,
             suite=self.suite,
+            migration=self.migration,
         )
         self.assertTrue(
             any(
@@ -298,6 +339,7 @@ class ResearchProductionSourcePromotionTests(unittest.TestCase):
             descriptor,
             self.inventory,
             suite=self.suite,
+            migration=self.migration,
         )
         self.assertTrue(
             any(
@@ -445,6 +487,7 @@ class ResearchProductionSourcePromotionTests(unittest.TestCase):
             descriptor,
             self.inventory,
             suite=self.suite,
+            migration=self.migration,
         )
         self.assertTrue(
             any("production source root must be a safe path" in error for error in errors),
@@ -720,6 +763,7 @@ class ResearchProductionSourcePromotionTests(unittest.TestCase):
             self.descriptor,
             self.inventory,
             suite=suite,
+            migration=self.migration,
         )
         self.assertTrue(
             any("production source target collision detected" in error for error in errors),
