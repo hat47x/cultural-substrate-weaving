@@ -281,6 +281,10 @@ def plan_production_source_promotion(
         realizations = skill.get("locale_realizations")
         if not isinstance(realizations, dict):
             raise ValueError(f"research suite locale realizations missing for {research_id}")
+        if not all(isinstance(locale, str) and locale for locale in realizations):
+            raise ValueError(
+                f"research suite locale realization keys must be non-empty strings for {research_id}"
+            )
         realization_locales = set(realizations)
         if realization_locales != descriptor_locales:
             raise ValueError(
@@ -329,7 +333,9 @@ def plan_production_source_promotion(
         research_id = skill["id"]
         descriptor_skill = descriptor_by_id[research_id]
         production_name = name_map[research_id]
-        production_source = descriptor_skill["production_source"]
+        production_source = descriptor_skill.get("production_source")
+        if not isinstance(production_source, dict):
+            raise ValueError(f"skill {research_id} production_source must be an object")
         source_mode = production_source.get("mode")
 
         if source_mode == "canonical_manifest":
@@ -353,7 +359,15 @@ def plan_production_source_promotion(
         locale_output: dict[str, dict] = {}
         promoted_repo_sources: set[str] = set()
         for locale, realization in skill["locale_realizations"].items():
-            package_source = realization["package_source"]
+            if not isinstance(realization, dict):
+                raise ValueError(
+                    f"skill {research_id}: locale realization {locale} must be an object"
+                )
+            package_source = realization.get("package_source")
+            if not isinstance(package_source, dict):
+                raise ValueError(
+                    f"skill {research_id}: realized locale {locale} must declare package_source"
+                )
             if package_source.get("mode") != "explicit_files":
                 raise ValueError(
                     f"research locale_tree source {research_id}/{locale} must use explicit_files"
@@ -377,7 +391,12 @@ def plan_production_source_promotion(
                     f"research package files are unsafe for {research_id}/{locale}"
                 )
             research_root = PurePosixPath(package_root)
-            production_root = production_source["root_pattern"].format(locale=locale)
+            root_pattern = production_source.get("root_pattern")
+            if not isinstance(root_pattern, str):
+                raise ValueError(
+                    f"skill {research_id} production root_pattern must be a string"
+                )
+            production_root = root_pattern.format(locale=locale)
             if (
                 not _safe_repo_path(production_root)
                 or not production_root.startswith("src/skills/")

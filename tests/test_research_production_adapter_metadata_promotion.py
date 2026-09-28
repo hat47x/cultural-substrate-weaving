@@ -340,6 +340,50 @@ class ResearchProductionAdapterMetadataPromotionTests(unittest.TestCase):
                         locale_catalog,
                     )
 
+    def test_planner_rejects_malformed_descriptor_adapter_metadata(self) -> None:
+        descriptor = copy.deepcopy(self.descriptor)
+        affinity = next(
+            item for item in descriptor["skills"] if item["research_id"] == "affinity-synthesis"
+        )
+        affinity["adapter_metadata"] = None
+        with self.assertRaisesRegex(
+            ValueError,
+            "skill affinity-synthesis adapter_metadata must be an object",
+        ):
+            plan_production_adapter_metadata_promotion(
+                self.adapter_plan,
+                descriptor,
+                self.locale_catalog,
+            )
+
+        descriptor = copy.deepcopy(self.descriptor)
+        affinity = next(
+            item for item in descriptor["skills"] if item["research_id"] == "affinity-synthesis"
+        )
+        affinity["adapter_metadata"]["openai_skill"] = []
+        with self.assertRaisesRegex(
+            ValueError,
+            "skill affinity-synthesis OpenAI adapter_metadata must be an object",
+        ):
+            plan_production_adapter_metadata_promotion(
+                self.adapter_plan,
+                descriptor,
+                self.locale_catalog,
+            )
+
+    def test_planner_rejects_non_object_openai_skills_map(self) -> None:
+        adapter_plan = copy.deepcopy(self.adapter_plan)
+        adapter_plan["distributions"]["openai_skill"]["skills"] = []
+        with self.assertRaisesRegex(
+            ValueError,
+            "OpenAI adapter metadata plan must declare a skills object",
+        ):
+            plan_production_adapter_metadata_promotion(
+                adapter_plan,
+                self.descriptor,
+                self.locale_catalog,
+            )
+
     def test_planner_rejects_duplicate_descriptor_skill(self) -> None:
         descriptor = copy.deepcopy(self.descriptor)
         descriptor["skills"].append(copy.deepcopy(descriptor["skills"][0]))

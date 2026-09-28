@@ -456,6 +456,55 @@ class ResearchProductionSourcePromotionTests(unittest.TestCase):
                         inventory,
                     )
 
+    def test_planner_rejects_malformed_per_skill_authority_shapes(self) -> None:
+        descriptor = copy.deepcopy(self.descriptor)
+        affinity = next(
+            item for item in descriptor["skills"] if item["research_id"] == "affinity-synthesis"
+        )
+        affinity["production_source"] = None
+        with self.assertRaisesRegex(
+            ValueError,
+            "skill affinity-synthesis production_source must be an object",
+        ):
+            plan_production_source_promotion(
+                self.suite,
+                descriptor,
+                self.migration,
+                self.inventory,
+            )
+
+        suite = copy.deepcopy(self.suite)
+        affinity_suite = next(
+            item for item in suite["skills"] if item["id"] == "affinity-synthesis"
+        )
+        affinity_suite["locale_realizations"]["ja-JP"] = []
+        with self.assertRaisesRegex(
+            ValueError,
+            "skill affinity-synthesis: locale realization ja-JP must be an object",
+        ):
+            plan_production_source_promotion(
+                suite,
+                self.descriptor,
+                self.migration,
+                self.inventory,
+            )
+
+        suite = copy.deepcopy(self.suite)
+        affinity_suite = next(
+            item for item in suite["skills"] if item["id"] == "affinity-synthesis"
+        )
+        affinity_suite["locale_realizations"]["ja-JP"]["package_source"] = []
+        with self.assertRaisesRegex(
+            ValueError,
+            "skill affinity-synthesis: realized locale ja-JP must declare package_source",
+        ):
+            plan_production_source_promotion(
+                suite,
+                self.descriptor,
+                self.migration,
+                self.inventory,
+            )
+
     def test_planner_rejects_duplicate_suite_skill(self) -> None:
         suite = copy.deepcopy(self.suite)
         suite["skills"].append(copy.deepcopy(suite["skills"][0]))
