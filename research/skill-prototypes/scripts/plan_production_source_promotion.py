@@ -296,11 +296,12 @@ def plan_production_source_promotion(
     name_map = migration.get("research_to_production_name")
     if not isinstance(name_map, dict):
         raise ValueError("public-name migration must declare research_to_production_name")
-    migration_ids = {
-        research_id
+    if not all(
+        isinstance(research_id, str) and research_id
         for research_id in name_map
-        if isinstance(research_id, str)
-    }
+    ):
+        raise ValueError("public-name migration Skill keys must be non-empty strings")
+    migration_ids = set(name_map)
     if migration_ids != descriptor_ids:
         raise ValueError(
             "public-name migration Skill set must match production descriptor: "
