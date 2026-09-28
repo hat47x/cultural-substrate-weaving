@@ -68,6 +68,60 @@ class ResearchProductionBuilderContractTests(unittest.TestCase):
             [],
         )
 
+    def test_validator_rejects_non_object_authority_roots_without_crashing(self) -> None:
+        self.assertEqual(
+            validate_production_builder_contract(ROOT, [], self.descriptor),
+            ["production builder contract must be an object"],
+        )
+        self.assertEqual(
+            validate_production_builder_contract(ROOT, self.contract, []),
+            ["production promotion descriptor must be an object"],
+        )
+
+    def test_descriptor_distribution_lists_reject_unhashable_values_without_crashing(self) -> None:
+        descriptor = copy.deepcopy(self.descriptor)
+        descriptor["first_wave_distributions"] = [
+            "openai_skill",
+            "claude_plugin",
+            {"name": "codex_plugin"},
+        ]
+        self.assert_has_error(
+            self.contract,
+            "first_wave_distributions must be a string list",
+            descriptor=descriptor,
+        )
+
+        descriptor = copy.deepcopy(self.descriptor)
+        descriptor["deferred_composite_distributions"] = [
+            "chatgpt_gpt",
+            {"name": "microsoft_copilot"},
+        ]
+        self.assert_has_error(
+            self.contract,
+            "deferred_composite_distributions must be a string list",
+            descriptor=descriptor,
+        )
+
+    def test_first_wave_builder_configs_must_be_objects(self) -> None:
+        for distribution_name, expected in (
+            ("openai_skill", "OpenAI builder configuration must be an object"),
+            ("claude_plugin", "Claude builder configuration must be an object"),
+            ("codex_plugin", "Codex builder configuration must be an object"),
+        ):
+            contract = copy.deepcopy(self.contract)
+            contract["first_wave"][distribution_name] = []
+            with self.subTest(distribution_name=distribution_name):
+                self.assert_has_error(contract, expected)
+
+    def test_descriptor_release_shape_must_be_an_object(self) -> None:
+        descriptor = copy.deepcopy(self.descriptor)
+        descriptor["release_shape"] = []
+        self.assert_has_error(
+            self.contract,
+            "production descriptor release_shape must be an object",
+            descriptor=descriptor,
+        )
+
     def test_contract_never_authorizes_promotion(self) -> None:
         contract = copy.deepcopy(self.contract)
         contract["production_promotion_authorized"] = True
