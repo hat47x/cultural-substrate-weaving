@@ -225,27 +225,36 @@ def plan_production_source_promotion(
     if not isinstance(inventory, dict):
         raise ValueError("projection-inventory authority must be an object")
 
-    descriptor_research_ids = [
-        item.get("research_id")
-        for item in descriptor.get("skills", [])
-        if isinstance(item, dict) and isinstance(item.get("research_id"), str)
-    ]
+    descriptor_skills = descriptor.get("skills")
+    if not isinstance(descriptor_skills, list):
+        raise ValueError("production promotion descriptor skills must be a list")
+    descriptor_research_ids: list[str] = []
+    for index, item in enumerate(descriptor_skills):
+        if not isinstance(item, dict) or not isinstance(item.get("research_id"), str) or not item.get("research_id"):
+            raise ValueError(
+                f"production descriptor Skill entry must declare research_id: index {index}"
+            )
+        descriptor_research_ids.append(item["research_id"])
     if len(descriptor_research_ids) != len(set(descriptor_research_ids)):
         raise ValueError("production descriptor contains duplicate research Skills")
 
-    suite_research_ids = [
-        item.get("id")
-        for item in suite.get("skills", [])
-        if isinstance(item, dict) and isinstance(item.get("id"), str)
-    ]
+    suite_skills = suite.get("skills")
+    if not isinstance(suite_skills, list) or not suite_skills:
+        raise ValueError("research skill suite skills must be a non-empty list")
+    suite_research_ids: list[str] = []
+    for index, item in enumerate(suite_skills):
+        if not isinstance(item, dict) or not isinstance(item.get("id"), str) or not item.get("id"):
+            raise ValueError(
+                f"research skill suite Skill entry must declare id: index {index}"
+            )
+        suite_research_ids.append(item["id"])
     if len(suite_research_ids) != len(set(suite_research_ids)):
         raise ValueError("research suite contains duplicate Skills")
 
     descriptor_by_id = _descriptor_by_id(descriptor)
     suite_by_id = {
         item["id"]: item
-        for item in suite.get("skills", [])
-        if isinstance(item, dict) and isinstance(item.get("id"), str)
+        for item in suite_skills
     }
     descriptor_ids = set(descriptor_by_id)
     suite_ids = set(suite_by_id)
@@ -316,7 +325,7 @@ def plan_production_source_promotion(
         "skills": [],
     }
 
-    for skill in suite["skills"]:
+    for skill in suite_skills:
         research_id = skill["id"]
         descriptor_skill = descriptor_by_id[research_id]
         production_name = name_map[research_id]
