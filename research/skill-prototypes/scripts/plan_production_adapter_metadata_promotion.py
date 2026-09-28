@@ -174,6 +174,8 @@ def _assert_locale_catalog_snapshot(
     source: str,
     locale_catalog: dict,
 ) -> None:
+    if not isinstance(locale_catalog, dict):
+        raise ValueError("production locale catalog must be an object")
     try:
         canonical = json.loads((root / source).read_text(encoding="utf-8"))
     except (OSError, json.JSONDecodeError, UnicodeError) as exc:
@@ -632,6 +634,12 @@ def validate_production_adapter_metadata_promotion_plan(
     else:
         errors.extend(validate_adapter_metadata(root, adapter_plan))
 
+    if isinstance(locale_catalog, dict):
+        validated_locale_catalog = locale_catalog
+    else:
+        errors.append("production locale catalog must be an object")
+        validated_locale_catalog = {}
+
     descriptor_skills = descriptor.get("skills")
     if not isinstance(descriptor_skills, list):
         descriptor_skills = []
@@ -822,7 +830,8 @@ def validate_production_adapter_metadata_promotion_plan(
         try:
             expected_shared_by = list(_bundle_distribution_names(adapter_plan))
             expected_catalog = _bundle_catalog_source(adapter_plan)
-            _assert_locale_catalog_snapshot(root, expected_catalog, locale_catalog)
+            if isinstance(locale_catalog, dict):
+                _assert_locale_catalog_snapshot(root, expected_catalog, locale_catalog)
             expected_prototype_sources = _bundle_prototype_sources(adapter_plan)
         except (KeyError, TypeError, ValueError) as exc:
             errors.append(f"bundle adapter promotion authority is invalid: {exc}")
@@ -858,7 +867,7 @@ def validate_production_adapter_metadata_promotion_plan(
         if locale in seen_bundle_locales:
             errors.append(f"duplicate locale-bundle promotion entry: {locale}")
         seen_bundle_locales.add(locale)
-        current = locale_catalog.get(locale)
+        current = validated_locale_catalog.get(locale)
         if not isinstance(current, dict):
             errors.append(f"bundle promotion references unknown locale: {locale}")
             continue
