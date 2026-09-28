@@ -484,6 +484,9 @@ def _validate_locale_realizations(
 
 
 def validate_suite(root: Path, manifest: dict) -> list[str]:
+    if not isinstance(manifest, dict):
+        return ["research skill suite must be an object"]
+
     errors: list[str] = []
 
     if manifest.get("schema") != EXPECTED_SCHEMA:
@@ -499,8 +502,14 @@ def validate_suite(root: Path, manifest: dict) -> list[str]:
         errors.append("research skill suite locales must be an object")
         suite_locales: set[str] = set()
     else:
-        suite_locales = set(locales)
-        if not isinstance(canonical_locale, str) or canonical_locale not in locales:
+        if not all(isinstance(locale, str) and locale for locale in locales):
+            errors.append("research skill suite locale keys must be non-empty strings")
+        suite_locales = {
+            locale
+            for locale in locales
+            if isinstance(locale, str) and locale
+        }
+        if not isinstance(canonical_locale, str) or canonical_locale not in suite_locales:
             errors.append(
                 f"research skill suite canonical_locale must name a declared locale: {canonical_locale!r}"
             )
@@ -643,6 +652,13 @@ def validate_suite(root: Path, manifest: dict) -> list[str]:
     if not isinstance(distributions, dict):
         errors.append("research skill suite distribution_prototypes must be an object")
     else:
+        if not all(
+            isinstance(distribution_name, str) and distribution_name
+            for distribution_name in distributions
+        ):
+            errors.append(
+                "research skill suite distribution_prototypes keys must be non-empty strings"
+            )
         for distribution_name, config in distributions.items():
             if not isinstance(config, dict):
                 errors.append(f"distribution prototype {distribution_name} must be an object")
