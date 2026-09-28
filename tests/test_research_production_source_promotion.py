@@ -57,6 +57,28 @@ class ResearchProductionSourcePromotionTests(unittest.TestCase):
     def test_current_plan_is_valid(self) -> None:
         self.assertEqual(self.validate(), [])
 
+    def test_validator_rejects_non_list_plan_skills_without_crashing(self) -> None:
+        plan = copy.deepcopy(self.plan)
+        plan["skills"] = {"affinity-synthesis": self.skill("affinity-synthesis", plan)}
+        errors = self.validate(plan)
+        self.assertTrue(
+            any("production source promotion plan Skills must be a list" in error for error in errors),
+            errors,
+        )
+
+    def test_validator_rejects_non_object_locale_plan_without_crashing(self) -> None:
+        plan = copy.deepcopy(self.plan)
+        self.skill("affinity-synthesis", plan)["locales"]["ja-JP"] = []
+        errors = self.validate(plan)
+        self.assertTrue(
+            any(
+                "production source plan locale entries must be objects: affinity-synthesis/ja-JP"
+                in error
+                for error in errors
+            ),
+            errors,
+        )
+
     def test_validator_composes_full_descriptor_status_authority(self) -> None:
         descriptor = copy.deepcopy(self.descriptor)
         descriptor["status"] = "promotion-ready"
