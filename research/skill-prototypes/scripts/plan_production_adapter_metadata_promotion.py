@@ -532,7 +532,13 @@ def plan_production_adapter_metadata_promotion(
                         f"{research_id}/{locale}/{profile}: {source!r}; "
                         f"expected under {expected_source_root.as_posix()!r}"
                     )
-                target = source_pattern.format(locale=locale, profile=profile)
+                try:
+                    target = source_pattern.format(locale=locale, profile=profile)
+                except (AttributeError, IndexError, KeyError, ValueError) as exc:
+                    raise ValueError(
+                        "OpenAI production metadata source pattern format is invalid: "
+                        f"{research_id}/{locale}/{profile}"
+                    ) from exc
                 if (
                     not _safe_repo_path(target)
                     or not target.startswith("adapters/openai-skill/")
@@ -861,12 +867,19 @@ def validate_production_adapter_metadata_promotion_plan(
         if isinstance(target, str) and target.startswith("research/"):
             errors.append(f"OpenAI production metadata target must not point into research: {target}")
         if isinstance(source_pattern, str) and isinstance(locale, str) and isinstance(profile, str):
-            expected_target = source_pattern.format(locale=locale, profile=profile)
-            if target != expected_target:
+            try:
+                expected_target = source_pattern.format(locale=locale, profile=profile)
+            except (AttributeError, IndexError, KeyError, ValueError):
                 errors.append(
-                    f"OpenAI production metadata target must use {production_name}: "
+                    "OpenAI production metadata source pattern format is invalid: "
                     f"{research_id}/{locale}/{profile}"
                 )
+            else:
+                if target != expected_target:
+                    errors.append(
+                        f"OpenAI production metadata target must use {production_name}: "
+                        f"{research_id}/{locale}/{profile}"
+                    )
 
         if metadata_mode == "planned-promotion-from-research-prototype":
             if item.get("state") != "planned-prototype-promotion":

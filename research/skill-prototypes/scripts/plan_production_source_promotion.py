@@ -45,12 +45,20 @@ def _target_relative(source_relative: str, locale: str) -> str:
 
 def _projection_actions(inventory: dict) -> dict[str, str]:
     actions: dict[str, str] = {}
-    for item in inventory.get("content_projection", []):
+    items = inventory.get("content_projection")
+    if not isinstance(items, list):
+        return actions
+    for item in items:
         if not isinstance(item, dict):
             continue
         path = item.get("path")
         action = item.get("action")
-        if isinstance(path, str) and isinstance(action, str):
+        if (
+            isinstance(path, str)
+            and path
+            and isinstance(action, str)
+            and action
+        ):
             actions[path] = action
     return actions
 
@@ -316,6 +324,30 @@ def plan_production_source_promotion(
                 f"{research_id}: {name_map.get(research_id)!r} != {expected_name!r}"
             )
 
+    content_projection = inventory.get("content_projection")
+    if not isinstance(content_projection, list) or not content_projection:
+        raise ValueError("content_projection must be a non-empty list")
+    seen_projection_paths: set[str] = set()
+    for index, item in enumerate(content_projection):
+        if not isinstance(item, dict):
+            raise ValueError(f"content_projection[{index}] must be an object")
+        projection_path = item.get("path")
+        if (
+            not isinstance(projection_path, str)
+            or not _safe_repo_path(projection_path)
+        ):
+            raise ValueError(
+                f"content_projection[{index}].path must be a safe repository-relative path"
+            )
+        if projection_path in seen_projection_paths:
+            raise ValueError(f"content_projection repeats path: {projection_path}")
+        seen_projection_paths.add(projection_path)
+        action = item.get("action")
+        if not isinstance(action, str) or not action:
+            raise ValueError(
+                f"content_projection action must be a non-empty string: {projection_path}"
+            )
+
     inventory_actions = _projection_actions(inventory)
 
     output = {
@@ -401,7 +433,12 @@ def plan_production_source_promotion(
                 raise ValueError(
                     f"skill {research_id} production root_pattern must be a string"
                 )
-            production_root = root_pattern.format(locale=locale)
+            try:
+                production_root = root_pattern.format(locale=locale)
+            except (AttributeError, IndexError, KeyError, ValueError) as exc:
+                raise ValueError(
+                    f"skill {research_id} production root_pattern format is invalid: {locale}"
+                ) from exc
             if (
                 not _safe_repo_path(production_root)
                 or not production_root.startswith("src/skills/")
@@ -695,7 +732,7 @@ def validate_production_source_promotion_plan(
             if isinstance(root_pattern, str) and isinstance(locale, str):
                 try:
                     expected_production_root = root_pattern.format(locale=locale)
-                except (KeyError, ValueError):
+                except (AttributeError, IndexError, KeyError, ValueError):
                     errors.append(
                         f"production source root pattern is invalid: {research_id}/{locale}"
                     )

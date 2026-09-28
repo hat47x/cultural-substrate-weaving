@@ -678,6 +678,51 @@ class ResearchProductionAdapterMetadataPromotionTests(unittest.TestCase):
                 self.locale_catalog,
             )
 
+    def test_planner_rejects_invalid_openai_target_template(self) -> None:
+        descriptor = copy.deepcopy(self.descriptor)
+        layer1 = next(
+            item
+            for item in descriptor["skills"]
+            if item["research_id"] == "affinity-synthesis"
+        )
+        layer1["adapter_metadata"]["openai_skill"]["source_pattern"] = (
+            "adapters/openai-skill/{unknown}/openai.{profile}.yaml"
+        )
+        with self.assertRaisesRegex(
+            ValueError,
+            "OpenAI production metadata source pattern format is invalid",
+        ):
+            plan_production_adapter_metadata_promotion(
+                self.adapter_plan,
+                descriptor,
+                self.locale_catalog,
+            )
+
+    def test_validator_rejects_invalid_openai_target_template_without_crashing(self) -> None:
+        descriptor = copy.deepcopy(self.descriptor)
+        layer1 = next(
+            item
+            for item in descriptor["skills"]
+            if item["research_id"] == "affinity-synthesis"
+        )
+        layer1["adapter_metadata"]["openai_skill"]["source_pattern"] = (
+            "adapters/openai-skill/{0}/openai.{profile}.yaml"
+        )
+        errors = validate_production_adapter_metadata_promotion_plan(
+            self.plan,
+            descriptor,
+            self.locale_catalog,
+            adapter_plan=self.adapter_plan,
+        )
+        self.assertTrue(
+            any(
+                "OpenAI production metadata source pattern format is invalid"
+                in error
+                for error in errors
+            ),
+            errors,
+        )
+
     def test_planner_rejects_unsafe_openai_target(self) -> None:
         descriptor = copy.deepcopy(self.descriptor)
         layer1 = next(

@@ -139,6 +139,14 @@ class ResearchPublicNameProjectionInventoryTests(unittest.TestCase):
         inventory["production_name"] = "affinity-synthesis"
         self.assert_has_error(inventory, "production_name must remain material-led-synthesis")
 
+    def test_content_projection_action_must_be_non_empty_string(self) -> None:
+        inventory = copy.deepcopy(self.inventory)
+        inventory["content_projection"][0]["action"] = None
+        self.assert_has_error(
+            inventory,
+            "content_projection action must be a non-empty string",
+        )
+
     def test_missing_expected_runtime_marker_requires_audit(self) -> None:
         inventory = copy.deepcopy(self.inventory)
         inventory["content_projection"][0]["required_markers"] = [

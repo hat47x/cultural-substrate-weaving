@@ -365,6 +365,35 @@ class ResearchProductionSourcePromotionTests(unittest.TestCase):
             errors,
         )
 
+    def test_planner_rejects_missing_projection_action(self) -> None:
+        inventory = copy.deepcopy(self.inventory)
+        inventory["content_projection"][0]["action"] = None
+        with self.assertRaisesRegex(
+            ValueError,
+            "content_projection action must be a non-empty string",
+        ):
+            plan_production_source_promotion(
+                self.suite,
+                self.descriptor,
+                self.migration,
+                inventory,
+            )
+
+    def test_validator_handles_non_list_content_projection_without_crashing(self) -> None:
+        inventory = copy.deepcopy(self.inventory)
+        inventory["content_projection"] = None
+        errors = validate_production_source_promotion_plan(
+            self.plan,
+            self.descriptor,
+            inventory,
+            suite=self.suite,
+            migration=self.migration,
+        )
+        self.assertTrue(
+            any("content_projection must be a non-empty list" in error for error in errors),
+            errors,
+        )
+
     def test_cli_authorities_reject_projection_inventory_drift(self) -> None:
         inventory = copy.deepcopy(self.inventory)
         inventory["content_projection"] = inventory["content_projection"][1:]
@@ -752,6 +781,45 @@ class ResearchProductionSourcePromotionTests(unittest.TestCase):
         )
         self.assertTrue(
             any("target path is unsafe" in error for error in errors),
+            errors,
+        )
+
+    def test_planner_rejects_invalid_production_root_template(self) -> None:
+        descriptor = copy.deepcopy(self.descriptor)
+        layer1 = next(
+            item for item in descriptor["skills"] if item["research_id"] == "affinity-synthesis"
+        )
+        layer1["production_source"]["root_pattern"] = (
+            "src/skills/material-led-synthesis/{unknown}"
+        )
+        with self.assertRaisesRegex(
+            ValueError,
+            "production root_pattern format is invalid",
+        ):
+            plan_production_source_promotion(
+                self.suite,
+                descriptor,
+                self.migration,
+                self.inventory,
+            )
+
+    def test_validator_rejects_invalid_production_root_template_without_crashing(self) -> None:
+        descriptor = copy.deepcopy(self.descriptor)
+        layer1 = next(
+            item for item in descriptor["skills"] if item["research_id"] == "affinity-synthesis"
+        )
+        layer1["production_source"]["root_pattern"] = (
+            "src/skills/material-led-synthesis/{0}"
+        )
+        errors = validate_production_source_promotion_plan(
+            self.plan,
+            descriptor,
+            self.inventory,
+            suite=self.suite,
+            migration=self.migration,
+        )
+        self.assertTrue(
+            any("production source root pattern is invalid" in error for error in errors),
             errors,
         )
 
