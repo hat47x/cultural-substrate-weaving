@@ -332,6 +332,13 @@ def plan_production_adapter_metadata_promotion(
     locale_catalog: dict,
     root: Path = ROOT,
 ) -> dict:
+    if not isinstance(adapter_plan, dict):
+        raise ValueError("adapter metadata plan authority must be an object")
+    if not isinstance(descriptor, dict):
+        raise ValueError("production promotion descriptor authority must be an object")
+    if not isinstance(locale_catalog, dict):
+        raise ValueError("production locale catalog must be an object")
+
     _assert_adapter_plan_distribution_modes(adapter_plan)
 
     descriptor_research_ids = [
