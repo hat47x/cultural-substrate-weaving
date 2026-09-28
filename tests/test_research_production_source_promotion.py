@@ -384,6 +384,47 @@ class ResearchProductionSourcePromotionTests(unittest.TestCase):
         )
 
 
+    def test_planner_rejects_non_list_skill_collections(self) -> None:
+        suite = copy.deepcopy(self.suite)
+        suite["skills"] = None
+        with self.assertRaisesRegex(
+            ValueError,
+            "research skill suite skills must be a non-empty list",
+        ):
+            plan_production_source_promotion(
+                suite,
+                self.descriptor,
+                self.migration,
+                self.inventory,
+            )
+
+        descriptor = copy.deepcopy(self.descriptor)
+        descriptor["skills"] = None
+        with self.assertRaisesRegex(
+            ValueError,
+            "production promotion descriptor skills must be a list",
+        ):
+            plan_production_source_promotion(
+                self.suite,
+                descriptor,
+                self.migration,
+                self.inventory,
+            )
+
+    def test_planner_rejects_malformed_skill_entry(self) -> None:
+        suite = copy.deepcopy(self.suite)
+        suite["skills"].append([])
+        with self.assertRaisesRegex(
+            ValueError,
+            "research skill suite Skill entry must declare id",
+        ):
+            plan_production_source_promotion(
+                suite,
+                self.descriptor,
+                self.migration,
+                self.inventory,
+            )
+
     def test_planner_rejects_non_object_authority_roots(self) -> None:
         cases = (
             ("suite", [], self.descriptor, self.migration, self.inventory, "research suite authority must be an object"),
