@@ -14,6 +14,7 @@ if str(PLANNER_DIR) not in sys.path:
 
 from plan_production_adapter_metadata_promotion import (  # noqa: E402
     plan_production_adapter_metadata_promotion,
+    validate_adapter_promotion_authorities,
     validate_production_adapter_metadata_promotion_plan,
 )
 
@@ -59,6 +60,18 @@ class ResearchProductionAdapterMetadataPromotionTests(unittest.TestCase):
     def bundle_item(self, locale: str, plan: dict | None = None) -> dict:
         source = self.plan if plan is None else plan
         return next(item for item in source["locale_bundle_promotions"] if item["locale"] == locale)
+
+    def test_cli_authorities_reject_non_object_roots_without_crashing(self) -> None:
+        errors = validate_adapter_promotion_authorities(
+            ROOT,
+            [],
+            [],
+        )
+        for expected in (
+            "adapter metadata plan authority must be an object",
+            "production promotion descriptor authority must be an object",
+        ):
+            self.assertTrue(any(expected in error for error in errors), errors)
 
     def test_validator_rejects_non_object_plan_without_crashing(self) -> None:
         errors = validate_production_adapter_metadata_promotion_plan(
