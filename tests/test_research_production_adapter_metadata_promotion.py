@@ -60,6 +60,29 @@ class ResearchProductionAdapterMetadataPromotionTests(unittest.TestCase):
         source = self.plan if plan is None else plan
         return next(item for item in source["locale_bundle_promotions"] if item["locale"] == locale)
 
+    def test_planner_rejects_non_object_locale_catalog(self) -> None:
+        with self.assertRaisesRegex(
+            ValueError,
+            "production locale catalog must be an object",
+        ):
+            plan_production_adapter_metadata_promotion(
+                self.adapter_plan,
+                self.descriptor,
+                [],
+            )
+
+    def test_validator_rejects_non_object_locale_catalog_without_crashing(self) -> None:
+        errors = validate_production_adapter_metadata_promotion_plan(
+            self.plan,
+            self.descriptor,
+            [],
+            adapter_plan=self.adapter_plan,
+        )
+        self.assertTrue(
+            any("production locale catalog must be an object" in error for error in errors),
+            errors,
+        )
+
     def test_validator_reports_malformed_descriptor_skills_without_crashing(self) -> None:
         descriptor = copy.deepcopy(self.descriptor)
         descriptor["skills"] = None
