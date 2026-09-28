@@ -784,6 +784,45 @@ class ResearchProductionSourcePromotionTests(unittest.TestCase):
             errors,
         )
 
+    def test_planner_rejects_invalid_production_root_template(self) -> None:
+        descriptor = copy.deepcopy(self.descriptor)
+        layer1 = next(
+            item for item in descriptor["skills"] if item["research_id"] == "affinity-synthesis"
+        )
+        layer1["production_source"]["root_pattern"] = (
+            "src/skills/material-led-synthesis/{unknown}"
+        )
+        with self.assertRaisesRegex(
+            ValueError,
+            "production root_pattern format is invalid",
+        ):
+            plan_production_source_promotion(
+                self.suite,
+                descriptor,
+                self.migration,
+                self.inventory,
+            )
+
+    def test_validator_rejects_invalid_production_root_template_without_crashing(self) -> None:
+        descriptor = copy.deepcopy(self.descriptor)
+        layer1 = next(
+            item for item in descriptor["skills"] if item["research_id"] == "affinity-synthesis"
+        )
+        layer1["production_source"]["root_pattern"] = (
+            "src/skills/material-led-synthesis/{0}"
+        )
+        errors = validate_production_source_promotion_plan(
+            self.plan,
+            descriptor,
+            self.inventory,
+            suite=self.suite,
+            migration=self.migration,
+        )
+        self.assertTrue(
+            any("production source root pattern is invalid" in error for error in errors),
+            errors,
+        )
+
     def test_planner_rejects_unsafe_descriptor_production_root(self) -> None:
         descriptor = copy.deepcopy(self.descriptor)
         layer1 = next(
