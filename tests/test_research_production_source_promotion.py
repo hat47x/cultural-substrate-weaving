@@ -505,6 +505,24 @@ class ResearchProductionSourcePromotionTests(unittest.TestCase):
                 self.inventory,
             )
 
+    def test_planner_rejects_duplicate_package_files(self) -> None:
+        suite = copy.deepcopy(self.suite)
+        affinity = next(
+            item for item in suite["skills"] if item["id"] == "affinity-synthesis"
+        )
+        files = affinity["locale_realizations"]["ja-JP"]["package_source"]["files"]
+        files.append(files[0])
+        with self.assertRaisesRegex(
+            ValueError,
+            "explicit_files contains duplicate paths",
+        ):
+            plan_production_source_promotion(
+                suite,
+                self.descriptor,
+                self.migration,
+                self.inventory,
+            )
+
     def test_planner_rejects_duplicate_suite_skill(self) -> None:
         suite = copy.deepcopy(self.suite)
         suite["skills"].append(copy.deepcopy(suite["skills"][0]))
@@ -572,6 +590,21 @@ class ResearchProductionSourcePromotionTests(unittest.TestCase):
         with self.assertRaisesRegex(
             ValueError,
             "public-name migration Skill set must match production descriptor",
+        ):
+            plan_production_source_promotion(
+                self.suite,
+                self.descriptor,
+                migration,
+                self.inventory,
+            )
+
+    def test_planner_rejects_non_string_public_name_migration_key(self) -> None:
+        migration = copy.deepcopy(self.migration)
+        existing = migration["research_to_production_name"].pop("affinity-synthesis")
+        migration["research_to_production_name"][1] = existing
+        with self.assertRaisesRegex(
+            ValueError,
+            "public-name migration Skill keys must be non-empty strings",
         ):
             plan_production_source_promotion(
                 self.suite,

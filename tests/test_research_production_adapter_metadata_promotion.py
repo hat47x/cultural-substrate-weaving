@@ -769,6 +769,20 @@ class ResearchProductionAdapterMetadataPromotionTests(unittest.TestCase):
             errors,
         )
 
+    def test_planner_rejects_non_string_bundle_locale_key(self) -> None:
+        adapter_plan = copy.deepcopy(self.adapter_plan)
+        claude_locales = adapter_plan["distributions"]["claude_plugin"]["locales"]
+        claude_locales[1] = claude_locales.pop("ja-JP")
+        with self.assertRaisesRegex(
+            ValueError,
+            "locale_bundle locale keys must be non-empty strings",
+        ):
+            plan_production_adapter_metadata_promotion(
+                adapter_plan,
+                self.descriptor,
+                self.locale_catalog,
+            )
+
     def test_planner_rejects_unhashable_bundle_catalog_source(self) -> None:
         adapter_plan = copy.deepcopy(self.adapter_plan)
         for distribution_name in ("claude_plugin", "codex_plugin"):

@@ -283,6 +283,10 @@ def _bundle_prototype_sources(adapter_plan: dict) -> dict[str, str]:
 
     sources: dict[str, str] = {}
     for locale, entry in first_locales.items():
+        if not isinstance(locale, str) or not locale:
+            raise ValueError(
+                f"locale_bundle locale keys must be non-empty strings: {first_name}: {locale!r}"
+            )
         if not isinstance(entry, dict):
             raise ValueError(f"locale_bundle metadata entry must be an object: {first_name}/{locale}")
         if entry.get("status") != "prototype":
@@ -307,6 +311,12 @@ def _bundle_prototype_sources(adapter_plan: dict) -> dict[str, str]:
     expected_locales = set(sources)
     for name in names[1:]:
         locale_map = distributions[name].get("locales")
+        if isinstance(locale_map, dict) and not all(
+            isinstance(locale, str) and locale for locale in locale_map
+        ):
+            raise ValueError(
+                f"locale_bundle locale keys must be non-empty strings: {name}"
+            )
         if not isinstance(locale_map, dict) or set(locale_map) != expected_locales:
             actual = set(locale_map) if isinstance(locale_map, dict) else set()
             raise ValueError(
