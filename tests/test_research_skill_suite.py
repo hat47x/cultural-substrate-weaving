@@ -28,6 +28,29 @@ class ResearchSkillSuiteTests(unittest.TestCase):
     def skill(self, manifest: dict, skill_id: str) -> dict:
         return next(skill for skill in manifest["skills"] if skill["id"] == skill_id)
 
+    def test_validator_rejects_non_object_manifest_without_crashing(self) -> None:
+        self.assertEqual(
+            validate_suite(ROOT, []),
+            ["research skill suite must be an object"],
+        )
+
+    def test_validator_rejects_non_string_mapping_keys_without_crashing(self) -> None:
+        manifest = copy.deepcopy(self.manifest)
+        manifest["locales"][1] = manifest["locales"].pop("ja-JP")
+        self.assert_has_error(
+            manifest,
+            "research skill suite locale keys must be non-empty strings",
+        )
+
+        manifest = copy.deepcopy(self.manifest)
+        manifest["distribution_prototypes"][1] = manifest[
+            "distribution_prototypes"
+        ].pop("claude_plugin")
+        self.assert_has_error(
+            manifest,
+            "research skill suite distribution_prototypes keys must be non-empty strings",
+        )
+
     def test_current_research_suite_manifest_is_internally_consistent(self) -> None:
         self.assertEqual(validate_suite(ROOT, self.manifest), [])
 
