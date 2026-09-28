@@ -505,6 +505,24 @@ class ResearchProductionSourcePromotionTests(unittest.TestCase):
                 self.inventory,
             )
 
+    def test_planner_rejects_duplicate_package_files(self) -> None:
+        suite = copy.deepcopy(self.suite)
+        affinity = next(
+            item for item in suite["skills"] if item["id"] == "affinity-synthesis"
+        )
+        files = affinity["locale_realizations"]["ja-JP"]["package_source"]["files"]
+        files.append(files[0])
+        with self.assertRaisesRegex(
+            ValueError,
+            "explicit_files contains duplicate paths",
+        ):
+            plan_production_source_promotion(
+                suite,
+                self.descriptor,
+                self.migration,
+                self.inventory,
+            )
+
     def test_planner_rejects_duplicate_suite_skill(self) -> None:
         suite = copy.deepcopy(self.suite)
         suite["skills"].append(copy.deepcopy(suite["skills"][0]))
