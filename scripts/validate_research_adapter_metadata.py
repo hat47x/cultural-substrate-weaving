@@ -476,6 +476,17 @@ def validate_adapter_metadata(root: Path, plan: dict) -> list[str]:
         distributions, dict
     ):
         return errors + ["suite manifest shape is invalid for adapter metadata validation"]
+    if not all(isinstance(locale, str) and locale for locale in locales_obj):
+        return errors + [
+            "suite manifest locale keys must be non-empty strings for adapter metadata validation"
+        ]
+    if not all(
+        isinstance(distribution_name, str) and distribution_name
+        for distribution_name in distributions
+    ):
+        return errors + [
+            "suite manifest distribution keys must be non-empty strings for adapter metadata validation"
+        ]
 
     skill_ids = {
         skill.get("id")
