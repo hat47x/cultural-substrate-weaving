@@ -88,6 +88,38 @@ class ResearchProductionSourcePromotionTests(unittest.TestCase):
             errors,
         )
 
+    def test_validator_composes_full_research_suite_authority(self) -> None:
+        suite = copy.deepcopy(self.suite)
+        suite["status"] = "production-ready"
+        errors = validate_production_source_promotion_plan(
+            self.plan,
+            self.descriptor,
+            self.inventory,
+            suite=suite,
+        )
+        self.assertTrue(
+            any(
+                "research skill suite must remain marked research-only before promotion"
+                in error
+                for error in errors
+            ),
+            errors,
+        )
+
+    def test_validator_composes_full_projection_inventory_authority(self) -> None:
+        inventory = copy.deepcopy(self.inventory)
+        inventory["status"] = "promotion-ready"
+        errors = validate_production_source_promotion_plan(
+            self.plan,
+            self.descriptor,
+            inventory,
+            suite=self.suite,
+        )
+        self.assertTrue(
+            any("projection inventory must remain status=design-only" in error for error in errors),
+            errors,
+        )
+
     def test_validator_requires_projection_inventory_authority(self) -> None:
         errors = validate_production_source_promotion_plan(
             self.plan,
