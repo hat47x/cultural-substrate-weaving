@@ -693,11 +693,21 @@ def validate_production_adapter_metadata_promotion_plan(
         if not isinstance(item, dict):
             errors.append("OpenAI adapter promotion entries must be objects")
             continue
-        key = (item.get("research_id"), item.get("locale"), item.get("profile"))
+        research_id = item.get("research_id")
+        locale = item.get("locale")
+        profile = item.get("profile")
+        if not all(
+            isinstance(value, str) and value
+            for value in (research_id, locale, profile)
+        ):
+            errors.append(
+                "OpenAI adapter promotion identity fields must be non-empty strings"
+            )
+            continue
+        key = (research_id, locale, profile)
         if key in seen_openai:
             errors.append(f"duplicate OpenAI adapter promotion entry: {key}")
         seen_openai.add(key)
-        research_id, locale, profile = key
         descriptor_skill = descriptor_by_id.get(research_id)
         if descriptor_skill is None:
             errors.append(f"unknown research Skill in OpenAI adapter promotion: {research_id}")
@@ -840,10 +850,14 @@ def validate_production_adapter_metadata_promotion_plan(
             errors.append("bundle metadata promotion entries must be objects")
             continue
         locale = item.get("locale")
-        if isinstance(locale, str):
-            if locale in seen_bundle_locales:
-                errors.append(f"duplicate locale-bundle promotion entry: {locale}")
-            seen_bundle_locales.add(locale)
+        if not isinstance(locale, str) or not locale:
+            errors.append(
+                "bundle metadata promotion locale must be a non-empty string"
+            )
+            continue
+        if locale in seen_bundle_locales:
+            errors.append(f"duplicate locale-bundle promotion entry: {locale}")
+        seen_bundle_locales.add(locale)
         current = locale_catalog.get(locale)
         if not isinstance(current, dict):
             errors.append(f"bundle promotion references unknown locale: {locale}")
