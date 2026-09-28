@@ -619,8 +619,15 @@ def validate_production_adapter_metadata_promotion_plan(
     adapter_plan: dict | None = None,
     root: Path = ROOT,
 ) -> list[str]:
+    if not isinstance(plan, dict):
+        return ["adapter metadata promotion plan must be an object"]
+
     errors: list[str] = []
-    errors.extend(validate_production_suite_descriptor(descriptor))
+    if not isinstance(descriptor, dict):
+        errors.append("production promotion descriptor must be an object")
+        descriptor = {}
+    else:
+        errors.extend(validate_production_suite_descriptor(descriptor))
     if plan.get("schema") != PLAN_SCHEMA:
         errors.append(f"adapter metadata promotion plan schema must be {PLAN_SCHEMA}")
     if plan.get("status") != "design-only":
@@ -631,6 +638,9 @@ def validate_production_adapter_metadata_promotion_plan(
         errors.append(
             "adapter metadata promotion validation requires adapter-plan authority"
         )
+    elif not isinstance(adapter_plan, dict):
+        errors.append("adapter metadata plan authority must be an object")
+        adapter_plan = None
     else:
         errors.extend(validate_adapter_metadata(root, adapter_plan))
 

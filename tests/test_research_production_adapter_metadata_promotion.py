@@ -60,6 +60,30 @@ class ResearchProductionAdapterMetadataPromotionTests(unittest.TestCase):
         source = self.plan if plan is None else plan
         return next(item for item in source["locale_bundle_promotions"] if item["locale"] == locale)
 
+    def test_validator_rejects_non_object_plan_without_crashing(self) -> None:
+        errors = validate_production_adapter_metadata_promotion_plan(
+            [],
+            self.descriptor,
+            self.locale_catalog,
+            adapter_plan=self.adapter_plan,
+        )
+        self.assertEqual(
+            errors,
+            ["adapter metadata promotion plan must be an object"],
+        )
+
+    def test_validator_rejects_non_object_descriptor_without_crashing(self) -> None:
+        errors = validate_production_adapter_metadata_promotion_plan(
+            self.plan,
+            [],
+            self.locale_catalog,
+            adapter_plan=self.adapter_plan,
+        )
+        self.assertTrue(
+            any("production promotion descriptor must be an object" in error for error in errors),
+            errors,
+        )
+
     def test_planner_rejects_non_object_locale_catalog(self) -> None:
         with self.assertRaisesRegex(
             ValueError,
@@ -129,6 +153,18 @@ class ResearchProductionAdapterMetadataPromotionTests(unittest.TestCase):
                 in error
                 for error in errors
             ),
+            errors,
+        )
+
+    def test_validator_rejects_non_object_adapter_plan_authority_without_crashing(self) -> None:
+        errors = validate_production_adapter_metadata_promotion_plan(
+            self.plan,
+            self.descriptor,
+            self.locale_catalog,
+            adapter_plan=[],
+        )
+        self.assertTrue(
+            any("adapter metadata plan authority must be an object" in error for error in errors),
             errors,
         )
 

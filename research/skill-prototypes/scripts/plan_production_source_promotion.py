@@ -413,8 +413,15 @@ def validate_production_source_promotion_plan(
     suite: dict | None = None,
     migration: dict | None = None,
 ) -> list[str]:
+    if not isinstance(plan, dict):
+        return ["production source promotion plan must be an object"]
+
     errors: list[str] = []
-    errors.extend(validate_production_suite_descriptor(descriptor))
+    if not isinstance(descriptor, dict):
+        errors.append("production promotion descriptor must be an object")
+        descriptor = {}
+    else:
+        errors.extend(validate_production_suite_descriptor(descriptor))
     if plan.get("schema") != PLAN_SCHEMA:
         errors.append(f"production source promotion plan schema must be {PLAN_SCHEMA}")
     if plan.get("status") != "design-only":
@@ -425,18 +432,27 @@ def validate_production_source_promotion_plan(
         errors.append(
             "production source promotion validation requires research suite authority"
         )
+    elif not isinstance(suite, dict):
+        errors.append("research suite authority must be an object")
+        suite = None
     else:
         errors.extend(validate_suite(ROOT, suite))
     if inventory is None:
         errors.append(
             "production source promotion validation requires projection-inventory authority"
         )
+    elif not isinstance(inventory, dict):
+        errors.append("projection-inventory authority must be an object")
+        inventory = None
     else:
         errors.extend(validate_projection_inventory(ROOT, inventory))
     if migration is None:
         errors.append(
             "production source promotion validation requires public-name migration authority"
         )
+    elif not isinstance(migration, dict):
+        errors.append("public-name migration authority must be an object")
+        migration = None
     else:
         errors.extend(validate_public_name_migration(ROOT, migration))
 
