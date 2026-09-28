@@ -619,6 +619,11 @@ def validate_production_adapter_metadata_promotion_plan(
     adapter_plan: dict | None = None,
     root: Path = ROOT,
 ) -> list[str]:
+    if not isinstance(plan, dict):
+        return ["adapter metadata promotion plan must be an object"]
+    if not isinstance(descriptor, dict):
+        return ["production promotion descriptor authority must be an object"]
+
     errors: list[str] = []
     errors.extend(validate_production_suite_descriptor(descriptor))
     if plan.get("schema") != PLAN_SCHEMA:
