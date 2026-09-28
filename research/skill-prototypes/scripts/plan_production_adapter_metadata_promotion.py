@@ -994,9 +994,7 @@ def main() -> int:
     try:
         adapter_plan = json.loads(ADAPTER_PLAN_PATH.read_text(encoding="utf-8"))
         descriptor = json.loads(DESCRIPTOR_PATH.read_text(encoding="utf-8"))
-        bundle_catalog_source = _bundle_catalog_source(adapter_plan)
-        locale_catalog = json.loads((ROOT / bundle_catalog_source).read_text(encoding="utf-8"))
-    except (OSError, json.JSONDecodeError, KeyError, TypeError, ValueError) as exc:
+    except (OSError, json.JSONDecodeError) as exc:
         print(f"production adapter metadata promotion planning failed: {exc}", file=sys.stderr)
         return 1
 
@@ -1008,6 +1006,13 @@ def main() -> int:
     if errors:
         for error in errors:
             print(f"ERROR: {error}", file=sys.stderr)
+        return 1
+
+    try:
+        bundle_catalog_source = _bundle_catalog_source(adapter_plan)
+        locale_catalog = json.loads((ROOT / bundle_catalog_source).read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError, KeyError, TypeError, ValueError) as exc:
+        print(f"production adapter metadata promotion planning failed: {exc}", file=sys.stderr)
         return 1
 
     try:
