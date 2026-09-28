@@ -297,6 +297,19 @@ class ResearchProductionAdapterMetadataPromotionTests(unittest.TestCase):
                 self.locale_catalog,
             )
 
+    def test_planner_rejects_malformed_descriptor_skill_entry(self) -> None:
+        descriptor = copy.deepcopy(self.descriptor)
+        descriptor["skills"].append([])
+        with self.assertRaisesRegex(
+            ValueError,
+            "production descriptor Skill entry must declare research_id",
+        ):
+            plan_production_adapter_metadata_promotion(
+                self.adapter_plan,
+                descriptor,
+                self.locale_catalog,
+            )
+
     def test_planner_rejects_non_object_openai_profile_entry(self) -> None:
         adapter_plan = copy.deepcopy(self.adapter_plan)
         adapter_plan["distributions"]["openai_skill"]["skills"][
