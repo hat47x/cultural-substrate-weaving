@@ -60,6 +60,26 @@ class ResearchProductionAdapterMetadataPromotionTests(unittest.TestCase):
         source = self.plan if plan is None else plan
         return next(item for item in source["locale_bundle_promotions"] if item["locale"] == locale)
 
+    def test_validator_composes_full_descriptor_gate_authority(self) -> None:
+        descriptor = copy.deepcopy(self.descriptor)
+        descriptor["complete_checkout_validation"][
+            "production_promotion_authorized"
+        ] = True
+        errors = validate_production_adapter_metadata_promotion_plan(
+            self.plan,
+            descriptor,
+            self.locale_catalog,
+            adapter_plan=self.adapter_plan,
+        )
+        self.assertTrue(
+            any(
+                "complete_checkout_validation.production_promotion_authorized must remain False"
+                in error
+                for error in errors
+            ),
+            errors,
+        )
+
     def test_validator_requires_adapter_plan_authority(self) -> None:
         errors = validate_production_adapter_metadata_promotion_plan(
             self.plan,
