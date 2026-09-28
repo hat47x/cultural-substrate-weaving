@@ -398,7 +398,7 @@ def plan_production_adapter_metadata_promotion(
         raise ValueError("production descriptor must declare Skills")
 
     openai_distribution = adapter_plan["distributions"]["openai_skill"]
-    openai_research = openai_distribution["skills"]
+    openai_research = openai_distribution.get("skills")
     if not isinstance(openai_research, dict):
         raise ValueError("OpenAI adapter metadata plan must declare a skills object")
     openai_skill_ids = set(openai_research)
@@ -424,8 +424,21 @@ def plan_production_adapter_metadata_promotion(
                 f"extra={sorted(locale_names - descriptor_locales)}"
             )
         descriptor_skill = descriptor_by_id[research_id]
-        production_name = descriptor_skill["proposed_installable_name"]
-        production_meta = descriptor_skill["adapter_metadata"]["openai_skill"]
+        production_name = descriptor_skill.get("proposed_installable_name")
+        if not isinstance(production_name, str) or not production_name:
+            raise ValueError(
+                f"skill {research_id} proposed_installable_name must be a non-empty string"
+            )
+        adapter_metadata = descriptor_skill.get("adapter_metadata")
+        if not isinstance(adapter_metadata, dict):
+            raise ValueError(
+                f"skill {research_id} adapter_metadata must be an object"
+            )
+        production_meta = adapter_metadata.get("openai_skill")
+        if not isinstance(production_meta, dict):
+            raise ValueError(
+                f"skill {research_id} OpenAI adapter_metadata must be an object"
+            )
         metadata_mode = production_meta.get("mode")
         source_pattern = production_meta.get("source_pattern")
         if metadata_mode not in {
