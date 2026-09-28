@@ -146,15 +146,22 @@ def _assert_adapter_plan_distribution_modes(adapter_plan: dict) -> None:
 def _bundle_catalog_source(adapter_plan: dict) -> str:
     distributions = adapter_plan["distributions"]
     names = _bundle_distribution_names(adapter_plan)
-    sources = {
+    source_values = [
         distributions[name].get("source")
         for name in names
         if isinstance(distributions.get(name), dict)
-    }
+    ]
+    invalid_sources = [source for source in source_values if not isinstance(source, str)]
+    if invalid_sources:
+        raise ValueError(
+            "locale_bundle production catalog path is invalid: "
+            f"{invalid_sources[0]!r}"
+        )
+    sources = set(source_values)
     if len(sources) != 1:
         raise ValueError(f"locale_bundle distributions must share one production catalog: {sources!r}")
     source = next(iter(sources))
-    if not isinstance(source, str) or not _safe_repo_path(source):
+    if not _safe_repo_path(source):
         raise ValueError(f"locale_bundle production catalog path is invalid: {source!r}")
     if not _path_under(source, PRODUCTION_ADAPTER_ROOT):
         raise ValueError(
@@ -360,11 +367,16 @@ def plan_production_adapter_metadata_promotion(
 
     _assert_adapter_plan_distribution_modes(adapter_plan)
 
-    descriptor_research_ids = [
-        item.get("research_id")
-        for item in descriptor.get("skills", [])
-        if isinstance(item, dict) and isinstance(item.get("research_id"), str)
-    ]
+    descriptor_skills = descriptor.get("skills")
+    if not isinstance(descriptor_skills, list):
+        raise ValueError("production promotion descriptor skills must be a list")
+    descriptor_research_ids: list[str] = []
+    for index, item in enumerate(descriptor_skills):
+        if not isinstance(item, dict) or not isinstance(item.get("research_id"), str) or not item.get("research_id"):
+            raise ValueError(
+                f"production descriptor Skill entry must declare research_id: index {index}"
+            )
+        descriptor_research_ids.append(item["research_id"])
     if len(descriptor_research_ids) != len(set(descriptor_research_ids)):
         raise ValueError("production descriptor contains duplicate research Skills")
 
@@ -446,6 +458,10 @@ def plan_production_adapter_metadata_promotion(
                 )
             for profile in profiles:
                 research_item = locale_profiles[profile]
+                if not isinstance(research_item, dict):
+                    raise ValueError(
+                        f"OpenAI adapter metadata entry {research_id}/{locale}/{profile} must be an object"
+                    )
                 research_status = research_item.get("status")
                 if research_status != expected_research_status:
                     raise ValueError(
@@ -923,7 +939,11 @@ def validate_production_adapter_metadata_promotion_plan(
         if not isinstance(update, dict) or set(update) != {"description"} or not isinstance(update.get("description"), str):
             errors.append(f"bundle promotion may update description only: {locale}")
         research_contains = item.get("prototype_research_contains")
-        if not isinstance(research_contains, list) or set(research_contains) != expected_research:
+        if (
+            not isinstance(research_contains, list)
+            or not all(isinstance(value, str) for value in research_contains)
+            or set(research_contains) != expected_research
+        ):
             errors.append(f"bundle prototype research composition mismatch: {locale}")
         if item.get("production_suite_contains") != expected_public:
             errors.append(f"bundle production composition must use public Skill identities: {locale}")
