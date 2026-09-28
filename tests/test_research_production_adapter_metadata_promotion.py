@@ -120,6 +120,32 @@ class ResearchProductionAdapterMetadataPromotionTests(unittest.TestCase):
         self.assertEqual(len(self.plan["openai_profile_promotions"]), 12)
         self.assertEqual(len(self.plan["locale_bundle_promotions"]), 2)
 
+    def test_validator_rejects_non_string_openai_identity_without_crashing(self) -> None:
+        plan = copy.deepcopy(self.plan)
+        plan["openai_profile_promotions"][0]["locale"] = []
+        errors = self.errors(plan)
+        self.assertTrue(
+            any(
+                "OpenAI adapter promotion identity fields must be non-empty strings"
+                in error
+                for error in errors
+            ),
+            errors,
+        )
+
+    def test_validator_rejects_non_string_bundle_locale_without_crashing(self) -> None:
+        plan = copy.deepcopy(self.plan)
+        plan["locale_bundle_promotions"][0]["locale"] = []
+        errors = self.errors(plan)
+        self.assertTrue(
+            any(
+                "bundle metadata promotion locale must be a non-empty string"
+                in error
+                for error in errors
+            ),
+            errors,
+        )
+
     def test_openai_profiles_follow_adapter_plan_authority(self) -> None:
         adapter_plan = copy.deepcopy(self.adapter_plan)
         openai = adapter_plan["distributions"]["openai_skill"]
