@@ -367,11 +367,16 @@ def plan_production_adapter_metadata_promotion(
 
     _assert_adapter_plan_distribution_modes(adapter_plan)
 
-    descriptor_research_ids = [
-        item.get("research_id")
-        for item in descriptor.get("skills", [])
-        if isinstance(item, dict) and isinstance(item.get("research_id"), str)
-    ]
+    descriptor_skills = descriptor.get("skills")
+    if not isinstance(descriptor_skills, list):
+        raise ValueError("production promotion descriptor skills must be a list")
+    descriptor_research_ids: list[str] = []
+    for index, item in enumerate(descriptor_skills):
+        if not isinstance(item, dict) or not isinstance(item.get("research_id"), str) or not item.get("research_id"):
+            raise ValueError(
+                f"production descriptor Skill entry must declare research_id: index {index}"
+            )
+        descriptor_research_ids.append(item["research_id"])
     if len(descriptor_research_ids) != len(set(descriptor_research_ids)):
         raise ValueError("production descriptor contains duplicate research Skills")
 
@@ -453,6 +458,10 @@ def plan_production_adapter_metadata_promotion(
                 )
             for profile in profiles:
                 research_item = locale_profiles[profile]
+                if not isinstance(research_item, dict):
+                    raise ValueError(
+                        f"OpenAI adapter metadata entry {research_id}/{locale}/{profile} must be an object"
+                    )
                 research_status = research_item.get("status")
                 if research_status != expected_research_status:
                     raise ValueError(
