@@ -325,6 +325,21 @@ class ResearchProductionAdapterMetadataPromotionTests(unittest.TestCase):
                 self.locale_catalog,
             )
 
+    def test_planner_rejects_non_string_distribution_key(self) -> None:
+        adapter_plan = copy.deepcopy(self.adapter_plan)
+        adapter_plan["distributions"][1] = copy.deepcopy(
+            adapter_plan["distributions"]["claude_plugin"]
+        )
+        with self.assertRaisesRegex(
+            ValueError,
+            "adapter metadata distribution keys must be non-empty strings",
+        ):
+            plan_production_adapter_metadata_promotion(
+                adapter_plan,
+                self.descriptor,
+                self.locale_catalog,
+            )
+
     def test_planner_rejects_non_object_authority_roots(self) -> None:
         cases = (
             ("adapter_plan", [], self.descriptor, self.locale_catalog, "adapter metadata plan authority must be an object"),
