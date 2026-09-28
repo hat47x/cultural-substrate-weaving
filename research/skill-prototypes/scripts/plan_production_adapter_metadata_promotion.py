@@ -626,6 +626,8 @@ def validate_production_adapter_metadata_promotion_plan(
         errors.append(
             "adapter metadata promotion validation requires adapter-plan authority"
         )
+    else:
+        errors.extend(validate_adapter_metadata(root, adapter_plan))
 
     descriptor_research_ids = [
         item.get("research_id")
