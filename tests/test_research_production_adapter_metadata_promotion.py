@@ -95,6 +95,25 @@ class ResearchProductionAdapterMetadataPromotionTests(unittest.TestCase):
             errors,
         )
 
+    def test_validator_composes_full_adapter_metadata_authority(self) -> None:
+        adapter_plan = copy.deepcopy(self.adapter_plan)
+        adapter_plan["distributions"]["openai_skill"]["profiles"]["interactive"][
+            "expected_allow_implicit_invocation"
+        ] = "yes"
+        errors = validate_production_adapter_metadata_promotion_plan(
+            self.plan,
+            self.descriptor,
+            self.locale_catalog,
+            adapter_plan=adapter_plan,
+        )
+        self.assertTrue(
+            any(
+                "expected_allow_implicit_invocation must be boolean" in error
+                for error in errors
+            ),
+            errors,
+        )
+
     def test_current_adapter_promotion_plan_is_valid(self) -> None:
         self.assertEqual(self.errors(), [])
         self.assertFalse(self.plan["writes_production_metadata"])

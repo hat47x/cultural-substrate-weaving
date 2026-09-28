@@ -415,10 +415,14 @@ def validate_production_source_promotion_plan(
         errors.append(
             "production source promotion validation requires research suite authority"
         )
+    else:
+        errors.extend(validate_suite(ROOT, suite))
     if inventory is None:
         errors.append(
             "production source promotion validation requires projection-inventory authority"
         )
+    else:
+        errors.extend(validate_projection_inventory(ROOT, inventory))
 
     descriptor_research_ids = [
         item.get("research_id")
