@@ -101,6 +101,33 @@ def _bundle_distribution_names(adapter_plan: dict) -> tuple[str, ...]:
     return names
 
 
+def _assert_adapter_plan_distribution_modes(adapter_plan: dict) -> None:
+    distributions = adapter_plan.get("distributions")
+    if not isinstance(distributions, dict):
+        raise ValueError("adapter metadata plan must declare distributions")
+
+    openai = distributions.get("openai_skill")
+    if not isinstance(openai, dict) or openai.get("scope") != "per_skill_per_profile":
+        raise ValueError(
+            "OpenAI adapter metadata scope must remain per_skill_per_profile"
+        )
+
+    bundle_names = set(_bundle_distribution_names(adapter_plan))
+    required_bundle_names = {"claude_plugin", "codex_plugin"}
+    missing = sorted(required_bundle_names - bundle_names)
+    if missing:
+        raise ValueError(
+            "adapter metadata plan is missing required locale_bundle distributions: "
+            f"{missing}"
+        )
+    for name in bundle_names:
+        config = distributions.get(name)
+        if not isinstance(config, dict) or config.get("source_mode") != "locale_catalog":
+            raise ValueError(
+                f"locale_bundle distribution {name} must use source_mode=locale_catalog"
+            )
+
+
 def _bundle_catalog_source(adapter_plan: dict) -> str:
     distributions = adapter_plan["distributions"]
     names = _bundle_distribution_names(adapter_plan)
@@ -288,6 +315,8 @@ def plan_production_adapter_metadata_promotion(
     locale_catalog: dict,
     root: Path = ROOT,
 ) -> dict:
+    _assert_adapter_plan_distribution_modes(adapter_plan)
+
     descriptor_research_ids = [
         item.get("research_id")
         for item in descriptor.get("skills", [])
@@ -610,6 +639,7 @@ def validate_production_adapter_metadata_promotion_plan(
     expected_openai_statuses: dict[tuple[str, str, str], str] | None
     if adapter_plan is not None:
         try:
+            _assert_adapter_plan_distribution_modes(adapter_plan)
             expected_openai_sources = _expected_openai_sources(adapter_plan)
             expected_openai_statuses = _expected_openai_statuses(adapter_plan)
             expected_openai_keys = set(expected_openai_sources)

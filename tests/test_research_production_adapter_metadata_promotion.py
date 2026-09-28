@@ -150,6 +150,54 @@ class ResearchProductionAdapterMetadataPromotionTests(unittest.TestCase):
                 self.locale_catalog,
             )
 
+    def test_planner_rejects_openai_scope_drift(self) -> None:
+        adapter_plan = copy.deepcopy(self.adapter_plan)
+        adapter_plan["distributions"]["openai_skill"]["scope"] = "locale_bundle"
+        with self.assertRaisesRegex(
+            ValueError,
+            "OpenAI adapter metadata scope must remain per_skill_per_profile",
+        ):
+            plan_production_adapter_metadata_promotion(
+                adapter_plan,
+                self.descriptor,
+                self.locale_catalog,
+            )
+
+    def test_planner_rejects_missing_required_bundle_distribution(self) -> None:
+        adapter_plan = copy.deepcopy(self.adapter_plan)
+        adapter_plan["distributions"]["claude_plugin"]["scope"] = "standalone_per_skill"
+        with self.assertRaisesRegex(
+            ValueError,
+            "missing required locale_bundle distributions",
+        ):
+            plan_production_adapter_metadata_promotion(
+                adapter_plan,
+                self.descriptor,
+                self.locale_catalog,
+            )
+
+    def test_planner_rejects_bundle_source_mode_drift(self) -> None:
+        adapter_plan = copy.deepcopy(self.adapter_plan)
+        adapter_plan["distributions"]["codex_plugin"]["source_mode"] = "per_skill_files"
+        with self.assertRaisesRegex(
+            ValueError,
+            "must use source_mode=locale_catalog",
+        ):
+            plan_production_adapter_metadata_promotion(
+                adapter_plan,
+                self.descriptor,
+                self.locale_catalog,
+            )
+
+    def test_validator_rejects_bundle_source_mode_drift(self) -> None:
+        adapter_plan = copy.deepcopy(self.adapter_plan)
+        adapter_plan["distributions"]["codex_plugin"]["source_mode"] = "per_skill_files"
+        errors = self.errors(self.plan, adapter_plan)
+        self.assertTrue(
+            any("must use source_mode=locale_catalog" in error for error in errors),
+            errors,
+        )
+
     def test_openai_skill_set_must_match_production_descriptor(self) -> None:
         adapter_plan = copy.deepcopy(self.adapter_plan)
         del adapter_plan["distributions"]["openai_skill"]["skills"]["iterative-inquiry-synthesis"]
