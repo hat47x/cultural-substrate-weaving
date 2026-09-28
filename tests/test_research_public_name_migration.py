@@ -68,6 +68,32 @@ class ResearchPublicNameMigrationTests(unittest.TestCase):
                 f"expected error containing {fragment!r}; got {errors!r}",
             )
 
+    def test_validator_rejects_non_object_contract_without_crashing(self) -> None:
+        self.assertEqual(
+            validate_public_name_migration(ROOT, []),
+            ["public-name migration contract must be an object"],
+        )
+
+    def test_mapping_keys_must_be_non_empty_strings(self) -> None:
+        contract = copy.deepcopy(self.contract)
+        value = contract["research_to_production_name"].pop("affinity-synthesis")
+        contract["research_to_production_name"][1] = value
+        self.assert_has_error(
+            contract,
+            "research_to_production_name keys must be non-empty strings",
+        )
+
+    def test_forbidden_prefixes_reject_unhashable_values_without_crashing(self) -> None:
+        contract = copy.deepcopy(self.contract)
+        contract["forbidden_production_reference_prefixes"] = [
+            "research/skill-prototypes/",
+            {"path": "../affinity-synthesis/"},
+        ]
+        self.assert_has_error(
+            contract,
+            "forbidden_production_reference_prefixes must be a non-empty string list",
+        )
+
     def test_current_contract_is_valid(self) -> None:
         self.assertEqual(validate_public_name_migration(ROOT, self.contract), [])
 
