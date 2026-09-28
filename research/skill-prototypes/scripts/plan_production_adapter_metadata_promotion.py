@@ -621,6 +621,10 @@ def validate_production_adapter_metadata_promotion_plan(
         errors.append("adapter metadata promotion plan must remain design-only")
     if plan.get("writes_production_metadata") is not False:
         errors.append("adapter metadata promotion plan must not write production metadata")
+    if adapter_plan is None:
+        errors.append(
+            "adapter metadata promotion validation requires adapter-plan authority"
+        )
 
     descriptor_research_ids = [
         item.get("research_id")
