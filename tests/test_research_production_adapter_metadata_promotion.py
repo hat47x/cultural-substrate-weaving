@@ -157,6 +157,32 @@ class ResearchProductionAdapterMetadataPromotionTests(unittest.TestCase):
         self.assertEqual(len(self.plan["openai_profile_promotions"]), 12)
         self.assertEqual(len(self.plan["locale_bundle_promotions"]), 2)
 
+    def test_validator_rejects_non_object_plan_without_crashing(self) -> None:
+        errors = validate_production_adapter_metadata_promotion_plan(
+            [],
+            self.descriptor,
+            self.locale_catalog,
+            adapter_plan=self.adapter_plan,
+        )
+        self.assertTrue(
+            any("adapter metadata promotion plan must be an object" in error for error in errors),
+            errors,
+        )
+
+    def test_validator_rejects_non_object_authorities_without_crashing(self) -> None:
+        errors = validate_production_adapter_metadata_promotion_plan(
+            self.plan,
+            [],
+            [],
+            adapter_plan=[],
+        )
+        for expected in (
+            "production promotion descriptor must be an object",
+            "production locale catalog authority must be an object",
+            "adapter metadata plan authority must be an object",
+        ):
+            self.assertTrue(any(expected in error for error in errors), errors)
+
     def test_validator_rejects_non_string_openai_identity_without_crashing(self) -> None:
         plan = copy.deepcopy(self.plan)
         plan["openai_profile_promotions"][0]["locale"] = []
