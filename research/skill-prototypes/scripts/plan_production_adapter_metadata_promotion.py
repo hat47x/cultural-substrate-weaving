@@ -31,6 +31,7 @@ PLAN_SCHEMA = "csw.production-adapter-metadata-promotion-plan/v1"
 BUNDLE_PROMOTION_STATE = "planned-locale-catalog-wording-update"
 RESEARCH_BUNDLE_ROOT = PurePosixPath("research/skill-prototypes/adapters/claude-codex")
 PRODUCTION_ADAPTER_ROOT = PurePosixPath("adapters")
+PRODUCTION_BUNDLE_CATALOG = PurePosixPath("adapters/claude-code/locales.json")
 
 
 def _safe_repo_path(value: str) -> bool:
@@ -118,7 +119,29 @@ def _bundle_catalog_source(adapter_plan: dict) -> str:
             "locale_bundle production catalog is outside production adapter source class: "
             f"{source!r}"
         )
+    if source != PRODUCTION_BUNDLE_CATALOG.as_posix():
+        raise ValueError(
+            "locale_bundle production catalog must remain canonical: "
+            f"{source!r} != {PRODUCTION_BUNDLE_CATALOG.as_posix()!r}"
+        )
     return source
+
+
+def _assert_locale_catalog_snapshot(
+    root: Path,
+    source: str,
+    locale_catalog: dict,
+) -> None:
+    try:
+        canonical = json.loads((root / source).read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError, UnicodeError) as exc:
+        raise ValueError(
+            f"production locale catalog could not be read from {source!r}: {exc}"
+        ) from exc
+    if locale_catalog != canonical:
+        raise ValueError(
+            "locale catalog snapshot must match canonical production catalog source"
+        )
 
 
 def _assert_descriptor_adapter_metadata_authority(
@@ -427,6 +450,7 @@ def plan_production_adapter_metadata_promotion(
 
     bundle_distribution_names = _bundle_distribution_names(adapter_plan)
     bundle_catalog_source = _bundle_catalog_source(adapter_plan)
+    _assert_locale_catalog_snapshot(root, bundle_catalog_source, locale_catalog)
     _assert_descriptor_adapter_metadata_authority(
         descriptor_by_id,
         bundle_catalog_source=bundle_catalog_source,
@@ -723,6 +747,7 @@ def validate_production_adapter_metadata_promotion_plan(
         try:
             expected_shared_by = list(_bundle_distribution_names(adapter_plan))
             expected_catalog = _bundle_catalog_source(adapter_plan)
+            _assert_locale_catalog_snapshot(root, expected_catalog, locale_catalog)
             expected_prototype_sources = _bundle_prototype_sources(adapter_plan)
         except (KeyError, TypeError, ValueError) as exc:
             errors.append(f"bundle adapter promotion authority is invalid: {exc}")
