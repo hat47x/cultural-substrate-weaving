@@ -410,6 +410,14 @@ def validate_production_source_promotion_plan(
         errors.append("production source promotion plan must remain design-only")
     if plan.get("selection_basis") != "research locale package_source.files":
         errors.append("production source promotion selection must remain package_source.files based")
+    if suite is None:
+        errors.append(
+            "production source promotion validation requires research suite authority"
+        )
+    if inventory is None:
+        errors.append(
+            "production source promotion validation requires projection-inventory authority"
+        )
 
     descriptor_research_ids = [
         item.get("research_id")
