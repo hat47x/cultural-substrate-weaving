@@ -60,6 +60,20 @@ class ResearchProductionAdapterMetadataPromotionTests(unittest.TestCase):
         source = self.plan if plan is None else plan
         return next(item for item in source["locale_bundle_promotions"] if item["locale"] == locale)
 
+    def test_validator_reports_malformed_descriptor_skills_without_crashing(self) -> None:
+        descriptor = copy.deepcopy(self.descriptor)
+        descriptor["skills"] = None
+        errors = validate_production_adapter_metadata_promotion_plan(
+            self.plan,
+            descriptor,
+            self.locale_catalog,
+            adapter_plan=self.adapter_plan,
+        )
+        self.assertTrue(
+            any("production promotion descriptor skills must be a list" in error for error in errors),
+            errors,
+        )
+
     def test_validator_composes_full_descriptor_gate_authority(self) -> None:
         descriptor = copy.deepcopy(self.descriptor)
         descriptor["complete_checkout_validation"][
@@ -119,6 +133,32 @@ class ResearchProductionAdapterMetadataPromotionTests(unittest.TestCase):
         self.assertFalse(self.plan["writes_production_metadata"])
         self.assertEqual(len(self.plan["openai_profile_promotions"]), 12)
         self.assertEqual(len(self.plan["locale_bundle_promotions"]), 2)
+
+    def test_validator_rejects_non_string_openai_identity_without_crashing(self) -> None:
+        plan = copy.deepcopy(self.plan)
+        plan["openai_profile_promotions"][0]["locale"] = []
+        errors = self.errors(plan)
+        self.assertTrue(
+            any(
+                "OpenAI adapter promotion identity fields must be non-empty strings"
+                in error
+                for error in errors
+            ),
+            errors,
+        )
+
+    def test_validator_rejects_non_string_bundle_locale_without_crashing(self) -> None:
+        plan = copy.deepcopy(self.plan)
+        plan["locale_bundle_promotions"][0]["locale"] = []
+        errors = self.errors(plan)
+        self.assertTrue(
+            any(
+                "bundle metadata promotion locale must be a non-empty string"
+                in error
+                for error in errors
+            ),
+            errors,
+        )
 
     def test_openai_profiles_follow_adapter_plan_authority(self) -> None:
         adapter_plan = copy.deepcopy(self.adapter_plan)

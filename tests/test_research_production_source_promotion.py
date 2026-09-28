@@ -79,6 +79,21 @@ class ResearchProductionSourcePromotionTests(unittest.TestCase):
             errors,
         )
 
+    def test_validator_reports_malformed_descriptor_skills_without_crashing(self) -> None:
+        descriptor = copy.deepcopy(self.descriptor)
+        descriptor["skills"] = None
+        errors = validate_production_source_promotion_plan(
+            self.plan,
+            descriptor,
+            self.inventory,
+            suite=self.suite,
+            migration=self.migration,
+        )
+        self.assertTrue(
+            any("production promotion descriptor skills must be a list" in error for error in errors),
+            errors,
+        )
+
     def test_validator_composes_full_descriptor_status_authority(self) -> None:
         descriptor = copy.deepcopy(self.descriptor)
         descriptor["status"] = "promotion-ready"
