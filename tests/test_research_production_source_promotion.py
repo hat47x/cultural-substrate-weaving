@@ -57,6 +57,35 @@ class ResearchProductionSourcePromotionTests(unittest.TestCase):
     def test_current_plan_is_valid(self) -> None:
         self.assertEqual(self.validate(), [])
 
+    def test_validator_rejects_non_object_plan_without_crashing(self) -> None:
+        errors = validate_production_source_promotion_plan(
+            [],
+            self.descriptor,
+            self.inventory,
+            suite=self.suite,
+            migration=self.migration,
+        )
+        self.assertTrue(
+            any("production source promotion plan must be an object" in error for error in errors),
+            errors,
+        )
+
+    def test_validator_rejects_non_object_authorities_without_crashing(self) -> None:
+        errors = validate_production_source_promotion_plan(
+            self.plan,
+            [],
+            [],
+            suite=[],
+            migration=[],
+        )
+        for expected in (
+            "production promotion descriptor must be an object",
+            "research suite authority must be an object",
+            "projection-inventory authority must be an object",
+            "public-name migration authority must be an object",
+        ):
+            self.assertTrue(any(expected in error for error in errors), errors)
+
     def test_validator_rejects_non_list_plan_skills_without_crashing(self) -> None:
         plan = copy.deepcopy(self.plan)
         plan["skills"] = {"affinity-synthesis": self.skill("affinity-synthesis", plan)}
