@@ -334,6 +334,40 @@ class ResearchProductionAdapterMetadataPromotionTests(unittest.TestCase):
                 self.locale_catalog,
             )
 
+    def test_planner_rejects_bundle_prototype_outside_research_source_class(self) -> None:
+        adapter_plan = copy.deepcopy(self.adapter_plan)
+        for distribution_name in ("claude_plugin", "codex_plugin"):
+            adapter_plan["distributions"][distribution_name]["locales"]["ja-JP"][
+                "prototype_source"
+            ] = "research/skill-prototypes/adapter-metadata-plan.json"
+
+        with self.assertRaisesRegex(
+            ValueError,
+            "locale_bundle prototype source is outside research bundle source class",
+        ):
+            plan_production_adapter_metadata_promotion(
+                adapter_plan,
+                self.descriptor,
+                self.locale_catalog,
+            )
+
+    def test_planner_rejects_bundle_catalog_outside_production_source_class(self) -> None:
+        adapter_plan = copy.deepcopy(self.adapter_plan)
+        for distribution_name in ("claude_plugin", "codex_plugin"):
+            adapter_plan["distributions"][distribution_name]["source"] = (
+                "research/skill-prototypes/adapter-metadata-plan.json"
+            )
+
+        with self.assertRaisesRegex(
+            ValueError,
+            "locale_bundle production catalog is outside production adapter source class",
+        ):
+            plan_production_adapter_metadata_promotion(
+                adapter_plan,
+                self.descriptor,
+                self.locale_catalog,
+            )
+
     def test_claude_and_codex_research_bundle_sources_are_shared_per_locale(self) -> None:
         distributions = self.adapter_plan["distributions"]
         claude = distributions["claude_plugin"]
