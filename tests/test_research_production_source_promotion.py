@@ -65,35 +65,6 @@ class ResearchProductionSourcePromotionTests(unittest.TestCase):
             suite=self.suite,
             migration=self.migration,
         )
-        self.assertTrue(
-            any("production source promotion plan must be an object" in error for error in errors),
-            errors,
-        )
-
-    def test_validator_rejects_non_object_authorities_without_crashing(self) -> None:
-        errors = validate_production_source_promotion_plan(
-            self.plan,
-            [],
-            [],
-            suite=[],
-            migration=[],
-        )
-        for expected in (
-            "production promotion descriptor must be an object",
-            "research suite authority must be an object",
-            "projection-inventory authority must be an object",
-            "public-name migration authority must be an object",
-        ):
-            self.assertTrue(any(expected in error for error in errors), errors)
-
-    def test_validator_rejects_non_object_plan_without_crashing(self) -> None:
-        errors = validate_production_source_promotion_plan(
-            [],
-            self.descriptor,
-            self.inventory,
-            suite=self.suite,
-            migration=self.migration,
-        )
         self.assertEqual(
             errors,
             ["production source promotion plan must be an object"],
@@ -110,6 +81,45 @@ class ResearchProductionSourcePromotionTests(unittest.TestCase):
         self.assertEqual(
             errors,
             ["production promotion descriptor authority must be an object"],
+        )
+
+    def test_validator_rejects_non_object_suite_authority_without_crashing(self) -> None:
+        errors = validate_production_source_promotion_plan(
+            self.plan,
+            self.descriptor,
+            self.inventory,
+            suite=[],
+            migration=self.migration,
+        )
+        self.assertTrue(
+            any("research suite authority must be an object" in error for error in errors),
+            errors,
+        )
+
+    def test_validator_rejects_non_object_inventory_authority_without_crashing(self) -> None:
+        errors = validate_production_source_promotion_plan(
+            self.plan,
+            self.descriptor,
+            [],
+            suite=self.suite,
+            migration=self.migration,
+        )
+        self.assertTrue(
+            any("projection-inventory authority must be an object" in error for error in errors),
+            errors,
+        )
+
+    def test_validator_rejects_non_object_migration_authority_without_crashing(self) -> None:
+        errors = validate_production_source_promotion_plan(
+            self.plan,
+            self.descriptor,
+            self.inventory,
+            suite=self.suite,
+            migration=[],
+        )
+        self.assertTrue(
+            any("public-name migration authority must be an object" in error for error in errors),
+            errors,
         )
 
     def test_validator_rejects_non_list_plan_skills_without_crashing(self) -> None:
