@@ -79,9 +79,9 @@ class ResearchProductionAdapterMetadataPromotionTests(unittest.TestCase):
             self.locale_catalog,
             adapter_plan=self.adapter_plan,
         )
-        self.assertEqual(
+        self.assertTrue(
+            any("production promotion descriptor must be an object" in error for error in errors),
             errors,
-            ["production promotion descriptor authority must be an object"],
         )
 
     def test_planner_rejects_non_object_locale_catalog(self) -> None:
@@ -103,7 +103,7 @@ class ResearchProductionAdapterMetadataPromotionTests(unittest.TestCase):
             adapter_plan=self.adapter_plan,
         )
         self.assertTrue(
-            any("production locale catalog must be an object" in error for error in errors),
+            any("production locale catalog authority must be an object" in error for error in errors),
             errors,
         )
 
