@@ -50,6 +50,31 @@ class ResearchReleaseCompositionPlanTests(unittest.TestCase):
     def test_current_release_composition_contract_is_valid(self) -> None:
         self.assertEqual(self.errors(), [])
 
+    def test_validator_rejects_non_object_descriptor_without_crashing(self) -> None:
+        self.assertEqual(
+            validate_release_composition_plan([], self.plan_text, self.package_text),
+            ["production promotion descriptor must be an object"],
+        )
+
+    def test_validator_rejects_non_string_source_text_without_crashing(self) -> None:
+        self.assertEqual(
+            validate_release_composition_plan(self.descriptor, [], self.package_text),
+            ["release composition plan text must be a string"],
+        )
+        self.assertEqual(
+            validate_release_composition_plan(self.descriptor, self.plan_text, []),
+            ["package.py source text must be a string"],
+        )
+
+    def test_malformed_descriptor_skills_does_not_crash_renamed_id_scan(self) -> None:
+        descriptor = copy.deepcopy(self.descriptor)
+        descriptor["skills"] = None
+        errors = self.errors(descriptor=descriptor)
+        self.assertTrue(
+            any("production descriptor skills must be a list" in error for error in errors),
+            errors,
+        )
+
     def test_three_skill_release_shape_flag_cannot_be_disabled(self) -> None:
         descriptor = copy.deepcopy(self.descriptor)
         descriptor["release_shape"]["openai_package_contains_three_standalone_skills"] = False

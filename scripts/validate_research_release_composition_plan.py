@@ -54,8 +54,12 @@ def _declared_target_names(
 
 
 def _renamed_research_ids(descriptor: dict) -> tuple[str, ...]:
+    skills = descriptor.get("skills")
+    if not isinstance(skills, list):
+        return ()
+
     renamed: list[str] = []
-    for item in descriptor.get("skills", []):
+    for item in skills:
         if not isinstance(item, dict):
             continue
         research_id = item.get("research_id")
@@ -76,6 +80,13 @@ def validate_release_composition_plan(
     plan_text: str,
     package_text: str,
 ) -> list[str]:
+    if not isinstance(descriptor, dict):
+        return ["production promotion descriptor must be an object"]
+    if not isinstance(plan_text, str):
+        return ["release composition plan text must be a string"]
+    if not isinstance(package_text, str):
+        return ["package.py source text must be a string"]
+
     errors: list[str] = []
     release_shape = descriptor.get("release_shape")
     required_flags = {
