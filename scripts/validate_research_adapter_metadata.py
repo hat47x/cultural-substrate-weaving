@@ -14,6 +14,7 @@ from pathlib import Path, PurePosixPath
 ROOT = Path(__file__).resolve().parents[1]
 PLAN_PATH = ROOT / "research/skill-prototypes/adapter-metadata-plan.json"
 EXPECTED_SCHEMA = "csw.research-adapter-metadata-plan/v1"
+EXPECTED_SUITE_MANIFEST = "research/skill-prototypes/suite-manifest.json"
 EXPECTED_BUNDLE_PROTOTYPE_SCHEMA = "csw.research-locale-bundle-metadata/v1"
 ALLOWED_SOURCE_STATUS = {"planned", "prototype", "existing"}
 ALLOWED_BUNDLE_STATUS = {"planned", "existing-baseline", "prototype", "reviewed"}
@@ -424,6 +425,12 @@ def validate_adapter_metadata(root: Path, plan: dict) -> list[str]:
         )
 
     suite_relative = plan.get("suite_manifest")
+    if suite_relative != EXPECTED_SUITE_MANIFEST:
+        errors.append(
+            "adapter metadata suite_manifest must remain canonical: "
+            f"{suite_relative!r} != {EXPECTED_SUITE_MANIFEST!r}"
+        )
+        return errors
     suite_path = _repo_path(root, suite_relative, "adapter metadata suite_manifest", errors)
     if suite_path is None or not suite_path.is_file():
         if suite_path is not None:

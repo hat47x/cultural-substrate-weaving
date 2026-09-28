@@ -150,6 +150,48 @@ class ResearchProductionAdapterMetadataPromotionTests(unittest.TestCase):
                 self.locale_catalog,
             )
 
+    def test_planner_rejects_adapter_plan_schema_drift(self) -> None:
+        adapter_plan = copy.deepcopy(self.adapter_plan)
+        adapter_plan["schema"] = "csw.research-adapter-metadata-plan/v0"
+        with self.assertRaisesRegex(
+            ValueError,
+            "adapter metadata plan schema must remain",
+        ):
+            plan_production_adapter_metadata_promotion(
+                adapter_plan,
+                self.descriptor,
+                self.locale_catalog,
+            )
+
+    def test_planner_rejects_suite_manifest_pointer_drift(self) -> None:
+        adapter_plan = copy.deepcopy(self.adapter_plan)
+        adapter_plan["suite_manifest"] = (
+            "research/skill-prototypes/P4-PRODUCTION-SUITE-DESCRIPTOR-PROTOTYPE.json"
+        )
+        with self.assertRaisesRegex(
+            ValueError,
+            "adapter metadata suite_manifest must remain canonical",
+        ):
+            plan_production_adapter_metadata_promotion(
+                adapter_plan,
+                self.descriptor,
+                self.locale_catalog,
+            )
+
+    def test_validator_rejects_suite_manifest_pointer_drift(self) -> None:
+        adapter_plan = copy.deepcopy(self.adapter_plan)
+        adapter_plan["suite_manifest"] = (
+            "research/skill-prototypes/P4-PRODUCTION-SUITE-DESCRIPTOR-PROTOTYPE.json"
+        )
+        errors = self.errors(self.plan, adapter_plan)
+        self.assertTrue(
+            any(
+                "adapter metadata suite_manifest must remain canonical" in error
+                for error in errors
+            ),
+            errors,
+        )
+
     def test_planner_rejects_openai_scope_drift(self) -> None:
         adapter_plan = copy.deepcopy(self.adapter_plan)
         adapter_plan["distributions"]["openai_skill"]["scope"] = "locale_bundle"

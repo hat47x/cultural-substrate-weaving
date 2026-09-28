@@ -52,6 +52,16 @@ class ResearchAdapterMetadataTests(unittest.TestCase):
     def test_current_adapter_metadata_descriptor_is_consistent(self) -> None:
         self.assertEqual(validate_adapter_metadata(ROOT, self.metadata), [])
 
+    def test_suite_manifest_pointer_must_remain_canonical(self) -> None:
+        metadata = copy.deepcopy(self.metadata)
+        metadata["suite_manifest"] = (
+            "research/skill-prototypes/P4-PRODUCTION-SUITE-DESCRIPTOR-PROTOTYPE.json"
+        )
+        self.assert_has_error(
+            metadata,
+            "adapter metadata suite_manifest must remain canonical",
+        )
+
     def test_openai_metadata_covers_all_suite_skills_and_locales(self) -> None:
         openai = self.metadata["distributions"]["openai_skill"]
         suite_skill_ids = {skill["id"] for skill in self.suite["skills"]}
