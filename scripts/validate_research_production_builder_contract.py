@@ -81,6 +81,11 @@ def validate_production_builder_contract(
     contract: dict,
     descriptor: dict,
 ) -> list[str]:
+    if not isinstance(contract, dict):
+        return ["production builder contract must be an object"]
+    if not isinstance(descriptor, dict):
+        return ["production promotion descriptor must be an object"]
+
     errors: list[str] = []
 
     if contract.get("schema") != EXPECTED_SCHEMA:
@@ -111,43 +116,99 @@ def validate_production_builder_contract(
         errors.append("builder contract source_mode_operations must preserve canonical_manifest and locale_tree separation")
 
     descriptor_first_wave = descriptor.get("first_wave_distributions")
+    if (
+        not isinstance(descriptor_first_wave, list)
+        or not all(
+            isinstance(name, str) and name
+            for name in descriptor_first_wave
+        )
+    ):
+        errors.append(
+            "production descriptor first_wave_distributions must be a string list "
+            "for builder contract validation"
+        )
+        descriptor_first_wave_names: list[str] = []
+    else:
+        descriptor_first_wave_names = descriptor_first_wave
+
     first_wave = contract.get("first_wave")
-    if not isinstance(first_wave, dict) or set(first_wave) != set(descriptor_first_wave or []):
+    first_wave_has_string_keys = (
+        isinstance(first_wave, dict)
+        and all(isinstance(name, str) and name for name in first_wave)
+    )
+    if (
+        not first_wave_has_string_keys
+        or set(first_wave) != set(descriptor_first_wave_names)
+    ):
         errors.append("builder contract first_wave must match the production descriptor first-wave distributions")
     else:
-        openai = first_wave.get("openai_skill", {})
-        if openai.get("mode") != "standalone_per_skill":
-            errors.append("OpenAI builder mode must remain standalone_per_skill")
-        if openai.get("profiles") != ["interactive", "metered"]:
-            errors.append("OpenAI builder profiles must remain interactive and metered")
-        if openai.get("target_pattern") != "dist/{locale}/openai-skill/{profile}/{target_name}":
-            errors.append("OpenAI target pattern must preserve the current locale/profile package shape")
-        if openai.get("frontmatter_name_uses_target_name") is not True:
-            errors.append("OpenAI Skill frontmatter name must use the production target name")
+        openai = first_wave.get("openai_skill")
+        if not isinstance(openai, dict):
+            errors.append("OpenAI builder configuration must be an object")
+        else:
+            if openai.get("mode") != "standalone_per_skill":
+                errors.append("OpenAI builder mode must remain standalone_per_skill")
+            if openai.get("profiles") != ["interactive", "metered"]:
+                errors.append("OpenAI builder profiles must remain interactive and metered")
+            if openai.get("target_pattern") != "dist/{locale}/openai-skill/{profile}/{target_name}":
+                errors.append("OpenAI target pattern must preserve the current locale/profile package shape")
+            if openai.get("frontmatter_name_uses_target_name") is not True:
+                errors.append("OpenAI Skill frontmatter name must use the production target name")
 
-        claude = first_wave.get("claude_plugin", {})
-        if claude.get("mode") != "locale_bundle":
-            errors.append("Claude builder mode must remain locale_bundle")
-        if claude.get("plugin_identity_source") != "production_descriptor.bundle_identity":
-            errors.append("Claude plugin identity must come from production_descriptor.bundle_identity")
-        if claude.get("target_pattern") != "plugins/{plugin_name}/skills/{target_name}":
-            errors.append("Claude target pattern must preserve one locale plugin with Skill subtrees")
-        if claude.get("marketplace_plugin_identity_is_preserved") is not True:
-            errors.append("Claude marketplace plugin identity must remain preserved")
+        claude = first_wave.get("claude_plugin")
+        if not isinstance(claude, dict):
+            errors.append("Claude builder configuration must be an object")
+        else:
+            if claude.get("mode") != "locale_bundle":
+                errors.append("Claude builder mode must remain locale_bundle")
+            if claude.get("plugin_identity_source") != "production_descriptor.bundle_identity":
+                errors.append("Claude plugin identity must come from production_descriptor.bundle_identity")
+            if claude.get("target_pattern") != "plugins/{plugin_name}/skills/{target_name}":
+                errors.append("Claude target pattern must preserve one locale plugin with Skill subtrees")
+            if claude.get("marketplace_plugin_identity_is_preserved") is not True:
+                errors.append("Claude marketplace plugin identity must remain preserved")
 
-        codex = first_wave.get("codex_plugin", {})
-        if codex.get("mode") != "reuse_claude_skill_tree":
-            errors.append("Codex builder mode must reuse the Claude Skill tree")
-        if codex.get("shared_skill_tree_distribution") != "claude_plugin":
-            errors.append("Codex must identify claude_plugin as its shared Skill tree")
-        if codex.get("target_pattern") != claude.get("target_pattern"):
-            errors.append("Codex and Claude must resolve to the same plugin Skill subtree pattern")
-        if codex.get("new_release_zip_kind") is not False:
-            errors.append("Codex must not add a new release ZIP kind in the first wave")
+        codex = first_wave.get("codex_plugin")
+        if not isinstance(codex, dict):
+            errors.append("Codex builder configuration must be an object")
+        else:
+            if codex.get("mode") != "reuse_claude_skill_tree":
+                errors.append("Codex builder mode must reuse the Claude Skill tree")
+            if codex.get("shared_skill_tree_distribution") != "claude_plugin":
+                errors.append("Codex must identify claude_plugin as its shared Skill tree")
+            claude_target_pattern = (
+                claude.get("target_pattern") if isinstance(claude, dict) else None
+            )
+            if codex.get("target_pattern") != claude_target_pattern:
+                errors.append("Codex and Claude must resolve to the same plugin Skill subtree pattern")
+            if codex.get("new_release_zip_kind") is not False:
+                errors.append("Codex must not add a new release ZIP kind in the first wave")
 
     descriptor_deferred = descriptor.get("deferred_composite_distributions")
+    if (
+        not isinstance(descriptor_deferred, list)
+        or not all(
+            isinstance(name, str) and name
+            for name in descriptor_deferred
+        )
+    ):
+        errors.append(
+            "production descriptor deferred_composite_distributions must be a string list "
+            "for builder contract validation"
+        )
+        descriptor_deferred_names: list[str] = []
+    else:
+        descriptor_deferred_names = descriptor_deferred
+
     deferred = contract.get("deferred_composite")
-    if not isinstance(deferred, dict) or set(deferred) != set(descriptor_deferred or []):
+    deferred_has_string_keys = (
+        isinstance(deferred, dict)
+        and all(isinstance(name, str) and name for name in deferred)
+    )
+    if (
+        not deferred_has_string_keys
+        or set(deferred) != set(descriptor_deferred_names)
+    ):
         errors.append("builder contract deferred_composite must match descriptor deferred composites")
     else:
         for distribution_name, item in deferred.items():
@@ -175,14 +236,17 @@ def validate_production_builder_contract(
             if fragment not in joined:
                 errors.append(f"builder contract missing invariant fragment: {fragment}")
 
-    release_shape = descriptor.get("release_shape", {})
+    release_shape = descriptor.get("release_shape")
+    if not isinstance(release_shape, dict):
+        errors.append("production descriptor release_shape must be an object")
+        release_shape = {}
     if isinstance(first_wave, dict):
-        codex = first_wave.get("codex_plugin", {})
+        codex = first_wave.get("codex_plugin")
         if release_shape.get("codex_reuses_claude_plugin_skill_tree") is not True:
             errors.append("descriptor must preserve Codex/Claude shared Skill-tree release shape")
         if release_shape.get("add_new_codex_release_zip_kind") is not False:
             errors.append("descriptor must keep add_new_codex_release_zip_kind false")
-        if codex.get("new_release_zip_kind") is not False:
+        if not isinstance(codex, dict) or codex.get("new_release_zip_kind") is not False:
             errors.append("builder contract and descriptor disagree on Codex release ZIP policy")
 
     skills = descriptor.get("skills")
@@ -214,7 +278,7 @@ def validate_production_builder_contract(
             targets = skill.get("targets")
             if not isinstance(targets, dict):
                 continue
-            for distribution in descriptor_first_wave or []:
+            for distribution in descriptor_first_wave_names:
                 target_name = targets.get(distribution)
                 if not isinstance(target_name, str) or not target_name:
                     errors.append(
