@@ -127,6 +127,11 @@ def validate_projection_inventory(root: Path, inventory: dict) -> list[str]:
             if relative in seen_paths:
                 errors.append(f"content_projection repeats path: {relative}")
             seen_paths.add(relative)
+        action = item.get("action")
+        if not isinstance(action, str) or not action:
+            errors.append(
+                f"content_projection action must be a non-empty string: {relative}"
+            )
         path = _repo_path(root, relative, f"content_projection[{index}].path", errors)
         if path is None:
             continue
