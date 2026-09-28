@@ -76,6 +76,11 @@ def _validate_openai(
     if not isinstance(profiles, dict) or not profiles:
         errors.append("openai_skill adapter metadata profiles must be a non-empty object")
         return
+    if not all(isinstance(profile, str) and profile for profile in profiles):
+        errors.append(
+            "openai_skill adapter metadata profile keys must be non-empty strings"
+        )
+        return
     profile_names = set(profiles)
     for profile, profile_config in profiles.items():
         if not isinstance(profile_config, dict):
@@ -90,6 +95,11 @@ def _validate_openai(
     skills = config.get("skills")
     if not isinstance(skills, dict):
         errors.append("openai_skill adapter metadata skills must be an object")
+        return
+    if not all(isinstance(skill_id, str) and skill_id for skill_id in skills):
+        errors.append(
+            "openai_skill adapter metadata skill ids must be non-empty strings"
+        )
         return
     if set(skills) != skill_ids:
         errors.append(
@@ -110,6 +120,11 @@ def _validate_openai(
         if not isinstance(locale_map, dict):
             errors.append(f"openai_skill metadata for {skill_id} must be an object")
             continue
+        if not all(isinstance(locale, str) and locale for locale in locale_map):
+            errors.append(
+                f"openai_skill metadata locale keys for {skill_id} must be non-empty strings"
+            )
+            continue
         if set(locale_map) != locales:
             errors.append(
                 f"openai_skill metadata locales for {skill_id} must match suite locales; "
@@ -120,6 +135,12 @@ def _validate_openai(
             profile_map = locale_map.get(locale)
             if not isinstance(profile_map, dict):
                 errors.append(f"openai_skill metadata for {skill_id}/{locale} must be an object")
+                continue
+            if not all(isinstance(profile, str) and profile for profile in profile_map):
+                errors.append(
+                    f"openai_skill metadata profile keys for {skill_id}/{locale} "
+                    "must be non-empty strings"
+                )
                 continue
             if set(profile_map) != profile_names:
                 errors.append(
@@ -344,6 +365,11 @@ def _validate_locale_bundle(
     if not isinstance(locale_states, dict):
         errors.append(f"{distribution_name} adapter metadata locales must be an object")
         return
+    if not all(isinstance(locale, str) and locale for locale in locale_states):
+        errors.append(
+            f"{distribution_name} adapter metadata locale keys must be non-empty strings"
+        )
+        return
     if set(locale_states) != locales:
         errors.append(
             f"{distribution_name} adapter metadata locales must match suite locales; "
@@ -418,6 +444,9 @@ def _validate_locale_bundle(
 
 
 def validate_adapter_metadata(root: Path, plan: dict) -> list[str]:
+    if not isinstance(plan, dict):
+        return ["research adapter metadata plan must be an object"]
+
     errors: list[str] = []
     if plan.get("schema") != EXPECTED_SCHEMA:
         errors.append(
@@ -463,6 +492,13 @@ def validate_adapter_metadata(root: Path, plan: dict) -> list[str]:
     metadata_distributions = plan.get("distributions")
     if not isinstance(metadata_distributions, dict):
         return errors + ["research adapter metadata distributions must be an object"]
+    if not all(
+        isinstance(name, str) and name
+        for name in metadata_distributions
+    ):
+        return errors + [
+            "research adapter metadata distribution keys must be non-empty strings"
+        ]
     if set(metadata_distributions) != skill_tree_distributions:
         errors.append(
             "adapter metadata distributions must match Skill-tree distributions; "
