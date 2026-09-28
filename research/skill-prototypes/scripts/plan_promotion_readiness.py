@@ -121,7 +121,12 @@ def _production_path(contract: dict | None, key: str) -> Path | None:
     if not isinstance(production_files, dict):
         return None
     value = production_files.get(key)
-    return Path(value) if isinstance(value, str) else None
+    if not isinstance(value, str) or not value or "\\" in value:
+        return None
+    path = PurePosixPath(value)
+    if path.is_absolute() or ".." in path.parts:
+        return None
+    return Path(value)
 
 
 def _design_and_file_state(*, design_present: bool, production_file_present: bool) -> str:
