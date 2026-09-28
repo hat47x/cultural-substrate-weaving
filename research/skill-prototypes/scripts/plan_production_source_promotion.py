@@ -402,6 +402,7 @@ def validate_production_source_promotion_plan(
     inventory: dict | None = None,
     *,
     suite: dict | None = None,
+    migration: dict | None = None,
 ) -> list[str]:
     errors: list[str] = []
     errors.extend(validate_production_suite_descriptor(descriptor))
@@ -423,6 +424,12 @@ def validate_production_source_promotion_plan(
         )
     else:
         errors.extend(validate_projection_inventory(ROOT, inventory))
+    if migration is None:
+        errors.append(
+            "production source promotion validation requires public-name migration authority"
+        )
+    else:
+        errors.extend(validate_public_name_migration(ROOT, migration))
 
     descriptor_research_ids = [
         item.get("research_id")
@@ -834,6 +841,7 @@ def main() -> int:
         descriptor,
         inventory,
         suite=suite,
+        migration=migration,
     )
     if errors:
         for error in errors:
