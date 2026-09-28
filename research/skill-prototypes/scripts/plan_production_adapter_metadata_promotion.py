@@ -122,6 +122,11 @@ def _assert_adapter_plan_distribution_modes(adapter_plan: dict) -> None:
     distributions = adapter_plan.get("distributions")
     if not isinstance(distributions, dict):
         raise ValueError("adapter metadata plan must declare distributions")
+    if not all(
+        isinstance(name, str) and name
+        for name in distributions
+    ):
+        raise ValueError("adapter metadata distribution keys must be non-empty strings")
 
     openai = distributions.get("openai_skill")
     if not isinstance(openai, dict) or openai.get("scope") != "per_skill_per_profile":
