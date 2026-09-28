@@ -103,7 +103,7 @@ class ResearchProductionAdapterMetadataPromotionTests(unittest.TestCase):
             adapter_plan=self.adapter_plan,
         )
         self.assertTrue(
-            any("production locale catalog authority must be an object" in error for error in errors),
+            any("production locale catalog must be an object" in error for error in errors),
             errors,
         )
 
