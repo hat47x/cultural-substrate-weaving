@@ -384,6 +384,23 @@ class ResearchProductionSourcePromotionTests(unittest.TestCase):
         )
 
 
+    def test_planner_rejects_non_object_authority_roots(self) -> None:
+        cases = (
+            ("suite", [], self.descriptor, self.migration, self.inventory, "research suite authority must be an object"),
+            ("descriptor", self.suite, [], self.migration, self.inventory, "production promotion descriptor authority must be an object"),
+            ("migration", self.suite, self.descriptor, [], self.inventory, "public-name migration authority must be an object"),
+            ("inventory", self.suite, self.descriptor, self.migration, [], "projection-inventory authority must be an object"),
+        )
+        for label, suite, descriptor, migration, inventory, expected in cases:
+            with self.subTest(label=label):
+                with self.assertRaisesRegex(ValueError, expected):
+                    plan_production_source_promotion(
+                        suite,
+                        descriptor,
+                        migration,
+                        inventory,
+                    )
+
     def test_planner_rejects_duplicate_suite_skill(self) -> None:
         suite = copy.deepcopy(self.suite)
         suite["skills"].append(copy.deepcopy(suite["skills"][0]))
