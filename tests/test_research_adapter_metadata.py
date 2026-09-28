@@ -52,6 +52,90 @@ class ResearchAdapterMetadataTests(unittest.TestCase):
     def test_current_adapter_metadata_descriptor_is_consistent(self) -> None:
         self.assertEqual(validate_adapter_metadata(ROOT, self.metadata), [])
 
+    def test_validator_rejects_non_object_plan_without_crashing(self) -> None:
+        self.assertEqual(
+            validate_adapter_metadata(ROOT, []),
+            ["research adapter metadata plan must be an object"],
+        )
+
+    def test_validator_rejects_non_string_mapping_keys_without_crashing(self) -> None:
+        cases = []
+
+        metadata = copy.deepcopy(self.metadata)
+        metadata["distributions"][1] = {}
+        cases.append(
+            (
+                "distribution",
+                metadata,
+                "research adapter metadata distribution keys must be non-empty strings",
+            )
+        )
+
+        metadata = copy.deepcopy(self.metadata)
+        profiles = metadata["distributions"]["openai_skill"]["profiles"]
+        profiles[1] = profiles.pop("interactive")
+        cases.append(
+            (
+                "profile",
+                metadata,
+                "openai_skill adapter metadata profile keys must be non-empty strings",
+            )
+        )
+
+        metadata = copy.deepcopy(self.metadata)
+        skills = metadata["distributions"]["openai_skill"]["skills"]
+        skills[1] = skills.pop("affinity-synthesis")
+        cases.append(
+            (
+                "skill",
+                metadata,
+                "openai_skill adapter metadata skill ids must be non-empty strings",
+            )
+        )
+
+        metadata = copy.deepcopy(self.metadata)
+        locales = metadata["distributions"]["openai_skill"]["skills"][
+            "affinity-synthesis"
+        ]
+        locales[1] = locales.pop("ja-JP")
+        cases.append(
+            (
+                "openai-locale",
+                metadata,
+                "openai_skill metadata locale keys for affinity-synthesis "
+                "must be non-empty strings",
+            )
+        )
+
+        metadata = copy.deepcopy(self.metadata)
+        profile_map = metadata["distributions"]["openai_skill"]["skills"][
+            "affinity-synthesis"
+        ]["ja-JP"]
+        profile_map[1] = profile_map.pop("interactive")
+        cases.append(
+            (
+                "openai-profile-map",
+                metadata,
+                "openai_skill metadata profile keys for affinity-synthesis/ja-JP "
+                "must be non-empty strings",
+            )
+        )
+
+        metadata = copy.deepcopy(self.metadata)
+        locales = metadata["distributions"]["claude_plugin"]["locales"]
+        locales[1] = locales.pop("ja-JP")
+        cases.append(
+            (
+                "bundle-locale",
+                metadata,
+                "claude_plugin adapter metadata locale keys must be non-empty strings",
+            )
+        )
+
+        for label, metadata, expected in cases:
+            with self.subTest(label=label):
+                self.assert_has_error(metadata, expected)
+
     def test_suite_manifest_pointer_must_remain_canonical(self) -> None:
         metadata = copy.deepcopy(self.metadata)
         metadata["suite_manifest"] = (
