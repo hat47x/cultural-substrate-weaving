@@ -113,9 +113,12 @@ def _expected_excluded_research_metadata(skill: dict) -> list[str]:
 
 
 def _descriptor_by_id(descriptor: dict) -> dict[str, dict]:
+    skills = descriptor.get("skills")
+    if not isinstance(skills, list):
+        return {}
     return {
         item["research_id"]: item
-        for item in descriptor.get("skills", [])
+        for item in skills
         if isinstance(item, dict) and isinstance(item.get("research_id"), str)
     }
 
@@ -431,18 +434,24 @@ def validate_production_source_promotion_plan(
     else:
         errors.extend(validate_public_name_migration(ROOT, migration))
 
+    descriptor_skills = descriptor.get("skills")
+    if not isinstance(descriptor_skills, list):
+        descriptor_skills = []
     descriptor_research_ids = [
         item.get("research_id")
-        for item in descriptor.get("skills", [])
+        for item in descriptor_skills
         if isinstance(item, dict) and isinstance(item.get("research_id"), str)
     ]
     if len(descriptor_research_ids) != len(set(descriptor_research_ids)):
         errors.append("production descriptor contains duplicate research Skills")
 
+    suite_skills = suite.get("skills") if suite is not None else []
+    if not isinstance(suite_skills, list):
+        suite_skills = []
     if suite is not None:
         suite_research_ids = [
             item.get("id")
-            for item in suite.get("skills", [])
+            for item in suite_skills
             if isinstance(item, dict) and isinstance(item.get("id"), str)
         ]
         if len(suite_research_ids) != len(set(suite_research_ids)):
@@ -469,7 +478,7 @@ def validate_production_source_promotion_plan(
     suite_by_id = (
         {
             item["id"]: item
-            for item in suite.get("skills", [])
+            for item in suite_skills
             if isinstance(item, dict) and isinstance(item.get("id"), str)
         }
         if suite is not None
