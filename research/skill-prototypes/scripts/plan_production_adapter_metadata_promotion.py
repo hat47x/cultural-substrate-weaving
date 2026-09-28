@@ -636,6 +636,9 @@ def validate_production_adapter_metadata_promotion_plan(
         errors.append(
             "adapter metadata promotion validation requires adapter-plan authority"
         )
+    elif not isinstance(adapter_plan, dict):
+        errors.append("adapter metadata plan authority must be an object")
+        adapter_plan = None
     else:
         errors.extend(validate_adapter_metadata(root, adapter_plan))
 
