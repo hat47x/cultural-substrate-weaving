@@ -146,15 +146,22 @@ def _assert_adapter_plan_distribution_modes(adapter_plan: dict) -> None:
 def _bundle_catalog_source(adapter_plan: dict) -> str:
     distributions = adapter_plan["distributions"]
     names = _bundle_distribution_names(adapter_plan)
-    sources = {
+    source_values = [
         distributions[name].get("source")
         for name in names
         if isinstance(distributions.get(name), dict)
-    }
+    ]
+    invalid_sources = [source for source in source_values if not isinstance(source, str)]
+    if invalid_sources:
+        raise ValueError(
+            "locale_bundle production catalog path is invalid: "
+            f"{invalid_sources[0]!r}"
+        )
+    sources = set(source_values)
     if len(sources) != 1:
         raise ValueError(f"locale_bundle distributions must share one production catalog: {sources!r}")
     source = next(iter(sources))
-    if not isinstance(source, str) or not _safe_repo_path(source):
+    if not _safe_repo_path(source):
         raise ValueError(f"locale_bundle production catalog path is invalid: {source!r}")
     if not _path_under(source, PRODUCTION_ADAPTER_ROOT):
         raise ValueError(
@@ -923,7 +930,11 @@ def validate_production_adapter_metadata_promotion_plan(
         if not isinstance(update, dict) or set(update) != {"description"} or not isinstance(update.get("description"), str):
             errors.append(f"bundle promotion may update description only: {locale}")
         research_contains = item.get("prototype_research_contains")
-        if not isinstance(research_contains, list) or set(research_contains) != expected_research:
+        if (
+            not isinstance(research_contains, list)
+            or not all(isinstance(value, str) for value in research_contains)
+            or set(research_contains) != expected_research
+        ):
             errors.append(f"bundle prototype research composition mismatch: {locale}")
         if item.get("production_suite_contains") != expected_public:
             errors.append(f"bundle production composition must use public Skill identities: {locale}")
