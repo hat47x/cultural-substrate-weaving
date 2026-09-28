@@ -433,7 +433,12 @@ def plan_production_source_promotion(
                 raise ValueError(
                     f"skill {research_id} production root_pattern must be a string"
                 )
-            production_root = root_pattern.format(locale=locale)
+            try:
+                production_root = root_pattern.format(locale=locale)
+            except (AttributeError, IndexError, KeyError, ValueError) as exc:
+                raise ValueError(
+                    f"skill {research_id} production root_pattern format is invalid: {locale}"
+                ) from exc
             if (
                 not _safe_repo_path(production_root)
                 or not production_root.startswith("src/skills/")
@@ -727,7 +732,7 @@ def validate_production_source_promotion_plan(
             if isinstance(root_pattern, str) and isinstance(locale, str):
                 try:
                     expected_production_root = root_pattern.format(locale=locale)
-                except (KeyError, ValueError):
+                except (AttributeError, IndexError, KeyError, ValueError):
                     errors.append(
                         f"production source root pattern is invalid: {research_id}/{locale}"
                     )
