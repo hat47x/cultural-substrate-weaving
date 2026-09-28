@@ -13,6 +13,7 @@ if str(PLANNER_DIR) not in sys.path:
     sys.path.insert(0, str(PLANNER_DIR))
 
 from plan_production_adapter_metadata_promotion import (  # noqa: E402
+    main as adapter_promotion_main,
     plan_production_adapter_metadata_promotion,
     validate_adapter_promotion_authorities,
     validate_production_adapter_metadata_promotion_plan,
@@ -72,6 +73,16 @@ class ResearchProductionAdapterMetadataPromotionTests(unittest.TestCase):
             "production promotion descriptor authority must be an object",
         ):
             self.assertTrue(any(expected in error for error in errors), errors)
+
+    def test_cli_validates_authority_before_bundle_catalog_derivation(self) -> None:
+        with patch(
+            "plan_production_adapter_metadata_promotion.json.loads",
+            side_effect=[[], self.descriptor],
+        ), patch(
+            "plan_production_adapter_metadata_promotion._bundle_catalog_source",
+            side_effect=AssertionError("bundle catalog derivation must not run"),
+        ):
+            self.assertEqual(adapter_promotion_main(), 1)
 
     def test_validator_rejects_non_object_plan_without_crashing(self) -> None:
         errors = validate_production_adapter_metadata_promotion_plan(
