@@ -57,6 +57,9 @@ def _repo_file(root: Path, relative: object, label: str, errors: list[str]) -> P
 
 
 def validate_public_name_migration(root: Path, contract: dict) -> list[str]:
+    if not isinstance(contract, dict):
+        return ["public-name migration contract must be an object"]
+
     errors: list[str] = []
 
     if contract.get("schema") != EXPECTED_SCHEMA:
@@ -119,6 +122,15 @@ def validate_public_name_migration(root: Path, contract: dict) -> list[str]:
     if not isinstance(mapping, dict):
         errors.append("research_to_production_name must be an object")
         mapping = {}
+    elif not all(isinstance(research_id, str) and research_id for research_id in mapping):
+        errors.append(
+            "research_to_production_name keys must be non-empty strings"
+        )
+        mapping = {
+            research_id: production_name
+            for research_id, production_name in mapping.items()
+            if isinstance(research_id, str) and research_id
+        }
     if set(mapping) != EXPECTED_RESEARCH_IDS:
         errors.append(
             "research_to_production_name must contain exactly the three research IDs"
@@ -164,7 +176,14 @@ def validate_public_name_migration(root: Path, contract: dict) -> list[str]:
 
     prefixes = contract.get("forbidden_production_reference_prefixes")
     expected_prefixes = {"research/skill-prototypes/", "../affinity-synthesis/"}
-    if not isinstance(prefixes, list) or set(prefixes) != expected_prefixes:
+    if (
+        not isinstance(prefixes, list)
+        or not all(isinstance(prefix, str) and prefix for prefix in prefixes)
+    ):
+        errors.append(
+            "forbidden_production_reference_prefixes must be a non-empty string list"
+        )
+    elif set(prefixes) != expected_prefixes:
         errors.append(
             "forbidden_production_reference_prefixes must protect research paths and sibling filesystem paths"
         )
