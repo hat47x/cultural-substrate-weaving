@@ -78,9 +78,12 @@ def _bundle_drop_fields(prototype: dict) -> list[str]:
 
 
 def _descriptor_by_id(descriptor: dict) -> dict[str, dict]:
+    skills = descriptor.get("skills")
+    if not isinstance(skills, list):
+        return {}
     return {
         item["research_id"]: item
-        for item in descriptor.get("skills", [])
+        for item in skills
         if isinstance(item, dict) and isinstance(item.get("research_id"), str)
     }
 
@@ -629,9 +632,12 @@ def validate_production_adapter_metadata_promotion_plan(
     else:
         errors.extend(validate_adapter_metadata(root, adapter_plan))
 
+    descriptor_skills = descriptor.get("skills")
+    if not isinstance(descriptor_skills, list):
+        descriptor_skills = []
     descriptor_research_ids = [
         item.get("research_id")
-        for item in descriptor.get("skills", [])
+        for item in descriptor_skills
         if isinstance(item, dict) and isinstance(item.get("research_id"), str)
     ]
     if len(descriptor_research_ids) != len(set(descriptor_research_ids)):
@@ -697,7 +703,7 @@ def validate_production_adapter_metadata_promotion_plan(
             errors.append(f"unknown research Skill in OpenAI adapter promotion: {research_id}")
             continue
 
-        production_name = descriptor_skill["proposed_installable_name"]
+        production_name = descriptor_skill.get("proposed_installable_name")
         if item.get("production_name") != production_name:
             errors.append(f"OpenAI adapter promotion production name mismatch: {research_id}")
 
@@ -712,7 +718,12 @@ def validate_production_adapter_metadata_promotion_plan(
                 f"{key}: {item.get('source')!r} != {expected_source!r}"
             )
 
-        production_meta = descriptor_skill.get("adapter_metadata", {}).get("openai_skill", {})
+        adapter_metadata = descriptor_skill.get("adapter_metadata")
+        production_meta = (
+            adapter_metadata.get("openai_skill", {})
+            if isinstance(adapter_metadata, dict)
+            else {}
+        )
         metadata_mode = production_meta.get("mode")
         source_pattern = production_meta.get("source_pattern")
         expected_research_status = (
@@ -786,10 +797,15 @@ def validate_production_adapter_metadata_promotion_plan(
         errors.append(f"OpenAI adapter promotion plan has undeclared surfaces: {extra_openai}")
 
     bundle = plan.get("locale_bundle_promotions")
-    if not isinstance(bundle, list) or len(bundle) != len(descriptor.get("locales", [])):
+    expected_locale_count = len(declared_locales) if isinstance(declared_locales, list) else 0
+    if not isinstance(bundle, list) or len(bundle) != expected_locale_count:
         errors.append("bundle metadata promotion plan must contain one entry per locale")
         bundle = []
-    expected_public = [item["proposed_installable_name"] for item in descriptor.get("skills", [])]
+    expected_public = [
+        item.get("proposed_installable_name")
+        for item in descriptor_skills
+        if isinstance(item, dict) and isinstance(item.get("proposed_installable_name"), str)
+    ]
     expected_research = set(descriptor_by_id)
 
     if adapter_plan is not None:
