@@ -331,6 +331,22 @@ class ResearchProductionSourcePromotionTests(unittest.TestCase):
             [],
         )
 
+    def test_cli_authorities_reject_non_object_roots_without_crashing(self) -> None:
+        errors = validate_source_promotion_authorities(
+            ROOT,
+            [],
+            [],
+            [],
+            [],
+        )
+        for expected in (
+            "research suite authority must be an object",
+            "production promotion descriptor authority must be an object",
+            "public-name migration authority must be an object",
+            "projection-inventory authority must be an object",
+        ):
+            self.assertTrue(any(expected in error for error in errors), errors)
+
     def test_cli_authorities_reject_migration_policy_drift(self) -> None:
         migration = copy.deepcopy(self.migration)
         migration["policy"]["production_frontmatter_uses_production_name"] = False
