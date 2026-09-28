@@ -384,6 +384,64 @@ class ResearchProductionAdapterMetadataPromotionTests(unittest.TestCase):
                 self.locale_catalog,
             )
 
+    def test_planner_rejects_non_string_openai_mapping_keys(self) -> None:
+        cases = []
+
+        adapter_plan = copy.deepcopy(self.adapter_plan)
+        skills = adapter_plan["distributions"]["openai_skill"]["skills"]
+        skills[1] = skills.pop("affinity-synthesis")
+        cases.append(
+            (
+                "skill",
+                adapter_plan,
+                "OpenAI adapter metadata Skill keys must be non-empty strings",
+            )
+        )
+
+        adapter_plan = copy.deepcopy(self.adapter_plan)
+        locales = adapter_plan["distributions"]["openai_skill"]["skills"]["affinity-synthesis"]
+        locales[1] = locales.pop("ja-JP")
+        cases.append(
+            (
+                "locale",
+                adapter_plan,
+                "OpenAI adapter metadata locale keys must be non-empty strings",
+            )
+        )
+
+        adapter_plan = copy.deepcopy(self.adapter_plan)
+        profiles = adapter_plan["distributions"]["openai_skill"]["profiles"]
+        profiles[1] = profiles.pop("interactive")
+        cases.append(
+            (
+                "declared-profile",
+                adapter_plan,
+                "OpenAI adapter metadata profile keys must be non-empty strings",
+            )
+        )
+
+        adapter_plan = copy.deepcopy(self.adapter_plan)
+        locale_profiles = adapter_plan["distributions"]["openai_skill"]["skills"][
+            "affinity-synthesis"
+        ]["ja-JP"]
+        locale_profiles[1] = locale_profiles.pop("interactive")
+        cases.append(
+            (
+                "locale-profile",
+                adapter_plan,
+                "OpenAI adapter metadata profile keys must be non-empty strings",
+            )
+        )
+
+        for label, adapter_plan, expected in cases:
+            with self.subTest(label=label):
+                with self.assertRaisesRegex(ValueError, expected):
+                    plan_production_adapter_metadata_promotion(
+                        adapter_plan,
+                        self.descriptor,
+                        self.locale_catalog,
+                    )
+
     def test_planner_rejects_duplicate_descriptor_skill(self) -> None:
         descriptor = copy.deepcopy(self.descriptor)
         descriptor["skills"].append(copy.deepcopy(descriptor["skills"][0]))

@@ -92,6 +92,8 @@ def _openai_profile_names(adapter_plan: dict) -> tuple[str, ...]:
     profiles = adapter_plan["distributions"]["openai_skill"]["profiles"]
     if not isinstance(profiles, dict) or not profiles:
         raise ValueError("OpenAI adapter metadata plan must declare profiles")
+    if not all(isinstance(profile, str) and profile for profile in profiles):
+        raise ValueError("OpenAI adapter metadata profile keys must be non-empty strings")
     return tuple(profiles)
 
 
@@ -411,6 +413,11 @@ def plan_production_adapter_metadata_promotion(
     openai_research = openai_distribution.get("skills")
     if not isinstance(openai_research, dict):
         raise ValueError("OpenAI adapter metadata plan must declare a skills object")
+    if not all(
+        isinstance(research_id, str) and research_id
+        for research_id in openai_research
+    ):
+        raise ValueError("OpenAI adapter metadata Skill keys must be non-empty strings")
     openai_skill_ids = set(openai_research)
     if openai_skill_ids != descriptor_skill_ids:
         raise ValueError(
@@ -426,6 +433,10 @@ def plan_production_adapter_metadata_promotion(
     for research_id, skill_metadata in openai_research.items():
         if not isinstance(skill_metadata, dict):
             raise ValueError(f"OpenAI adapter metadata Skill entry must be an object: {research_id}")
+        if not all(isinstance(locale, str) and locale for locale in skill_metadata):
+            raise ValueError(
+                f"OpenAI adapter metadata locale keys must be non-empty strings: {research_id}"
+            )
         locale_names = set(skill_metadata)
         if locale_names != descriptor_locales:
             raise ValueError(
@@ -471,6 +482,14 @@ def plan_production_adapter_metadata_promotion(
             if not isinstance(locale_profiles, dict):
                 raise ValueError(
                     f"OpenAI adapter metadata locale entry must be an object: {research_id}/{locale}"
+                )
+            if not all(
+                isinstance(profile, str) and profile
+                for profile in locale_profiles
+            ):
+                raise ValueError(
+                    "OpenAI adapter metadata profile keys must be non-empty strings: "
+                    f"{research_id}/{locale}"
                 )
             profile_names = set(locale_profiles)
             if profile_names != expected_profiles:
