@@ -198,7 +198,14 @@ def validate_projection_inventory(root: Path, inventory: dict) -> list[str]:
             continue
         relative = item.get("path")
         if isinstance(relative, str):
+            if relative in seen_structured_paths:
+                errors.append(f"structured_projection repeats path: {relative}")
             seen_structured_paths.add(relative)
+        action = item.get("action")
+        if not isinstance(action, str) or not action:
+            errors.append(
+                f"structured_projection action must be a non-empty string: {relative}"
+            )
         path = _repo_path(root, relative, f"structured_projection[{index}].path", errors)
         if path is None:
             continue
@@ -231,12 +238,26 @@ def validate_projection_inventory(root: Path, inventory: dict) -> list[str]:
     if not isinstance(path_items, list) or len(path_items) < 2:
         errors.append("path_projection must describe source and adapter promotion paths")
     else:
+        seen_research_prefixes: set[str] = set()
+        seen_production_patterns: set[str] = set()
         for index, item in enumerate(path_items):
             if not isinstance(item, dict):
                 errors.append(f"path_projection[{index}] must be an object")
                 continue
             research_prefix = item.get("research_prefix")
             production_pattern = item.get("production_pattern")
+            if isinstance(research_prefix, str):
+                if research_prefix in seen_research_prefixes:
+                    errors.append(
+                        f"path_projection repeats research_prefix: {research_prefix}"
+                    )
+                seen_research_prefixes.add(research_prefix)
+            if isinstance(production_pattern, str):
+                if production_pattern in seen_production_patterns:
+                    errors.append(
+                        f"path_projection repeats production_pattern: {production_pattern}"
+                    )
+                seen_production_patterns.add(production_pattern)
             if not isinstance(research_prefix, str) or "affinity-synthesis" not in research_prefix:
                 errors.append(f"path_projection[{index}] must preserve affinity-synthesis research prefix")
             if not isinstance(production_pattern, str) or "material-led-synthesis" not in production_pattern:
@@ -248,7 +269,12 @@ def validate_projection_inventory(root: Path, inventory: dict) -> list[str]:
     if not isinstance(keep, list) or not keep:
         errors.append("research_history_keep must be a non-empty list")
     else:
+        seen_history_paths: set[str] = set()
         for index, relative in enumerate(keep):
+            if isinstance(relative, str):
+                if relative in seen_history_paths:
+                    errors.append(f"research_history_keep repeats path: {relative}")
+                seen_history_paths.add(relative)
             path = _repo_path(root, relative, f"research_history_keep[{index}]", errors)
             if path is not None and not path.exists():
                 errors.append(f"research history path is missing: {relative}")

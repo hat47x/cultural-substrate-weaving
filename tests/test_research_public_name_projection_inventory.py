@@ -225,6 +225,47 @@ class ResearchPublicNameProjectionInventoryTests(unittest.TestCase):
             "missing promotion-critical content projection paths",
         )
 
+    def test_structured_projection_action_must_be_non_empty_string(self) -> None:
+        inventory = copy.deepcopy(self.inventory)
+        inventory["structured_projection"][0]["action"] = None
+        self.assert_has_error(
+            inventory,
+            "structured_projection action must be a non-empty string",
+        )
+
+    def test_structured_projection_paths_must_be_unique(self) -> None:
+        inventory = copy.deepcopy(self.inventory)
+        inventory["structured_projection"].append(
+            copy.deepcopy(inventory["structured_projection"][0])
+        )
+        self.assert_has_error(
+            inventory,
+            "structured_projection repeats path",
+        )
+
+    def test_path_projection_mappings_must_be_unique(self) -> None:
+        inventory = copy.deepcopy(self.inventory)
+        duplicate = copy.deepcopy(inventory["path_projection"][0])
+        inventory["path_projection"].append(duplicate)
+        self.assert_has_error(
+            inventory,
+            "path_projection repeats research_prefix",
+        )
+        self.assert_has_error(
+            inventory,
+            "path_projection repeats production_pattern",
+        )
+
+    def test_research_history_keep_paths_must_be_unique(self) -> None:
+        inventory = copy.deepcopy(self.inventory)
+        inventory["research_history_keep"].append(
+            inventory["research_history_keep"][0]
+        )
+        self.assert_has_error(
+            inventory,
+            "research_history_keep repeats path",
+        )
+
     def test_bundle_contains_must_still_expose_research_id_before_projection(self) -> None:
         inventory = copy.deepcopy(self.inventory)
         inventory["structured_projection"][0]["field"] = "missing-field"
