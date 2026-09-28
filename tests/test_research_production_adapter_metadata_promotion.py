@@ -351,6 +351,57 @@ class ResearchProductionAdapterMetadataPromotionTests(unittest.TestCase):
                 self.locale_catalog,
             )
 
+    def test_planner_rejects_coordinated_noncanonical_bundle_catalog(self) -> None:
+        adapter_plan = copy.deepcopy(self.adapter_plan)
+        descriptor = copy.deepcopy(self.descriptor)
+        drifted_source = "adapters/claude-code/other-locales.json"
+        for distribution_name in ("claude_plugin", "codex_plugin"):
+            adapter_plan["distributions"][distribution_name]["source"] = drifted_source
+        for skill in descriptor["skills"]:
+            for distribution_name in ("claude_plugin", "codex_plugin"):
+                skill["adapter_metadata"][distribution_name]["source"] = drifted_source
+
+        with self.assertRaisesRegex(
+            ValueError,
+            "locale_bundle production catalog must remain canonical",
+        ):
+            plan_production_adapter_metadata_promotion(
+                adapter_plan,
+                descriptor,
+                self.locale_catalog,
+            )
+
+    def test_planner_rejects_drifted_locale_catalog_snapshot(self) -> None:
+        locale_catalog = copy.deepcopy(self.locale_catalog)
+        locale_catalog["ja-JP"]["display"] = "drifted display"
+        with self.assertRaisesRegex(
+            ValueError,
+            "locale catalog snapshot must match canonical production catalog source",
+        ):
+            plan_production_adapter_metadata_promotion(
+                self.adapter_plan,
+                self.descriptor,
+                locale_catalog,
+            )
+
+    def test_validator_rejects_drifted_locale_catalog_snapshot(self) -> None:
+        locale_catalog = copy.deepcopy(self.locale_catalog)
+        locale_catalog["en-US"]["display"] = "drifted display"
+        errors = validate_production_adapter_metadata_promotion_plan(
+            self.plan,
+            self.descriptor,
+            locale_catalog,
+            adapter_plan=self.adapter_plan,
+        )
+        self.assertTrue(
+            any(
+                "locale catalog snapshot must match canonical production catalog source"
+                in error
+                for error in errors
+            ),
+            errors,
+        )
+
     def test_planner_rejects_bundle_catalog_outside_production_source_class(self) -> None:
         adapter_plan = copy.deepcopy(self.adapter_plan)
         for distribution_name in ("claude_plugin", "codex_plugin"):
