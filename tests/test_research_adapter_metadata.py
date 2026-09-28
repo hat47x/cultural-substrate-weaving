@@ -5,6 +5,7 @@ import json
 import sys
 import unittest
 from pathlib import Path
+from unittest.mock import patch
 
 ROOT = Path(__file__).resolve().parents[1]
 PLANNER_DIR = ROOT / "research" / "skill-prototypes" / "scripts"
@@ -135,6 +136,47 @@ class ResearchAdapterMetadataTests(unittest.TestCase):
         for label, metadata, expected in cases:
             with self.subTest(label=label):
                 self.assert_has_error(metadata, expected)
+
+    def test_validator_rejects_non_string_suite_mapping_keys_without_crashing(self) -> None:
+        real_load_json = __import__(
+            "validate_research_adapter_metadata"
+        )._load_json
+
+        cases = []
+
+        suite = copy.deepcopy(self.suite)
+        suite["locales"][1] = suite["locales"].pop("ja-JP")
+        cases.append(
+            (
+                "locale",
+                suite,
+                "suite manifest locale keys must be non-empty strings",
+            )
+        )
+
+        suite = copy.deepcopy(self.suite)
+        suite["distribution_prototypes"][1] = suite[
+            "distribution_prototypes"
+        ].pop("claude_plugin")
+        cases.append(
+            (
+                "distribution",
+                suite,
+                "suite manifest distribution keys must be non-empty strings",
+            )
+        )
+
+        for label, suite, expected in cases:
+            def load_json(path: Path, field: str, errors: list[str]) -> dict | None:
+                if field == "adapter metadata suite_manifest":
+                    return suite
+                return real_load_json(path, field, errors)
+
+            with self.subTest(label=label), patch(
+                "validate_research_adapter_metadata._load_json",
+                side_effect=load_json,
+            ):
+                self.assert_has_error(self.metadata, expected)
 
     def test_suite_manifest_pointer_must_remain_canonical(self) -> None:
         metadata = copy.deepcopy(self.metadata)
