@@ -103,6 +103,9 @@ def discover_package_selected_identity_sensitive_sources(root: Path) -> set[str]
 
 
 def validate_projection_inventory(root: Path, inventory: dict) -> list[str]:
+    if not isinstance(inventory, dict):
+        return ["projection inventory must be an object"]
+
     errors: list[str] = []
     if inventory.get("schema") != EXPECTED_SCHEMA:
         errors.append(f"projection inventory schema must be {EXPECTED_SCHEMA}")
