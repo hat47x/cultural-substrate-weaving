@@ -647,7 +647,7 @@ def validate_production_adapter_metadata_promotion_plan(
     if isinstance(locale_catalog, dict):
         validated_locale_catalog = locale_catalog
     else:
-        errors.append("production locale catalog authority must be an object")
+        errors.append("production locale catalog must be an object")
         validated_locale_catalog = {}
 
     descriptor_skills = descriptor.get("skills")
