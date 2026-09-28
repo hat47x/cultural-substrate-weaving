@@ -190,10 +190,23 @@ def validate_source_promotion_authorities(
 ) -> list[str]:
     """Validate every source-promotion authority used by the CLI entrypoint."""
 
-    errors = validate_suite(root, suite)
-    errors.extend(validate_production_suite_descriptor(descriptor))
-    errors.extend(validate_public_name_migration(root, migration))
-    errors.extend(validate_projection_inventory(root, inventory))
+    errors: list[str] = []
+    if not isinstance(suite, dict):
+        errors.append("research suite authority must be an object")
+    else:
+        errors.extend(validate_suite(root, suite))
+    if not isinstance(descriptor, dict):
+        errors.append("production promotion descriptor authority must be an object")
+    else:
+        errors.extend(validate_production_suite_descriptor(descriptor))
+    if not isinstance(migration, dict):
+        errors.append("public-name migration authority must be an object")
+    else:
+        errors.extend(validate_public_name_migration(root, migration))
+    if not isinstance(inventory, dict):
+        errors.append("projection-inventory authority must be an object")
+    else:
+        errors.extend(validate_projection_inventory(root, inventory))
     return errors
 
 
