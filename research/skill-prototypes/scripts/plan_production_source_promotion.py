@@ -415,11 +415,13 @@ def validate_production_source_promotion_plan(
 ) -> list[str]:
     if not isinstance(plan, dict):
         return ["production source promotion plan must be an object"]
-    if not isinstance(descriptor, dict):
-        return ["production promotion descriptor authority must be an object"]
 
     errors: list[str] = []
-    errors.extend(validate_production_suite_descriptor(descriptor))
+    if not isinstance(descriptor, dict):
+        errors.append("production promotion descriptor must be an object")
+        descriptor = {}
+    else:
+        errors.extend(validate_production_suite_descriptor(descriptor))
     if plan.get("schema") != PLAN_SCHEMA:
         errors.append(f"production source promotion plan schema must be {PLAN_SCHEMA}")
     if plan.get("status") != "design-only":
