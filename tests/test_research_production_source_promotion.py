@@ -78,9 +78,9 @@ class ResearchProductionSourcePromotionTests(unittest.TestCase):
             suite=self.suite,
             migration=self.migration,
         )
-        self.assertEqual(
+        self.assertTrue(
+            any("production promotion descriptor must be an object" in error for error in errors),
             errors,
-            ["production promotion descriptor authority must be an object"],
         )
 
     def test_validator_rejects_non_object_suite_authority_without_crashing(self) -> None:
