@@ -61,6 +61,9 @@ def _validate_name(value: object, label: str, errors: list[str]) -> str | None:
 
 
 def validate_production_suite_descriptor(descriptor: dict) -> list[str]:
+    if not isinstance(descriptor, dict):
+        return ["production promotion descriptor must be an object"]
+
     errors: list[str] = []
     if descriptor.get("schema") != EXPECTED_SCHEMA:
         errors.append(f"descriptor schema must be {EXPECTED_SCHEMA}")
@@ -100,22 +103,34 @@ def validate_production_suite_descriptor(descriptor: dict) -> list[str]:
             )
 
     first_wave = descriptor.get("first_wave_distributions")
-    if not isinstance(first_wave, list) or set(first_wave) != FIRST_WAVE or len(first_wave) != 3:
+    first_wave_is_string_list = (
+        isinstance(first_wave, list)
+        and all(isinstance(name, str) and name for name in first_wave)
+    )
+    if (
+        not first_wave_is_string_list
+        or set(first_wave) != FIRST_WAVE
+        or len(first_wave) != 3
+    ):
         errors.append(
             "first_wave_distributions must contain exactly openai_skill, claude_plugin, codex_plugin"
         )
-    declared_first_wave = set(first_wave) if isinstance(first_wave, list) else set()
+    declared_first_wave = set(first_wave) if first_wave_is_string_list else set()
 
     deferred = descriptor.get("deferred_composite_distributions")
+    deferred_is_string_list = (
+        isinstance(deferred, list)
+        and all(isinstance(name, str) and name for name in deferred)
+    )
     if (
-        not isinstance(deferred, list)
+        not deferred_is_string_list
         or set(deferred) != DEFERRED_COMPOSITE
         or len(deferred) != 2
     ):
         errors.append(
             "deferred_composite_distributions must contain exactly chatgpt_gpt and microsoft_copilot"
         )
-    if isinstance(first_wave, list) and isinstance(deferred, list):
+    if first_wave_is_string_list and deferred_is_string_list:
         overlap = set(first_wave) & set(deferred)
         if overlap:
             errors.append(f"first-wave and deferred distributions must not overlap: {sorted(overlap)}")
@@ -123,8 +138,26 @@ def validate_production_suite_descriptor(descriptor: dict) -> list[str]:
     skills = descriptor.get("skills")
     if not isinstance(skills, list):
         return errors + ["production promotion descriptor skills must be a list"]
-    ids = [skill.get("research_id") for skill in skills if isinstance(skill, dict)]
-    if len(ids) != len(skills) or set(ids) != EXPECTED_SKILLS or len(ids) != len(set(ids)):
+    ids: list[str] = []
+    malformed_skill_identity = False
+    for index, skill in enumerate(skills):
+        if not isinstance(skill, dict):
+            errors.append(f"production descriptor skill[{index}] must be an object")
+            malformed_skill_identity = True
+            continue
+        research_id = skill.get("research_id")
+        if not isinstance(research_id, str) or not research_id:
+            errors.append(
+                f"production descriptor skill[{index}] research_id must be a non-empty string"
+            )
+            malformed_skill_identity = True
+            continue
+        ids.append(research_id)
+    if (
+        malformed_skill_identity
+        or set(ids) != EXPECTED_SKILLS
+        or len(ids) != len(set(ids))
+    ):
         errors.append("descriptor research_id set must contain exactly the three research suite Skills")
 
     public_names: list[str] = []
@@ -176,7 +209,11 @@ def validate_production_suite_descriptor(descriptor: dict) -> list[str]:
                     errors.append(f"skill {research_id} production runtime_entry must be SKILL.md")
 
         targets = skill.get("targets")
-        if not isinstance(targets, dict) or set(targets) != declared_first_wave:
+        targets_have_string_keys = (
+            isinstance(targets, dict)
+            and all(isinstance(name, str) and name for name in targets)
+        )
+        if not targets_have_string_keys or set(targets) != declared_first_wave:
             errors.append(f"skill {research_id} targets must declare exactly the first-wave distributions")
         else:
             openai = _validate_name(
@@ -212,7 +249,14 @@ def validate_production_suite_descriptor(descriptor: dict) -> list[str]:
                         )
 
         adapter_metadata = skill.get("adapter_metadata")
-        if not isinstance(adapter_metadata, dict) or set(adapter_metadata) != declared_first_wave:
+        adapter_metadata_has_string_keys = (
+            isinstance(adapter_metadata, dict)
+            and all(isinstance(name, str) and name for name in adapter_metadata)
+        )
+        if (
+            not adapter_metadata_has_string_keys
+            or set(adapter_metadata) != declared_first_wave
+        ):
             errors.append(
                 f"skill {research_id} adapter_metadata must declare exactly the first-wave distributions"
             )
