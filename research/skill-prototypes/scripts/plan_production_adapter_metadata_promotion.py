@@ -326,6 +326,25 @@ def _bundle_prototype_sources(adapter_plan: dict) -> dict[str, str]:
     return sources
 
 
+def validate_adapter_promotion_authorities(
+    root: Path,
+    adapter_plan: dict,
+    descriptor: dict,
+) -> list[str]:
+    """Validate top-level authorities used by the adapter-promotion CLI."""
+
+    errors: list[str] = []
+    if not isinstance(adapter_plan, dict):
+        errors.append("adapter metadata plan authority must be an object")
+    else:
+        errors.extend(validate_adapter_metadata(root, adapter_plan))
+    if not isinstance(descriptor, dict):
+        errors.append("production promotion descriptor authority must be an object")
+    else:
+        errors.extend(validate_production_suite_descriptor(descriptor))
+    return errors
+
+
 def plan_production_adapter_metadata_promotion(
     adapter_plan: dict,
     descriptor: dict,
@@ -981,8 +1000,11 @@ def main() -> int:
         print(f"production adapter metadata promotion planning failed: {exc}", file=sys.stderr)
         return 1
 
-    errors = validate_adapter_metadata(ROOT, adapter_plan)
-    errors.extend(validate_production_suite_descriptor(descriptor))
+    errors = validate_adapter_promotion_authorities(
+        ROOT,
+        adapter_plan,
+        descriptor,
+    )
     if errors:
         for error in errors:
             print(f"ERROR: {error}", file=sys.stderr)
