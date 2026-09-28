@@ -22,6 +22,7 @@ from plan_promotion_readiness import (  # noqa: E402
     SOURCE_PROJECTION_PREVIEW,
     SOURCE_PROJECTION_TEST,
     _declared_field,
+    _production_path,
     _translation_status_path,
     observe_promotion_readiness,
 )
@@ -115,6 +116,20 @@ class ResearchPromotionReadinessObserverTests(unittest.TestCase):
         descriptor = copy.deepcopy(self.descriptor)
         descriptor["translation_refresh"]["state"] = "../outside.json"
         self.assertIsNone(_translation_status_path(descriptor))
+
+    def test_production_file_path_rejects_unsafe_contract_pointer(self) -> None:
+        contract = {"production_files": {"builder": "scripts/build.py"}}
+        self.assertEqual(_production_path(contract, "builder"), Path("scripts/build.py"))
+
+        for value in (
+            "",
+            "../outside.py",
+            "/tmp/outside.py",
+            "scripts\\outside.py",
+        ):
+            with self.subTest(value=value):
+                contract = {"production_files": {"builder": value}}
+                self.assertIsNone(_production_path(contract, "builder"))
 
     def test_method_evaluation_uses_declared_metadata_field(self) -> None:
         paired = (ROOT / PAIRED_RUN).read_text(encoding="utf-8")
