@@ -615,6 +615,7 @@ def validate_production_adapter_metadata_promotion_plan(
     root: Path = ROOT,
 ) -> list[str]:
     errors: list[str] = []
+    errors.extend(validate_production_suite_descriptor(descriptor))
     if plan.get("schema") != PLAN_SCHEMA:
         errors.append(f"adapter metadata promotion plan schema must be {PLAN_SCHEMA}")
     if plan.get("status") != "design-only":
