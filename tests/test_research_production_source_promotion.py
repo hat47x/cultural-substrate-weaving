@@ -598,6 +598,21 @@ class ResearchProductionSourcePromotionTests(unittest.TestCase):
                 self.inventory,
             )
 
+    def test_planner_rejects_non_string_public_name_migration_key(self) -> None:
+        migration = copy.deepcopy(self.migration)
+        existing = migration["research_to_production_name"].pop("affinity-synthesis")
+        migration["research_to_production_name"][1] = existing
+        with self.assertRaisesRegex(
+            ValueError,
+            "public-name migration Skill keys must be non-empty strings",
+        ):
+            plan_production_source_promotion(
+                self.suite,
+                self.descriptor,
+                migration,
+                self.inventory,
+            )
+
     def test_public_name_migration_name_must_match_descriptor(self) -> None:
         migration = copy.deepcopy(self.migration)
         migration["research_to_production_name"]["affinity-synthesis"] = (
