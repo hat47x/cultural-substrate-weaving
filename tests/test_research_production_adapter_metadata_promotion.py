@@ -60,6 +60,21 @@ class ResearchProductionAdapterMetadataPromotionTests(unittest.TestCase):
         source = self.plan if plan is None else plan
         return next(item for item in source["locale_bundle_promotions"] if item["locale"] == locale)
 
+    def test_validator_requires_adapter_plan_authority(self) -> None:
+        errors = validate_production_adapter_metadata_promotion_plan(
+            self.plan,
+            self.descriptor,
+            self.locale_catalog,
+        )
+        self.assertTrue(
+            any(
+                "adapter metadata promotion validation requires adapter-plan authority"
+                in error
+                for error in errors
+            ),
+            errors,
+        )
+
     def test_current_adapter_promotion_plan_is_valid(self) -> None:
         self.assertEqual(self.errors(), [])
         self.assertFalse(self.plan["writes_production_metadata"])
