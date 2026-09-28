@@ -284,6 +284,34 @@ class ResearchProductionAdapterMetadataPromotionTests(unittest.TestCase):
             )
         self.assertEqual(self.errors(plan, adapter_plan), [])
 
+    def test_planner_rejects_non_list_descriptor_skills(self) -> None:
+        descriptor = copy.deepcopy(self.descriptor)
+        descriptor["skills"] = None
+        with self.assertRaisesRegex(
+            ValueError,
+            "production promotion descriptor skills must be a list",
+        ):
+            plan_production_adapter_metadata_promotion(
+                self.adapter_plan,
+                descriptor,
+                self.locale_catalog,
+            )
+
+    def test_planner_rejects_non_object_openai_profile_entry(self) -> None:
+        adapter_plan = copy.deepcopy(self.adapter_plan)
+        adapter_plan["distributions"]["openai_skill"]["skills"][
+            "affinity-synthesis"
+        ]["ja-JP"]["interactive"] = []
+        with self.assertRaisesRegex(
+            ValueError,
+            "OpenAI adapter metadata entry affinity-synthesis/ja-JP/interactive must be an object",
+        ):
+            plan_production_adapter_metadata_promotion(
+                adapter_plan,
+                self.descriptor,
+                self.locale_catalog,
+            )
+
     def test_planner_rejects_non_object_authority_roots(self) -> None:
         cases = (
             ("adapter_plan", [], self.descriptor, self.locale_catalog, "adapter metadata plan authority must be an object"),
