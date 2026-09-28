@@ -127,6 +127,46 @@ class ResearchProductionSourcePromotionTests(unittest.TestCase):
             errors,
         )
 
+    def test_validator_reports_malformed_suite_skills_without_crashing(self) -> None:
+        suite = copy.deepcopy(self.suite)
+        suite["skills"] = None
+        errors = validate_production_source_promotion_plan(
+            self.plan,
+            self.descriptor,
+            self.inventory,
+            suite=suite,
+            migration=self.migration,
+        )
+        self.assertTrue(
+            any(
+                "research skill suite skills must be a non-empty list" in error
+                for error in errors
+            ),
+            errors,
+        )
+
+    def test_validator_fallback_handles_non_list_plan_skills_without_crashing(self) -> None:
+        plan = copy.deepcopy(self.plan)
+        plan["skills"] = None
+        errors = validate_production_source_promotion_plan(
+            plan,
+            self.descriptor,
+            self.inventory,
+            migration=self.migration,
+        )
+        self.assertTrue(
+            any("production source promotion plan Skills must be a list" in error for error in errors),
+            errors,
+        )
+        self.assertTrue(
+            any(
+                "production source promotion validation requires research suite authority"
+                in error
+                for error in errors
+            ),
+            errors,
+        )
+
     def test_validator_composes_full_research_suite_authority(self) -> None:
         suite = copy.deepcopy(self.suite)
         suite["status"] = "production-ready"

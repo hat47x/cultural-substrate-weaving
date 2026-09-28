@@ -128,7 +128,10 @@ def _locale_tree_source_prefixes(suite: dict, descriptor: dict) -> tuple[str, ..
 
     descriptor_by_id = _descriptor_by_id(descriptor)
     prefixes: set[str] = set()
-    for skill in suite.get("skills", []):
+    skills = suite.get("skills")
+    if not isinstance(skills, list):
+        return ()
+    for skill in skills:
         if not isinstance(skill, dict):
             continue
         research_id = skill.get("id")
@@ -150,7 +153,10 @@ def _planned_source_prefixes(plan: dict) -> tuple[str, ...]:
     """Compatibility fallback for callers that do not provide the research suite."""
 
     prefixes: set[str] = set()
-    for skill in plan.get("skills", []):
+    skills = plan.get("skills")
+    if not isinstance(skills, list):
+        return ()
+    for skill in skills:
         if not isinstance(skill, dict) or skill.get("state") != "planned-locale-tree-promotion":
             continue
         locales = skill.get("locales")
