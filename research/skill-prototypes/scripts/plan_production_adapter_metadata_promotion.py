@@ -29,6 +29,8 @@ from validate_research_production_suite_descriptor import (  # noqa: E402
 
 PLAN_SCHEMA = "csw.production-adapter-metadata-promotion-plan/v1"
 BUNDLE_PROMOTION_STATE = "planned-locale-catalog-wording-update"
+RESEARCH_BUNDLE_ROOT = PurePosixPath("research/skill-prototypes/adapters/claude-codex")
+PRODUCTION_ADAPTER_ROOT = PurePosixPath("adapters")
 
 
 def _safe_repo_path(value: str) -> bool:
@@ -111,6 +113,11 @@ def _bundle_catalog_source(adapter_plan: dict) -> str:
     source = next(iter(sources))
     if not isinstance(source, str) or not _safe_repo_path(source):
         raise ValueError(f"locale_bundle production catalog path is invalid: {source!r}")
+    if not _path_under(source, PRODUCTION_ADAPTER_ROOT):
+        raise ValueError(
+            "locale_bundle production catalog is outside production adapter source class: "
+            f"{source!r}"
+        )
     return source
 
 
@@ -213,6 +220,13 @@ def _bundle_prototype_sources(adapter_plan: dict) -> dict[str, str]:
         if not isinstance(source, str) or not _safe_repo_path(source):
             raise ValueError(
                 f"locale_bundle prototype source is invalid: {first_name}/{locale}: {source!r}"
+            )
+        expected_source_root = RESEARCH_BUNDLE_ROOT / locale
+        if not _path_under(source, expected_source_root):
+            raise ValueError(
+                "locale_bundle prototype source is outside research bundle source class: "
+                f"{first_name}/{locale}: {source!r}; "
+                f"expected under {expected_source_root.as_posix()!r}"
             )
         sources[locale] = source
 
