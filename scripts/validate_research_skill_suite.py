@@ -43,12 +43,20 @@ REQUIRED_SKILL_EVIDENCE = {
 
 
 def load_manifest(path: Path = MANIFEST_PATH) -> dict:
-    return json.loads(path.read_text(encoding="utf-8"))
+    value = json.loads(path.read_text(encoding="utf-8"))
+    if not isinstance(value, dict):
+        raise ValueError(f"{path} must contain a JSON object")
+    return value
 
 
 def _repo_path(root: Path, relative: object, field: str, errors: list[str]) -> Path | None:
-    if not isinstance(relative, str) or not relative:
-        errors.append(f"{field} must be a non-empty repository-relative path")
+    if (
+        not isinstance(relative, str)
+        or not relative
+        or "\\" in relative
+        or "\x00" in relative
+    ):
+        errors.append(f"{field} must be a non-empty repository-relative POSIX path")
         return None
     resolved_root = root.resolve()
     resolved = (root / relative).resolve()
@@ -140,8 +148,13 @@ def _package_relative_file(
     field: str,
     errors: list[str],
 ) -> Path | None:
-    if not isinstance(relative, str) or not relative:
-        errors.append(f"{field} must be a non-empty path relative to package root")
+    if (
+        not isinstance(relative, str)
+        or not relative
+        or "\\" in relative
+        or "\x00" in relative
+    ):
+        errors.append(f"{field} must be a non-empty POSIX path relative to package root")
         return None
     path = Path(relative)
     if path.is_absolute():
@@ -309,6 +322,12 @@ def _validate_package_source(
             f"cannot be read as JSON: {exc}"
         )
         return
+    if not isinstance(config, dict):
+        errors.append(
+            f"skill {skill_id}: locale realization {locale} package manifest "
+            "must contain a JSON object"
+        )
+        return
 
     declared_locales = config.get("locales")
     if not isinstance(declared_locales, dict) or locale not in declared_locales:
@@ -373,7 +392,15 @@ def _validate_locale_realizations(
         errors.append(f"skill {skill_id}: locale_realizations must be an object")
         return
 
-    realization_locales = set(value)
+    if not all(isinstance(locale, str) and locale for locale in value):
+        errors.append(
+            f"skill {skill_id}: locale_realizations keys must be non-empty strings"
+        )
+    realization_locales = {
+        locale
+        for locale in value
+        if isinstance(locale, str) and locale
+    }
     missing = sorted(suite_locales - realization_locales)
     extra = sorted(realization_locales - suite_locales)
     if missing or extra:
@@ -680,10 +707,15 @@ def validate_suite(root: Path, manifest: dict) -> list[str]:
                             f"distribution prototype {distribution_name} references unknown skills: {unknown}"
                         )
             primary = config.get("primary")
-            if primary is not None and primary not in known_skill_ids:
-                errors.append(
-                    f"distribution prototype {distribution_name} primary references unknown skill: {primary!r}"
-                )
+            if primary is not None:
+                if not isinstance(primary, str) or not primary:
+                    errors.append(
+                        f"distribution prototype {distribution_name} primary must be a non-empty string"
+                    )
+                elif primary not in known_skill_ids:
+                    errors.append(
+                        f"distribution prototype {distribution_name} primary references unknown skill: {primary!r}"
+                    )
 
     promotion_gates = manifest.get("promotion_gates")
     if not isinstance(promotion_gates, list) or not promotion_gates:

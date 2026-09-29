@@ -4,12 +4,13 @@ import copy
 import json
 import sys
 import unittest
+from unittest.mock import patch
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "scripts"))
 
-from validate_research_skill_suite import validate_suite  # noqa: E402
+from validate_research_skill_suite import load_manifest, validate_suite  # noqa: E402
 
 MANIFEST_PATH = ROOT / "research" / "skill-prototypes" / "suite-manifest.json"
 
@@ -32,6 +33,31 @@ class ResearchSkillSuiteTests(unittest.TestCase):
         self.assertEqual(
             validate_suite(ROOT, []),
             ["research skill suite must be an object"],
+        )
+
+    def test_manifest_loader_rejects_non_object_json_root(self) -> None:
+        with patch(
+            "validate_research_skill_suite.json.loads",
+            return_value=[],
+        ):
+            with self.assertRaisesRegex(ValueError, "must contain a JSON object"):
+                load_manifest(MANIFEST_PATH)
+
+    def test_validator_rejects_non_string_realization_key_without_crashing(self) -> None:
+        manifest = copy.deepcopy(self.manifest)
+        affinity = self.skill(manifest, "affinity-synthesis")
+        affinity["locale_realizations"][1] = affinity["locale_realizations"].pop("ja-JP")
+        self.assert_has_error(
+            manifest,
+            "locale_realizations keys must be non-empty strings",
+        )
+
+    def test_validator_rejects_non_string_distribution_primary_without_crashing(self) -> None:
+        manifest = copy.deepcopy(self.manifest)
+        manifest["distribution_prototypes"]["chatgpt_gpt"]["primary"] = {"id": "x"}
+        self.assert_has_error(
+            manifest,
+            "primary must be a non-empty string",
         )
 
     def test_validator_rejects_non_string_mapping_keys_without_crashing(self) -> None:
@@ -87,6 +113,28 @@ class ResearchSkillSuiteTests(unittest.TestCase):
         manifest = copy.deepcopy(self.manifest)
         manifest["distribution_prototypes"]["claude_plugin"]["contains"].append("missing-skill")
         self.assert_has_error(manifest, "references unknown skills")
+
+    def test_repository_paths_reject_windows_separator(self) -> None:
+        manifest = copy.deepcopy(self.manifest)
+        affinity = self.skill(manifest, "affinity-synthesis")
+        affinity["runtime_entry"] = (
+            "research\\skill-prototypes\\affinity-synthesis\\SKILL.md"
+        )
+        self.assert_has_error(
+            manifest,
+            "runtime_entry must be a non-empty repository-relative POSIX path",
+        )
+
+    def test_package_relative_paths_reject_windows_separator(self) -> None:
+        manifest = copy.deepcopy(self.manifest)
+        affinity = self.skill(manifest, "affinity-synthesis")
+        affinity["locale_realizations"]["ja-JP"]["package_source"]["files"].append(
+            "references\\METHOD.md"
+        )
+        self.assert_has_error(
+            manifest,
+            "package file must be a non-empty POSIX path relative to package root",
+        )
 
     def test_skill_paths_must_stay_inside_their_source_root(self) -> None:
         manifest = copy.deepcopy(self.manifest)
@@ -230,6 +278,16 @@ class ResearchSkillSuiteTests(unittest.TestCase):
             "scripts/README.md"
         )
         self.assert_has_error(manifest, "package file is not runtime or declared research metadata")
+
+    def test_canonical_manifest_must_be_json_object(self) -> None:
+        with patch(
+            "validate_research_skill_suite.json.loads",
+            return_value=[],
+        ):
+            self.assert_has_error(
+                self.manifest,
+                "package manifest must contain a JSON object",
+            )
 
     def test_canonical_manifest_router_must_match_runtime_entry(self) -> None:
         manifest = copy.deepcopy(self.manifest)
