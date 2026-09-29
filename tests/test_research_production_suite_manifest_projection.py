@@ -39,6 +39,47 @@ class ResearchProductionSuiteManifestProjectionTests(unittest.TestCase):
     def skill(self, public_id: str) -> dict:
         return next(skill for skill in self.projected["skills"] if skill["id"] == public_id)
 
+    def test_projector_rejects_invalid_descriptor_authority(self) -> None:
+        with self.assertRaisesRegex(
+            ValueError,
+            "production promotion descriptor must be an object",
+        ):
+            project_production_suite_manifest([])
+
+        descriptor = copy.deepcopy(self.descriptor)
+        descriptor["status"] = "promotion-ready"
+        with self.assertRaisesRegex(
+            ValueError,
+            "production suite descriptor authority validation failed",
+        ):
+            project_production_suite_manifest(descriptor)
+
+    def test_validator_rejects_malformed_authority_roots_without_crashing(self) -> None:
+        self.assertEqual(
+            validate_projected_production_suite([], self.descriptor),
+            ["projected production suite must be an object"],
+        )
+        self.assertEqual(
+            validate_projected_production_suite(self.projected, []),
+            ["production promotion descriptor must be an object"],
+        )
+
+    def test_validator_rejects_malformed_skill_id_without_crashing(self) -> None:
+        projected = copy.deepcopy(self.projected)
+        projected["skills"][0]["id"] = {"name": "invalid"}
+        self.assert_has_error(
+            projected,
+            "projected production Skill id must be a non-empty string",
+        )
+
+    def test_validator_rejects_non_object_distribution_entry(self) -> None:
+        projected = copy.deepcopy(self.projected)
+        projected["distributions"]["openai_skill"] = []
+        self.assert_has_error(
+            projected,
+            "projected openai_skill distribution entry must be an object",
+        )
+
     def test_current_projection_is_valid(self) -> None:
         self.assertEqual(
             validate_projected_production_suite(self.projected, self.descriptor),
