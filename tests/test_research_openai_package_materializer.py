@@ -5,13 +5,18 @@ import sys
 import tempfile
 import unittest
 from pathlib import Path
+from unittest.mock import patch
 
 ROOT = Path(__file__).resolve().parents[1]
 PLANNER_DIR = ROOT / "research" / "skill-prototypes" / "scripts"
 if str(PLANNER_DIR) not in sys.path:
     sys.path.insert(0, str(PLANNER_DIR))
 
-from materialize_openai_packages import materialize_openai_packages  # noqa: E402
+from materialize_openai_packages import (  # noqa: E402
+    _metadata_source,
+    _skill_target_name,
+    materialize_openai_packages,
+)
 
 METADATA_PATH = ROOT / "research" / "skill-prototypes" / "adapter-metadata-plan.json"
 
@@ -32,6 +37,36 @@ class ResearchOpenAIPackageMaterializerTests(unittest.TestCase):
             allow_partial=allow_partial,
         )
         return output, result, temp
+
+    def test_skill_target_helper_rejects_malformed_authority(self) -> None:
+        with self.assertRaisesRegex(ValueError, "research skill suite must be an object"):
+            _skill_target_name([], "cultural-substrate-weaving", "ja-JP")
+
+        with self.assertRaisesRegex(ValueError, "research skill suite skills must be a list"):
+            _skill_target_name(
+                {"skills": None},
+                "cultural-substrate-weaving",
+                "ja-JP",
+            )
+
+    def test_metadata_source_helper_rejects_malformed_profile_entry(self) -> None:
+        with self.assertRaisesRegex(ValueError, "profile entry must be an object"):
+            _metadata_source(ROOT, [], "cultural-substrate-weaving", "interactive")
+
+    def test_materializer_rejects_unsafe_skill_target_before_profile_copy(self) -> None:
+        with tempfile.TemporaryDirectory() as temp_dir:
+            output = Path(temp_dir) / "packages"
+            with patch(
+                "materialize_openai_packages._skill_target_name",
+                return_value="../escape",
+            ):
+                with self.assertRaisesRegex(ValueError, "unsafe materialization target"):
+                    materialize_openai_packages(
+                        locale="ja-JP",
+                        output_root=output,
+                        root=ROOT,
+                    )
+            self.assertFalse((Path(temp_dir) / "escape").exists())
 
     def test_ja_materializes_three_skills_for_both_profiles(self) -> None:
         output, result, temp = self.materialize("ja-JP")
