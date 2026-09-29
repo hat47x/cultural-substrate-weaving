@@ -44,7 +44,10 @@ def _safe_repo_relative(value: object) -> bool:
 def _existing_file(root: Path, value: object) -> Path | None:
     if not _safe_repo_relative(value):
         return None
-    path = root / str(value)
+    repository = root.resolve()
+    path = (root / str(value)).resolve()
+    if not path.is_relative_to(repository):
+        return None
     return path if path.is_file() else None
 
 
@@ -235,6 +238,9 @@ def validate_complete_checkout_gate(
     execution_descriptor: dict | None = None,
     evidence_existed_at_execution: bool | None = None,
 ) -> list[str]:
+    if not isinstance(descriptor, dict):
+        return ["production promotion descriptor must be an object"]
+
     errors: list[str] = []
     gate = descriptor.get("complete_checkout_validation")
     if not isinstance(gate, dict):
@@ -358,6 +364,12 @@ def main() -> int:
         descriptor = json.loads(DESCRIPTOR_PATH.read_text(encoding="utf-8"))
     except (OSError, json.JSONDecodeError) as exc:
         print(f"complete-checkout gate validation failed: {exc}", file=sys.stderr)
+        return 1
+    if not isinstance(descriptor, dict):
+        print(
+            "complete-checkout gate validation failed: production promotion descriptor must be an object",
+            file=sys.stderr,
+        )
         return 1
 
     gate = descriptor.get("complete_checkout_validation")
