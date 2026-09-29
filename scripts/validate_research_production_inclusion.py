@@ -100,7 +100,12 @@ def validate_production_inclusion(root: Path, plan: dict) -> list[str]:
     locales = set(suite.get("locales", {}))
     included_count = 0
     for skill_id, entry in plan_skills.items():
-        if not isinstance(entry, dict) or skill_id not in suite_skills:
+        if not isinstance(skill_id, str) or not skill_id:
+            continue
+        if skill_id not in suite_skills:
+            continue
+        if not isinstance(entry, dict):
+            errors.append(f"skill {skill_id}: production inclusion entry must be an object")
             continue
         state = entry.get("production_state")
         if state not in {"included", "candidate"}:
@@ -132,7 +137,19 @@ def validate_production_inclusion(root: Path, plan: dict) -> list[str]:
                         manifest = {}
                     if manifest.get("name") != skill_id:
                         errors.append(f"skill {skill_id}: production manifest name mismatch")
-                    if set(manifest.get("locales", {})) != locales:
+                    manifest_locales = manifest.get("locales")
+                    if not isinstance(manifest_locales, dict):
+                        errors.append(
+                            f"skill {skill_id}: production manifest locales must be an object"
+                        )
+                    elif not all(
+                        isinstance(locale, str) and locale
+                        for locale in manifest_locales
+                    ):
+                        errors.append(
+                            f"skill {skill_id}: production manifest locale keys must be non-empty strings"
+                        )
+                    elif set(manifest_locales) != locales:
                         errors.append(f"skill {skill_id}: production manifest locale set mismatch")
                     router = manifest.get("router")
                     if not isinstance(router, str) or not router or "\\" in router or "\x00" in router:
@@ -148,11 +165,13 @@ def validate_production_inclusion(root: Path, plan: dict) -> list[str]:
                         else:
                             repository = root.resolve()
                             for locale in locales:
+                                locale_root = (root / "src" / locale).resolve()
                                 runtime = (
-                                    root / "src" / locale / Path(*router_pure.parts)
+                                    locale_root / Path(*router_pure.parts)
                                 ).resolve()
                                 if (
-                                    not runtime.is_relative_to(repository)
+                                    not locale_root.is_relative_to(repository)
+                                    or not runtime.is_relative_to(locale_root)
                                     or not runtime.is_file()
                                 ):
                                     errors.append(
@@ -162,7 +181,17 @@ def validate_production_inclusion(root: Path, plan: dict) -> list[str]:
             errors.append(f"skill {skill_id}: candidate Skill must not claim production_source")
 
         locale_states = entry.get("locales")
-        if not isinstance(locale_states, dict) or set(locale_states) != locales:
+        if not isinstance(locale_states, dict):
+            errors.append(f"skill {skill_id}: locale states must be an object")
+            continue
+        if not all(isinstance(locale, str) and locale for locale in locale_states):
+            errors.append(f"skill {skill_id}: locale state keys must be non-empty strings")
+        valid_locale_keys = {
+            locale
+            for locale in locale_states
+            if isinstance(locale, str) and locale
+        }
+        if valid_locale_keys != locales:
             errors.append(f"skill {skill_id}: locale state set must match suite locales")
             continue
         realizations = suite_skills[skill_id].get("locale_realizations", {})
