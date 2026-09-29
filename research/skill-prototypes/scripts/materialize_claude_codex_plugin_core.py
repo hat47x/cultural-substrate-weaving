@@ -24,7 +24,11 @@ PLANNER_DIR = ROOT / "research" / "skill-prototypes" / "scripts"
 if str(PLANNER_DIR) not in sys.path:
     sys.path.insert(0, str(PLANNER_DIR))
 
-from materialize_skill_tree import _safe_output_root, materialize_skill_tree  # noqa: E402
+from materialize_skill_tree import (  # noqa: E402
+    _safe_output_root,
+    _target_path,
+    materialize_skill_tree,
+)
 from plan_adapter_metadata import plan_adapter_metadata  # noqa: E402
 
 READY_BUNDLE_METADATA = {"prototype", "reviewed"}
@@ -32,7 +36,10 @@ REPOSITORY_URL = "https://github.com/hat47x/cultural-substrate-weaving"
 
 
 def _load_json(path: Path) -> dict:
-    return json.loads(path.read_text(encoding="utf-8"))
+    value = json.loads(path.read_text(encoding="utf-8"))
+    if not isinstance(value, dict):
+        raise ValueError(f"{path} must contain a JSON object")
+    return value
 
 
 def _version(root: Path) -> str:
@@ -160,7 +167,8 @@ def materialize_claude_codex_plugin_core(
         bundle, metadata_source = _bundle_metadata(root, claude_plan, codex_plan)
 
         output = _safe_output_root(output_root, root)
-        plugin_root = output / bundle["plugin_name"]
+        plugin_name = bundle.get("plugin_name")
+        plugin_root = _target_path(output, plugin_name)
         skills_source = claude_tree / "skills"
         if not skills_source.is_dir():
             raise ValueError("research Claude/Codex bundle has no shared skills/ tree")
@@ -168,7 +176,7 @@ def materialize_claude_codex_plugin_core(
 
         current_version = _version(root)
         claude_manifest = {
-            "name": bundle["plugin_name"],
+            "name": plugin_name,
             "description": bundle["description"],
             "version": current_version,
             "author": {"name": "hat47x"},
@@ -179,7 +187,7 @@ def materialize_claude_codex_plugin_core(
         _write_json(plugin_root / ".claude-plugin" / "plugin.json", claude_manifest)
 
         codex_manifest = {
-            "name": bundle["plugin_name"],
+            "name": plugin_name,
             "version": current_version,
             "description": bundle["description"],
             "author": {"name": "hat47x"},
@@ -206,7 +214,7 @@ def materialize_claude_codex_plugin_core(
     return {
         "schema": "csw.research-claude-codex-plugin-core/v1",
         "locale": locale,
-        "plugin_name": bundle["plugin_name"],
+        "plugin_name": plugin_name,
         "metadata_source": metadata_source,
         "metadata_state": claude_plan.get("metadata_state"),
         "contains": list(bundle["contains"]),
