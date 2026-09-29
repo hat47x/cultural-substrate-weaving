@@ -4,12 +4,16 @@ import copy
 import json
 import sys
 import unittest
+from unittest.mock import patch
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "scripts"))
 
-from validate_research_package_targets import validate_package_targets  # noqa: E402
+from validate_research_package_targets import (  # noqa: E402
+    main as package_target_main,
+    validate_package_targets,
+)
 
 MANIFEST_PATH = ROOT / "research" / "skill-prototypes" / "suite-manifest.json"
 CLAUDE_LOCALES_PATH = ROOT / "adapters" / "claude-code" / "locales.json"
@@ -65,6 +69,13 @@ class ResearchPackageTargetTests(unittest.TestCase):
             any("locale_realizations must be an object" in error for error in errors),
             errors,
         )
+
+    def test_cli_catches_non_object_json_root(self) -> None:
+        with patch(
+            "validate_research_package_targets.load_manifest",
+            side_effect=ValueError("manifest must contain a JSON object"),
+        ):
+            self.assertEqual(package_target_main(), 1)
 
     def test_current_package_targets_are_internally_consistent(self) -> None:
         self.assertEqual(validate_package_targets(self.manifest), [])
