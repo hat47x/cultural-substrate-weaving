@@ -22,7 +22,9 @@ from plan_promotion_readiness import (  # noqa: E402
     SOURCE_PROJECTION_PREVIEW,
     SOURCE_PROJECTION_TEST,
     _declared_field,
+    _iterative_parity_check,
     _production_path,
+    _skill_entries,
     _translation_status_path,
     observe_promotion_readiness,
 )
@@ -116,6 +118,16 @@ class ResearchPromotionReadinessObserverTests(unittest.TestCase):
         descriptor = copy.deepcopy(self.descriptor)
         descriptor["translation_refresh"]["state"] = "../outside.json"
         self.assertIsNone(_translation_status_path(descriptor))
+
+    def test_skill_entry_projection_rejects_malformed_collection_without_crashing(self) -> None:
+        self.assertEqual(_skill_entries({"skills": None}), [])
+        self.assertEqual(_skill_entries({"skills": [[], {"id": "ok"}]}), [{"id": "ok"}])
+
+    def test_method_parity_treats_malformed_skill_collection_as_unobserved(self) -> None:
+        state, evidence, details = _iterative_parity_check(ROOT, {"skills": None})
+        self.assertEqual(state, "not-observed-in-this-branch")
+        self.assertEqual(evidence, [])
+        self.assertEqual(details, {})
 
     def test_production_file_path_rejects_unsafe_contract_pointer(self) -> None:
         contract = {"production_files": {"builder": "scripts/build.py"}}

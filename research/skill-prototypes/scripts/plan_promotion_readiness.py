@@ -157,12 +157,19 @@ def _contract_and_regression_state(
     return "not-observed-in-this-branch", evidence
 
 
+def _skill_entries(authority: dict) -> list[dict]:
+    skills = authority.get("skills")
+    if not isinstance(skills, list):
+        return []
+    return [item for item in skills if isinstance(item, dict)]
+
+
 def _iterative_parity_check(root: Path, suite: dict) -> tuple[str, list[str], dict]:
     skill = next(
         (
             item
-            for item in suite.get("skills", [])
-            if isinstance(item, dict) and item.get("id") == "iterative-inquiry-synthesis"
+            for item in _skill_entries(suite)
+            if item.get("id") == "iterative-inquiry-synthesis"
         ),
         None,
     )
@@ -271,8 +278,8 @@ def observe_promotion_readiness(root: Path = ROOT) -> dict:
                 "date": name_gate.get("date"),
                 "skill_name_states": {
                     str(skill.get("research_id")): skill.get("public_name_status")
-                    for skill in descriptor.get("skills", [])
-                    if isinstance(skill, dict) and skill.get("research_id")
+                    for skill in _skill_entries(descriptor)
+                    if skill.get("research_id")
                 },
             },
         )
@@ -427,8 +434,8 @@ def observe_promotion_readiness(root: Path = ROOT) -> dict:
             if isinstance(skill.get("production_source"), dict)
             else None
         )
-        for skill in descriptor.get("skills", [])
-        if isinstance(skill, dict) and skill.get("research_id")
+        for skill in _skill_entries(descriptor)
+        if skill.get("research_id")
     }
     observations.append(
         _obs(
