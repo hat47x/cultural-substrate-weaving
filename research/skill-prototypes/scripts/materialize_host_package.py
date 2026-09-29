@@ -27,6 +27,7 @@ for path in (PLANNER_DIR, SCRIPTS_DIR):
 
 from common import locale_short  # noqa: E402
 from materialize_skill_tree import (  # noqa: E402
+    _load_json,
     _target_path,
     _validated_inputs,
     materialize_skill_tree,
@@ -38,12 +39,13 @@ READY_BUNDLE_METADATA = {"prototype", "reviewed"}
 REPOSITORY_URL = "https://github.com/hat47x/cultural-substrate-weaving"
 
 
-def _load_json(path: Path) -> dict:
-    return json.loads(path.read_text(encoding="utf-8"))
-
-
 def _openai_profile_names(metadata: dict) -> tuple[str, ...]:
-    distribution = metadata.get("distributions", {}).get("openai_skill")
+    if not isinstance(metadata, dict):
+        raise ValueError("adapter metadata plan must be an object")
+    distributions = metadata.get("distributions")
+    if not isinstance(distributions, dict):
+        raise ValueError("adapter metadata plan must declare distributions")
+    distribution = distributions.get("openai_skill")
     if not isinstance(distribution, dict):
         raise ValueError("adapter metadata plan must declare openai_skill")
     profiles = distribution.get("profiles")
