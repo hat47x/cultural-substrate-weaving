@@ -32,6 +32,31 @@ def _safe_repo_relative(value: object) -> bool:
     return not path.is_absolute() and ".." not in path.parts
 
 
+def _existing_repo_file(root: Path, value: object) -> Path | None:
+    if not _safe_repo_relative(value):
+        return None
+    repository = root.resolve()
+    path = (root / str(value)).resolve()
+    if not path.is_relative_to(repository) or not path.is_file():
+        return None
+    return path
+
+
+def _locale_file(root: Path, locale: str, relative: object) -> Path | None:
+    if not _safe_repo_relative(relative):
+        return None
+    repository = root.resolve()
+    locale_root = (root / "src" / locale).resolve()
+    path = (locale_root / str(relative)).resolve()
+    if (
+        not locale_root.is_relative_to(repository)
+        or not path.is_relative_to(locale_root)
+        or not path.is_file()
+    ):
+        return None
+    return path
+
+
 def _sha256(path: Path) -> str:
     return hashlib.sha256(path.read_bytes()).hexdigest()
 
@@ -50,6 +75,11 @@ def validate_translation_refresh_state(
     status: dict,
     manifest: dict,
 ) -> list[str]:
+    if not isinstance(status, dict):
+        return ["translation refresh status must be an object"]
+    if not isinstance(manifest, dict):
+        return ["translation manifest must be an object"]
+
     errors: list[str] = []
 
     if status.get("schema") != EXPECTED_SCHEMA:
@@ -68,7 +98,7 @@ def validate_translation_refresh_state(
         errors.append("translation refresh state must not authorize production promotion")
 
     human_record = status.get("human_record")
-    if not _safe_repo_relative(human_record) or not (root / str(human_record)).is_file():
+    if _existing_repo_file(root, human_record) is None:
         errors.append("translation refresh human_record must be an existing safe repository file")
 
     manifest_path_value = status.get("manifest")
@@ -78,6 +108,9 @@ def validate_translation_refresh_state(
     scope_files = _string_set(status.get("scope_files"), "scope_files", errors)
     if not scope_files:
         errors.append("scope_files must preserve the nonempty bilingual semantic-edit scope")
+    for relative in scope_files:
+        if not _safe_repo_relative(relative):
+            errors.append(f"scope_files contains unsafe repository-relative path: {relative!r}")
 
     expected_stale = _string_set(
         status.get("expected_stale_files"), "expected_stale_files", errors
@@ -113,13 +146,13 @@ def validate_translation_refresh_state(
             errors.append(f"translation manifest entry must be an object: {relative}")
             continue
 
-        ja_path = root / "src" / "ja-JP" / relative
-        en_path = root / "src" / "en-US" / relative
-        if not ja_path.is_file():
-            errors.append(f"canonical Japanese file missing: src/ja-JP/{relative}")
+        ja_path = _locale_file(root, "ja-JP", relative)
+        en_path = _locale_file(root, "en-US", relative)
+        if ja_path is None:
+            errors.append(f"canonical Japanese file missing or unsafe: src/ja-JP/{relative}")
             continue
-        if entry.get("en_present") is True and not en_path.is_file():
-            errors.append(f"declared English translation missing: src/en-US/{relative}")
+        if entry.get("en_present") is True and en_path is None:
+            errors.append(f"declared English translation missing or unsafe: src/en-US/{relative}")
 
         current_ja = _sha256(ja_path)
         tracked_ja = entry.get("ja_sha256")
@@ -173,9 +206,9 @@ def validate_translation_refresh_state(
             ):
                 errors.append(f"English markers must be a nonempty string list: {relative}")
                 continue
-            en_path = root / "src" / "en-US" / relative
-            if not en_path.is_file():
-                errors.append(f"English scope file missing: src/en-US/{relative}")
+            en_path = _locale_file(root, "en-US", relative)
+            if en_path is None:
+                errors.append(f"English scope file missing or unsafe: src/en-US/{relative}")
                 continue
             text = en_path.read_text(encoding="utf-8")
             for marker in required:
@@ -216,9 +249,20 @@ def validate_translation_refresh_state(
 def main() -> int:
     try:
         status = json.loads(STATUS_PATH.read_text(encoding="utf-8"))
-        manifest_path = ROOT / str(status.get("manifest", ""))
+        if not isinstance(status, dict):
+            raise ValueError("translation refresh status must contain a JSON object")
+        manifest_value = status.get("manifest")
+        if manifest_value != "i18n/translation-manifest.json":
+            raise ValueError(
+                "translation refresh state must point to i18n/translation-manifest.json"
+            )
+        manifest_path = _existing_repo_file(ROOT, manifest_value)
+        if manifest_path is None:
+            raise ValueError("translation manifest is missing or unsafe")
         manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
-    except (OSError, json.JSONDecodeError) as exc:
+        if not isinstance(manifest, dict):
+            raise ValueError("translation manifest must contain a JSON object")
+    except (OSError, json.JSONDecodeError, ValueError) as exc:
         print(f"research translation refresh state validation failed: {exc}", file=sys.stderr)
         return 1
 
