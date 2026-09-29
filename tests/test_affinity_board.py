@@ -48,6 +48,8 @@ class AffinityBoardTest(unittest.TestCase):
                     "notes://001",
                     "--provenance",
                     "target-side notes",
+                    "--status",
+                    "target_supported",
                 ).stdout.strip(),
                 "S001",
             )
@@ -88,6 +90,7 @@ class AffinityBoardTest(unittest.TestCase):
             )
 
             data = json.loads(target.read_text(encoding="utf-8"))
+            self.assertEqual(data["sources"][0]["input_status"], "target_supported")
             self.assertEqual(data["cards"][0]["id"], "C001")
             self.assertEqual(data["cards"][0]["source_refs"], ["S001"])
             self.assertEqual(data["groups"][0]["members"], ["C001", "C002"])
