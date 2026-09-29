@@ -21,7 +21,10 @@ for path in (PLANNER_DIR, VALIDATOR_DIR):
         sys.path.insert(0, str(path))
 
 from plan_skill_subtrees import plan_skill_subtrees  # noqa: E402
-from validate_research_package_targets import validate_package_targets  # noqa: E402
+from validate_research_package_targets import (  # noqa: E402
+    _safe_skill_name,
+    validate_package_targets,
+)
 from validate_research_skill_suite import validate_suite  # noqa: E402
 
 PLAN_SCHEMA = "csw.research-skill-entry-transform-plan/v1"
@@ -32,6 +35,8 @@ OPENAI_DISTRIBUTIONS = {"openai_skill"}
 def split_skill_frontmatter(text: str) -> tuple[list[tuple[str, str]], str]:
     """Parse the simple scalar YAML frontmatter used by prototype SKILL.md files."""
 
+    if not isinstance(text, str):
+        raise ValueError("Skill entry text must be a string")
     lines = text.splitlines(keepends=True)
     if not lines or lines[0].rstrip("\r\n") != "---":
         raise ValueError("Skill entry must start with YAML frontmatter")
@@ -72,6 +77,10 @@ def render_explicit_skill_entry(
 ) -> str:
     """Normalize a prototype Skill entry for one research distribution target."""
 
+    if not _safe_skill_name(target_name):
+        raise ValueError(f"Skill entry target_name is unsafe: {target_name!r}")
+    if not isinstance(explicit_invocation, bool):
+        raise ValueError("Skill entry explicit_invocation must be a boolean")
     fields, body = split_skill_frontmatter(text)
     values = dict(fields)
     description = values.get("description")
