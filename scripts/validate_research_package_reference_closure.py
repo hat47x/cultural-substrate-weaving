@@ -38,6 +38,13 @@ PACKAGE_REFERENCE_PREFIXES = {
 FILE_LIKE_SUFFIXES = {".md", ".json", ".yaml", ".yml", ".py"}
 
 
+def _safe_relative_path(value: object) -> bool:
+    if not isinstance(value, str) or not value or "\\" in value:
+        return False
+    path = PurePosixPath(value)
+    return not path.is_absolute() and ".." not in path.parts and bool(path.parts)
+
+
 def _candidate_refs(text: str) -> set[str]:
     candidates: set[str] = set()
     for value in INLINE_CODE_RE.findall(text):
@@ -120,26 +127,37 @@ def validate_in_memory_package_reference_closure(
     production tree to disk.
     """
 
+    if not isinstance(files, dict):
+        return [f"{label} file map must be an object"]
+
     errors: list[str] = []
     normalized: dict[str, str] = {}
     for relative, text in files.items():
         if not isinstance(relative, str) or not isinstance(text, str):
             errors.append(f"{label} file map must contain string paths and text contents")
             continue
-        path = PurePosixPath(relative).as_posix()
-        if path == ".." or path.startswith("../") or path.startswith("/"):
+        if not _safe_relative_path(relative):
             errors.append(f"{label} file path escapes package root: {relative}")
             continue
+        path = PurePosixPath(relative).as_posix()
         if path in normalized:
             errors.append(f"{label} file map contains duplicate normalized path: {path}")
             continue
         normalized[path] = text
 
-    runtime = PurePosixPath(runtime_entry).as_posix()
-    runtime_text = normalized.get(runtime)
-    if runtime_text is None:
-        errors.append(f"{label} runtime entry is missing: {runtime}")
+    runtime = (
+        PurePosixPath(runtime_entry).as_posix()
+        if _safe_relative_path(runtime_entry)
+        else None
+    )
+    if runtime is None:
+        errors.append(f"{label} runtime entry path is unsafe: {runtime_entry!r}")
+        runtime_text = None
     else:
+        runtime_text = normalized.get(runtime)
+    if runtime is not None and runtime_text is None:
+        errors.append(f"{label} runtime entry is missing: {runtime}")
+    elif runtime_text is not None:
         for relative in sorted(package_local_references(runtime_text)):
             if relative not in normalized:
                 errors.append(f"{label} runtime reference is missing: {relative}")
@@ -167,8 +185,15 @@ def validate_in_memory_package_reference_closure(
 
 
 def validate_package_reference_closure(root: Path, manifest: dict) -> list[str]:
+    if not isinstance(manifest, dict):
+        return ["research skill suite must be an object before package reference validation"]
+    skills = manifest.get("skills")
+    if not isinstance(skills, list):
+        return ["research skill suite skills must be a list before package reference validation"]
+
     errors: list[str] = []
-    for skill in manifest.get("skills", []):
+    repository = root.resolve()
+    for skill in skills:
         if not isinstance(skill, dict):
             continue
         skill_id = skill.get("id")
@@ -186,17 +211,45 @@ def validate_package_reference_closure(root: Path, manifest: dict) -> list[str]:
             package_root_relative = package_source.get("root")
             runtime_relative = realization.get("runtime_entry")
             files = package_source.get("files")
-            if not isinstance(package_root_relative, str) or not isinstance(runtime_relative, str):
+            if not _safe_relative_path(package_root_relative):
+                errors.append(
+                    f"skill {skill_id}: locale {locale} package root is unsafe: "
+                    f"{package_root_relative!r}"
+                )
+                continue
+            if not _safe_relative_path(runtime_relative):
+                errors.append(
+                    f"skill {skill_id}: locale {locale} runtime entry path is unsafe: "
+                    f"{runtime_relative!r}"
+                )
                 continue
             if not isinstance(files, list) or not all(isinstance(item, str) for item in files):
                 continue
 
             package_root = (root / package_root_relative).resolve()
             runtime_path = (root / runtime_relative).resolve()
-            if not runtime_path.is_file() or not runtime_path.is_relative_to(package_root):
+            if not package_root.is_relative_to(repository):
+                errors.append(
+                    f"skill {skill_id}: locale {locale} package root escapes repository: "
+                    f"{package_root_relative}"
+                )
+                continue
+            if (
+                not runtime_path.is_file()
+                or not runtime_path.is_relative_to(repository)
+                or not runtime_path.is_relative_to(package_root)
+            ):
                 continue
 
-            declared = {PurePosixPath(item).as_posix() for item in files}
+            declared: set[str] = set()
+            for item in files:
+                if not _safe_relative_path(item):
+                    errors.append(
+                        f"skill {skill_id}: locale {locale} package file path escapes package root: "
+                        f"{item}"
+                    )
+                    continue
+                declared.add(PurePosixPath(item).as_posix())
 
             runtime_text = runtime_path.read_text(encoding="utf-8")
             for relative in sorted(package_local_references(runtime_text)):
