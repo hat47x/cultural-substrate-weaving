@@ -26,6 +26,46 @@ class ResearchPackageTargetTests(unittest.TestCase):
         errors = validate_package_targets(manifest)
         self.assertTrue(any(fragment in error for error in errors), f"expected {fragment!r}; got {errors!r}")
 
+    def test_validator_rejects_malformed_root_and_distribution_shape(self) -> None:
+        self.assertEqual(
+            validate_package_targets([]),
+            ["research skill suite must be an object before package target validation"],
+        )
+
+        manifest = copy.deepcopy(self.manifest)
+        manifest["distribution_prototypes"] = None
+        self.assert_has_error(
+            manifest,
+            "distribution_prototypes must be an object",
+        )
+
+        manifest = copy.deepcopy(self.manifest)
+        manifest["distribution_prototypes"]["claude_plugin"]["contains"] = None
+        self.assert_has_error(
+            manifest,
+            "locale_bundle distribution claude_plugin contains must be a list",
+        )
+
+    def test_validator_rejects_non_string_package_target_key_without_crashing(self) -> None:
+        manifest = copy.deepcopy(self.manifest)
+        targets = self.skill(manifest, "affinity-synthesis")["locale_realizations"][
+            "ja-JP"
+        ]["package_targets"]
+        targets[1] = targets.pop("openai_skill")
+        self.assert_has_error(
+            manifest,
+            "package target keys must be non-empty strings",
+        )
+
+    def test_collision_scan_tolerates_malformed_realization_map(self) -> None:
+        manifest = copy.deepcopy(self.manifest)
+        self.skill(manifest, "affinity-synthesis")["locale_realizations"] = None
+        errors = validate_package_targets(manifest)
+        self.assertTrue(
+            any("locale_realizations must be an object" in error for error in errors),
+            errors,
+        )
+
     def test_current_package_targets_are_internally_consistent(self) -> None:
         self.assertEqual(validate_package_targets(self.manifest), [])
 

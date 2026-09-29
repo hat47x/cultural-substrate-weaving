@@ -18,19 +18,29 @@ SKILL_TREE_MODES = {"standalone_per_skill", "locale_bundle"}
 
 
 def load_manifest(path: Path = MANIFEST_PATH) -> dict:
-    return json.loads(path.read_text(encoding="utf-8"))
+    value = json.loads(path.read_text(encoding="utf-8"))
+    if not isinstance(value, dict):
+        raise ValueError(f"{path} must contain a JSON object")
+    return value
 
 
 def _target_distributions(manifest: dict, skill_id: str) -> list[str]:
     names: list[str] = []
-    for distribution_name, config in manifest.get("distribution_prototypes", {}).items():
+    distributions = manifest.get("distribution_prototypes")
+    if not isinstance(distributions, dict):
+        return names
+    for distribution_name, config in distributions.items():
+        if not isinstance(distribution_name, str) or not distribution_name:
+            continue
         if not isinstance(config, dict):
             continue
         mode = config.get("mode")
         if mode == "standalone_per_skill":
             names.append(distribution_name)
-        elif mode == "locale_bundle" and skill_id in config.get("contains", []):
-            names.append(distribution_name)
+        elif mode == "locale_bundle":
+            contains = config.get("contains")
+            if isinstance(contains, list) and skill_id in contains:
+                names.append(distribution_name)
     return names
 
 
@@ -45,7 +55,29 @@ def _safe_skill_name(value: object) -> bool:
 
 
 def validate_package_targets(manifest: dict) -> list[str]:
+    if not isinstance(manifest, dict):
+        return ["research skill suite must be an object before package target validation"]
+
     errors: list[str] = []
+    distributions = manifest.get("distribution_prototypes")
+    if not isinstance(distributions, dict):
+        return ["research skill suite distribution_prototypes must be an object before package target validation"]
+    for distribution_name, config in distributions.items():
+        if not isinstance(distribution_name, str) or not distribution_name:
+            errors.append("research skill suite distribution keys must be non-empty strings")
+            continue
+        if not isinstance(config, dict):
+            errors.append(
+                f"research skill suite distribution {distribution_name} must be an object"
+            )
+            continue
+        if config.get("mode") == "locale_bundle" and not isinstance(
+            config.get("contains"), list
+        ):
+            errors.append(
+                f"locale_bundle distribution {distribution_name} contains must be a list"
+            )
+
     skills = manifest.get("skills")
     if not isinstance(skills, list):
         return ["research skill suite skills must be a list before package target validation"]
@@ -53,7 +85,9 @@ def validate_package_targets(manifest: dict) -> list[str]:
     skill_map = {skill.get("id"): skill for skill in skills if isinstance(skill, dict) and isinstance(skill.get("id"), str)}
     locales = manifest.get("locales")
     if not isinstance(locales, dict):
-        return ["research skill suite locales must be an object before package target validation"]
+        return errors + ["research skill suite locales must be an object before package target validation"]
+    if not all(isinstance(locale, str) and locale for locale in locales):
+        errors.append("research skill suite locale keys must be non-empty strings")
 
     for skill_id, skill in skill_map.items():
         expected = set(_target_distributions(manifest, skill_id))
@@ -74,7 +108,19 @@ def validate_package_targets(manifest: dict) -> list[str]:
             if not isinstance(targets, dict):
                 errors.append(f"skill {skill_id}: realized locale {locale} must declare package_targets")
                 continue
-            actual = set(targets)
+            target_keys_are_strings = all(
+                isinstance(name, str) and name
+                for name in targets
+            )
+            if not target_keys_are_strings:
+                errors.append(
+                    f"skill {skill_id}: locale {locale} package target keys must be non-empty strings"
+                )
+            actual = {
+                name
+                for name in targets
+                if isinstance(name, str) and name
+            }
             missing = sorted(expected - actual)
             extra = sorted(actual - expected)
             if missing or extra:
@@ -89,19 +135,37 @@ def validate_package_targets(manifest: dict) -> list[str]:
                     errors.append(f"skill {skill_id}: locale {locale} package target {distribution_name} has unsafe skill_name: {skill_name!r}")
 
     for locale in locales:
-        for distribution_name, config in manifest.get("distribution_prototypes", {}).items():
-            if not isinstance(config, dict) or config.get("mode") not in SKILL_TREE_MODES:
+        if not isinstance(locale, str) or not locale:
+            continue
+        for distribution_name, config in distributions.items():
+            if (
+                not isinstance(distribution_name, str)
+                or not distribution_name
+                or not isinstance(config, dict)
+                or config.get("mode") not in SKILL_TREE_MODES
+            ):
                 continue
             if config.get("mode") == "standalone_per_skill":
                 target_skill_ids = list(skill_map)
             else:
-                target_skill_ids = [skill_id for skill_id in config.get("contains", []) if skill_id in skill_map]
+                contains = config.get("contains")
+                target_skill_ids = [
+                    skill_id
+                    for skill_id in contains
+                    if skill_id in skill_map
+                ] if isinstance(contains, list) else []
             by_name: dict[str, list[str]] = {}
             for skill_id in target_skill_ids:
-                realization = skill_map[skill_id].get("locale_realizations", {}).get(locale, {})
+                realizations = skill_map[skill_id].get("locale_realizations")
+                if not isinstance(realizations, dict):
+                    continue
+                realization = realizations.get(locale)
                 if not isinstance(realization, dict) or realization.get("status") == "planned":
                     continue
-                target = realization.get("package_targets", {}).get(distribution_name, {})
+                package_targets = realization.get("package_targets")
+                if not isinstance(package_targets, dict):
+                    continue
+                target = package_targets.get(distribution_name)
                 if not isinstance(target, dict):
                     continue
                 skill_name = target.get("skill_name")
