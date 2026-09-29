@@ -246,5 +246,6 @@ handoff capsuleは**次roundの開始・問いの決定・全参照のreopenを�
 - 書式・ID・relation grammar・machine-readable map・diagram projection: `references/REPRESENTATION.md`
 - 標準成果物: `references/TEMPLATE.md`
 - machine-readable schema候補: `references/affinity-map.schema.json`
+- machine-readable mapを明示的に増分編集する補助: `scripts/edit_map.py`（自動cluster / label / relation推論は行わない）
 - 評価・反例: `evals/CASES.md`
 - 公開時の根拠と限界: `evidence/dossier.md`
