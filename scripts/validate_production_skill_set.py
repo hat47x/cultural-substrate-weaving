@@ -11,7 +11,10 @@ SCHEMA = "csw.production-skill-set/v1"
 
 
 def _load(path: Path) -> dict:
-    return json.loads(path.read_text(encoding="utf-8"))
+    value = json.loads(path.read_text(encoding="utf-8"))
+    if not isinstance(value, dict):
+        raise ValueError(f"{path} must contain a JSON object")
+    return value
 
 
 def _safe_source_manifest(value: object) -> str | None:
@@ -28,6 +31,9 @@ def _safe_source_manifest(value: object) -> str | None:
 
 
 def validate_production_skill_set(root: Path, skill_set: dict) -> list[str]:
+    if not isinstance(skill_set, dict):
+        return ["production Skill-set must be an object"]
+
     errors: list[str] = []
     if skill_set.get("schema") != SCHEMA:
         errors.append("production Skill-set schema mismatch")
@@ -64,10 +70,21 @@ def validate_production_skill_set(root: Path, skill_set: dict) -> list[str]:
             )
             continue
 
-        manifest_path = root / source_manifest
+        repository = root.resolve()
+        src_root = (root / "src").resolve()
+        manifest_path = (root / source_manifest).resolve()
+        if (
+            not src_root.is_relative_to(repository)
+            or not manifest_path.is_relative_to(src_root)
+        ):
+            errors.append(
+                f"skill {skill_id}: source_manifest must resolve inside repository src/"
+            )
+            continue
+
         try:
             manifest = _load(manifest_path)
-        except (OSError, json.JSONDecodeError) as exc:
+        except (OSError, json.JSONDecodeError, ValueError) as exc:
             errors.append(f"skill {skill_id}: cannot read source manifest: {exc}")
             continue
 
@@ -77,6 +94,11 @@ def validate_production_skill_set(root: Path, skill_set: dict) -> list[str]:
         locales = manifest.get("locales")
         if not isinstance(locales, dict) or not locales:
             errors.append(f"skill {skill_id}: source manifest must declare locales")
+            continue
+        if not all(isinstance(locale, str) and locale for locale in locales):
+            errors.append(
+                f"skill {skill_id}: source manifest locale keys must be non-empty strings"
+            )
             continue
 
         canonical_locale = manifest.get("canonical_locale")
@@ -91,7 +113,7 @@ def validate_production_skill_set(root: Path, skill_set: dict) -> list[str]:
 def main() -> int:
     try:
         skill_set = _load(SKILL_SET_PATH)
-    except (OSError, json.JSONDecodeError) as exc:
+    except (OSError, json.JSONDecodeError, ValueError) as exc:
         print(f"production Skill-set validation failed: {exc}", file=sys.stderr)
         return 1
 
