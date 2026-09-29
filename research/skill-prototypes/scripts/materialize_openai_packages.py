@@ -23,28 +23,55 @@ PLANNER_DIR = ROOT / "research" / "skill-prototypes" / "scripts"
 if str(PLANNER_DIR) not in sys.path:
     sys.path.insert(0, str(PLANNER_DIR))
 
-from materialize_skill_tree import _safe_output_root, materialize_skill_tree  # noqa: E402
+from materialize_skill_tree import (  # noqa: E402
+    _load_json,
+    _safe_output_root,
+    _target_path,
+    materialize_skill_tree,
+)
 from plan_adapter_metadata import plan_adapter_metadata  # noqa: E402
 
 READY_METADATA_STATES = {"existing", "prototype"}
 PROFILES = ("interactive", "metered")
 
 
-def _load_json(path: Path) -> dict:
-    return json.loads(path.read_text(encoding="utf-8"))
-
-
 def _skill_target_name(suite: dict, skill_id: str, locale: str) -> str:
+    if not isinstance(suite, dict):
+        raise ValueError("research skill suite must be an object")
+    skills = suite.get("skills")
+    if not isinstance(skills, list):
+        raise ValueError("research skill suite skills must be a list")
     skill = next(
-        item
-        for item in suite["skills"]
-        if isinstance(item, dict) and item.get("id") == skill_id
+        (
+            item
+            for item in skills
+            if isinstance(item, dict) and item.get("id") == skill_id
+        ),
+        None,
     )
-    realization = skill["locale_realizations"][locale]
-    return realization["package_targets"]["openai_skill"]["skill_name"]
+    if not isinstance(skill, dict):
+        raise ValueError(f"research skill suite entry is missing: {skill_id}")
+    realizations = skill.get("locale_realizations")
+    if not isinstance(realizations, dict):
+        raise ValueError(f"research skill locale realizations are missing: {skill_id}")
+    realization = realizations.get(locale)
+    if not isinstance(realization, dict):
+        raise ValueError(f"research skill locale realization is missing: {skill_id}/{locale}")
+    package_targets = realization.get("package_targets")
+    if not isinstance(package_targets, dict):
+        raise ValueError(f"research skill package targets are missing: {skill_id}/{locale}")
+    openai = package_targets.get("openai_skill")
+    if not isinstance(openai, dict):
+        raise ValueError(f"OpenAI package target is missing: {skill_id}/{locale}")
+    skill_name = openai.get("skill_name")
+    if not isinstance(skill_name, str) or not skill_name:
+        raise ValueError(f"OpenAI package skill_name is missing: {skill_id}/{locale}")
+    return skill_name
 
 
 def _metadata_source(root: Path, profile_entry: dict, skill_id: str, profile: str) -> Path:
+    if not isinstance(profile_entry, dict):
+        raise ValueError(f"OpenAI metadata profile entry must be an object: {skill_id}/{profile}")
     state = profile_entry.get("status")
     source = profile_entry.get("source")
     if state not in READY_METADATA_STATES or not isinstance(source, str):
@@ -117,7 +144,7 @@ def materialize_openai_packages(
                     raise ValueError(f"OpenAI metadata has no {profile} profile for {skill_id}")
 
                 source_tree_name = _skill_target_name(suite, skill_id, locale)
-                source_tree = stage / source_tree_name
+                source_tree = _target_path(stage, source_tree_name)
                 if not source_tree.is_dir():
                     raise ValueError(
                         f"materialized OpenAI Skill tree is missing for {skill_id}: "
@@ -131,7 +158,10 @@ def materialize_openai_packages(
                     profile,
                 )
 
-                target_root = output / profile / source_tree_name
+                target_root = _target_path(
+                    output,
+                    f"{profile}/{source_tree_name}",
+                )
                 shutil.copytree(source_tree, target_root)
                 metadata_target = target_root / "agents" / "openai.yaml"
                 metadata_target.parent.mkdir(parents=True, exist_ok=True)
