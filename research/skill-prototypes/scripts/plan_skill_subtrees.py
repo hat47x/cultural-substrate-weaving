@@ -150,6 +150,16 @@ def _subtree_state(
 def plan_skill_subtrees(manifest: dict, root: Path = ROOT) -> dict:
     """Return source-to-target path mappings for Skill-tree distribution shapes."""
 
+    if not isinstance(manifest, dict):
+        raise ValueError("research skill suite must be an object")
+    errors = validate_suite(root, manifest)
+    errors.extend(validate_package_targets(manifest))
+    if errors:
+        raise ValueError(
+            "research skill subtree authority validation failed: "
+            f"{errors[0]}"
+        )
+
     layout = plan_suite(manifest)
     skill_map = {
         skill["id"]: skill
