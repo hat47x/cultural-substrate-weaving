@@ -227,7 +227,7 @@ def main() -> int:
     try:
         suite = _load_json(SUITE_PATH)
         metadata_plan = _load_json(METADATA_PATH)
-    except (OSError, json.JSONDecodeError) as exc:
+    except (OSError, json.JSONDecodeError, ValueError) as exc:
         print(f"research adapter metadata planning failed: {exc}", file=sys.stderr)
         return 1
 
