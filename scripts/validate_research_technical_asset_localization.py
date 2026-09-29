@@ -176,7 +176,7 @@ def validate_localization(
                 errors.append(f"localized technical asset missing Japanese source: {ja_relative}")
             if en is None:
                 errors.append(f"localized technical asset missing English draft: {en_relative}")
-            if _safe_repo_relative(en_relative):
+            if en is not None:
                 covered_english_package_paths.add(str(en_relative))
             if item.get("english_runtime_reference") is not True:
                 errors.append(f"translated runtime technical asset must be runtime-referenced: {research_id}/{role}")
@@ -187,7 +187,7 @@ def validate_localization(
             shared = _file(shared_relative, root=root)
             if shared is None:
                 errors.append(f"shared technical asset missing: {shared_relative}")
-            if _safe_repo_relative(shared_relative):
+            if shared is not None:
                 covered_english_package_paths.add(str(shared_relative))
             if item.get("english_package_required") is not True:
                 errors.append(f"shared runtime technical asset must be package-required: {research_id}/{role}")
