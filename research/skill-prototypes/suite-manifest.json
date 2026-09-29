@@ -40,7 +40,8 @@
               "evals/CASES.md",
               "evidence/dossier.md",
               "scripts/affinity_board.py",
-              "scripts/validate_map.py"
+              "scripts/validate_map.py",
+              "scripts/edit_map.py"
             ]
           },
           "package_targets": {
