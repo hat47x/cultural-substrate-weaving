@@ -36,6 +36,75 @@ class ResearchPackageReferenceClosureTests(unittest.TestCase):
             f"expected error containing {fragment!r}; got {errors!r}",
         )
 
+    def test_validator_rejects_malformed_manifest_root_without_crashing(self) -> None:
+        self.assertEqual(
+            validate_package_reference_closure(ROOT, []),
+            ["research skill suite must be an object before package reference validation"],
+        )
+        self.assertEqual(
+            validate_package_reference_closure(ROOT, {"skills": None}),
+            ["research skill suite skills must be a list before package reference validation"],
+        )
+
+    def test_in_memory_validator_rejects_unsafe_file_and_runtime_paths(self) -> None:
+        self.assertEqual(
+            validate_in_memory_package_reference_closure(
+                [],
+                "SKILL.md",
+                label="fixture",
+            ),
+            ["fixture file map must be an object"],
+        )
+
+        errors = validate_in_memory_package_reference_closure(
+            {
+                "SKILL.md": "entry\n",
+                "references/../outside.md": "outside\n",
+            },
+            "../SKILL.md",
+            label="fixture",
+        )
+        self.assertTrue(
+            any("file path escapes package root" in error for error in errors),
+            errors,
+        )
+        self.assertTrue(
+            any("runtime entry path is unsafe" in error for error in errors),
+            errors,
+        )
+
+    def test_on_disk_validator_rejects_repository_escape_before_read(self) -> None:
+        with tempfile.TemporaryDirectory() as temp_dir:
+            base = Path(temp_dir)
+            root = base / "repo"
+            outside = base / "outside"
+            root.mkdir()
+            outside.mkdir()
+            (outside / "SKILL.md").write_text("outside\n", encoding="utf-8")
+            manifest = self._fixture_manifest(["SKILL.md"])
+            realization = manifest["skills"][0]["locale_realizations"]["ja-JP"]
+            realization["package_source"]["root"] = "../outside"
+            realization["runtime_entry"] = "../outside/SKILL.md"
+
+            errors = validate_package_reference_closure(root, manifest)
+            self.assertTrue(
+                any("package root is unsafe" in error for error in errors),
+                errors,
+            )
+
+    def test_package_file_path_cannot_escape_declared_package_root(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            package = root / "skill"
+            package.mkdir()
+            (package / "SKILL.md").write_text("entry\n", encoding="utf-8")
+            manifest = self._fixture_manifest(["SKILL.md", "../outside.md"])
+            errors = validate_package_reference_closure(root, manifest)
+            self.assertTrue(
+                any("package file path escapes package root" in error for error in errors),
+                errors,
+            )
+
     def test_current_explicit_package_references_are_closed(self) -> None:
         self.assertEqual(validate_package_reference_closure(ROOT, self.manifest), [])
 
