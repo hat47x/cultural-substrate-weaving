@@ -126,6 +126,28 @@ class ResearchSkillEntryTransformTests(unittest.TestCase):
         fields, _ = split_skill_frontmatter(rendered)
         self.assertEqual(dict(fields)["name"], "renamed-affinity")
 
+    def test_entry_renderer_rejects_unsafe_target_name_and_flag(self) -> None:
+        source = AFFINITY_EN.read_text(encoding="utf-8")
+        for target_name in ("", "../escape", "bad/name", " bad", None):
+            with self.subTest(target_name=target_name):
+                with self.assertRaisesRegex(ValueError, "target_name is unsafe"):
+                    render_explicit_skill_entry(
+                        source,
+                        target_name=target_name,
+                        explicit_invocation=False,
+                    )
+
+        with self.assertRaisesRegex(ValueError, "explicit_invocation must be a boolean"):
+            render_explicit_skill_entry(
+                source,
+                target_name="affinity-synthesis",
+                explicit_invocation=1,
+            )
+
+    def test_frontmatter_parser_rejects_non_string_input(self) -> None:
+        with self.assertRaisesRegex(ValueError, "Skill entry text must be a string"):
+            split_skill_frontmatter([])
+
     def test_scalar_frontmatter_parser_fails_closed(self) -> None:
         with self.assertRaisesRegex(ValueError, "must declare description"):
             render_explicit_skill_entry(
