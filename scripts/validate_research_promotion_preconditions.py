@@ -7,6 +7,10 @@ import json
 import sys
 from pathlib import Path
 
+from validate_research_production_suite_descriptor import (
+    validate_production_suite_descriptor,
+)
+
 ROOT = Path(__file__).resolve().parents[1]
 DESCRIPTOR_PATH = (
     ROOT
@@ -35,7 +39,11 @@ REQUIRED_PRECONDITIONS = frozenset(
 
 
 def validate_promotion_preconditions(descriptor: dict) -> list[str]:
+    if not isinstance(descriptor, dict):
+        return ["production promotion descriptor must be an object"]
+
     errors: list[str] = []
+    errors.extend(validate_production_suite_descriptor(descriptor))
     values = descriptor.get("promotion_preconditions")
     if not isinstance(values, list) or not values:
         return ["promotion_preconditions must be a non-empty list"]
