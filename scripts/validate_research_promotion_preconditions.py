@@ -46,7 +46,7 @@ def validate_promotion_preconditions(descriptor: dict) -> list[str]:
     errors.extend(validate_production_suite_descriptor(descriptor))
     values = descriptor.get("promotion_preconditions")
     if not isinstance(values, list) or not values:
-        return ["promotion_preconditions must be a non-empty list"]
+        return errors + ["promotion_preconditions must be a non-empty list"]
     if not all(isinstance(value, str) and value.strip() for value in values):
         errors.append("promotion_preconditions must contain only non-empty strings")
         return errors
