@@ -47,6 +47,44 @@ class ResearchProductionPlanConsistencyTests(unittest.TestCase):
             f"expected error containing {fragment!r}; got {errors!r}",
         )
 
+    def test_validator_rejects_non_object_authority_roots_without_crashing(self) -> None:
+        self.assertEqual(
+            validate_production_plan_consistency([], self.contract, self.documents),
+            ["production promotion descriptor must be an object"],
+        )
+        self.assertEqual(
+            validate_production_plan_consistency(self.descriptor, [], self.documents),
+            ["production builder contract must be an object"],
+        )
+        self.assertEqual(
+            validate_production_plan_consistency(self.descriptor, self.contract, []),
+            ["production consistency documents must be an object"],
+        )
+
+    def test_validator_composes_full_descriptor_authority(self) -> None:
+        descriptor = copy.deepcopy(self.descriptor)
+        descriptor["status"] = "promotion-ready"
+        self.assert_has_error(
+            "production promotion descriptor must remain status=design-only",
+            descriptor=descriptor,
+        )
+
+    def test_validator_composes_full_builder_contract_authority(self) -> None:
+        contract = copy.deepcopy(self.contract)
+        contract["production_promotion_authorized"] = True
+        self.assert_has_error(
+            "builder contract must not authorize production promotion",
+            contract=contract,
+        )
+
+    def test_malformed_invariant_list_does_not_crash_comparison(self) -> None:
+        contract = copy.deepcopy(self.contract)
+        contract["invariants"].append({"text": "invalid"})
+        self.assert_has_error(
+            "builder contract invariants must be a string list",
+            contract=contract,
+        )
+
     def test_current_plans_match_machine_readable_contracts(self) -> None:
         self.assertEqual(
             validate_production_plan_consistency(

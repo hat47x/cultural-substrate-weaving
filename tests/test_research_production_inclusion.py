@@ -54,6 +54,23 @@ class ResearchProductionInclusionTests(unittest.TestCase):
             f"expected error containing {fragment!r}; got {errors!r}",
         )
 
+    def validate_with_production_manifest(
+        self,
+        plan: dict,
+        production_manifest: dict,
+    ) -> list[str]:
+        real_load = production_inclusion._load
+
+        def load(path: Path) -> dict:
+            if path == SUITE_PATH:
+                return self.suite
+            if path == ROOT / "src" / "manifest.json":
+                return production_manifest
+            return real_load(path)
+
+        with patch.object(production_inclusion, "_load", side_effect=load):
+            return validate_production_inclusion(ROOT, plan)
+
     def skill(self, suite: dict, skill_id: str) -> dict:
         return next(skill for skill in suite["skills"] if skill["id"] == skill_id)
 
@@ -99,8 +116,93 @@ class ResearchProductionInclusionTests(unittest.TestCase):
             "production manifest must remain inside repository",
         )
 
+    def test_plan_skill_entry_must_be_an_object(self) -> None:
+        plan = copy.deepcopy(self.plan)
+        plan["skills"]["affinity-synthesis"] = []
+        self.assert_has_error(
+            plan,
+            "production inclusion entry must be an object",
+        )
+
+    def test_locale_state_keys_must_be_non_empty_strings(self) -> None:
+        plan = copy.deepcopy(self.plan)
+        plan["skills"]["affinity-synthesis"]["locales"][1] = "candidate"
+        self.assert_has_error(
+            plan,
+            "locale state keys must be non-empty strings",
+        )
+
+    def test_production_manifest_locales_must_be_an_object(self) -> None:
+        errors = self.validate_with_production_manifest(
+            self.plan,
+            {
+                "name": "cultural-substrate-weaving",
+                "locales": [],
+                "router": "ROUTER.md",
+            },
+        )
+        self.assertTrue(
+            any("production manifest locales must be an object" in error for error in errors),
+            errors,
+        )
+
+    def test_production_manifest_locale_keys_must_be_strings(self) -> None:
+        errors = self.validate_with_production_manifest(
+            self.plan,
+            {
+                "name": "cultural-substrate-weaving",
+                "locales": {1: {}},
+                "router": "ROUTER.md",
+            },
+        )
+        self.assertTrue(
+            any(
+                "production manifest locale keys must be non-empty strings" in error
+                for error in errors
+            ),
+            errors,
+        )
+
+    def test_production_router_cannot_escape_locale_root(self) -> None:
+        errors = self.validate_with_production_manifest(
+            self.plan,
+            {
+                "name": "cultural-substrate-weaving",
+                "locales": {"ja-JP": {}, "en-US": {}},
+                "router": "../outside.md",
+            },
+        )
+        self.assertTrue(
+            any("production router must remain inside locale root" in error for error in errors),
+            errors,
+        )
+
     def test_current_inclusion_plan_is_consistent(self) -> None:
         self.assertEqual(validate_production_inclusion(ROOT, self.plan), [])
+
+    def test_nested_inclusion_entry_shape_is_explicitly_rejected(self) -> None:
+        plan = copy.deepcopy(self.plan)
+        plan["skills"]["affinity-synthesis"] = []
+        self.assert_has_error(
+            plan,
+            "skill affinity-synthesis: production inclusion entry must be an object",
+        )
+
+    def test_locale_state_mapping_shape_is_explicitly_rejected(self) -> None:
+        plan = copy.deepcopy(self.plan)
+        plan["skills"]["affinity-synthesis"]["locales"] = None
+        self.assert_has_error(
+            plan,
+            "skill affinity-synthesis: locale states must be an object",
+        )
+
+        plan = copy.deepcopy(self.plan)
+        locales = plan["skills"]["affinity-synthesis"]["locales"]
+        locales[1] = locales.pop("ja-JP")
+        self.assert_has_error(
+            plan,
+            "skill affinity-synthesis: locale state keys must be non-empty strings",
+        )
 
     def test_research_candidate_cannot_claim_production_source(self) -> None:
         plan = copy.deepcopy(self.plan)
