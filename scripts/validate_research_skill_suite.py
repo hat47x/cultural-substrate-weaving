@@ -728,7 +728,7 @@ def main() -> int:
     try:
         manifest = load_manifest()
         errors = validate_suite(ROOT, manifest)
-    except (OSError, json.JSONDecodeError) as exc:
+    except (OSError, json.JSONDecodeError, ValueError) as exc:
         print(f"research skill suite validation failed: {exc}", file=sys.stderr)
         return 1
     if errors:
