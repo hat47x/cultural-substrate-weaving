@@ -19,6 +19,21 @@ def _safe_relative(value: object) -> bool:
     return not path.is_absolute() and ".." not in path.parts
 
 
+def _locale_file(root: Path, locale: str, relative: object) -> Path | None:
+    if not _safe_relative(relative):
+        return None
+    repository = root.resolve()
+    locale_root = (root / "src" / locale).resolve()
+    path = (locale_root / str(relative)).resolve()
+    if (
+        not locale_root.is_relative_to(repository)
+        or not path.is_relative_to(locale_root)
+        or not path.is_file()
+    ):
+        return None
+    return path
+
+
 def _git_blob_sha(path: Path) -> str:
     data = path.read_bytes()
     header = f"blob {len(data)}\0".encode("ascii")
@@ -26,6 +41,9 @@ def _git_blob_sha(path: Path) -> str:
 
 
 def validate_review_snapshot(root: Path, status: dict) -> list[str]:
+    if not isinstance(status, dict):
+        return ["translation review snapshot status must be an object"]
+
     errors: list[str] = []
     scope = status.get("scope_files")
     blobs = status.get("reviewed_source_blobs")
@@ -46,9 +64,9 @@ def validate_review_snapshot(root: Path, status: dict) -> list[str]:
         if not isinstance(expected, str) or len(expected) != 40 or any(ch not in "0123456789abcdef" for ch in expected):
             errors.append(f"invalid reviewed source blob SHA: {relative}")
             continue
-        source = root / "src" / "ja-JP" / relative
-        if not source.is_file():
-            errors.append(f"reviewed Japanese source missing: src/ja-JP/{relative}")
+        source = _locale_file(root, "ja-JP", relative)
+        if source is None:
+            errors.append(f"reviewed Japanese source missing or unsafe: src/ja-JP/{relative}")
             continue
         current = _git_blob_sha(source)
         if current != expected:
@@ -67,7 +85,9 @@ def validate_review_snapshot(root: Path, status: dict) -> list[str]:
 def main() -> int:
     try:
         status = json.loads(STATUS_PATH.read_text(encoding="utf-8"))
-    except (OSError, json.JSONDecodeError) as exc:
+        if not isinstance(status, dict):
+            raise ValueError("translation review snapshot status must contain a JSON object")
+    except (OSError, json.JSONDecodeError, ValueError) as exc:
         print(f"research translation review snapshot validation failed: {exc}", file=sys.stderr)
         return 1
     errors = validate_review_snapshot(ROOT, status)
