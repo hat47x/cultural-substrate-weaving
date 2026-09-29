@@ -314,9 +314,22 @@ def status_payload(data: dict[str, Any]) -> dict[str, Any]:
                 memberships[str(member)] += 1
 
     card_ids = [str(card.get("id")) for card in cards if card.get("id")]
+    source_statuses = Counter(
+        str(item.get("input_status", "")).strip() or "(unspecified)"
+        for item in objects(data, "sources")
+    )
+    card_statuses = Counter(
+        str(item.get("input_status", "")).strip() or "(unspecified)"
+        for item in cards
+    )
+
     return {
         "format": data.get("format"),
         "version": data.get("version"),
+        "input_status_counts": {
+            "sources": dict(sorted(source_statuses.items())),
+            "cards": dict(sorted(card_statuses.items())),
+        },
         "counts": {
             key: len(objects(data, section))
             for key, (section, _prefix) in SECTIONS.items()
@@ -373,6 +386,16 @@ def cmd_status(args: argparse.Namespace) -> None:
     print("singleton-groups:", ", ".join(payload["singleton_groups"]) or "-")
     print("residuals:", ", ".join(payload["residual_refs"]) or "-")
     print("questions:", ", ".join(payload["question_refs"]) or "-")
+    source_status = payload["input_status_counts"]["sources"]
+    card_status = payload["input_status_counts"]["cards"]
+    print(
+        "source-status:",
+        ", ".join(f"{key}={value}" for key, value in source_status.items()) or "-",
+    )
+    print(
+        "card-status:",
+        ", ".join(f"{key}={value}" for key, value in card_status.items()) or "-",
+    )
     print(f"validation: errors={len(errors)} warnings={len(warnings)}")
 
 
