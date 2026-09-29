@@ -72,11 +72,34 @@ def _status(root: Path) -> str:
 
 
 def _descriptor(root: Path) -> dict:
-    return json.loads((root / DESCRIPTOR_PATH.relative_to(ROOT)).read_text(encoding="utf-8"))
+    value = json.loads(
+        (root / DESCRIPTOR_PATH.relative_to(ROOT)).read_text(encoding="utf-8")
+    )
+    if not isinstance(value, dict):
+        raise ValueError("production promotion descriptor must contain a JSON object")
+    return value
 
 
 def _valid_sha(value: str) -> bool:
     return len(value) == 40 and all(ch in "0123456789abcdef" for ch in value)
+
+
+def _candidate_output_path(root: Path, current_head: str) -> Path:
+    if not _valid_sha(current_head):
+        raise ValueError("candidate output requires a valid 40-character lowercase HEAD")
+    repository = root.resolve()
+    canonical_dir = repository / ".tmp" / "research-complete-checkout"
+    resolved_dir = (root / ".tmp" / "research-complete-checkout").resolve()
+    if resolved_dir != canonical_dir or not resolved_dir.is_relative_to(repository):
+        raise ValueError(
+            "candidate output directory must remain canonical inside repository"
+        )
+    output = (
+        resolved_dir / f"P4-COMPLETE-CHECKOUT-PASS-{current_head[:12]}.md"
+    ).resolve()
+    if output.parent != resolved_dir or not output.is_relative_to(repository):
+        raise ValueError("candidate output path must remain inside canonical directory")
+    return output
 
 
 def candidate_record(execution_commit: str) -> str:
@@ -135,6 +158,9 @@ def validate_candidate_recording_head(record: str, current_head: str) -> list[st
 
 
 def validate_preconditions(root: Path, descriptor: dict, *, head: str, status: str) -> list[str]:
+    if not isinstance(descriptor, dict):
+        return ["production promotion descriptor must be an object"]
+
     errors: list[str] = []
     if not _valid_sha(head):
         errors.append("current HEAD is not a 40-character lowercase commit SHA")
@@ -172,7 +198,7 @@ def execute_gate(
         validation_commit = head_reader(root)
         initial_status = status_reader(root)
         descriptor_value = descriptor if descriptor is not None else _descriptor(root)
-    except (OSError, subprocess.CalledProcessError, json.JSONDecodeError) as exc:
+    except (OSError, subprocess.CalledProcessError, json.JSONDecodeError, ValueError) as exc:
         return 2, None, [f"complete-checkout preflight failed: {exc}"]
 
     errors = validate_preconditions(
@@ -233,10 +259,15 @@ def main() -> int:
             print(f"FAIL candidate recording: {error}")
         return 2
 
-    OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
-    output = OUTPUT_DIR / f"P4-COMPLETE-CHECKOUT-PASS-{current_head[:12]}.md"
-    output.write_text(record, encoding="utf-8")
-    print(f"Candidate record written to {output.relative_to(ROOT)}")
+    try:
+        output = _candidate_output_path(ROOT, current_head)
+        output.parent.mkdir(parents=True, exist_ok=True)
+        output = _candidate_output_path(ROOT, current_head)
+        output.write_text(record, encoding="utf-8")
+    except (OSError, ValueError) as exc:
+        print(f"FAIL candidate recording: unsafe output path: {exc}")
+        return 2
+    print(f"Candidate record written to {output.relative_to(ROOT.resolve())}")
     print("No descriptor or tracked execution evidence was modified.")
     return 0
 
