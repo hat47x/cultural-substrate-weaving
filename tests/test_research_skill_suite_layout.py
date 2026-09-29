@@ -22,6 +22,38 @@ class ResearchSkillSuiteLayoutTests(unittest.TestCase):
     def skill(self, manifest: dict, skill_id: str) -> dict:
         return next(skill for skill in manifest["skills"] if skill["id"] == skill_id)
 
+    def test_planner_rejects_malformed_top_level_collections(self) -> None:
+        cases = (
+            ([], "research skill suite must be an object"),
+            ({"skills": None, "locales": {}, "distribution_prototypes": {}}, "skills must be a list"),
+            ({"skills": [], "locales": None, "distribution_prototypes": {}}, "locales must be an object"),
+            ({"skills": [], "locales": {}, "distribution_prototypes": None}, "distribution_prototypes must be an object"),
+        )
+        for manifest, expected in cases:
+            with self.subTest(expected=expected):
+                with self.assertRaisesRegex(ValueError, expected):
+                    plan_suite(manifest)
+
+    def test_malformed_realization_map_is_blocked_not_crashed(self) -> None:
+        manifest = copy.deepcopy(self.manifest)
+        self.skill(manifest, "affinity-synthesis")["locale_realizations"] = None
+        plan = plan_suite(manifest)
+        en = plan["locales"]["en-US"]["distributions"]
+        affinity = next(
+            item
+            for item in en["openai_skill"]["items"]
+            if item["skill_id"] == "affinity-synthesis"
+        )
+        self.assertEqual(affinity["state"], "blocked")
+        self.assertEqual(affinity["status"], "invalid-realization-map")
+        self.assertEqual(en["claude_plugin"]["state"], "blocked")
+
+    def test_malformed_locale_bundle_contains_is_rejected_explicitly(self) -> None:
+        manifest = copy.deepcopy(self.manifest)
+        manifest["distribution_prototypes"]["claude_plugin"]["contains"] = None
+        with self.assertRaisesRegex(ValueError, "contains must be a list"):
+            plan_suite(manifest)
+
     def test_current_artifact_layout_is_buildable_in_both_locales(self) -> None:
         plan = plan_suite(self.manifest)
         expected_names = {"cultural-substrate-weaving": "weave", "affinity-synthesis": "affinity-synthesis", "iterative-inquiry-synthesis": "iterative-inquiry-synthesis"}

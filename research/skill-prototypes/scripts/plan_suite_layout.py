@@ -22,7 +22,12 @@ PLAN_SCHEMA = "csw.research-skill-suite-layout-plan/v1"
 def _realization(skill: dict | None, locale: str) -> dict:
     if skill is None:
         return {"status": "unknown-skill", "realized": False, "runtime_entry": None, "package_source": None, "package_targets": None}
-    realization = skill.get("locale_realizations", {}).get(locale, {})
+    realizations = skill.get("locale_realizations")
+    if not isinstance(realizations, dict):
+        return {"status": "invalid-realization-map", "realized": False, "runtime_entry": None, "package_source": None, "package_targets": None}
+    realization = realizations.get(locale)
+    if not isinstance(realization, dict):
+        return {"status": "missing-realization", "realized": False, "runtime_entry": None, "package_source": None, "package_targets": None}
     status = realization.get("status")
     runtime_entry = realization.get("runtime_entry")
     package_source = realization.get("package_source")
@@ -55,15 +60,30 @@ def _aggregate_state(realized_count: int, target_count: int) -> str:
 
 
 def plan_suite(manifest: dict) -> dict:
-    skills = manifest.get("skills", [])
+    if not isinstance(manifest, dict):
+        raise ValueError("research skill suite must be an object")
+    skills = manifest.get("skills")
+    if not isinstance(skills, list):
+        raise ValueError("research skill suite skills must be a list")
+    locales = manifest.get("locales")
+    if not isinstance(locales, dict):
+        raise ValueError("research skill suite locales must be an object")
+    distribution_prototypes = manifest.get("distribution_prototypes")
+    if not isinstance(distribution_prototypes, dict):
+        raise ValueError("research skill suite distribution_prototypes must be an object")
+
     skills_by_id = {skill.get("id"): skill for skill in skills if isinstance(skill, dict) and isinstance(skill.get("id"), str)}
     skill_order = [skill.get("id") for skill in skills if isinstance(skill, dict) and isinstance(skill.get("id"), str)]
     plan = {"schema": PLAN_SCHEMA, "suite_id": manifest.get("suite_id"), "note": "Buildability reflects declared research locale realizations, package-source descriptors, and distribution target names only; it is not promotion or release readiness.", "locales": {}}
-    for locale, locale_config in manifest.get("locales", {}).items():
+    for locale, locale_config in locales.items():
+        if not isinstance(locale, str) or not locale:
+            raise ValueError("research skill suite locale keys must be non-empty strings")
         availability = {skill_id: _realization(skills_by_id.get(skill_id), locale) for skill_id in skill_order}
         distributions: dict[str, dict] = {}
-        for distribution_name, config in manifest.get("distribution_prototypes", {}).items():
-            mode = config.get("mode")
+        for distribution_name, config in distribution_prototypes.items():
+            if not isinstance(distribution_name, str) or not distribution_name:
+                raise ValueError("research skill suite distribution keys must be non-empty strings")
+            mode = config.get("mode") if isinstance(config, dict) else None
             if mode == "standalone_per_skill":
                 items = []
                 buildable_count = 0
@@ -78,6 +98,10 @@ def plan_suite(manifest: dict) -> dict:
                 continue
             if mode == "locale_bundle":
                 target_skills = config.get("contains", [])
+                if not isinstance(target_skills, list):
+                    raise ValueError(
+                        f"locale_bundle distribution contains must be a list: {distribution_name}"
+                    )
                 missing_skills = []
                 realized_skills = []
                 target_skill_names: dict[str, str] = {}
