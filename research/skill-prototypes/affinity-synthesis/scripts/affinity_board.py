@@ -142,6 +142,7 @@ def cmd_add_source(args: argparse.Namespace) -> None:
         for key, value in (
             ("provenance", args.provenance),
             ("discovery_route", args.discovery_route),
+            ("input_status", args.status),
             ("independence_note", args.independence_note),
         ):
             if value:
@@ -401,6 +402,7 @@ def build_parser() -> argparse.ArgumentParser:
     source.add_argument("--ref", required=True)
     source.add_argument("--provenance")
     source.add_argument("--discovery-route")
+    source.add_argument("--status")
     source.add_argument("--independence-note")
     source.set_defaults(func=cmd_add_source)
 
