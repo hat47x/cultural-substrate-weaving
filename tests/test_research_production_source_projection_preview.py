@@ -136,6 +136,51 @@ class ResearchProductionSourceProjectionPreviewTests(unittest.TestCase):
             errors,
         )
 
+    def test_projected_validator_rejects_malformed_entries_without_crashing(self) -> None:
+        projected = copy.deepcopy(self.projected)
+        projected["synthetic-invalid-entry"] = []
+        errors = validate_projected_contents(projected, self.plan)
+        self.assertTrue(
+            any("projected production entry must be an object" in error for error in errors),
+            errors,
+        )
+
+        projected = copy.deepcopy(self.projected)
+        target = next(iter(projected))
+        projected[target]["content"] = []
+        errors = validate_projected_contents(projected, self.plan)
+        self.assertTrue(
+            any("projected production content must be a string" in error for error in errors),
+            errors,
+        )
+
+        projected = copy.deepcopy(self.projected)
+        target = next(iter(projected))
+        projected[target]["target_relative"] = {"path": "SKILL.md"}
+        errors = validate_projected_contents(projected, self.plan)
+        self.assertTrue(
+            any(
+                "projected production target_relative must be a non-empty string"
+                in error
+                for error in errors
+            ),
+            errors,
+        )
+
+    def test_projected_validator_rejects_malformed_plan_locale_shape_without_crashing(self) -> None:
+        plan = copy.deepcopy(self.plan)
+        skill = next(
+            item
+            for item in plan["skills"]
+            if item.get("state") == "planned-locale-tree-promotion"
+        )
+        skill["locales"] = None
+        errors = validate_projected_contents(self.projected, plan)
+        self.assertTrue(
+            any("planned production Skill locales must be an object" in error for error in errors),
+            errors,
+        )
+
     def test_layer1_frontmatter_changes_but_display_title_remains_affinity_synthesis(self) -> None:
         ja = self.projected["src/skills/material-led-synthesis/ja-JP/SKILL.md"]["content"]
         en = self.projected["src/skills/material-led-synthesis/en-US/SKILL.md"]["content"]
