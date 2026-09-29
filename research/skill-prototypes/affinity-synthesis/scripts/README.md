@@ -25,6 +25,69 @@ Checks include:
 
 Warnings are deliberately separate from errors because some questionable states require human/material judgment rather than automatic rejection.
 
+## `edit_map.py`
+
+Applies **explicit incremental edits** to an existing `affinity-map`. It is a card/map maintenance helper, not an automatic clustering or naming engine.
+
+Typical operations:
+
+```bash
+# Add a newly observed source and card without assigning a group yet.
+python scripts/edit_map.py map.json --in-place add-source \
+  --id S03 --ref "follow-up interview"
+
+python scripts/edit_map.py map.json --in-place add-card \
+  --id C014 \
+  --text "追加材料の意味を、既存の束へ急いで吸収しない" \
+  --source-ref S03
+
+# Change only the card's primary membership.
+python scripts/edit_map.py map.json --in-place move-card \
+  --card C014 --to G03
+
+# Preserve a secondary resonance without duplicating membership/support.
+python scripts/edit_map.py map.json --in-place add-resonance \
+  --id X04 --from C014 --to G01 \
+  --note "主配置はG03だが、G01の成立条件にも響く"
+
+# Keep a possible missing relation as a question first.
+python scripts/edit_map.py map.json --in-place add-question \
+  --id Q05 \
+  --text "G01とG03の間に時間差を介した接続があるか" \
+  --arises-from G01 --arises-from G03 \
+  --candidate-relation-between G01 G03
+
+# Only after a return-check, explicitly promote that question to a relation.
+python scripts/edit_map.py map.json --in-place promote-question \
+  --question Q05 --relation-id R07 \
+  --direction directed \
+  --predicate "G01で生じた遅れがG03の選択余地を狭める" \
+  --basis C002 --basis C014 --state supported
+```
+
+Supported edits in the first slice:
+
+- `add-source`
+- `add-card`
+- `add-group`
+- `move-card`
+- `add-resonance`
+- `add-question`
+- `promote-question`
+
+Every operation works on a copy, runs `validate_map.validate()`, and writes only if no semantic error remains. `--in-place` uses an atomic file replacement; `-o/--output` can be used to preserve the previous map as a checkpoint.
+
+### Editor non-goals
+
+- It does not infer affinity groups.
+- It does not generate labels from card text.
+- It does not move a card merely because another group looks similar.
+- It does not convert spatial proximity or resonance into an explicit relation.
+- It does not promote a questionable relation automatically.
+- It does not treat secondary resonance as another primary membership or another independent supporting observation.
+
+The tool exists to make externally inspectable thinking operations reproducible. The human/agent still owns the semantic judgment that justifies each edit.
+
 ## `render_mermaid.py`
 
 Reference renderer for topology-oriented projections.
