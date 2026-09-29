@@ -113,28 +113,54 @@ def _prepare_openai_metadata(
     locale: str,
     profile: str | None,
 ) -> list[dict]:
+    if not isinstance(suite, dict):
+        raise ValueError("research skill suite must be an object")
+    skills = suite.get("skills")
+    if not isinstance(skills, list):
+        raise ValueError("research skill suite skills must be a list")
+
     profiles = _openai_profile_names(metadata)
     if profile not in profiles:
         raise ValueError(
             "openai_skill host materialization requires profile declared in adapter metadata"
         )
 
-    declared = metadata["distributions"]["openai_skill"]["skills"]
+    distributions = metadata.get("distributions")
+    assert isinstance(distributions, dict)
+    openai = distributions.get("openai_skill")
+    if not isinstance(openai, dict):
+        raise ValueError("adapter metadata plan must declare openai_skill")
+    declared = openai.get("skills")
+    if not isinstance(declared, dict):
+        raise ValueError("OpenAI adapter metadata plan must declare a skills object")
+
     mappings: list[dict] = []
-    for skill in suite.get("skills", []):
+    for skill in skills:
         if not isinstance(skill, dict):
             continue
         skill_id = skill.get("id")
-        if not isinstance(skill_id, str):
+        if not isinstance(skill_id, str) or not skill_id:
             continue
-        realization = skill.get("locale_realizations", {}).get(locale)
+        realizations = skill.get("locale_realizations")
+        if not isinstance(realizations, dict):
+            raise ValueError(f"OpenAI locale realizations are missing for {skill_id}")
+        realization = realizations.get(locale)
         if not isinstance(realization, dict) or realization.get("status") == "planned":
             raise ValueError(f"OpenAI runtime is not materializable for {skill_id}/{locale}")
-        target = realization.get("package_targets", {}).get("openai_skill")
+        package_targets = realization.get("package_targets")
+        if not isinstance(package_targets, dict):
+            raise ValueError(f"OpenAI package targets are missing for {skill_id}/{locale}")
+        target = package_targets.get("openai_skill")
         if not isinstance(target, dict) or not isinstance(target.get("skill_name"), str):
             raise ValueError(f"OpenAI package target is missing for {skill_id}/{locale}")
 
-        entry = declared.get(skill_id, {}).get(locale, {}).get(profile)
+        skill_metadata = declared.get(skill_id)
+        if not isinstance(skill_metadata, dict):
+            raise ValueError(f"OpenAI metadata declaration is missing for {skill_id}")
+        locale_metadata = skill_metadata.get(locale)
+        if not isinstance(locale_metadata, dict):
+            raise ValueError(f"OpenAI metadata declaration is missing for {skill_id}/{locale}")
+        entry = locale_metadata.get(profile)
         if not isinstance(entry, dict):
             raise ValueError(f"OpenAI metadata declaration is missing for {skill_id}/{locale}/{profile}")
         status = entry.get("status")
@@ -169,8 +195,26 @@ def _load_bundle_metadata(
     distribution_name: str,
     locale: str,
 ) -> tuple[dict, str]:
-    config = metadata["distributions"][distribution_name]
-    locale_entry = config["locales"][locale]
+    if not isinstance(metadata, dict):
+        raise ValueError("adapter metadata plan must be an object")
+    distributions = metadata.get("distributions")
+    if not isinstance(distributions, dict):
+        raise ValueError("adapter metadata plan must declare distributions")
+    config = distributions.get(distribution_name)
+    if not isinstance(config, dict):
+        raise ValueError(
+            f"adapter metadata plan must declare distribution: {distribution_name}"
+        )
+    locales = config.get("locales")
+    if not isinstance(locales, dict):
+        raise ValueError(
+            f"bundle metadata locales must be an object: {distribution_name}"
+        )
+    locale_entry = locales.get(locale)
+    if not isinstance(locale_entry, dict):
+        raise ValueError(
+            f"bundle metadata locale entry is missing: {distribution_name}/{locale}"
+        )
     status = locale_entry.get("status")
     if status not in READY_BUNDLE_METADATA:
         raise ValueError(f"bundle metadata is not host-materializable: {status!r}")
