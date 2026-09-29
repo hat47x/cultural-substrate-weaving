@@ -67,6 +67,15 @@ def _project_adapter_metadata(skill: dict) -> dict:
 
 
 def project_production_suite_manifest(descriptor: dict) -> dict:
+    if not isinstance(descriptor, dict):
+        raise ValueError("production promotion descriptor must be an object")
+    errors = validate_production_suite_descriptor(descriptor)
+    if errors:
+        raise ValueError(
+            "production suite descriptor authority validation failed: "
+            f"{errors[0]}"
+        )
+
     public_ids = [skill["proposed_installable_name"] for skill in descriptor["skills"]]
     skills = []
     for skill in descriptor["skills"]:
@@ -119,6 +128,15 @@ def _walk(value):
 
 
 def validate_projected_production_suite(manifest: dict, descriptor: dict) -> list[str]:
+    if not isinstance(manifest, dict):
+        return ["projected production suite must be an object"]
+    if not isinstance(descriptor, dict):
+        return ["production promotion descriptor must be an object"]
+
+    descriptor_errors = validate_production_suite_descriptor(descriptor)
+    if descriptor_errors:
+        return descriptor_errors
+
     errors: list[str] = []
     if manifest.get("schema") != PLAN_SCHEMA:
         errors.append(f"projected production suite schema must be {PLAN_SCHEMA}")
@@ -137,9 +155,20 @@ def validate_projected_production_suite(manifest: dict, descriptor: dict) -> lis
         return errors
 
     expected_ids = [
-        skill["proposed_installable_name"] for skill in descriptor.get("skills", [])
+        skill["proposed_installable_name"] for skill in descriptor["skills"]
     ]
-    actual_ids = [skill.get("id") for skill in skills if isinstance(skill, dict)]
+    actual_ids: list[str] = []
+    for index, skill in enumerate(skills):
+        if not isinstance(skill, dict):
+            errors.append("projected production Skill entries must be objects")
+            continue
+        skill_id = skill.get("id")
+        if not isinstance(skill_id, str) or not skill_id:
+            errors.append(
+                f"projected production Skill id must be a non-empty string: index={index}"
+            )
+            continue
+        actual_ids.append(skill_id)
     if actual_ids != expected_ids:
         errors.append("projected production Skill ids must use descriptor public installable names in order")
     if len(actual_ids) != len(set(actual_ids)):
@@ -152,9 +181,10 @@ def validate_projected_production_suite(manifest: dict, descriptor: dict) -> lis
     }
     for skill in skills:
         if not isinstance(skill, dict):
-            errors.append("projected production Skill entries must be objects")
             continue
         public_id = skill.get("id")
+        if not isinstance(public_id, str) or not public_id:
+            continue
         source_skill = descriptor_by_public_id.get(public_id)
         if source_skill is None:
             errors.append(f"projected production Skill has no descriptor source: {public_id}")
@@ -188,25 +218,37 @@ def validate_projected_production_suite(manifest: dict, descriptor: dict) -> lis
                     )
 
     distributions = manifest.get("distributions")
-    if not isinstance(distributions, dict) or set(distributions) != {
+    expected_distributions = {
         "openai_skill",
         "claude_plugin",
         "codex_plugin",
-    }:
+    }
+    if not isinstance(distributions, dict) or set(distributions) != expected_distributions:
         errors.append("projected production distributions must contain only the first-wave Skill-tree distributions")
     else:
+        valid_distributions: dict[str, dict] = {}
         for distribution in ("openai_skill", "claude_plugin", "codex_plugin"):
             item = distributions[distribution]
+            if not isinstance(item, dict):
+                errors.append(
+                    f"projected {distribution} distribution entry must be an object"
+                )
+                continue
+            valid_distributions[distribution] = item
             if item.get("contains") != expected_ids:
                 errors.append(f"projected {distribution} composition must contain all public Skill ids")
-        if distributions["openai_skill"].get("mode") != "standalone_per_skill":
+        openai = valid_distributions.get("openai_skill")
+        claude = valid_distributions.get("claude_plugin")
+        codex = valid_distributions.get("codex_plugin")
+        if isinstance(openai, dict) and openai.get("mode") != "standalone_per_skill":
             errors.append("projected OpenAI distribution mode must be standalone_per_skill")
-        if distributions["claude_plugin"].get("mode") != "locale_bundle":
+        if isinstance(claude, dict) and claude.get("mode") != "locale_bundle":
             errors.append("projected Claude distribution mode must be locale_bundle")
-        if distributions["codex_plugin"].get("mode") != "reuse_claude_skill_tree":
-            errors.append("projected Codex distribution mode must reuse the Claude Skill tree")
-        if distributions["codex_plugin"].get("shared_skill_tree_distribution") != "claude_plugin":
-            errors.append("projected Codex distribution must point to claude_plugin as its shared Skill tree")
+        if isinstance(codex, dict):
+            if codex.get("mode") != "reuse_claude_skill_tree":
+                errors.append("projected Codex distribution mode must reuse the Claude Skill tree")
+            if codex.get("shared_skill_tree_distribution") != "claude_plugin":
+                errors.append("projected Codex distribution must point to claude_plugin as its shared Skill tree")
 
     if manifest.get("bundle_identity") != descriptor.get("bundle_identity"):
         errors.append("projected production bundle_identity must match the promotion descriptor")
