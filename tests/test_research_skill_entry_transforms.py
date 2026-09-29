@@ -32,6 +32,10 @@ class ResearchSkillEntryTransformTests(unittest.TestCase):
             for entry in plan["locales"][locale]["distributions"][distribution]["entries"]
         }
 
+    def test_planner_rejects_invalid_suite_authority_without_crashing(self) -> None:
+        with self.assertRaisesRegex(ValueError, "research skill suite must be an object"):
+            plan_skill_entry_transforms([], ROOT)
+
     def test_bilingual_entry_transform_policies_are_explicit(self) -> None:
         plan = plan_skill_entry_transforms(self.manifest, ROOT)
         for locale in ("ja-JP", "en-US"):
