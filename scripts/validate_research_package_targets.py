@@ -185,7 +185,7 @@ def main() -> int:
         from validate_research_skill_suite import validate_suite
         errors = validate_suite(ROOT, manifest)
         errors.extend(validate_package_targets(manifest))
-    except (OSError, json.JSONDecodeError) as exc:
+    except (OSError, json.JSONDecodeError, ValueError) as exc:
         print(f"research package target validation failed: {exc}", file=sys.stderr)
         return 1
     if errors:
