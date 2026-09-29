@@ -14,6 +14,7 @@ if str(SCRIPTS_DIR) not in sys.path:
     sys.path.insert(0, str(SCRIPTS_DIR))
 
 from validate_research_english_review_gate import (  # noqa: E402
+    _existing_file,
     validate_english_review_gate,
 )
 
@@ -69,6 +70,26 @@ class ResearchEnglishReviewGateTests(unittest.TestCase):
                 target = root / relative
                 target.parent.mkdir(parents=True, exist_ok=True)
                 shutil.copy2(source, target)
+
+    def test_validator_rejects_non_object_descriptor_without_crashing(self) -> None:
+        self.assertEqual(
+            validate_english_review_gate(ROOT, []),
+            ["production promotion descriptor must be an object"],
+        )
+
+    def test_existing_file_rejects_symlink_escape(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            base = Path(tmp)
+            root = base / "repo"
+            root.mkdir()
+            outside = base / "outside.md"
+            outside.write_text("outside\n", encoding="utf-8")
+            link = root / "review.md"
+            try:
+                link.symlink_to(outside)
+            except OSError as exc:
+                self.skipTest(f"symlink unavailable: {exc}")
+            self.assertIsNone(_existing_file(root, "review.md"))
 
     def test_current_gate_is_valid_and_pending(self) -> None:
         self.assertEqual(validate_english_review_gate(ROOT, self.descriptor), [])
