@@ -26,7 +26,7 @@ ADAPTER_PLAN_PATH = BASE / "adapter-metadata-plan.json"
 
 
 def _safe_repo_relative(value: object) -> bool:
-    if not isinstance(value, str) or not value or "\\" in value:
+    if not isinstance(value, str) or not value or "\\" in value or "\x00" in value:
         return False
     path = PurePosixPath(value)
     return not path.is_absolute() and ".." not in path.parts
@@ -34,6 +34,8 @@ def _safe_repo_relative(value: object) -> bool:
 
 def renamed_skill_ids(descriptor: dict) -> dict[str, str]:
     mapping: dict[str, str] = {}
+    if not isinstance(descriptor, dict):
+        return mapping
     skills = descriptor.get("skills")
     if not isinstance(skills, list):
         return mapping
@@ -73,9 +75,10 @@ def _read_text(root: Path, relative: object, label: str, errors: list[str]) -> s
     if not _safe_repo_relative(relative):
         errors.append(f"unsafe or missing adapter metadata source for {label}: {relative!r}")
         return None
-    path = root / str(relative)
-    if not path.is_file():
-        errors.append(f"adapter metadata source is missing for {label}: {relative}")
+    repository = root.resolve()
+    path = (root / str(relative)).resolve()
+    if not path.is_relative_to(repository) or not path.is_file():
+        errors.append(f"adapter metadata source is missing or unsafe for {label}: {relative}")
         return None
     try:
         return path.read_text(encoding="utf-8")
@@ -89,12 +92,22 @@ def validate_adapter_public_identity(
     descriptor: dict,
     adapter_plan: dict,
 ) -> list[str]:
+    if not isinstance(descriptor, dict):
+        return ["production promotion descriptor must be an object"]
+    if not isinstance(adapter_plan, dict):
+        return ["adapter metadata plan must be an object"]
+    if not isinstance(descriptor.get("skills"), list):
+        return ["production promotion descriptor skills must be a list"]
+
     errors: list[str] = []
+    distributions = adapter_plan.get("distributions")
+    if not isinstance(distributions, dict):
+        return ["adapter metadata plan distributions must be an object"]
+
     renamed_ids = renamed_skill_ids(descriptor)
     if not renamed_ids:
         return errors
 
-    distributions = adapter_plan.get("distributions")
     if not isinstance(distributions, dict):
         return ["adapter metadata plan distributions must be an object"]
 
@@ -164,7 +177,11 @@ def main() -> int:
     try:
         descriptor = json.loads(DESCRIPTOR_PATH.read_text(encoding="utf-8"))
         adapter_plan = json.loads(ADAPTER_PLAN_PATH.read_text(encoding="utf-8"))
-    except (OSError, json.JSONDecodeError) as exc:
+        if not isinstance(descriptor, dict):
+            raise ValueError("production promotion descriptor must contain a JSON object")
+        if not isinstance(adapter_plan, dict):
+            raise ValueError("adapter metadata plan must contain a JSON object")
+    except (OSError, json.JSONDecodeError, ValueError) as exc:
         print(f"research adapter public-identity validation failed: {exc}", file=sys.stderr)
         return 1
 
