@@ -12,6 +12,8 @@ if str(PLANNER_DIR) not in sys.path:
     sys.path.insert(0, str(PLANNER_DIR))
 
 from materialize_claude_codex_plugin_core import (  # noqa: E402
+    _load_json,
+    _plugin_root,
     materialize_claude_codex_plugin_core,
 )
 
@@ -40,6 +42,25 @@ class ResearchClaudeCodexPluginCoreTests(unittest.TestCase):
         )
         plugin_root = output / result["plugin_name"]
         return output, plugin_root, result, temp
+
+    def test_plugin_root_rejects_unsafe_bundle_name(self) -> None:
+        with tempfile.TemporaryDirectory() as temp_dir:
+            output = Path(temp_dir).resolve()
+            self.assertEqual(
+                _plugin_root(output, {"plugin_name": "cultural-substrate-weaving"}),
+                output / "cultural-substrate-weaving",
+            )
+            for plugin_name in ("", "../escape", "/tmp/escape", "bad\\name", None):
+                with self.subTest(plugin_name=plugin_name):
+                    with self.assertRaisesRegex(ValueError, "unsafe materialization target"):
+                        _plugin_root(output, {"plugin_name": plugin_name})
+
+    def test_plugin_core_json_loader_requires_object_root(self) -> None:
+        with tempfile.TemporaryDirectory() as temp_dir:
+            path = Path(temp_dir) / "array.json"
+            path.write_text("[]\n", encoding="utf-8")
+            with self.assertRaisesRegex(ValueError, "must contain a JSON object"):
+                _load_json(path)
 
     def test_ja_materializes_one_shared_three_skill_plugin_core(self) -> None:
         _, plugin_root, result, temp = self.materialize()
