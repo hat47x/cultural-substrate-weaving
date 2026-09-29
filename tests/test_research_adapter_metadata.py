@@ -398,6 +398,40 @@ class ResearchAdapterMetadataTests(unittest.TestCase):
         self.assertIn("handoffs", en_description)
         self.assertIn("universal procedure", en_description)
 
+    def test_planner_rejects_invalid_authority_roots_without_crashing(self) -> None:
+        with self.assertRaisesRegex(ValueError, "research skill suite must be an object"):
+            plan_adapter_metadata([], self.metadata, ROOT)
+
+        with self.assertRaisesRegex(
+            ValueError,
+            "research adapter metadata plan must be an object",
+        ):
+            plan_adapter_metadata(self.suite, [], ROOT)
+
+    def test_planner_composes_adapter_metadata_authority_validation(self) -> None:
+        metadata = copy.deepcopy(self.metadata)
+        entry = metadata["distributions"]["openai_skill"]["skills"][
+            "affinity-synthesis"
+        ]["ja-JP"]["interactive"]
+        entry["status"] = "planned"
+        with self.assertRaisesRegex(
+            ValueError,
+            "research adapter metadata authority validation failed",
+        ):
+            plan_adapter_metadata(self.suite, metadata, ROOT)
+
+    def test_planner_composes_suite_package_target_validation(self) -> None:
+        suite = copy.deepcopy(self.suite)
+        skill = next(
+            item for item in suite["skills"] if item["id"] == "affinity-synthesis"
+        )
+        skill["locale_realizations"]["ja-JP"]["package_targets"].pop("openai_skill")
+        with self.assertRaisesRegex(
+            ValueError,
+            "research adapter metadata authority validation failed",
+        ):
+            plan_adapter_metadata(suite, self.metadata, ROOT)
+
     def test_openai_coverage_is_prototype_for_realized_in_both_locales(self) -> None:
         plan = plan_adapter_metadata(self.suite, self.metadata, ROOT)
         for locale in ("ja-JP", "en-US"):
