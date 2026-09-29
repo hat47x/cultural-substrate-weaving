@@ -35,6 +35,20 @@ class ResearchPromotionPreconditionTests(unittest.TestCase):
             f"expected error containing {fragment!r}; got {errors!r}",
         )
 
+    def test_validator_rejects_non_object_descriptor_without_crashing(self) -> None:
+        self.assertEqual(
+            validate_promotion_preconditions([]),
+            ["production promotion descriptor must be an object"],
+        )
+
+    def test_validator_composes_full_descriptor_authority(self) -> None:
+        descriptor = copy.deepcopy(self.descriptor)
+        descriptor["status"] = "promotion-ready"
+        self.assert_has_error(
+            descriptor,
+            "production promotion descriptor must remain status=design-only",
+        )
+
     def test_current_promotion_preconditions_are_valid(self) -> None:
         self.assertEqual(validate_promotion_preconditions(self.descriptor), [])
 
