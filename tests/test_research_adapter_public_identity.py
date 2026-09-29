@@ -5,6 +5,7 @@ import sys
 import tempfile
 import unittest
 from pathlib import Path
+from unittest.mock import patch
 
 ROOT = Path(__file__).resolve().parents[1]
 SCRIPTS_DIR = ROOT / "scripts"
@@ -12,6 +13,8 @@ if str(SCRIPTS_DIR) not in sys.path:
     sys.path.insert(0, str(SCRIPTS_DIR))
 
 from validate_research_adapter_public_identity import (  # noqa: E402
+    _read_text,
+    main as adapter_public_identity_main,
     renamed_skill_ids,
     validate_adapter_public_identity,
     validate_host_visible_text,
@@ -26,6 +29,92 @@ class ResearchAdapterPublicIdentityTests(unittest.TestCase):
     def setUp(self) -> None:
         self.descriptor = json.loads(DESCRIPTOR_PATH.read_text(encoding="utf-8"))
         self.adapter_plan = json.loads(ADAPTER_PLAN_PATH.read_text(encoding="utf-8"))
+
+    def test_validator_rejects_non_object_authority_roots_without_crashing(self) -> None:
+        self.assertEqual(
+            validate_adapter_public_identity(ROOT, [], self.adapter_plan),
+            ["production promotion descriptor must be an object"],
+        )
+        self.assertEqual(
+            validate_adapter_public_identity(ROOT, self.descriptor, []),
+            ["adapter metadata plan must be an object"],
+        )
+
+        descriptor = {"skills": None}
+        self.assertEqual(
+            validate_adapter_public_identity(ROOT, descriptor, self.adapter_plan),
+            ["production promotion descriptor skills must be a list"],
+        )
+
+    def test_read_text_rejects_symlink_escape(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            base = Path(tmp)
+            root = base / "repo"
+            root.mkdir()
+            outside = base / "outside.yaml"
+            outside.write_text("interface: {}\n", encoding="utf-8")
+            link = root / "openai.yaml"
+            try:
+                link.symlink_to(outside)
+            except OSError as exc:
+                self.skipTest(f"symlink unavailable: {exc}")
+            errors: list[str] = []
+            self.assertIsNone(_read_text(root, "openai.yaml", "fixture", errors))
+            self.assertTrue(
+                any("missing or unsafe" in error for error in errors),
+                errors,
+            )
+
+    def test_validator_rejects_host_visible_source_symlink_escape(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            base = Path(tmp)
+            root = base / "repo"
+            root.mkdir()
+            outside = base / "outside.yaml"
+            outside.write_text(
+                'interface:\n  default_prompt: "Invoke affinity-synthesis."\n',
+                encoding="utf-8",
+            )
+            link = root / "openai.yaml"
+            try:
+                link.symlink_to(outside)
+            except OSError as exc:
+                self.skipTest(f"symlink unavailable: {exc}")
+
+            descriptor = {
+                "skills": [
+                    {
+                        "research_id": "affinity-synthesis",
+                        "proposed_installable_name": "material-led-synthesis",
+                    }
+                ]
+            }
+            adapter_plan = {
+                "distributions": {
+                    "openai_skill": {
+                        "skills": {
+                            "affinity-synthesis": {
+                                "ja-JP": {
+                                    "interactive": {"source": "openai.yaml"}
+                                }
+                            }
+                        }
+                    },
+                    "claude_plugin": {"locales": {}},
+                }
+            }
+            errors = validate_adapter_public_identity(root, descriptor, adapter_plan)
+            self.assertTrue(
+                any("missing or unsafe" in error for error in errors),
+                errors,
+            )
+
+    def test_cli_catches_non_object_json_root(self) -> None:
+        with patch(
+            "validate_research_adapter_public_identity.json.loads",
+            side_effect=[[], self.adapter_plan],
+        ):
+            self.assertEqual(adapter_public_identity_main(), 1)
 
     def test_current_host_visible_metadata_has_no_renamed_research_id_leak(self) -> None:
         self.assertEqual(
