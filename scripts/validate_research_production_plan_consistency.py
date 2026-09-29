@@ -12,6 +12,13 @@ import json
 import sys
 from pathlib import Path
 
+from validate_research_production_builder_contract import (
+    validate_production_builder_contract,
+)
+from validate_research_production_suite_descriptor import (
+    validate_production_suite_descriptor,
+)
+
 ROOT = Path(__file__).resolve().parents[1]
 BASE = ROOT / "research" / "skill-prototypes"
 DESCRIPTOR_PATH = BASE / "P4-PRODUCTION-SUITE-DESCRIPTOR-PROTOTYPE.json"
@@ -74,7 +81,16 @@ def validate_production_plan_consistency(
     contract: dict,
     documents: dict[str, str],
 ) -> list[str]:
+    if not isinstance(descriptor, dict):
+        return ["production promotion descriptor must be an object"]
+    if not isinstance(contract, dict):
+        return ["production builder contract must be an object"]
+    if not isinstance(documents, dict):
+        return ["production consistency documents must be an object"]
+
     errors: list[str] = []
+    errors.extend(validate_production_suite_descriptor(descriptor))
+    errors.extend(validate_production_builder_contract(ROOT, contract, descriptor))
 
     operations = contract.get("source_mode_operations")
     if not isinstance(operations, dict) or operations.get("locale_tree") != (
@@ -90,7 +106,11 @@ def validate_production_plan_consistency(
         errors.append("builder contract must keep locale_tree source package-purity validation enabled")
 
     invariants = contract.get("invariants")
-    joined_invariants = "\n".join(invariants) if isinstance(invariants, list) else ""
+    joined_invariants = (
+        "\n".join(item for item in invariants if isinstance(item, str))
+        if isinstance(invariants, list)
+        else ""
+    )
     for marker in (
         "each locale-tree source root is package-closed",
         "without a research-only exclusion filter",
