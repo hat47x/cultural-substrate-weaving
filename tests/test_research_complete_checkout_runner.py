@@ -103,6 +103,34 @@ class ResearchCompleteCheckoutRunnerTests(unittest.TestCase):
         )
         self.assertTrue(any("valid execution commit" in error for error in errors), errors)
 
+    def test_preconditions_reject_non_object_descriptor_without_crashing(self) -> None:
+        self.assertEqual(
+            validate_preconditions(ROOT, [], head=HEAD, status=""),
+            ["production promotion descriptor must be an object"],
+        )
+
+    def test_execute_gate_rejects_non_object_descriptor_before_commands(self) -> None:
+        calls: list[tuple[str, ...]] = []
+
+        def run_command(_root: Path, argv) -> int:
+            calls.append(tuple(argv))
+            return 0
+
+        code, record, messages = execute_gate(
+            ROOT,
+            run_command=run_command,
+            head_reader=lambda _root: HEAD,
+            status_reader=lambda _root: "",
+            descriptor=[],
+        )
+        self.assertEqual(code, 2)
+        self.assertIsNone(record)
+        self.assertEqual(calls, [])
+        self.assertTrue(
+            any("production promotion descriptor must be an object" in message for message in messages),
+            messages,
+        )
+
     def test_clean_blocked_preconditions_are_accepted(self) -> None:
         self.assertEqual(
             validate_preconditions(ROOT, descriptor(), head=HEAD, status=""),

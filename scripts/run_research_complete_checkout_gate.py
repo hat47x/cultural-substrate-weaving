@@ -72,7 +72,12 @@ def _status(root: Path) -> str:
 
 
 def _descriptor(root: Path) -> dict:
-    return json.loads((root / DESCRIPTOR_PATH.relative_to(ROOT)).read_text(encoding="utf-8"))
+    value = json.loads(
+        (root / DESCRIPTOR_PATH.relative_to(ROOT)).read_text(encoding="utf-8")
+    )
+    if not isinstance(value, dict):
+        raise ValueError("production promotion descriptor must contain a JSON object")
+    return value
 
 
 def _valid_sha(value: str) -> bool:
@@ -135,6 +140,9 @@ def validate_candidate_recording_head(record: str, current_head: str) -> list[st
 
 
 def validate_preconditions(root: Path, descriptor: dict, *, head: str, status: str) -> list[str]:
+    if not isinstance(descriptor, dict):
+        return ["production promotion descriptor must be an object"]
+
     errors: list[str] = []
     if not _valid_sha(head):
         errors.append("current HEAD is not a 40-character lowercase commit SHA")
@@ -172,7 +180,7 @@ def execute_gate(
         validation_commit = head_reader(root)
         initial_status = status_reader(root)
         descriptor_value = descriptor if descriptor is not None else _descriptor(root)
-    except (OSError, subprocess.CalledProcessError, json.JSONDecodeError) as exc:
+    except (OSError, subprocess.CalledProcessError, json.JSONDecodeError, ValueError) as exc:
         return 2, None, [f"complete-checkout preflight failed: {exc}"]
 
     errors = validate_preconditions(
