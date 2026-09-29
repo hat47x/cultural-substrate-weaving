@@ -25,17 +25,38 @@ SIBLING_RESEARCH_IDS = {research_id for research_id, _ in EXPECTED_ASSETS}
 
 
 def _safe_repo_relative(value: object) -> bool:
-    if not isinstance(value, str) or not value or "\\" in value:
+    if not isinstance(value, str) or not value or "\\" in value or "\x00" in value:
         return False
     path = PurePosixPath(value)
     return not path.is_absolute() and ".." not in path.parts
 
 
-def _file(relative: object) -> Path | None:
+def _file(relative: object, *, root: Path = ROOT) -> Path | None:
     if not _safe_repo_relative(relative):
         return None
-    path = ROOT / str(relative)
-    return path if path.is_file() else None
+    repository = root.resolve()
+    path = (root / str(relative)).resolve()
+    if not path.is_relative_to(repository) or not path.is_file():
+        return None
+    return path
+
+
+def _package_file_set(skill: object) -> set[str]:
+    if not isinstance(skill, dict):
+        return set()
+    realizations = skill.get("locale_realizations")
+    if not isinstance(realizations, dict):
+        return set()
+    english = realizations.get("en-US")
+    if not isinstance(english, dict):
+        return set()
+    package_source = english.get("package_source")
+    if not isinstance(package_source, dict):
+        return set()
+    files = package_source.get("files")
+    if not isinstance(files, list):
+        return set()
+    return {item for item in files if isinstance(item, str)}
 
 
 def _packaged_non_markdown_paths(suite: dict, errors: list[str]) -> set[str]:
@@ -108,7 +129,17 @@ def _packaged_non_markdown_paths(suite: dict, errors: list[str]) -> set[str]:
     return packaged
 
 
-def validate_localization(contract: dict, suite: dict) -> list[str]:
+def validate_localization(
+    contract: dict,
+    suite: dict,
+    *,
+    root: Path = ROOT,
+) -> list[str]:
+    if not isinstance(contract, dict):
+        return ["technical localization contract must be an object"]
+    if not isinstance(suite, dict):
+        return ["research skill suite must be an object"]
+
     errors: list[str] = []
 
     if contract.get("schema") != EXPECTED_SCHEMA:
@@ -139,13 +170,13 @@ def validate_localization(contract: dict, suite: dict) -> list[str]:
         if status == "translated-draft":
             ja_relative = item.get("ja")
             en_relative = item.get("en")
-            ja = _file(ja_relative)
-            en = _file(en_relative)
+            ja = _file(ja_relative, root=root)
+            en = _file(en_relative, root=root)
             if ja is None:
                 errors.append(f"localized technical asset missing Japanese source: {ja_relative}")
             if en is None:
                 errors.append(f"localized technical asset missing English draft: {en_relative}")
-            if _safe_repo_relative(en_relative):
+            if en is not None:
                 covered_english_package_paths.add(str(en_relative))
             if item.get("english_runtime_reference") is not True:
                 errors.append(f"translated runtime technical asset must be runtime-referenced: {research_id}/{role}")
@@ -153,10 +184,10 @@ def validate_localization(contract: dict, suite: dict) -> list[str]:
                 errors.append(f"translated runtime technical asset must be package-required: {research_id}/{role}")
         elif status == "language-neutral-shared":
             shared_relative = item.get("shared")
-            shared = _file(shared_relative)
+            shared = _file(shared_relative, root=root)
             if shared is None:
                 errors.append(f"shared technical asset missing: {shared_relative}")
-            if _safe_repo_relative(shared_relative):
+            if shared is not None:
                 covered_english_package_paths.add(str(shared_relative))
             if item.get("english_package_required") is not True:
                 errors.append(f"shared runtime technical asset must be package-required: {research_id}/{role}")
@@ -176,15 +207,18 @@ def validate_localization(contract: dict, suite: dict) -> list[str]:
             f"{missing_technical_classification}"
         )
 
-    skill_by_id = {
-        skill.get("id"): skill
-        for skill in suite.get("skills", [])
-        if isinstance(skill, dict)
-    }
+    skills = suite.get("skills")
+    if isinstance(skills, list):
+        skill_by_id = {
+            skill.get("id"): skill
+            for skill in skills
+            if isinstance(skill, dict)
+        }
+    else:
+        skill_by_id = {}
 
     affinity = skill_by_id.get("affinity-synthesis", {})
-    affinity_en = affinity.get("locale_realizations", {}).get("en-US", {})
-    affinity_files = set(affinity_en.get("package_source", {}).get("files", []))
+    affinity_files = _package_file_set(affinity)
     for required in (
         "SKILL.en.md",
         "references/METHOD.en.md",
@@ -195,8 +229,7 @@ def validate_localization(contract: dict, suite: dict) -> list[str]:
             errors.append(f"affinity English package source missing localized runtime asset: {required}")
 
     iterative = skill_by_id.get("iterative-inquiry-synthesis", {})
-    iterative_en = iterative.get("locale_realizations", {}).get("en-US", {})
-    iterative_files = set(iterative_en.get("package_source", {}).get("files", []))
+    iterative_files = _package_file_set(iterative)
     for required in (
         "SKILL.en.md",
         "references/METHOD.en.md",
@@ -206,7 +239,8 @@ def validate_localization(contract: dict, suite: dict) -> list[str]:
             errors.append(f"iterative English package source missing localized runtime asset: {required}")
 
     affinity_runtime = _file(
-        "research/skill-prototypes/affinity-synthesis/SKILL.en.md"
+        "research/skill-prototypes/affinity-synthesis/SKILL.en.md",
+        root=root,
     )
     if affinity_runtime is not None:
         text = affinity_runtime.read_text(encoding="utf-8")
@@ -216,7 +250,8 @@ def validate_localization(contract: dict, suite: dict) -> list[str]:
             errors.append("affinity English runtime must not directly reference Japanese REPRESENTATION.md")
 
     iterative_runtime = _file(
-        "research/skill-prototypes/iterative-inquiry-synthesis/SKILL.en.md"
+        "research/skill-prototypes/iterative-inquiry-synthesis/SKILL.en.md",
+        root=root,
     )
     if iterative_runtime is not None:
         text = iterative_runtime.read_text(encoding="utf-8")
@@ -249,11 +284,15 @@ def main() -> int:
     try:
         contract = json.loads(CONTRACT_PATH.read_text(encoding="utf-8"))
         suite = json.loads(SUITE_MANIFEST_PATH.read_text(encoding="utf-8"))
-    except (OSError, json.JSONDecodeError) as exc:
+        if not isinstance(contract, dict):
+            raise ValueError("technical localization contract must contain a JSON object")
+        if not isinstance(suite, dict):
+            raise ValueError("research skill suite must contain a JSON object")
+    except (OSError, json.JSONDecodeError, ValueError) as exc:
         print(f"technical asset localization validation failed: {exc}", file=sys.stderr)
         return 1
 
-    errors = validate_localization(contract, suite)
+    errors = validate_localization(contract, suite, root=ROOT)
     if errors:
         for error in errors:
             print(f"ERROR: {error}", file=sys.stderr)
