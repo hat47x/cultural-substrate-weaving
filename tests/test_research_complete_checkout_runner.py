@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import sys
+import tempfile
 import unittest
 from pathlib import Path
 
@@ -11,6 +12,7 @@ if str(SCRIPTS_DIR) not in sys.path:
 
 from run_research_complete_checkout_gate import (  # noqa: E402
     COMMANDS,
+    _candidate_output_path,
     REQUIRED_GATE_COMMANDS,
     STATE_TRANSITION_LABEL,
     candidate_execution_commit,
@@ -35,6 +37,54 @@ def descriptor(status: str = "blocked-not-run") -> dict:
 
 
 class ResearchCompleteCheckoutRunnerTests(unittest.TestCase):
+    def test_candidate_output_path_stays_in_canonical_tmp_directory(self) -> None:
+        with tempfile.TemporaryDirectory() as temp_dir:
+            root = Path(temp_dir).resolve()
+            expected = (
+                root
+                / ".tmp"
+                / "research-complete-checkout"
+                / f"P4-COMPLETE-CHECKOUT-PASS-{HEAD[:12]}.md"
+            )
+            self.assertEqual(_candidate_output_path(root, HEAD), expected)
+
+    def test_candidate_output_path_rejects_symlink_escape(self) -> None:
+        with tempfile.TemporaryDirectory() as temp_dir:
+            base = Path(temp_dir)
+            root = base / "repo"
+            root.mkdir()
+            outside = base / "outside"
+            outside.mkdir()
+            link = root / ".tmp"
+            try:
+                link.symlink_to(outside, target_is_directory=True)
+            except OSError as exc:
+                self.skipTest(f"symlink unavailable: {exc}")
+            with self.assertRaisesRegex(
+                ValueError,
+                "candidate output directory must remain canonical",
+            ):
+                _candidate_output_path(root, HEAD)
+
+    def test_candidate_output_path_rejects_existing_file_symlink_escape(self) -> None:
+        with tempfile.TemporaryDirectory() as temp_dir:
+            base = Path(temp_dir)
+            root = base / "repo"
+            output_dir = root / ".tmp" / "research-complete-checkout"
+            output_dir.mkdir(parents=True)
+            outside = base / "outside.md"
+            outside.write_text("outside\n", encoding="utf-8")
+            output = output_dir / f"P4-COMPLETE-CHECKOUT-PASS-{HEAD[:12]}.md"
+            try:
+                output.symlink_to(outside)
+            except OSError as exc:
+                self.skipTest(f"symlink unavailable: {exc}")
+            with self.assertRaisesRegex(
+                ValueError,
+                "candidate output path must remain inside canonical directory",
+            ):
+                _candidate_output_path(root, HEAD)
+
     def test_candidate_record_contains_validator_markers_without_authorization(self) -> None:
         text = candidate_record(HEAD)
         for marker in (
