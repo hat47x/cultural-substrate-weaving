@@ -14,6 +14,7 @@ if str(PLANNER_DIR) not in sys.path:
     sys.path.insert(0, str(PLANNER_DIR))
 
 from materialize_host_package import (  # noqa: E402
+    _load_bundle_metadata,
     _openai_profile_names,
     _prepare_openai_metadata,
     materialize_host_package,
@@ -94,6 +95,62 @@ class ResearchHostPackageMaterializerTests(unittest.TestCase):
 
         with self.assertRaisesRegex(ValueError, "must declare distributions"):
             _openai_profile_names({})
+
+    def test_openai_metadata_helper_rejects_malformed_nested_authority(self) -> None:
+        suite = json.loads(SUITE_PATH.read_text(encoding="utf-8"))
+        metadata = json.loads(METADATA_PATH.read_text(encoding="utf-8"))
+
+        with self.assertRaisesRegex(ValueError, "research skill suite must be an object"):
+            _prepare_openai_metadata(
+                root=ROOT,
+                suite=[],
+                metadata=metadata,
+                locale="ja-JP",
+                profile="interactive",
+            )
+
+        malformed = copy.deepcopy(metadata)
+        malformed["distributions"]["openai_skill"]["skills"] = None
+        with self.assertRaisesRegex(ValueError, "must declare a skills object"):
+            _prepare_openai_metadata(
+                root=ROOT,
+                suite=suite,
+                metadata=malformed,
+                locale="ja-JP",
+                profile="interactive",
+            )
+
+        malformed_suite = copy.deepcopy(suite)
+        malformed_suite["skills"][0]["locale_realizations"] = None
+        with self.assertRaisesRegex(ValueError, "locale realizations are missing"):
+            _prepare_openai_metadata(
+                root=ROOT,
+                suite=malformed_suite,
+                metadata=metadata,
+                locale="ja-JP",
+                profile="interactive",
+            )
+
+    def test_bundle_metadata_helper_rejects_malformed_nested_authority(self) -> None:
+        metadata = json.loads(METADATA_PATH.read_text(encoding="utf-8"))
+
+        with self.assertRaisesRegex(ValueError, "adapter metadata plan must be an object"):
+            _load_bundle_metadata(
+                root=ROOT,
+                metadata=[],
+                distribution_name="claude_plugin",
+                locale="ja-JP",
+            )
+
+        malformed = copy.deepcopy(metadata)
+        malformed["distributions"]["claude_plugin"]["locales"] = None
+        with self.assertRaisesRegex(ValueError, "bundle metadata locales must be an object"):
+            _load_bundle_metadata(
+                root=ROOT,
+                metadata=malformed,
+                distribution_name="claude_plugin",
+                locale="ja-JP",
+            )
 
     def test_openai_profiles_follow_adapter_metadata_authority(self) -> None:
         suite = json.loads(SUITE_PATH.read_text(encoding="utf-8"))
