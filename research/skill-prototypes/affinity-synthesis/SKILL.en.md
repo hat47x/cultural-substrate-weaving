@@ -159,6 +159,43 @@ Useful views can include:
 
 Automatic layout must not create semantic assertions. If position itself matters, retain positional information separately from a topology-only renderer.
 
+### 11. Externalize a working board when the material grows
+
+When card count, group movement, residuals, or relation candidates become difficult to track reliably inside transient conversation context, externalize them into a machine-readable working board.
+
+This prototype includes `scripts/affinity_board.py`. It is **not an automatic classifier or synthesis engine**. It is a small tool for manipulating already-explicit thinking without erasing semantic identity.
+
+- Give cards, groups, residuals, questions, and relations stable IDs.
+- Move a card between groups while preserving the card ID and source provenance.
+- Keep secondary resonance separate from membership.
+- Keep a questionable connection as `Q` until an explicit return-to-source check justifies an `R`.
+- Surface ungrouped cards, multiple direct memberships, singleton groups, residuals, and questions so an overly tidy structure can be inspected again.
+- Do not let the tool infer group labels, relation predicates, importance, or truth. Those remain material-reading and source-return judgments.
+
+Minimal example:
+
+```bash
+python scripts/affinity_board.py init /tmp/board.json \
+  --question "What structure is emerging from the material?"
+
+python scripts/affinity_board.py add-source /tmp/board.json \
+  --ref "notes://001" \
+  --provenance "target-side notes" \
+  --status "target_supported"
+
+python scripts/affinity_board.py add-card /tmp/board.json \
+  "A meaning-bearing observation" \
+  --source S001
+
+python scripts/affinity_board.py add-group /tmp/board.json \
+  --label "A label that only emerges from the combined cards" \
+  --member C001
+
+python scripts/affinity_board.py status /tmp/board.json
+```
+
+The working board is an operational surface over the semantic record, not necessarily the final deliverable. Feed it to the `render_*.py` projections only when a diagram helps, and only after source-return checks have stabilized the relevant structure.
+
 ## Output contract
 
 Use the level of externalization the task needs. A complete research-grade output may include:

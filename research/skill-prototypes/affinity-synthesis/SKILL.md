@@ -185,6 +185,43 @@ Mermaidはtopology projectionに向く。自動layoutで元の空間配置が変
 
 rendering toolが使える場合は、syntaxだけでなく視覚的な誤読も確認する。図の見栄えのためにsemantic relationを追加・削除・強化しない。
 
+### 11. 材料が増えたらworking boardへ外在化する
+
+カード数やgroup移動、残差、relation候補が増え、会話内の一時的な並びだけでは同一性を追いにくくなったら、machine-readableなworking boardへ外在化してよい。
+
+このprototypeには `scripts/affinity_board.py` がある。これは**思考を代行する分類器ではなく、思考結果を壊さず操作するための道具**である。
+
+- card / group / residual / question / relationへstable IDを付ける。
+- cardをgroup間で移動してもcard IDとsource provenanceを維持する。
+- secondary resonanceをmembershipへ変換しない。
+- questionable connectionを`Q`のまま保持し、明示的なreturn-checkなしに`R`へ昇格させない。
+- ungrouped card、multiple direct membership、singleton group、residual、questionを一覧化し、綺麗に収まりすぎた構造を再点検する。
+- toolはgroup label、relation predicate、重要度、truthを推論しない。それらは材料を読み、元材料へ戻す作業の中で決める。
+
+最小例:
+
+```bash
+python scripts/affinity_board.py init /tmp/board.json \
+  --question "いま何が構造として立ち上がっているか"
+
+python scripts/affinity_board.py add-source /tmp/board.json \
+  --ref "notes://001" \
+  --provenance "target-side notes" \
+  --status "target_supported"
+
+python scripts/affinity_board.py add-card /tmp/board.json \
+  "観察された意味単位" \
+  --source S001
+
+python scripts/affinity_board.py add-group /tmp/board.json \
+  --label "複数カードを合わせて初めて立つ表札" \
+  --member C001
+
+python scripts/affinity_board.py status /tmp/board.json
+```
+
+working boardはsemantic recordの操作面であり、完成成果物そのものとは限らない。必要なときだけ`render_*.py`へ渡し、source-return check後の構造を図や叙述へ投影する。
+
 ## Output Contract
 
 成果物には、用途に応じて少なくとも次を追跡可能にする。

@@ -2,6 +2,50 @@
 
 These scripts operate on the research `affinity-map` interchange format. They are **representation helpers**, not a KJ engine. None of them may infer a new semantic relation merely to satisfy a renderer.
 
+## `affinity_board.py`
+
+Small working-board CLI for manipulating the research `affinity-map` without turning representation code into a synthesis engine.
+
+Typical flow:
+
+```bash
+python scripts/affinity_board.py init /tmp/board.json \
+  --question "What structure is emerging?"
+
+python scripts/affinity_board.py add-source /tmp/board.json \
+  --ref "notes://001" \
+  --provenance "target-side notes" \
+  --status "target_supported"
+
+python scripts/affinity_board.py add-card /tmp/board.json \
+  "Meaning-bearing card text" \
+  --source S001
+
+python scripts/affinity_board.py add-group /tmp/board.json \
+  --label "Integrated label" \
+  --member C001
+
+python scripts/affinity_board.py add-residual /tmp/board.json \
+  "Difference that should not be forced into the group" \
+  --ref C001
+
+python scripts/affinity_board.py status /tmp/board.json
+```
+
+Supported operations include explicit source/card/group creation, group membership edits, primary-card moves, secondary resonance, relations, residuals, questions, and board status.
+
+Design constraints:
+
+- every mutation is validated before replacing the file;
+- failed mutations leave the previous board unchanged;
+- IDs are stable references, not ontology classes;
+- `move-card` changes direct membership but preserves the card itself;
+- relation predicates and group labels are never inferred;
+- questionable connections can remain questions instead of being promoted to relations;
+- `status` surfaces ungrouped cards, multiple direct memberships, singleton groups, residuals, questions, and validation warnings.
+
+The CLI is useful when conversation context is no longer a reliable place to remember card identity and movement. For small cases, directly editing the JSON or using the Markdown template can remain simpler.
+
 ## `validate_map.py`
 
 Checks semantic cross-references that JSON Schema alone cannot express conveniently.

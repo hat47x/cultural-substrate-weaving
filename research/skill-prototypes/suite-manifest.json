@@ -5,7 +5,9 @@
   "repository_release_line": "0.5.x",
   "canonical_locale": "ja-JP",
   "locales": {
-    "ja-JP": {"status": "canonical"},
+    "ja-JP": {
+      "status": "canonical"
+    },
     "en-US": {
       "status": "translated-draft",
       "note": "Thin CSW runtime and English runtime/Method Definition drafts exist for both sibling prototypes. Directly referenced representation/round technical assets now also have English drafts. Independent review and research-only ancillary-material classification/localization remain promotion gates."
@@ -29,12 +31,28 @@
           "package_source": {
             "mode": "explicit_files",
             "root": "research/skill-prototypes/affinity-synthesis",
-            "files": ["SKILL.md", "references/METHOD.md", "references/REPRESENTATION.md", "references/TEMPLATE.md", "references/affinity-map.schema.json", "evals/CASES.md", "evidence/dossier.md"]
+            "files": [
+              "SKILL.md",
+              "references/METHOD.md",
+              "references/REPRESENTATION.md",
+              "references/TEMPLATE.md",
+              "references/affinity-map.schema.json",
+              "evals/CASES.md",
+              "evidence/dossier.md",
+              "scripts/affinity_board.py",
+              "scripts/validate_map.py"
+            ]
           },
           "package_targets": {
-            "openai_skill": {"skill_name": "affinity-synthesis"},
-            "claude_plugin": {"skill_name": "affinity-synthesis"},
-            "codex_plugin": {"skill_name": "affinity-synthesis"}
+            "openai_skill": {
+              "skill_name": "affinity-synthesis"
+            },
+            "claude_plugin": {
+              "skill_name": "affinity-synthesis"
+            },
+            "codex_plugin": {
+              "skill_name": "affinity-synthesis"
+            }
           }
         },
         "en-US": {
@@ -45,12 +63,25 @@
           "package_source": {
             "mode": "explicit_files",
             "root": "research/skill-prototypes/affinity-synthesis",
-            "files": ["SKILL.en.md", "references/METHOD.en.md", "references/REPRESENTATION.en.md", "references/affinity-map.schema.json"]
+            "files": [
+              "SKILL.en.md",
+              "references/METHOD.en.md",
+              "references/REPRESENTATION.en.md",
+              "references/affinity-map.schema.json",
+              "scripts/affinity_board.py",
+              "scripts/validate_map.py"
+            ]
           },
           "package_targets": {
-            "openai_skill": {"skill_name": "affinity-synthesis"},
-            "claude_plugin": {"skill_name": "affinity-synthesis"},
-            "codex_plugin": {"skill_name": "affinity-synthesis"}
+            "openai_skill": {
+              "skill_name": "affinity-synthesis"
+            },
+            "claude_plugin": {
+              "skill_name": "affinity-synthesis"
+            },
+            "codex_plugin": {
+              "skill_name": "affinity-synthesis"
+            }
           }
         }
       },
@@ -76,10 +107,17 @@
         "research/skill-prototypes/affinity-synthesis/evals/REPRESENTATION-DRY-RUN-2026-09-06.md",
         "research/skill-prototypes/affinity-synthesis/evals/REPRESENTATION-SCALE-114-2026-09-06.md"
       ],
-      "checks": ["research/skill-prototypes/affinity-synthesis/scripts/check_representation.py"],
+      "checks": [
+        "research/skill-prototypes/affinity-synthesis/scripts/check_representation.py"
+      ],
       "method_version": "0.1-research",
       "realization_version": "0.1-research-bilingual-draft",
-      "delegation": {"may_delegate_narrower_tasks_to": ["compatible-affinity-mapping-skill"], "does_not_require": []}
+      "delegation": {
+        "may_delegate_narrower_tasks_to": [
+          "compatible-affinity-mapping-skill"
+        ],
+        "does_not_require": []
+      }
     },
     {
       "id": "iterative-inquiry-synthesis",
@@ -95,11 +133,25 @@
           "status": "prototype",
           "runtime_entry": "research/skill-prototypes/iterative-inquiry-synthesis/SKILL.md",
           "method_definition": "research/skill-prototypes/iterative-inquiry-synthesis/references/METHOD.md",
-          "package_source": {"mode": "explicit_files", "root": "research/skill-prototypes/iterative-inquiry-synthesis", "files": ["SKILL.md", "references/METHOD.md", "references/ROUND-TEMPLATE.md"]},
+          "package_source": {
+            "mode": "explicit_files",
+            "root": "research/skill-prototypes/iterative-inquiry-synthesis",
+            "files": [
+              "SKILL.md",
+              "references/METHOD.md",
+              "references/ROUND-TEMPLATE.md"
+            ]
+          },
           "package_targets": {
-            "openai_skill": {"skill_name": "iterative-inquiry-synthesis"},
-            "claude_plugin": {"skill_name": "iterative-inquiry-synthesis"},
-            "codex_plugin": {"skill_name": "iterative-inquiry-synthesis"}
+            "openai_skill": {
+              "skill_name": "iterative-inquiry-synthesis"
+            },
+            "claude_plugin": {
+              "skill_name": "iterative-inquiry-synthesis"
+            },
+            "codex_plugin": {
+              "skill_name": "iterative-inquiry-synthesis"
+            }
           }
         },
         "en-US": {
@@ -107,11 +159,25 @@
           "human_review": "recommended",
           "runtime_entry": "research/skill-prototypes/iterative-inquiry-synthesis/SKILL.en.md",
           "method_definition": "research/skill-prototypes/iterative-inquiry-synthesis/references/METHOD.en.md",
-          "package_source": {"mode": "explicit_files", "root": "research/skill-prototypes/iterative-inquiry-synthesis", "files": ["SKILL.en.md", "references/METHOD.en.md", "references/ROUND-TEMPLATE.en.md"]},
+          "package_source": {
+            "mode": "explicit_files",
+            "root": "research/skill-prototypes/iterative-inquiry-synthesis",
+            "files": [
+              "SKILL.en.md",
+              "references/METHOD.en.md",
+              "references/ROUND-TEMPLATE.en.md"
+            ]
+          },
           "package_targets": {
-            "openai_skill": {"skill_name": "iterative-inquiry-synthesis"},
-            "claude_plugin": {"skill_name": "iterative-inquiry-synthesis"},
-            "codex_plugin": {"skill_name": "iterative-inquiry-synthesis"}
+            "openai_skill": {
+              "skill_name": "iterative-inquiry-synthesis"
+            },
+            "claude_plugin": {
+              "skill_name": "iterative-inquiry-synthesis"
+            },
+            "codex_plugin": {
+              "skill_name": "iterative-inquiry-synthesis"
+            }
           }
         }
       },
@@ -137,7 +203,12 @@
       ],
       "method_version": "0.1-research",
       "realization_version": "0.1-research-bilingual-draft",
-      "delegation": {"prefers_compatible_realization": ["affinity-synthesis"], "hard_dependency": false}
+      "delegation": {
+        "prefers_compatible_realization": [
+          "affinity-synthesis"
+        ],
+        "hard_dependency": false
+      }
     },
     {
       "id": "cultural-substrate-weaving",
@@ -153,11 +224,21 @@
           "status": "existing",
           "runtime_entry": "src/ja-JP/ROUTER.md",
           "method_definition": null,
-          "package_source": {"mode": "canonical_manifest", "manifest": "src/manifest.json", "locale_root": "src/ja-JP"},
+          "package_source": {
+            "mode": "canonical_manifest",
+            "manifest": "src/manifest.json",
+            "locale_root": "src/ja-JP"
+          },
           "package_targets": {
-            "openai_skill": {"skill_name": "cultural-substrate-weaving"},
-            "claude_plugin": {"skill_name": "weave"},
-            "codex_plugin": {"skill_name": "weave"}
+            "openai_skill": {
+              "skill_name": "cultural-substrate-weaving"
+            },
+            "claude_plugin": {
+              "skill_name": "weave"
+            },
+            "codex_plugin": {
+              "skill_name": "weave"
+            }
           }
         },
         "en-US": {
@@ -165,11 +246,21 @@
           "human_review": "recommended",
           "runtime_entry": "src/en-US/ROUTER.md",
           "method_definition": null,
-          "package_source": {"mode": "canonical_manifest", "manifest": "src/manifest.json", "locale_root": "src/en-US"},
+          "package_source": {
+            "mode": "canonical_manifest",
+            "manifest": "src/manifest.json",
+            "locale_root": "src/en-US"
+          },
           "package_targets": {
-            "openai_skill": {"skill_name": "cultural-substrate-weaving"},
-            "claude_plugin": {"skill_name": "weave"},
-            "codex_plugin": {"skill_name": "weave"}
+            "openai_skill": {
+              "skill_name": "cultural-substrate-weaving"
+            },
+            "claude_plugin": {
+              "skill_name": "weave"
+            },
+            "codex_plugin": {
+              "skill_name": "weave"
+            }
           }
         }
       },
@@ -180,7 +271,10 @@
       "method_version": "0.5-research-line",
       "realization_version": "0.5-thin-bilingual-research",
       "delegation": {
-        "prefers_compatible_realization": ["affinity-synthesis", "iterative-inquiry-synthesis"],
+        "prefers_compatible_realization": [
+          "affinity-synthesis",
+          "iterative-inquiry-synthesis"
+        ],
         "hard_dependency": false,
         "fallback_contract": [
           "do not promote framework-generated candidates to target-supported findings",
@@ -237,11 +331,50 @@
     "docs/ja/maintainers/csw-thin-synthesis-connection-contract.md"
   ],
   "distribution_prototypes": {
-    "openai_skill": {"mode": "standalone_per_skill", "implementation_status": "planned-production-generalization", "note": "All three locale realizations have package-source descriptors and explicit target names; the current production build remains single-skill."},
-    "claude_plugin": {"mode": "locale_bundle", "contains": ["cultural-substrate-weaving", "affinity-synthesis", "iterative-inquiry-synthesis"], "implementation_status": "planned-production-generalization", "note": "Package-source and target-name input is available in both locales, but the production builder has not yet been generalized to emit all three Skills."},
-    "codex_plugin": {"mode": "locale_bundle", "contains": ["cultural-substrate-weaving", "affinity-synthesis", "iterative-inquiry-synthesis"], "implementation_status": "planned-production-generalization", "note": "Package-source and target-name input is available in both locales, but the production builder has not yet been generalized to emit all three Skills."},
-    "chatgpt_gpt": {"mode": "composite_agent_realization", "primary": "cultural-substrate-weaving", "implementation_status": "planned-composite-refresh", "note": "Primary CSW realization and package-source descriptor exist; companion method-composition parity is not yet asserted by the production package."},
-    "microsoft_copilot": {"mode": "composite_agent_realization", "primary": "cultural-substrate-weaving", "implementation_status": "implemented-limited-composite-adapter", "embedded_subset_of": ["affinity-synthesis"], "does_not_claim": ["full affinity-synthesis representation / lineage", "full iterative-inquiry-synthesis round governance"], "note": "Self-contained Instructions embed a minimal compatible material-synthesis fallback because sibling Skill invocation cannot be assumed."}
+    "openai_skill": {
+      "mode": "standalone_per_skill",
+      "implementation_status": "planned-production-generalization",
+      "note": "All three locale realizations have package-source descriptors and explicit target names; the current production build remains single-skill."
+    },
+    "claude_plugin": {
+      "mode": "locale_bundle",
+      "contains": [
+        "cultural-substrate-weaving",
+        "affinity-synthesis",
+        "iterative-inquiry-synthesis"
+      ],
+      "implementation_status": "planned-production-generalization",
+      "note": "Package-source and target-name input is available in both locales, but the production builder has not yet been generalized to emit all three Skills."
+    },
+    "codex_plugin": {
+      "mode": "locale_bundle",
+      "contains": [
+        "cultural-substrate-weaving",
+        "affinity-synthesis",
+        "iterative-inquiry-synthesis"
+      ],
+      "implementation_status": "planned-production-generalization",
+      "note": "Package-source and target-name input is available in both locales, but the production builder has not yet been generalized to emit all three Skills."
+    },
+    "chatgpt_gpt": {
+      "mode": "composite_agent_realization",
+      "primary": "cultural-substrate-weaving",
+      "implementation_status": "planned-composite-refresh",
+      "note": "Primary CSW realization and package-source descriptor exist; companion method-composition parity is not yet asserted by the production package."
+    },
+    "microsoft_copilot": {
+      "mode": "composite_agent_realization",
+      "primary": "cultural-substrate-weaving",
+      "implementation_status": "implemented-limited-composite-adapter",
+      "embedded_subset_of": [
+        "affinity-synthesis"
+      ],
+      "does_not_claim": [
+        "full affinity-synthesis representation / lineage",
+        "full iterative-inquiry-synthesis round governance"
+      ],
+      "note": "Self-contained Instructions embed a minimal compatible material-synthesis fallback because sibling Skill invocation cannot be assumed."
+    }
   },
   "promotion_gates": [
     "research skill suite manifest, locale realizations, package-source descriptors, and package target names pass repository validation",
