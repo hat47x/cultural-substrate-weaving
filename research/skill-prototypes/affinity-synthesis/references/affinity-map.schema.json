@@ -3,15 +3,28 @@
   "$id": "https://example.invalid/affinity-map.schema.json",
   "title": "Affinity Synthesis Map",
   "type": "object",
-  "required": ["format", "version", "cards", "groups"],
+  "required": [
+    "format",
+    "version",
+    "cards",
+    "groups"
+  ],
   "properties": {
-    "format": {"const": "affinity-map"},
-    "version": {"type": "string"},
+    "format": {
+      "const": "affinity-map"
+    },
+    "version": {
+      "type": "string"
+    },
     "subject": {
       "type": "object",
       "properties": {
-        "question": {"type": "string"},
-        "scope": {"type": "string"}
+        "question": {
+          "type": "string"
+        },
+        "scope": {
+          "type": "string"
+        }
       },
       "additionalProperties": true
     },
@@ -19,13 +32,28 @@
       "type": "array",
       "items": {
         "type": "object",
-        "required": ["id"],
+        "required": [
+          "id"
+        ],
         "properties": {
-          "id": {"type": "string"},
-          "ref": {"type": "string"},
-          "provenance": {"type": "string"},
-          "discovery_route": {"type": "string"},
-          "independence_note": {"type": "string"}
+          "id": {
+            "type": "string"
+          },
+          "ref": {
+            "type": "string"
+          },
+          "provenance": {
+            "type": "string"
+          },
+          "discovery_route": {
+            "type": "string"
+          },
+          "independence_note": {
+            "type": "string"
+          },
+          "input_status": {
+            "type": "string"
+          }
         },
         "additionalProperties": true
       }
@@ -34,13 +62,35 @@
       "type": "array",
       "items": {
         "type": "object",
-        "required": ["id", "text"],
+        "required": [
+          "id",
+          "text"
+        ],
         "properties": {
-          "id": {"type": "string"},
-          "text": {"type": "string"},
-          "source_refs": {"type": "array", "items": {"type": "string"}},
-          "preservation_note": {"type": "string"},
-          "derivation_refs": {"type": "array", "items": {"type": "string"}}
+          "id": {
+            "type": "string"
+          },
+          "text": {
+            "type": "string"
+          },
+          "source_refs": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "preservation_note": {
+            "type": "string"
+          },
+          "derivation_refs": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "input_status": {
+            "type": "string"
+          }
         },
         "additionalProperties": true
       }
@@ -49,19 +99,54 @@
       "type": "array",
       "items": {
         "type": "object",
-        "required": ["id", "label", "members"],
+        "required": [
+          "id",
+          "label",
+          "members"
+        ],
         "properties": {
-          "id": {"type": "string"},
-          "label": {"type": "string"},
-          "display_label": {"type": "string"},
-          "members": {"type": "array", "items": {"type": "string"}},
-          "preserved_differences": {"type": "array", "items": {"type": "string"}},
+          "id": {
+            "type": "string"
+          },
+          "label": {
+            "type": "string"
+          },
+          "display_label": {
+            "type": "string"
+          },
+          "members": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "preserved_differences": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
           "transformation_audit": {
             "type": "object",
             "properties": {
-              "inherited": {"type": "array", "items": {"type": "string"}},
-              "emergent": {"type": "array", "items": {"type": "string"}},
-              "residual": {"type": "array", "items": {"type": "string"}}
+              "inherited": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "emergent": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "residual": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              }
             },
             "additionalProperties": true
           }
@@ -73,13 +158,28 @@
       "type": "array",
       "items": {
         "type": "object",
-        "required": ["id", "from", "to", "note"],
+        "required": [
+          "id",
+          "from",
+          "to",
+          "note"
+        ],
         "properties": {
-          "id": {"type": "string"},
-          "from": {"type": "string"},
-          "to": {"type": "string"},
-          "note": {"type": "string"},
-          "display_label": {"type": "string"}
+          "id": {
+            "type": "string"
+          },
+          "from": {
+            "type": "string"
+          },
+          "to": {
+            "type": "string"
+          },
+          "note": {
+            "type": "string"
+          },
+          "display_label": {
+            "type": "string"
+          }
         },
         "additionalProperties": true
       }
@@ -88,17 +188,49 @@
       "type": "array",
       "items": {
         "type": "object",
-        "required": ["id", "from", "to", "direction", "predicate"],
+        "required": [
+          "id",
+          "from",
+          "to",
+          "direction",
+          "predicate"
+        ],
         "properties": {
-          "id": {"type": "string"},
-          "from": {"type": "string"},
-          "to": {"type": "string"},
-          "direction": {"type": "string", "enum": ["directed", "reciprocal", "unspecified"]},
-          "predicate": {"type": "string"},
-          "display_label": {"type": "string"},
-          "state": {"type": "string"},
-          "basis": {"type": "array", "items": {"type": "string"}},
-          "note": {"type": "string"}
+          "id": {
+            "type": "string"
+          },
+          "from": {
+            "type": "string"
+          },
+          "to": {
+            "type": "string"
+          },
+          "direction": {
+            "type": "string",
+            "enum": [
+              "directed",
+              "reciprocal",
+              "unspecified"
+            ]
+          },
+          "predicate": {
+            "type": "string"
+          },
+          "display_label": {
+            "type": "string"
+          },
+          "state": {
+            "type": "string"
+          },
+          "basis": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "note": {
+            "type": "string"
+          }
         },
         "additionalProperties": true
       }
@@ -107,19 +239,50 @@
       "type": "array",
       "items": {
         "type": "object",
-        "required": ["id", "text"],
+        "required": [
+          "id",
+          "text"
+        ],
         "properties": {
-          "id": {"type": "string"},
-          "text": {"type": "string"},
-          "display_label": {"type": "string"},
-          "basis": {"type": "array", "items": {"type": "string"}},
-          "state": {"type": "string"},
+          "id": {
+            "type": "string"
+          },
+          "text": {
+            "type": "string"
+          },
+          "display_label": {
+            "type": "string"
+          },
+          "basis": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "state": {
+            "type": "string"
+          },
           "transformation_audit": {
             "type": "object",
             "properties": {
-              "inherited": {"type": "array", "items": {"type": "string"}},
-              "emergent": {"type": "array", "items": {"type": "string"}},
-              "residual": {"type": "array", "items": {"type": "string"}}
+              "inherited": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "emergent": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "residual": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              }
             },
             "additionalProperties": true
           }
@@ -131,12 +294,26 @@
       "type": "array",
       "items": {
         "type": "object",
-        "required": ["id", "text"],
+        "required": [
+          "id",
+          "text"
+        ],
         "properties": {
-          "id": {"type": "string"},
-          "text": {"type": "string"},
-          "refs": {"type": "array", "items": {"type": "string"}},
-          "handling": {"type": "string"}
+          "id": {
+            "type": "string"
+          },
+          "text": {
+            "type": "string"
+          },
+          "refs": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "handling": {
+            "type": "string"
+          }
         },
         "additionalProperties": true
       }
@@ -145,22 +322,47 @@
       "type": "array",
       "items": {
         "type": "object",
-        "required": ["id", "text"],
+        "required": [
+          "id",
+          "text"
+        ],
         "properties": {
-          "id": {"type": "string"},
-          "text": {"type": "string"},
-          "arises_from": {"type": "array", "items": {"type": "string"}},
+          "id": {
+            "type": "string"
+          },
+          "text": {
+            "type": "string"
+          },
+          "arises_from": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
           "candidate_relation_between": {
             "type": "array",
-            "items": {"type": "string"},
+            "items": {
+              "type": "string"
+            },
             "minItems": 2,
             "maxItems": 2,
             "uniqueItems": true
           },
-          "would_clarify_refs": {"type": "array", "items": {"type": "string"}},
-          "handling": {"type": "string"},
-          "state": {"type": "string"},
-          "display_label": {"type": "string"}
+          "would_clarify_refs": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "handling": {
+            "type": "string"
+          },
+          "state": {
+            "type": "string"
+          },
+          "display_label": {
+            "type": "string"
+          }
         },
         "additionalProperties": true
       }
@@ -168,38 +370,85 @@
     "handoff": {
       "type": "object",
       "properties": {
-        "semantic_refs": {"type": "array", "items": {"type": "string"}, "uniqueItems": true},
-        "residual_refs": {"type": "array", "items": {"type": "string"}, "uniqueItems": true},
-        "source_refs_to_preserve": {"type": "array", "items": {"type": "string"}, "uniqueItems": true},
+        "semantic_refs": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "uniqueItems": true
+        },
+        "residual_refs": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "uniqueItems": true
+        },
+        "source_refs_to_preserve": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "uniqueItems": true
+        },
         "next_check_candidates": {
           "type": "array",
           "items": {
             "type": "object",
-            "required": ["text"],
+            "required": [
+              "text"
+            ],
             "properties": {
-              "text": {"type": "string"},
-              "refs": {"type": "array", "items": {"type": "string"}},
-              "status": {"type": "string"}
+              "text": {
+                "type": "string"
+              },
+              "refs": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "status": {
+                "type": "string"
+              }
             },
             "additionalProperties": true
           }
         },
-        "do_not_assume": {"type": "array", "items": {"type": "string"}}
+        "do_not_assume": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
       },
       "additionalProperties": true
     },
     "layout": {
       "type": "object",
       "properties": {
-        "projection": {"type": "string"},
+        "projection": {
+          "type": "string"
+        },
         "positions": {
           "type": "object",
           "additionalProperties": {
             "type": "object",
-            "required": ["x", "y"],
+            "required": [
+              "x",
+              "y"
+            ],
             "properties": {
-              "x": {"type": "number", "minimum": 0, "maximum": 1},
-              "y": {"type": "number", "minimum": 0, "maximum": 1}
+              "x": {
+                "type": "number",
+                "minimum": 0,
+                "maximum": 1
+              },
+              "y": {
+                "type": "number",
+                "minimum": 0,
+                "maximum": 1
+              }
             },
             "additionalProperties": true
           }
