@@ -31,7 +31,7 @@ import posixpath
 import shlex
 import sys
 from collections import Counter
-from pathlib import Path
+from pathlib import Path, PurePosixPath
 
 ROOT = Path(__file__).resolve().parents[1]
 MANIFEST_PATH = ROOT / "research" / "skill-prototypes" / "suite-manifest.json"
@@ -49,6 +49,36 @@ PLANNER_PREFIX = f"{PLANNER_DIR}/plan_"
 
 def _normalize_path(value: str) -> str:
     return posixpath.normpath(value.replace("\\", "/"))
+
+
+def _safe_repo_relative(value: object) -> bool:
+    if not isinstance(value, str) or not value or "\\" in value or "\x00" in value:
+        return False
+    path = PurePosixPath(value)
+    return not path.is_absolute() and ".." not in path.parts
+
+
+def _discovered_paths(
+    root: Path,
+    directory_relative: str,
+    pattern: str,
+    prefix: str,
+) -> set[str]:
+    repository = root.resolve()
+    directory = (root / directory_relative).resolve()
+    if not directory.is_relative_to(repository) or not directory.is_dir():
+        return set()
+
+    found: set[str] = set()
+    for path in directory.glob(pattern):
+        resolved = path.resolve()
+        if (
+            path.is_file()
+            and resolved.is_relative_to(directory)
+            and resolved.is_relative_to(repository)
+        ):
+            found.add(_normalize_path(f"{prefix}{path.name}"))
+    return found
 
 
 def _target_recipe(makefile_text: str, target: str = TARGET) -> list[str] | None:
@@ -97,30 +127,30 @@ def _direct_python_scripts(recipe: list[str]) -> list[str]:
 
 
 def _suite_validator_paths(root: Path = ROOT) -> set[str]:
-    scripts_dir = root / "scripts"
-    return {
-        _normalize_path(f"scripts/{path.name}")
-        for path in scripts_dir.glob(SUITE_VALIDATOR_GLOB)
-        if path.is_file()
-    }
+    return _discovered_paths(
+        root,
+        "scripts",
+        SUITE_VALIDATOR_GLOB,
+        "scripts/",
+    )
 
 
 def _research_validator_paths(root: Path = ROOT) -> set[str]:
-    scripts_dir = root / RESEARCH_SCRIPT_DIR
-    return {
-        _normalize_path(f"{RESEARCH_SCRIPT_DIR}/{path.name}")
-        for path in scripts_dir.glob(RESEARCH_VALIDATOR_GLOB)
-        if path.is_file()
-    }
+    return _discovered_paths(
+        root,
+        RESEARCH_SCRIPT_DIR,
+        RESEARCH_VALIDATOR_GLOB,
+        f"{RESEARCH_SCRIPT_DIR}/",
+    )
 
 
 def _planner_paths(root: Path = ROOT) -> set[str]:
-    scripts_dir = root / PLANNER_DIR
-    return {
-        _normalize_path(f"{PLANNER_DIR}/{path.name}")
-        for path in scripts_dir.glob(PLANNER_GLOB)
-        if path.is_file()
-    }
+    return _discovered_paths(
+        root,
+        PLANNER_DIR,
+        PLANNER_GLOB,
+        f"{PLANNER_DIR}/",
+    )
 
 
 def _validate_convention_wiring(
@@ -158,6 +188,15 @@ def validate_declared_checks(
     research_validator_paths: set[str] | None = None,
     planner_paths: set[str] | None = None,
 ) -> list[str]:
+    if not isinstance(manifest, dict):
+        return ["research skill suite must be an object"]
+    if not isinstance(makefile_text, str):
+        return ["Makefile text must be a string"]
+
+    skills = manifest.get("skills")
+    if not isinstance(skills, list):
+        return ["research skill suite skills must be a list"]
+
     errors: list[str] = []
     recipe = _target_recipe(makefile_text)
     if recipe is None:
@@ -168,19 +207,27 @@ def validate_declared_checks(
 
     declared: set[str] = set()
     skill_roots: list[str] = []
-    for skill in manifest.get("skills", []):
+    for skill in skills:
         if not isinstance(skill, dict):
             continue
         skill_id = skill.get("id", "<unknown>")
         source_root = skill.get("source_root")
-        if isinstance(source_root, str) and source_root:
-            skill_roots.append(_normalize_path(source_root))
+        if source_root is not None:
+            if not _safe_repo_relative(source_root):
+                errors.append(
+                    f"skill {skill_id}: source_root must be a repository-relative POSIX path"
+                )
+            else:
+                skill_roots.append(_normalize_path(source_root))
 
         checks = skill.get("checks", [])
         if not isinstance(checks, list):
             continue
         for check in checks:
-            if not isinstance(check, str) or not check:
+            if not _safe_repo_relative(check):
+                errors.append(
+                    f"skill {skill_id}: declared check must be a repository-relative POSIX path"
+                )
                 continue
             normalized = _normalize_path(check)
             declared.add(normalized)
@@ -258,7 +305,9 @@ def main() -> int:
     try:
         manifest = json.loads(MANIFEST_PATH.read_text(encoding="utf-8"))
         makefile_text = MAKEFILE_PATH.read_text(encoding="utf-8")
-    except (OSError, json.JSONDecodeError) as exc:
+        if not isinstance(manifest, dict):
+            raise ValueError("research skill suite must contain a JSON object")
+    except (OSError, json.JSONDecodeError, ValueError) as exc:
         print(f"research declared-check wiring validation failed: {exc}", file=sys.stderr)
         return 1
 

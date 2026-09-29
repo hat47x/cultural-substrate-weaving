@@ -3,8 +3,10 @@ from __future__ import annotations
 import copy
 import json
 import sys
+import tempfile
 import unittest
 from pathlib import Path
+from unittest.mock import patch
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "scripts"))
@@ -13,6 +15,7 @@ from validate_research_declared_checks import (  # noqa: E402
     _planner_paths,
     _research_validator_paths,
     _suite_validator_paths,
+    main as declared_checks_main,
     validate_declared_checks,
 )
 
@@ -44,6 +47,68 @@ class ResearchDeclaredCheckWiringTests(unittest.TestCase):
             any(fragment in error for error in errors),
             f"expected error containing {fragment!r}; got {errors!r}",
         )
+
+    def test_validator_rejects_malformed_roots_without_crashing(self) -> None:
+        self.assertEqual(
+            validate_declared_checks([], self.makefile),
+            ["research skill suite must be an object"],
+        )
+        self.assertEqual(
+            validate_declared_checks(self.manifest, []),
+            ["Makefile text must be a string"],
+        )
+
+        manifest = copy.deepcopy(self.manifest)
+        manifest["skills"] = None
+        self.assertEqual(
+            validate_declared_checks(manifest, self.makefile),
+            ["research skill suite skills must be a list"],
+        )
+
+    def test_manifest_paths_must_be_safe_repo_relative_posix_paths(self) -> None:
+        manifest = copy.deepcopy(self.manifest)
+        skill = next(
+            item for item in manifest["skills"] if item["id"] == "affinity-synthesis"
+        )
+        skill["source_root"] = "../outside"
+        skill["checks"].append("../outside/check.py")
+        errors = self.validate(manifest, self.makefile)
+        self.assertTrue(
+            any("source_root must be a repository-relative POSIX path" in error for error in errors),
+            errors,
+        )
+        self.assertTrue(
+            any("declared check must be a repository-relative POSIX path" in error for error in errors),
+            errors,
+        )
+
+    def test_validator_discovery_rejects_symlink_escape(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            base = Path(tmp)
+            root = base / "repo"
+            scripts = root / "scripts"
+            scripts.mkdir(parents=True)
+            local = scripts / "validate_research_local.py"
+            local.write_text("pass\n", encoding="utf-8")
+            outside = base / "validate_research_escape.py"
+            outside.write_text("pass\n", encoding="utf-8")
+            link = scripts / "validate_research_escape.py"
+            try:
+                link.symlink_to(outside)
+            except OSError as exc:
+                self.skipTest(f"symlink unavailable: {exc}")
+
+            self.assertEqual(
+                _suite_validator_paths(root),
+                {"scripts/validate_research_local.py"},
+            )
+
+    def test_cli_catches_non_object_manifest_root(self) -> None:
+        with patch(
+            "validate_research_declared_checks.json.loads",
+            return_value=[],
+        ):
+            self.assertEqual(declared_checks_main(), 1)
 
     def test_current_declared_checks_validators_and_planners_are_wired(self) -> None:
         self.assertEqual(self.validate(self.manifest, self.makefile), [])
