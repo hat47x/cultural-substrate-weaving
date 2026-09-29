@@ -88,6 +88,13 @@ class ResearchHostPackageMaterializerTests(unittest.TestCase):
                 ).read_text(encoding="utf-8")
                 self.assertIn("allow_implicit_invocation: false", text)
 
+    def test_openai_profile_helper_rejects_non_object_metadata_root(self) -> None:
+        with self.assertRaisesRegex(ValueError, "adapter metadata plan must be an object"):
+            _openai_profile_names([])
+
+        with self.assertRaisesRegex(ValueError, "must declare distributions"):
+            _openai_profile_names({})
+
     def test_openai_profiles_follow_adapter_metadata_authority(self) -> None:
         suite = json.loads(SUITE_PATH.read_text(encoding="utf-8"))
         metadata = json.loads(METADATA_PATH.read_text(encoding="utf-8"))
