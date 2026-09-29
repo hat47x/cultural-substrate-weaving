@@ -11,10 +11,18 @@ SKILL_SET_PATH = ROOT / "src" / "skill-set.json"
 
 
 def _load(path: Path) -> dict:
-    return json.loads(path.read_text(encoding="utf-8"))
+    value = json.loads(path.read_text(encoding="utf-8"))
+    if not isinstance(value, dict):
+        raise ValueError(f"{path} must contain a JSON object")
+    return value
 
 
 def validate_projection(skill_set: dict, inclusion_plan: dict) -> list[str]:
+    if not isinstance(skill_set, dict):
+        return ["production Skill-set must be an object"]
+    if not isinstance(inclusion_plan, dict):
+        return ["research inclusion plan must be an object"]
+
     errors: list[str] = []
     production_entries = skill_set.get("skills")
     plan_skills = inclusion_plan.get("skills")
@@ -23,15 +31,38 @@ def validate_projection(skill_set: dict, inclusion_plan: dict) -> list[str]:
     if not isinstance(plan_skills, dict):
         return ["research inclusion plan skills must be an object"]
 
-    production = {
-        entry.get("id"): entry
-        for entry in production_entries
-        if isinstance(entry, dict) and isinstance(entry.get("id"), str)
-    }
+    production: dict[str, dict] = {}
+    for index, entry in enumerate(production_entries):
+        if not isinstance(entry, dict):
+            errors.append(f"production Skill-set entry[{index}] must be an object")
+            continue
+        skill_id = entry.get("id")
+        if not isinstance(skill_id, str) or not skill_id:
+            errors.append(
+                f"production Skill-set entry[{index}] id must be a non-empty string"
+            )
+            continue
+        if skill_id in production:
+            errors.append(f"production Skill-set contains duplicate Skill id: {skill_id}")
+            continue
+        production[skill_id] = entry
+
+    plan_entries: dict[str, dict] = {}
+    for skill_id, entry in plan_skills.items():
+        if not isinstance(skill_id, str) or not skill_id:
+            errors.append("research inclusion plan skill ids must be non-empty strings")
+            continue
+        if not isinstance(entry, dict):
+            errors.append(
+                f"research inclusion plan entry must be an object: {skill_id}"
+            )
+            continue
+        plan_entries[skill_id] = entry
+
     included = {
         skill_id: entry
-        for skill_id, entry in plan_skills.items()
-        if isinstance(entry, dict) and entry.get("production_state") == "included"
+        for skill_id, entry in plan_entries.items()
+        if entry.get("production_state") == "included"
     }
 
     if set(production) != set(included):
@@ -48,12 +79,8 @@ def validate_projection(skill_set: dict, inclusion_plan: dict) -> list[str]:
                 f"skill {skill_id}: production source_manifest does not match inclusion decision"
             )
 
-    for skill_id, entry in plan_skills.items():
-        if (
-            isinstance(entry, dict)
-            and entry.get("production_state") != "included"
-            and skill_id in production
-        ):
+    for skill_id, entry in plan_entries.items():
+        if entry.get("production_state") != "included" and skill_id in production:
             errors.append(f"skill {skill_id}: non-included research Skill leaked into production")
 
     return errors
@@ -63,7 +90,7 @@ def main() -> int:
     try:
         skill_set = _load(SKILL_SET_PATH)
         plan = _load(PLAN_PATH)
-    except (OSError, json.JSONDecodeError) as exc:
+    except (OSError, json.JSONDecodeError, ValueError) as exc:
         print(f"production projection validation failed: {exc}", file=sys.stderr)
         return 1
 
