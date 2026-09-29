@@ -28,6 +28,20 @@ class ResearchSkillSubtreePlanTests(unittest.TestCase):
     def subtree(self, distribution: dict, skill_id: str) -> dict:
         return next(item for item in distribution["subtrees"] if item["skill_id"] == skill_id)
 
+    def test_planner_rejects_invalid_authority_root_without_crashing(self) -> None:
+        with self.assertRaisesRegex(ValueError, "research skill suite must be an object"):
+            plan_skill_subtrees([], ROOT)
+
+    def test_planner_composes_suite_and_package_target_validation(self) -> None:
+        manifest = copy.deepcopy(self.manifest)
+        skill = self.skill(manifest, "affinity-synthesis")
+        skill["locale_realizations"]["ja-JP"]["package_targets"].pop("openai_skill")
+        with self.assertRaisesRegex(
+            ValueError,
+            "research skill subtree authority validation failed",
+        ):
+            plan_skill_subtrees(manifest, ROOT)
+
     def test_japanese_affinity_preserves_explicit_relative_structure(self) -> None:
         plan = plan_skill_subtrees(self.manifest, ROOT)
         affinity = self.subtree(
