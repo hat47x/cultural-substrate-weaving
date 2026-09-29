@@ -10,7 +10,11 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "scripts"))
 
-from validate_research_translation_review_snapshot import _git_blob_sha, validate_review_snapshot
+from validate_research_translation_review_snapshot import (
+    _git_blob_sha,
+    _locale_file,
+    validate_review_snapshot,
+)
 
 STATUS_PATH = ROOT / "research/skill-prototypes/P4-CSW-TENSION-TRANSLATION-STATUS-2026-09-07.json"
 
@@ -18,6 +22,27 @@ STATUS_PATH = ROOT / "research/skill-prototypes/P4-CSW-TENSION-TRANSLATION-STATU
 class TranslationReviewSnapshotTests(unittest.TestCase):
     def setUp(self) -> None:
         self.status = json.loads(STATUS_PATH.read_text(encoding="utf-8"))
+
+    def test_validator_rejects_non_object_status_without_crashing(self) -> None:
+        self.assertEqual(
+            validate_review_snapshot(ROOT, []),
+            ["translation review snapshot status must be an object"],
+        )
+
+    def test_locale_source_rejects_symlink_escape(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            base = Path(tmp)
+            root = base / "repo"
+            locale_root = root / "src" / "ja-JP"
+            locale_root.mkdir(parents=True)
+            outside = base / "outside.md"
+            outside.write_text("outside\n", encoding="utf-8")
+            link = locale_root / "ROUTER.md"
+            try:
+                link.symlink_to(outside)
+            except OSError as exc:
+                self.skipTest(f"symlink unavailable: {exc}")
+            self.assertIsNone(_locale_file(root, "ja-JP", "ROUTER.md"))
 
     def test_current_reviewed_sources_match_snapshot(self) -> None:
         self.assertEqual(validate_review_snapshot(ROOT, self.status), [])
