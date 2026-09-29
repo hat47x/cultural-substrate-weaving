@@ -25,7 +25,10 @@ PLAN_SCHEMA = "csw.research-adapter-metadata-coverage/v1"
 
 
 def _load_json(path: Path) -> dict:
-    return json.loads(path.read_text(encoding="utf-8"))
+    value = json.loads(path.read_text(encoding="utf-8"))
+    if not isinstance(value, dict):
+        raise ValueError(f"{path} must contain a JSON object")
+    return value
 
 
 def _profile_metadata_state(profile_output: dict[str, dict]) -> str:
@@ -160,6 +163,20 @@ def plan_adapter_metadata(
     root: Path = ROOT,
 ) -> dict:
     """Return runtime-vs-adapter-metadata coverage for Skill-tree distributions."""
+
+    if not isinstance(suite, dict):
+        raise ValueError("research skill suite must be an object")
+    if not isinstance(metadata_plan, dict):
+        raise ValueError("research adapter metadata plan must be an object")
+
+    errors = validate_suite(root, suite)
+    errors.extend(validate_package_targets(suite))
+    errors.extend(validate_adapter_metadata(root, metadata_plan))
+    if errors:
+        raise ValueError(
+            "research adapter metadata authority validation failed: "
+            f"{errors[0]}"
+        )
 
     layout = plan_suite(suite)
     output = {
