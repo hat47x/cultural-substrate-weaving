@@ -108,9 +108,6 @@ def validate_adapter_public_identity(
     if not renamed_ids:
         return errors
 
-    if not isinstance(distributions, dict):
-        return ["adapter metadata plan distributions must be an object"]
-
     openai = distributions.get("openai_skill")
     if not isinstance(openai, dict):
         errors.append("adapter metadata plan must declare openai_skill")
