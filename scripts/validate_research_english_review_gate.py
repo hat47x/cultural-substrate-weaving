@@ -57,7 +57,10 @@ def _safe_repo_relative(value: object) -> bool:
 def _existing_file(root: Path, value: object) -> Path | None:
     if not _safe_repo_relative(value):
         return None
-    path = root / str(value)
+    repository = root.resolve()
+    path = (root / str(value)).resolve()
+    if not path.is_relative_to(repository):
+        return None
     return path if path.is_file() else None
 
 
@@ -232,6 +235,9 @@ def _validate_targets(root: Path, targets_path: Path, errors: list[str]) -> None
 
 
 def validate_english_review_gate(root: Path, descriptor: dict) -> list[str]:
+    if not isinstance(descriptor, dict):
+        return ["production promotion descriptor must be an object"]
+
     errors: list[str] = []
     gate = descriptor.get("english_independent_review")
     if not isinstance(gate, dict):
