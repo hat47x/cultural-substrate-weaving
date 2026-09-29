@@ -57,6 +57,48 @@ class ResearchProductionInclusionTests(unittest.TestCase):
     def skill(self, suite: dict, skill_id: str) -> dict:
         return next(skill for skill in suite["skills"] if skill["id"] == skill_id)
 
+    def test_validator_rejects_non_object_plan_without_crashing(self) -> None:
+        self.assertEqual(
+            validate_production_inclusion(ROOT, []),
+            ["production inclusion plan must be an object"],
+        )
+
+    def test_suite_manifest_pointer_must_remain_canonical(self) -> None:
+        plan = copy.deepcopy(self.plan)
+        plan["suite_manifest"] = "../outside.json"
+        self.assert_has_error(
+            plan,
+            "production inclusion suite_manifest must remain canonical",
+        )
+
+    def test_suite_authority_validation_is_composed(self) -> None:
+        suite = copy.deepcopy(self.suite)
+        suite["locales"] = None
+        self.assert_has_error_with_suite(
+            self.plan,
+            suite,
+            "research skill suite locales must be an object",
+        )
+
+    def test_plan_skill_ids_must_be_non_empty_strings(self) -> None:
+        plan = copy.deepcopy(self.plan)
+        value = plan["skills"].pop("affinity-synthesis")
+        plan["skills"][1] = value
+        self.assert_has_error(
+            plan,
+            "production inclusion plan skill ids must be non-empty strings",
+        )
+
+    def test_production_manifest_pointer_cannot_escape_repository(self) -> None:
+        plan = copy.deepcopy(self.plan)
+        plan["skills"]["cultural-substrate-weaving"]["production_source"][
+            "manifest"
+        ] = "../outside.json"
+        self.assert_has_error(
+            plan,
+            "production manifest must remain inside repository",
+        )
+
     def test_current_inclusion_plan_is_consistent(self) -> None:
         self.assertEqual(validate_production_inclusion(ROOT, self.plan), [])
 
