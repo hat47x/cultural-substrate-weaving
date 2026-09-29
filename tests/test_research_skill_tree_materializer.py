@@ -14,6 +14,7 @@ if str(PLANNER_DIR) not in sys.path:
 from materialize_skill_tree import (  # noqa: E402
     _load_json,
     _safe_output_root,
+    _target_path,
     materialize_skill_tree,
 )
 
@@ -183,6 +184,24 @@ class ResearchSkillTreeMaterializerTests(unittest.TestCase):
                         output_root=Path(temp_dir) / "tree",
                         root=ROOT,
                     )
+
+    def test_target_path_rejects_malformed_or_unsafe_targets(self) -> None:
+        with tempfile.TemporaryDirectory() as temp_dir:
+            output = Path(temp_dir).resolve()
+            self.assertEqual(
+                _target_path(output, "skills/example/SKILL.md"),
+                output / "skills" / "example" / "SKILL.md",
+            )
+            for target in (
+                "",
+                "../outside",
+                "/tmp/outside",
+                "skills\\outside",
+                None,
+            ):
+                with self.subTest(target=target):
+                    with self.assertRaisesRegex(ValueError, "unsafe materialization target"):
+                        _target_path(output, target)
 
     def test_materializer_refuses_output_inside_repository(self) -> None:
         with self.assertRaisesRegex(ValueError, "outside the repository"):
