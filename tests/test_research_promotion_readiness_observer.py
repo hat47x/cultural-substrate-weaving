@@ -24,6 +24,7 @@ from plan_promotion_readiness import (  # noqa: E402
     _declared_field,
     _iterative_parity_check,
     _production_path,
+    _repo_relative_path,
     _skill_entries,
     _translation_status_path,
     observe_promotion_readiness,
@@ -142,6 +143,35 @@ class ResearchPromotionReadinessObserverTests(unittest.TestCase):
             with self.subTest(value=value):
                 contract = {"production_files": {"builder": value}}
                 self.assertIsNone(_production_path(contract, "builder"))
+
+    def test_repo_relative_path_rejects_unsafe_evidence_pointer(self) -> None:
+        self.assertEqual(
+            _repo_relative_path("research/skill-prototypes/evidence.md"),
+            Path("research/skill-prototypes/evidence.md"),
+        )
+        for value in (
+            "",
+            "../outside.md",
+            "/tmp/outside.md",
+            "research\\outside.md",
+            None,
+        ):
+            with self.subTest(value=value):
+                self.assertIsNone(_repo_relative_path(value))
+
+    def test_method_parity_rejects_unsafe_declared_check_path(self) -> None:
+        suite = {
+            "skills": [
+                {
+                    "id": "iterative-inquiry-synthesis",
+                    "checks": ["../outside.py"],
+                }
+            ]
+        }
+        state, evidence, details = _iterative_parity_check(ROOT, suite)
+        self.assertEqual(state, "declared-checks-incomplete")
+        self.assertEqual(evidence, [])
+        self.assertEqual(details["unsafe_declared_checks"], ["../outside.py"])
 
     def test_method_evaluation_uses_declared_metadata_field(self) -> None:
         paired = (ROOT / PAIRED_RUN).read_text(encoding="utf-8")
