@@ -12,6 +12,7 @@ if str(PLANNER_DIR) not in sys.path:
     sys.path.insert(0, str(PLANNER_DIR))
 
 from materialize_skill_tree import (  # noqa: E402
+    _load_json,
     _safe_output_root,
     materialize_skill_tree,
 )
@@ -161,6 +162,13 @@ class ResearchSkillTreeMaterializerTests(unittest.TestCase):
 
     def test_en_codex_uses_same_shared_skill_tree_entry_policy(self) -> None:
         self.assert_bundle_three_skill_tree("en-US", "codex_plugin")
+
+    def test_materializer_json_loader_rejects_non_object_root(self) -> None:
+        with tempfile.TemporaryDirectory() as temp_dir:
+            path = Path(temp_dir) / "array.json"
+            path.write_text("[]\n", encoding="utf-8")
+            with self.assertRaisesRegex(ValueError, "must contain a JSON object"):
+                _load_json(path)
 
     def test_materializer_preflight_rejects_reference_closure_errors(self) -> None:
         with patch(
