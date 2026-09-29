@@ -79,11 +79,13 @@ def _safe_output_root(output_root: Path, root: Path) -> Path:
 
 
 def _target_path(output_root: Path, target: str) -> Path:
+    if not isinstance(target, str) or not target or "\\" in target:
+        raise ValueError(f"unsafe materialization target: {target!r}")
     pure = PurePosixPath(target)
-    if pure.is_absolute() or ".." in pure.parts:
+    if pure.is_absolute() or ".." in pure.parts or not pure.parts:
         raise ValueError(f"unsafe materialization target: {target!r}")
     path = output_root.joinpath(*pure.parts).resolve()
-    if not path.is_relative_to(output_root):
+    if path == output_root.resolve() or not path.is_relative_to(output_root.resolve()):
         raise ValueError(f"materialization target escapes output root: {target!r}")
     return path
 
