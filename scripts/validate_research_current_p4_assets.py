@@ -22,13 +22,25 @@ DESCRIPTOR_PATH = (
 
 
 def _safe_repo_relative(value: object) -> bool:
-    if not isinstance(value, str) or not value or "\\" in value:
+    if not isinstance(value, str) or not value or "\\" in value or "\x00" in value:
         return False
     path = PurePosixPath(value)
     return not path.is_absolute() and ".." not in path.parts
 
 
+def _existing_repo_file(root: Path, relative: object) -> Path | None:
+    if not _safe_repo_relative(relative):
+        return None
+    repository = root.resolve()
+    path = (root / str(relative)).resolve()
+    if not path.is_relative_to(repository) or not path.is_file():
+        return None
+    return path
+
+
 def current_p4_authority_paths(descriptor: dict) -> list[str]:
+    if not isinstance(descriptor, dict):
+        return []
     complete = descriptor.get("complete_checkout_validation")
     translation = descriptor.get("translation_refresh")
     public_name = descriptor.get("public_name_recheck")
@@ -55,6 +67,11 @@ def current_p4_authority_paths(descriptor: dict) -> list[str]:
 
 
 def validate_current_p4_assets(root: Path, manifest: dict, descriptor: dict) -> list[str]:
+    if not isinstance(manifest, dict):
+        return ["research skill suite must be an object"]
+    if not isinstance(descriptor, dict):
+        return ["production promotion descriptor must be an object"]
+
     errors: list[str] = []
 
     complete = descriptor.get("complete_checkout_validation")
@@ -103,8 +120,10 @@ def validate_current_p4_assets(root: Path, manifest: dict, descriptor: dict) -> 
         if relative in seen:
             errors.append(f"current P4 authority path is reused by multiple fields: {relative}")
         seen.add(relative)
-        if not (root / relative).is_file():
-            errors.append(f"current P4 authority file is missing: {relative}")
+        if _existing_repo_file(root, relative) is None:
+            errors.append(
+                f"current P4 authority file is missing or unsafe after resolution: {relative}"
+            )
         if relative not in registered:
             errors.append(
                 f"current P4 authority is not registered in suite_research_assets: {relative}"
@@ -117,7 +136,11 @@ def main() -> int:
     try:
         manifest = json.loads(MANIFEST_PATH.read_text(encoding="utf-8"))
         descriptor = json.loads(DESCRIPTOR_PATH.read_text(encoding="utf-8"))
-    except (OSError, json.JSONDecodeError) as exc:
+        if not isinstance(manifest, dict):
+            raise ValueError("research skill suite must contain a JSON object")
+        if not isinstance(descriptor, dict):
+            raise ValueError("production promotion descriptor must contain a JSON object")
+    except (OSError, json.JSONDecodeError, ValueError) as exc:
         print(f"current P4 authority-asset validation failed: {exc}", file=sys.stderr)
         return 1
 

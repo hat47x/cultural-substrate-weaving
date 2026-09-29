@@ -84,6 +84,24 @@ def _valid_sha(value: str) -> bool:
     return len(value) == 40 and all(ch in "0123456789abcdef" for ch in value)
 
 
+def _candidate_output_path(root: Path, current_head: str) -> Path:
+    if not _valid_sha(current_head):
+        raise ValueError("candidate output requires a valid 40-character lowercase HEAD")
+    repository = root.resolve()
+    canonical_dir = repository / ".tmp" / "research-complete-checkout"
+    resolved_dir = (root / ".tmp" / "research-complete-checkout").resolve()
+    if resolved_dir != canonical_dir or not resolved_dir.is_relative_to(repository):
+        raise ValueError(
+            "candidate output directory must remain canonical inside repository"
+        )
+    output = (
+        resolved_dir / f"P4-COMPLETE-CHECKOUT-PASS-{current_head[:12]}.md"
+    ).resolve()
+    if output.parent != resolved_dir or not output.is_relative_to(repository):
+        raise ValueError("candidate output path must remain inside canonical directory")
+    return output
+
+
 def candidate_record(execution_commit: str) -> str:
     return (
         "# P4 Complete-Checkout Execution Candidate\n\n"
@@ -241,10 +259,15 @@ def main() -> int:
             print(f"FAIL candidate recording: {error}")
         return 2
 
-    OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
-    output = OUTPUT_DIR / f"P4-COMPLETE-CHECKOUT-PASS-{current_head[:12]}.md"
-    output.write_text(record, encoding="utf-8")
-    print(f"Candidate record written to {output.relative_to(ROOT)}")
+    try:
+        output = _candidate_output_path(ROOT, current_head)
+        output.parent.mkdir(parents=True, exist_ok=True)
+        output = _candidate_output_path(ROOT, current_head)
+        output.write_text(record, encoding="utf-8")
+    except (OSError, ValueError) as exc:
+        print(f"FAIL candidate recording: unsafe output path: {exc}")
+        return 2
+    print(f"Candidate record written to {output.relative_to(ROOT.resolve())}")
     print("No descriptor or tracked execution evidence was modified.")
     return 0
 
