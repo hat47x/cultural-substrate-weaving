@@ -10,7 +10,11 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "scripts"))
 
-from validate_research_skill_suite import load_manifest, validate_suite  # noqa: E402
+from validate_research_skill_suite import (  # noqa: E402
+    load_manifest,
+    main as suite_validation_main,
+    validate_suite,
+)
 
 MANIFEST_PATH = ROOT / "research" / "skill-prototypes" / "suite-manifest.json"
 
@@ -34,6 +38,13 @@ class ResearchSkillSuiteTests(unittest.TestCase):
             validate_suite(ROOT, []),
             ["research skill suite must be an object"],
         )
+
+    def test_cli_catches_non_object_json_root(self) -> None:
+        with patch(
+            "validate_research_skill_suite.load_manifest",
+            side_effect=ValueError("manifest must contain a JSON object"),
+        ):
+            self.assertEqual(suite_validation_main(), 1)
 
     def test_manifest_loader_rejects_non_object_json_root(self) -> None:
         with patch(

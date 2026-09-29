@@ -14,7 +14,10 @@ for path in (PLANNER_DIR, SCRIPTS_DIR):
     if str(path) not in sys.path:
         sys.path.insert(0, str(path))
 
-from plan_adapter_metadata import plan_adapter_metadata  # noqa: E402
+from plan_adapter_metadata import (  # noqa: E402
+    main as adapter_metadata_main,
+    plan_adapter_metadata,
+)
 from validate_research_adapter_metadata import validate_adapter_metadata  # noqa: E402
 
 SUITE_PATH = ROOT / "research" / "skill-prototypes" / "suite-manifest.json"
@@ -49,6 +52,13 @@ class ResearchAdapterMetadataTests(unittest.TestCase):
     def bundle_metadata(self, locale: str) -> dict:
         path = RESEARCH_BUNDLE_ROOT / locale / "bundle-metadata.json"
         return json.loads(path.read_text(encoding="utf-8"))
+
+    def test_cli_catches_non_object_json_root(self) -> None:
+        with patch(
+            "plan_adapter_metadata._load_json",
+            side_effect=ValueError("authority must contain a JSON object"),
+        ):
+            self.assertEqual(adapter_metadata_main(), 1)
 
     def test_current_adapter_metadata_descriptor_is_consistent(self) -> None:
         self.assertEqual(validate_adapter_metadata(ROOT, self.metadata), [])

@@ -3,28 +3,81 @@ from __future__ import annotations
 
 import json
 import sys
-from pathlib import Path
+from pathlib import Path, PurePosixPath
 
 ROOT = Path(__file__).resolve().parents[1]
 PLAN_PATH = ROOT / "research" / "skill-prototypes" / "production-inclusion-plan.json"
+EXPECTED_SUITE_MANIFEST = "research/skill-prototypes/suite-manifest.json"
+
+from validate_research_skill_suite import validate_suite  # noqa: E402
 
 
 def _load(path: Path) -> dict:
-    return json.loads(path.read_text(encoding="utf-8"))
+    value = json.loads(path.read_text(encoding="utf-8"))
+    if not isinstance(value, dict):
+        raise ValueError(f"{path} must contain a JSON object")
+    return value
+
+
+def _safe_repo_file(
+    root: Path,
+    relative: object,
+    label: str,
+    errors: list[str],
+) -> Path | None:
+    if (
+        not isinstance(relative, str)
+        or not relative
+        or "\\" in relative
+        or "\x00" in relative
+    ):
+        errors.append(f"{label} must be a non-empty repository-relative POSIX path")
+        return None
+    pure = PurePosixPath(relative)
+    if pure.is_absolute() or ".." in pure.parts:
+        errors.append(f"{label} must remain inside repository")
+        return None
+    repository = root.resolve()
+    path = root.joinpath(*pure.parts).resolve()
+    if not path.is_relative_to(repository):
+        errors.append(f"{label} must remain inside repository")
+        return None
+    if not path.is_file():
+        errors.append(f"{label} is missing: {relative}")
+        return None
+    return path
 
 
 def validate_production_inclusion(root: Path, plan: dict) -> list[str]:
+    if not isinstance(plan, dict):
+        return ["production inclusion plan must be an object"]
+
     errors: list[str] = []
     if plan.get("schema") != "csw.research-production-inclusion-plan/v1":
         errors.append("production inclusion plan schema mismatch")
 
     suite_path = plan.get("suite_manifest")
-    if not isinstance(suite_path, str):
-        return errors + ["production inclusion plan must declare suite_manifest"]
+    if suite_path != EXPECTED_SUITE_MANIFEST:
+        return errors + [
+            "production inclusion suite_manifest must remain canonical: "
+            f"{suite_path!r} != {EXPECTED_SUITE_MANIFEST!r}"
+        ]
+    suite_file = _safe_repo_file(
+        root,
+        suite_path,
+        "production inclusion suite_manifest",
+        errors,
+    )
+    if suite_file is None:
+        return errors
     try:
-        suite = _load(root / suite_path)
-    except (OSError, json.JSONDecodeError) as exc:
+        suite = _load(suite_file)
+    except (OSError, json.JSONDecodeError, ValueError) as exc:
         return errors + [f"cannot read suite manifest: {exc}"]
+
+    suite_errors = validate_suite(root, suite)
+    if suite_errors:
+        return errors + suite_errors
 
     suite_skills = {
         skill["id"]: skill
@@ -34,7 +87,14 @@ def validate_production_inclusion(root: Path, plan: dict) -> list[str]:
     plan_skills = plan.get("skills")
     if not isinstance(plan_skills, dict):
         return errors + ["production inclusion plan skills must be an object"]
-    if set(plan_skills) != set(suite_skills):
+    if not all(isinstance(skill_id, str) and skill_id for skill_id in plan_skills):
+        errors.append("production inclusion plan skill ids must be non-empty strings")
+    valid_plan_skill_ids = {
+        skill_id
+        for skill_id in plan_skills
+        if isinstance(skill_id, str) and skill_id
+    }
+    if valid_plan_skill_ids != set(suite_skills):
         errors.append("production inclusion plan skill set must match research suite skill set")
 
     locales = set(suite.get("locales", {}))
@@ -56,21 +116,48 @@ def validate_production_inclusion(root: Path, plan: dict) -> list[str]:
                 errors.append(f"skill {skill_id}: unsupported production source mode")
             else:
                 manifest_path = source.get("manifest")
-                if not isinstance(manifest_path, str) or not (root / manifest_path).is_file():
-                    errors.append(f"skill {skill_id}: production manifest is missing")
-                else:
-                    manifest = _load(root / manifest_path)
+                manifest_file = _safe_repo_file(
+                    root,
+                    manifest_path,
+                    f"skill {skill_id}: production manifest",
+                    errors,
+                )
+                if manifest_file is not None:
+                    try:
+                        manifest = _load(manifest_file)
+                    except (OSError, json.JSONDecodeError, ValueError) as exc:
+                        errors.append(
+                            f"skill {skill_id}: cannot read production manifest: {exc}"
+                        )
+                        manifest = {}
                     if manifest.get("name") != skill_id:
                         errors.append(f"skill {skill_id}: production manifest name mismatch")
                     if set(manifest.get("locales", {})) != locales:
                         errors.append(f"skill {skill_id}: production manifest locale set mismatch")
                     router = manifest.get("router")
-                    if isinstance(router, str):
-                        for locale in locales:
-                            if not (root / "src" / locale / router).is_file():
-                                errors.append(
-                                    f"skill {skill_id}: production runtime entry is missing for {locale}"
-                                )
+                    if not isinstance(router, str) or not router or "\\" in router or "\x00" in router:
+                        errors.append(
+                            f"skill {skill_id}: production router must be a non-empty POSIX path"
+                        )
+                    else:
+                        router_pure = PurePosixPath(router)
+                        if router_pure.is_absolute() or ".." in router_pure.parts:
+                            errors.append(
+                                f"skill {skill_id}: production router must remain inside locale root"
+                            )
+                        else:
+                            repository = root.resolve()
+                            for locale in locales:
+                                runtime = (
+                                    root / "src" / locale / Path(*router_pure.parts)
+                                ).resolve()
+                                if (
+                                    not runtime.is_relative_to(repository)
+                                    or not runtime.is_file()
+                                ):
+                                    errors.append(
+                                        f"skill {skill_id}: production runtime entry is missing for {locale}"
+                                    )
         elif source is not None:
             errors.append(f"skill {skill_id}: candidate Skill must not claim production_source")
 
@@ -104,7 +191,7 @@ def main() -> int:
     try:
         plan = _load(PLAN_PATH)
         errors = validate_production_inclusion(ROOT, plan)
-    except (OSError, json.JSONDecodeError) as exc:
+    except (OSError, json.JSONDecodeError, ValueError) as exc:
         print(f"production inclusion validation failed: {exc}", file=sys.stderr)
         return 1
     if errors:
