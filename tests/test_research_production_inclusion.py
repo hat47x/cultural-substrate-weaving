@@ -180,6 +180,30 @@ class ResearchProductionInclusionTests(unittest.TestCase):
     def test_current_inclusion_plan_is_consistent(self) -> None:
         self.assertEqual(validate_production_inclusion(ROOT, self.plan), [])
 
+    def test_nested_inclusion_entry_shape_is_explicitly_rejected(self) -> None:
+        plan = copy.deepcopy(self.plan)
+        plan["skills"]["affinity-synthesis"] = []
+        self.assert_has_error(
+            plan,
+            "skill affinity-synthesis: production inclusion entry must be an object",
+        )
+
+    def test_locale_state_mapping_shape_is_explicitly_rejected(self) -> None:
+        plan = copy.deepcopy(self.plan)
+        plan["skills"]["affinity-synthesis"]["locales"] = None
+        self.assert_has_error(
+            plan,
+            "skill affinity-synthesis: locale states must be an object",
+        )
+
+        plan = copy.deepcopy(self.plan)
+        locales = plan["skills"]["affinity-synthesis"]["locales"]
+        locales[1] = locales.pop("ja-JP")
+        self.assert_has_error(
+            plan,
+            "skill affinity-synthesis: locale state keys must be non-empty strings",
+        )
+
     def test_research_candidate_cannot_claim_production_source(self) -> None:
         plan = copy.deepcopy(self.plan)
         plan["skills"]["affinity-synthesis"]["production_source"] = {
