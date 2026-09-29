@@ -49,6 +49,23 @@ class ResearchPromotionPreconditionTests(unittest.TestCase):
             "production promotion descriptor must remain status=design-only",
         )
 
+    def test_missing_preconditions_preserve_descriptor_authority_errors(self) -> None:
+        descriptor = copy.deepcopy(self.descriptor)
+        descriptor["status"] = "promotion-ready"
+        descriptor["promotion_preconditions"] = None
+        errors = validate_promotion_preconditions(descriptor)
+        self.assertTrue(
+            any(
+                "production promotion descriptor must remain status=design-only" in error
+                for error in errors
+            ),
+            errors,
+        )
+        self.assertTrue(
+            any("promotion_preconditions must be a non-empty list" in error for error in errors),
+            errors,
+        )
+
     def test_current_promotion_preconditions_are_valid(self) -> None:
         self.assertEqual(validate_promotion_preconditions(self.descriptor), [])
 
