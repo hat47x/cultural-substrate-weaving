@@ -100,6 +100,14 @@ class AffinityBoardTest(unittest.TestCase):
                 self.run_board("status", str(target), "--json").stdout
             )
             self.assertEqual(status["ungrouped_cards"], [])
+            self.assertEqual(
+                status["input_status_counts"]["sources"],
+                {"target_supported": 1},
+            )
+            self.assertEqual(
+                status["input_status_counts"]["cards"],
+                {"(unspecified)": 1, "target_supported": 1},
+            )
             self.assertEqual(status["validation"]["errors"], [])
 
     def test_move_card_changes_primary_membership_without_changing_card_id(self) -> None:
