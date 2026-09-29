@@ -69,6 +69,12 @@ def _write_json(path: Path, value: dict) -> None:
     )
 
 
+def _plugin_root(output: Path, bundle: dict) -> Path:
+    if not isinstance(bundle, dict):
+        raise ValueError("Claude/Codex bundle metadata must be an object")
+    return _target_path(output, bundle.get("plugin_name"))
+
+
 def _bundle_plan(metadata_plan: dict, locale: str, distribution: str) -> dict:
     try:
         plan = metadata_plan["locales"][locale]["distributions"][distribution]
@@ -168,7 +174,7 @@ def materialize_claude_codex_plugin_core(
 
         output = _safe_output_root(output_root, root)
         plugin_name = bundle.get("plugin_name")
-        plugin_root = _target_path(output, plugin_name)
+        plugin_root = _plugin_root(output, bundle)
         skills_source = claude_tree / "skills"
         if not skills_source.is_dir():
             raise ValueError("research Claude/Codex bundle has no shared skills/ tree")
