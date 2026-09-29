@@ -277,35 +277,89 @@ def validate_projected_contents(projected: dict[str, dict], plan: dict) -> list[
     except ProjectionError as exc:
         return [f"invalid production source promotion plan: {exc}"]
     by_skill_locale: dict[tuple[str, str], list[dict]] = {}
-    for item in projected.values():
-        key = (item["research_id"], item["locale"])
+    for target_key, item in projected.items():
+        if not isinstance(item, dict):
+            errors.append(f"projected production entry must be an object: {target_key!r}")
+            continue
+        research_id = item.get("research_id")
+        locale = item.get("locale")
+        target = item.get("target")
+        target_relative = item.get("target_relative")
+        content = item.get("content")
+        if not isinstance(research_id, str) or not research_id:
+            errors.append(f"projected production research_id must be a non-empty string: {target_key!r}")
+            continue
+        if not isinstance(locale, str) or not locale:
+            errors.append(f"projected production locale must be a non-empty string: {target_key!r}")
+            continue
+        if not isinstance(target, str) or not target:
+            errors.append(f"projected production target must be a non-empty string: {target_key!r}")
+            continue
+        if not isinstance(target_relative, str) or not target_relative:
+            errors.append(
+                f"projected production target_relative must be a non-empty string: {target_key!r}"
+            )
+            continue
+        if not isinstance(content, str):
+            errors.append(f"projected production content must be a string: {target}")
+            continue
+
+        key = (research_id, locale)
         by_skill_locale.setdefault(key, []).append(item)
 
-        content = item.get("content", "")
         if f"../{rename_research_id}/" in content:
             errors.append(
                 "projected production package content retains research sibling filesystem path: "
-                f"{item['target']}"
+                f"{target}"
             )
         elif rename_research_id in content:
             errors.append(
                 "projected production package content retains research installable identifier: "
-                f"{item['target']}"
+                f"{target}"
             )
 
-    for skill in plan.get("skills", []):
+    skills = plan["skills"]
+    for skill in skills:
         if not isinstance(skill, dict) or skill.get("state") != "planned-locale-tree-promotion":
             continue
-        research_id = skill["research_id"]
-        production_name = skill["production_name"]
-        for locale, locale_plan in skill.get("locales", {}).items():
+        research_id = skill.get("research_id")
+        production_name = skill.get("production_name")
+        if not isinstance(research_id, str) or not research_id:
+            errors.append("planned production Skill research_id must be a non-empty string")
+            continue
+        if not isinstance(production_name, str) or not production_name:
+            errors.append(
+                f"planned production Skill production_name must be a non-empty string: {research_id}"
+            )
+            continue
+        locales = skill.get("locales")
+        if not isinstance(locales, dict):
+            errors.append(f"planned production Skill locales must be an object: {research_id}")
+            continue
+        for locale, locale_plan in locales.items():
+            if not isinstance(locale, str) or not locale:
+                errors.append(
+                    f"planned production Skill locale key must be a non-empty string: {research_id}"
+                )
+                continue
+            if not isinstance(locale_plan, dict):
+                errors.append(
+                    f"planned production locale entry must be an object: {research_id}/{locale}"
+                )
+                continue
             items = by_skill_locale.get((research_id, locale), [])
             runtime_target = locale_plan.get("runtime_entry")
+            if not isinstance(runtime_target, str) or not runtime_target:
+                errors.append(
+                    f"planned production runtime_entry must be a non-empty string: {research_id}/{locale}"
+                )
+                continue
             runtime = projected.get(runtime_target)
-            if runtime is None:
+            if not isinstance(runtime, dict) or not isinstance(runtime.get("content"), str):
                 errors.append(f"projected runtime entry missing: {research_id}/{locale}")
                 continue
-            frontmatter_name = _frontmatter_name(runtime["content"])
+            runtime_content = runtime["content"]
+            frontmatter_name = _frontmatter_name(runtime_content)
             if frontmatter_name != production_name:
                 errors.append(
                     f"projected runtime frontmatter name mismatch: {research_id}/{locale}: "
@@ -333,7 +387,7 @@ def validate_projected_contents(projected: dict[str, dict], plan: dict) -> list[
             if locale == "en-US":
                 if any(".en.md" in relative for relative in target_relatives):
                     errors.append(f"English projected filenames retain .en suffix: {research_id}")
-                if ".en.md" in runtime["content"]:
+                if ".en.md" in runtime_content:
                     errors.append(f"English projected runtime retains package-local .en.md reference: {research_id}")
 
     return errors
