@@ -45,7 +45,10 @@ READY_BUNDLE_METADATA = {"prototype", "reviewed"}
 
 
 def _load_json(path: Path) -> dict:
-    return json.loads(path.read_text(encoding="utf-8"))
+    value = json.loads(path.read_text(encoding="utf-8"))
+    if not isinstance(value, dict):
+        raise ValueError(f"{path} must contain a JSON object")
+    return value
 
 
 def _validated_inputs(root: Path) -> tuple[dict, dict]:
