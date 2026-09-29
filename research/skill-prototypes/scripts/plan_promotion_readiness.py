@@ -68,17 +68,20 @@ def _exists(root: Path, relative: Path) -> bool:
     return (root / relative).is_file()
 
 
-def _translation_status_path(descriptor: dict) -> Path | None:
-    translation = descriptor.get("translation_refresh")
-    if not isinstance(translation, dict):
-        return None
-    value = translation.get("state")
+def _repo_relative_path(value: object) -> Path | None:
     if not isinstance(value, str) or not value or "\\" in value:
         return None
     path = PurePosixPath(value)
     if path.is_absolute() or ".." in path.parts:
         return None
     return Path(value)
+
+
+def _translation_status_path(descriptor: dict) -> Path | None:
+    translation = descriptor.get("translation_refresh")
+    if not isinstance(translation, dict):
+        return None
+    return _repo_relative_path(translation.get("state"))
 
 
 def _declared_field(text: str | None, field: str) -> str | None:
@@ -120,13 +123,7 @@ def _production_path(contract: dict | None, key: str) -> Path | None:
     production_files = contract.get("production_files")
     if not isinstance(production_files, dict):
         return None
-    value = production_files.get(key)
-    if not isinstance(value, str) or not value or "\\" in value:
-        return None
-    path = PurePosixPath(value)
-    if path.is_absolute() or ".." in path.parts:
-        return None
-    return Path(value)
+    return _repo_relative_path(production_files.get(key))
 
 
 def _design_and_file_state(*, design_present: bool, production_file_present: bool) -> str:
@@ -177,14 +174,30 @@ def _iterative_parity_check(root: Path, suite: dict) -> tuple[str, list[str], di
         return "not-observed-in-this-branch", [], {}
     checks = skill.get("checks")
     declared = [value for value in checks if isinstance(value, str)] if isinstance(checks, list) else []
-    present = [value for value in declared if _exists(root, Path(value))]
-    if declared and len(present) == len(declared):
+    safe_declared = [
+        value
+        for value in declared
+        if _repo_relative_path(value) is not None
+    ]
+    present = [
+        value
+        for value in safe_declared
+        if _exists(root, _repo_relative_path(value))
+    ]
+    if declared and len(safe_declared) != len(declared):
+        state = "declared-checks-incomplete"
+    elif declared and len(present) == len(declared):
         state = "declared-checks-present-execution-unrecorded"
     elif declared:
         state = "declared-checks-incomplete"
     else:
         state = "not-observed-in-this-branch"
-    return state, present, {"declared_checks": declared}
+    return state, present, {
+        "declared_checks": declared,
+        "unsafe_declared_checks": [
+            value for value in declared if value not in safe_declared
+        ],
+    }
 
 
 def observe_promotion_readiness(root: Path = ROOT) -> dict:
@@ -261,9 +274,10 @@ def observe_promotion_readiness(root: Path = ROOT) -> dict:
     if not isinstance(name_gate, dict):
         raise ValueError("production descriptor must declare public_name_recheck")
     name_evidence = name_gate.get("evidence")
+    name_evidence_path = _repo_relative_path(name_evidence)
     name_state = (
         "evidence-present"
-        if isinstance(name_evidence, str) and _exists(root, Path(name_evidence))
+        if name_evidence_path is not None and _exists(root, name_evidence_path)
         else "evidence-missing"
     )
     observations.append(
@@ -271,7 +285,9 @@ def observe_promotion_readiness(root: Path = ROOT) -> dict:
             "public_name_recheck",
             name_state,
             authority=DESCRIPTOR.as_posix(),
-            evidence=[name_evidence] if isinstance(name_evidence, str) else [],
+            evidence=[name_evidence]
+            if name_evidence_path is not None
+            else [],
             evidence_kind="collision-recheck-evidence",
             notes=["A collision recheck is time-bounded evidence, not promotion authorization."],
             details={
