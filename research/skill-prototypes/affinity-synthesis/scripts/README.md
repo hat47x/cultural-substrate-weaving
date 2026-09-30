@@ -68,10 +68,21 @@ python scripts/affinity_board.py demote-relation /tmp/board.json R001 \
   "G01とG03の間に、なお支持できる関係は残るか" \
   --id Q009 --would-clarify C002 --would-clarify C014
 
+# Optionally prepare a handoff capsule without starting another round.
+python scripts/affinity_board.py update-handoff /tmp/board.json \
+  --semantic-ref G01 --semantic-ref N001 \
+  --residual-ref Q009 \
+  --source-ref S001 \
+  --do-not-assume "Q009が示すrelationはまだ支持されていない"
+
+python scripts/affinity_board.py handoff-add-check /tmp/board.json \
+  "新材料がQ009へ実際に触れた場合だけ再検査する" \
+  --ref Q009 --ref G01 --status candidate
+
 python scripts/affinity_board.py status /tmp/board.json
 ```
 
-Supported operations include explicit source/card/group creation, post-group transformation audit, group membership edits, primary-card moves, secondary resonance, relations, residuals, questions, explicit question-to-relation promotion after return-check, narrative synthesis with basis/transformation audit, relation revision/demotion after another return-check, and board status.
+Supported operations include explicit source/card/group creation, post-group transformation audit, group membership edits, primary-card moves, secondary resonance, relations, residuals, questions, explicit question-to-relation promotion after return-check, narrative synthesis with basis/transformation audit, relation revision/demotion after another return-check, optional handoff-capsule maintenance, and board status.
 
 Design constraints:
 
@@ -85,6 +96,8 @@ Design constraints:
 - questionable connections can remain questions instead of being promoted to relations;
 - an existing relation is not sticky: `revise-relation` requires the caller to restate predicate/direction, and `demote-relation` removes the `R` before creating a new unresolved `Q`;
 - relation demotion preserves the prior predicate only as audit history, not as a current assertion;
+- `update-handoff` only records refs/provenance/guardrails selected from the current synthesis; it does not reopen them or start another round;
+- `handoff-add-check` records a possible next check as a candidate, without executing, prioritizing, or treating it as required work;
 - `add-narrative` requires at least one explicit `--basis` ref so map ↔ narrative return-check remains inspectable.
 - `status` surfaces ungrouped cards, multiple direct memberships, singleton groups, narratives, residuals, questions, and validation warnings.
 
