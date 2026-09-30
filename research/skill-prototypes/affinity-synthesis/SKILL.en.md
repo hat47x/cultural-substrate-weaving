@@ -173,7 +173,7 @@ This prototype includes `scripts/affinity_board.py`. It is **not an automatic cl
 - Keep a questionable connection as `Q`; promote it to `R` with `promote-question` only after an explicit return-to-source check.
 - Do not treat an asserted relation as permanent. If a return-check weakens it, use `revise-relation` to restate predicate/direction explicitly; if it no longer survives, use `demote-relation` to withdraw `R` and reopen a new `Q`.
 - Keep basis refs on narrative synthesized from the relation structure, and retain inherited / emergent / residual transformation audit when it matters.
-- When later material touches a stable ref, use `focus` to inspect only that ref's one-hop context before deciding whether broader structure should be reopened.
+- When later material touches a stable ref, use `focus` to inspect only that ref's one-hop membership, relation, resonance, narrative, residual, question, source, and handoff context before deciding whether broader structure should be reopened.
 - When a downstream iterative layer needs a handoff, use the capsule only to preserve selected stable refs, reopenable residuals, source refs, guardrails, and possible next checks. It does not start another round or reopen everything.
 - Surface ungrouped cards, multiple direct memberships, singleton groups, narratives, residuals, and questions so an overly tidy structure can be inspected again.
 - Do not let the tool infer group labels, relation predicates, importance, or truth. Those remain material-reading and source-return judgments.
