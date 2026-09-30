@@ -550,6 +550,134 @@ class AffinityBoardTest(unittest.TestCase):
             self.assertIn("--basis", result.stderr)
             self.assertEqual(target.read_text(encoding="utf-8"), before)
 
+    def test_handoff_capsule_preserves_refs_without_starting_next_round(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            target = Path(tmp) / "board.json"
+            self.run_board("init", str(target))
+            self.run_board(
+                "add-source",
+                str(target),
+                "--ref",
+                "notes://001",
+            )
+            self.run_board(
+                "add-card",
+                str(target),
+                "Card A",
+                "--source",
+                "S001",
+            )
+            self.run_board(
+                "add-group",
+                str(target),
+                "--label",
+                "Working group",
+                "--member",
+                "C001",
+            )
+            self.run_board(
+                "add-residual",
+                str(target),
+                "Difference to preserve",
+                "--ref",
+                "C001",
+            )
+            self.run_board(
+                "update-handoff",
+                str(target),
+                "--semantic-ref",
+                "G001",
+                "--residual-ref",
+                "U001",
+                "--source-ref",
+                "S001",
+                "--do-not-assume",
+                "U001 implies a supported relation",
+            )
+            self.run_board(
+                "handoff-add-check",
+                str(target),
+                "Reopen U001 only if new material touches the difference",
+                "--ref",
+                "U001",
+                "--ref",
+                "G001",
+                "--status",
+                "candidate",
+            )
+
+            data = json.loads(target.read_text(encoding="utf-8"))
+            handoff = data["handoff"]
+            self.assertEqual(handoff["semantic_refs"], ["G001"])
+            self.assertEqual(handoff["residual_refs"], ["U001"])
+            self.assertEqual(handoff["source_refs_to_preserve"], ["S001"])
+            self.assertEqual(
+                handoff["do_not_assume"],
+                ["U001 implies a supported relation"],
+            )
+            self.assertEqual(
+                handoff["next_check_candidates"],
+                [
+                    {
+                        "text": "Reopen U001 only if new material touches the difference",
+                        "refs": ["U001", "G001"],
+                        "status": "candidate",
+                    }
+                ],
+            )
+
+            status = json.loads(
+                self.run_board("status", str(target), "--json").stdout
+            )
+            self.assertEqual(
+                status["handoff"],
+                {
+                    "present": True,
+                    "semantic_refs": 1,
+                    "residual_refs": 1,
+                    "source_refs_to_preserve": 1,
+                    "next_check_candidates": 1,
+                    "do_not_assume": 1,
+                },
+            )
+            self.assertEqual(status["validation"]["errors"], [])
+
+    def test_invalid_handoff_ref_is_rejected_without_overwriting_map(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            target = Path(tmp) / "board.json"
+            self.run_board("init", str(target))
+            before = target.read_text(encoding="utf-8")
+            result = self.run_board(
+                "update-handoff",
+                str(target),
+                "--semantic-ref",
+                "G999",
+                check=False,
+            )
+            self.assertNotEqual(result.returncode, 0)
+            self.assertIn(
+                "handoff semantic_ref does not resolve locally",
+                result.stderr,
+            )
+            self.assertEqual(target.read_text(encoding="utf-8"), before)
+
+    def test_handoff_update_requires_explicit_field_without_overwriting_map(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            target = Path(tmp) / "board.json"
+            self.run_board("init", str(target))
+            before = target.read_text(encoding="utf-8")
+            result = self.run_board(
+                "update-handoff",
+                str(target),
+                check=False,
+            )
+            self.assertNotEqual(result.returncode, 0)
+            self.assertIn(
+                "requires at least one handoff field",
+                result.stderr,
+            )
+            self.assertEqual(target.read_text(encoding="utf-8"), before)
+
     def test_invalid_reference_is_rejected_without_overwriting_map(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
             target = Path(tmp) / "board.json"
