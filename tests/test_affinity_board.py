@@ -535,6 +535,143 @@ class AffinityBoardTest(unittest.TestCase):
             self.assertEqual(status["narrative_refs"], ["N001"])
             self.assertEqual(status["validation"]["errors"], [])
 
+    def test_explicit_spatial_positions_do_not_create_semantic_relations(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            target = Path(tmp) / "board.json"
+            self.run_board("init", str(target))
+            self.run_board("add-card", str(target), "Card A")
+            self.run_board(
+                "add-group",
+                str(target),
+                "--label",
+                "Working group",
+                "--member",
+                "C001",
+            )
+
+            self.run_board(
+                "set-position",
+                str(target),
+                "G001",
+                "0.18",
+                "0.42",
+                "--projection",
+                "spatial-map",
+            )
+            self.run_board(
+                "set-position",
+                str(target),
+                "C001",
+                "0.12",
+                "0.30",
+            )
+
+            data = json.loads(target.read_text(encoding="utf-8"))
+            self.assertEqual(data["layout"]["projection"], "spatial-map")
+            self.assertEqual(
+                data["layout"]["positions"]["G001"],
+                {"x": 0.18, "y": 0.42},
+            )
+            self.assertEqual(
+                data["layout"]["positions"]["C001"],
+                {"x": 0.12, "y": 0.30},
+            )
+            self.assertEqual(data["relations"], [])
+
+            focus = json.loads(
+                self.run_board("focus", str(target), "G001").stdout
+            )
+            self.assertEqual(
+                focus["layout_position"],
+                {"x": 0.18, "y": 0.42},
+            )
+
+            status = json.loads(
+                self.run_board("status", str(target), "--json").stdout
+            )
+            self.assertEqual(
+                status["layout"],
+                {
+                    "present": True,
+                    "projection": "spatial-map",
+                    "position_count": 2,
+                },
+            )
+            self.assertEqual(status["validation"]["errors"], [])
+
+            self.run_board(
+                "set-position",
+                str(target),
+                "G001",
+                "0.25",
+                "0.50",
+            )
+            data = json.loads(target.read_text(encoding="utf-8"))
+            self.assertEqual(
+                data["layout"]["positions"]["G001"],
+                {"x": 0.25, "y": 0.50},
+            )
+
+            self.run_board(
+                "clear-position",
+                str(target),
+                "C001",
+            )
+            data = json.loads(target.read_text(encoding="utf-8"))
+            self.assertNotIn("C001", data["layout"]["positions"])
+            self.assertEqual(data["relations"], [])
+
+    def test_invalid_spatial_position_does_not_overwrite_map(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            target = Path(tmp) / "board.json"
+            self.run_board("init", str(target))
+            self.run_board(
+                "add-source",
+                str(target),
+                "--ref",
+                "notes://position",
+            )
+            self.run_board("add-card", str(target), "Card A")
+            self.run_board(
+                "add-group",
+                str(target),
+                "--label",
+                "Working group",
+                "--member",
+                "C001",
+            )
+            before = target.read_text(encoding="utf-8")
+
+            source_result = self.run_board(
+                "set-position",
+                str(target),
+                "S001",
+                "0.2",
+                "0.3",
+                check=False,
+            )
+            self.assertNotEqual(source_result.returncode, 0)
+            self.assertIn(
+                "layout position ref must resolve to",
+                source_result.stderr,
+            )
+            self.assertEqual(target.read_text(encoding="utf-8"), before)
+
+            range_result = self.run_board(
+                "set-position",
+                str(target),
+                "G001",
+                "1.2",
+                "0.3",
+                check=False,
+            )
+            self.assertNotEqual(range_result.returncode, 0)
+            self.assertIn(
+                "layout coordinates must be between 0 and 1",
+                range_result.stderr,
+            )
+            self.assertEqual(target.read_text(encoding="utf-8"), before)
+
     def test_focus_reopens_only_one_hop_semantic_context(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
             target = Path(tmp) / "board.json"
