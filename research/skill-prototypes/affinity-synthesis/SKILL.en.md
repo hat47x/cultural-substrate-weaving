@@ -165,11 +165,17 @@ When card count, group movement, residuals, or relation candidates become diffic
 
 This prototype includes `scripts/affinity_board.py`. It is **not an automatic classifier or synthesis engine**. It is a small tool for manipulating already-explicit thinking without erasing semantic identity.
 
-- Give cards, groups, residuals, questions, and relations stable IDs.
+- Give cards, groups, relations, narratives, residuals, and questions stable IDs.
 - Move a card between groups while preserving the card ID and source provenance.
+- After a working group/label exists, use `audit-group` when needed to externalize inherited / emergent / residual meaning and preserved differences. Do not use these as a pre-grouping taxonomy.
+- Surface groups that still lack transformation audit so a tidy-looking map is not mistaken for a completed return-check.
 - Keep secondary resonance separate from membership.
-- Keep a questionable connection as `Q` until an explicit return-to-source check justifies an `R`.
-- Surface ungrouped cards, multiple direct memberships, singleton groups, residuals, and questions so an overly tidy structure can be inspected again.
+- Keep a questionable connection as `Q`; promote it to `R` with `promote-question` only after an explicit return-to-source check.
+- Do not treat an asserted relation as permanent. If a return-check weakens it, use `revise-relation` to restate predicate/direction explicitly; if it no longer survives, use `demote-relation` to withdraw `R` and reopen a new `Q`.
+- Keep basis refs on narrative synthesized from the relation structure, and retain inherited / emergent / residual transformation audit when it matters.
+- When later material touches a stable ref, use `focus` to inspect only that ref's one-hop context before deciding whether broader structure should be reopened.
+- When a downstream iterative layer needs a handoff, use the capsule only to preserve selected stable refs, reopenable residuals, source refs, guardrails, and possible next checks. It does not start another round or reopen everything.
+- Surface ungrouped cards, multiple direct memberships, singleton groups, narratives, residuals, and questions so an overly tidy structure can be inspected again.
 - Do not let the tool infer group labels, relation predicates, importance, or truth. Those remain material-reading and source-return judgments.
 
 Minimal example:
@@ -190,6 +196,8 @@ python scripts/affinity_board.py add-card /tmp/board.json \
 python scripts/affinity_board.py add-group /tmp/board.json \
   --label "A label that only emerges from the combined cards" \
   --member C001
+
+python scripts/affinity_board.py focus /tmp/board.json C001
 
 python scripts/affinity_board.py status /tmp/board.json
 ```
