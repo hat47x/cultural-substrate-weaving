@@ -304,6 +304,49 @@ def cmd_add_question(args: argparse.Namespace) -> None:
     mutate(args.map, op)
 
 
+def cmd_promote_question(args: argparse.Namespace) -> None:
+    def op(data: dict[str, Any]) -> None:
+        question = find_item(data, "question", args.question)
+        endpoints = question.get("candidate_relation_between")
+        if (
+            not isinstance(endpoints, list)
+            or len(endpoints) != 2
+            or not all(isinstance(value, str) and value for value in endpoints)
+            or endpoints[0] == endpoints[1]
+        ):
+            raise ValueError(
+                "question must declare two candidate_relation_between endpoints "
+                "before promotion"
+            )
+
+        nodes = semantic_nodes(data)
+        for ref in endpoints:
+            if ref not in nodes:
+                raise ValueError(
+                    f"question candidate relation endpoint is not a card/group: {ref}"
+                )
+
+        relation_id = choose_id(data, "relation", args.id)
+        relation: dict[str, Any] = {
+            "id": relation_id,
+            "from": endpoints[0],
+            "to": endpoints[1],
+            "direction": args.direction,
+            "predicate": args.predicate,
+        }
+        if args.basis:
+            relation["basis"] = list(dict.fromkeys(args.basis))
+        if args.state:
+            relation["state"] = args.state
+
+        objects(data, "relations").append(relation)
+        question["state"] = "promoted-after-return-check"
+        question["handling"] = f"promoted to {relation_id}"
+        print(relation_id)
+
+    mutate(args.map, op)
+
+
 def status_payload(data: dict[str, Any]) -> dict[str, Any]:
     cards = objects(data, "cards")
     groups = objects(data, "groups")
@@ -519,6 +562,26 @@ def build_parser() -> argparse.ArgumentParser:
     question.add_argument("--handling")
     question.add_argument("--state")
     question.set_defaults(func=cmd_add_question)
+
+    promote = sub.add_parser(
+        "promote-question",
+        help=(
+            "promote an explicit relation candidate only after a return-to-source "
+            "check has justified a readable relation"
+        ),
+    )
+    promote.add_argument("map", type=Path)
+    promote.add_argument("question")
+    add_common_id(promote)
+    promote.add_argument("--predicate", required=True)
+    promote.add_argument(
+        "--direction",
+        choices=("directed", "reciprocal", "unspecified"),
+        required=True,
+    )
+    promote.add_argument("--basis", action="append")
+    promote.add_argument("--state")
+    promote.set_defaults(func=cmd_promote_question)
 
     status = sub.add_parser(
         "status",
