@@ -95,6 +95,27 @@ def semantic_nodes(data: dict[str, Any]) -> set[str]:
     }
 
 
+def positionable_ids(data: dict[str, Any]) -> set[str]:
+    return {
+        str(item.get("id"))
+        for section in ("cards", "groups", "narratives", "residuals", "questions")
+        for item in objects(data, section)
+        if item.get("id")
+    }
+
+
+def layout_positions(
+    data: dict[str, Any],
+) -> tuple[dict[str, Any], dict[str, Any]]:
+    layout = data.setdefault("layout", {})
+    if not isinstance(layout, dict):
+        raise ValueError("layout must be an object")
+    positions = layout.setdefault("positions", {})
+    if not isinstance(positions, dict):
+        raise ValueError("layout positions must be an object")
+    return layout, positions
+
+
 def warn_lines(warnings: list[str]) -> None:
     for warning in warnings:
         print(f"WARNING: {warning}", file=sys.stderr)
@@ -523,6 +544,33 @@ def cmd_handoff_add_check(args: argparse.Namespace) -> None:
     mutate(args.map, op)
 
 
+def cmd_set_position(args: argparse.Namespace) -> None:
+    def op(data: dict[str, Any]) -> None:
+        if args.ref not in positionable_ids(data):
+            raise ValueError(
+                "layout position ref must resolve to card/group/narrative/residual/question: "
+                f"{args.ref}"
+            )
+        if not 0 <= args.x <= 1 or not 0 <= args.y <= 1:
+            raise ValueError("layout coordinates must be between 0 and 1")
+        layout, positions = layout_positions(data)
+        positions[args.ref] = {"x": args.x, "y": args.y}
+        if args.projection:
+            layout["projection"] = args.projection
+
+    mutate(args.map, op)
+
+
+def cmd_clear_position(args: argparse.Namespace) -> None:
+    def op(data: dict[str, Any]) -> None:
+        _layout, positions = layout_positions(data)
+        if args.ref not in positions:
+            raise ValueError(f"layout position does not exist: {args.ref}")
+        del positions[args.ref]
+
+    mutate(args.map, op)
+
+
 def focus_payload(data: dict[str, Any], ref: str) -> dict[str, Any]:
     matches: list[tuple[str, dict[str, Any]]] = []
     for candidate_kind, (section, _prefix) in SECTIONS.items():
@@ -655,6 +703,15 @@ def focus_payload(data: dict[str, Any], ref: str) -> dict[str, Any]:
                 if isinstance(value, str)
             ]
 
+    layout_position = None
+    layout = data.get("layout")
+    if isinstance(layout, dict):
+        positions = layout.get("positions")
+        if isinstance(positions, dict):
+            position = positions.get(ref)
+            if isinstance(position, dict):
+                layout_position = position
+
     return {
         "ref": ref,
         "kind": kind,
@@ -670,6 +727,7 @@ def focus_payload(data: dict[str, Any], ref: str) -> dict[str, Any]:
         "sources": sources,
         "cards_from_source": cards_from_source,
         "handoff": handoff_context,
+        "layout_position": layout_position,
     }
 
 
@@ -869,6 +927,17 @@ def status_payload(data: dict[str, Any]) -> dict[str, Any]:
             for item in objects(data, "questions")
             if item.get("id")
         ],
+        "layout": (
+            {
+                "present": True,
+                "projection": data["layout"].get("projection"),
+                "position_count": len(data["layout"].get("positions", {}))
+                if isinstance(data["layout"].get("positions", {}), dict)
+                else 0,
+            }
+            if isinstance(data.get("layout"), dict)
+            else {"present": False}
+        ),
         "handoff": (
             {
                 "present": True,
@@ -926,6 +995,15 @@ def cmd_status(args: argparse.Namespace) -> None:
     print("narratives:", ", ".join(payload["narrative_refs"]) or "-")
     print("residuals:", ", ".join(payload["residual_refs"]) or "-")
     print("questions:", ", ".join(payload["question_refs"]) or "-")
+    layout = payload["layout"]
+    if layout["present"]:
+        print(
+            "layout:",
+            f"projection={layout['projection'] or '-'} "
+            f"positions={layout['position_count']}",
+        )
+    else:
+        print("layout: -")
     handoff = payload["handoff"]
     if handoff["present"]:
         print(
@@ -1192,16 +1270,27 @@ def build_parser() -> argparse.ArgumentParser:
     handoff_check.add_argument("--status")
     handoff_check.set_defaults(func=cmd_handoff_add_check)
 
-    diff = sub.add_parser(
-        "diff",
+    set_position = sub.add_parser(
+        "set-position",
         help=(
-            "compare two affinity-map snapshots by stable ID without inferring "
-            "semantic justification or touched-but-unchanged state"
+            "set an explicit normalized layout position without inferring "
+            "semantic relations"
         ),
     )
-    diff.add_argument("before", type=Path)
-    diff.add_argument("after", type=Path)
-    diff.set_defaults(func=cmd_diff)
+    set_position.add_argument("map", type=Path)
+    set_position.add_argument("ref")
+    set_position.add_argument("x", type=float)
+    set_position.add_argument("y", type=float)
+    set_position.add_argument("--projection")
+    set_position.set_defaults(func=cmd_set_position)
+
+    clear_position = sub.add_parser(
+        "clear-position",
+        help="remove one explicit layout position without changing semantics",
+    )
+    clear_position.add_argument("map", type=Path)
+    clear_position.add_argument("ref")
+    clear_position.set_defaults(func=cmd_clear_position)
 
     focus = sub.add_parser(
         "focus",
@@ -1213,6 +1302,17 @@ def build_parser() -> argparse.ArgumentParser:
     focus.add_argument("map", type=Path)
     focus.add_argument("ref")
     focus.set_defaults(func=cmd_focus)
+
+    diff = sub.add_parser(
+        "diff",
+        help=(
+            "compare two affinity-map snapshots by stable ID without inferring "
+            "semantic justification or touched-but-unchanged state"
+        ),
+    )
+    diff.add_argument("before", type=Path)
+    diff.add_argument("after", type=Path)
+    diff.set_defaults(func=cmd_diff)
 
     status = sub.add_parser(
         "status",
