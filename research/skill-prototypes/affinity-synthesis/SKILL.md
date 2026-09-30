@@ -195,11 +195,12 @@ rendering toolが使える場合は、syntaxだけでなく視覚的な誤読も
 - cardをgroup間で移動してもcard IDとsource provenanceを維持する。
 - group / 表札を立てた後、必要なら`audit-group`でinherited / emergent / residualとpreserved differenceを外在化する。これらを事前taxonomyとしてgroupingへ使わない。
 - statusでtransformation audit未実施groupを見える化し、綺麗にまとまったこと自体を監査完了とみなさない。
+- 配置そのものに分析上の意味がある場合だけ、`set-position`でcard / group / narrative / residual / questionのnormalized座標を明示記録する。近接・上下・中心周縁からmembership / relation / resonance / importanceを推論しない。不要になれば`clear-position`で配置だけを外す。
 - secondary resonanceをmembershipへ変換しない。
 - questionable connectionを`Q`のまま保持し、明示的なreturn-check後に`promote-question`を使った場合だけ`R`へ昇格させる。
 - 一度`R`へ昇格したrelationも固定しない。source-return checkで主張が弱まれば`revise-relation`でpredicate / directionを明示的に言い直し、維持できなければ`demote-relation`で`R`を撤回して新しい`Q`へ戻す。
 - relation構造を読んで作ったnarrativeにはbasis refを残し、inherited / emergent / residualの変換監査を必要に応じて保持する。
-- 後の材料がstable IDへ触れた場合は、全mapを再構築する前に`focus`でそのIDの1-hop contextだけを開く。membership / relation / resonance / narrative / residual / question / sourceに加え、handoffでの保持・再確認候補への直接言及を確認する。そのrefがhandoffで実際に持ち越されている場合だけ`do_not_assume` guardrailも併せて読み、実際に再検査すべき範囲を見分ける。
+- 後の材料がstable IDへ触れた場合は、全mapを再構築する前に`focus`でそのIDの1-hop contextだけを開く。membership / relation / resonance / narrative / residual / question / source、handoffでの直接言及、明示されたlayout positionを確認する。そのrefがhandoffで実際に持ち越されている場合だけ`do_not_assume` guardrailも併せて読み、実際に再検査すべき範囲を見分ける。
 - 反復探索へ渡す必要がある場合だけ、`update-handoff` / `handoff-add-check` でstable semantic refs、reopen可能な残差、保持すべきsource ref、未仮定事項、可能な次確認をcapsule化する。capsuleは次roundの開始・全参照のreopen・候補の実行を指示しない。
 - ungrouped card、multiple direct membership、singleton group、narrative、residual、questionを一覧化し、綺麗に収まりすぎた構造を再点検する。
 - toolはgroup label、relation predicate、重要度、truthを推論しない。それらは材料を読み、元材料へ戻す作業の中で決める。

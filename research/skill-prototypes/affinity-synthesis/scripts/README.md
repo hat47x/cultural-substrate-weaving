@@ -33,6 +33,11 @@ python scripts/affinity_board.py add-group /tmp/board.json \
   --label "Second integrated meaning" \
   --member C002
 
+# Preserve explicit geometry when spatial arrangement itself matters.
+python scripts/affinity_board.py set-position /tmp/board.json G001 0.18 0.42 \
+  --projection spatial-map
+python scripts/affinity_board.py set-position /tmp/board.json G002 0.58 0.37
+
 # Audit what the grouping kept, newly created, and still failed to integrate.
 python scripts/affinity_board.py audit-group /tmp/board.json G001 \
   --inherited "C001の具体的な制約を保持する" \
@@ -93,7 +98,7 @@ python scripts/affinity_board.py focus /tmp/board.json G001
 python scripts/affinity_board.py status /tmp/board.json
 ```
 
-Supported operations include explicit source/card/group creation, post-group transformation audit, group membership edits, primary-card moves, secondary resonance, relations, residuals, questions, explicit question-to-relation promotion after return-check, narrative synthesis with basis/transformation audit, relation revision/demotion after another return-check, optional handoff-capsule maintenance, one-hop semantic focus, and board status.
+Supported operations include explicit source/card/group creation, post-group transformation audit, group membership edits, primary-card moves, explicit normalized spatial positions, secondary resonance, relations, residuals, questions, explicit question-to-relation promotion after return-check, narrative synthesis with basis/transformation audit, relation revision/demotion after another return-check, optional handoff-capsule maintenance, one-hop semantic focus, and board status.
 
 Design constraints:
 
@@ -103,6 +108,7 @@ Design constraints:
 - `move-card` changes direct membership but preserves the card itself;
 - `audit-group` is a post-grouping audit: inherited / emergent / residual are recorded after a working group/label exists, not used as a pre-grouping taxonomy;
 - `status` reports groups that still lack transformation audit so a polished-looking map does not silently skip the return-check;
+- `set-position` / `clear-position` manipulate only normalized layout coordinates for card/group/narrative/residual/question refs; proximity never creates membership, relation, resonance, importance, or support;
 - relation predicates and group labels are never inferred;
 - questionable connections can remain questions instead of being promoted to relations;
 - an existing relation is not sticky: `revise-relation` requires the caller to restate predicate/direction, and `demote-relation` removes the `R` before creating a new unresolved `Q`;
@@ -110,7 +116,7 @@ Design constraints:
 - `update-handoff` only records refs/provenance/guardrails selected from the current synthesis; it does not reopen them or start another round;
 - `handoff-add-check` records a possible next check as a candidate, without executing, prioritizing, or treating it as required work;
 - `add-narrative` requires at least one explicit `--basis` ref so map ↔ narrative return-check remains inspectable.
-- `focus` is read-only and one-hop: it exposes the selected artifact plus directly connected membership, relation, resonance, narrative, residual, question, source, and handoff context without recursively reopening the whole map. Handoff `do_not_assume` guardrails are surfaced only when the selected ref is actually carried or referenced by a next-check candidate.
+- `focus` is read-only and one-hop: it exposes the selected artifact plus directly connected membership, relation, resonance, narrative, residual, question, source, handoff context, and that ref's explicit layout position without recursively reopening the whole map. Handoff `do_not_assume` guardrails are surfaced only when the selected ref is actually carried or referenced by a next-check candidate.
 - `status` surfaces ungrouped cards, multiple direct memberships, singleton groups, narratives, residuals, questions, and validation warnings.
 
 The CLI is useful when conversation context is no longer a reliable place to remember card identity and movement. For small cases, directly editing the JSON or using the Markdown template can remain simpler.

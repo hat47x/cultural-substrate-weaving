@@ -169,11 +169,12 @@ This prototype includes `scripts/affinity_board.py`. It is **not an automatic cl
 - Move a card between groups while preserving the card ID and source provenance.
 - After a working group/label exists, use `audit-group` when needed to externalize inherited / emergent / residual meaning and preserved differences. Do not use these as a pre-grouping taxonomy.
 - Surface groups that still lack transformation audit so a tidy-looking map is not mistaken for a completed return-check.
+- When geometry itself matters, use `set-position` to record explicit normalized positions for cards, groups, narratives, residuals, or questions. Do not infer membership, relation, resonance, importance, or support from proximity or direction; use `clear-position` when only the layout should be removed.
 - Keep secondary resonance separate from membership.
 - Keep a questionable connection as `Q`; promote it to `R` with `promote-question` only after an explicit return-to-source check.
 - Do not treat an asserted relation as permanent. If a return-check weakens it, use `revise-relation` to restate predicate/direction explicitly; if it no longer survives, use `demote-relation` to withdraw `R` and reopen a new `Q`.
 - Keep basis refs on narrative synthesized from the relation structure, and retain inherited / emergent / residual transformation audit when it matters.
-- When later material touches a stable ref, use `focus` to inspect only that ref's one-hop membership, relation, resonance, narrative, residual, question, source, and handoff context before deciding whether broader structure should be reopened. Surface `do_not_assume` guardrails only when that ref is actually carried or referenced by a next-check candidate.
+- When later material touches a stable ref, use `focus` to inspect only that ref's one-hop membership, relation, resonance, narrative, residual, question, source, handoff context, and explicit layout position before deciding whether broader structure should be reopened. Surface `do_not_assume` guardrails only when that ref is actually carried or referenced by a next-check candidate.
 - When a downstream iterative layer needs a handoff, use the capsule only to preserve selected stable refs, reopenable residuals, source refs, guardrails, and possible next checks. It does not start another round or reopen everything.
 - Surface ungrouped cards, multiple direct memberships, singleton groups, narratives, residuals, and questions so an overly tidy structure can be inspected again.
 - Do not let the tool infer group labels, relation predicates, importance, or truth. Those remain material-reading and source-return judgments.
