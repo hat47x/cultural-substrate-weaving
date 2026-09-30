@@ -266,6 +266,36 @@ def cmd_add_relation(args: argparse.Namespace) -> None:
     mutate(args.map, op)
 
 
+def cmd_add_narrative(args: argparse.Namespace) -> None:
+    def op(data: dict[str, Any]) -> None:
+        item: dict[str, Any] = {
+            "id": choose_id(data, "narrative", args.id),
+            "text": args.text,
+        }
+        if args.basis:
+            item["basis"] = list(dict.fromkeys(args.basis))
+        if args.state:
+            item["state"] = args.state
+        if args.display_label:
+            item["display_label"] = args.display_label
+
+        audit: dict[str, list[str]] = {}
+        for key, values in (
+            ("inherited", args.inherited),
+            ("emergent", args.emergent),
+            ("residual", args.residual),
+        ):
+            if values:
+                audit[key] = list(dict.fromkeys(values))
+        if audit:
+            item["transformation_audit"] = audit
+
+        objects(data, "narratives").append(item)
+        print(item["id"])
+
+    mutate(args.map, op)
+
+
 def cmd_add_residual(args: argparse.Namespace) -> None:
     def op(data: dict[str, Any]) -> None:
         item: dict[str, Any] = {
@@ -384,6 +414,11 @@ def status_payload(data: dict[str, Any]) -> dict[str, Any]:
             for group in groups
             if len(group.get("members", [])) == 1
         ],
+        "narrative_refs": [
+            str(item.get("id"))
+            for item in objects(data, "narratives")
+            if item.get("id")
+        ],
         "residual_refs": [
             str(item.get("id"))
             for item in objects(data, "residuals")
@@ -419,6 +454,7 @@ def cmd_status(args: argparse.Namespace) -> None:
                 "group",
                 "resonance",
                 "relation",
+                "narrative",
                 "residual",
                 "question",
             )
@@ -427,6 +463,7 @@ def cmd_status(args: argparse.Namespace) -> None:
     print("ungrouped:", ", ".join(payload["ungrouped_cards"]) or "-")
     print("multi-membership:", ", ".join(payload["multiply_grouped_cards"]) or "-")
     print("singleton-groups:", ", ".join(payload["singleton_groups"]) or "-")
+    print("narratives:", ", ".join(payload["narrative_refs"]) or "-")
     print("residuals:", ", ".join(payload["residual_refs"]) or "-")
     print("questions:", ", ".join(payload["question_refs"]) or "-")
     source_status = payload["input_status_counts"]["sources"]
@@ -540,6 +577,21 @@ def build_parser() -> argparse.ArgumentParser:
     relation.add_argument("--state")
     relation.add_argument("--basis", action="append")
     relation.set_defaults(func=cmd_add_relation)
+
+    narrative = sub.add_parser(
+        "add-narrative",
+        help="record narrative synthesis from explicit map refs without inventing relations",
+    )
+    narrative.add_argument("map", type=Path)
+    add_common_id(narrative)
+    narrative.add_argument("text")
+    narrative.add_argument("--basis", action="append")
+    narrative.add_argument("--state")
+    narrative.add_argument("--display-label")
+    narrative.add_argument("--inherited", action="append")
+    narrative.add_argument("--emergent", action="append")
+    narrative.add_argument("--residual", action="append")
+    narrative.set_defaults(func=cmd_add_narrative)
 
     residual = sub.add_parser("add-residual", help="keep an unresolved difference visible")
     residual.add_argument("map", type=Path)
