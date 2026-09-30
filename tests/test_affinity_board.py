@@ -150,12 +150,9 @@ class AffinityBoardTest(unittest.TestCase):
             self.assertEqual(data["relations"], [])
 
             self.run_board(
-                "add-relation",
+                "promote-question",
                 str(target),
-                "--from",
-                "C001",
-                "--to",
-                "C002",
+                "Q001",
                 "--direction",
                 "unspecified",
                 "--predicate",
@@ -164,9 +161,43 @@ class AffinityBoardTest(unittest.TestCase):
                 "C001",
                 "--basis",
                 "C002",
+                "--state",
+                "supported",
             )
             data = json.loads(target.read_text(encoding="utf-8"))
             self.assertEqual(data["relations"][0]["id"], "R001")
+            self.assertEqual(data["questions"][0]["state"], "promoted-after-return-check")
+            self.assertEqual(data["questions"][0]["handling"], "promoted to R001")
+
+    def test_question_without_candidate_relation_cannot_be_promoted(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            target = Path(tmp) / "board.json"
+            self.run_board("init", str(target))
+            self.run_board("add-card", str(target), "Card A")
+            self.run_board(
+                "add-question",
+                str(target),
+                "What should be checked next?",
+                "--arises-from",
+                "C001",
+            )
+            before = target.read_text(encoding="utf-8")
+            result = self.run_board(
+                "promote-question",
+                str(target),
+                "Q001",
+                "--direction",
+                "directed",
+                "--predicate",
+                "invented relation",
+                check=False,
+            )
+            self.assertNotEqual(result.returncode, 0)
+            self.assertIn(
+                "must declare two candidate_relation_between endpoints",
+                result.stderr,
+            )
+            self.assertEqual(target.read_text(encoding="utf-8"), before)
 
     def test_invalid_reference_is_rejected_without_overwriting_map(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
