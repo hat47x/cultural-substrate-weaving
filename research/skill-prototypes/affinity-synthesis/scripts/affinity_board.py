@@ -746,6 +746,122 @@ def cmd_focus(args: argparse.Namespace) -> None:
     )
 
 
+def _items_by_id(data: dict[str, Any], section: str) -> dict[str, dict[str, Any]]:
+    result: dict[str, dict[str, Any]] = {}
+    for item in objects(data, section):
+        item_id = str(item.get("id", "")).strip()
+        if item_id:
+            result[item_id] = item
+    return result
+
+
+def _changed_fields(before: dict[str, Any], after: dict[str, Any]) -> list[str]:
+    keys = (set(before) | set(after)) - {"id"}
+    return sorted(key for key in keys if before.get(key) != after.get(key))
+
+
+def diff_payload(before: dict[str, Any], after: dict[str, Any]) -> dict[str, Any]:
+    sections: dict[str, Any] = {}
+    total_added = 0
+    total_removed = 0
+    total_changed = 0
+
+    for kind, (section, _prefix) in SECTIONS.items():
+        before_items = _items_by_id(before, section)
+        after_items = _items_by_id(after, section)
+        before_ids = set(before_items)
+        after_ids = set(after_items)
+        added = sorted(after_ids - before_ids)
+        removed = sorted(before_ids - after_ids)
+        changed: dict[str, Any] = {}
+
+        for item_id in sorted(before_ids & after_ids):
+            old = before_items[item_id]
+            new = after_items[item_id]
+            if old == new:
+                continue
+            detail: dict[str, Any] = {"fields": _changed_fields(old, new)}
+            if kind == "group" and old.get("members") != new.get("members"):
+                old_members = [str(value) for value in old.get("members", [])]
+                new_members = [str(value) for value in new.get("members", [])]
+                detail["members_added"] = [
+                    value for value in new_members if value not in old_members
+                ]
+                detail["members_removed"] = [
+                    value for value in old_members if value not in new_members
+                ]
+                detail["member_order_changed"] = (
+                    set(old_members) == set(new_members)
+                    and old_members != new_members
+                )
+            changed[item_id] = detail
+
+        sections[kind] = {
+            "added": added,
+            "removed": removed,
+            "changed": changed,
+        }
+        total_added += len(added)
+        total_removed += len(removed)
+        total_changed += len(changed)
+
+    before_layout = before.get("layout")
+    after_layout = after.get("layout")
+    before_positions = (
+        before_layout.get("positions", {})
+        if isinstance(before_layout, dict)
+        and isinstance(before_layout.get("positions", {}), dict)
+        else {}
+    )
+    after_positions = (
+        after_layout.get("positions", {})
+        if isinstance(after_layout, dict)
+        and isinstance(after_layout.get("positions", {}), dict)
+        else {}
+    )
+    layout_refs = set(before_positions) | set(after_positions)
+
+    return {
+        "format": "affinity-map-diff",
+        "version": "0.1",
+        "sections": sections,
+        "subject_changed": before.get("subject") != after.get("subject"),
+        "handoff_changed": before.get("handoff") != after.get("handoff"),
+        "representation": {
+            "layout_changed": before_layout != after_layout,
+            "layout_changed_refs": sorted(
+                ref
+                for ref in layout_refs
+                if before_positions.get(ref) != after_positions.get(ref)
+            ),
+        },
+        "summary": {
+            "added": total_added,
+            "removed": total_removed,
+            "changed": total_changed,
+        },
+        "interpretation_boundary": (
+            "This is a mechanical stable-ID/field diff. It does not decide whether "
+            "a wording change is semantic, whether an untouched artifact was checked, "
+            "or whether a changed field is justified by the material."
+        ),
+    }
+
+
+def cmd_diff(args: argparse.Namespace) -> None:
+    before = load_map(args.before)
+    after = load_map(args.after)
+    before_errors, before_warnings = validate(before)
+    after_errors, after_warnings = validate(after)
+    if before_errors:
+        raise ValueError("before map is invalid:\n- " + "\n- ".join(before_errors))
+    if after_errors:
+        raise ValueError("after map is invalid:\n- " + "\n- ".join(after_errors))
+    warn_lines([f"before: {warning}" for warning in before_warnings])
+    warn_lines([f"after: {warning}" for warning in after_warnings])
+    print(json.dumps(diff_payload(before, after), ensure_ascii=False, indent=2))
+
+
 def status_payload(data: dict[str, Any]) -> dict[str, Any]:
     cards = objects(data, "cards")
     groups = objects(data, "groups")
@@ -1186,6 +1302,17 @@ def build_parser() -> argparse.ArgumentParser:
     focus.add_argument("map", type=Path)
     focus.add_argument("ref")
     focus.set_defaults(func=cmd_focus)
+
+    diff = sub.add_parser(
+        "diff",
+        help=(
+            "compare two affinity-map snapshots by stable ID without inferring "
+            "semantic justification or touched-but-unchanged state"
+        ),
+    )
+    diff.add_argument("before", type=Path)
+    diff.add_argument("after", type=Path)
+    diff.set_defaults(func=cmd_diff)
 
     status = sub.add_parser(
         "status",

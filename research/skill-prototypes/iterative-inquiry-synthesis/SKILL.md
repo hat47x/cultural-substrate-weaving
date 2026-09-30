@@ -50,6 +50,7 @@ private chain-of-thoughtではなく、外部から検査できるartifactを残
    - 何が変わったか。
    - 何を実際に再検査し、意味上は変わらなかったか。
    - 何が弱まり、撤回されたか。
+   - prior/current snapshotが`affinity-map`で利用可能なら、compatible realizationの`affinity_board.py diff BEFORE AFTER`を機械的差分の補助に使ってよい。ただし`=`（touched and explicitly checked but unchanged）はtoolから推論せず、このroundで実際に触れて再検査した事実からだけ記録する。
 6. **Separate semantic and representation delta**
    - card meaning / membership / label / relation / resonance / residual / questionの変化と、wording / renderer / line wrapping / layoutだけの変化を分ける。
 7. **Externalize residuals**
