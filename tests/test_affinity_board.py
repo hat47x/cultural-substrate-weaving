@@ -110,6 +110,121 @@ class AffinityBoardTest(unittest.TestCase):
             )
             self.assertEqual(status["validation"]["errors"], [])
 
+    def test_group_transformation_audit_is_explicit_and_status_visible(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            target = Path(tmp) / "board.json"
+            self.run_board("init", str(target))
+            self.run_board("add-card", str(target), "Card A")
+            self.run_board("add-card", str(target), "Card B")
+            self.run_board(
+                "add-group",
+                str(target),
+                "--label",
+                "Integrated meaning",
+                "--member",
+                "C001",
+                "--member",
+                "C002",
+            )
+
+            before = json.loads(
+                self.run_board("status", str(target), "--json").stdout
+            )
+            self.assertEqual(
+                before["groups_without_transformation_audit"],
+                ["G001"],
+            )
+
+            self.run_board(
+                "audit-group",
+                str(target),
+                "G001",
+                "--inherited",
+                "C001 retains the practical constraint",
+                "--emergent",
+                "the cards together expose a trade-off",
+                "--residual",
+                "their timing remains different",
+                "--preserved-difference",
+                "timing remains visibly different",
+            )
+
+            data = json.loads(target.read_text(encoding="utf-8"))
+            group = data["groups"][0]
+            self.assertEqual(
+                group["transformation_audit"]["inherited"],
+                ["C001 retains the practical constraint"],
+            )
+            self.assertEqual(
+                group["transformation_audit"]["emergent"],
+                ["the cards together expose a trade-off"],
+            )
+            self.assertEqual(
+                group["transformation_audit"]["residual"],
+                ["their timing remains different"],
+            )
+            self.assertEqual(
+                group["preserved_differences"],
+                ["timing remains visibly different"],
+            )
+
+            after = json.loads(
+                self.run_board("status", str(target), "--json").stdout
+            )
+            self.assertEqual(
+                after["groups_without_transformation_audit"],
+                [],
+            )
+            self.assertEqual(after["validation"]["errors"], [])
+
+    def test_preserved_difference_alone_does_not_mark_group_audited(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            target = Path(tmp) / "board.json"
+            self.run_board("init", str(target))
+            self.run_board("add-group", str(target), "--label", "Group")
+            self.run_board(
+                "audit-group",
+                str(target),
+                "G001",
+                "--preserved-difference",
+                "This difference remains intentionally visible",
+            )
+
+            data = json.loads(target.read_text(encoding="utf-8"))
+            group = data["groups"][0]
+            self.assertEqual(
+                group["preserved_differences"],
+                ["This difference remains intentionally visible"],
+            )
+            self.assertNotIn("transformation_audit", group)
+
+            status = json.loads(
+                self.run_board("status", str(target), "--json").stdout
+            )
+            self.assertEqual(
+                status["groups_without_transformation_audit"],
+                ["G001"],
+            )
+
+    def test_group_audit_requires_explicit_content_without_overwriting_map(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            target = Path(tmp) / "board.json"
+            self.run_board("init", str(target))
+            self.run_board("add-group", str(target), "--label", "Group")
+            before = target.read_text(encoding="utf-8")
+            result = self.run_board(
+                "audit-group",
+                str(target),
+                "G001",
+                check=False,
+            )
+            self.assertNotEqual(result.returncode, 0)
+            self.assertIn(
+                "requires at least one transformation audit",
+                result.stderr,
+            )
+            self.assertEqual(target.read_text(encoding="utf-8"), before)
+
     def test_move_card_changes_primary_membership_without_changing_card_id(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
             target = Path(tmp) / "board.json"
