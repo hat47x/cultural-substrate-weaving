@@ -177,6 +177,35 @@ class AffinityBoardTest(unittest.TestCase):
             )
             self.assertEqual(after["validation"]["errors"], [])
 
+    def test_preserved_difference_alone_does_not_mark_group_audited(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            target = Path(tmp) / "board.json"
+            self.run_board("init", str(target))
+            self.run_board("add-group", str(target), "--label", "Group")
+            self.run_board(
+                "audit-group",
+                str(target),
+                "G001",
+                "--preserved-difference",
+                "This difference remains intentionally visible",
+            )
+
+            data = json.loads(target.read_text(encoding="utf-8"))
+            group = data["groups"][0]
+            self.assertEqual(
+                group["preserved_differences"],
+                ["This difference remains intentionally visible"],
+            )
+            self.assertNotIn("transformation_audit", group)
+
+            status = json.loads(
+                self.run_board("status", str(target), "--json").stdout
+            )
+            self.assertEqual(
+                status["groups_without_transformation_audit"],
+                ["G001"],
+            )
+
     def test_group_audit_requires_explicit_content_without_overwriting_map(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
             target = Path(tmp) / "board.json"
