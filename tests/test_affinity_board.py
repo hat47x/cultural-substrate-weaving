@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import json
+import shutil
 import subprocess
 import sys
 import tempfile
@@ -534,6 +535,99 @@ class AffinityBoardTest(unittest.TestCase):
             self.assertEqual(status["counts"]["narrative"], 1)
             self.assertEqual(status["narrative_refs"], ["N001"])
             self.assertEqual(status["validation"]["errors"], [])
+
+    def test_diff_reports_stable_id_structural_changes(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            before = Path(tmp) / "before.json"
+            after = Path(tmp) / "after.json"
+            self.run_board("init", str(before))
+            self.run_board(
+                "add-source",
+                str(before),
+                "--ref",
+                "notes://delta",
+            )
+            self.run_board(
+                "add-card",
+                str(before),
+                "Existing card",
+                "--source",
+                "S001",
+            )
+            self.run_board(
+                "add-group",
+                str(before),
+                "--label",
+                "Existing group",
+                "--member",
+                "C001",
+            )
+            shutil.copyfile(before, after)
+
+            self.run_board(
+                "add-card",
+                str(after),
+                "New card from later material",
+                "--source",
+                "S001",
+            )
+            self.run_board("group-add", str(after), "G001", "C002")
+            self.run_board(
+                "add-residual",
+                str(after),
+                "New material leaves one difference unresolved",
+                "--ref",
+                "G001",
+            )
+
+            payload = json.loads(
+                self.run_board("diff", str(before), str(after)).stdout
+            )
+            self.assertEqual(payload["sections"]["card"]["added"], ["C002"])
+            self.assertEqual(payload["sections"]["residual"]["added"], ["U001"])
+            group_change = payload["sections"]["group"]["changed"]["G001"]
+            self.assertEqual(group_change["fields"], ["members"])
+            self.assertEqual(group_change["members_added"], ["C002"])
+            self.assertEqual(group_change["members_removed"], [])
+            self.assertFalse(group_change["member_order_changed"])
+            self.assertEqual(
+                payload["summary"],
+                {"added": 2, "removed": 0, "changed": 1},
+            )
+            self.assertFalse(payload["representation"]["layout_changed"])
+            self.assertIn(
+                "mechanical stable-ID/field diff",
+                payload["interpretation_boundary"],
+            )
+
+    def test_diff_separates_layout_change_from_artifact_change(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            before = Path(tmp) / "before.json"
+            after = Path(tmp) / "after.json"
+            self.run_board("init", str(before))
+            self.run_board("add-card", str(before), "Stable card")
+            shutil.copyfile(before, after)
+
+            data = json.loads(after.read_text(encoding="utf-8"))
+            data["layout"] = {
+                "positions": {
+                    "C001": {"x": 0.2, "y": 0.8},
+                }
+            }
+            after.write_text(json.dumps(data), encoding="utf-8")
+
+            payload = json.loads(
+                self.run_board("diff", str(before), str(after)).stdout
+            )
+            self.assertEqual(
+                payload["summary"],
+                {"added": 0, "removed": 0, "changed": 0},
+            )
+            self.assertTrue(payload["representation"]["layout_changed"])
+            self.assertEqual(
+                payload["representation"]["layout_changed_refs"],
+                ["C001"],
+            )
 
     def test_focus_reopens_only_one_hop_semantic_context(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
