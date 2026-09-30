@@ -626,6 +626,27 @@ class AffinityBoardTest(unittest.TestCase):
                 "--basis",
                 "R001",
             )
+            self.run_board(
+                "update-handoff",
+                str(target),
+                "--semantic-ref",
+                "G001",
+                "--residual-ref",
+                "U001",
+                "--source-ref",
+                "S001",
+            )
+            self.run_board(
+                "handoff-add-check",
+                str(target),
+                "Reinspect G001 only if later material touches the boundary.",
+                "--ref",
+                "G001",
+                "--ref",
+                "U001",
+                "--status",
+                "candidate",
+            )
 
             group_focus = json.loads(
                 self.run_board("focus", str(target), "G001").stdout
@@ -652,6 +673,14 @@ class AffinityBoardTest(unittest.TestCase):
                 [item["id"] for item in group_focus["questions"]],
                 ["Q001"],
             )
+            self.assertTrue(group_focus["handoff"]["semantic_ref"])
+            self.assertEqual(
+                [
+                    item["text"]
+                    for item in group_focus["handoff"]["next_check_candidates"]
+                ],
+                ["Reinspect G001 only if later material touches the boundary."],
+            )
 
             card_focus = json.loads(
                 self.run_board("focus", str(target), "C001").stdout
@@ -665,6 +694,17 @@ class AffinityBoardTest(unittest.TestCase):
             self.assertEqual(
                 [item["id"] for item in card_focus["basis_relations"]],
                 ["R001"],
+            )
+
+            source_focus = json.loads(
+                self.run_board("focus", str(target), "S001").stdout
+            )
+            self.assertEqual(
+                [item["id"] for item in source_focus["cards_from_source"]],
+                ["C001"],
+            )
+            self.assertTrue(
+                source_focus["handoff"]["source_ref_to_preserve"]
             )
 
     def test_focus_rejects_ambiguous_imported_ref(self) -> None:
