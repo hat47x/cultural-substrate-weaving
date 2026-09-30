@@ -610,6 +610,7 @@ def focus_payload(data: dict[str, Any], ref: str) -> dict[str, Any]:
         "residual_ref": False,
         "source_ref_to_preserve": False,
         "next_check_candidates": [],
+        "do_not_assume": [],
     }
     handoff = data.get("handoff")
     if isinstance(handoff, dict):
@@ -638,6 +639,20 @@ def focus_payload(data: dict[str, Any], ref: str) -> dict[str, Any]:
                     str(value)
                     for value in candidate.get("refs", [])
                 ]
+            ]
+
+        is_locally_carried = bool(
+            handoff_context["semantic_ref"]
+            or handoff_context["residual_ref"]
+            or handoff_context["source_ref_to_preserve"]
+            or handoff_context["next_check_candidates"]
+        )
+        guardrails = handoff.get("do_not_assume", [])
+        if is_locally_carried and isinstance(guardrails, list):
+            handoff_context["do_not_assume"] = [
+                str(value)
+                for value in guardrails
+                if isinstance(value, str)
             ]
 
     return {
