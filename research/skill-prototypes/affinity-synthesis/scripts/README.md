@@ -25,6 +25,13 @@ python scripts/affinity_board.py add-group /tmp/board.json \
   --label "Integrated label" \
   --member C001
 
+# Audit what the grouping kept, newly created, and still failed to integrate.
+python scripts/affinity_board.py audit-group /tmp/board.json G001 \
+  --inherited "C001の具体的な制約を保持する" \
+  --emergent "複数材料を重ねると選択上のトレードオフが見える" \
+  --residual "時間感覚の差はなお未解消" \
+  --preserved-difference "時間感覚の差を表札へ吸収しない"
+
 python scripts/affinity_board.py add-residual /tmp/board.json \
   "Difference that should not be forced into the group" \
   --ref C001
@@ -64,7 +71,7 @@ python scripts/affinity_board.py demote-relation /tmp/board.json R001 \
 python scripts/affinity_board.py status /tmp/board.json
 ```
 
-Supported operations include explicit source/card/group creation, group membership edits, primary-card moves, secondary resonance, relations, residuals, questions, explicit question-to-relation promotion after return-check, narrative synthesis with basis/transformation audit, relation revision/demotion after another return-check, and board status.
+Supported operations include explicit source/card/group creation, post-group transformation audit, group membership edits, primary-card moves, secondary resonance, relations, residuals, questions, explicit question-to-relation promotion after return-check, narrative synthesis with basis/transformation audit, relation revision/demotion after another return-check, and board status.
 
 Design constraints:
 
@@ -72,6 +79,8 @@ Design constraints:
 - failed mutations leave the previous board unchanged;
 - IDs are stable references, not ontology classes;
 - `move-card` changes direct membership but preserves the card itself;
+- `audit-group` is a post-grouping audit: inherited / emergent / residual are recorded after a working group/label exists, not used as a pre-grouping taxonomy;
+- `status` reports groups that still lack transformation audit so a polished-looking map does not silently skip the return-check;
 - relation predicates and group labels are never inferred;
 - questionable connections can remain questions instead of being promoted to relations;
 - an existing relation is not sticky: `revise-relation` requires the caller to restate predicate/direction, and `demote-relation` removes the `R` before creating a new unresolved `Q`;
