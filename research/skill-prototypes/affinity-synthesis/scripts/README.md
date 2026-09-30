@@ -110,7 +110,7 @@ Design constraints:
 - `update-handoff` only records refs/provenance/guardrails selected from the current synthesis; it does not reopen them or start another round;
 - `handoff-add-check` records a possible next check as a candidate, without executing, prioritizing, or treating it as required work;
 - `add-narrative` requires at least one explicit `--basis` ref so map ↔ narrative return-check remains inspectable.
-- `focus` is read-only and one-hop: it exposes the selected artifact plus directly connected membership, relation, resonance, narrative, residual, question, source, and handoff context without recursively reopening the whole map.
+- `focus` is read-only and one-hop: it exposes the selected artifact plus directly connected membership, relation, resonance, narrative, residual, question, source, and handoff context without recursively reopening the whole map. Handoff `do_not_assume` guardrails are surfaced only when the selected ref is actually carried or referenced by a next-check candidate.
 - `status` surfaces ungrouped cards, multiple direct memberships, singleton groups, narratives, residuals, questions, and validation warnings.
 
 The CLI is useful when conversation context is no longer a reliable place to remember card identity and movement. For small cases, directly editing the JSON or using the Markdown template can remain simpler.
