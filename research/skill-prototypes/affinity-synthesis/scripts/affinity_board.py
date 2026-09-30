@@ -585,7 +585,7 @@ def build_parser() -> argparse.ArgumentParser:
     narrative.add_argument("map", type=Path)
     add_common_id(narrative)
     narrative.add_argument("text")
-    narrative.add_argument("--basis", action="append")
+    narrative.add_argument("--basis", action="append", required=True)
     narrative.add_argument("--state")
     narrative.add_argument("--display-label")
     narrative.add_argument("--inherited", action="append")
