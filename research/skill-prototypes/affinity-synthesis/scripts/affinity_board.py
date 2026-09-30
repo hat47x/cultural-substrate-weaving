@@ -190,6 +190,40 @@ def cmd_add_group(args: argparse.Namespace) -> None:
     mutate(args.map, op)
 
 
+def cmd_audit_group(args: argparse.Namespace) -> None:
+    def op(data: dict[str, Any]) -> None:
+        group = find_item(data, "group", args.group)
+        updates = {
+            "inherited": args.inherited,
+            "emergent": args.emergent,
+            "residual": args.residual,
+        }
+        if (
+            not any(values is not None for values in updates.values())
+            and args.preserved_difference is None
+        ):
+            raise ValueError(
+                "audit-group requires at least one transformation audit "
+                "or preserved difference"
+            )
+
+        audit = group.setdefault("transformation_audit", {})
+        if not isinstance(audit, dict):
+            raise ValueError(
+                f"group {args.group} transformation_audit must be an object"
+            )
+        for key, values in updates.items():
+            if values is not None:
+                audit[key] = list(dict.fromkeys(values))
+
+        if args.preserved_difference is not None:
+            group["preserved_differences"] = list(
+                dict.fromkeys(args.preserved_difference)
+            )
+
+    mutate(args.map, op)
+
+
 def cmd_group_add(args: argparse.Namespace) -> None:
     def op(data: dict[str, Any]) -> None:
         group = find_item(data, "group", args.group)
@@ -479,6 +513,19 @@ def status_payload(data: dict[str, Any]) -> dict[str, Any]:
             for group in groups
             if len(group.get("members", [])) == 1
         ],
+        "groups_without_transformation_audit": [
+            str(group.get("id"))
+            for group in groups
+            if group.get("id")
+            and not (
+                isinstance(group.get("transformation_audit"), dict)
+                and any(
+                    isinstance(group["transformation_audit"].get(key), list)
+                    and bool(group["transformation_audit"].get(key))
+                    for key in ("inherited", "emergent", "residual")
+                )
+            )
+        ],
         "narrative_refs": [
             str(item.get("id"))
             for item in objects(data, "narratives")
@@ -528,6 +575,10 @@ def cmd_status(args: argparse.Namespace) -> None:
     print("ungrouped:", ", ".join(payload["ungrouped_cards"]) or "-")
     print("multi-membership:", ", ".join(payload["multiply_grouped_cards"]) or "-")
     print("singleton-groups:", ", ".join(payload["singleton_groups"]) or "-")
+    print(
+        "group-audit-missing:",
+        ", ".join(payload["groups_without_transformation_audit"]) or "-",
+    )
     print("narratives:", ", ".join(payload["narrative_refs"]) or "-")
     print("residuals:", ", ".join(payload["residual_refs"]) or "-")
     print("questions:", ", ".join(payload["question_refs"]) or "-")
@@ -592,6 +643,24 @@ def build_parser() -> argparse.ArgumentParser:
     group.add_argument("--member", action="append")
     group.add_argument("--preserved-difference", action="append")
     group.set_defaults(func=cmd_add_group)
+
+    audit_group = sub.add_parser(
+        "audit-group",
+        help=(
+            "record inherited/emergent/residual transformation audit after grouping"
+        ),
+    )
+    audit_group.add_argument("map", type=Path)
+    audit_group.add_argument("group")
+    audit_group.add_argument("--inherited", action="append", default=None)
+    audit_group.add_argument("--emergent", action="append", default=None)
+    audit_group.add_argument("--residual", action="append", default=None)
+    audit_group.add_argument(
+        "--preserved-difference",
+        action="append",
+        default=None,
+    )
+    audit_group.set_defaults(func=cmd_audit_group)
 
     group_add = sub.add_parser("group-add", help="add explicit members to a group")
     group_add.add_argument("map", type=Path)
