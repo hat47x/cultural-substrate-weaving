@@ -18,66 +18,74 @@ python scripts/affinity_board.py add-source /tmp/board.json \
   --status "target_supported"
 
 python scripts/affinity_board.py add-card /tmp/board.json \
-  "Meaning-bearing card text" \
+  "Meaning-bearing card A" \
+  --source S001
+
+python scripts/affinity_board.py add-card /tmp/board.json \
+  "Meaning-bearing card B with a different timing" \
   --source S001
 
 python scripts/affinity_board.py add-group /tmp/board.json \
-  --label "Integrated label" \
+  --label "First integrated meaning" \
   --member C001
+
+python scripts/affinity_board.py add-group /tmp/board.json \
+  --label "Second integrated meaning" \
+  --member C002
 
 # Audit what the grouping kept, newly created, and still failed to integrate.
 python scripts/affinity_board.py audit-group /tmp/board.json G001 \
   --inherited "C001の具体的な制約を保持する" \
-  --emergent "複数材料を重ねると選択上のトレードオフが見える" \
-  --residual "時間感覚の差はなお未解消" \
+  --emergent "他のまとまりと並べると選択上のトレードオフが見える" \
+  --residual "C002との時間感覚の差はなお未解消" \
   --preserved-difference "時間感覚の差を表札へ吸収しない"
 
 python scripts/affinity_board.py add-residual /tmp/board.json \
-  "Difference that should not be forced into the group" \
-  --ref C001
+  "Difference that should not be forced into either group" \
+  --ref C001 --ref C002
 
 # Keep a possible relation as a question first.
 python scripts/affinity_board.py add-question /tmp/board.json \
-  "G01とG03の間に時間差を介した接続があるか" \
-  --between G01 G03 \
+  "G001とG002の間に時間差を介した接続があるか" \
+  --between G001 G002 \
   --state unresolved
 
 # Only after returning to the material, promote it explicitly.
 python scripts/affinity_board.py promote-question /tmp/board.json Q001 \
   --direction directed \
-  --predicate "G01で生じた遅れがG03の選択余地を狭める" \
-  --basis C002 --basis C014 --state supported
+  --predicate "G001で生じた遅れがG002の選択余地を狭める" \
+  --basis C001 --basis C002 --state supported
 
 # Narrate from explicit map refs and keep transformation provenance visible.
 python scripts/affinity_board.py add-narrative /tmp/board.json \
-  "G01からG03への制約は支持されたが、C014の時間感覚は未統合のまま残る" \
-  --basis G01 --basis G03 --basis R001 \
-  --inherited "G01とG03は別のまとまりとして立つ" \
+  "G001からG002への制約は支持されたが、U001の時間差は未統合のまま残る" \
+  --basis G001 --basis G002 --basis R001 --basis U001 \
+  --inherited "G001とG002は別のまとまりとして立つ" \
   --emergent "接続から選択余地の縮小が見える" \
-  --residual "C014の時間感覚はなお未統合"
+  --residual "U001の時間差はなお未統合"
 
 # A return-check may weaken an already asserted relation.
 python scripts/affinity_board.py revise-relation /tmp/board.json R001 \
   --direction directed \
-  --predicate "G01はG03の一部の選択肢を狭める可能性がある" \
-  --basis C002 --state tentative \
+  --predicate "G001はG002の一部の選択肢を狭める可能性がある" \
+  --basis C001 --state tentative \
   --note "戻し検査で主張を弱めた"
 
 # If the relation no longer survives, remove R and reopen it as Q.
 python scripts/affinity_board.py demote-relation /tmp/board.json R001 \
-  "G01とG03の間に、なお支持できる関係は残るか" \
-  --id Q009 --would-clarify C002 --would-clarify C014
+  "G001とG002の間に、なお支持できる関係は残るか" \
+  --id Q002 --would-clarify C001 --would-clarify C002
 
 # Optionally prepare a handoff capsule without starting another round.
 python scripts/affinity_board.py update-handoff /tmp/board.json \
-  --semantic-ref G01 --semantic-ref N001 \
-  --residual-ref Q009 \
+  --semantic-ref G001 \
+  --residual-ref Q002 \
   --source-ref S001 \
-  --do-not-assume "Q009が示すrelationはまだ支持されていない"
+  --do-not-assume "Q002が示すrelationはまだ支持されていない"
 
 python scripts/affinity_board.py handoff-add-check /tmp/board.json \
-  "新材料がQ009へ実際に触れた場合だけ再検査する" \
-  --ref Q009 --ref G01 --status candidate
+  "新材料がQ002へ実際に触れた場合だけ再検査する" \
+  --ref Q002 --ref G001 --status candidate
 
 python scripts/affinity_board.py status /tmp/board.json
 ```
