@@ -87,10 +87,13 @@ python scripts/affinity_board.py handoff-add-check /tmp/board.json \
   "新材料がQ002へ実際に触れた場合だけ再検査する" \
   --ref Q002 --ref G001 --status candidate
 
+# Reopen only the local semantic neighborhood of one stable ref.
+python scripts/affinity_board.py focus /tmp/board.json G001
+
 python scripts/affinity_board.py status /tmp/board.json
 ```
 
-Supported operations include explicit source/card/group creation, post-group transformation audit, group membership edits, primary-card moves, secondary resonance, relations, residuals, questions, explicit question-to-relation promotion after return-check, narrative synthesis with basis/transformation audit, relation revision/demotion after another return-check, optional handoff-capsule maintenance, and board status.
+Supported operations include explicit source/card/group creation, post-group transformation audit, group membership edits, primary-card moves, secondary resonance, relations, residuals, questions, explicit question-to-relation promotion after return-check, narrative synthesis with basis/transformation audit, relation revision/demotion after another return-check, optional handoff-capsule maintenance, one-hop semantic focus, and board status.
 
 Design constraints:
 
@@ -107,6 +110,7 @@ Design constraints:
 - `update-handoff` only records refs/provenance/guardrails selected from the current synthesis; it does not reopen them or start another round;
 - `handoff-add-check` records a possible next check as a candidate, without executing, prioritizing, or treating it as required work;
 - `add-narrative` requires at least one explicit `--basis` ref so map ↔ narrative return-check remains inspectable.
+- `focus` is read-only and one-hop: it exposes the selected artifact plus directly connected membership, relation, resonance, narrative, residual, question, and source context without recursively reopening the whole map.
 - `status` surfaces ungrouped cards, multiple direct memberships, singleton groups, narratives, residuals, questions, and validation warnings.
 
 The CLI is useful when conversation context is no longer a reliable place to remember card identity and movement. For small cases, directly editing the JSON or using the Markdown template can remain simpler.
