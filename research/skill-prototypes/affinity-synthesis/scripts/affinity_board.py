@@ -481,6 +481,48 @@ def cmd_demote_relation(args: argparse.Namespace) -> None:
     mutate(args.map, op)
 
 
+def cmd_update_handoff(args: argparse.Namespace) -> None:
+    def op(data: dict[str, Any]) -> None:
+        updates = {
+            "semantic_refs": args.semantic_ref,
+            "residual_refs": args.residual_ref,
+            "source_refs_to_preserve": args.source_ref,
+            "do_not_assume": args.do_not_assume,
+        }
+        if not any(value is not None for value in updates.values()):
+            raise ValueError(
+                "update-handoff requires at least one handoff field"
+            )
+
+        handoff = data.setdefault("handoff", {})
+        if not isinstance(handoff, dict):
+            raise ValueError("handoff must be an object")
+        for key, values in updates.items():
+            if values is not None:
+                handoff[key] = list(dict.fromkeys(values))
+
+    mutate(args.map, op)
+
+
+def cmd_handoff_add_check(args: argparse.Namespace) -> None:
+    def op(data: dict[str, Any]) -> None:
+        handoff = data.setdefault("handoff", {})
+        if not isinstance(handoff, dict):
+            raise ValueError("handoff must be an object")
+        candidates = handoff.setdefault("next_check_candidates", [])
+        if not isinstance(candidates, list):
+            raise ValueError("handoff next_check_candidates must be an array")
+
+        item: dict[str, Any] = {"text": args.text}
+        if args.ref:
+            item["refs"] = list(dict.fromkeys(args.ref))
+        if args.status:
+            item["status"] = args.status
+        candidates.append(item)
+
+    mutate(args.map, op)
+
+
 def status_payload(data: dict[str, Any]) -> dict[str, Any]:
     cards = objects(data, "cards")
     groups = objects(data, "groups")
@@ -546,6 +588,22 @@ def status_payload(data: dict[str, Any]) -> dict[str, Any]:
             for item in objects(data, "questions")
             if item.get("id")
         ],
+        "handoff": (
+            {
+                "present": True,
+                "semantic_refs": len(data["handoff"].get("semantic_refs", [])),
+                "residual_refs": len(data["handoff"].get("residual_refs", [])),
+                "source_refs_to_preserve": len(
+                    data["handoff"].get("source_refs_to_preserve", [])
+                ),
+                "next_check_candidates": len(
+                    data["handoff"].get("next_check_candidates", [])
+                ),
+                "do_not_assume": len(data["handoff"].get("do_not_assume", [])),
+            }
+            if isinstance(data.get("handoff"), dict)
+            else {"present": False}
+        ),
     }
 
 
@@ -587,6 +645,23 @@ def cmd_status(args: argparse.Namespace) -> None:
     print("narratives:", ", ".join(payload["narrative_refs"]) or "-")
     print("residuals:", ", ".join(payload["residual_refs"]) or "-")
     print("questions:", ", ".join(payload["question_refs"]) or "-")
+    handoff = payload["handoff"]
+    if handoff["present"]:
+        print(
+            "handoff:",
+            " ".join(
+                f"{key}={handoff[key]}"
+                for key in (
+                    "semantic_refs",
+                    "residual_refs",
+                    "source_refs_to_preserve",
+                    "next_check_candidates",
+                    "do_not_assume",
+                )
+            ),
+        )
+    else:
+        print("handoff: -")
     source_status = payload["input_status_counts"]["sources"]
     card_status = payload["input_status_counts"]["cards"]
     print(
@@ -809,6 +884,32 @@ def build_parser() -> argparse.ArgumentParser:
     demote_relation.add_argument("--handling")
     demote_relation.add_argument("--state")
     demote_relation.set_defaults(func=cmd_demote_relation)
+
+    update_handoff = sub.add_parser(
+        "update-handoff",
+        help=(
+            "update selected handoff capsule fields without starting another round"
+        ),
+    )
+    update_handoff.add_argument("map", type=Path)
+    update_handoff.add_argument("--semantic-ref", action="append", default=None)
+    update_handoff.add_argument("--residual-ref", action="append", default=None)
+    update_handoff.add_argument("--source-ref", action="append", default=None)
+    update_handoff.add_argument("--do-not-assume", action="append", default=None)
+    update_handoff.set_defaults(func=cmd_update_handoff)
+
+    handoff_check = sub.add_parser(
+        "handoff-add-check",
+        help=(
+            "append a possible next check to the handoff capsule without "
+            "executing or prioritizing it"
+        ),
+    )
+    handoff_check.add_argument("map", type=Path)
+    handoff_check.add_argument("text")
+    handoff_check.add_argument("--ref", action="append")
+    handoff_check.add_argument("--status")
+    handoff_check.set_defaults(func=cmd_handoff_add_check)
 
     status = sub.add_parser(
         "status",
