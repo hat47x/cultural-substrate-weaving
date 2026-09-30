@@ -635,6 +635,8 @@ class AffinityBoardTest(unittest.TestCase):
                 "U001",
                 "--source-ref",
                 "S001",
+                "--do-not-assume",
+                "the open boundary is not yet a supported relation",
             )
             self.run_board(
                 "handoff-add-check",
@@ -681,6 +683,10 @@ class AffinityBoardTest(unittest.TestCase):
                 ],
                 ["Reinspect G001 only if later material touches the boundary."],
             )
+            self.assertEqual(
+                group_focus["handoff"]["do_not_assume"],
+                ["the open boundary is not yet a supported relation"],
+            )
 
             card_focus = json.loads(
                 self.run_board("focus", str(target), "C001").stdout
@@ -695,6 +701,7 @@ class AffinityBoardTest(unittest.TestCase):
                 [item["id"] for item in card_focus["basis_relations"]],
                 ["R001"],
             )
+            self.assertEqual(card_focus["handoff"]["do_not_assume"], [])
 
             source_focus = json.loads(
                 self.run_board("focus", str(target), "S001").stdout
@@ -705,6 +712,10 @@ class AffinityBoardTest(unittest.TestCase):
             )
             self.assertTrue(
                 source_focus["handoff"]["source_ref_to_preserve"]
+            )
+            self.assertEqual(
+                source_focus["handoff"]["do_not_assume"],
+                ["the open boundary is not yet a supported relation"],
             )
 
     def test_focus_rejects_ambiguous_imported_ref(self) -> None:
