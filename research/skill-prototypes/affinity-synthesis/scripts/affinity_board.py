@@ -194,6 +194,55 @@ def cmd_add_card(args: argparse.Namespace) -> None:
     mutate(args.map, op)
 
 
+def cmd_trace_card(args: argparse.Namespace) -> None:
+    def op(data: dict[str, Any]) -> None:
+        if not any(
+            value is not None
+            for value in (
+                args.framework,
+                args.operation,
+                args.location,
+                args.as_if,
+                args.note,
+            )
+        ):
+            raise ValueError(
+                "trace-card requires framework, operation, location, as-if, or note"
+            )
+
+        card = find_item(data, "card", args.card)
+        trace = card.setdefault("catalytic_trace", {})
+        if not isinstance(trace, dict):
+            raise ValueError(
+                f"card catalytic_trace must be an object: {args.card}"
+            )
+
+        for key, values in (
+            ("frameworks", args.framework),
+            ("operations", args.operation),
+            ("locations", args.location),
+        ):
+            if values is None:
+                continue
+            existing = trace.get(key, [])
+            if not isinstance(existing, list):
+                raise ValueError(
+                    f"card catalytic_trace {key} must be an array: {args.card}"
+                )
+            trace[key] = list(
+                dict.fromkeys([str(value) for value in existing] + values)
+            )
+
+        if args.as_if is not None:
+            trace["as_if"] = args.as_if
+        if args.note is not None:
+            trace["note"] = args.note
+
+        print(args.card)
+
+    mutate(args.map, op)
+
+
 def cmd_add_group(args: argparse.Namespace) -> None:
     def op(data: dict[str, Any]) -> None:
         item: dict[str, Any] = {
@@ -880,6 +929,30 @@ def status_payload(data: dict[str, Any]) -> dict[str, Any]:
         str(item.get("input_status", "")).strip() or "(unspecified)"
         for item in cards
     )
+    traced_cards = [
+        card
+        for card in cards
+        if isinstance(card.get("catalytic_trace"), dict)
+        and bool(card.get("catalytic_trace"))
+    ]
+    framework_counts: Counter[str] = Counter()
+    operation_counts: Counter[str] = Counter()
+    for card in traced_cards:
+        trace = card["catalytic_trace"]
+        for framework in trace.get("frameworks", []):
+            framework_counts[str(framework)] += 1
+        for operation in trace.get("operations", []):
+            operation_counts[str(operation)] += 1
+    untraced_framework_generated = [
+        str(card.get("id"))
+        for card in cards
+        if card.get("id")
+        and str(card.get("input_status", "")) == "framework_generated"
+        and not (
+            isinstance(card.get("catalytic_trace"), dict)
+            and bool(card.get("catalytic_trace"))
+        )
+    ]
 
     return {
         "format": data.get("format"),
@@ -887,6 +960,12 @@ def status_payload(data: dict[str, Any]) -> dict[str, Any]:
         "input_status_counts": {
             "sources": dict(sorted(source_statuses.items())),
             "cards": dict(sorted(card_statuses.items())),
+        },
+        "catalytic_trace": {
+            "traced_cards": len(traced_cards),
+            "frameworks": dict(sorted(framework_counts.items())),
+            "operations": dict(sorted(operation_counts.items())),
+            "untraced_framework_generated_cards": untraced_framework_generated,
         },
         "counts": {
             key: len(objects(data, section))
@@ -1031,6 +1110,17 @@ def cmd_status(args: argparse.Namespace) -> None:
         "card-status:",
         ", ".join(f"{key}={value}" for key, value in card_status.items()) or "-",
     )
+    catalytic = payload["catalytic_trace"]
+    print(
+        "catalytic-trace:",
+        f"cards={catalytic['traced_cards']} "
+        f"frameworks={len(catalytic['frameworks'])} "
+        f"operations={len(catalytic['operations'])}",
+    )
+    print(
+        "catalytic-untraced-framework-generated:",
+        ", ".join(catalytic["untraced_framework_generated_cards"]) or "-",
+    )
     print(f"validation: errors={len(errors)} warnings={len(warnings)}")
 
 
@@ -1073,6 +1163,22 @@ def build_parser() -> argparse.ArgumentParser:
     card.add_argument("--preservation-note")
     card.add_argument("--derived-from", action="append")
     card.set_defaults(func=cmd_add_card)
+
+    trace_card = sub.add_parser(
+        "trace-card",
+        help=(
+            "attach cultural-framework catalytic provenance to a card without "
+            "changing grouping or epistemic status"
+        ),
+    )
+    trace_card.add_argument("map", type=Path)
+    trace_card.add_argument("card")
+    trace_card.add_argument("--framework", action="append", default=None)
+    trace_card.add_argument("--operation", action="append", default=None)
+    trace_card.add_argument("--location", action="append", default=None)
+    trace_card.add_argument("--as-if")
+    trace_card.add_argument("--note")
+    trace_card.set_defaults(func=cmd_trace_card)
 
     group = sub.add_parser("add-group", help="create an explicit group")
     group.add_argument("map", type=Path)

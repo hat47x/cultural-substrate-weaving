@@ -111,6 +111,75 @@ class AffinityBoardTest(unittest.TestCase):
             )
             self.assertEqual(status["validation"]["errors"], [])
 
+    def test_catalytic_trace_preserves_framework_operation_without_grouping_authority(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            target = Path(tmp) / "board.json"
+            self.run_board("init", str(target))
+            self.run_board(
+                "add-card",
+                str(target),
+                "What changes if the target is viewed from the opposing position?",
+                "--status",
+                "framework_generated",
+            )
+            self.run_board(
+                "trace-card",
+                str(target),
+                "C001",
+                "--framework",
+                "five-phases",
+                "--operation",
+                "opposition-complement",
+                "--operation",
+                "transition-path",
+                "--location",
+                "wood-metal",
+                "--as-if",
+                "seen as a generative cycle",
+                "--note",
+                "candidate only; not target-side support",
+            )
+            self.run_board(
+                "add-card",
+                str(target),
+                "A second framework-generated candidate without trace yet",
+                "--status",
+                "framework_generated",
+            )
+
+            data = json.loads(target.read_text(encoding="utf-8"))
+            trace = data["cards"][0]["catalytic_trace"]
+            self.assertEqual(trace["frameworks"], ["five-phases"])
+            self.assertEqual(
+                trace["operations"],
+                ["opposition-complement", "transition-path"],
+            )
+            self.assertEqual(trace["locations"], ["wood-metal"])
+            self.assertEqual(trace["as_if"], "seen as a generative cycle")
+            self.assertEqual(data["groups"], [])
+            self.assertEqual(data["relations"], [])
+
+            status = json.loads(
+                self.run_board("status", str(target), "--json").stdout
+            )
+            self.assertEqual(status["catalytic_trace"]["traced_cards"], 1)
+            self.assertEqual(
+                status["catalytic_trace"]["frameworks"],
+                {"five-phases": 1},
+            )
+            self.assertEqual(
+                status["catalytic_trace"]["operations"],
+                {
+                    "opposition-complement": 1,
+                    "transition-path": 1,
+                },
+            )
+            self.assertEqual(
+                status["catalytic_trace"]["untraced_framework_generated_cards"],
+                ["C002"],
+            )
+            self.assertEqual(status["validation"]["errors"], [])
+
     def test_group_transformation_audit_is_explicit_and_status_visible(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
             target = Path(tmp) / "board.json"

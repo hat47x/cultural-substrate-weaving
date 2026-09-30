@@ -90,6 +90,36 @@
           },
           "input_status": {
             "type": "string"
+          },
+          "catalytic_trace": {
+            "type": "object",
+            "properties": {
+              "frameworks": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "operations": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "locations": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "as_if": {
+                "type": "string"
+              },
+              "note": {
+                "type": "string"
+              }
+            },
+            "additionalProperties": true
           }
         },
         "additionalProperties": true
