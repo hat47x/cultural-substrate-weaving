@@ -605,6 +605,41 @@ def focus_payload(data: dict[str, Any], ref: str) -> dict[str, Any]:
             if ref in [str(value) for value in item.get("source_refs", [])]
         ]
 
+    handoff_context: dict[str, Any] = {
+        "semantic_ref": False,
+        "residual_ref": False,
+        "source_ref_to_preserve": False,
+        "next_check_candidates": [],
+    }
+    handoff = data.get("handoff")
+    if isinstance(handoff, dict):
+        semantic_refs = handoff.get("semantic_refs", [])
+        residual_refs = handoff.get("residual_refs", [])
+        source_refs_to_preserve = handoff.get("source_refs_to_preserve", [])
+        candidates = handoff.get("next_check_candidates", [])
+        if isinstance(semantic_refs, list):
+            handoff_context["semantic_ref"] = ref in [
+                str(value) for value in semantic_refs
+            ]
+        if isinstance(residual_refs, list):
+            handoff_context["residual_ref"] = ref in [
+                str(value) for value in residual_refs
+            ]
+        if isinstance(source_refs_to_preserve, list):
+            handoff_context["source_ref_to_preserve"] = ref in [
+                str(value) for value in source_refs_to_preserve
+            ]
+        if isinstance(candidates, list):
+            handoff_context["next_check_candidates"] = [
+                candidate
+                for candidate in candidates
+                if isinstance(candidate, dict)
+                and ref in [
+                    str(value)
+                    for value in candidate.get("refs", [])
+                ]
+            ]
+
     return {
         "ref": ref,
         "kind": kind,
@@ -619,6 +654,7 @@ def focus_payload(data: dict[str, Any], ref: str) -> dict[str, Any]:
         "source_refs": source_refs,
         "sources": sources,
         "cards_from_source": cards_from_source,
+        "handoff": handoff_context,
     }
 
 
