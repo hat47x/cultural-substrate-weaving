@@ -193,6 +193,8 @@ rendering toolが使える場合は、syntaxだけでなく視覚的な誤読も
 
 - card / group / relation / narrative / residual / questionへstable IDを付ける。
 - cardをgroup間で移動してもcard IDとsource provenanceを維持する。
+- group / 表札を立てた後、必要なら`audit-group`でinherited / emergent / residualとpreserved differenceを外在化する。これらを事前taxonomyとしてgroupingへ使わない。
+- statusでtransformation audit未実施groupを見える化し、綺麗にまとまったこと自体を監査完了とみなさない。
 - secondary resonanceをmembershipへ変換しない。
 - questionable connectionを`Q`のまま保持し、明示的なreturn-check後に`promote-question`を使った場合だけ`R`へ昇格させる。
 - 一度`R`へ昇格したrelationも固定しない。source-return checkで主張が弱まれば`revise-relation`でpredicate / directionを明示的に言い直し、維持できなければ`demote-relation`で`R`を撤回して新しい`Q`へ戻す。
