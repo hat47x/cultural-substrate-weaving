@@ -233,6 +233,11 @@ def cmd_trace_card(args: argparse.Namespace) -> None:
                 dict.fromkeys([str(value) for value in existing] + values)
             )
 
+        if not trace.get("frameworks") or not trace.get("operations"):
+            raise ValueError(
+                "trace-card requires at least one framework and one operation"
+            )
+
         if args.as_if is not None:
             trace["as_if"] = args.as_if
         if args.note is not None:
@@ -933,7 +938,8 @@ def status_payload(data: dict[str, Any]) -> dict[str, Any]:
         card
         for card in cards
         if isinstance(card.get("catalytic_trace"), dict)
-        and bool(card.get("catalytic_trace"))
+        and bool(card["catalytic_trace"].get("frameworks"))
+        and bool(card["catalytic_trace"].get("operations"))
     ]
     framework_counts: Counter[str] = Counter()
     operation_counts: Counter[str] = Counter()
@@ -950,7 +956,8 @@ def status_payload(data: dict[str, Any]) -> dict[str, Any]:
         and str(card.get("input_status", "")) == "framework_generated"
         and not (
             isinstance(card.get("catalytic_trace"), dict)
-            and bool(card.get("catalytic_trace"))
+            and bool(card["catalytic_trace"].get("frameworks"))
+            and bool(card["catalytic_trace"].get("operations"))
         )
     ]
 

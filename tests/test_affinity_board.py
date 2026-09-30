@@ -180,6 +180,33 @@ class AffinityBoardTest(unittest.TestCase):
             )
             self.assertEqual(status["validation"]["errors"], [])
 
+    def test_catalytic_trace_requires_framework_and_operation_without_overwriting_map(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            target = Path(tmp) / "board.json"
+            self.run_board("init", str(target))
+            self.run_board(
+                "add-card",
+                str(target),
+                "Framework-generated candidate",
+                "--status",
+                "framework_generated",
+            )
+            before = target.read_text(encoding="utf-8")
+            result = self.run_board(
+                "trace-card",
+                str(target),
+                "C001",
+                "--framework",
+                "five-phases",
+                check=False,
+            )
+            self.assertNotEqual(result.returncode, 0)
+            self.assertIn(
+                "requires at least one framework and one operation",
+                result.stderr,
+            )
+            self.assertEqual(target.read_text(encoding="utf-8"), before)
+
     def test_group_transformation_audit_is_explicit_and_status_visible(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
             target = Path(tmp) / "board.json"
