@@ -50,6 +50,7 @@ Persist inspectable artifacts rather than private chain-of-thought.
    - what changed?
    - what was explicitly checked but remained semantically stable?
    - what weakened or was withdrawn?
+   - when prior/current snapshots are available as `affinity-map`, a compatible realization's `affinity_board.py diff BEFORE AFTER` may be used as a mechanical diff aid. Do not infer `=` (touched and explicitly checked but unchanged) from that tool; record it only when this round actually touched and rechecked the artifact.
 6. **Separate semantic delta from representation-only delta**
    - distinguish changes in card meaning, membership, labels, explicit relations, resonance, residuals, or questions from wording, renderer, line wrapping, or layout changes.
 7. **Externalize residuals**

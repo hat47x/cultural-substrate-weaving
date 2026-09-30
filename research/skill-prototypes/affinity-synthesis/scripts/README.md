@@ -90,6 +90,9 @@ python scripts/affinity_board.py handoff-add-check /tmp/board.json \
 # Reopen only the local semantic neighborhood of one stable ref.
 python scripts/affinity_board.py focus /tmp/board.json G001
 
+# Compare two saved snapshots mechanically by stable ID.
+python scripts/affinity_board.py diff /tmp/before.json /tmp/after.json
+
 python scripts/affinity_board.py status /tmp/board.json
 ```
 
@@ -111,6 +114,7 @@ Design constraints:
 - `handoff-add-check` records a possible next check as a candidate, without executing, prioritizing, or treating it as required work;
 - `add-narrative` requires at least one explicit `--basis` ref so map ↔ narrative return-check remains inspectable.
 - `focus` is read-only and one-hop: it exposes the selected artifact plus directly connected membership, relation, resonance, narrative, residual, question, source, and handoff context without recursively reopening the whole map. Handoff `do_not_assume` guardrails are surfaced only when the selected ref is actually carried or referenced by a next-check candidate.
+- `diff` is read-only and mechanical: it reports stable-ID additions/removals/field changes, group membership changes, handoff changes, and layout changes, but it does not infer touched-but-unchanged state or semantic justification.
 - `status` surfaces ungrouped cards, multiple direct memberships, singleton groups, narratives, residuals, questions, and validation warnings.
 
 The CLI is useful when conversation context is no longer a reliable place to remember card identity and movement. For small cases, directly editing the JSON or using the Markdown template can remain simpler.
