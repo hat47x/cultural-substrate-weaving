@@ -535,6 +535,165 @@ class AffinityBoardTest(unittest.TestCase):
             self.assertEqual(status["narrative_refs"], ["N001"])
             self.assertEqual(status["validation"]["errors"], [])
 
+    def test_focus_reopens_only_one_hop_semantic_context(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            target = Path(tmp) / "board.json"
+            self.run_board("init", str(target))
+            self.run_board(
+                "add-source",
+                str(target),
+                "--ref",
+                "notes://focus",
+                "--status",
+                "target_supported",
+            )
+            self.run_board(
+                "add-card",
+                str(target),
+                "Card A",
+                "--source",
+                "S001",
+                "--status",
+                "target_supported",
+            )
+            self.run_board("add-card", str(target), "Card B")
+            self.run_board(
+                "add-group",
+                str(target),
+                "--label",
+                "First meaning",
+                "--member",
+                "C001",
+            )
+            self.run_board(
+                "add-group",
+                str(target),
+                "--label",
+                "Second meaning",
+                "--member",
+                "C002",
+            )
+            self.run_board(
+                "add-resonance",
+                str(target),
+                "--from",
+                "C002",
+                "--to",
+                "G001",
+                "--note",
+                "C002 constrains G001 without becoming a member",
+            )
+            self.run_board(
+                "add-question",
+                str(target),
+                "Does G001 constrain G002?",
+                "--arises-from",
+                "G001",
+                "--between",
+                "G001",
+                "G002",
+                "--state",
+                "unresolved",
+            )
+            self.run_board(
+                "promote-question",
+                str(target),
+                "Q001",
+                "--direction",
+                "directed",
+                "--predicate",
+                "the return-check supports a constraint",
+                "--basis",
+                "C001",
+                "--basis",
+                "C002",
+                "--state",
+                "supported",
+            )
+            self.run_board(
+                "add-residual",
+                str(target),
+                "The boundary condition is still unresolved",
+                "--ref",
+                "G001",
+            )
+            self.run_board(
+                "add-narrative",
+                str(target),
+                "G001 constrains G002 while a boundary condition remains open.",
+                "--basis",
+                "G001",
+                "--basis",
+                "R001",
+            )
+
+            group_focus = json.loads(
+                self.run_board("focus", str(target), "G001").stdout
+            )
+            self.assertEqual(group_focus["kind"], "group")
+            self.assertEqual(group_focus["artifact"]["id"], "G001")
+            self.assertEqual(
+                [item["id"] for item in group_focus["endpoint_relations"]],
+                ["R001"],
+            )
+            self.assertEqual(
+                [item["id"] for item in group_focus["resonances"]],
+                ["X001"],
+            )
+            self.assertEqual(
+                [item["id"] for item in group_focus["narratives"]],
+                ["N001"],
+            )
+            self.assertEqual(
+                [item["id"] for item in group_focus["residuals"]],
+                ["U001"],
+            )
+            self.assertEqual(
+                [item["id"] for item in group_focus["questions"]],
+                ["Q001"],
+            )
+
+            card_focus = json.loads(
+                self.run_board("focus", str(target), "C001").stdout
+            )
+            self.assertEqual(card_focus["member_of_groups"], ["G001"])
+            self.assertEqual(card_focus["source_refs"], ["S001"])
+            self.assertEqual(
+                [item["id"] for item in card_focus["sources"]],
+                ["S001"],
+            )
+            self.assertEqual(
+                [item["id"] for item in card_focus["basis_relations"]],
+                ["R001"],
+            )
+
+    def test_focus_rejects_ambiguous_imported_ref(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            target = Path(tmp) / "board.json"
+            target.write_text(
+                json.dumps(
+                    {
+                        "format": "affinity-map",
+                        "version": "0.1",
+                        "sources": [{"id": "C001", "ref": "source with reused id"}],
+                        "cards": [{"id": "C001", "text": "card with reused id"}],
+                        "groups": [],
+                    }
+                ),
+                encoding="utf-8",
+            )
+            result = self.run_board(
+                "focus",
+                str(target),
+                "C001",
+                check=False,
+            )
+            self.assertNotEqual(result.returncode, 0)
+            self.assertIn(
+                "semantic ref is ambiguous across namespaces",
+                result.stderr,
+            )
+
     def test_narrative_requires_explicit_basis(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
             target = Path(tmp) / "board.json"

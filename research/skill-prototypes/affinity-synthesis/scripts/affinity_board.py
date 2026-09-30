@@ -523,6 +523,120 @@ def cmd_handoff_add_check(args: argparse.Namespace) -> None:
     mutate(args.map, op)
 
 
+def focus_payload(data: dict[str, Any], ref: str) -> dict[str, Any]:
+    matches: list[tuple[str, dict[str, Any]]] = []
+    for candidate_kind, (section, _prefix) in SECTIONS.items():
+        for item in objects(data, section):
+            if str(item.get("id", "")) == ref:
+                matches.append((candidate_kind, item))
+
+    if not matches:
+        raise ValueError(f"semantic ref does not exist: {ref}")
+    if len(matches) > 1:
+        namespaces = ", ".join(kind for kind, _item in matches)
+        raise ValueError(
+            f"semantic ref is ambiguous across namespaces: {ref} ({namespaces})"
+        )
+
+    kind, artifact = matches[0]
+
+    member_of_groups = [
+        str(group.get("id"))
+        for group in objects(data, "groups")
+        if ref in [str(member) for member in group.get("members", [])]
+    ]
+    endpoint_relations = [
+        item
+        for item in objects(data, "relations")
+        if ref in {str(item.get("from", "")), str(item.get("to", ""))}
+    ]
+    basis_relations = [
+        item
+        for item in objects(data, "relations")
+        if ref in [str(value) for value in item.get("basis", [])]
+        and item not in endpoint_relations
+    ]
+    resonances = [
+        item
+        for item in objects(data, "resonances")
+        if ref in {str(item.get("from", "")), str(item.get("to", ""))}
+    ]
+    narratives = [
+        item
+        for item in objects(data, "narratives")
+        if ref in [str(value) for value in item.get("basis", [])]
+    ]
+    residuals = [
+        item
+        for item in objects(data, "residuals")
+        if ref in [str(value) for value in item.get("refs", [])]
+    ]
+    questions = [
+        item
+        for item in objects(data, "questions")
+        if (
+            ref in [str(value) for value in item.get("arises_from", [])]
+            or ref in [
+                str(value)
+                for value in item.get("candidate_relation_between", [])
+            ]
+            or ref in [
+                str(value)
+                for value in item.get("would_clarify_refs", [])
+            ]
+        )
+    ]
+
+    source_refs: list[str] = []
+    sources: list[dict[str, Any]] = []
+    cards_from_source: list[dict[str, Any]] = []
+    if kind == "card":
+        source_refs = [str(value) for value in artifact.get("source_refs", [])]
+        source_ref_set = set(source_refs)
+        sources = [
+            item
+            for item in objects(data, "sources")
+            if str(item.get("id", "")) in source_ref_set
+        ]
+    elif kind == "source":
+        cards_from_source = [
+            item
+            for item in objects(data, "cards")
+            if ref in [str(value) for value in item.get("source_refs", [])]
+        ]
+
+    return {
+        "ref": ref,
+        "kind": kind,
+        "artifact": artifact,
+        "member_of_groups": member_of_groups,
+        "endpoint_relations": endpoint_relations,
+        "basis_relations": basis_relations,
+        "resonances": resonances,
+        "narratives": narratives,
+        "residuals": residuals,
+        "questions": questions,
+        "source_refs": source_refs,
+        "sources": sources,
+        "cards_from_source": cards_from_source,
+    }
+
+
+def cmd_focus(args: argparse.Namespace) -> None:
+    data = load_map(args.map)
+    errors, warnings = validate(data)
+    if errors:
+        raise ValueError("map is invalid:\n- " + "\n- ".join(errors))
+    warn_lines(warnings)
+    print(
+        json.dumps(
+            focus_payload(data, args.ref),
+            ensure_ascii=False,
+            indent=2,
+        )
+    )
+
+
 def status_payload(data: dict[str, Any]) -> dict[str, Any]:
     cards = objects(data, "cards")
     groups = objects(data, "groups")
@@ -910,6 +1024,17 @@ def build_parser() -> argparse.ArgumentParser:
     handoff_check.add_argument("--ref", action="append")
     handoff_check.add_argument("--status")
     handoff_check.set_defaults(func=cmd_handoff_add_check)
+
+    focus = sub.add_parser(
+        "focus",
+        help=(
+            "show the one-hop semantic neighborhood of one stable ref without "
+            "reopening the whole map"
+        ),
+    )
+    focus.add_argument("map", type=Path)
+    focus.add_argument("ref")
+    focus.set_defaults(func=cmd_focus)
 
     status = sub.add_parser(
         "status",
