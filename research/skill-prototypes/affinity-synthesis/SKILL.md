@@ -194,7 +194,7 @@ rendering toolが使える場合は、syntaxだけでなく視覚的な誤読も
 - card / group / residual / question / relationへstable IDを付ける。
 - cardをgroup間で移動してもcard IDとsource provenanceを維持する。
 - secondary resonanceをmembershipへ変換しない。
-- questionable connectionを`Q`のまま保持し、明示的なreturn-checkなしに`R`へ昇格させない。
+- questionable connectionを`Q`のまま保持し、明示的なreturn-check後に`promote-question`を使った場合だけ`R`へ昇格させる。
 - ungrouped card、multiple direct membership、singleton group、residual、questionを一覧化し、綺麗に収まりすぎた構造を再点検する。
 - toolはgroup label、relation predicate、重要度、truthを推論しない。それらは材料を読み、元材料へ戻す作業の中で決める。
 
@@ -283,6 +283,5 @@ handoff capsuleは**次roundの開始・問いの決定・全参照のreopenを�
 - 書式・ID・relation grammar・machine-readable map・diagram projection: `references/REPRESENTATION.md`
 - 標準成果物: `references/TEMPLATE.md`
 - machine-readable schema候補: `references/affinity-map.schema.json`
-- machine-readable mapを明示的に増分編集する補助: `scripts/edit_map.py`（自動cluster / label / relation推論は行わない）
 - 評価・反例: `evals/CASES.md`
 - 公開時の根拠と限界: `evidence/dossier.md`
