@@ -169,6 +169,143 @@ class AffinityBoardTest(unittest.TestCase):
             self.assertEqual(data["questions"][0]["state"], "promoted-after-return-check")
             self.assertEqual(data["questions"][0]["handling"], "promoted to R001")
 
+    def test_relation_can_be_weakened_then_reopened_as_question(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            target = Path(tmp) / "board.json"
+            self.run_board("init", str(target))
+            self.run_board("add-card", str(target), "Card A")
+            self.run_board("add-card", str(target), "Card B")
+            self.run_board(
+                "add-group",
+                str(target),
+                "--label",
+                "First group",
+                "--member",
+                "C001",
+            )
+            self.run_board(
+                "add-group",
+                str(target),
+                "--label",
+                "Second group",
+                "--member",
+                "C002",
+            )
+            self.run_board(
+                "add-question",
+                str(target),
+                "Does G001 constrain G002?",
+                "--between",
+                "G001",
+                "G002",
+                "--state",
+                "unresolved",
+            )
+            self.run_board(
+                "promote-question",
+                str(target),
+                "Q001",
+                "--direction",
+                "directed",
+                "--predicate",
+                "G001 constrains G002",
+                "--basis",
+                "C001",
+                "--basis",
+                "C002",
+                "--state",
+                "supported",
+            )
+
+            self.run_board(
+                "revise-relation",
+                str(target),
+                "R001",
+                "--direction",
+                "directed",
+                "--predicate",
+                "G001 may narrow one option visible in G002",
+                "--basis",
+                "C001",
+                "--state",
+                "tentative",
+                "--note",
+                "weakened after return-to-source",
+            )
+            data = json.loads(target.read_text(encoding="utf-8"))
+            relation = data["relations"][0]
+            self.assertEqual(relation["from"], "G001")
+            self.assertEqual(relation["to"], "G002")
+            self.assertEqual(
+                relation["predicate"],
+                "G001 may narrow one option visible in G002",
+            )
+            self.assertEqual(relation["basis"], ["C001"])
+            self.assertEqual(relation["state"], "tentative")
+            self.assertEqual(
+                relation["note"],
+                "weakened after return-to-source",
+            )
+
+            self.assertEqual(
+                self.run_board(
+                    "demote-relation",
+                    str(target),
+                    "R001",
+                    "Is any defensible relation left between G001 and G002?",
+                    "--id",
+                    "Q002",
+                    "--would-clarify",
+                    "C001",
+                    "--would-clarify",
+                    "C002",
+                ).stdout.strip(),
+                "Q002",
+            )
+            data = json.loads(target.read_text(encoding="utf-8"))
+            self.assertEqual(data["relations"], [])
+
+            prior_question = next(
+                item for item in data["questions"] if item["id"] == "Q001"
+            )
+            self.assertEqual(
+                prior_question["state"],
+                "relation-demoted-after-return-check",
+            )
+            self.assertEqual(
+                prior_question["handling"],
+                "relation R001 demoted to Q002 after return-check",
+            )
+
+            reopened = next(
+                item for item in data["questions"] if item["id"] == "Q002"
+            )
+            self.assertEqual(
+                reopened["candidate_relation_between"],
+                ["G001", "G002"],
+            )
+            self.assertEqual(
+                reopened["arises_from"],
+                ["G001", "G002"],
+            )
+            self.assertEqual(reopened["state"], "unresolved")
+            self.assertEqual(
+                reopened["would_clarify_refs"],
+                ["C001", "C002"],
+            )
+            self.assertIn("prior predicate:", reopened["handling"])
+            self.assertIn(
+                "G001 may narrow one option visible in G002",
+                reopened["handling"],
+            )
+
+            status = json.loads(
+                self.run_board("status", str(target), "--json").stdout
+            )
+            self.assertEqual(status["counts"]["relation"], 0)
+            self.assertEqual(status["counts"]["question"], 2)
+            self.assertEqual(status["validation"]["errors"], [])
+
     def test_question_without_candidate_relation_cannot_be_promoted(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
             target = Path(tmp) / "board.json"

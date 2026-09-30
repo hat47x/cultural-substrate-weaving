@@ -377,6 +377,71 @@ def cmd_promote_question(args: argparse.Namespace) -> None:
     mutate(args.map, op)
 
 
+def cmd_revise_relation(args: argparse.Namespace) -> None:
+    def op(data: dict[str, Any]) -> None:
+        relation = find_item(data, "relation", args.relation)
+        relation["predicate"] = args.predicate
+        relation["direction"] = args.direction
+        if args.basis is not None:
+            if args.basis:
+                relation["basis"] = list(dict.fromkeys(args.basis))
+            else:
+                relation.pop("basis", None)
+        if args.state:
+            relation["state"] = args.state
+        if args.note:
+            relation["note"] = args.note
+
+    mutate(args.map, op)
+
+
+def cmd_demote_relation(args: argparse.Namespace) -> None:
+    def op(data: dict[str, Any]) -> None:
+        relation = find_item(data, "relation", args.relation)
+        source = relation.get("from")
+        target = relation.get("to")
+        predicate = relation.get("predicate")
+        if not isinstance(source, str) or not source:
+            raise ValueError(f"relation source is invalid: {args.relation}")
+        if not isinstance(target, str) or not target:
+            raise ValueError(f"relation target is invalid: {args.relation}")
+        if not isinstance(predicate, str) or not predicate.strip():
+            raise ValueError(f"relation predicate is invalid: {args.relation}")
+
+        question_id = choose_id(data, "question", args.id)
+        question: dict[str, Any] = {
+            "id": question_id,
+            "text": args.text,
+            "arises_from": [source, target],
+            "candidate_relation_between": [source, target],
+            "handling": (
+                args.handling
+                or (
+                    f"demoted from {args.relation} after return-check; "
+                    f"prior predicate: {predicate}"
+                )
+            ),
+            "state": args.state or "unresolved",
+        }
+        if args.would_clarify:
+            question["would_clarify_refs"] = list(
+                dict.fromkeys(args.would_clarify)
+            )
+
+        objects(data, "relations").remove(relation)
+        for prior_question in objects(data, "questions"):
+            if prior_question.get("handling") == f"promoted to {args.relation}":
+                prior_question["state"] = "relation-demoted-after-return-check"
+                prior_question["handling"] = (
+                    f"relation {args.relation} demoted to {question_id} "
+                    "after return-check"
+                )
+        objects(data, "questions").append(question)
+        print(question_id)
+
+    mutate(args.map, op)
+
+
 def status_payload(data: dict[str, Any]) -> dict[str, Any]:
     cards = objects(data, "cards")
     groups = objects(data, "groups")
@@ -634,6 +699,42 @@ def build_parser() -> argparse.ArgumentParser:
     promote.add_argument("--basis", action="append")
     promote.add_argument("--state")
     promote.set_defaults(func=cmd_promote_question)
+
+    revise_relation = sub.add_parser(
+        "revise-relation",
+        help=(
+            "restate an existing relation after return-to-source without changing "
+            "its endpoints"
+        ),
+    )
+    revise_relation.add_argument("map", type=Path)
+    revise_relation.add_argument("relation")
+    revise_relation.add_argument("--predicate", required=True)
+    revise_relation.add_argument(
+        "--direction",
+        choices=("directed", "reciprocal", "unspecified"),
+        required=True,
+    )
+    revise_relation.add_argument("--basis", action="append", default=None)
+    revise_relation.add_argument("--state")
+    revise_relation.add_argument("--note")
+    revise_relation.set_defaults(func=cmd_revise_relation)
+
+    demote_relation = sub.add_parser(
+        "demote-relation",
+        help=(
+            "withdraw an explicit relation after return-check and preserve it as "
+            "an unresolved question candidate"
+        ),
+    )
+    demote_relation.add_argument("map", type=Path)
+    demote_relation.add_argument("relation")
+    add_common_id(demote_relation)
+    demote_relation.add_argument("text")
+    demote_relation.add_argument("--would-clarify", action="append")
+    demote_relation.add_argument("--handling")
+    demote_relation.add_argument("--state")
+    demote_relation.set_defaults(func=cmd_demote_relation)
 
     status = sub.add_parser(
         "status",

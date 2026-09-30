@@ -49,10 +49,22 @@ python scripts/affinity_board.py add-narrative /tmp/board.json \
   --emergent "接続から選択余地の縮小が見える" \
   --residual "C014の時間感覚はなお未統合"
 
+# A return-check may weaken an already asserted relation.
+python scripts/affinity_board.py revise-relation /tmp/board.json R001 \
+  --direction directed \
+  --predicate "G01はG03の一部の選択肢を狭める可能性がある" \
+  --basis C002 --state tentative \
+  --note "戻し検査で主張を弱めた"
+
+# If the relation no longer survives, remove R and reopen it as Q.
+python scripts/affinity_board.py demote-relation /tmp/board.json R001 \
+  "G01とG03の間に、なお支持できる関係は残るか" \
+  --id Q009 --would-clarify C002 --would-clarify C014
+
 python scripts/affinity_board.py status /tmp/board.json
 ```
 
-Supported operations include explicit source/card/group creation, group membership edits, primary-card moves, secondary resonance, relations, residuals, questions, explicit question-to-relation promotion after return-check, narrative synthesis with basis/transformation audit, and board status.
+Supported operations include explicit source/card/group creation, group membership edits, primary-card moves, secondary resonance, relations, residuals, questions, explicit question-to-relation promotion after return-check, narrative synthesis with basis/transformation audit, relation revision/demotion after another return-check, and board status.
 
 Design constraints:
 
@@ -62,6 +74,8 @@ Design constraints:
 - `move-card` changes direct membership but preserves the card itself;
 - relation predicates and group labels are never inferred;
 - questionable connections can remain questions instead of being promoted to relations;
+- an existing relation is not sticky: `revise-relation` requires the caller to restate predicate/direction, and `demote-relation` removes the `R` before creating a new unresolved `Q`;
+- relation demotion preserves the prior predicate only as audit history, not as a current assertion;
 - `add-narrative` requires at least one explicit `--basis` ref so map ↔ narrative return-check remains inspectable.
 - `status` surfaces ungrouped cards, multiple direct memberships, singleton groups, narratives, residuals, questions, and validation warnings.
 
