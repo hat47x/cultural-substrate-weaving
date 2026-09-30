@@ -191,11 +191,12 @@ rendering toolが使える場合は、syntaxだけでなく視覚的な誤読も
 
 このprototypeには `scripts/affinity_board.py` がある。これは**思考を代行する分類器ではなく、思考結果を壊さず操作するための道具**である。
 
-- card / group / residual / question / relationへstable IDを付ける。
+- card / group / relation / narrative / residual / questionへstable IDを付ける。
 - cardをgroup間で移動してもcard IDとsource provenanceを維持する。
 - secondary resonanceをmembershipへ変換しない。
 - questionable connectionを`Q`のまま保持し、明示的なreturn-check後に`promote-question`を使った場合だけ`R`へ昇格させる。
-- ungrouped card、multiple direct membership、singleton group、residual、questionを一覧化し、綺麗に収まりすぎた構造を再点検する。
+- relation構造を読んで作ったnarrativeにはbasis refを残し、inherited / emergent / residualの変換監査を必要に応じて保持する。
+- ungrouped card、multiple direct membership、singleton group、narrative、residual、questionを一覧化し、綺麗に収まりすぎた構造を再点検する。
 - toolはgroup label、relation predicate、重要度、truthを推論しない。それらは材料を読み、元材料へ戻す作業の中で決める。
 
 最小例:

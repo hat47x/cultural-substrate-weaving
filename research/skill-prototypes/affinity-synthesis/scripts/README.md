@@ -41,10 +41,18 @@ python scripts/affinity_board.py promote-question /tmp/board.json Q001 \
   --predicate "G01で生じた遅れがG03の選択余地を狭める" \
   --basis C002 --basis C014 --state supported
 
+# Narrate from explicit map refs and keep transformation provenance visible.
+python scripts/affinity_board.py add-narrative /tmp/board.json \
+  "G01からG03への制約は支持されたが、C014の時間感覚は未統合のまま残る" \
+  --basis G01 --basis G03 --basis R001 \
+  --inherited "G01とG03は別のまとまりとして立つ" \
+  --emergent "接続から選択余地の縮小が見える" \
+  --residual "C014の時間感覚はなお未統合"
+
 python scripts/affinity_board.py status /tmp/board.json
 ```
 
-Supported operations include explicit source/card/group creation, group membership edits, primary-card moves, secondary resonance, relations, residuals, questions, explicit question-to-relation promotion after return-check, and board status.
+Supported operations include explicit source/card/group creation, group membership edits, primary-card moves, secondary resonance, relations, residuals, questions, explicit question-to-relation promotion after return-check, narrative synthesis with basis/transformation audit, and board status.
 
 Design constraints:
 
@@ -54,7 +62,8 @@ Design constraints:
 - `move-card` changes direct membership but preserves the card itself;
 - relation predicates and group labels are never inferred;
 - questionable connections can remain questions instead of being promoted to relations;
-- `status` surfaces ungrouped cards, multiple direct memberships, singleton groups, residuals, questions, and validation warnings.
+- `add-narrative` requires at least one explicit `--basis` ref so map ↔ narrative return-check remains inspectable.
+- `status` surfaces ungrouped cards, multiple direct memberships, singleton groups, narratives, residuals, questions, and validation warnings.
 
 The CLI is useful when conversation context is no longer a reliable place to remember card identity and movement. For small cases, directly editing the JSON or using the Markdown template can remain simpler.
 

@@ -199,6 +199,105 @@ class AffinityBoardTest(unittest.TestCase):
             )
             self.assertEqual(target.read_text(encoding="utf-8"), before)
 
+    def test_narrative_synthesis_keeps_basis_and_transformation_audit(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            target = Path(tmp) / "board.json"
+            self.run_board("init", str(target))
+            self.run_board("add-card", str(target), "Card A")
+            self.run_board("add-card", str(target), "Card B")
+            self.run_board(
+                "add-group",
+                str(target),
+                "--label",
+                "First integrated meaning",
+                "--member",
+                "C001",
+            )
+            self.run_board(
+                "add-group",
+                str(target),
+                "--label",
+                "Second integrated meaning",
+                "--member",
+                "C002",
+            )
+            self.run_board(
+                "add-question",
+                str(target),
+                "Does G001 constrain G002?",
+                "--between",
+                "G001",
+                "G002",
+                "--state",
+                "unresolved",
+            )
+            self.run_board(
+                "promote-question",
+                str(target),
+                "Q001",
+                "--direction",
+                "directed",
+                "--predicate",
+                "the return-check supports a constraint from G001 toward G002",
+                "--basis",
+                "C001",
+                "--basis",
+                "C002",
+                "--state",
+                "supported",
+            )
+
+            result = self.run_board(
+                "add-narrative",
+                str(target),
+                "G001 constrains G002, while the remaining condition stays unresolved.",
+                "--basis",
+                "G001",
+                "--basis",
+                "G002",
+                "--basis",
+                "R001",
+                "--state",
+                "draft-after-map-read",
+                "--inherited",
+                "G001 and G002 remain distinct meanings",
+                "--emergent",
+                "their supported relation exposes a constraint",
+                "--residual",
+                "the condition under which the constraint disappears is unresolved",
+            )
+            self.assertEqual(result.stdout.strip(), "N001")
+
+            data = json.loads(target.read_text(encoding="utf-8"))
+            narrative = data["narratives"][0]
+            self.assertEqual(narrative["basis"], ["G001", "G002", "R001"])
+            self.assertEqual(
+                narrative["transformation_audit"]["emergent"],
+                ["their supported relation exposes a constraint"],
+            )
+
+            status = json.loads(
+                self.run_board("status", str(target), "--json").stdout
+            )
+            self.assertEqual(status["counts"]["narrative"], 1)
+            self.assertEqual(status["narrative_refs"], ["N001"])
+            self.assertEqual(status["validation"]["errors"], [])
+
+    def test_narrative_requires_explicit_basis(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            target = Path(tmp) / "board.json"
+            self.run_board("init", str(target))
+            before = target.read_text(encoding="utf-8")
+            result = self.run_board(
+                "add-narrative",
+                str(target),
+                "A narrative without inspectable map refs must not be added by the board.",
+                check=False,
+            )
+            self.assertNotEqual(result.returncode, 0)
+            self.assertIn("--basis", result.stderr)
+            self.assertEqual(target.read_text(encoding="utf-8"), before)
+
     def test_invalid_reference_is_rejected_without_overwriting_map(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
             target = Path(tmp) / "board.json"
