@@ -207,13 +207,18 @@ def cmd_audit_group(args: argparse.Namespace) -> None:
                 "or preserved difference"
             )
 
-        audit = group.setdefault("transformation_audit", {})
-        if not isinstance(audit, dict):
-            raise ValueError(
-                f"group {args.group} transformation_audit must be an object"
-            )
-        for key, values in updates.items():
-            if values is not None:
+        audit_updates = {
+            key: values
+            for key, values in updates.items()
+            if values is not None
+        }
+        if audit_updates:
+            audit = group.setdefault("transformation_audit", {})
+            if not isinstance(audit, dict):
+                raise ValueError(
+                    f"group {args.group} transformation_audit must be an object"
+                )
+            for key, values in audit_updates.items():
                 audit[key] = list(dict.fromkeys(values))
 
         if args.preserved_difference is not None:
