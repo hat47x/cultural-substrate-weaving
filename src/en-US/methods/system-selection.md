@@ -45,6 +45,24 @@ Also confirm the original domain of use, lineage, and limits. Show lineage well 
 
 Do not collapse candidates into one fit score. On the target-led path, ask what different way of seeing the unresolved target structure the framework can supply. On the framework-led path, ask what distinctions or questions appear that the current problem framing does not yet contain. Do not turn this into unlimited enumeration of unrelated frameworks, or discard parts of a framework merely because one use case did not foreground them.
 
+### Compose framework use by needed cognitive function, not fit score
+
+When exploratory use is meant to draw broad cognitive contribution from cultural frameworks, do not converge early on the single framework that looks most similar to the target. Ask which **cognitive function** is still missing from the current target understanding.
+
+Representative functions include:
+
+- changing segmentation or position;
+- exposing an empty position as an unasked question rather than a target gap;
+- introducing another relation principle such as opposition, complementarity, adjacency, or center/periphery;
+- bringing cycles, phase, transition, generation/restraint, or reversibility/irreversibility into time;
+- shifting boundary, scale, or layer;
+- deriving attention, observation, or trial candidates from practice knowledge;
+- reversing or relativizing the current problem framing.
+
+When multiple frameworks are used, do not optimize for candidate count. Where useful, place frameworks with **different segmentation principles, temporal structures, path structures, or practice structures** against one another. A second framework does not vote on the first. It acts as a reflecting surface that can disturb units, timing, boundaries, or assumptions frozen by the first.
+
+Do not collapse these functions into a single fit score. Preserve a target-side baseline and make it possible to compare which new questions, distinctions, research targets, or trials appeared after framework contact.
+
 ## 3a. Exploratory use and attribution use
 
 ### Exploratory use

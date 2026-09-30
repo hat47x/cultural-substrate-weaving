@@ -25,6 +25,18 @@ python scripts/affinity_board.py add-card /tmp/board.json \
   "Meaning-bearing card B with a different timing" \
   --source S001
 
+# Keep the cultural operation that produced a framework-generated candidate.
+python scripts/affinity_board.py add-card /tmp/board.json \
+  "What becomes visible from the complementary position?" \
+  --status framework_generated
+
+python scripts/affinity_board.py trace-card /tmp/board.json C003 \
+  --framework "five-phases" \
+  --operation "opposition-complement" \
+  --operation "transition-path" \
+  --location "wood-metal" \
+  --as-if "seen as a generative cycle"
+
 python scripts/affinity_board.py add-group /tmp/board.json \
   --label "First integrated meaning" \
   --member C001
@@ -108,6 +120,8 @@ Design constraints:
 - every mutation is validated before replacing the file;
 - failed mutations leave the previous board unchanged;
 - IDs are stable references, not ontology classes;
+- `trace-card` records framework / operation / location / as-if provenance on a card; it never changes membership, relation, importance, evidence status, or truth. Operation names remain open strings rather than a closed taxonomy;
+- `status` may expose the framework/operation mix and `framework_generated` cards whose catalytic trace is still absent. These are observation aids, not coverage or quality scores;
 - `move-card` changes direct membership but preserves the card itself;
 - `audit-group` is a post-grouping audit: inherited / emergent / residual are recorded after a working group/label exists, not used as a pre-grouping taxonomy;
 - `status` reports groups that still lack transformation audit so a polished-looking map does not silently skip the return-check;
