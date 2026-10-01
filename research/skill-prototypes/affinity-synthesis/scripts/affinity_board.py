@@ -243,6 +243,10 @@ def cmd_trace_card(args: argparse.Namespace) -> None:
             raise ValueError(
                 "trace-card requires at least one framework and one operation"
             )
+        if trace.get("target_response_refs") and not trace.get("target_responses"):
+            raise ValueError(
+                "target-response-ref requires at least one target-response"
+            )
 
         if args.as_if is not None:
             trace["as_if"] = args.as_if
