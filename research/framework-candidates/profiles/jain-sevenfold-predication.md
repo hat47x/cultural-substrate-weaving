@@ -17,6 +17,14 @@ https://iep.utm.edu/jain/
 
 The reference describes seven predicative forms involving affirmation, negation, both, indescribability, and combinations, all marked by syāt / conditioned standpoint.
 
+### Specialist scholarly source
+
+Shree Nahata, “In Some Ways: Syādvāda as the Synthesis of Anekāntavāda and Nayavāda in Akalaṅka’s Philosophical Treatises,” Journal of Indian Philosophy (2024)
+
+https://link.springer.com/article/10.1007/s10781-024-09575-7
+
+This study reads Akalaṅka's Laghīyastraya and Nyāyaviniścaya and clarifies how syādvāda, anekāntavāda, and nayavāda are related in his system. It strengthens the profile's standpoint/conditional-predication boundary without implying that Akalaṅka exhausts all Jain formulations.
+
 ## Structural core
 
 The central cognitive value for CSW is not seven labels by themselves. It is the requirement that assertions be bound to circumstance, standpoint, or aspect, while leaving room for what is not adequately expressible under the current vocabulary.
