@@ -265,3 +265,37 @@ ritualというタグだけで自動routingしない。
 この差分表を固定routing ruleへしない。
 
 次に増やす候補は、この表の既存operationに似ているかを先に照合し、**名前や文化圏ではなく、新しい認知operationを追加できる場合だけ**研究queueへ入れる。
+
+
+## Jingluo / Marshallese wave navigation
+
+### overlap
+
+Both can expose route / network structure and ask how movement or flow proceeds through connected paths.
+
+### keep separate because
+
+**Jingluo** preserves:
+
+- main vs collateral channel distinctions;
+- branching / channel topology;
+- a traditional medical-system route vocabulary;
+- the need to separate structural use from modern anatomy/physiology claims.
+
+**Marshallese wave navigation** preserves:
+
+- relative environmental cues rather than a channel inventory;
+- route memory and cue sequence;
+- instructional model vs situated sensing;
+- perturbation / wave interaction as navigational signal;
+- non-medical wayfinding.
+
+### collapse test
+
+If both are reduced to “draw a network,” both lose their distinctive operation.
+
+If de-binding retains only nodes and edges, the Marshallese candidate should be rejected as redundant. It remains distinct only when **model/environment return, local cue sequence, and situated sensing** survive target return.
+
+### adoption consequence
+
+Do not use Marshallese wave navigation as a safer cultural wrapper around Jingluo. Keep it research-only until its non-medical wayfinding value is demonstrated in a target-side worked example and compared against another route tradition.
