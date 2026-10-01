@@ -53,6 +53,7 @@ When exploration is delegated and broad discovery increment is desired, use the 
    - Keep questions, distinctions, relation candidates, transition candidates, falsifiers, observation targets, trials, and residuals as separate material; delegate to a compatible `affinity-synthesis` when useful.
    - Do not let framework-derived cards predetermine grouping or labels.
    - Return the resulting candidates to target-side sources and observations, distinguishing what survives independently, what is pushed back, and what remains unresolved.
+   - When a compatible cognitive scaffold is available, keep an append-only transformation history on the same stable framework-derived candidate after target return. States may correspond to survival, weakening, rejection, residualization, or reframing, but state names remain open vocabulary; passing through target return does not itself become `target_supported`, truth, or importance.
 
 A framework's available cognitive operations can be summarized like this:
 

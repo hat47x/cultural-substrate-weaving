@@ -90,6 +90,7 @@ verification: target_supported | unresolved | other explicit state
 ```
 
 固定schemaではない。compatibleなAffinity Boardで`target_response`を記録する場合、具体的な対象側材料へ戻せるときはsource/card参照を併記してよい。参照があること自体は`target_supported`を意味せず、由来と検証状態を別に保つ。
+framework由来candidateを対象へ戻した後の変形も、必要なら同じstable cardのappend-only auditとして保持できる。compatibleなAffinity Boardでは`audit-return`でopen-stringのstate、target-side basis ref、修正note、次確認候補を追記してよい。このauditはKJ grouping前のtaxonomyではなく、通常の材料主導統合へ戻すための履歴である。
 
 第三構造が親和統合の中でさらに変化した場合も、元のtarget/framework tensionへ戻れるlineageを残す。統合後の文が滑らかになったことを理由に、緊張の履歴を削除しない。
 

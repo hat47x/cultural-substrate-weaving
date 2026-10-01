@@ -88,6 +88,7 @@ verification: target_supported | unresolved | other explicit state
 ```
 
 This is not a fixed schema. When a compatible Affinity Board records a `target_response`, it may also retain source/card refs when the response can be tied back to concrete target-side material. The presence of such refs does not itself mean `target_supported`; keep origin and verification state separate.
+After a framework-derived candidate is returned to the target, its transformation may also be kept as append-only history on the same stable card. In a compatible Affinity Board, `audit-return` may append an open-string state, target-side basis refs, a revision note, and possible next checks. This audit is not a pre-grouping taxonomy; it is history carried back into ordinary material-led affinity synthesis.
 
 If the third structure changes further inside affinity synthesis, retain lineage back to the original target/framework tension. Do not delete the history of tension merely because the resulting prose has become smooth.
 
