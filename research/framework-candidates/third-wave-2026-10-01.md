@@ -103,6 +103,37 @@ Status: sourced-candidate
 
 profile: profiles/shinto-threshold-purification.md
 
+## 3. Classical stasis theory — 争点そのものの型を分離する
+
+Status: profile-ready
+
+Nyāya五支が「理由から結論への橋」を展開するのに対し、stasis theoryは議論が何を争っているかを分ける。
+
+cross-source minimumとして次を候補化する。
+
+- fact / conjecture — そもそも起きたか、成り立つか;
+- definition — 何と呼ぶ／分類するべきか;
+- quality / evaluation — どう評価・正当化・非難するか;
+- procedure / competence — 誰が、どの場で、どの規則・時点・方法で決めるか。
+
+### operation
+
+- dispute-state-separation
+- fact-before-evaluation-probe
+- definition-shift-audit
+- quality-after-concession-probe
+- competence-procedure-probe
+- stasis-switch-detection
+
+### 境界
+
+- Hermagoras、Cicero、Rhetorica ad Herennium、Quintilian、Hermogenes等を一つの不変な四分類へ潰さない。
+- stasisを特定しただけで真偽や妥当性が決まるとは扱わない。
+- 古代法廷の手続・管轄を対象側の規則として輸入しない。
+- 現代教材の「fact / definition / quality / policy」等を、そのまま古代の唯一の正本として逆投影しない。
+
+profile: profiles/classical-stasis-theory.md
+
 ## 並行成果との統合
 
 Nyāyaは `profiles/nyaya-five-member-inference.md`、空間型マンダラは `profiles/buddhist-mandala.md` を正本とする。Tibetan-specificな厚みは `profiles/tibetan-buddhist-mandala.md` に分離する。第三波で同名・類似の別profileは作らない。
