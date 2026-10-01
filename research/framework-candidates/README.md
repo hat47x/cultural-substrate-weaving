@@ -108,7 +108,9 @@ Status: research-only
 - llull-ars
 - five-aggregates
 - jo-ha-kyu
+- rites-of-passage（比較人類学上のboundary-crossing model）
+- buddhist-mandala（center / direction / gate / nested boundary、lineage-sensitive）
 
-Ifá / Odù、Jingluo、Sefirot、chakraは構造的価値が高い一方、living tradition、医療、宗教、系譜差の境界が重いため、採用を急がず研究レーンに留める。
+Ifá / Odù、Jingluo、Sefirot、chakraは構造的価値が高い一方、living tradition、医療、宗教、系譜差の境界が重いため、採用を急がず研究レーンに留める。Buddhist mandalaもsource basisは十分だが、runtime化前にlineage-specific contractとcross-lineage minimumを分ける。Rites-of-passageは文化native体系ではなく比較人類学モデルとして別扱いする。
 
 当面は効果比較を増やさない。profile-ready / skill-candidateの母集団を増やし、source basis、lineage、structural core、native operation、de-binding、target-return questionを揃えることを優先する。
