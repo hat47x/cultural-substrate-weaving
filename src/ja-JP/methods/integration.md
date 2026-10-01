@@ -66,7 +66,7 @@ newly_recomposed:
 
 を持たせる。
 
-これはLayer 1に弁証法や文化体系処理を実装させるためではない。**第三構造が何との緊張から生じたのかを失わず、親和統合がその緊張自体も材料として扱えるようにするため**である。
+これはLayer 1に弁証法や文化体系処理を実装させるためではない。**第三構造が何との緊張から生じたのかを失わず、親和統合がその緊張自体も材料として扱えるようにするため**である。compatibleなAffinity Boardでは、`cross_field_emergent` cardに`trace-cross-field`を使い、target側refとtrace済みframework card refを別々に保持してよい。これはlineageの外在化であり、第三候補の採用や真偽判定ではない。
 
 Layer 1は、`cross_field_candidate` を特権的な上位表札として扱わない。対象側の抵抗、体系側の読み、第三候補を必要に応じて別々のmeaning-bearing unitとして保持し、そこから改めて材料主導で統合する。
 
