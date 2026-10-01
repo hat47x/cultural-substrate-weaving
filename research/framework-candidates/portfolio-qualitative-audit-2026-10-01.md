@@ -173,3 +173,21 @@ Maya calendar、Ifá、Shinto、Hadith、Tibetan Buddhist mandala等は、歴史
 - target-return questionが単なる体系語の言い換えではなく、対象側で観察・反証・試行へ降りる。
 
 この条件を満たした後に、体系なし／近い体系／遠い体系／複数体系などの比較へ進む。
+
+
+## 追加補強 — 単一資料依存の解消
+
+同日追補として、inventory上でsourceが1件のみだった候補を再調査した。
+
+補強した体系:
+
+- Sāṅkhya: GRETIL / SUB Göttingen の『Sāṃkhyakārikā』デジタル古典本文を追加。
+- catuṣkoṭi: Digital Sanskrit Buddhist Canon の『Mūlamadhyamakakārikā』を、Madhyamakaにおける古典的文脈として追加。四句分別全体の唯一の正本とは扱わない。
+- Jain sevenfold predication: Akalaṅkaのsyādvāda / anekāntavāda / nayavādaの関係を扱う2024年の専門研究を追加。
+- Twenty-Four Solar Terms: 地域的起源と適用差を検討する2024年Scientific Reports論文を追加。
+- Ifá / Odù: Karin BarberによるRoutledge Encyclopedia of Philosophyのcorpus解説を追加。
+- Llull Ars: Science History Institute所蔵の『Ars brevis』歴史写本デジタル資料を追加。
+
+この補強後、**inventory上でsourceが2件未満の候補は0件**となった。
+
+これは「各体系の資料が十分」という意味ではない。最低限、単一資料だけに依存して体系構造を再構成する状態を解消したという品質上の節目である。次は件数を増やすより、jingluo / sefirot / chakra のように系譜・医療・宗教上の境界が重い候補について、profile化の前段となるsource packetを厚くする。
