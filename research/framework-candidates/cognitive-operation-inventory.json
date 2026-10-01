@@ -982,6 +982,59 @@
           "url": "https://www.metmuseum.org/art/collection/search/53205"
         }
       ]
+    },
+    {
+      "id": "nyaya-five-member-inference",
+      "names": [
+        "Nyāya five-member inference",
+        "Nyaya five-member inference",
+        "五支論証",
+        "pañcāvayava"
+      ],
+      "readiness": "profile-ready",
+      "structural_primitives": [
+        "thesis",
+        "reason",
+        "corroborating example",
+        "application to the target case",
+        "conclusion"
+      ],
+      "cognitive_operations": [
+        "thesis-reason-separation",
+        "example-corroboration-probe",
+        "rule-to-case-application-check",
+        "inferential-bridge-exposure",
+        "counterexample-prompt",
+        "pseudo-reason-audit"
+      ],
+      "useful_for": [
+        "making the bridge from reason to concrete target explicit",
+        "distinguishing a vivid example from actual support",
+        "checking whether the proposed relation applies to the target case"
+      ],
+      "do_not_assume": [
+        "the five-member presentation is one timeless form of all Indian logic",
+        "the five-member form by itself makes an argument valid",
+        "Nyāya, Buddhist logic, Vaiśeṣika, Caraka debate traditions, and Navya-Nyāya are interchangeable",
+        "a stock analogy becomes target-side evidence"
+      ],
+      "sources": [
+        {
+          "kind": "scholarly-reference",
+          "title": "Logic in Classical Indian Philosophy",
+          "url": "https://plato.stanford.edu/entries/logic-india/"
+        },
+        {
+          "kind": "scholarly-reference",
+          "title": "Nyaya",
+          "url": "https://iep.utm.edu/nyaya/"
+        },
+        {
+          "kind": "scholarly-monograph-chapter",
+          "title": "An Introduction to Indian Philosophy — Reasoning",
+          "url": "https://www.cambridge.org/core/books/abs/an-introduction-to-indian-philosophy/reasoning/43A57DB83FF080BE57958897B4A7F6A2"
+        }
+      ]
     }
   ]
 }
