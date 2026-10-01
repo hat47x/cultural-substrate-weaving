@@ -193,6 +193,7 @@ rendering toolが使える場合は、syntaxだけでなく視覚的な誤読も
 
 - card / group / relation / narrative / residual / questionへstable IDを付ける。
 - CSW等から来た`framework_generated` cardでは、必要なら`trace-card`でframework / operation / location / yield-kind / target-response / as-ifを残す。target responseを具体的な対象側材料へ戻せる場合は`target-response-ref`でsource/cardを参照してよいが、これは監査来歴でありtarget-supportedへの自動昇格ではない。statusで「どの認知操作から何が生まれ、対象がどう押し返したか」の偏り、未trace / yield未分類card、responseはあるが対象側参照がまだないcardを観測できるが、網羅率・品質点にはしない。
+- target側とframework側の緊張から`cross_field_emergent` cardが生じた場合は、必要なら`trace-cross-field`でtarget refsと、catalytic trace済みのframework-generated card refsを別々に残す。preserved / negated-or-revised / newly-recomposedも必要時に外在化するが、第三候補を上位表札・relation・supportへ自動昇格させない。
 - cardをgroup間で移動してもcard IDとsource provenanceを維持する。
 - group / 表札を立てた後、必要なら`audit-group`でinherited / emergent / residualとpreserved differenceを外在化する。これらを事前taxonomyとしてgroupingへ使わない。
 - statusでtransformation audit未実施groupを見える化し、綺麗にまとまったこと自体を監査完了とみなさない。
