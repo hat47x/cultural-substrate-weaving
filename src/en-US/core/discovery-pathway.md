@@ -68,7 +68,7 @@ A framework's available cognitive operations can be summarized like this:
 | Practical wisdom | Where should attention go next, and what observation or trial could obtain a response from reality? |
 | Symbolic neighborhood | What new question can connect things that ordinary vocabulary keeps far apart? |
 
-Do not collapse outputs from these operations immediately into one explanation. When useful, externalize at least `question / distinction / relation-candidate / transition-candidate / falsifier / observation-or-trial / residual` separately. This preserves framework richness long enough for later affinity synthesis to recompose it with target material.
+Do not collapse outputs from these operations immediately into one explanation. When useful, externalize at least `question / distinction / relation-candidate / transition-candidate / falsifier / observation-or-trial / residual` separately. This preserves framework richness long enough for later affinity synthesis to recompose it with target material. When a compatible Affinity Board is available, `trace-card` may retain framework, operation, yield-kind, and target-response on framework-derived cards. This is provenance for observing what the traversal has and has not exercised, not a checklist requiring every operation or a quality score.
 
 This pass does not make maximum depth or multiple frameworks mandatory. It is an execution form for cases where exploratory use is meant to draw broadly on the cognitive possibilities of cultural frameworks while avoiding premature convergence.
 

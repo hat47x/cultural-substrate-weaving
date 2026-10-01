@@ -134,6 +134,12 @@ class AffinityBoardTest(unittest.TestCase):
                 "transition-path",
                 "--location",
                 "wood-metal",
+                "--yield-kind",
+                "question",
+                "--yield-kind",
+                "transition-candidate",
+                "--target-response",
+                "pushback",
                 "--as-if",
                 "seen as a generative cycle",
                 "--note",
@@ -155,6 +161,11 @@ class AffinityBoardTest(unittest.TestCase):
                 ["opposition-complement", "transition-path"],
             )
             self.assertEqual(trace["locations"], ["wood-metal"])
+            self.assertEqual(
+                trace["yield_kinds"],
+                ["question", "transition-candidate"],
+            )
+            self.assertEqual(trace["target_responses"], ["pushback"])
             self.assertEqual(trace["as_if"], "seen as a generative cycle")
             self.assertEqual(data["groups"], [])
             self.assertEqual(data["relations"], [])
@@ -175,8 +186,25 @@ class AffinityBoardTest(unittest.TestCase):
                 },
             )
             self.assertEqual(
+                status["catalytic_trace"]["yield_kinds"],
+                {
+                    "question": 1,
+                    "transition-candidate": 1,
+                },
+            )
+            self.assertEqual(
+                status["catalytic_trace"]["target_responses"],
+                {"pushback": 1},
+            )
+            self.assertEqual(
                 status["catalytic_trace"]["untraced_framework_generated_cards"],
                 ["C002"],
+            )
+            self.assertEqual(
+                status["catalytic_trace"][
+                    "framework_generated_cards_without_yield_kind"
+                ],
+                [],
             )
             self.assertEqual(status["validation"]["errors"], [])
 
@@ -206,6 +234,38 @@ class AffinityBoardTest(unittest.TestCase):
                 result.stderr,
             )
             self.assertEqual(target.read_text(encoding="utf-8"), before)
+
+    def test_catalytic_trace_can_remain_observationally_untyped(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            target = Path(tmp) / "board.json"
+            self.run_board("init", str(target))
+            self.run_board(
+                "add-card",
+                str(target),
+                "A framework-generated distinction whose useful yield is not typed yet",
+                "--status",
+                "framework_generated",
+            )
+            self.run_board(
+                "trace-card",
+                str(target),
+                "C001",
+                "--framework",
+                "iching",
+                "--operation",
+                "transition-path",
+            )
+            status = json.loads(
+                self.run_board("status", str(target), "--json").stdout
+            )
+            self.assertEqual(
+                status["catalytic_trace"][
+                    "framework_generated_cards_without_yield_kind"
+                ],
+                ["C001"],
+            )
+            self.assertEqual(status["catalytic_trace"]["yield_kinds"], {})
+            self.assertEqual(status["validation"]["errors"], [])
 
     def test_group_transformation_audit_is_explicit_and_status_visible(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:

@@ -166,7 +166,7 @@ When card count, group movement, residuals, or relation candidates become diffic
 This prototype includes `scripts/affinity_board.py`. It is **not an automatic classifier or synthesis engine**. It is a small tool for manipulating already-explicit thinking without erasing semantic identity.
 
 - Give cards, groups, relations, narratives, residuals, and questions stable IDs.
-- For `framework_generated` cards arriving from CSW or another catalytic layer, use `trace-card` when useful to retain framework / operation / location / as-if provenance. This trace never becomes grouping, importance, support, or truth weight. Status may expose operation diversity and untraced framework-generated cards as observations, not coverage or quality scores.
+- For `framework_generated` cards arriving from CSW or another catalytic layer, use `trace-card` when useful to retain framework / operation / location / yield-kind / target-response / as-if provenance. This trace never becomes grouping, importance, support, or truth weight. Status may expose which cognitive operations produced which kinds of yield, how the target responded, and which framework-generated cards remain untraced or yield-untyped. These are observations, not coverage or quality scores.
 - Move a card between groups while preserving the card ID and source provenance.
 - After a working group/label exists, use `audit-group` when needed to externalize inherited / emergent / residual meaning and preserved differences. Do not use these as a pre-grouping taxonomy.
 - Surface groups that still lack transformation audit so a tidy-looking map is not mistaken for a completed return-check.

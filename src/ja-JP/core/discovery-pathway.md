@@ -68,7 +68,7 @@
 | 実践知 | 次に何へ注意し、何を観察・試行すると現実から応答を得られるか |
 | 象徴的近傍 | 通常語彙では離れている二つを、どの新しい問いで接続できるか |
 
-各操作から得たものは、最初から一つの説明へまとめない。必要なら、少なくとも `question / distinction / relation-candidate / transition-candidate / falsifier / observation-or-trial / residual` を別々に外在化する。これにより、文化体系の豊かさを早い物語化で失わず、その後の親和統合で対象材料と再構成できる。
+各操作から得たものは、最初から一つの説明へまとめない。必要なら、少なくとも `question / distinction / relation-candidate / transition-candidate / falsifier / observation-or-trial / residual` を別々に外在化する。これにより、文化体系の豊かさを早い物語化で失わず、その後の親和統合で対象材料と再構成できる。 compatibleなAffinity Boardを使う場合は、framework由来cardへ`trace-card`でframework・operation・yield-kind・target-responseを残せる。これは「何を使い切れていないか」を観測するための来歴であり、全operationを埋めるチェックリストや品質点ではない。
 
 このpassは、すべての探索で最大深度や複数体系を必須化する規則ではない。**探索利用の目的が文化体系の認知的な可能性を広く取り出すことにあるとき、早期収束を避けて利用可能な操作空間を十分に開くための実行形**である。
 
