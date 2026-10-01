@@ -356,6 +356,156 @@ class AffinityBoardTest(unittest.TestCase):
             self.assertEqual(status["catalytic_trace"]["yield_kinds"], {})
             self.assertEqual(status["validation"]["errors"], [])
 
+    def test_target_return_audit_keeps_append_only_candidate_history(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            target = Path(tmp) / "board.json"
+            self.run_board("init", str(target))
+            self.run_board(
+                "add-source",
+                str(target),
+                "--ref",
+                "notes://return-basis",
+                "--status",
+                "target_supported",
+            )
+            self.run_board(
+                "add-card",
+                str(target),
+                "Target-side material that pushes back",
+                "--source",
+                "S001",
+                "--status",
+                "target_supported",
+            )
+            self.run_board(
+                "add-card",
+                str(target),
+                "Framework-generated candidate",
+                "--status",
+                "framework_generated",
+            )
+            self.run_board(
+                "trace-card",
+                str(target),
+                "C002",
+                "--framework",
+                "five-phases",
+                "--operation",
+                "transition-path",
+                "--yield-kind",
+                "transition-candidate",
+                "--target-response",
+                "pushback",
+                "--target-response-ref",
+                "C001",
+            )
+            self.run_board(
+                "audit-return",
+                str(target),
+                "C002",
+                "--state",
+                "weakened",
+                "--basis-ref",
+                "C001",
+                "--note",
+                "the target supports only a narrower transition",
+                "--next-check",
+                "look for a second target-side example",
+            )
+            self.run_board(
+                "audit-return",
+                str(target),
+                "C002",
+                "--state",
+                "reframed",
+                "--basis-ref",
+                "S001",
+                "--basis-ref",
+                "C001",
+                "--note",
+                "keep the contrast but drop the original breadth",
+            )
+
+            data = json.loads(target.read_text(encoding="utf-8"))
+            card = data["cards"][1]
+            self.assertEqual(card["input_status"], "framework_generated")
+            audits = card["catalytic_trace"]["target_return_audits"]
+            self.assertEqual(
+                [audit["state"] for audit in audits],
+                ["weakened", "reframed"],
+            )
+            self.assertEqual(audits[0]["basis_refs"], ["C001"])
+            self.assertEqual(audits[1]["basis_refs"], ["S001", "C001"])
+            self.assertEqual(
+                audits[0]["next_checks"],
+                ["look for a second target-side example"],
+            )
+            self.assertEqual(data["groups"], [])
+            self.assertEqual(data["relations"], [])
+
+            status = json.loads(
+                self.run_board("status", str(target), "--json").stdout
+            )
+            self.assertEqual(
+                status["catalytic_trace"]["target_return_states"],
+                {"reframed": 1, "weakened": 1},
+            )
+            self.assertEqual(
+                status["catalytic_trace"][
+                    "framework_generated_cards_without_return_audit"
+                ],
+                [],
+            )
+
+            focus = json.loads(
+                self.run_board("focus", str(target), "C002").stdout
+            )
+            self.assertEqual(
+                [audit["state"] for audit in focus["target_return_audits"]],
+                ["weakened", "reframed"],
+            )
+
+    def test_target_return_audit_rejects_framework_basis_non_destructively(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            target = Path(tmp) / "board.json"
+            self.run_board("init", str(target))
+            for text_value in ("Candidate A", "Candidate B"):
+                self.run_board(
+                    "add-card",
+                    str(target),
+                    text_value,
+                    "--status",
+                    "framework_generated",
+                )
+            for ref in ("C001", "C002"):
+                self.run_board(
+                    "trace-card",
+                    str(target),
+                    ref,
+                    "--framework",
+                    "five-phases",
+                    "--operation",
+                    "transition-path",
+                )
+
+            before = target.read_text(encoding="utf-8")
+            result = self.run_board(
+                "audit-return",
+                str(target),
+                "C001",
+                "--state",
+                "survived",
+                "--basis-ref",
+                "C002",
+                check=False,
+            )
+            self.assertNotEqual(result.returncode, 0)
+            self.assertIn(
+                "must not use framework/cross-field card as target-side material",
+                result.stderr,
+            )
+            self.assertEqual(target.read_text(encoding="utf-8"), before)
+
     def test_cross_field_trace_preserves_both_sides_without_promoting_structure(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
             target = Path(tmp) / "board.json"

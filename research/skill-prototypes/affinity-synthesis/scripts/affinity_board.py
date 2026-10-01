@@ -258,6 +258,44 @@ def cmd_trace_card(args: argparse.Namespace) -> None:
     mutate(args.map, op)
 
 
+def cmd_audit_return(args: argparse.Namespace) -> None:
+    def op(data: dict[str, Any]) -> None:
+        card = find_item(data, "card", args.card)
+        if str(card.get("input_status", "")) != "framework_generated":
+            raise ValueError(
+                f"audit-return requires input_status=framework_generated: {args.card}"
+            )
+
+        trace = card.get("catalytic_trace")
+        if not (
+            isinstance(trace, dict)
+            and trace.get("frameworks")
+            and trace.get("operations")
+        ):
+            raise ValueError(
+                f"audit-return requires a complete catalytic trace first: {args.card}"
+            )
+
+        audits = trace.setdefault("target_return_audits", [])
+        if not isinstance(audits, list):
+            raise ValueError(
+                f"card catalytic target_return_audits must be an array: {args.card}"
+            )
+
+        audit: dict[str, Any] = {
+            "state": args.state,
+            "basis_refs": list(dict.fromkeys(args.basis_ref)),
+        }
+        if args.note:
+            audit["note"] = args.note
+        if args.next_check:
+            audit["next_checks"] = list(dict.fromkeys(args.next_check))
+        audits.append(audit)
+        print(args.card)
+
+    mutate(args.map, op)
+
+
 def cmd_trace_cross_field(args: argparse.Namespace) -> None:
     def op(data: dict[str, Any]) -> None:
         card = find_item(data, "card", args.card)
@@ -760,6 +798,16 @@ def focus_payload(data: dict[str, Any], ref: str) -> dict[str, Any]:
         )
     ]
 
+    target_return_audits: list[dict[str, Any]] = []
+    if kind == "card":
+        catalytic_trace = artifact.get("catalytic_trace")
+        if isinstance(catalytic_trace, dict):
+            audits = catalytic_trace.get("target_return_audits", [])
+            if isinstance(audits, list):
+                target_return_audits = [
+                    item for item in audits if isinstance(item, dict)
+                ]
+
     source_refs: list[str] = []
     sources: list[dict[str, Any]] = []
     cards_from_source: list[dict[str, Any]] = []
@@ -852,6 +900,7 @@ def focus_payload(data: dict[str, Any], ref: str) -> dict[str, Any]:
         "source_refs": source_refs,
         "sources": sources,
         "cards_from_source": cards_from_source,
+        "target_return_audits": target_return_audits,
         "handoff": handoff_context,
         "layout_position": layout_position,
     }
@@ -1055,6 +1104,22 @@ def status_payload(data: dict[str, Any]) -> dict[str, Any]:
         and bool(card["catalytic_trace"].get("target_responses"))
         and not bool(card["catalytic_trace"].get("target_response_refs"))
     ]
+    target_return_state_counts: Counter[str] = Counter()
+    for card in traced_cards:
+        audits = card["catalytic_trace"].get("target_return_audits", [])
+        if isinstance(audits, list):
+            for audit in audits:
+                if isinstance(audit, dict):
+                    state = str(audit.get("state", "")).strip()
+                    if state:
+                        target_return_state_counts[state] += 1
+    framework_generated_without_return_audit = [
+        str(card.get("id"))
+        for card in traced_cards
+        if card.get("id")
+        and str(card.get("input_status", "")) == "framework_generated"
+        and not bool(card["catalytic_trace"].get("target_return_audits"))
+    ]
     cross_field_traced = [
         card
         for card in cards
@@ -1089,6 +1154,10 @@ def status_payload(data: dict[str, Any]) -> dict[str, Any]:
                 framework_generated_without_yield_kind
             ),
             "target_response_cards_without_refs": target_response_without_refs,
+            "target_return_states": dict(sorted(target_return_state_counts.items())),
+            "framework_generated_cards_without_return_audit": (
+                framework_generated_without_return_audit
+            ),
         },
         "cross_field_trace": {
             "traced_cards": len(cross_field_traced),
@@ -1249,6 +1318,19 @@ def cmd_status(args: argparse.Namespace) -> None:
         ", ".join(catalytic["untraced_framework_generated_cards"]) or "-",
     )
     print(
+        "catalytic-return-states:",
+        ", ".join(
+            f"{key}={value}"
+            for key, value in catalytic["target_return_states"].items()
+        )
+        or "-",
+    )
+    print(
+        "catalytic-return-pending:",
+        ", ".join(catalytic["framework_generated_cards_without_return_audit"])
+        or "-",
+    )
+    print(
         "catalytic-yield-kinds:",
         ", ".join(
             f"{key}={value}"
@@ -1345,6 +1427,21 @@ def build_parser() -> argparse.ArgumentParser:
     trace_card.add_argument("--as-if")
     trace_card.add_argument("--note")
     trace_card.set_defaults(func=cmd_trace_card)
+
+    audit_return = sub.add_parser(
+        "audit-return",
+        help=(
+            "append a target-return audit to a traced framework-generated card "
+            "without changing its epistemic status or synthesis authority"
+        ),
+    )
+    audit_return.add_argument("map", type=Path)
+    audit_return.add_argument("card")
+    audit_return.add_argument("--state", required=True)
+    audit_return.add_argument("--basis-ref", action="append", required=True)
+    audit_return.add_argument("--note")
+    audit_return.add_argument("--next-check", action="append", default=None)
+    audit_return.set_defaults(func=cmd_audit_return)
 
     trace_cross_field = sub.add_parser(
         "trace-cross-field",
