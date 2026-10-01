@@ -204,12 +204,13 @@ def cmd_trace_card(args: argparse.Namespace) -> None:
                 args.location,
                 args.yield_kind,
                 args.target_response,
+                args.target_response_ref,
                 args.as_if,
                 args.note,
             )
         ):
             raise ValueError(
-                "trace-card requires framework, operation, location, yield-kind, target-response, as-if, or note"
+                "trace-card requires framework, operation, location, yield-kind, target-response, target-response-ref, as-if, or note"
             )
 
         card = find_item(data, "card", args.card)
@@ -225,6 +226,7 @@ def cmd_trace_card(args: argparse.Namespace) -> None:
             ("locations", args.location),
             ("yield_kinds", args.yield_kind),
             ("target_responses", args.target_response),
+            ("target_response_refs", args.target_response_ref),
         ):
             if values is None:
                 continue
@@ -980,6 +982,13 @@ def status_payload(data: dict[str, Any]) -> dict[str, Any]:
         and bool(card["catalytic_trace"].get("operations"))
         and not bool(card["catalytic_trace"].get("yield_kinds"))
     ]
+    target_response_without_refs = [
+        str(card.get("id"))
+        for card in traced_cards
+        if card.get("id")
+        and bool(card["catalytic_trace"].get("target_responses"))
+        and not bool(card["catalytic_trace"].get("target_response_refs"))
+    ]
 
     return {
         "format": data.get("format"),
@@ -998,6 +1007,7 @@ def status_payload(data: dict[str, Any]) -> dict[str, Any]:
             "framework_generated_cards_without_yield_kind": (
                 framework_generated_without_yield_kind
             ),
+            "target_response_cards_without_refs": target_response_without_refs,
         },
         "counts": {
             key: len(objects(data, section))
@@ -1176,6 +1186,10 @@ def cmd_status(args: argparse.Namespace) -> None:
         )
         or "-",
     )
+    print(
+        "catalytic-target-response-without-refs:",
+        ", ".join(catalytic["target_response_cards_without_refs"]) or "-",
+    )
     print(f"validation: errors={len(errors)} warnings={len(warnings)}")
 
 
@@ -1233,6 +1247,7 @@ def build_parser() -> argparse.ArgumentParser:
     trace_card.add_argument("--location", action="append", default=None)
     trace_card.add_argument("--yield-kind", action="append", default=None)
     trace_card.add_argument("--target-response", action="append", default=None)
+    trace_card.add_argument("--target-response-ref", action="append", default=None)
     trace_card.add_argument("--as-if")
     trace_card.add_argument("--note")
     trace_card.set_defaults(func=cmd_trace_card)
