@@ -13,7 +13,7 @@ This map tracks structural diversity. It does not rank frameworks or claim that 
 | conditional chain / cessation | dependent origination | — | branching conditional networks |
 | binary-frame disruption | catuṣkoṭi | — | explicit boundary-crossing logic |
 | conditioned perspective | Jain sevenfold predication | — | social/role perspective systems |
-| explanatory pluralism | Aristotle four causes | — | argument/rhetorical issue states |
+| explanatory pluralism | Aristotle four causes | Nyāya inference | argument/rhetorical issue states beyond inference |
 | expression → reception | Rasa | Jo-Ha-Kyū | narrative and ritual sequencing |
 | embodied observation | Taiheki | chakra | lineage-specific embodied practice |
 | coupled periodicity / multi-scale time | Maya calendars | Stems/Branches | more than two independently varying cycles |
@@ -23,6 +23,10 @@ This map tracks structural diversity. It does not rank frameworks or claim that 
 | route / network topology | — | Jingluo | non-medical network traditions |
 | whole-part reciprocity / multi-perspective network | — | Huayan | primary-text and lineage separation |
 | symbolic mediation network | — | Sefirot | reliable lineage separation |
+| explicit argument / inference structure | — | Nyāya inference | debate-state and fallacy layers without flattening Indian logic |
+| social role / relation-conditioned conduct | — | Confucian role / li | historical layer separation and non-hierarchical de-binding |
+| explicit threshold crossing / preparation | — | Shinto shrine threshold / purification | historical and shrine-variation separation |
+| spatial center-periphery / nested boundary | — | Buddhist mandala spatial systems | lineage-specific structure map before adoption |
 
 ## Priority rule
 
