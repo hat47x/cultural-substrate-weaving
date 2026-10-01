@@ -96,6 +96,7 @@ Status: research-only
 - aristotle-four-causes
 - rasa
 - maya-calendars（Tzolk’in / Chol Q’ij, Haab, Calendar Round, Long Count）
+- huayan（法蔵中心のwhole–part reciprocity / mutual inclusion）
 
 採用済みでも研究を打ち切らない。runtimeが使う最小構造核と、独立Skill相当まで厚くする研究は分ける。
 
