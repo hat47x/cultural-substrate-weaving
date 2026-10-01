@@ -10,6 +10,14 @@ https://ich.unesco.org/en/RL/the-twenty-four-solar-terms-knowledge-in-china-of-t
 
 UNESCO describes an annual solar motion divided into 24 named segments, used historically and in living practice as recurring temporal markers.
 
+### Independent scholarly context
+
+Scientific Reports, “Analysis of geographical origin of solar terms based on the STTMD method” (2024)
+
+https://www.nature.com/articles/s41598-024-73740-x
+
+The study independently examines the geographic and climatic origin of the solar-term system and emphasizes the middle/lower Yellow River context and later regional adaptation. CSW uses this source mainly to strengthen the boundary against treating the 24 terms as a universal climate model.
+
 ## Structural value for CSW
 
 - finer segmentation than four seasons;
