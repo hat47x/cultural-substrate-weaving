@@ -41,6 +41,18 @@ python scripts/affinity_board.py trace-card /tmp/board.json C003 \
   --target-response-ref S001 \
   --as-if "seen as a generative cycle"
 
+# Preserve both sides when target/framework tension produces a third candidate.
+python scripts/affinity_board.py add-card /tmp/board.json \
+  "The tension suggests a narrower conditional distinction" \
+  --status cross_field_emergent
+python scripts/affinity_board.py trace-cross-field /tmp/board.json C004 \
+  --target-ref C001 \
+  --framework-ref C003 \
+  --preserved-target "target-side resistance remains explicit" \
+  --preserved-framework "the counter-view still exposes a contrast" \
+  --negated-or-revised "the original correspondence was too broad" \
+  --newly-recomposed "the contrast survives only under a narrower condition"
+
 python scripts/affinity_board.py add-group /tmp/board.json \
   --label "First integrated meaning" \
   --member C001
