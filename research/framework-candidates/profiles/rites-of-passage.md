@@ -1,68 +1,74 @@
 # Rites of passage / van Gennep candidate profile
 
-Status: sourced-candidate / research-only / comparative-anthropology
+Status: profile-ready / research-only / comparative-analytic-framework
 
 ## Source basis
 
-Arnold van Gennep's *The Rites of Passage* was first published in French in 1909. The University of Chicago Press second edition and David I. Kertzer's introduction summarize the recurrent three-part sequence as separation, a marginal/liminal transition, and incorporation. The introduction also stresses that the three phases are not equally developed in every rite and that a rite may have purposes beyond passage itself.
+Arnold van Gennep, *The Rites of Passage*, University of Chicago Press edition
 
-Sources:
+https://press.uchicago.edu/ucp/books/book/chicago/R/bo38180827.html
 
-- University of Chicago Press, *The Rites of Passage, Second Edition*
-  - https://press.uchicago.edu/ucp/books/book/chicago/R/bo38180827
-- University of Chicago Press, course introduction / David I. Kertzer
-  - https://press.uchicago.edu/dam/ucp/books/pdf/course_intro/978-0-226-62949-0_course_intro.pdf
-- White Rose Research Online, *Rites of passage* (Blackwell Encyclopedia of Sociology entry)
-  - https://eprints.whiterose.ac.uk/id/eprint/79955/
+University of Chicago Press course introduction
+
+https://press.uchicago.edu/dam/ucp/books/pdf/course_intro/978-0-226-62949-0_course_intro.pdf
+
+Cambridge University Press discussions of rites of passage and later liminality work
+
+https://www.cambridge.org/core/books/abs/rites-of-passage/introduction-rites-of-passage/96409189B33DAEF7A22F36F1A28E392D
+
+https://www.cambridge.org/core/journals/canadian-journal-of-law-and-jurisprudence/article/ritual-approach-to-patent-law/18904959F1A1370F8AA06698B3F00B7E
+
+Van Gennep's comparative schema distinguishes separation, transition / margin / liminality, and incorporation. Later scholarship, especially Victor Turner, greatly expanded “liminality,” so CSW must not back-project all later liminality theory into van Gennep's original formulation.
 
 ## Structural value for CSW
 
-The distinctive value is not a three-item classification. It is an explicit **boundary-crossing sequence** in which an actor or group is detached from one status, held in an intermediate state, and incorporated into another status.
+This candidate directly fills the current **explicit boundary-crossing** gap. Its value is not “three stages” as a taxonomy, but treating **crossing itself** as an analyzable process:
 
-Potential operations:
+- an old status or relation is actively loosened;
+- an intermediate state may be ambiguous rather than merely incomplete;
+- incorporation into a new state is a separate operation, not an automatic consequence of leaving the old one.
 
-- separation-before-crossing;
-- threshold / liminal holding;
-- incorporation / return;
-- incomplete-transition probe;
-- phase-emphasis comparison;
-- old-status / in-between / new-status distinction;
-- passage-versus-state distinction.
+That distinction can reveal processes that appear to have “changed” but have never completed incorporation, or situations where an intermediate state has its own constraints.
 
-This fills a gap left by state taxonomies and ordinary process phases: the middle state is structurally neither the old position nor the completed new one.
+## Candidate operations
 
-## What not to import
-
-- Do not treat every change process as a rite of passage.
-- Do not assume every culture instantiates one identical ritual sequence.
-- Do not force the three phases into equal-duration blocks.
-- Do not reduce "liminal" to a generic synonym for uncertainty.
-- Do not infer a new social identity, legitimacy, or completed incorporation without target-side evidence.
-- Do not present van Gennep's comparative model as the native self-description of the communities whose rituals he compared.
-
-## De-binding route
-
-Before returning a generated candidate to the target:
-
-1. remove ritual vocabulary unless the target is itself ritual;
-2. restate the structure as old state / disengagement / intermediate state / entry condition / new state;
-3. preserve which part came from the comparative model rather than the target;
-4. ask what observable event would establish actual separation, threshold occupancy, or incorporation;
-5. allow the target to show that no clean passage exists.
+- pre-boundary / separation probe;
+- liminal-state preservation;
+- threshold-crossing inspection;
+- incorporation / reintegration check;
+- failed-incorporation probe;
+- asymmetry of transition phases;
+- status-before / status-after comparison;
+- residue-from-separation check.
 
 ## Target-return questions
 
-- What has actually been left behind, rather than merely renamed?
-- Is the current condition still inside the old state, already inside the new one, or genuinely intermediate?
-- Which event or recognition would count as incorporation?
-- Is the transition stalled because separation never occurred, because the intermediate state is prolonged, or because incorporation lacks recognition?
-- Are all three phases present, or does this case emphasize only one?
-- What remains different after the passage vocabulary is removed?
+- What has actually been separated from, rather than merely declared obsolete?
+- Which old permissions, roles, expectations, or dependencies are still active?
+- Is the target genuinely in a new state, or in an intermediate state with mixed rules?
+- What concrete act, recognition, or condition would count as incorporation?
+- Could the process stall after separation without reaching the new state?
+- Are observers treating ambiguity during transition as failure when it is structurally intermediate?
+- If ritual vocabulary is removed, do the boundary, intermediate-state, and incorporation questions still survive?
+
+## Boundaries
+
+- This is a comparative anthropological framework, not one culture's ritual system.
+- Do not claim every cultural transition follows the same three phases with equal strength.
+- Van Gennep himself treats the phases as variably emphasized; do not force symmetry.
+- Do not collapse specific ritual meanings into a generic “change-management” recipe.
+- Distinguish van Gennep's schema from Turner's later elaboration of liminality and communitas.
+- Do not infer that an intermediate state is psychologically or socially liberating merely because it is liminal.
+- Do not map sacred/ritual status changes onto an unrelated target as facts.
+
+## De-binding route
+
+1. translate separation / liminality / incorporation into target-side old-state / in-between / new-state conditions;
+2. identify which boundary markers are actually observed;
+3. preserve unresolved mixed-state evidence rather than forcing incorporation;
+4. return each transition claim to target-side records, roles, permissions, acts, or observations;
+5. keep culturally specific ritual meaning outside the target unless independently relevant.
 
 ## Adoption gap
 
-The structural gap is now well sourced, but runtime adoption should wait for:
-
-- one non-ritual worked example showing de-binding without pretending a workplace/process transition is a ritual;
-- an explicit ownership note that this is a comparative anthropological model, not one culture-native framework;
-- comparison against Jo-Ha-Kyū so temporal articulation and social/status boundary-crossing remain distinct operation families.
+The operation is distinct and well sourced, but runtime adoption should decide explicitly whether a comparative anthropological schema belongs in the cultural-framework portfolio or in a more general methods layer. A target-return worked example should be added before adoption.
