@@ -318,47 +318,69 @@
         "Jingluo",
         "meridian and collateral system"
       ],
-      "readiness": "research-only",
+      "readiness": "profile-ready",
       "structural_primitives": [
-        "main channels",
-        "collaterals",
-        "network/pathway organization",
-        "standardized terminology and nomenclature"
+        "main route / meridian distinction",
+        "collateral route distinction",
+        "branch / divergence / reconvergence",
+        "route continuity",
+        "main-path / side-path asymmetry"
       ],
       "cognitive_operations": [
-        "network-path",
-        "main-vs-collateral",
-        "flow-route",
-        "branching",
-        "connection-topology"
+        "main-vs-collateral-pass",
+        "route-before-node-reframe",
+        "branching-path-probe",
+        "alternate-path-bypass-probe",
+        "route-discontinuity-check",
+        "cross-route-connection-probe"
       ],
       "useful_for": [
-        "opening path and network questions where a tree or simple chain is too narrow",
-        "distinguishing main routes from collateral connections"
+        "distinguishing principal paths from collateral or connecting paths",
+        "finding branch reconvergence and bypass structure that a flat graph can hide",
+        "checking continuity at handoffs rather than only inspecting nodes"
       ],
       "do_not_assume": [
         "traditional channel structure is established modern anatomy or physiology",
-        "exploratory use licenses diagnosis or treatment advice",
-        "medical correspondences may be moved into non-medical targets as facts"
+        "WHO or ISO terminology standards are biomedical validation",
+        "exploratory use licenses diagnosis treatment or efficacy claims",
+        "medical correspondences may be moved into non-medical targets as facts",
+        "the Huangdi Neijing is one historically uniform textual layer"
       ],
       "sources": [
+        {
+          "kind": "primary-classical-digital-edition",
+          "title": "Huangdi Neijing — Ling Shu Jing — Jing Mai",
+          "url": "https://ctext.org/huangdi-neijing/jing-mai/zh"
+        },
         {
           "kind": "institutional-standard",
           "title": "WHO international standard terminologies on traditional Chinese medicine",
           "url": "https://www.who.int/publications-detail-redirect/9789240042322"
         },
         {
-          "kind": "biomedical-index-reference",
-          "title": "NCBI MeSH: Meridians",
-          "url": "https://www.ncbi.nlm.nih.gov/mesh/68016740"
+          "kind": "institutional-nomenclature-standard",
+          "title": "WHO Standard Acupuncture Nomenclature, Part 2",
+          "url": "https://iris.who.int/bitstream/handle/10665/207637/Standard_acupuncture_nomenclature_1991_partII_eng.pdf?sequence=1"
         },
         {
-          "kind": "scholarly-review-reference",
+          "kind": "international-technical-specification",
+          "title": "ISO/TS 16843-4:2017 — Meridian and collateral channels",
+          "url": "https://www.iso.org/standard/68587.html"
+        },
+        {
+          "kind": "scholarly-boundary-review",
           "title": "A 4D systemic view on meridian essence: Substantial, functional, chronological and cultural attributes",
           "url": "https://pubmed.ncbi.nlm.nih.gov/34896049/"
+        },
+        {
+          "kind": "scholarly-anatomy-boundary-review",
+          "title": "Historical Review about Research on “Bonghan System” in China",
+          "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC3687598/"
         }
       ],
-      "source_packet_path": "research/framework-candidates/source-packets/jingluo.md"
+      "source_packet_path": "research/framework-candidates/source-packets/jingluo.md",
+      "profile_path": "research/framework-candidates/profiles/jingluo.md",
+      "adoption_hold": "medical-tradition-sensitive"
     },
     {
       "id": "sefirot",
@@ -1416,6 +1438,67 @@
       ],
       "profile_path": "research/framework-candidates/profiles/mimamsa-hermeneutics.md",
       "adoption_hold": "lineage-sensitive"
+    },
+    {
+      "id": "marshallese-wave-navigation",
+      "names": [
+        "Marshallese wave navigation",
+        "Marshallese stick charts",
+        "wave piloting",
+        "マーシャル諸島の波航法"
+      ],
+      "readiness": "profile-ready",
+      "structural_primitives": [
+        "relative island/atoll placement",
+        "wave and current interaction cues",
+        "instructional models distinct from live traversal",
+        "memorized route/cue structure",
+        "situated embodied sensing"
+      ],
+      "cognitive_operations": [
+        "relative-route-model",
+        "cue-sequence-wayfinding",
+        "model-environment-return",
+        "disturbance-as-signal",
+        "embodied-abstract-complementarity"
+      ],
+      "useful_for": [
+        "opening non-medical route-network questions without assuming a global coordinate map",
+        "distinguishing a rehearsal model from live environmental feedback",
+        "using local cue transitions to update a route without rebuilding the whole map",
+        "testing whether perturbations around obstacles carry useful location information"
+      ],
+      "do_not_assume": [
+        "stick charts are literal modern maps or metrically to scale",
+        "one invariant notation or chart typology applies across Marshallese navigators, families, schools, and periods",
+        "public museum descriptions reveal restricted family-held navigation knowledge",
+        "traditional wave-navigation claims are modern oceanographic facts without independent evidence",
+        "the framework licenses real-world marine navigation or safety advice"
+      ],
+      "sources": [
+        {
+          "kind": "institutional-collection-record",
+          "title": "Smithsonian Institution — Stick Navigation Chart",
+          "url": "https://www.si.edu/object/nmnhanthropology_8552873"
+        },
+        {
+          "kind": "institutional-educational-resource",
+          "title": "Smithsonian Ocean — Navigating the Waters with Micronesian Stick Charts",
+          "url": "https://ocean.si.edu/human-connections/history-cultures/navigating-waters-micronesian-stick-charts"
+        },
+        {
+          "kind": "scholarly-ethnographic-study",
+          "title": "Resolving Ambivalence in Marshallese Navigation",
+          "url": "https://escholarship.org/uc/item/43h1d0d7"
+        },
+        {
+          "kind": "practitioner-linked-scholarly-record",
+          "title": "The Role of Canoe-Building and Navigation in Yapese and Marshallese Seafaring Systems",
+          "url": "https://link.springer.com/article/10.1007/s11457-025-09456-4"
+        }
+      ],
+      "profile_path": "research/framework-candidates/profiles/marshallese-wave-navigation.md",
+      "adoption_hold": "living-tradition-sensitive"
     }
   ]
 }

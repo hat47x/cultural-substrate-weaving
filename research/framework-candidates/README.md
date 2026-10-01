@@ -85,6 +85,8 @@ Status: research-only
 - second-wave-2026-10-01.md
 - third-wave-2026-10-01.md
 - fourth-wave-2026-10-01.md
+- fifth-wave-2026-10-02.md
+- worked-examples/ 以下のtarget-return例
 - portfolio-qualitative-audit-2026-10-01.md
 - near-neighbor-differentiation-2026-10-01.md
 - profiles/ 以下の各体系profile
@@ -122,7 +124,9 @@ Status: research-only
 - tibetan-buddhist-mandala（sourced-candidate / lineage-sensitive）
 - hadith-isnad-matn（profile-ready / religious-tradition-sensitive）
 - mimamsa-hermeneutics（sourced-candidate / lineage-sensitive）
+- jingluo（profile-ready / medical-tradition-sensitive / route-network）
+- marshallese-wave-navigation（profile-ready / living-tradition-sensitive / non-medical route-network）
 
-Ifá / Odù、Jingluo、Sefirot、chakra、buddhist-mandala、tibetan-buddhist-mandalaは構造的価値が高い一方、living tradition、医療、宗教、系譜差の境界が重いため、採用を急がず研究レーンに留める。Jingluo / Sefirot / chakra は source-packets/ に前段資料層を置き、profile化条件を明示している。
+Ifá / Odù、Jingluo、Sefirot、chakra、buddhist-mandala、tibetan-buddhist-mandalaは構造的価値が高い一方、living tradition、医療、宗教、系譜差の境界が重いため、採用を急がず研究レーンに留める。Jingluoは古典・標準用語・biomedical boundary・非医療target-returnを分離したprofile-ready段階へ進めたが、source-packetも根拠層として保持する。Sefirot / chakra は引き続き source-packets/ のpre-profile段階に留める。
 
 当面は効果比較を増やさない。profile-ready / skill-candidateの母集団を増やし、source basis、lineage、structural core、native operation、de-binding、target-return questionを揃えることを優先する。
