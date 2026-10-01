@@ -478,6 +478,11 @@
           "kind": "scholarly-reference",
           "title": "Sankhya",
           "url": "https://iep.utm.edu/sankhya/"
+        },
+        {
+          "kind": "primary-classical-text",
+          "title": "Īśvarakṛṣṇa: Sāṃkhyakārikā (GRETIL)",
+          "url": "https://gretil.sub.uni-goettingen.de/gretil/corpustei/transformations/html/sa_IzvarakRSNa-sAMkhyakArikA-alt.htm"
         }
       ]
     },
@@ -519,6 +524,11 @@
           "kind": "scholarly-reference",
           "title": "Contradiction — LNC and the Buddhist Tetralemma",
           "url": "https://plato.stanford.edu/entries/contradiction/"
+        },
+        {
+          "kind": "primary-classical-context",
+          "title": "Mūlamadhyamakakārikā — Digital Sanskrit Buddhist Canon",
+          "url": "https://www.dsbcproject.org/canon-text/content/931/3060"
         }
       ]
     },
@@ -562,6 +572,11 @@
           "kind": "scholarly-reference",
           "title": "Jain Philosophy",
           "url": "https://iep.utm.edu/jain/"
+        },
+        {
+          "kind": "scholarly-specialist-reference",
+          "title": "In Some Ways: Syādvāda as the Synthesis of Anekāntavāda and Nayavāda in Akalaṅka’s Philosophical Treatises",
+          "url": "https://link.springer.com/article/10.1007/s10781-024-09575-7"
         }
       ]
     },
