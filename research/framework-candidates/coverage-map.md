@@ -21,7 +21,7 @@ This map tracks structural diversity. It does not rank frameworks or claim that 
 | seasonal phase / boundary | — | Twenty-Four Solar Terms | spatially varying ecological timing |
 | indexed narrative corpus | — | Ifá / Odù | culturally safe non-ritual abstraction |
 | experience decomposition | — | Five aggregates | non-overlap with existing Buddhist core |
-| route / network topology | — | Jingluo | non-medical network traditions |
+| route / network topology | — | Jingluo; Marshallese wave navigation | compare medical channel topology with non-medical cue-sequence wayfinding; another non-maritime route tradition remains useful |
 | whole-part reciprocity / multi-perspective network | — | Huayan | primary-text and lineage separation |
 | symbolic mediation network | — | Sefirot | reliable lineage separation |
 | explicit argument / inference structure | — | Nyāya inference | debate-state and fallacy layers without flattening Indian logic |
