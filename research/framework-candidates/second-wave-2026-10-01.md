@@ -16,7 +16,7 @@ Status: research-only / qualitative expansion before effectiveness evaluation
 
 第二波では、第一波と似た分類体系を増やすのではなく、まだ薄いoperation空間を埋める。
 
-現時点の主な空白:
+第二波開始時点の主な空白:
 
 - network / collateral
 - whole-part reciprocity
@@ -26,6 +26,8 @@ Status: research-only / qualitative expansion before effectiveness evaluation
 - ritual practice sequence
 - layered mediation
 - explicit boundary-crossing
+
+華厳のruntime採用によって、whole-part reciprocity / multi-perspective network / role-defined identityは一段埋まった。route / collateral型networkは別構造なので未充足のまま残す。
 
 ## 第二波の最初の追加: Huayan / 華厳
 
@@ -77,6 +79,8 @@ Huayanをnetwork候補として扱うとき、Indra's Netだけへ縮約しな�
   - https://plato.stanford.edu/entries/analysis/s3.html
 - Internet Encyclopedia of Philosophy, Fazang
   - https://iep.utm.edu/fazang/
+- CBETA Online, T1881 華嚴經金師子章註
+  - https://cbetaonline.dila.edu.tw/zh/T1881
 
 profile:
 
@@ -84,16 +88,19 @@ profile:
 
 ### 現在のstatus
 
-sourced-candidate
+adopted / runtime-corpus
 
-profile-readyへ進める前に、
+採用は法蔵中心の最小構造核へ限定した。
 
-1. primary/classical sourceまたは信頼できるprimary-text translationを追加する;
-2. Avatamsaka backgroundとFazang固有operationを分ける;
-3. Chinese Huayan / Korean Hwaeom / Japanese Kegonを一つの不変体系として扱わない;
-4. target-returnのworked exampleを追加する;
+- whole-part reciprocity;
+- role-defined identity;
+- perspective-through-node;
+- integration-with-difference;
+- mutual dependenceをtarget-side factへ変換しない境界。
 
-必要がある。
+CBETA T1881を古典資料アンカーとして追加し、法蔵根本文本と後代注釈を同一層へ潰さないこともruntime dossierに明記した。
+
+今後は採用の可否ではなく、Avataṃsaka background、後代中国華厳、Korean Hwaeom / Japanese Kegon、worked target-return exampleの深化を行う。
 
 ## 既存第二波候補の位置
 
@@ -141,7 +148,7 @@ modern rainbow seven-chakra diagramをtimeless standardへしない。
 
 ## なお残る大きなgap
 
-Huayan追加後も次は薄い。
+Huayan採用後も次は薄い。
 
 ### spatial center-periphery
 
