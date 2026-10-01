@@ -209,7 +209,7 @@ def cmd_trace_card(args: argparse.Namespace) -> None:
             )
         ):
             raise ValueError(
-                "trace-card requires framework, operation, location, as-if, or note"
+                "trace-card requires framework, operation, location, yield-kind, target-response, as-if, or note"
             )
 
         card = find_item(data, "card", args.card)
