@@ -63,6 +63,51 @@
       "skill_reference": "03-transformation.md"
     },
     {
+      "id": "framework-portfolio",
+      "source": "frameworks/portfolio.md",
+      "skill_reference": "04-framework-portfolio.md"
+    },
+    {
+      "id": "framework-yijing",
+      "source": "frameworks/yijing.md",
+      "skill_reference": "04a-yijing.md"
+    },
+    {
+      "id": "framework-wuxing",
+      "source": "frameworks/wuxing.md",
+      "skill_reference": "04b-wuxing.md"
+    },
+    {
+      "id": "framework-sankhya",
+      "source": "frameworks/sankhya.md",
+      "skill_reference": "04c-sankhya.md"
+    },
+    {
+      "id": "framework-dependent-origination",
+      "source": "frameworks/dependent-origination.md",
+      "skill_reference": "04d-dependent-origination.md"
+    },
+    {
+      "id": "framework-catuskoti",
+      "source": "frameworks/catuskoti.md",
+      "skill_reference": "04e-catuskoti.md"
+    },
+    {
+      "id": "framework-jain-sevenfold-predication",
+      "source": "frameworks/jain-sevenfold-predication.md",
+      "skill_reference": "04f-jain-sevenfold-predication.md"
+    },
+    {
+      "id": "framework-aristotle-four-causes",
+      "source": "frameworks/aristotle-four-causes.md",
+      "skill_reference": "04g-aristotle-four-causes.md"
+    },
+    {
+      "id": "framework-rasa",
+      "source": "frameworks/rasa.md",
+      "skill_reference": "04h-rasa.md"
+    },
+    {
       "id": "human-and-taiheki",
       "source": "domains/human-and-taiheki.md",
       "skill_reference": "05-human-and-taiheki.md"
@@ -97,6 +142,17 @@
       "methods/framework-application.md",
       "methods/transformation.md",
       "methods/integration.md"
+    ],
+    "01a-framework-library.md": [
+      "frameworks/portfolio.md",
+      "frameworks/yijing.md",
+      "frameworks/wuxing.md",
+      "frameworks/sankhya.md",
+      "frameworks/dependent-origination.md",
+      "frameworks/catuskoti.md",
+      "frameworks/jain-sevenfold-predication.md",
+      "frameworks/aristotle-four-causes.md",
+      "frameworks/rasa.md"
     ],
     "02-human-and-taiheki.md": [
       "domains/human-and-taiheki.md"

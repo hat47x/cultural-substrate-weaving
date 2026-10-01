@@ -48,10 +48,11 @@ compatible realizationがない環境でも、CSW自体の文化体系探索、�
 1. **委任を読み、状態を記録する**：著者の依頼、スキル外の設定・指示から、今回委ねられている判断、利用範囲、資源制約を確認する。必要なら`non_activation / limited / exploratory`、文化体系の`not_loaded / probe / preview / full / enacted`を現在状態として記録する。状態名そのものは次の行動を決めない。
 2. **抱く**：問い、対象材料、基準線、壊してはならない保持事項を置く。
 3. **出会う**：現在の分節から構造的に遠い体系を候補にし、その構造核へ触れる。体系固有構造を汎用語へ早く薄めない。
-4. **走らせる**：仮定を明示したまま、配置・空位・遷移・補位置・実践を導く。
-5. **交える**：対象材料と交差させ、一致と押し返しの両方を見る。多数・異種の材料から構造を立ち上げる必要があれば、`references/10-integration.md` の接続契約を通じてcompatible synthesis realizationへ渡す。由来と判断主体を区別して追える形にする。
-6. **降ろし、返す**：問い、観察、小さな試し、構成、判断へと具体化し、候補、差分、残差、反証、来歴を提示する。採用・停止・公開・行動への反映は外部の決定権へ返す。生成AIに判断が委任されている場合は、その委任の範囲で判断する。第三構造が生じても、対象側の独立supportなしに事実へ昇格させない。
-7. **味わう**：実際に起きたことを新しい材料として受け取る。新しいframework contactが旧artifactや残差へ触れるなら、`references/00-iteration.md` の接続契約からcompatible iterative realizationへ渡す。
+4. **全体場を開く**：対象への対応付けより先に、体系自身の位置集合、関係網、隣接・対立、周期、境界、遷移、実践、象徴的近傍を可能な範囲で保つ。探索利用で発見増分を広く取る場合は、体系数や読書量ではなく、異なる認知操作をどれだけ開けたかを重視する。
+5. **多方向に走らせる**：仮定を明示したまま、配置・空位・補位置だけでなく、場の中の移動、遷移、周期、境界、実践を体系が持つ範囲で順に走らせ、問い・区別・関係候補・遷移候補・反証条件・観察／試行・残差を分けて取り出す。必要なら構造型の異なる第二体系で再分節する。
+6. **交える**：対象材料と交差させ、一致と押し返しの両方を見る。多数・異種の材料から構造を立ち上げる必要があれば、`references/10-integration.md` の接続契約を通じてcompatible synthesis realizationへ渡す。framework由来候補にgroupingや表札を先決めさせず、由来と判断主体を区別して追える形にする。
+7. **体系語を外して降ろし、返す**：候補を対象語の問い、観察、小さな試し、構成、判断へと具体化し、候補、差分、残差、反証、来歴を提示する。採用・停止・公開・行動への反映は外部の決定権へ返す。生成AIに判断が委任されている場合は、その委任の範囲で判断する。第三構造が生じても、対象側の独立supportなしに事実へ昇格させない。
+8. **味わう**：実際に起きたことを新しい材料として受け取る。新しいframework contactが旧artifactや残差へ触れるなら、`references/00-iteration.md` の接続契約からcompatible iterative realizationへ渡す。
 
 文化体系の数、読み込み深度、全文読解の有無、体系固有操作の実行有無は、それ自体では成功・失敗・停止を意味しない。外部の評価基準で必要なら、それらを観測値として利用できる。
 
@@ -78,6 +79,7 @@ compatible realizationがない環境でも、CSW自体の文化体系探索、�
 | 体系の選定、構造核、探索／帰属利用 | [02-system-selection.md](references/02-system-selection.md) |
 | 割当、遷移、実践の層、採用後検査、出口 | [02a-framework-application.md](references/02a-framework-application.md) |
 | 関係種別、欠落と接続、複数体系 | [03-transformation.md](references/03-transformation.md) |
+| 採用済み文化体系の索引、構造核、固有操作、異説境界 | [04-framework-portfolio.md](references/04-framework-portfolio.md) |
 | 人間の身体反応とTaiheki | [05-human-and-taiheki.md](references/05-human-and-taiheki.md) |
 | 判断来歴、長期event | [08-governance-and-records.md](references/08-governance-and-records.md) |
 | 評価とその来歴 | [09-evaluation.md](references/09-evaluation.md) |
@@ -86,6 +88,8 @@ compatible realizationがない環境でも、CSW自体の文化体系探索、�
 ## 読み込み方
 
 一括読み込みを避け、参照順・参照数・文化体系の候補数や深度は、本スキル自身の価値判断では固定しない。
+
+採用済み体系を使う場合は、まずframework portfolioから該当ドシエを読み、毎回モデル記憶やWeb検索だけで構造を再構成しない。外部検索は、ドシエにない系譜差・異説・細部の確認、または未採用体系の新規探索に使う。
 
 - 外部から利用範囲や使用体系が指定されている場合は、その指定に沿って参照する。
 - 著者が体系選定や読み込み深度を生成AIへ委ねている場合は、その委任を根拠として候補を想起・検索し、必要な参照へ進む。

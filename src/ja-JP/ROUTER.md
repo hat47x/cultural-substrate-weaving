@@ -73,6 +73,7 @@ compatible realizationがない環境でも、CSW自体の文化体系探索、�
 | 体系の選定、構造核、探索／帰属利用 | [02-system-selection.md](methods/system-selection.md) |
 | 割当、遷移、実践の層、採用後検査、出口 | [02a-framework-application.md](methods/framework-application.md) |
 | 関係種別、欠落と接続、複数体系 | [03-transformation.md](methods/transformation.md) |
+| 採用済み文化体系の索引、構造核、固有操作、異説境界 | [04-framework-portfolio.md](frameworks/portfolio.md) |
 | 人間の身体反応とTaiheki | [05-human-and-taiheki.md](domains/human-and-taiheki.md) |
 | 判断来歴、長期event | [08-governance-and-records.md](governance/governance-and-records.md) |
 | 評価とその来歴 | [09-evaluation.md](governance/evaluation.md) |
@@ -81,6 +82,8 @@ compatible realizationがない環境でも、CSW自体の文化体系探索、�
 ## 読み込み方
 
 一括読み込みを避け、参照順・参照数・文化体系の候補数や深度は、本スキル自身の価値判断では固定しない。
+
+採用済み体系を使う場合は、まずframework portfolioから該当ドシエを読み、毎回モデル記憶やWeb検索だけで構造を再構成しない。外部検索は、ドシエにない系譜差・異説・細部の確認、または未採用体系の新規探索に使う。
 
 - 外部から利用範囲や使用体系が指定されている場合は、その指定に沿って参照する。
 - 著者が体系選定や読み込み深度を生成AIへ委ねている場合は、その委任を根拠として候補を想起・検索し、必要な参照へ進む。

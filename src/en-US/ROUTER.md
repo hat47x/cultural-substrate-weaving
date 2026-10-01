@@ -73,6 +73,7 @@ Framework count, loading depth, full reading, and execution of framework-native 
 | Framework selection, structural core, exploration / attribution use | [02-system-selection.md](methods/system-selection.md) |
 | Assignment, transitions, practice layer, post-use checks, exits | [02a-framework-application.md](methods/framework-application.md) |
 | Relation types, missing connections, multiple frameworks | [03-transformation.md](methods/transformation.md) |
+| Adopted framework index, structural cores, native operations, and variant boundaries | [04-framework-portfolio.md](frameworks/portfolio.md) |
 | Human bodily responses and Taiheki | [05-human-and-taiheki.md](domains/human-and-taiheki.md) |
 | Decision provenance and longitudinal events | [08-governance-and-records.md](governance/governance-and-records.md) |
 | Evaluation and its provenance | [09-evaluation.md](governance/evaluation.md) |
@@ -81,6 +82,8 @@ Framework count, loading depth, full reading, and execution of framework-native 
 ## Loading behavior
 
 Avoid loading everything at once. This skill does not fix reference order, reference count, framework count, or depth as its own value judgment.
+
+When an adopted framework is used, load its dossier from the framework portfolio before reconstructing its structure from model memory or ad-hoc web search. Use external research for lineage-specific differences, variants, missing details, or frameworks not yet in the adopted corpus.
 
 - When usage scope or a framework is specified outside the skill, follow that specification when loading references.
 - When the author has delegated framework selection or depth to the generative AI, use that delegation as the authority for recalling or searching candidates and loading the needed references.

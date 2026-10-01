@@ -17,6 +17,8 @@ Normally, search for candidate frameworks from target-side structures that are s
 
 ### Do not leave candidate recall to the model's spontaneous associations
 
+For adopted frameworks, check frameworks/portfolio.md and the matching dossier first. The internal dossier is not a whitelist; it is a source-grounded base population that prevents structure from depending on ad-hoc recall quality on every run. Use external research for new encounters, lineage differences, variants, and gaps in the dossier.
+
 In exploratory use, do not end candidate search with frameworks already close to the target's current vocabulary. Give **high recall/search priority** to frameworks that offer structures different from the target's present partitioning, such as state grids, cycles and calendars, paths and flows, directions, layers, and paths between layers. Structural distance can become the catalytic force that reorganizes how a question looks.
 
 The following names are search anchors for reaching different structural families, not adoption recommendations or a complete candidate list.
