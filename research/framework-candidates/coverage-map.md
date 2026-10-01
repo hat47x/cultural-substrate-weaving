@@ -25,8 +25,8 @@ This map tracks structural diversity. It does not rank frameworks or claim that 
 | symbolic mediation network | — | Sefirot | reliable lineage separation |
 | explicit argument / inference structure | — | Nyāya inference | debate-state and fallacy layers without flattening Indian logic |
 | social role / relation-conditioned conduct | — | Confucian role / li | historical layer separation and non-hierarchical de-binding |
-| explicit threshold crossing / preparation | — | Shinto shrine threshold / purification | historical and shrine-variation separation |
-| spatial center-periphery / nested boundary | — | Buddhist mandala spatial systems | lineage-specific structure map before adoption |
+| explicit threshold crossing / incorporation / preparation | — | Rites of Passage; Shinto shrine threshold / purification | comparative schema vs culture-native protocol; historical and shrine-variation separation |
+| spatial center-periphery / nested boundary | — | Buddhist mandala; Tibetan Buddhist mandala | lineage-specific structure map and non-ritual spatial contrast before adoption |
 
 ## Priority rule
 
