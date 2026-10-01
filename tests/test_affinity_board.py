@@ -356,6 +356,165 @@ class AffinityBoardTest(unittest.TestCase):
             self.assertEqual(status["catalytic_trace"]["yield_kinds"], {})
             self.assertEqual(status["validation"]["errors"], [])
 
+    def test_cross_field_trace_preserves_both_sides_without_promoting_structure(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            target = Path(tmp) / "board.json"
+            self.run_board("init", str(target))
+            self.run_board(
+                "add-source",
+                str(target),
+                "--ref",
+                "notes://target-side",
+                "--status",
+                "target_supported",
+            )
+            self.run_board(
+                "add-card",
+                str(target),
+                "Target-side material that resists the initial framework reading",
+                "--source",
+                "S001",
+                "--status",
+                "target_supported",
+            )
+            self.run_board(
+                "add-card",
+                str(target),
+                "Framework-generated reading from a counter-view",
+                "--status",
+                "framework_generated",
+            )
+            self.run_board(
+                "trace-card",
+                str(target),
+                "C002",
+                "--framework",
+                "iching",
+                "--operation",
+                "counter-view",
+                "--yield-kind",
+                "distinction",
+            )
+            self.run_board(
+                "add-card",
+                str(target),
+                "The tension suggests a narrower conditional distinction",
+                "--status",
+                "cross_field_emergent",
+            )
+            self.run_board(
+                "trace-cross-field",
+                str(target),
+                "C003",
+                "--target-ref",
+                "C001",
+                "--framework-ref",
+                "C002",
+                "--preserved-target",
+                "the target-side resistance remains explicit",
+                "--preserved-framework",
+                "the counter-view still exposes a useful contrast",
+                "--negated-or-revised",
+                "the original correspondence is too broad",
+                "--newly-recomposed",
+                "the contrast only survives under a narrower condition",
+                "--note",
+                "third structure remains candidate material",
+            )
+            self.run_board(
+                "add-card",
+                str(target),
+                "Another cross-field candidate without lineage yet",
+                "--status",
+                "cross_field_emergent",
+            )
+
+            data = json.loads(target.read_text(encoding="utf-8"))
+            trace = data["cards"][2]["cross_field_trace"]
+            self.assertEqual(trace["target_refs"], ["C001"])
+            self.assertEqual(trace["framework_refs"], ["C002"])
+            self.assertEqual(
+                trace["preserved_from_target"],
+                ["the target-side resistance remains explicit"],
+            )
+            self.assertEqual(
+                trace["preserved_from_framework"],
+                ["the counter-view still exposes a useful contrast"],
+            )
+            self.assertEqual(
+                trace["negated_or_revised"],
+                ["the original correspondence is too broad"],
+            )
+            self.assertEqual(
+                trace["newly_recomposed"],
+                ["the contrast only survives under a narrower condition"],
+            )
+            self.assertEqual(data["groups"], [])
+            self.assertEqual(data["relations"], [])
+
+            status = json.loads(
+                self.run_board("status", str(target), "--json").stdout
+            )
+            self.assertEqual(status["cross_field_trace"]["traced_cards"], 1)
+            self.assertEqual(
+                status["cross_field_trace"][
+                    "untraced_cross_field_emergent_cards"
+                ],
+                ["C004"],
+            )
+            self.assertEqual(status["validation"]["errors"], [])
+
+            target_focus = json.loads(
+                self.run_board("focus", str(target), "C001").stdout
+            )
+            framework_focus = json.loads(
+                self.run_board("focus", str(target), "C002").stdout
+            )
+            self.assertEqual(
+                [item["id"] for item in target_focus["cross_field_cards"]],
+                ["C003"],
+            )
+            self.assertEqual(
+                [item["id"] for item in framework_focus["cross_field_cards"]],
+                ["C003"],
+            )
+
+    def test_cross_field_trace_rejects_non_framework_framework_ref_non_destructively(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            target = Path(tmp) / "board.json"
+            self.run_board("init", str(target))
+            self.run_board(
+                "add-card",
+                str(target),
+                "Target-side material",
+                "--status",
+                "target_supported",
+            )
+            self.run_board(
+                "add-card",
+                str(target),
+                "Cross-field candidate",
+                "--status",
+                "cross_field_emergent",
+            )
+            before = target.read_text(encoding="utf-8")
+            result = self.run_board(
+                "trace-cross-field",
+                str(target),
+                "C002",
+                "--target-ref",
+                "C001",
+                "--framework-ref",
+                "C001",
+                check=False,
+            )
+            self.assertNotEqual(result.returncode, 0)
+            self.assertIn(
+                "framework_ref must reference framework_generated card",
+                result.stderr,
+            )
+            self.assertEqual(target.read_text(encoding="utf-8"), before)
+
     def test_group_transformation_audit_is_explicit_and_status_visible(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
             target = Path(tmp) / "board.json"
