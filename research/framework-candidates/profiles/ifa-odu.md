@@ -6,7 +6,7 @@ Status: research-only / living-tradition-sensitive
 
 UNESCO Intangible Cultural Heritage, Ifa divination system
 
-https://ich.unesco.org/en/RL/baul-traditions-00146
+https://ich.unesco.org/en/RL/ifa-divination-system-00146?lang=en
 
 UNESCO describes 256 odù, each with a divination signature, and a much larger evolving corpus of ese verses transmitted and interpreted by trained Yoruba priests.
 
