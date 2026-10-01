@@ -351,8 +351,14 @@
           "kind": "biomedical-index-reference",
           "title": "NCBI MeSH: Meridians",
           "url": "https://www.ncbi.nlm.nih.gov/mesh/68016740"
+        },
+        {
+          "kind": "scholarly-review-reference",
+          "title": "A 4D systemic view on meridian essence: Substantial, functional, chronological and cultural attributes",
+          "url": "https://pubmed.ncbi.nlm.nih.gov/34896049/"
         }
-      ]
+      ],
+      "source_packet_path": "research/framework-candidates/source-packets/jingluo.md"
     },
     {
       "id": "sefirot",
@@ -394,8 +400,24 @@
           "kind": "tradition-educational-reference",
           "title": "Sefer Yetzirah: The Book of Creation",
           "url": "https://www.myjewishlearning.com/article/sefer-yetzirah-the-book-of-creation/"
+        },
+        {
+          "kind": "primary-text-library",
+          "title": "Sefer Yetzirah — Sefaria Library",
+          "url": "https://www.sefaria.org/texts/Kabbalah/Sefer%20Yetzirah"
+        },
+        {
+          "kind": "scholarly-reference",
+          "title": "A Note on the Sefirot — Reading the Zohar",
+          "url": "https://academic.oup.com/book/1782/chapter-abstract/141450127"
+        },
+        {
+          "kind": "scholarly-specialist-reference",
+          "title": "Spheres, Sefirot, and the Imaginal Astronomical Discourse of Classical Kabbalah",
+          "url": "https://www.cambridge.org/core/journals/harvard-theological-review/article/spheres-sefirot-and-the-imaginal-astronomical-discourse-of-classical-kabbalah/6406AC47AA34ACAFCA9E9F99823AF630"
         }
-      ]
+      ],
+      "source_packet_path": "research/framework-candidates/source-packets/sefirot.md"
     },
     {
       "id": "chakra",
@@ -436,8 +458,19 @@
           "kind": "scholarly-reference",
           "title": "The Origins of Yoga and Tantra",
           "url": "https://www.cambridge.org/core/books/the-origins-of-yoga-and-tantra/1089DDCE8D4C84AEB3D5F892B9F4BAFF"
+        },
+        {
+          "kind": "scholarly-specialist-reference",
+          "title": "Esoteric Physiology and Subtle Body Systems",
+          "url": "https://academic.oup.com/edited-volume/44001/chapter-abstract/413992373"
+        },
+        {
+          "kind": "scholarly-modern-reception-reference",
+          "title": "How compatible are Western psychology and yoga psychology?",
+          "url": "https://www.frontiersin.org/journals/psychology/articles/10.3389/fpsyg.2025.1554014/full"
         }
-      ]
+      ],
+      "source_packet_path": "research/framework-candidates/source-packets/chakra.md"
     },
     {
       "id": "sankhya",
