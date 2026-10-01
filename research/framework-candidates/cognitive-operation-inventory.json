@@ -1,0 +1,353 @@
+{
+  "schema": "csw.framework-candidate-inventory/v1",
+  "status": "research-only",
+  "date": "2026-10-01",
+  "selection_principle": "Prefer structural and cognitive-operation diversity over framework count or superficial similarity to the target.",
+  "candidates": [
+    {
+      "id": "yijing",
+      "names": [
+        "易",
+        "易経",
+        "Yijing",
+        "Book of Changes"
+      ],
+      "readiness": "profile-ready",
+      "structural_primitives": [
+        "yin-yang line",
+        "eight trigrams",
+        "sixty-four hexagrams",
+        "line change",
+        "paired and transformed configurations"
+      ],
+      "cognitive_operations": [
+        "position",
+        "contrast",
+        "combination",
+        "transition",
+        "counter-view",
+        "state-recomposition"
+      ],
+      "useful_for": [
+        "reframing a static description as a state configuration",
+        "asking what changes when one component changes",
+        "examining opposed or neighboring configurations"
+      ],
+      "do_not_assume": [
+        "a hexagram correspondence is a target-side fact",
+        "later interpretive correspondences are part of one timeless canonical system",
+        "divinatory judgment is required for exploratory cognitive use"
+      ],
+      "sources": [
+        {
+          "kind": "primary-text-digital-edition",
+          "title": "Book of Changes: Xi Ci I",
+          "url": "https://ctext.org/book-of-changes/xi-ci-shang"
+        },
+        {
+          "kind": "scholarly-reference",
+          "title": "Metaphysics in Chinese Philosophy",
+          "url": "https://plato.stanford.edu/entries/chinese-metaphysics/"
+        }
+      ]
+    },
+    {
+      "id": "wuxing",
+      "names": [
+        "五行",
+        "Wuxing",
+        "Five Phases"
+      ],
+      "readiness": "profile-ready",
+      "structural_primitives": [
+        "five relational phases",
+        "generation cycle",
+        "overcoming cycle",
+        "cyclical transformation",
+        "historical correlative extensions"
+      ],
+      "cognitive_operations": [
+        "relation",
+        "cycle",
+        "generation-path",
+        "constraint-path",
+        "counter-cycle",
+        "phase-shift"
+      ],
+      "useful_for": [
+        "separating enabling and constraining relations",
+        "looking for cycles instead of one-way causation",
+        "testing whether the same element changes role by context"
+      ],
+      "do_not_assume": [
+        "the five phases are five physical substances",
+        "all historical correspondence tables belong to one invariant system",
+        "a phase assignment is target-side evidence"
+      ],
+      "sources": [
+        {
+          "kind": "scholarly-reference",
+          "title": "Metaphysics in Chinese Philosophy",
+          "url": "https://plato.stanford.edu/entries/chinese-metaphysics/"
+        },
+        {
+          "kind": "scholarly-reference",
+          "title": "Religious Daoism",
+          "url": "https://plato.stanford.edu/entries/daoism-religion/"
+        }
+      ]
+    },
+    {
+      "id": "tzolkin",
+      "names": [
+        "Tzolk’in",
+        "Chol Q’ij",
+        "Maya sacred calendar"
+      ],
+      "readiness": "sourced-candidate",
+      "structural_primitives": [
+        "twenty day signs",
+        "thirteen-number cycle",
+        "260 unique day combinations",
+        "recurrent phase coupling"
+      ],
+      "cognitive_operations": [
+        "cycle",
+        "phase-coupling",
+        "recurrence",
+        "multi-period coordinate",
+        "relative-position-in-cycle"
+      ],
+      "useful_for": [
+        "asking how two independent periodic structures combine",
+        "examining recurrence distance and phase coincidence",
+        "opening a non-linear temporal coordinate"
+      ],
+      "do_not_assume": [
+        "calendar structure licenses generic personality or fortune claims",
+        "living Maya interpretations are interchangeable across communities",
+        "a calendrical coordinate is evidence of causation"
+      ],
+      "sources": [
+        {
+          "kind": "institutional-living-tradition-resource",
+          "title": "Living Maya Time: The Calendar System",
+          "url": "https://maya.nmai.si.edu/calendar/calendar-system"
+        }
+      ]
+    },
+    {
+      "id": "dependent-origination",
+      "names": [
+        "縁起",
+        "pratītyasamutpāda",
+        "paṭiccasamuppāda",
+        "dependent origination"
+      ],
+      "readiness": "sourced-candidate",
+      "structural_primitives": [
+        "conditional arising",
+        "causal or conditional sequences",
+        "traditional twelve-link formulation",
+        "cessation by removing conditions",
+        "multiple historical formulations"
+      ],
+      "cognitive_operations": [
+        "condition-chain",
+        "upstream-condition",
+        "cessation-counterfactual",
+        "dependency-reframing",
+        "anti-essentialist-counter-view"
+      ],
+      "useful_for": [
+        "asking what conditions make a phenomenon possible",
+        "looking upstream from an observed outcome",
+        "testing what changes when a condition ceases"
+      ],
+      "do_not_assume": [
+        "the twelve-link list is the only historically valid formulation",
+        "the doctrine is a generic causal-DAG formalism",
+        "religious claims become domain facts outside their tradition"
+      ],
+      "sources": [
+        {
+          "kind": "scholarly-reference",
+          "title": "Buddha",
+          "url": "https://plato.stanford.edu/entries/buddha/"
+        }
+      ]
+    },
+    {
+      "id": "rasa",
+      "names": [
+        "Rasa",
+        "ラサ",
+        "Indian aesthetic rasa theory"
+      ],
+      "readiness": "sourced-candidate",
+      "structural_primitives": [
+        "aesthetic savor or experience",
+        "dramatic and poetic context",
+        "relation between represented affective material and spectator experience",
+        "long history of interpretation and extension"
+      ],
+      "cognitive_operations": [
+        "reception-view",
+        "affective-composition",
+        "audience-position",
+        "experience-transformation",
+        "counter-view-from-spectator"
+      ],
+      "useful_for": [
+        "separating represented emotion from experienced aesthetic effect",
+        "asking what a composition makes available to a receiver",
+        "examining how affective elements combine into an emergent experience"
+      ],
+      "do_not_assume": [
+        "rasa is a universal modern emotion taxonomy",
+        "later navarasa lists exhaust the historical theory",
+        "aesthetic categories directly diagnose a person's psychology"
+      ],
+      "sources": [
+        {
+          "kind": "scholarly-reference",
+          "title": "Rasa in Indian Aesthetics",
+          "url": "https://academic.oup.com/reference/62382/reference-article-abstract/566568637"
+        },
+        {
+          "kind": "scholarly-reference",
+          "title": "Aesthetics, Oxford Bibliographies in Hinduism",
+          "url": "https://academic.oup.com/reference/62357/reference-article-abstract/554506345"
+        }
+      ]
+    },
+    {
+      "id": "jingluo",
+      "names": [
+        "経絡",
+        "Jingluo",
+        "meridian and collateral system"
+      ],
+      "readiness": "research-only",
+      "structural_primitives": [
+        "main channels",
+        "collaterals",
+        "network/pathway organization",
+        "standardized terminology and nomenclature"
+      ],
+      "cognitive_operations": [
+        "network-path",
+        "main-vs-collateral",
+        "flow-route",
+        "branching",
+        "connection-topology"
+      ],
+      "useful_for": [
+        "opening path and network questions where a tree or simple chain is too narrow",
+        "distinguishing main routes from collateral connections"
+      ],
+      "do_not_assume": [
+        "traditional channel structure is established modern anatomy or physiology",
+        "exploratory use licenses diagnosis or treatment advice",
+        "medical correspondences may be moved into non-medical targets as facts"
+      ],
+      "sources": [
+        {
+          "kind": "institutional-standard",
+          "title": "WHO international standard terminologies on traditional Chinese medicine",
+          "url": "https://www.who.int/publications-detail-redirect/9789240042322"
+        },
+        {
+          "kind": "biomedical-index-reference",
+          "title": "NCBI MeSH: Meridians",
+          "url": "https://www.ncbi.nlm.nih.gov/mesh/68016740"
+        }
+      ]
+    },
+    {
+      "id": "sefirot",
+      "names": [
+        "Sefirot",
+        "セフィロト",
+        "Kabbalistic sefirot"
+      ],
+      "readiness": "research-only",
+      "structural_primitives": [
+        "ten sefirot in later Kabbalistic theology",
+        "emanational or mediating structure",
+        "relations and balancing among sefirot",
+        "significant differences between early Sefer Yetzirah uses and later Kabbalah"
+      ],
+      "cognitive_operations": [
+        "layer",
+        "mediation",
+        "balance-and-tension",
+        "vertical-differentiation",
+        "relation-network"
+      ],
+      "useful_for": [
+        "asking what mediates between an abstract whole and concrete manifestation",
+        "examining tensions among differentiated functions without collapsing them"
+      ],
+      "do_not_assume": [
+        "all Tree of Life diagrams are historically identical",
+        "Sefer Yetzirah's sefirot and later Kabbalistic sefirot are one unchanged schema",
+        "religious theology can be reduced to a generic organization chart"
+      ],
+      "sources": [
+        {
+          "kind": "tradition-educational-reference",
+          "title": "What Are the Sefirot?",
+          "url": "https://www.myjewishlearning.com/article/sefirot/"
+        },
+        {
+          "kind": "tradition-educational-reference",
+          "title": "Sefer Yetzirah: The Book of Creation",
+          "url": "https://www.myjewishlearning.com/article/sefer-yetzirah-the-book-of-creation/"
+        }
+      ]
+    },
+    {
+      "id": "chakra",
+      "names": [
+        "cakra",
+        "chakra",
+        "チャクラ",
+        "subtle-body chakra systems"
+      ],
+      "readiness": "defer-lineage-specific",
+      "structural_primitives": [
+        "subtle-body centers",
+        "vertical or axial arrangements in some traditions",
+        "practice-linked visualization",
+        "multiple Hindu and Buddhist configurations rather than one universal seven-center schema"
+      ],
+      "cognitive_operations": [
+        "vertical-axis",
+        "embodied-position",
+        "practice-sequence",
+        "layer-transition"
+      ],
+      "useful_for": [
+        "opening embodied and vertically ordered perspectives when a lineage-specific source is available"
+      ],
+      "do_not_assume": [
+        "the modern rainbow seven-chakra chart is a timeless pan-Indian standard",
+        "different Hindu and Buddhist chakra systems are interchangeable",
+        "subtle-body claims are anatomical or medical facts"
+      ],
+      "sources": [
+        {
+          "kind": "scholarly-reference",
+          "title": "The Oxford Handbook of Tantric Studies",
+          "url": "https://academic.oup.com/edited-volume/44001"
+        },
+        {
+          "kind": "scholarly-reference",
+          "title": "The Origins of Yoga and Tantra",
+          "url": "https://www.cambridge.org/core/books/the-origins-of-yoga-and-tantra/1089DDCE8D4C84AEB3D5F892B9F4BAFF"
+        }
+      ]
+    }
+  ]
+}

@@ -161,6 +161,87 @@ def validate(data: dict[str, Any]) -> tuple[list[str], list[str]]:
                             f"to source/card: {ref}"
                         )
 
+        if isinstance(trace, dict):
+            return_audits = trace.get("target_return_audits", [])
+            if return_audits is not None:
+                if not isinstance(return_audits, list):
+                    errors.append(
+                        f"card {cid} catalytic target_return_audits must be an array"
+                    )
+                elif return_audits:
+                    if str(card.get("input_status", "")) != "framework_generated":
+                        errors.append(
+                            f"card {cid} catalytic target_return_audits require "
+                            "input_status=framework_generated"
+                        )
+                    if not trace.get("frameworks") or not trace.get("operations"):
+                        errors.append(
+                            f"card {cid} catalytic target_return_audits require "
+                            "frameworks and operations"
+                        )
+                    for index, audit in enumerate(return_audits):
+                        if not isinstance(audit, dict):
+                            errors.append(
+                                f"card {cid} catalytic target_return_audit[{index}] "
+                                "must be an object"
+                            )
+                            continue
+                        if not str(audit.get("state", "")).strip():
+                            errors.append(
+                                f"card {cid} catalytic target_return_audit[{index}] "
+                                "must have state"
+                            )
+                        basis_refs = audit.get("basis_refs", [])
+                        if not isinstance(basis_refs, list) or not basis_refs:
+                            errors.append(
+                                f"card {cid} catalytic target_return_audit[{index}] "
+                                "basis_refs must be a non-empty array"
+                            )
+                            basis_refs = []
+                        for ref in basis_refs:
+                            basis_ref = str(ref)
+                            if basis_ref == cid:
+                                errors.append(
+                                    f"card {cid} catalytic target_return basis_ref "
+                                    "cannot reference itself"
+                                )
+                                continue
+                            if basis_ref not in source_ids | card_ids:
+                                errors.append(
+                                    f"card {cid} catalytic target_return basis_ref "
+                                    f"must resolve to source/card: {ref}"
+                                )
+                                continue
+                            target_card = card_by_id.get(basis_ref)
+                            if target_card is not None and str(
+                                target_card.get("input_status", "")
+                            ) in {"framework_generated", "cross_field_emergent"}:
+                                errors.append(
+                                    f"card {cid} catalytic target_return basis_ref "
+                                    "must not use framework/cross-field card as "
+                                    f"target-side material: {ref}"
+                                )
+                            target_source = source_by_id.get(basis_ref)
+                            if target_source is not None and str(
+                                target_source.get("input_status", "")
+                            ) in {"framework_generated", "cross_field_emergent"}:
+                                errors.append(
+                                    f"card {cid} catalytic target_return basis_ref "
+                                    "must not use framework/cross-field source as "
+                                    f"target-side material: {ref}"
+                                )
+                        next_checks = audit.get("next_checks", [])
+                        if not isinstance(next_checks, list):
+                            errors.append(
+                                f"card {cid} catalytic target_return_audit[{index}] "
+                                "next_checks must be an array"
+                            )
+                        elif any(not str(value).strip() for value in next_checks):
+                            errors.append(
+                                f"card {cid} catalytic target_return_audit[{index}] "
+                                "next_checks must contain readable strings"
+                            )
+
         cross_trace = card.get("cross_field_trace")
         if cross_trace is not None:
             if not isinstance(cross_trace, dict):

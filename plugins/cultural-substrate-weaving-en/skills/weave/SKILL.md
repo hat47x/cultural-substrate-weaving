@@ -48,10 +48,11 @@ Do not rewrite newly generated meaning as if the source material had stated it f
 1. **Read the delegation and record the state**: identify the judgments, usage scope, and resource constraints entrusted by the author's request and settings or instructions outside the skill. When useful, record `non_activation / limited / exploratory` and cultural-framework depth `not_loaded / probe / preview / full / enacted` as current states. The state names do not decide the next action.
 2. **Hold**: set out the question, target material, baseline, and what must not be broken.
 3. **Encounter**: take as candidates frameworks structurally distant from the current segmentation, and touch their structural core. Do not thin framework-native structure into generic language too early.
-4. **Run**: keeping the assumption explicit, derive placement, vacancies, transitions, complementary positions, and practice.
-5. **Cross**: cross the results with target material and look at both fit and pushback. If numerous or heterogeneous materials need material-led structure discovery, use the connection contract in `references/10-integration.md` to hand them to a compatible synthesis realization. Keep provenance and the judging subject distinguishable.
-6. **Land and return**: make candidates concrete step by step through questions, observations, small trials, composition, and judgments, and present candidates, differences, residuals, falsifiers, and provenance. Adoption, stopping, publication, and action return to the external decision authority. If judgment was delegated to the generative AI, decide within that delegation. Do not promote a third structure to target-side fact without independent target-side support.
-7. **Savor**: receive what actually happened as new material. If a new framework contact touches prior artifacts or residuals, use the connection contract in `references/00-iteration.md` to hand it to a compatible iterative realization.
+4. **Open the whole field**: before mapping the target, preserve as much as relevant of the framework's own position set, relation graph, adjacency and opposition, cycles, boundaries, transitions, practice, and symbolic neighborhoods. When broad discovery increment is the purpose of exploratory use, emphasize the diversity of cognitive operations opened rather than framework count or reading volume.
+5. **Run in multiple directions**: keeping the assumption explicit, traverse placement, vacancies, complements, movement through the field, transitions, cycles, boundaries, and practice wherever the framework actually provides them. Harvest questions, distinctions, relation candidates, transition candidates, falsifiers, observations or trials, and residuals separately. When useful, re-segment through a second framework of a different structural type.
+6. **Cross**: cross the results with target material and look at both fit and pushback. If numerous or heterogeneous materials need material-led structure discovery, use the connection contract in `references/10-integration.md` to hand them to a compatible synthesis realization. Do not let framework-derived candidates predetermine grouping or labels; keep provenance and the judging subject distinguishable.
+7. **De-bind, land, and return**: remove framework vocabulary where possible and make candidates concrete through target-language questions, observations, small trials, composition, and judgments. Present candidates, differences, residuals, falsifiers, and provenance. Adoption, stopping, publication, and action return to the external decision authority. If judgment was delegated to the generative AI, decide within that delegation. Do not promote a third structure to target-side fact without independent target-side support.
+8. **Savor**: receive what actually happened as new material. If a new framework contact touches prior artifacts or residuals, use the connection contract in `references/00-iteration.md` to hand it to a compatible iterative realization.
 
 Framework count, loading depth, full reading, and execution of framework-native operations do not by themselves mean success, failure, or stopping. They may be used as observations when external evaluation criteria require them.
 
@@ -78,6 +79,7 @@ Framework count, loading depth, full reading, and execution of framework-native 
 | Framework selection, structural core, exploration / attribution use | [02-system-selection.md](references/02-system-selection.md) |
 | Assignment, transitions, practice layer, post-use checks, exits | [02a-framework-application.md](references/02a-framework-application.md) |
 | Relation types, missing connections, multiple frameworks | [03-transformation.md](references/03-transformation.md) |
+| Adopted framework index, structural cores, native operations, and variant boundaries | [04-framework-portfolio.md](references/04-framework-portfolio.md) |
 | Human bodily responses and Taiheki | [05-human-and-taiheki.md](references/05-human-and-taiheki.md) |
 | Decision provenance and longitudinal events | [08-governance-and-records.md](references/08-governance-and-records.md) |
 | Evaluation and its provenance | [09-evaluation.md](references/09-evaluation.md) |
@@ -86,6 +88,8 @@ Framework count, loading depth, full reading, and execution of framework-native 
 ## Loading behavior
 
 Avoid loading everything at once. This skill does not fix reference order, reference count, framework count, or depth as its own value judgment.
+
+When an adopted framework is used, load its dossier from the framework portfolio before reconstructing its structure from model memory or ad-hoc web search. Use external research for lineage-specific differences, variants, missing details, or frameworks not yet in the adopted corpus.
 
 - When usage scope or a framework is specified outside the skill, follow that specification when loading references.
 - When the author has delegated framework selection or depth to the generative AI, use that delegation as the authority for recalling or searching candidates and loading the needed references.
