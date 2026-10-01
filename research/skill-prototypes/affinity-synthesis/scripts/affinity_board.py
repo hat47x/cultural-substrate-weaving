@@ -202,6 +202,8 @@ def cmd_trace_card(args: argparse.Namespace) -> None:
                 args.framework,
                 args.operation,
                 args.location,
+                args.yield_kind,
+                args.target_response,
                 args.as_if,
                 args.note,
             )
@@ -221,6 +223,8 @@ def cmd_trace_card(args: argparse.Namespace) -> None:
             ("frameworks", args.framework),
             ("operations", args.operation),
             ("locations", args.location),
+            ("yield_kinds", args.yield_kind),
+            ("target_responses", args.target_response),
         ):
             if values is None:
                 continue
@@ -943,12 +947,18 @@ def status_payload(data: dict[str, Any]) -> dict[str, Any]:
     ]
     framework_counts: Counter[str] = Counter()
     operation_counts: Counter[str] = Counter()
+    yield_kind_counts: Counter[str] = Counter()
+    target_response_counts: Counter[str] = Counter()
     for card in traced_cards:
         trace = card["catalytic_trace"]
         for framework in trace.get("frameworks", []):
             framework_counts[str(framework)] += 1
         for operation in trace.get("operations", []):
             operation_counts[str(operation)] += 1
+        for yield_kind in trace.get("yield_kinds", []):
+            yield_kind_counts[str(yield_kind)] += 1
+        for target_response in trace.get("target_responses", []):
+            target_response_counts[str(target_response)] += 1
     untraced_framework_generated = [
         str(card.get("id"))
         for card in cards
@@ -959,6 +969,16 @@ def status_payload(data: dict[str, Any]) -> dict[str, Any]:
             and bool(card["catalytic_trace"].get("frameworks"))
             and bool(card["catalytic_trace"].get("operations"))
         )
+    ]
+    framework_generated_without_yield_kind = [
+        str(card.get("id"))
+        for card in cards
+        if card.get("id")
+        and str(card.get("input_status", "")) == "framework_generated"
+        and isinstance(card.get("catalytic_trace"), dict)
+        and bool(card["catalytic_trace"].get("frameworks"))
+        and bool(card["catalytic_trace"].get("operations"))
+        and not bool(card["catalytic_trace"].get("yield_kinds"))
     ]
 
     return {
@@ -972,7 +992,12 @@ def status_payload(data: dict[str, Any]) -> dict[str, Any]:
             "traced_cards": len(traced_cards),
             "frameworks": dict(sorted(framework_counts.items())),
             "operations": dict(sorted(operation_counts.items())),
+            "yield_kinds": dict(sorted(yield_kind_counts.items())),
+            "target_responses": dict(sorted(target_response_counts.items())),
             "untraced_framework_generated_cards": untraced_framework_generated,
+            "framework_generated_cards_without_yield_kind": (
+                framework_generated_without_yield_kind
+            ),
         },
         "counts": {
             key: len(objects(data, section))
@@ -1128,6 +1153,29 @@ def cmd_status(args: argparse.Namespace) -> None:
         "catalytic-untraced-framework-generated:",
         ", ".join(catalytic["untraced_framework_generated_cards"]) or "-",
     )
+    print(
+        "catalytic-yield-kinds:",
+        ", ".join(
+            f"{key}={value}"
+            for key, value in catalytic["yield_kinds"].items()
+        )
+        or "-",
+    )
+    print(
+        "catalytic-target-responses:",
+        ", ".join(
+            f"{key}={value}"
+            for key, value in catalytic["target_responses"].items()
+        )
+        or "-",
+    )
+    print(
+        "catalytic-framework-generated-without-yield-kind:",
+        ", ".join(
+            catalytic["framework_generated_cards_without_yield_kind"]
+        )
+        or "-",
+    )
     print(f"validation: errors={len(errors)} warnings={len(warnings)}")
 
 
@@ -1183,6 +1231,8 @@ def build_parser() -> argparse.ArgumentParser:
     trace_card.add_argument("--framework", action="append", default=None)
     trace_card.add_argument("--operation", action="append", default=None)
     trace_card.add_argument("--location", action="append", default=None)
+    trace_card.add_argument("--yield-kind", action="append", default=None)
+    trace_card.add_argument("--target-response", action="append", default=None)
     trace_card.add_argument("--as-if")
     trace_card.add_argument("--note")
     trace_card.set_defaults(func=cmd_trace_card)

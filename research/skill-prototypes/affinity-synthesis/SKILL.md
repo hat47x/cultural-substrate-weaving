@@ -192,7 +192,7 @@ rendering toolが使える場合は、syntaxだけでなく視覚的な誤読も
 このprototypeには `scripts/affinity_board.py` がある。これは**思考を代行する分類器ではなく、思考結果を壊さず操作するための道具**である。
 
 - card / group / relation / narrative / residual / questionへstable IDを付ける。
-- CSW等から来た`framework_generated` cardでは、必要なら`trace-card`でframework / operation / location / as-ifを残す。これは触媒経路の来歴であり、grouping、重要度、support、truthの重みには変換しない。statusで操作の多様性や未trace cardを観測できるが、網羅率・品質点にはしない。
+- CSW等から来た`framework_generated` cardでは、必要なら`trace-card`でframework / operation / location / yield-kind / target-response / as-ifを残す。これは触媒経路の来歴であり、grouping、重要度、support、truthの重みには変換しない。statusで「どの認知操作から何が生まれ、対象がどう押し返したか」の偏りや未trace / yield未分類cardを観測できるが、網羅率・品質点にはしない。
 - cardをgroup間で移動してもcard IDとsource provenanceを維持する。
 - group / 表札を立てた後、必要なら`audit-group`でinherited / emergent / residualとpreserved differenceを外在化する。これらを事前taxonomyとしてgroupingへ使わない。
 - statusでtransformation audit未実施groupを見える化し、綺麗にまとまったこと自体を監査完了とみなさない。
