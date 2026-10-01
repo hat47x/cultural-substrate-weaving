@@ -122,6 +122,7 @@ Status: research-only
 - tibetan-buddhist-mandala（sourced-candidate / lineage-sensitive）
 - hadith-isnad-matn（profile-ready / religious-tradition-sensitive）
 - mimamsa-hermeneutics（sourced-candidate / lineage-sensitive）
+- marshallese-wave-navigation（profile-ready / living-tradition-sensitive / non-medical route-network）
 
 Ifá / Odù、Jingluo、Sefirot、chakra、buddhist-mandala、tibetan-buddhist-mandalaは構造的価値が高い一方、living tradition、医療、宗教、系譜差の境界が重いため、採用を急がず研究レーンに留める。Jingluo / Sefirot / chakra は source-packets/ に前段資料層を置き、profile化条件を明示している。
 
