@@ -49,6 +49,48 @@ class ResearchAffinityMapValidationTests(unittest.TestCase):
             any("question Q01 arises_from ref does not resolve locally" in warning for warning in warnings)
         )
 
+    def test_catalytic_target_response_refs_must_resolve_to_source_or_card(self) -> None:
+        data = self.fixture()
+        data["cards"][0]["input_status"] = "framework_generated"
+        data["cards"][0]["catalytic_trace"] = {
+            "frameworks": ["iching"],
+            "operations": ["counter-view"],
+            "target_responses": ["pushback"],
+            "target_response_refs": ["S01", "C002"],
+        }
+        errors, _warnings = validate(data)
+        self.assertEqual(errors, [])
+
+        data["cards"][0]["catalytic_trace"]["target_response_refs"] = ["G01"]
+        errors, _warnings = validate(data)
+        self.assertTrue(
+            any(
+                "catalytic target_response_ref must resolve to source/card: G01"
+                in error
+                for error in errors
+            ),
+            errors,
+        )
+
+    def test_catalytic_target_response_ref_cannot_reference_framework_card_itself(self) -> None:
+        data = self.fixture()
+        data["cards"][0]["input_status"] = "framework_generated"
+        data["cards"][0]["catalytic_trace"] = {
+            "frameworks": ["iching"],
+            "operations": ["counter-view"],
+            "target_responses": ["pushback"],
+            "target_response_refs": ["C001"],
+        }
+        errors, _warnings = validate(data)
+        self.assertTrue(
+            any(
+                "catalytic target_response_ref cannot reference itself"
+                in error
+                for error in errors
+            ),
+            errors,
+        )
+
     def test_unresolved_question_provenance_still_warns(self) -> None:
         data = self.fixture()
         data["questions"][0]["arises_from"] = ["X404"]
