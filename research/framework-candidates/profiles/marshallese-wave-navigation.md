@@ -170,9 +170,15 @@ Marshallese wave-navigation structure instead contributes **wayfinding through e
 
 This profile is sufficiently sourced for research use as a **profile-ready candidate**.
 
+A first target-side worked example now exists at:
+
+- `research/framework-candidates/worked-examples/marshallese-wave-navigation.md`
+
+It provisionally shows that relative-route, cue-sequence, model/environment return, disturbance-as-signal, and local route-update operations survive de-binding.
+
 Before runtime adoption:
 
-- add a small target-side worked example where a global map is unavailable but local cue transitions can be tested;
 - compare against another non-medical wayfinding tradition to ensure the retained operation is not merely generic route planning;
 - keep a living-tradition / public-source boundary explicit;
-- verify that CSW's de-bound output still contains model/environment return and cue-sequence operations rather than only “use a network.”
+- verify the same operation survives in at least one second target domain;
+- confirm that runtime use can preserve model/environment return and cue-sequence operations rather than collapsing to “use a network.”
