@@ -660,6 +660,11 @@
           "kind": "institutional-living-heritage-reference",
           "title": "The Twenty-Four Solar Terms",
           "url": "https://ich.unesco.org/en/RL/the-twenty-four-solar-terms-knowledge-in-china-of-time-and-practices-developed-through-observation-of-the-suns-annual-motion-00647"
+        },
+        {
+          "kind": "scholarly-empirical-reference",
+          "title": "Analysis of geographical origin of solar terms based on the STTMD method",
+          "url": "https://www.nature.com/articles/s41598-024-73740-x"
         }
       ],
       "profile_path": "research/framework-candidates/profiles/twenty-four-solar-terms.md"
@@ -748,6 +753,11 @@
           "kind": "institutional-living-heritage-reference",
           "title": "Ifa divination system",
           "url": "https://ich.unesco.org/en/RL/ifa-divination-system-00146?lang=en"
+        },
+        {
+          "kind": "scholarly-encyclopedia-reference",
+          "title": "Ifá divination corpus, the — Routledge Encyclopedia of Philosophy",
+          "url": "https://www.rep.routledge.com/articles/thematic/ifa-divination-corpus-the/v-1/sections/the-corpus-of-verses"
         }
       ],
       "profile_path": "research/framework-candidates/profiles/ifa-odu.md"
@@ -790,6 +800,11 @@
           "kind": "scholarly-reference",
           "title": "Ramon Llull",
           "url": "https://plato.stanford.edu/entries/llull/"
+        },
+        {
+          "kind": "primary-manuscript-digital-facsimile",
+          "title": "Ars brevis and Ars abbreviata praedicandi, versio latinus II",
+          "url": "https://digital.sciencehistory.org/works/txt90sk/viewer/sckkfrs"
         }
       ],
       "profile_path": "research/framework-candidates/profiles/llull-ars.md"
