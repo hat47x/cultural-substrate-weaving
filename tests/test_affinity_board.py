@@ -116,6 +116,14 @@ class AffinityBoardTest(unittest.TestCase):
             target = Path(tmp) / "board.json"
             self.run_board("init", str(target))
             self.run_board(
+                "add-source",
+                str(target),
+                "--ref",
+                "notes://target-pushback",
+                "--status",
+                "target_supported",
+            )
+            self.run_board(
                 "add-card",
                 str(target),
                 "What changes if the target is viewed from the opposing position?",
@@ -140,6 +148,8 @@ class AffinityBoardTest(unittest.TestCase):
                 "transition-candidate",
                 "--target-response",
                 "pushback",
+                "--target-response-ref",
+                "S001",
                 "--as-if",
                 "seen as a generative cycle",
                 "--note",
@@ -166,6 +176,7 @@ class AffinityBoardTest(unittest.TestCase):
                 ["question", "transition-candidate"],
             )
             self.assertEqual(trace["target_responses"], ["pushback"])
+            self.assertEqual(trace["target_response_refs"], ["S001"])
             self.assertEqual(trace["as_if"], "seen as a generative cycle")
             self.assertEqual(data["groups"], [])
             self.assertEqual(data["relations"], [])
@@ -206,6 +217,10 @@ class AffinityBoardTest(unittest.TestCase):
                 ],
                 [],
             )
+            self.assertEqual(
+                status["catalytic_trace"]["target_response_cards_without_refs"],
+                [],
+            )
             self.assertEqual(status["validation"]["errors"], [])
 
     def test_catalytic_trace_requires_framework_and_operation_without_overwriting_map(self) -> None:
@@ -231,6 +246,80 @@ class AffinityBoardTest(unittest.TestCase):
             self.assertNotEqual(result.returncode, 0)
             self.assertIn(
                 "requires at least one framework and one operation",
+                result.stderr,
+            )
+            self.assertEqual(target.read_text(encoding="utf-8"), before)
+
+    def test_target_response_can_be_recorded_before_target_refs_exist(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            target = Path(tmp) / "board.json"
+            self.run_board("init", str(target))
+            self.run_board(
+                "add-card",
+                str(target),
+                "Framework-generated candidate awaiting target-side grounding",
+                "--status",
+                "framework_generated",
+            )
+            self.run_board(
+                "trace-card",
+                str(target),
+                "C001",
+                "--framework",
+                "iching",
+                "--operation",
+                "counter-view",
+                "--target-response",
+                "unresolved",
+            )
+
+            status = json.loads(
+                self.run_board("status", str(target), "--json").stdout
+            )
+            self.assertEqual(
+                status["catalytic_trace"]["target_response_cards_without_refs"],
+                ["C001"],
+            )
+            self.assertEqual(status["validation"]["errors"], [])
+
+    def test_target_response_ref_without_response_is_rejected_non_destructively(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            target = Path(tmp) / "board.json"
+            self.run_board("init", str(target))
+            self.run_board(
+                "add-source",
+                str(target),
+                "--ref",
+                "notes://target",
+            )
+            self.run_board(
+                "add-card",
+                str(target),
+                "Framework-generated candidate",
+                "--status",
+                "framework_generated",
+            )
+            self.run_board(
+                "trace-card",
+                str(target),
+                "C001",
+                "--framework",
+                "iching",
+                "--operation",
+                "position-pass",
+            )
+            before = target.read_text(encoding="utf-8")
+            result = self.run_board(
+                "trace-card",
+                str(target),
+                "C001",
+                "--target-response-ref",
+                "S001",
+                check=False,
+            )
+            self.assertNotEqual(result.returncode, 0)
+            self.assertIn(
+                "target-response-ref requires at least one target-response",
                 result.stderr,
             )
             self.assertEqual(target.read_text(encoding="utf-8"), before)
