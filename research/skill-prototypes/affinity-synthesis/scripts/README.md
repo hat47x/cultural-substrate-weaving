@@ -38,6 +38,7 @@ python scripts/affinity_board.py trace-card /tmp/board.json C003 \
   --yield-kind "question" \
   --yield-kind "transition-candidate" \
   --target-response "pushback" \
+  --target-response-ref S001 \
   --as-if "seen as a generative cycle"
 
 python scripts/affinity_board.py add-group /tmp/board.json \
