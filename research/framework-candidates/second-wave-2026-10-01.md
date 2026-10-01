@@ -212,6 +212,22 @@ profile:
 
 - profiles/rites-of-passage.md
 
+### Nyāya five-member inference
+
+並行researchで、argument/rhetorical gapのうち「reasonが具体的targetへどう適用されるか」を露出する候補としてprofile-ready化した。
+
+- thesis / reason分離;
+- corroborating example;
+- rule-to-case application;
+- inferential bridge;
+- counterexample / pseudo-reason probe.
+
+Aristotle四原因の「whyの種類」とは役割が異なり、claimからreason、example、applicationを経てconclusionへ至る橋を監査する。五項目を埋めればvalidになるとは扱わない。
+
+profile:
+
+- profiles/nyaya-five-member-inference.md
+
 ### Buddhist mandala
 
 spatial center-peripheryの空白に対して、Buddhist mandalaをsourced candidate化した。
