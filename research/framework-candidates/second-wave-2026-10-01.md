@@ -194,14 +194,91 @@ Huayan採用後も次は薄い。
 
 「同じ問いを別の象徴語で言い直すだけ」の候補は優先しない。
 
+## 2026-10-01 追加候補化
+
+### Rites of passage / van Gennep
+
+explicit boundary-crossingの空白に対して、比較人類学上の三相構造をsourced candidate化した。
+
+- separation;
+- margin / liminal transition;
+- incorporation;
+- phase emphasisの非対称;
+- incomplete transition.
+
+ここでは「世界中の文化が同じ三段階をnativeに持つ」とは扱わない。van Gennepの比較モデルとして出自を明記し、culture-native frameworkとは別種の候補として保持する。
+
+profile:
+
+- profiles/rites-of-passage.md
+
+### Nyāya five-member inference
+
+並行researchで、argument/rhetorical gapのうち「reasonが具体的targetへどう適用されるか」を露出する候補としてprofile-ready化した。
+
+- thesis / reason分離;
+- corroborating example;
+- rule-to-case application;
+- inferential bridge;
+- counterexample / pseudo-reason probe.
+
+Aristotle四原因の「whyの種類」とは役割が異なり、claimからreason、example、applicationを経てconclusionへ至る橋を監査する。五項目を埋めればvalidになるとは扱わない。
+
+profile:
+
+- profiles/nyaya-five-member-inference.md
+
+### Buddhist mandala
+
+spatial center-peripheryの空白に対して、Buddhist mandalaをsourced candidate化した。
+
+- center / periphery;
+- direction / quadrant;
+- gate / threshold;
+- concentric / nested boundary;
+- outer-to-inner approach.
+
+ただしmandalaを一つの不変な図式として扱わず、Tibetan Vajrayāna、日本密教、Pure Land等の差、さらにHindu yantraとの違いを保つ。runtime採用前には、lineage-specific contractまたはcross-lineage minimumのどちらを採るか決める。
+
+profile:
+
+- profiles/buddhist-mandala.md
+
+## なお残る大きなgap
+
+今回の候補化で、
+
+- explicit boundary-crossing;
+- spatial center-periphery;
+
+はresearch corpus上では一段埋まった。
+
+一方、次はまだ薄い。
+
+### ritual practice sequence
+
+Rites-of-passageは比較モデルとして順序を与えるが、culture-nativeな実践手順そのものではない。順序・反復・不可逆性・役割分担をnativeに持つ体系を別に調べる。
+
+### route / collateral network
+
+Jingluo候補は価値があるが、traditional medical structureとmodern anatomy / physiology / treatment claimを混ぜないsource packetが必要。
+
+### layered symbolic mediation
+
+Sefirotは候補価値があるが、Sefer Yetzirahとlater Kabbalah、Tree of Life図の歴史的variantを分けたsource packetが必要。
+
+### culture-native boundary crossing
+
+van Gennepの比較モデルだけでexplicit boundary-crossingを完了扱いにしない。個別文化側でthreshold / passage / incorporationがnativeに構造化される事例を、ritual authorityを模倣せず使えるか引き続き調べる。
+
 ## 現時点の次候補
 
 優先調査:
 
-1. explicit boundary-crossingを持つ体系;
-2. spatial center-peripheryを持つ体系;
-3. ritual practice sequenceを持つ体系;
-4. Jingluoのmedical/non-medical boundaryを十分に書けるsource packet;
-5. Sefirotのlineage-separated source packet.
+1. ritual practice sequenceを持つculture-native体系;
+2. culture-native boundary-crossingのsource packet;
+3. Jingluoのmedical/non-medical boundaryを十分に書けるsource packet;
+4. Sefirotのlineage-separated source packet;
+5. mandalaのlineage-specific / minimum-structure分離。
 
 採用順位ではない。operation空間を埋めるためのresearch queueである。
