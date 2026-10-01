@@ -646,7 +646,8 @@
           "title": "The Twenty-Four Solar Terms",
           "url": "https://ich.unesco.org/en/RL/the-twenty-four-solar-terms-knowledge-in-china-of-time-and-practices-developed-through-observation-of-the-suns-annual-motion-00647"
         }
-      ]
+      ],
+      "profile_path": "research/framework-candidates/profiles/twenty-four-solar-terms.md"
     },
     {
       "id": "heavenly-stems-earthly-branches",
@@ -691,7 +692,8 @@
           "title": "Astronomy and Mathematics in Ancient China — excerpt on the sexagenary cycle",
           "url": "https://assets.cambridge.org/97805210/35378/excerpt/9780521035378_excerpt.pdf"
         }
-      ]
+      ],
+      "profile_path": "research/framework-candidates/profiles/heavenly-stems-earthly-branches.md"
     },
     {
       "id": "ifa-odu",
@@ -732,7 +734,8 @@
           "title": "Ifa divination system",
           "url": "https://ich.unesco.org/en/RL/ifa-divination-system-00146?lang=en"
         }
-      ]
+      ],
+      "profile_path": "research/framework-candidates/profiles/ifa-odu.md"
     },
     {
       "id": "llull-ars",
@@ -773,7 +776,8 @@
           "title": "Ramon Llull",
           "url": "https://plato.stanford.edu/entries/llull/"
         }
-      ]
+      ],
+      "profile_path": "research/framework-candidates/profiles/llull-ars.md"
     },
     {
       "id": "five-aggregates",
@@ -819,7 +823,8 @@
           "title": "Abhidharma",
           "url": "https://plato.stanford.edu/entries/abhidharma/"
         }
-      ]
+      ],
+      "profile_path": "research/framework-candidates/profiles/five-aggregates.md"
     },
     {
       "id": "jo-ha-kyu",
@@ -867,7 +872,8 @@
           "title": "Johakyū — Noh Terminology",
           "url": "https://db2.the-noh.com/edic/2009/06/johakyu_1.html"
         }
-      ]
+      ],
+      "profile_path": "research/framework-candidates/profiles/jo-ha-kyu.md"
     },
     {
       "id": "nyaya-five-member-inference",
