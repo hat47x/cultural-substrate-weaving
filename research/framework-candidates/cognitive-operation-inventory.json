@@ -909,7 +909,7 @@
           "url": "https://iep.utm.edu/nyaya/"
         }
       ],
-      "profile_path": "research/framework-candidates/profiles/nyaya-inference.md"
+      "profile_path": "research/framework-candidates/profiles/nyaya-five-member-inference.md"
     },
     {
       "id": "confucian-role-ritual",
@@ -944,6 +944,11 @@
         "role is a fixed personality or essence"
       ],
       "sources": [
+        {
+          "kind": "primary-text-digital-edition",
+          "title": "The Analects: Yan Yuan",
+          "url": "https://ctext.org/analects/yan-yuan"
+        },
         {
           "kind": "scholarly-reference",
           "title": "Confucius",
@@ -1020,7 +1025,7 @@
         "仏教マンダラ空間構造",
         "maṇḍala"
       ],
-      "readiness": "defer-lineage-specific",
+      "readiness": "sourced-candidate",
       "structural_primitives": [
         "distinguished center",
         "cardinal differentiation",
@@ -1063,7 +1068,102 @@
           "url": "https://www.metmuseum.org/art/collection/search/40137"
         }
       ],
-      "profile_path": "research/framework-candidates/profiles/buddhist-mandala-spatial.md"
+      "profile_path": "research/framework-candidates/profiles/buddhist-mandala.md",
+      "adoption_hold": "lineage-sensitive",
+      "related_profiles": [
+        "research/framework-candidates/profiles/tibetan-buddhist-mandala.md"
+      ]
+    },
+    {
+      "id": "rites-of-passage",
+      "names": [
+        "Rites of Passage",
+        "van Gennep transition schema",
+        "通過儀礼"
+      ],
+      "readiness": "profile-ready",
+      "structural_primitives": [
+        "separation",
+        "transition / margin / liminality",
+        "incorporation",
+        "status-before / status-after",
+        "incomplete incorporation"
+      ],
+      "cognitive_operations": [
+        "separation-probe",
+        "liminal-state-preservation",
+        "threshold-crossing-inspection",
+        "incorporation-check",
+        "failed-incorporation-probe"
+      ],
+      "useful_for": [
+        "treating crossing itself as an analyzable process",
+        "preserving an intermediate state instead of forcing a binary old/new classification",
+        "asking what concrete condition would complete incorporation"
+      ],
+      "do_not_assume": [
+        "every cultural transition follows the same three phases equally",
+        "later Turnerian liminality is identical to van Gennep's original schema",
+        "ritual status changes become target-side facts"
+      ],
+      "sources": [
+        {
+          "kind": "scholarly-primary-edition",
+          "title": "The Rites of Passage",
+          "url": "https://press.uchicago.edu/ucp/books/book/chicago/R/bo38180827.html"
+        },
+        {
+          "kind": "scholarly-reference",
+          "title": "Introduction: Rites of Passage",
+          "url": "https://www.cambridge.org/core/books/abs/rites-of-passage/introduction-rites-of-passage/96409189B33DAEF7A22F36F1A28E392D"
+        }
+      ],
+      "profile_path": "research/framework-candidates/profiles/rites-of-passage.md"
+    },
+    {
+      "id": "tibetan-buddhist-mandala",
+      "names": [
+        "Tibetan Buddhist mandala",
+        "チベット仏教マンダラ"
+      ],
+      "readiness": "sourced-candidate",
+      "structural_primitives": [
+        "center / periphery",
+        "directional differentiation",
+        "gated threshold",
+        "nested enclosure",
+        "outside-to-center traversal"
+      ],
+      "cognitive_operations": [
+        "center-periphery",
+        "directional-quadrant",
+        "threshold-gate",
+        "nested-enclosure",
+        "outside-to-center-traversal"
+      ],
+      "useful_for": [
+        "adding lineage-specific depth to spatial center-periphery research",
+        "examining mediated access and intermediate enclosures",
+        "distinguishing static hierarchy from ritualized traversal"
+      ],
+      "do_not_assume": [
+        "there is one invariant Tibetan mandala",
+        "one deity mandala's colors directions or gates are universal",
+        "initiation or ritual authority can be simulated by CSW"
+      ],
+      "sources": [
+        {
+          "kind": "museum-scholarly-reference",
+          "title": "Mandalas: Mapping the Buddhist Art of Tibet",
+          "url": "https://www.metmuseum.org/met-publications/mandalas-mapping-the-buddhist-art-of-tibet"
+        },
+        {
+          "kind": "museum-reference",
+          "title": "The Mandala: A Guide to Transformation",
+          "url": "https://rubinmuseum.org/the-mandala-a-guide-to-transformation/"
+        }
+      ],
+      "profile_path": "research/framework-candidates/profiles/tibetan-buddhist-mandala.md"
     }
   ]
 }
