@@ -12,7 +12,7 @@
         "Yijing",
         "Book of Changes"
       ],
-      "readiness": "profile-ready",
+      "readiness": "adopted",
       "structural_primitives": [
         "yin-yang line",
         "eight trigrams",
@@ -48,8 +48,14 @@
           "kind": "scholarly-reference",
           "title": "Metaphysics in Chinese Philosophy",
           "url": "https://plato.stanford.edu/entries/chinese-metaphysics/"
+        },
+        {
+          "kind": "scholarly-reference",
+          "title": "Chinese Philosophy of Change (Yijing) — appendices",
+          "url": "https://plato.stanford.edu/entries/chinese-change/appendix.html"
         }
-      ]
+      ],
+      "runtime_path": "src/ja-JP/frameworks/yijing.md"
     },
     {
       "id": "wuxing",
@@ -58,7 +64,7 @@
         "Wuxing",
         "Five Phases"
       ],
-      "readiness": "profile-ready",
+      "readiness": "adopted",
       "structural_primitives": [
         "five relational phases",
         "generation cycle",
@@ -95,28 +101,35 @@
           "title": "Religious Daoism",
           "url": "https://plato.stanford.edu/entries/daoism-religion/"
         }
-      ]
+      ],
+      "runtime_path": "src/ja-JP/frameworks/wuxing.md"
     },
     {
       "id": "tzolkin",
       "names": [
         "Tzolk’in",
         "Chol Q’ij",
-        "Maya sacred calendar"
+        "Haab",
+        "Calendar Round",
+        "Long Count",
+        "Maya calendar system"
       ],
-      "readiness": "sourced-candidate",
+      "readiness": "adopted",
       "structural_primitives": [
-        "twenty day signs",
-        "thirteen-number cycle",
-        "260 unique day combinations",
-        "recurrent phase coupling"
+        "twenty day signs × thirteen-number cycle",
+        "260-day Tzolk’in / Chol Q’ij cycle",
+        "365-day Haab cycle",
+        "18,980-day Calendar Round coupling",
+        "Long Count multi-scale historical coordinate",
+        "living-tradition calendar practice"
       ],
       "cognitive_operations": [
-        "cycle",
-        "phase-coupling",
-        "recurrence",
-        "multi-period coordinate",
-        "relative-position-in-cycle"
+        "coupled-cycle",
+        "partial-vs-full-recurrence",
+        "phase-desynchronization",
+        "recurrence-distance",
+        "multi-scale-time",
+        "cycle-count-distinction"
       ],
       "useful_for": [
         "asking how two independent periodic structures combine",
@@ -133,8 +146,15 @@
           "kind": "institutional-living-tradition-resource",
           "title": "Living Maya Time: The Calendar System",
           "url": "https://maya.nmai.si.edu/calendar/calendar-system"
+        },
+        {
+          "kind": "institutional-living-tradition-resource",
+          "title": "Living Maya Time: Corn and Calendar Traditions",
+          "url": "https://maya.nmai.si.edu/corn-and-maya-time/corn-and-calendar-traditions"
         }
-      ]
+      ],
+      "runtime_path": "src/ja-JP/frameworks/maya-calendars.md",
+      "adopted_as": "maya-calendars"
     },
     {
       "id": "dependent-origination",
@@ -144,7 +164,7 @@
         "paṭiccasamuppāda",
         "dependent origination"
       ],
-      "readiness": "sourced-candidate",
+      "readiness": "adopted",
       "structural_primitives": [
         "conditional arising",
         "causal or conditional sequences",
@@ -174,8 +194,14 @@
           "kind": "scholarly-reference",
           "title": "Buddha",
           "url": "https://plato.stanford.edu/entries/buddha/"
+        },
+        {
+          "kind": "primary-text-translation",
+          "title": "SN 12 — dependent origination formula (SuttaCentral)",
+          "url": "https://suttacentral.net/sn12.41/en/sujato"
         }
-      ]
+      ],
+      "runtime_path": "src/ja-JP/frameworks/dependent-origination.md"
     },
     {
       "id": "rasa",
@@ -184,7 +210,7 @@
         "ラサ",
         "Indian aesthetic rasa theory"
       ],
-      "readiness": "sourced-candidate",
+      "readiness": "adopted",
       "structural_primitives": [
         "aesthetic savor or experience",
         "dramatic and poetic context",
@@ -218,8 +244,14 @@
           "kind": "scholarly-reference",
           "title": "Aesthetics, Oxford Bibliographies in Hinduism",
           "url": "https://academic.oup.com/reference/62357/reference-article-abstract/554506345"
+        },
+        {
+          "kind": "scholarly-reference",
+          "title": "The Alchemy of Rasa in the Performer–Spectator Interaction",
+          "url": "https://www.cambridge.org/core/journals/new-theatre-quarterly/article/abs/alchemy-of-rasa-in-the-performerspectator-interaction/AAE15994E99A99227CAA627A2DB31777"
         }
-      ]
+      ],
+      "runtime_path": "src/ja-JP/frameworks/rasa.md"
     },
     {
       "id": "jingluo",
@@ -346,6 +378,426 @@
           "kind": "scholarly-reference",
           "title": "The Origins of Yoga and Tantra",
           "url": "https://www.cambridge.org/core/books/the-origins-of-yoga-and-tantra/1089DDCE8D4C84AEB3D5F892B9F4BAFF"
+        }
+      ]
+    },
+    {
+      "id": "sankhya",
+      "names": [
+        "サーンキヤ",
+        "Sāṅkhya",
+        "Samkhya"
+      ],
+      "readiness": "adopted",
+      "runtime_path": "src/ja-JP/frameworks/sankhya.md",
+      "structural_primitives": [
+        "puruṣa / prakṛti distinction",
+        "twenty-five tattvas in classical formulation",
+        "manifest / unmanifest nature",
+        "three guṇas",
+        "production or evolution sequence"
+      ],
+      "cognitive_operations": [
+        "layer-backtracking",
+        "production-tree",
+        "observer-process-split",
+        "mixture-view",
+        "upstream-inversion"
+      ],
+      "useful_for": [
+        "separating observer position from generated process",
+        "moving from visible products toward upstream layers",
+        "testing whether a single label hides a mixture of tendencies"
+      ],
+      "do_not_assume": [
+        "the twenty-five tattvas are target-side ontology",
+        "later cosmological accounts are identical to the classical formulation",
+        "guṇas are fixed personality types",
+        "Sāṅkhya may be merged automatically with chakra, Ayurveda, Yoga, or Vedānta systems"
+      ],
+      "sources": [
+        {
+          "kind": "scholarly-reference",
+          "title": "Sankhya",
+          "url": "https://iep.utm.edu/sankhya/"
+        }
+      ]
+    },
+    {
+      "id": "catuskoti",
+      "names": [
+        "四句分別",
+        "catuṣkoṭi",
+        "tetralemma"
+      ],
+      "readiness": "adopted",
+      "runtime_path": "src/ja-JP/frameworks/catuskoti.md",
+      "structural_primitives": [
+        "P",
+        "not-P",
+        "both P and not-P",
+        "neither P nor not-P",
+        "lineage-sensitive use of the four corners"
+      ],
+      "cognitive_operations": [
+        "binary-break",
+        "both-probe",
+        "neither-probe",
+        "predicate-audit",
+        "de-reification"
+      ],
+      "useful_for": [
+        "opening a question trapped in binary opposition",
+        "separating mixed time/layer/actor conditions",
+        "testing whether the predicate itself is malformed"
+      ],
+      "do_not_assume": [
+        "the four corners form one universally accepted four-valued logic",
+        "all Buddhist uses are identical",
+        "the framework establishes that a target is both or neither"
+      ],
+      "sources": [
+        {
+          "kind": "scholarly-reference",
+          "title": "Contradiction — LNC and the Buddhist Tetralemma",
+          "url": "https://plato.stanford.edu/entries/contradiction/"
+        }
+      ]
+    },
+    {
+      "id": "jain-sevenfold-predication",
+      "names": [
+        "ジャイナ多面説",
+        "anekāntavāda",
+        "syādvāda",
+        "saptabhaṅgī",
+        "sevenfold predication"
+      ],
+      "readiness": "adopted",
+      "runtime_path": "src/ja-JP/frameworks/jain-sevenfold-predication.md",
+      "structural_primitives": [
+        "conditioned predication",
+        "standpoint or circumstance",
+        "affirmation / negation / both",
+        "indescribability",
+        "sevenfold combinations"
+      ],
+      "cognitive_operations": [
+        "perspective-binding",
+        "qualified-assertion",
+        "indescribability-probe",
+        "contradiction-decomposition",
+        "perspective-rotation"
+      ],
+      "useful_for": [
+        "restoring omitted conditions to strong claims",
+        "preserving residuals that current vocabulary cannot state",
+        "separating apparent contradiction by standpoint, time, or aspect"
+      ],
+      "do_not_assume": [
+        "syādvāda is generic relativism",
+        "sevenfold predication is identical to the Buddhist tetralemma",
+        "seven ontological target states have been established"
+      ],
+      "sources": [
+        {
+          "kind": "scholarly-reference",
+          "title": "Jain Philosophy",
+          "url": "https://iep.utm.edu/jain/"
+        }
+      ]
+    },
+    {
+      "id": "aristotle-four-causes",
+      "names": [
+        "アリストテレス四原因",
+        "Aristotle's four causes"
+      ],
+      "readiness": "adopted",
+      "runtime_path": "src/ja-JP/frameworks/aristotle-four-causes.md",
+      "structural_primitives": [
+        "material cause",
+        "formal cause",
+        "efficient cause",
+        "final cause",
+        "causal or explanatory pluralism"
+      ],
+      "cognitive_operations": [
+        "why-splitting",
+        "explanation-gap",
+        "causal-category-audit",
+        "multi-cause-composition",
+        "artifact-design-probe"
+      ],
+      "useful_for": [
+        "splitting one vague why-question into distinct explanation types",
+        "detecting when purpose, mechanism, structure, and material are conflated",
+        "looking for explanatory gaps without forcing one winner"
+      ],
+      "do_not_assume": [
+        "all four causes map directly to modern scientific causation",
+        "final causes may be attributed without domain evidence",
+        "every target must instantiate all four in the same way"
+      ],
+      "sources": [
+        {
+          "kind": "scholarly-reference",
+          "title": "Aristotle on Causality",
+          "url": "https://plato.stanford.edu/entries/aristotle-causality/"
+        },
+        {
+          "kind": "scholarly-reference",
+          "title": "Aristotle's Metaphysics",
+          "url": "https://plato.stanford.edu/entries/aristotle-metaphysics/"
+        }
+      ]
+    },
+    {
+      "id": "twenty-four-solar-terms",
+      "names": [
+        "二十四節気",
+        "Twenty-Four Solar Terms"
+      ],
+      "readiness": "sourced-candidate",
+      "structural_primitives": [
+        "annual solar cycle",
+        "twenty-four named segments",
+        "seasonal transition",
+        "practice-linked temporal markers"
+      ],
+      "cognitive_operations": [
+        "annual-phase",
+        "seasonal-transition",
+        "fine-grained-cycle-segmentation",
+        "practice-timing",
+        "phase-boundary"
+      ],
+      "useful_for": [
+        "replacing coarse seasons with finer phase distinctions",
+        "asking what changes near a recurring boundary",
+        "linking temporal segmentation to practice without assuming causation"
+      ],
+      "do_not_assume": [
+        "the terms are a universal climate model",
+        "traditional practice timings are automatically optimal today",
+        "cultural meanings are interchangeable across all regions and communities"
+      ],
+      "sources": [
+        {
+          "kind": "institutional-living-heritage-reference",
+          "title": "The Twenty-Four Solar Terms",
+          "url": "https://ich.unesco.org/en/RL/the-twenty-four-solar-terms-knowledge-in-china-of-time-and-practices-developed-through-observation-of-the-suns-annual-motion-00647"
+        }
+      ]
+    },
+    {
+      "id": "heavenly-stems-earthly-branches",
+      "names": [
+        "十干十二支",
+        "天干地支",
+        "Heavenly Stems and Earthly Branches",
+        "ganzhi"
+      ],
+      "readiness": "sourced-candidate",
+      "structural_primitives": [
+        "ten-stem cycle",
+        "twelve-branch cycle",
+        "sequential synchronized pairing",
+        "sixty-position recurrence"
+      ],
+      "cognitive_operations": [
+        "coupled-cycle",
+        "phase-offset",
+        "recurrence-distance",
+        "coordinate-pair",
+        "partial-vs-full-recurrence"
+      ],
+      "useful_for": [
+        "asking how 10- and 12-position cycles create a 60-position joint state",
+        "distinguishing partial recurrence from full recurrence",
+        "tracking offset between periodic coordinates"
+      ],
+      "do_not_assume": [
+        "later cosmological meanings are identical to earliest calendrical use",
+        "zodiac personality claims follow from cycle mechanics",
+        "calendar coordinates cause target events"
+      ],
+      "sources": [
+        {
+          "kind": "scholarly-reference",
+          "title": "Evolution of the calendar in Shang China",
+          "url": "https://www.cambridge.org/core/books/abs/archaeology-of-measurement/evolution-of-the-calendar-in-shang-china/C6465ACCE5ACC6D6EF27922B8665EAA4"
+        },
+        {
+          "kind": "scholarly-reference",
+          "title": "Astronomy and Mathematics in Ancient China — excerpt on the sexagenary cycle",
+          "url": "https://assets.cambridge.org/97805210/35378/excerpt/9780521035378_excerpt.pdf"
+        }
+      ]
+    },
+    {
+      "id": "ifa-odu",
+      "names": [
+        "Ifá",
+        "Ifa",
+        "Odù Ifá"
+      ],
+      "readiness": "research-only",
+      "structural_primitives": [
+        "256 odù",
+        "specific divination signatures",
+        "large and growing corpus of ese verses",
+        "priest-mediated interpretation",
+        "oral/literary transmission"
+      ],
+      "cognitive_operations": [
+        "combinatorial-index",
+        "indexed-corpus-retrieval",
+        "case-by-signature",
+        "poetic-analogy",
+        "decision-context-reframing"
+      ],
+      "useful_for": [
+        "studying how a compact combinatorial signature can open a much larger narrative corpus",
+        "asking how indexed stories generate non-local analogies",
+        "examining retrieval-plus-interpretation rather than taxonomy alone"
+      ],
+      "do_not_assume": [
+        "sacred/divinatory practice can be detached from Yoruba communities without loss",
+        "an odù correspondence is target evidence",
+        "the corpus may be reduced to generic prompt templates",
+        "CSW may simulate priestly authority"
+      ],
+      "sources": [
+        {
+          "kind": "institutional-living-heritage-reference",
+          "title": "Ifa divination system",
+          "url": "https://ich.unesco.org/en/RL/baul-traditions-00146"
+        }
+      ]
+    },
+    {
+      "id": "llull-ars",
+      "names": [
+        "Ramon Llull's Ars",
+        "Ars Magna",
+        "Ars brevis",
+        "ルルスの術"
+      ],
+      "readiness": "sourced-candidate",
+      "structural_primitives": [
+        "symbolic principles encoded as letters",
+        "binary and ternary combinations",
+        "rotating figures",
+        "combinatorial question generation",
+        "historical revisions of the system"
+      ],
+      "cognitive_operations": [
+        "combinatorial-enumeration",
+        "systematic-crossing",
+        "rotation",
+        "unseen-combination-probe",
+        "argument-space-expansion"
+      ],
+      "useful_for": [
+        "systematically crossing dimensions that ordinary association would not pair",
+        "separating coverage by combination from semantic plausibility",
+        "generating a bounded combinatorial search space"
+      ],
+      "do_not_assume": [
+        "Llull's theological truth claims become domain facts",
+        "all historical phases of the Ars are one fixed machine",
+        "combinatorial coverage guarantees useful or true outputs"
+      ],
+      "sources": [
+        {
+          "kind": "scholarly-reference",
+          "title": "Ramon Llull",
+          "url": "https://plato.stanford.edu/entries/llull/"
+        }
+      ]
+    },
+    {
+      "id": "five-aggregates",
+      "names": [
+        "五蘊",
+        "five aggregates",
+        "pañcaskandha"
+      ],
+      "readiness": "sourced-candidate",
+      "structural_primitives": [
+        "form",
+        "sensation",
+        "apperception/perception",
+        "formations or volitions",
+        "consciousness",
+        "process-oriented analysis of sentient experience"
+      ],
+      "cognitive_operations": [
+        "experience-decomposition",
+        "anti-agent-reification",
+        "process-view",
+        "component-interaction",
+        "residual-after-decomposition"
+      ],
+      "useful_for": [
+        "breaking an undifferentiated account of experience into different process types",
+        "asking which part of an apparent self-description belongs to sensation, perception, disposition, or awareness",
+        "countering premature single-agent explanations"
+      ],
+      "do_not_assume": [
+        "the five aggregates are a modern psychological taxonomy",
+        "Buddhist claims about personhood become target facts",
+        "the categories are identical across all Buddhist analytical traditions"
+      ],
+      "sources": [
+        {
+          "kind": "scholarly-reference",
+          "title": "Mind in Indian Buddhist Philosophy",
+          "url": "https://plato.stanford.edu/entries/mind-indian-buddhism/"
+        },
+        {
+          "kind": "scholarly-reference",
+          "title": "Abhidharma",
+          "url": "https://plato.stanford.edu/entries/abhidharma/"
+        }
+      ]
+    },
+    {
+      "id": "jo-ha-kyu",
+      "names": [
+        "序破急",
+        "Jo-Ha-Kyū",
+        "Jyo-Ha-Kyu"
+      ],
+      "readiness": "sourced-candidate",
+      "structural_primitives": [
+        "opening / development-disruption / rapid-close temporal articulation",
+        "acceleration and deceleration in traditional performance",
+        "nested pacing potential requiring further lineage work"
+      ],
+      "cognitive_operations": [
+        "pacing-segmentation",
+        "tempo-transition",
+        "acceleration-profile",
+        "closure-shape",
+        "nested-temporal-structure"
+      ],
+      "useful_for": [
+        "examining whether a process has only content structure but no temporal shape",
+        "asking where acceleration or release should occur",
+        "distinguishing phase function from equal-duration thirds"
+      ],
+      "do_not_assume": [
+        "jo-ha-kyū means three equal blocks",
+        "one quantitative timing law applies to all Japanese arts",
+        "a performance principle is automatically optimal for unrelated targets"
+      ],
+      "sources": [
+        {
+          "kind": "scholarly-empirical-reference",
+          "title": "Characteristics of actions for sliding walk technique in Japanese traditional performing art",
+          "url": "https://www.jstage.jst.go.jp/article/hcs/2014/24/2014_204/_article/-char/en"
         }
       ]
     }

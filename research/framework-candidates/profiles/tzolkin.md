@@ -1,6 +1,6 @@
 # Tzolk’in framework profile candidate
 
-Status: sourced-candidate / research-only
+Status: adopted / runtime-corpus
 
 ## Identity
 
@@ -127,3 +127,19 @@ Before skill-candidate status:
 Current status remains sourced-candidate.
 
 The calendar mechanics are sourceable and structurally distinct, but enacted use should wait for a more lineage-aware account of living Maya interpretation.
+
+
+## Adoption synchronization
+
+The narrow Tzolk’in candidate has been adopted through the broader runtime dossier `src/ja-JP/frameworks/maya-calendars.md`.
+
+The adopted scope deliberately adds Haab, Calendar Round, and Long Count so that CSW can distinguish:
+
+- one short cycle from another;
+- partial recurrence from full recurrence;
+- coupled cycles from long-term counting;
+- calendar mechanics from day-sign interpretation and ritual meaning.
+
+This broader structure resolves the main earlier adoption gap: CSW no longer needs to treat the 13×20 Tzolk’in mechanism as if it were the whole Maya calendar system.
+
+The runtime still does not license personality/fortune claims, community-independent spiritual interpretation, or causal claims from calendar coordinates.

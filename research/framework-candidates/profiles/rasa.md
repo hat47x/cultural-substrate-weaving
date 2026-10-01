@@ -1,6 +1,6 @@
 # Rasa framework profile candidate
 
-Status: sourced-candidate / research-only
+Status: adopted / runtime-corpus
 
 ## Identity
 
@@ -22,6 +22,12 @@ Oxford Bibliographies, Aesthetics
 https://academic.oup.com/reference/62357/reference-article-abstract/554506345
 
 This source situates the Nāṭyaśāstra as a major early source for rasa theory and emphasizes the long history of interpretation rather than one closed modern taxonomy.
+
+Cambridge Core, The Alchemy of Rasa in the Performer–Spectator Interaction
+
+https://www.cambridge.org/core/journals/new-theatre-quarterly/article/abs/alchemy-of-rasa-in-the-performerspectator-interaction/AAE15994E99A99227CAA627A2DB31777
+
+This source supports the performer–spectator relation, the prepared conditions of rasa, and the need to preserve cultural specificity.
 
 ## Structural core retained by this profile
 
@@ -115,7 +121,7 @@ Outputs:
 
 Rasa theory developed over centuries.
 
-Before skill-candidate status:
+The adopted runtime core remains intentionally narrow. Future enrichment should:
 
 - distinguish the Nāṭyaśāstra formulation from later elaborations;
 - document the relation between rasa and bhāva terminology;
@@ -139,8 +145,8 @@ Before skill-candidate status:
 4. ask for target-side evidence from actual reception when available;
 5. retain mismatch between intended and observed effect as a residual rather than forcing the theory to fit.
 
-## Candidate adoption note
+## Adoption synchronization
 
-Current status remains sourced-candidate.
+The expression/composition/reception distinction is adopted in `src/ja-JP/frameworks/rasa.md`.
 
-The framework adds a cognitive function currently weak in CSW: systematic separation of expression from reception. More primary/theoretical detail is needed before independent Skill adoption.
+Runtime adoption licenses receiver-position, composition-to-experience, and represented-content-vs-experienced-effect questions. It does not license a universal nine-emotion checklist, psychological diagnosis, or claims about actual audience response without reception evidence. More historical depth is enrichment for the dossier, not a reason to discard the already well-bounded minimal operation.

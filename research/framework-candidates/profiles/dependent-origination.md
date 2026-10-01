@@ -1,6 +1,6 @@
 # Dependent origination framework profile candidate
 
-Status: sourced-candidate / research-only
+Status: adopted / runtime-corpus
 
 ## Identity
 
@@ -16,6 +16,12 @@ Stanford Encyclopedia of Philosophy, Buddha
 https://plato.stanford.edu/entries/buddha/
 
 The source presents the Buddhist analysis of suffering in terms of causes and conditions and notes the traditional twelve-link chain, while also noting that the twelve-link formulation is a later compilation and that shorter formulations occur in early materials.
+
+SuttaCentral, SN 12.41
+
+https://suttacentral.net/sn12.41/en/sujato
+
+This supplies the compact arising/cessation conditional formula used by the runtime dossier.
 
 ## Structural core retained by this profile
 
@@ -108,7 +114,7 @@ This is an exploratory cognitive move, not a claim that Buddhist ontology has be
 
 The twelve-link chain is important but should not be treated as a timeless single-format algorithm.
 
-Before skill-candidate status, the profile should distinguish at least:
+The runtime dossier deliberately does not merge these historical layers. Future enrichment should distinguish further:
 
 - early/shorter formulations;
 - the standard twelve-link presentation;
@@ -134,8 +140,8 @@ The purpose is not to teach all Buddhist schools. It is to prevent one later sch
 4. formulate cessation claims as testable target questions where possible;
 5. preserve contradiction if target material does not behave as the chain predicts.
 
-## Candidate adoption note
+## Adoption synchronization
 
-Current status remains sourced-candidate.
+The minimal conditional-arising / cessation structure is adopted in `src/ja-JP/frameworks/dependent-origination.md`.
 
-The conditional-arising operation is promising and structurally distinct, but the profile needs lineage-aware source expansion before use as an independent Skill module.
+Adoption does not mean CSW imports the full twelve-link chain into every target. The runtime uses condition, cessation, chain expansion/compression, and intervention-point questions. Unsupported links stay framework_generated and must return to target evidence. Independent doctrinal or standalone-Skill depth remains a separate research task.

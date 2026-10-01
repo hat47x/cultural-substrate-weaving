@@ -1,6 +1,6 @@
 # Yijing framework profile candidate
 
-Status: profile-ready / research-only
+Status: adopted / runtime-corpus
 
 ## Identity
 
@@ -157,13 +157,16 @@ Before returning a candidate to the target:
 4. state what target observation would support or push back on it;
 5. preserve any useful residual even if the Yijing mapping itself is withdrawn.
 
-## Candidate adoption note
+## Adoption synchronization
 
-This profile has enough source support and structural specificity to proceed toward skill-candidate.
+This framework is adopted in `src/ja-JP/frameworks/yijing.md` as a minimal catalytic dossier.
 
-Remaining work before adoption:
+Runtime adoption licenses configuration, position, nesting, contrast, and clearly-labelled CSW mutation probes. It does not license a complete divination procedure or one universal transformation convention.
 
-- distinguish at least two historically important transformation conventions rather than implying one universal rule;
-- add a compact glossary for line / trigram / hexagram terminology;
-- add one worked target-return example that does not use divination or personality typing;
-- independent source review for Japanese terminology.
+Compact glossary:
+
+- line / 爻: one binary position;
+- trigram / 卦: three-line local configuration;
+- hexagram / 六十四卦の一卦: six-line composite configuration.
+
+Target-return example: if a project plan is hypothetically represented as six dependent positions, changing one assumption may expose which downstream relation actually depends on it. The hexagram mapping is then removed; the surviving target question is “which observed dependency changes when this assumption changes?” Further historical transformation conventions remain enrichment work, not blockers to this minimal runtime use.
