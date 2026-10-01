@@ -254,6 +254,58 @@
       "runtime_path": "src/ja-JP/frameworks/rasa.md"
     },
     {
+      "id": "huayan",
+      "names": [
+        "華厳",
+        "Huayan",
+        "Hwaeom",
+        "Kegon"
+      ],
+      "readiness": "sourced-candidate",
+      "structural_primitives": [
+        "whole-part co-definition",
+        "mutual inclusion and interdependence",
+        "identity-with-difference",
+        "perspective-sensitive network",
+        "role-defined identity"
+      ],
+      "cognitive_operations": [
+        "whole-part-reciprocity",
+        "mutual-inclusion-view",
+        "perspective-through-node",
+        "context-role-reidentification",
+        "integration-with-difference"
+      ],
+      "useful_for": [
+        "reframing apparently independent components as role-defined parts of a whole",
+        "viewing a network from different nodes without erasing difference",
+        "testing whether a component label depends on its containing context"
+      ],
+      "do_not_assume": [
+        "Huayan metaphysics is a target-domain fact",
+        "mutual dependence means every target element is empirically connected with equal strength",
+        "Indra's Net is the whole of Huayan",
+        "Chinese Huayan, Korean Hwaeom, and Japanese Kegon are one invariant lineage"
+      ],
+      "sources": [
+        {
+          "kind": "scholarly-reference",
+          "title": "Huayan Buddhism",
+          "url": "https://plato.stanford.edu/entries/buddhism-huayan/"
+        },
+        {
+          "kind": "scholarly-reference",
+          "title": "Analysis — Fazang's whole-part analysis",
+          "url": "https://plato.stanford.edu/entries/analysis/s3.html"
+        },
+        {
+          "kind": "scholarly-reference",
+          "title": "Fazang",
+          "url": "https://iep.utm.edu/fazang/"
+        }
+      ]
+    },
+    {
       "id": "jingluo",
       "names": [
         "経絡",
