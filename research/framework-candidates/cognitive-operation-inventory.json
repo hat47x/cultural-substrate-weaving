@@ -858,6 +858,120 @@
           "url": "https://www.jstage.jst.go.jp/article/hcs/2014/24/2014_204/_article/-char/en"
         }
       ]
+    },
+    {
+      "id": "rites-of-passage",
+      "names": [
+        "rites of passage",
+        "rite de passage",
+        "通過儀礼",
+        "van Gennep transition model"
+      ],
+      "readiness": "sourced-candidate",
+      "structural_primitives": [
+        "separation from a prior status",
+        "marginal / liminal transition",
+        "incorporation into a new status",
+        "unequal phase emphasis across cases",
+        "status and threshold crossing"
+      ],
+      "cognitive_operations": [
+        "separation-before-crossing",
+        "liminal-holding",
+        "incorporation-check",
+        "incomplete-transition-probe",
+        "phase-emphasis-comparison",
+        "passage-versus-state-distinction"
+      ],
+      "useful_for": [
+        "asking whether a transition has actually left the prior state",
+        "distinguishing an intermediate state from completed incorporation",
+        "locating where a passage is stalled or socially unrecognized"
+      ],
+      "do_not_assume": [
+        "every change process is a rite of passage",
+        "all cultures instantiate one identical three-stage ritual",
+        "the three phases have equal duration or importance",
+        "liminality is merely a generic synonym for uncertainty",
+        "the comparative model is a culture-native self-description"
+      ],
+      "sources": [
+        {
+          "kind": "scholarly-primary-edition",
+          "title": "The Rites of Passage, Second Edition",
+          "url": "https://press.uchicago.edu/ucp/books/book/chicago/R/bo38180827"
+        },
+        {
+          "kind": "scholarly-introduction",
+          "title": "The Rites of Passage — David I. Kertzer introduction",
+          "url": "https://press.uchicago.edu/dam/ucp/books/pdf/course_intro/978-0-226-62949-0_course_intro.pdf"
+        },
+        {
+          "kind": "scholarly-reference",
+          "title": "Rites of passage — Blackwell Encyclopedia of Sociology",
+          "url": "https://eprints.whiterose.ac.uk/id/eprint/79955/"
+        }
+      ]
+    },
+    {
+      "id": "buddhist-mandala",
+      "names": [
+        "Buddhist mandala",
+        "maṇḍala",
+        "仏教曼荼羅"
+      ],
+      "readiness": "sourced-candidate",
+      "structural_primitives": [
+        "center and periphery",
+        "directional quadrants",
+        "gates and thresholds",
+        "concentric or nested boundaries",
+        "outer-to-inner ritual or visualized approach",
+        "lineage-specific iconographic programs"
+      ],
+      "cognitive_operations": [
+        "center-periphery-pass",
+        "directional-quadrant-pass",
+        "gate-threshold-probe",
+        "concentric-boundary-pass",
+        "mediated-access-probe",
+        "outer-to-inner-path",
+        "center-shift-counter-view"
+      ],
+      "useful_for": [
+        "asking whether a target has meaningful centers, boundaries, gates, or sectors",
+        "separating center/periphery from generic hierarchy",
+        "examining how access or perspective changes across nested regions"
+      ],
+      "do_not_assume": [
+        "mandala is generic symmetry or sacred geometry",
+        "Buddhist mandalas across lineages share one invariant diagram",
+        "Hindu yantra and Buddhist mandala structures are interchangeable",
+        "target elements inherit deity, color, direction, or cosmological correspondences",
+        "a framework-generated center is automatically privileged or true"
+      ],
+      "sources": [
+        {
+          "kind": "museum-scholarly-reference",
+          "title": "Mandala — Rubin Museum of Himalayan Art",
+          "url": "https://rubinmuseum.org/highlights/mandala/"
+        },
+        {
+          "kind": "museum-scholarly-reference",
+          "title": "The Mandala: A Guide to Transformation",
+          "url": "https://rubinmuseum.org/the-mandala-a-guide-to-transformation/"
+        },
+        {
+          "kind": "museum-object-study",
+          "title": "Evoking the Divine: Mental Purification Using a Tibetan Tsakali Mandala",
+          "url": "https://www.metmuseum.org/fr/perspectives/tsakali-mandala"
+        },
+        {
+          "kind": "museum-object-study",
+          "title": "Mandala of the Bodhisattva Hannya (Prajnaparamita)",
+          "url": "https://www.metmuseum.org/art/collection/search/53205"
+        }
+      ]
     }
   ]
 }
