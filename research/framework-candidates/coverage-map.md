@@ -20,6 +20,7 @@ This map tracks structural diversity. It does not rank frameworks or claim that 
 | indexed narrative corpus | — | Ifá / Odù | culturally safe non-ritual abstraction |
 | experience decomposition | — | Five aggregates | non-overlap with existing Buddhist core |
 | route / network topology | — | Jingluo | non-medical network traditions |
+| whole-part reciprocity / multi-perspective network | — | Huayan | primary-text and lineage separation |
 | symbolic mediation network | — | Sefirot | reliable lineage separation |
 
 ## Priority rule
