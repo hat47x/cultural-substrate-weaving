@@ -87,6 +87,7 @@ Status: research-only
 - fourth-wave-2026-10-01.md
 - fifth-wave-2026-10-02.md
 - worked-examples/ 以下のtarget-return例
+- comparisons/ 以下のnear-neighbor / comparative collapse test
 - portfolio-qualitative-audit-2026-10-01.md
 - near-neighbor-differentiation-2026-10-01.md
 - profiles/ 以下の各体系profile

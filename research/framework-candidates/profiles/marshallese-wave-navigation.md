@@ -176,9 +176,14 @@ A first target-side worked example now exists at:
 
 It provisionally shows that relative-route, cue-sequence, model/environment return, disturbance-as-signal, and local route-update operations survive de-binding.
 
+A comparison against the Vaeakau–Taumako wind-compass / navigational-toolkit tradition now exists at:
+
+- `research/framework-candidates/comparisons/marshallese-vs-vaeakau-taumako.md`
+
+The comparison provisionally supports keeping this candidate distinct when it retains **disturbance-as-signal, relative environmental structure, model/environment return, and local cue-sequence update**. It should be rejected as redundant if practical CSW use collapses those operations into generic multi-cue navigation or graph reasoning.
+
 Before runtime adoption:
 
-- compare against another non-medical wayfinding tradition to ensure the retained operation is not merely generic route planning;
 - keep a living-tradition / public-source boundary explicit;
-- verify the same operation survives in at least one second target domain;
+- verify the same operation survives in at least one second non-navigation target domain;
 - confirm that runtime use can preserve model/environment return and cue-sequence operations rather than collapsing to “use a network.”
