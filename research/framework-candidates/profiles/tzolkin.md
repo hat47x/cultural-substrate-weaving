@@ -97,14 +97,15 @@ Outputs:
 
 ## Living-tradition boundary
 
-This system remains in sourced-candidate rather than profile-ready because mechanics alone are not enough for culturally faithful enacted use.
+The adopted runtime layer is intentionally limited to source-grounded calendar mechanics plus living-context cautions. It distinguishes Yucatec Tzolk’in from K’iche’ Chol Q’ij and expands the mechanics layer to Haab, Calendar Round, and Long Count.
 
-Before skill-candidate status:
+Adoption does **not** include day-sign personality or fortune interpretation, priestly/day-keeper authority, or a community-independent ritual layer.
 
-- distinguish Yucatec Tzolk’in and K’iche’ Chol Q’ij terminology and living practice;
-- add sources from living Maya educational or scholarly materials on day-sign interpretation;
-- separate calendar arithmetic from ceremonial and divinatory practice;
-- avoid extracting sacred vocabulary merely as generic productivity metaphors.
+Further enacted or interpretive use requires:
+
+- community- and language-specific living-tradition sources;
+- explicit separation of calendar arithmetic from ceremonial/divinatory practice;
+- care not to extract sacred vocabulary into generic productivity metaphors.
 
 ## Exploratory prompts produced by this profile
 
@@ -122,12 +123,9 @@ Before skill-candidate status:
 4. ask what target observation distinguishes partial from full recurrence;
 5. do not carry day-sign interpretations unless separately sourced.
 
-## Candidate adoption note
+## Adoption note
 
-Current status remains sourced-candidate.
-
-The calendar mechanics are sourceable and structurally distinct, but enacted use should wait for a more lineage-aware account of living Maya interpretation.
-
+The mechanics layer is adopted through the broader Maya-calendar runtime dossier. Interpretive and enacted layers remain outside the adopted scope and still require lineage-aware living-tradition research.
 
 ## Adoption synchronization
 
