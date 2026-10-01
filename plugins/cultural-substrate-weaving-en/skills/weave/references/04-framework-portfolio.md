@@ -23,6 +23,7 @@ This file indexes frameworks that CSW carries internally. Adopted does not mean 
 | Aristotle's four causes | pluralize why-explanations | material / formal / efficient / final | aristotle-four-causes.md |
 | Rasa theory | expression–reception relation | bhāva / rasa | rasa.md |
 | Maya calendar systems | coupled cycles, phase difference, partial/full recurrence, long-span time | Tzolk’in / Haab / Calendar Round / Long Count | maya-calendars.md |
+| Huayan | whole–part reciprocity, node perspective, integration with difference | Fazang whole–part analysis and mutual inclusion | huayan.md |
 | Taiheki | embodied observation | bodily typology | ../domains/human-and-taiheki.md |
 
-Maya calendar systems make the calendar/long-cycle area materially thicker. The portfolio remains thin in spatial-directional systems, ritual sequences, dense symbolic networks, and non-Western rhetoric, law, and narrative form. Framework count is not a success metric, but too narrow a population impoverishes the encounter function. Continue increasing source quality and structural breadth before efficacy testing.
+Maya calendar systems make calendar/long-cycle work materially thicker, while Huayan adds whole–part reciprocity and network perspective. The portfolio remains thin in spatial-directional systems, ritual sequences, route-oriented networks, and non-Western rhetoric, law, and narrative form. Framework count is not a success metric, but too narrow a population impoverishes the encounter function. Continue increasing source quality and structural breadth before efficacy testing.
