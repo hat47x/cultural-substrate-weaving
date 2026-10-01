@@ -117,13 +117,30 @@ runtimeへ進める前に、
 
 これでroute-networkの空白は「候補が一つもない」状態ではなくなった。ただしroute tradition全体のcoverageが十分という意味ではない。今後は候補数を増やすより、**別の非海洋・非医療route traditionでも同じoperationが出るか**を確認する方が価値が高い。
 
+## 比較伝統によるcollapse test
+
+Vaeakau–Taumakoのwind compass / navigational toolkitを比較対象として調べた。
+
+比較ノート:
+
+- `comparisons/marshallese-vs-vaeakau-taumako.md`
+
+この比較では、両者に環境cue・wayfinding・学習された空間frameworkという共通性がある一方、
+
+- Vaeakau–Taumako: discrete directional frame / multiple cue-family toolkit / fallback;
+- Marshallese: perturbation-as-signal / relative environmental structure / model-environment return / local cue sequence;
+
+という中心操作の差が残った。
+
+そのためVaeakau–Taumakoは当面inventory候補へ追加せず、Marshallese候補がgeneric route planningへ崩れていないか確認する比較伝統として保持する。
+
 ## 次のqueue
 
 優先順位は次とする。
 
-1. Marshallese candidateのtarget-side worked example。
-2. non-maritime route traditionを1件だけ探索し、generic graphとの差を比較。
-3. ritual sequence / oral-performative memoryの空白を再評価。
+1. Marshallese operationを第二のnon-navigation target domainで再検証する。
+2. ritual sequence / oral-performative memoryの空白を再評価する。
+3. route familyは新候補数を増やさず、negative example / selection boundaryを追加する。
 4. Jingluo / Sefirot / chakraのsource packetは、lineage-safeな追加資料が得られたときに厚くする。
 
 広範な効果比較は引き続き開始しない。
