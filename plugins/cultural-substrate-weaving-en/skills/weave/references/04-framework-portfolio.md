@@ -22,6 +22,7 @@ This file indexes frameworks that CSW carries internally. Adopted does not mean 
 | Jain syādvāda | perspectival qualification | sevenfold predication | jain-sevenfold-predication.md |
 | Aristotle's four causes | pluralize why-explanations | material / formal / efficient / final | aristotle-four-causes.md |
 | Rasa theory | expression–reception relation | bhāva / rasa | rasa.md |
+| Maya calendar systems | coupled cycles, phase difference, partial/full recurrence, long-span time | Tzolk’in / Haab / Calendar Round / Long Count | maya-calendars.md |
 | Taiheki | embodied observation | bodily typology | ../domains/human-and-taiheki.md |
 
-The portfolio remains thin in calendars and long cycles, spatial-directional systems, ritual sequences, dense symbolic networks, and non-Western rhetoric, law, and narrative form. Framework count is not a success metric, but too narrow a population impoverishes the encounter function. Continue increasing source quality and structural breadth before efficacy testing.
+Maya calendar systems make the calendar/long-cycle area materially thicker. The portfolio remains thin in spatial-directional systems, ritual sequences, dense symbolic networks, and non-Western rhetoric, law, and narrative form. Framework count is not a success metric, but too narrow a population impoverishes the encounter function. Continue increasing source quality and structural breadth before efficacy testing.
