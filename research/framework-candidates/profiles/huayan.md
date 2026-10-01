@@ -1,6 +1,6 @@
 # Huayan framework profile candidate
 
-Status: sourced-candidate / research-only
+Status: adopted / runtime-corpus research companion
 
 ## Identity
 
@@ -35,7 +35,13 @@ https://iep.utm.edu/fazang/
 
 Useful as an independent overview of Fazang and the Indra's Net metaphor in Huayan thought.
 
-This profile remains sourced-candidate because it does not yet carry a primary-text or lineage-specific source packet sufficient for profile-ready status.
+### Classical canonical text
+
+CBETA Online, T1881 華嚴經金師子章註
+
+https://cbetaonline.dila.edu.tw/zh/T1881
+
+T1881 preserves the Fazang-attributed Golden Lion root text together with later Song commentary by Chengqian. The runtime dossier uses this source as a classical anchor while keeping root text and later commentary historically distinct.
 
 ## Structural core retained by this profile
 
@@ -204,19 +210,23 @@ Before returning a candidate to the target:
 5. retain differences that resist whole-field integration;
 6. use target-return audit if the candidate survives only after weakening or reframing.
 
-## Candidate adoption note
+## Adoption note
 
-Current status remains sourced-candidate.
+Huayan has been adopted into the runtime corpus through `src/<locale>/frameworks/huayan.md`.
 
-Reasons to continue:
+Adoption is deliberately narrow:
 
-- it adds whole-part reciprocity and multi-perspective network operations that are weak in the first wave;
-- it is structurally distinct from simple linear dependency and from route/collateral networks;
-- strong scholarly references are available.
+- Fazang-centered whole–part reciprocity;
+- mutual inclusion without erasing difference;
+- role-defined identity;
+- node-perspective and integration-with-difference operations;
+- explicit separation of framework-generated relations from target-side facts.
 
-Remaining work before profile-ready:
+The classical source gap is now covered by CBETA T1881, while the runtime dossier explicitly distinguishes Fazang's root text from later commentary.
 
-- add at least one suitable primary/classical source or reliable primary-text translation;
-- separate Avatamsaka background from Fazang-specific operations more explicitly;
-- add one worked target-return example showing both preserved integration and preserved difference;
-- independent terminology review for Japanese use.
+Further research remains useful for:
+
+- Avataṃsaka background beyond the present Fazang-centered scope;
+- later Chinese Huayan developments;
+- Korean Hwaeom and Japanese Kegon receptions;
+- worked target-return cases where integration and local resistance both remain visible.
