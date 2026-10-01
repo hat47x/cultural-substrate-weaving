@@ -17,6 +17,14 @@ https://plato.stanford.edu/entries/contradiction/
 
 The reference lays out the four corners around a proposition: P, not-P, both, and neither, while situating the form in Buddhist philosophical debates.
 
+### Primary classical context
+
+Nāgārjuna, Mūlamadhyamakakārikā — Digital Sanskrit Buddhist Canon
+
+https://www.dsbcproject.org/canon-text/content/931/3060
+
+The MMK is retained as an important classical Madhyamaka context in which four-corner patterns occur. It is **not** treated as the unique canonical definition of catuṣkoṭi across Buddhist traditions. The existing scholarly source remains the authority for the cross-tradition caution and logical framing used by this profile.
+
 ## Structural core
 
 For a proposition P, open four positions:
