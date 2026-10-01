@@ -87,7 +87,7 @@ origin: framework_generated | cross_field_emergent | target-side material lineag
 verification: target_supported | unresolved | other explicit state
 ```
 
-This is not a fixed schema.
+This is not a fixed schema. When a compatible Affinity Board records a `target_response`, it may also retain source/card refs when the response can be tied back to concrete target-side material. The presence of such refs does not itself mean `target_supported`; keep origin and verification state separate.
 
 If the third structure changes further inside affinity synthesis, retain lineage back to the original target/framework tension. Do not delete the history of tension merely because the resulting prose has become smooth.
 
