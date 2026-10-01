@@ -82,6 +82,7 @@ Status: research-only
 - cognitive-operation-inventory.json
 - coverage-map.md
 - first-wave-2026-10-01.md
+- second-wave-2026-10-01.md
 - profiles/ 以下の各体系profile
 
 ### runtime採用済み
@@ -100,6 +101,7 @@ Status: research-only
 
 ### 量を増やす側のsourced candidate
 
+- huayan
 - twenty-four-solar-terms
 - heavenly-stems-earthly-branches
 - llull-ars
