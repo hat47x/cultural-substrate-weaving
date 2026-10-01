@@ -870,7 +870,7 @@
       ]
     },
     {
-      "id": "nyaya-inference",
+      "id": "nyaya-five-member-inference",
       "names": [
         "Nyāya",
         "ニヤーヤ",
@@ -1029,7 +1029,7 @@
       "profile_path": "research/framework-candidates/profiles/shinto-threshold-purification.md"
     },
     {
-      "id": "buddhist-mandala-spatial",
+      "id": "buddhist-mandala",
       "names": [
         "Buddhist mandala spatial systems",
         "仏教マンダラ空間構造",
@@ -1229,6 +1229,124 @@
         }
       ],
       "profile_path": "research/framework-candidates/profiles/classical-stasis-theory.md"
+    },
+    {
+      "id": "hadith-isnad-matn",
+      "names": [
+        "Hadith isnād / matn",
+        "isnād / matn",
+        "ハディース伝承鎖と本文"
+      ],
+      "readiness": "profile-ready",
+      "structural_primitives": [
+        "report content (matn)",
+        "attributed transmission chain (isnād)",
+        "multiple chains",
+        "textual variants",
+        "chain/content non-equivalence"
+      ],
+      "cognitive_operations": [
+        "transmission-content-separation",
+        "branch-and-convergence-comparison",
+        "attribution-path-audit",
+        "matn-variant-comparison",
+        "provenance-content-non-equivalence"
+      ],
+      "useful_for": [
+        "keeping what is said separate from how it was transmitted",
+        "comparing branching and converging provenance paths",
+        "localizing uncertainty in a chain without converting provenance into truth"
+      ],
+      "do_not_assume": [
+        "an isnād is proof that report content is historically true",
+        "classical hadith criticism and modern historical isnād-cum-matn analysis are one method",
+        "religious authenticity grades are general-purpose truth scores",
+        "CSW can simulate religious scholarly authority"
+      ],
+      "sources": [
+        {
+          "kind": "scholarly-reference",
+          "title": "Hadith — Oxford Bibliographies",
+          "url": "https://academic.oup.com/reference/62361/reference-article-abstract/554579067"
+        },
+        {
+          "kind": "scholarly-reference",
+          "title": "Modern Hadith Studies — Introduction",
+          "url": "https://academic.oup.com/edinburgh-scholarship-online/book/37555/chapter-abstract/331803753"
+        },
+        {
+          "kind": "scholarly-method-reference",
+          "title": "Dating — The Wiley Blackwell Concise Companion to the Hadith",
+          "url": "https://onlinelibrary.wiley.com/doi/10.1002/9781118638477.ch6"
+        },
+        {
+          "kind": "scholarly-source-criticism",
+          "title": "Verifying Source Citations in the Hadith Literature",
+          "url": "https://online.ucpress.edu/jmw/article/1/3/5/51002/Verifying-Source-Citations-in-the-Hadith"
+        }
+      ],
+      "profile_path": "research/framework-candidates/profiles/hadith-isnad-matn.md"
+    },
+    {
+      "id": "mimamsa-hermeneutics",
+      "names": [
+        "Mīmāṃsā hermeneutics",
+        "Pūrvamīmāṃsā hermeneutics",
+        "ミーマーンサー解釈学"
+      ],
+      "readiness": "sourced-candidate",
+      "structural_primitives": [
+        "prescriptive unit",
+        "sentence / purpose unity",
+        "syntactic expectancy",
+        "semantic fitness",
+        "proximity",
+        "direct vs context-supplied meaning",
+        "norm conflict"
+      ],
+      "cognitive_operations": [
+        "prescriptive-unit-detection",
+        "purpose-unity-probe",
+        "syntactic-expectancy-check",
+        "semantic-fitness-check",
+        "explicit-vs-context-supplied-distinction",
+        "norm-conflict-decomposition"
+      ],
+      "useful_for": [
+        "segmenting prescriptive text by action and purpose rather than adjacency alone",
+        "separating explicit wording from contextual supplementation",
+        "testing whether apparent normative conflicts share the same agent action condition and purpose"
+      ],
+      "do_not_assume": [
+        "Mīmāṃsā is one invariant school",
+        "Vedic authority transfers to unrelated target texts",
+        "its hermeneutic rules guarantee one uniquely correct interpretation",
+        "later Vedānta uses may be projected back into early Mīmāṃsā"
+      ],
+      "sources": [
+        {
+          "kind": "scholarly-reference",
+          "title": "Language and Testimony in Classical Indian Philosophy",
+          "url": "https://plato.stanford.edu/archives/spr2011/entries/language-india/"
+        },
+        {
+          "kind": "scholarly-reference",
+          "title": "The Literal-Nonliteral Distinction in Classical Indian Philosophy",
+          "url": "https://plato.stanford.edu/archives/spr2018/entries/literal-nonliteral-india/"
+        },
+        {
+          "kind": "scholarly-reference",
+          "title": "Understanding Prescriptive Texts: Rules and Logic as Elaborated by the Mīmāṃsā School",
+          "url": "https://scholarworks.iu.edu/iupjournals/index.php/jwp/article/view/922"
+        },
+        {
+          "kind": "scholarly-reference",
+          "title": "Duty and Sacrifice: A Logical Analysis of the Mīmāṃsā Theory of Vedic Injunctions",
+          "url": "https://www.tandfonline.com/doi/full/10.1080/01445340.2019.1615366"
+        }
+      ],
+      "profile_path": "research/framework-candidates/profiles/mimamsa-hermeneutics.md",
+      "adoption_hold": "lineage-sensitive"
     }
   ]
 }
