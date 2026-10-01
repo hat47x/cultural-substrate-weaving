@@ -213,3 +213,43 @@ near-neighbor-differentiation-2026-10-01.md を追加し、近いoperationを持
 対象には、dependent origination / Huayan、catuṣkoṭi / Jain sevenfold predication、Aristotle / Nyāya / classical stasis、mandala / rites of passage / Shinto threshold、Maya calendar / Stems-Branches、Hadith / generic provenance、Mīmāṃsā / generic close reading、Yijing / Llull Ars等を含む。
 
 これにより、今後の量的拡張は「文化名が違う」だけでは不十分とし、de-binding後にも既存候補で置換しにくいoperationが残ることを候補維持の基準にする。
+
+
+## 2026-10-02 follow-up — non-medical route wayfinding
+
+第5波として `marshallese-wave-navigation` を profile-ready 候補へ追加した。
+
+更新後のinventory:
+
+- 候補総数: **29**
+- adopted: **10**
+- profile-ready: **7**
+- sourced-candidate: **9**
+- research-only: **2**
+- defer-lineage-specific: **1**
+
+この追加の目的は件数増加ではなく、これまでJingluoへ偏っていたroute / network familyへ、**非医療のrelative wayfinding**を追加することである。
+
+新候補では、
+
+- relative route
+- local cue sequence
+- instructional model vs situated evidence
+- disturbance-as-signal
+- local route update
+
+を構造核として保持する。
+
+また `worked-examples/marshallese-wave-navigation.md` で、distributed-system incidentを対象にde-bindした結果、generic graphだけでは残りにくい model/environment return と cue-sequence operation が保持されることを暫定確認した。
+
+ただしruntime採用はまだ行わない。
+
+残る確認は、
+
+1. 別のnon-medical wayfinding traditionとの比較;
+2. 第二target domainでも同じoperationが残るか;
+3. living-tradition / public-source境界をruntime dossier単体で守れるか;
+
+である。
+
+この追加によりroute-networkは「候補が存在しない空白」ではなくなったが、coverage完了とはみなさない。次は同familyの数を増やすより、別伝統との比較でgeneric route planningとの差を明示することを優先する。
