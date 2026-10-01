@@ -4,60 +4,21 @@ Status: research-only / qualitative expansion before effectiveness evaluation
 
 ## 目的
 
-第一波・第二波で、状態構成、循環、条件連鎖、受容、whole-part、複数周期などは一定程度厚くなった。
+並行レーンの第二波拡張では、すでに次のoperation gapが候補化された。
 
-第三波では、まだ薄い次のoperation空間を優先する。
+- inferential bridge / case application: Nyāya five-member inference
+- explicit boundary-crossing / liminality: Rites of Passage / van Gennep
+- spatial center-periphery / nested boundary: Buddhist mandala
+- lineage-specific spatial/ritual depth: Tibetan Buddhist mandala
 
-- argument structure / explicit inference
+その進捗を重複実装せず正本として引き継ぎ、第三波では別の空白を二つだけ追加する。
+
 - social role / relation-conditioned conduct
-- explicit threshold crossing / purification-before-entry
-- spatial center-periphery / bounded directional space
+- culture-native threshold crossing / preparation before central action
 
-今回もframework countを増やすこと自体を目的にしない。既存体系と異なるnative operationを持ち、source basisと誤用境界を明示できる候補だけを追加する。
+framework countを増やすこと自体は目的にしない。source basis、系譜差、誤用境界、de-binding、target-return questionを持てる候補だけを研究層へ加える。
 
-## 1. Nyāya inference — 議論を五つの働きへ展開する
-
-Status: profile-ready
-
-### 構造核
-
-Nyāyaの対人的・教育的な論証では、典型的に次の五支が区別される。
-
-1. pratijñā — thesis / proposition
-2. hetu — reason
-3. udāharaṇa / dṛṣṭānta — general concomitance with example
-4. upanaya — application to the case
-5. nigamana — conclusion
-
-CSWでの価値は「五項目の型」ではなく、**主張、理由、一般関係、個別事例への適用、結論を分けて点検できること**にある。
-
-### operation
-
-- argument-unfolding
-- reason-rule-separation
-- example-counterexample-probe
-- rule-application-audit
-- inference-gap-detection
-
-### 境界
-
-- Nyāyaをインド論理学全体と同一視しない。
-- 五支を現代形式論理の完全な代替として扱わない。
-- 論証形式が整っていることを、前提や結論が真である証拠にしない。
-- pramāṇaを一般的な「証拠リスト」へ薄めない。
-
-### source basis
-
-- Stanford Encyclopedia of Philosophy, Logic in Classical Indian Philosophy
-  - https://plato.stanford.edu/entries/logic-india/
-- Stanford Encyclopedia of Philosophy, Epistemology in Classical Indian Philosophy
-  - https://plato.stanford.edu/entries/epistemology-india/
-- Internet Encyclopedia of Philosophy, Nyaya
-  - https://iep.utm.edu/nyaya/
-
-profile: profiles/nyaya-inference.md
-
-## 2. Confucian role / li — 関係と役割の中で行為を見る
+## 1. Confucian role / li — 関係と役割の中で行為を見る
 
 Status: profile-ready
 
@@ -65,14 +26,12 @@ Status: profile-ready
 
 Analectsを中心とする初期儒家資料では、li（礼）は祭祀だけでなく、家族、友人、地域、官職等における適切な行為・態度・儀礼へ広がる。役割や関係は、行為を読む文脈として機能する。
 
-CSWでは価値判断を借りるのではなく、
+CSWでは歴史的な価値判断を借りるのではなく、次を問いの生成器として扱う。
 
 - role-conditioned expectation
 - relation-centered perspective
 - name / role と実際の行為のずれ
 - 実践が態度・欲求・関係を形づくる可能性
-
-を問いの生成器として扱う。
 
 ### operation
 
@@ -80,7 +39,7 @@ CSWでは価値判断を借りるのではなく、
 - name-behavior-congruence
 - relation-obligation-map
 - ritual-context-shift
-- practice-shapes-disposition probe
+- practice-shapes-disposition-probe
 
 ### 境界
 
@@ -98,7 +57,7 @@ CSWでは価値判断を借りるのではなく、
 
 profile: profiles/confucian-role-ritual.md
 
-## 3. Shinto shrine threshold / purification — 境界通過と準備の順序
+## 2. Shinto shrine threshold / purification — 境界通過と準備の順序
 
 Status: sourced-candidate
 
@@ -111,9 +70,9 @@ Status: sourced-candidate
 - 手水で参拝前に清める;
 - 拝礼を行う;
 
-という、**境界→進入→準備／清め→中心行為**の順序が明確に確認できる。
+という、**境界→進入→準備／清め→中心行為**の順序が確認できる。
 
-CSWでは宗教的効力を一般化せず、境界通過前後で状態・許容行為・準備が変わる体系として研究する。
+比較人類学上のRites of Passageが「分離→移行→編入」という一般モデルを供給するのに対し、この候補はliving tradition内の具体的なthreshold / preparation sequenceとして保持する。
 
 ### operation
 
@@ -144,67 +103,24 @@ CSWでは宗教的効力を一般化せず、境界通過前後で状態・許�
 
 profile: profiles/shinto-threshold-purification.md
 
-## 4. Buddhist mandala spatial systems — 中心・方位・外周・門
+## 並行成果との統合
 
-Status: defer-lineage-specific
+Nyāyaは `profiles/nyaya-five-member-inference.md`、空間型マンダラは `profiles/buddhist-mandala.md` を正本とする。Tibetan-specificな厚みは `profiles/tibetan-buddhist-mandala.md` に分離する。第三波で同名・類似の別profileは作らない。
 
-### 構造核
-
-仏教タントラ系のマンダラには、中心、方位、外周、囲い、門、複数の同心的領域などを持つものがある。Rubin Museumは中心を持つ円／方形構造、方位、瞑想・可視化・灌頂等の用途を説明する。Metの具体例では、中心の主尊、内外の複数領域、方位に対応する周辺尊が確認できる。
-
-CSWに有用なのは、宗教図像そのものではなく、
-
-- center-periphery
-- cardinal differentiation
-- nested enclosure
-- gate / threshold
-- approach-to-center
-
-という空間操作である。
-
-### operation
-
-- center-periphery-reframe
-- directional-role-map
-- nested-boundary-pass
-- gate-threshold-probe
-- center-approach-sequence
-
-### 境界
-
-- 単一の「普遍マンダラ」を作らない。
-- 仏教・ヒンドゥー・ジャイナ、地域、時代、タントラ系譜を混同しない。
-- 神格・灌頂・修行の宗教的効力を対象側の事実へ移さない。
-- Jung的な一般心理図式を古典的マンダラそのものとして逆投影しない。
-
-### source basis
-
-- Rubin Museum of Himalayan Art, Mandala
-  - https://rubinmuseum.org/highlights/mandala/
-- Rubin Museum of Himalayan Art, The Mandala: A Guide to Transformation
-  - https://rubinmuseum.org/the-mandala-a-guide-to-transformation/
-- The Metropolitan Museum of Art, Mandala of the Bodhisattva Monju of the Eight Syllables
-  - https://www.metmuseum.org/art/collection/search/40137
-
-profile: profiles/buddhist-mandala-spatial.md
+Rites of Passageは比較人類学モデル、Shinto shrine threshold / purificationはculture-nativeな実践系列として併存させる。両者を同じ「三段階」へ畳まない。
 
 ## 今回の判断
 
-runtime採用は増やさない。
+runtime採用は増やさない。効果比較も開始しない。
 
-理由は二つある。
-
-1. 現在の不足は、採用済み体系の数よりも、質のあるprofile-ready / sourced-candidate母集団の薄さにある。
-2. 早くruntimeへ入れると、体系固有の構造をsourceから学ぶ前に、CSW側の一般語彙へ薄める圧力が強くなる。
-
-したがって第三波では、NyāyaとConfucian role/liをprofile-readyまで上げ、Shinto threshold/purificationとBuddhist mandalaを系譜・実践境界を保った研究候補として追加する。
+現在は、採用済み体系数を増やすより、異質なoperationを持つprofile-ready / sourced-candidate母集団を十分な質と量まで厚くする段階である。
 
 ## 次の研究queue
 
 - Nyāya: hetvābhāsa等の誤謬・debate vocabularyを、五支の操作と混ぜずに追加できるか。
-- Confucian role/li: Analects中心のscopeから、Mencius / Xunzi / later Ru traditionへの差をどう分離するか。
-- Shinto: 現代参拝protocolと、歴史的harae / misogi / ōharaeの層を分けたまま、boundary-crossing operationをどこまで抽象化できるか。
-- Buddhist mandala: 一つの具体的lineage / ritual corpusへscopeを絞り、center-periphery / gate / approach操作をprofile-readyへ上げられるか。
+- Confucian role/li: primary-text anchorを追加し、Mencius / Xunzi / later Ru traditionとの差を分離する。
+- Shinto: 現代参拝protocolと、歴史的harae / misogi / shubatsu / ōharaeの層を分けたまま、boundary-crossing operationをどこまで抽象化できるか。
+- Buddhist mandala: cross-lineage minimumとlineage-specific structureを混同せず、target-return例を追加する。
 - 既存queue: Jingluo / Sefirot / chakra / Ifá / solar terms / stems-branches / Llull / five aggregates / Jo-Ha-Kyū も継続する。
 
-効果比較はまだ開始しない。
+効果比較は、十分な質と量の候補層が揃った後に再検討する。
