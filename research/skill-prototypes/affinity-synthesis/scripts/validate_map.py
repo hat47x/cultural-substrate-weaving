@@ -118,6 +118,16 @@ def validate(data: dict[str, Any]) -> tuple[list[str], list[str]]:
         | question_ids
     )
     local_artifact_ids = source_ids | semantic_artifact_ids
+    source_by_id = {
+        str(item.get("id", "")): item
+        for item in sections["source"]
+        if item.get("id")
+    }
+    card_by_id = {
+        str(item.get("id", "")): item
+        for item in sections["card"]
+        if item.get("id")
+    }
 
     for card in sections["card"]:
         cid = str(card.get("id", ""))
@@ -150,6 +160,88 @@ def validate(data: dict[str, Any]) -> tuple[list[str], list[str]]:
                             f"card {cid} catalytic target_response_ref must resolve "
                             f"to source/card: {ref}"
                         )
+
+        cross_trace = card.get("cross_field_trace")
+        if cross_trace is not None:
+            if not isinstance(cross_trace, dict):
+                errors.append(f"card {cid} cross_field_trace must be an object")
+                continue
+            if str(card.get("input_status", "")) != "cross_field_emergent":
+                errors.append(
+                    f"card {cid} cross_field_trace requires input_status=cross_field_emergent"
+                )
+
+            target_refs = cross_trace.get("target_refs", [])
+            framework_refs = cross_trace.get("framework_refs", [])
+            if not isinstance(target_refs, list) or not target_refs:
+                errors.append(
+                    f"card {cid} cross_field_trace target_refs must be a non-empty array"
+                )
+                target_refs = []
+            if not isinstance(framework_refs, list) or not framework_refs:
+                errors.append(
+                    f"card {cid} cross_field_trace framework_refs must be a non-empty array"
+                )
+                framework_refs = []
+
+            for ref in target_refs:
+                target_ref = str(ref)
+                if target_ref == cid:
+                    errors.append(
+                        f"card {cid} cross_field target_ref cannot reference itself"
+                    )
+                    continue
+                if target_ref not in local_artifact_ids:
+                    errors.append(
+                        f"card {cid} cross_field target_ref does not resolve locally: {ref}"
+                    )
+                    continue
+                target_card = card_by_id.get(target_ref)
+                if target_card is not None and str(
+                    target_card.get("input_status", "")
+                ) in {"framework_generated", "cross_field_emergent"}:
+                    errors.append(
+                        f"card {cid} cross_field target_ref must not use "
+                        f"framework/cross-field card as target-side material: {ref}"
+                    )
+                target_source = source_by_id.get(target_ref)
+                if target_source is not None and str(
+                    target_source.get("input_status", "")
+                ) in {"framework_generated", "cross_field_emergent"}:
+                    errors.append(
+                        f"card {cid} cross_field target_ref must not use "
+                        f"framework/cross-field source as target-side material: {ref}"
+                    )
+
+            for ref in framework_refs:
+                framework_ref = str(ref)
+                if framework_ref == cid:
+                    errors.append(
+                        f"card {cid} cross_field framework_ref cannot reference itself"
+                    )
+                    continue
+                framework_card = card_by_id.get(framework_ref)
+                if framework_card is None:
+                    errors.append(
+                        f"card {cid} cross_field framework_ref must resolve to card: {ref}"
+                    )
+                    continue
+                if str(framework_card.get("input_status", "")) != "framework_generated":
+                    errors.append(
+                        f"card {cid} cross_field framework_ref must reference "
+                        f"framework_generated card: {ref}"
+                    )
+                    continue
+                framework_trace = framework_card.get("catalytic_trace")
+                if not (
+                    isinstance(framework_trace, dict)
+                    and framework_trace.get("frameworks")
+                    and framework_trace.get("operations")
+                ):
+                    errors.append(
+                        f"card {cid} cross_field framework_ref must reference "
+                        f"traced framework card: {ref}"
+                    )
 
     group_membership: dict[str, set[str]] = {}
     card_primary_memberships: Counter[str] = Counter()
