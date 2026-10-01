@@ -11,6 +11,15 @@ Status: profile-ready / research-only
 
 ## Source basis
 
+### Primary text digital edition
+
+Chinese Text Project, The Analects: Yan Yuan
+
+https://ctext.org/analects/yan-yuan
+
+Useful as a primary-text anchor for Analects 12.1, where seeing, hearing, speaking, and acting are explicitly related to li. This anchor does not by itself settle later interpretations of li or ren.
+
+
 ### Scholarly reference
 
 Stanford Encyclopedia of Philosophy, Confucius
