@@ -258,6 +258,52 @@ def cmd_trace_card(args: argparse.Namespace) -> None:
     mutate(args.map, op)
 
 
+def cmd_trace_cross_field(args: argparse.Namespace) -> None:
+    def op(data: dict[str, Any]) -> None:
+        card = find_item(data, "card", args.card)
+        if str(card.get("input_status", "")) != "cross_field_emergent":
+            raise ValueError(
+                f"cross-field trace requires input_status=cross_field_emergent: {args.card}"
+            )
+
+        trace = card.setdefault("cross_field_trace", {})
+        if not isinstance(trace, dict):
+            raise ValueError(
+                f"card cross_field_trace must be an object: {args.card}"
+            )
+
+        for key, values in (
+            ("target_refs", args.target_ref),
+            ("framework_refs", args.framework_ref),
+            ("preserved_from_target", args.preserved_target),
+            ("preserved_from_framework", args.preserved_framework),
+            ("negated_or_revised", args.negated_or_revised),
+            ("newly_recomposed", args.newly_recomposed),
+        ):
+            if values is None:
+                continue
+            existing = trace.get(key, [])
+            if not isinstance(existing, list):
+                raise ValueError(
+                    f"card cross_field_trace {key} must be an array: {args.card}"
+                )
+            trace[key] = list(
+                dict.fromkeys([str(value) for value in existing] + values)
+            )
+
+        if not trace.get("target_refs") or not trace.get("framework_refs"):
+            raise ValueError(
+                "trace-cross-field requires at least one target-ref and one framework-ref"
+            )
+
+        if args.note is not None:
+            trace["note"] = args.note
+
+        print(args.card)
+
+    mutate(args.map, op)
+
+
 def cmd_add_group(args: argparse.Namespace) -> None:
     def op(data: dict[str, Any]) -> None:
         item: dict[str, Any] = {
@@ -698,6 +744,21 @@ def focus_payload(data: dict[str, Any], ref: str) -> dict[str, Any]:
             ]
         )
     ]
+    cross_field_cards = [
+        card
+        for card in objects(data, "cards")
+        if isinstance(card.get("cross_field_trace"), dict)
+        and (
+            ref in [
+                str(value)
+                for value in card["cross_field_trace"].get("target_refs", [])
+            ]
+            or ref in [
+                str(value)
+                for value in card["cross_field_trace"].get("framework_refs", [])
+            ]
+        )
+    ]
 
     source_refs: list[str] = []
     sources: list[dict[str, Any]] = []
@@ -787,6 +848,7 @@ def focus_payload(data: dict[str, Any], ref: str) -> dict[str, Any]:
         "narratives": narratives,
         "residuals": residuals,
         "questions": questions,
+        "cross_field_cards": cross_field_cards,
         "source_refs": source_refs,
         "sources": sources,
         "cards_from_source": cards_from_source,
@@ -993,6 +1055,21 @@ def status_payload(data: dict[str, Any]) -> dict[str, Any]:
         and bool(card["catalytic_trace"].get("target_responses"))
         and not bool(card["catalytic_trace"].get("target_response_refs"))
     ]
+    cross_field_traced = [
+        card
+        for card in cards
+        if str(card.get("input_status", "")) == "cross_field_emergent"
+        and isinstance(card.get("cross_field_trace"), dict)
+        and bool(card["cross_field_trace"].get("target_refs"))
+        and bool(card["cross_field_trace"].get("framework_refs"))
+    ]
+    untraced_cross_field = [
+        str(card.get("id"))
+        for card in cards
+        if card.get("id")
+        and str(card.get("input_status", "")) == "cross_field_emergent"
+        and card not in cross_field_traced
+    ]
 
     return {
         "format": data.get("format"),
@@ -1012,6 +1089,10 @@ def status_payload(data: dict[str, Any]) -> dict[str, Any]:
                 framework_generated_without_yield_kind
             ),
             "target_response_cards_without_refs": target_response_without_refs,
+        },
+        "cross_field_trace": {
+            "traced_cards": len(cross_field_traced),
+            "untraced_cross_field_emergent_cards": untraced_cross_field,
         },
         "counts": {
             key: len(objects(data, section))
@@ -1194,6 +1275,15 @@ def cmd_status(args: argparse.Namespace) -> None:
         "catalytic-target-response-without-refs:",
         ", ".join(catalytic["target_response_cards_without_refs"]) or "-",
     )
+    cross_field = payload["cross_field_trace"]
+    print(
+        "cross-field-trace:",
+        f"cards={cross_field['traced_cards']}",
+    )
+    print(
+        "cross-field-untraced:",
+        ", ".join(cross_field["untraced_cross_field_emergent_cards"]) or "-",
+    )
     print(f"validation: errors={len(errors)} warnings={len(warnings)}")
 
 
@@ -1255,6 +1345,24 @@ def build_parser() -> argparse.ArgumentParser:
     trace_card.add_argument("--as-if")
     trace_card.add_argument("--note")
     trace_card.set_defaults(func=cmd_trace_card)
+
+    trace_cross_field = sub.add_parser(
+        "trace-cross-field",
+        help=(
+            "preserve target/framework lineage for a cross_field_emergent card "
+            "without promoting it to a privileged synthesis"
+        ),
+    )
+    trace_cross_field.add_argument("map", type=Path)
+    trace_cross_field.add_argument("card")
+    trace_cross_field.add_argument("--target-ref", action="append", default=None)
+    trace_cross_field.add_argument("--framework-ref", action="append", default=None)
+    trace_cross_field.add_argument("--preserved-target", action="append", default=None)
+    trace_cross_field.add_argument("--preserved-framework", action="append", default=None)
+    trace_cross_field.add_argument("--negated-or-revised", action="append", default=None)
+    trace_cross_field.add_argument("--newly-recomposed", action="append", default=None)
+    trace_cross_field.add_argument("--note")
+    trace_cross_field.set_defaults(func=cmd_trace_cross_field)
 
     group = sub.add_parser("add-group", help="create an explicit group")
     group.add_argument("map", type=Path)

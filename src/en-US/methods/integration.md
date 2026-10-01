@@ -64,7 +64,7 @@ negated_or_revised:
 newly_recomposed:
 ```
 
-This does not ask Layer 1 to implement dialectics or cultural-framework interpretation. It exists so **the third structure remains traceable to the tension that produced it and affinity synthesis can treat the tension itself as material**.
+This does not ask Layer 1 to implement dialectics or cultural-framework interpretation. It exists so **the third structure remains traceable to the tension that produced it and affinity synthesis can treat the tension itself as material**. In a compatible Affinity Board, a `cross_field_emergent` card may use `trace-cross-field` to retain target-side refs separately from traced framework-card refs. That is lineage externalization, not adoption or truth assignment for the third candidate.
 
 Layer 1 does not treat the `cross_field_candidate` as a privileged higher-order label. It may keep the target-side resistance, framework-side reading, and third candidate as separate meaning-bearing units and integrate them again from the material upward.
 

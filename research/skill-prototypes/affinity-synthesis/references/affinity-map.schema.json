@@ -91,6 +91,51 @@
           "input_status": {
             "type": "string"
           },
+          "cross_field_trace": {
+            "type": "object",
+            "properties": {
+              "target_refs": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "framework_refs": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "preserved_from_target": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "preserved_from_framework": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "negated_or_revised": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "newly_recomposed": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "note": {
+                "type": "string"
+              }
+            },
+            "additionalProperties": true
+          },
           "catalytic_trace": {
             "type": "object",
             "properties": {

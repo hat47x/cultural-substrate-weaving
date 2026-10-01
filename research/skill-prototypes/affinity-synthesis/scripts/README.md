@@ -41,6 +41,18 @@ python scripts/affinity_board.py trace-card /tmp/board.json C003 \
   --target-response-ref S001 \
   --as-if "seen as a generative cycle"
 
+# Preserve both sides when target/framework tension produces a third candidate.
+python scripts/affinity_board.py add-card /tmp/board.json \
+  "The tension suggests a narrower conditional distinction" \
+  --status cross_field_emergent
+python scripts/affinity_board.py trace-cross-field /tmp/board.json C004 \
+  --target-ref C001 \
+  --framework-ref C003 \
+  --preserved-target "target-side resistance remains explicit" \
+  --preserved-framework "the counter-view still exposes a contrast" \
+  --negated-or-revised "the original correspondence was too broad" \
+  --newly-recomposed "the contrast survives only under a narrower condition"
+
 python scripts/affinity_board.py add-group /tmp/board.json \
   --label "First integrated meaning" \
   --member C001
@@ -125,6 +137,7 @@ Design constraints:
 - failed mutations leave the previous board unchanged;
 - IDs are stable references, not ontology classes;
 - `trace-card` records framework / operation / location / yield-kind / target-response / as-if provenance on a card; when a target response can be tied to concrete target-side material, `--target-response-ref` may point to source/card refs. Those refs are audit provenance, not automatic verification or support. Operation, yield, and response names remain open strings rather than a closed taxonomy;
+- `trace-cross-field` is only for `cross_field_emergent` cards and requires both target-side refs and traced `framework_generated` card refs. It may retain preserved / negated-or-revised / newly-recomposed notes, but never promotes the third candidate to a privileged label, relation, support, or fact;
 - `status` may expose the framework / operation / yield / target-response mix, `framework_generated` cards whose catalytic trace is absent, traced cards whose yield is still untyped, and response-labelled cards that still lack target-side refs. These are observation aids for spotting premature convergence or one-operation bias, not coverage or quality scores;
 - `move-card` changes direct membership but preserves the card itself;
 - `audit-group` is a post-grouping audit: inherited / emergent / residual are recorded after a working group/label exists, not used as a pre-grouping taxonomy;

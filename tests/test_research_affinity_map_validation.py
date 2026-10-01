@@ -91,6 +91,93 @@ class ResearchAffinityMapValidationTests(unittest.TestCase):
             errors,
         )
 
+    def test_cross_field_trace_preserves_target_and_framework_lineage(self) -> None:
+        data = self.fixture()
+        data["cards"][0]["input_status"] = "target_supported"
+        data["cards"].append(
+            {
+                "id": "C003",
+                "text": "framework candidate",
+                "input_status": "framework_generated",
+                "catalytic_trace": {
+                    "frameworks": ["iching"],
+                    "operations": ["counter-view"],
+                },
+            }
+        )
+        data["cards"].append(
+            {
+                "id": "C004",
+                "text": "cross-field candidate",
+                "input_status": "cross_field_emergent",
+                "cross_field_trace": {
+                    "target_refs": ["C001"],
+                    "framework_refs": ["C003"],
+                    "newly_recomposed": ["narrower conditional distinction"],
+                },
+            }
+        )
+        errors, _warnings = validate(data)
+        self.assertEqual(errors, [])
+
+    def test_cross_field_framework_ref_must_be_traced_framework_card(self) -> None:
+        data = self.fixture()
+        data["cards"][0]["input_status"] = "target_supported"
+        data["cards"].append(
+            {
+                "id": "C003",
+                "text": "cross-field candidate",
+                "input_status": "cross_field_emergent",
+                "cross_field_trace": {
+                    "target_refs": ["C002"],
+                    "framework_refs": ["C001"],
+                },
+            }
+        )
+        errors, _warnings = validate(data)
+        self.assertTrue(
+            any(
+                "cross_field framework_ref must reference framework_generated card"
+                in error
+                for error in errors
+            ),
+            errors,
+        )
+
+    def test_cross_field_target_ref_must_not_use_framework_candidate_as_target_side(self) -> None:
+        data = self.fixture()
+        data["cards"].append(
+            {
+                "id": "C003",
+                "text": "framework candidate",
+                "input_status": "framework_generated",
+                "catalytic_trace": {
+                    "frameworks": ["five-phases"],
+                    "operations": ["transition-path"],
+                },
+            }
+        )
+        data["cards"].append(
+            {
+                "id": "C004",
+                "text": "cross-field candidate",
+                "input_status": "cross_field_emergent",
+                "cross_field_trace": {
+                    "target_refs": ["C003"],
+                    "framework_refs": ["C003"],
+                },
+            }
+        )
+        errors, _warnings = validate(data)
+        self.assertTrue(
+            any(
+                "cross_field target_ref must not use framework/cross-field card"
+                in error
+                for error in errors
+            ),
+            errors,
+        )
+
     def test_unresolved_question_provenance_still_warns(self) -> None:
         data = self.fixture()
         data["questions"][0]["arises_from"] = ["X404"]
