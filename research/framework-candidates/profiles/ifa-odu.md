@@ -10,6 +10,14 @@ https://ich.unesco.org/en/RL/ifa-divination-system-00146?lang=en
 
 UNESCO describes 256 odù, each with a divination signature, and a much larger evolving corpus of ese verses transmitted and interpreted by trained Yoruba priests.
 
+### Scholarly corpus reference
+
+Karin Barber, “Ifá divination corpus, the,” Routledge Encyclopedia of Philosophy
+
+https://www.rep.routledge.com/articles/thematic/ifa-divination-corpus-the/v-1/sections/the-corpus-of-verses
+
+Barber describes the 256-figure system and the large poetic corpus attached to the figures, including recitation and interpretation by trained specialists. This independent scholarly source reinforces the distinction between compact signature, open oral corpus, and situated interpretation without turning the corpus into a generic retrieval template.
+
 ## Structural value for CSW
 
 The distinctive cognitive structure is not “fortune telling.” It is a compact combinatorial signature that indexes a large poetic/narrative corpus, after which interpretation occurs in a decision context.
