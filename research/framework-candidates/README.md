@@ -110,6 +110,7 @@ Status: research-only
 - jo-ha-kyu
 - rites-of-passage（比較人類学上のboundary-crossing model）
 - buddhist-mandala（center / direction / gate / nested boundary、lineage-sensitive）
+- nyaya-five-member-inference（claim / reason / example / application / conclusion の推論橋渡し）
 
 Ifá / Odù、Jingluo、Sefirot、chakraは構造的価値が高い一方、living tradition、医療、宗教、系譜差の境界が重いため、採用を急がず研究レーンに留める。Buddhist mandalaもsource basisは十分だが、runtime化前にlineage-specific contractとcross-lineage minimumを分ける。Rites-of-passageは文化native体系ではなく比較人類学モデルとして別扱いする。
 
