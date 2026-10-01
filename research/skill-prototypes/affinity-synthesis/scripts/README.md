@@ -41,6 +41,13 @@ python scripts/affinity_board.py trace-card /tmp/board.json C003 \
   --target-response-ref S001 \
   --as-if "seen as a generative cycle"
 
+# Append the candidate's transformation after returning it to target-side material.
+python scripts/affinity_board.py audit-return /tmp/board.json C003 \
+  --state "weakened" \
+  --basis-ref S001 \
+  --note "the target supports only a narrower transition" \
+  --next-check "look for another target-side example"
+
 # Preserve both sides when target/framework tension produces a third candidate.
 python scripts/affinity_board.py add-card /tmp/board.json \
   "The tension suggests a narrower conditional distinction" \
@@ -129,7 +136,7 @@ python scripts/affinity_board.py diff /tmp/before.json /tmp/after.json
 python scripts/affinity_board.py status /tmp/board.json
 ```
 
-Supported operations include explicit source/card/group creation, post-group transformation audit, group membership edits, primary-card moves, explicit normalized spatial positions, secondary resonance, relations, residuals, questions, explicit question-to-relation promotion after return-check, narrative synthesis with basis/transformation audit, relation revision/demotion after another return-check, optional handoff-capsule maintenance, one-hop semantic focus, and board status.
+Supported operations include explicit source/card/group creation, cultural catalytic tracing and append-only target-return audit, post-group transformation audit, group membership edits, primary-card moves, explicit normalized spatial positions, secondary resonance, relations, residuals, questions, explicit question-to-relation promotion after return-check, narrative synthesis with basis/transformation audit, relation revision/demotion after another return-check, optional handoff-capsule maintenance, one-hop semantic focus, and board status.
 
 Design constraints:
 
@@ -137,6 +144,7 @@ Design constraints:
 - failed mutations leave the previous board unchanged;
 - IDs are stable references, not ontology classes;
 - `trace-card` records framework / operation / location / yield-kind / target-response / as-if provenance on a card; when a target response can be tied to concrete target-side material, `--target-response-ref` may point to source/card refs. Those refs are audit provenance, not automatic verification or support. Operation, yield, and response names remain open strings rather than a closed taxonomy;
+- `audit-return` appends target-return history to an already traced `framework_generated` card. Its state is an open string and its basis refs must resolve to target-side source/card material. It does not mutate input status, grouping, relations, importance, support, or truth; rejected/weakened histories remain visible instead of being erased;
 - `trace-cross-field` is only for `cross_field_emergent` cards and requires both target-side refs and traced `framework_generated` card refs. It may retain preserved / negated-or-revised / newly-recomposed notes, but never promotes the third candidate to a privileged label, relation, support, or fact;
 - `status` may expose the framework / operation / yield / target-response mix, `framework_generated` cards whose catalytic trace is absent, traced cards whose yield is still untyped, and response-labelled cards that still lack target-side refs. These are observation aids for spotting premature convergence or one-operation bias, not coverage or quality scores;
 - `move-card` changes direct membership but preserves the card itself;
