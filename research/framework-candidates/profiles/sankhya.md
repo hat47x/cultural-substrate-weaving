@@ -17,6 +17,14 @@ https://iep.utm.edu/sankhya/
 
 The reference identifies the classical system as a 25-tattva enumeration, distinguishes puruṣa from prakṛti, describes manifest/unmanifest prakṛti, the three guṇas, and warns that later accounts of the unmanifest-to-manifest relation can differ.
 
+### Primary classical text
+
+Īśvarakṛṣṇa, Sāṃkhyakārikā — GRETIL / SUB Göttingen
+
+https://gretil.sub.uni-goettingen.de/gretil/corpustei/transformations/html/sa_IzvarakRSNa-sAMkhyakArikA-alt.htm
+
+This digital Sanskrit text supplies a direct classical-text anchor for the kārikā layer. GRETIL records the underlying printed edition and the University of Tokyo data entry. CSW uses it to keep the adopted structural core tied to the classical text rather than reconstructing missing detail from model memory.
+
 ## Structural core
 
 - puruṣa: witnessing/conscious person side in the classical system;
