@@ -1,6 +1,6 @@
 # Wuxing framework profile candidate
 
-Status: profile-ready / research-only
+Status: adopted / runtime-corpus
 
 ## Identity
 
@@ -160,13 +160,10 @@ The last question is important: CSW may keep a relation question even when the f
 4. return the candidate to target evidence;
 5. if target material does not support the phase mapping, withdraw the mapping without discarding a surviving question.
 
-## Candidate adoption note
+## Adoption synchronization
 
-This profile can proceed toward skill-candidate as a compact relation/cycle module.
+This framework is adopted in `src/ja-JP/frameworks/wuxing.md` as a relation/cycle dossier.
 
-Remaining work before adoption:
+Runtime adoption licenses the explicitly sourced generation and overcoming relations, role reversal, cycle-break questions, and de-binding back to target relation verbs. It does not load medical, astrological, directional, or personality correspondence tables.
 
-- add a historically grounded note on ordering and variant conventions;
-- separate early philosophical use from later medical/correlative tables;
-- add a target-return example showing a relation question surviving after phase labels are removed;
-- independent review of Japanese terminology.
+Target-return example: a five-phase assignment may be discarded after use, while the surviving target question “which enabling relation became unstable because a constraining relation was removed?” remains testable in the target. Historical correspondence layers remain enrichment work rather than part of the adopted core.

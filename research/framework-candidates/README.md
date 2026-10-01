@@ -32,7 +32,7 @@ Status: research-only
 - skill-candidate
   - 実際のCSW operationとして使うためのprofileとsource boundaryが揃った。
 - adopted
-  - runtime/packageへ採用された。
+  - framework dossier がruntime/packageへ採用された。独立した別Skillとして公開済みという意味ではない。
 
 この段階は価値順位ではない。たとえば、宗教的・医療的文脈が強い体系は認知的に豊かでも、誤用境界を十分に書けるまで研究段階に留める。
 
@@ -80,8 +80,35 @@ Status: research-only
 ## 現在の入口
 
 - cognitive-operation-inventory.json
+- coverage-map.md
 - first-wave-2026-10-01.md
-- profiles/yijing.md
-- profiles/wuxing.md
+- second-wave-2026-10-01.md
+- profiles/ 以下の各体系profile
 
-次段では、第一波の残りについてもsource付きprofileを増やし、profile-readyの体系だけをSkill候補化する。
+### runtime採用済み
+
+- yijing
+- wuxing
+- sankhya
+- dependent-origination
+- catuskoti
+- jain-sevenfold-predication
+- aristotle-four-causes
+- rasa
+- maya-calendars（Tzolk’in / Chol Q’ij, Haab, Calendar Round, Long Count）
+- huayan（法蔵中心のwhole–part reciprocity / mutual inclusion）
+
+採用済みでも研究を打ち切らない。runtimeが使う最小構造核と、独立Skill相当まで厚くする研究は分ける。
+
+### 量を増やす側のsourced candidate
+
+- huayan
+- twenty-four-solar-terms
+- heavenly-stems-earthly-branches
+- llull-ars
+- five-aggregates
+- jo-ha-kyu
+
+Ifá / Odù、Jingluo、Sefirot、chakraは構造的価値が高い一方、living tradition、医療、宗教、系譜差の境界が重いため、採用を急がず研究レーンに留める。
+
+当面は効果比較を増やさない。profile-ready / skill-candidateの母集団を増やし、source basis、lineage、structural core、native operation、de-binding、target-return questionを揃えることを優先する。

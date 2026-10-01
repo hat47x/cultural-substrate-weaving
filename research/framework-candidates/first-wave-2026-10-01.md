@@ -10,7 +10,7 @@ CSWの文化体系層は、現時点では方法論の厚みに比べて個別�
 
 第一波では、対象への表面的な「相性」ではなく、現在のCSWが必要としているoperation空間の差で候補を選ぶ。
 
-## 第一波で厚くする五体系
+## 第一波で厚くした五体系（現在はいずれも最小runtime dossierへ採用済み）
 
 ### 1. 易 / Yijing — 離散状態と変化
 
@@ -99,10 +99,11 @@ CSWで開ける仕事:
 - Smithsonian National Museum of the American Indian, Living Maya Time: The Calendar System
   - https://maya.nmai.si.edu/calendar/calendar-system
 
-次段:
+採用後の状態:
 
-- living-tradition側の用語・実践差を追加確認。
-- calendar mechanicsとinterpretive traditionを別層にしたprofileを作る。
+- runtimeではTzolk’in単独でなく、Haab / Calendar Round / Long Countまで含む `maya-calendars` dossierへ拡張した。
+- calendar mechanicsとday-sign interpretation / ritual authorityを分離した。
+- living-traditionの解釈・儀礼層は今後もcommunity / language別の研究対象として残す。
 
 ### 4. 縁起 / dependent origination — 条件連鎖と停止点
 
@@ -131,9 +132,10 @@ CSWで開ける仕事:
 - Stanford Encyclopedia of Philosophy, Buddha
   - https://plato.stanford.edu/entries/buddha/
 
-次段:
+採用後の状態:
 
-- early Buddhist / Abhidharma / Mahayana等のformulation差を整理してからprofile化する。
+- runtimeはconditional arising / cessation / intervention-pointという最小構造核だけを採用した。
+- early Buddhist / Abhidharma / Mahayana等のformulation差は、採用済み核を厚くする追加研究として残す。
 
 ### 5. Rasa — 表現内容と受容経験を分ける
 
@@ -163,9 +165,10 @@ CSWで開ける仕事:
 - Oxford Bibliographies, Aesthetics
   - https://academic.oup.com/reference/62357/reference-article-abstract/554506345
 
-次段:
+採用後の状態:
 
-- Nāṭyaśāstraの構造語とAbhinavagupta以降の展開を分けてprofile化する。
+- runtimeはproduction / composition / receptionの分離を最小構造核として採用した。
+- NāṭyaśāstraとAbhinavagupta以降の展開、rasa / bhāva語彙の歴史差は追加研究として残す。
 
 ## 第二波に留める候補
 
@@ -195,18 +198,20 @@ vertical axis / embodied position / practice sequenceを供給し得るが、Hin
 |---|---|
 | discrete state / recomposition / transition | Yijing |
 | relational cycle / generation vs constraint | Wuxing |
-| coupled periodicity / recurrence | Tzolk’in |
+| coupled periodicity / recurrence / long-span time | Maya calendar systems |
 | condition chain / interruption / anti-essentialist view | dependent origination |
 | aesthetic emergence / receiver position | Rasa |
 
-ここで埋まっていない主な空間は、
+第一波採用後も薄かった主な空間は、
 
-- network / collateral
+- route / collateral型network
 - spatial center-periphery
 - embodied axis
 - ritual practice sequence
-- layered mediation
+- layered mediation / whole-part reciprocity
 - explicit boundary-crossing
+
+その後、華厳の採用によってwhole-part reciprocity / role-defined identity / node perspectiveは一段厚くなった。route型networkや空間方位、儀礼手順等は引き続き候補研究を進める。
 
 である。
 
