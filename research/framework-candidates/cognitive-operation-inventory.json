@@ -730,7 +730,7 @@
         {
           "kind": "institutional-living-heritage-reference",
           "title": "Ifa divination system",
-          "url": "https://ich.unesco.org/en/RL/baul-traditions-00146"
+          "url": "https://ich.unesco.org/en/RL/ifa-divination-system-00146?lang=en"
         }
       ]
     },
@@ -856,6 +856,16 @@
           "kind": "scholarly-empirical-reference",
           "title": "Characteristics of actions for sliding walk technique in Japanese traditional performing art",
           "url": "https://www.jstage.jst.go.jp/article/hcs/2014/24/2014_204/_article/-char/en"
+        },
+        {
+          "kind": "scholarly-empirical-reference",
+          "title": "RELATION BETWEEN TRANSITIONS IN THE NOH STAGE STYLE AFTER ZEAMI AND “JOHAKYU FIVE PARTS”",
+          "url": "https://www.jstage.jst.go.jp/article/aija/81/728/81_2317/_article"
+        },
+        {
+          "kind": "tradition-educational-reference",
+          "title": "Johakyū — Noh Terminology",
+          "url": "https://db2.the-noh.com/edic/2009/06/johakyu_1.html"
         }
       ]
     },
