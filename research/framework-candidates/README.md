@@ -113,6 +113,7 @@ Status: research-only
 - confucian-role-ritual（profile-ready）
 - shinto-threshold-purification
 - rites-of-passage（profile-ready）
+- classical-stasis-theory（profile-ready / rhetorical issue-state）
 - buddhist-mandala（sourced-candidate / lineage-sensitive）
 - tibetan-buddhist-mandala（sourced-candidate / lineage-sensitive）
 
