@@ -128,6 +128,29 @@ def validate(data: dict[str, Any]) -> tuple[list[str], list[str]]:
             if str(ref) not in local_artifact_ids:
                 warnings.append(f"card {cid} derivation_ref does not resolve locally: {ref}")
 
+        trace = card.get("catalytic_trace")
+        if trace is not None and not isinstance(trace, dict):
+            errors.append(f"card {cid} catalytic_trace must be an object")
+            continue
+        if isinstance(trace, dict):
+            response_refs = trace.get("target_response_refs", [])
+            if not isinstance(response_refs, list):
+                errors.append(
+                    f"card {cid} catalytic target_response_refs must be an array"
+                )
+            else:
+                for ref in response_refs:
+                    response_ref = str(ref)
+                    if response_ref == cid:
+                        errors.append(
+                            f"card {cid} catalytic target_response_ref cannot reference itself"
+                        )
+                    elif response_ref not in source_ids | card_ids:
+                        errors.append(
+                            f"card {cid} catalytic target_response_ref must resolve "
+                            f"to source/card: {ref}"
+                        )
+
     group_membership: dict[str, set[str]] = {}
     card_primary_memberships: Counter[str] = Counter()
     for group in sections["group"]:

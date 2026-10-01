@@ -89,7 +89,7 @@ origin: framework_generated | cross_field_emergent | target-side material lineag
 verification: target_supported | unresolved | other explicit state
 ```
 
-固定schemaではない。
+固定schemaではない。compatibleなAffinity Boardで`target_response`を記録する場合、具体的な対象側材料へ戻せるときはsource/card参照を併記してよい。参照があること自体は`target_supported`を意味せず、由来と検証状態を別に保つ。
 
 第三構造が親和統合の中でさらに変化した場合も、元のtarget/framework tensionへ戻れるlineageを残す。統合後の文が滑らかになったことを理由に、緊張の履歴を削除しない。
 
