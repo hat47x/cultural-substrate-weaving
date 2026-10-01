@@ -113,6 +113,11 @@
       "skill_reference": "04i-maya-calendars.md"
     },
     {
+      "id": "framework-huayan",
+      "source": "frameworks/huayan.md",
+      "skill_reference": "04j-huayan.md"
+    },
+    {
       "id": "human-and-taiheki",
       "source": "domains/human-and-taiheki.md",
       "skill_reference": "05-human-and-taiheki.md"
@@ -158,7 +163,8 @@
       "frameworks/jain-sevenfold-predication.md",
       "frameworks/aristotle-four-causes.md",
       "frameworks/rasa.md",
-      "frameworks/maya-calendars.md"
+      "frameworks/maya-calendars.md",
+      "frameworks/huayan.md"
     ],
     "02-human-and-taiheki.md": [
       "domains/human-and-taiheki.md"
