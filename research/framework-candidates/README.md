@@ -87,6 +87,7 @@ Status: research-only
 - fourth-wave-2026-10-01.md
 - portfolio-qualitative-audit-2026-10-01.md
 - profiles/ 以下の各体系profile
+- source-packets/ 以下のpre-profile資料層
 
 ### runtime採用済み
 
@@ -121,6 +122,6 @@ Status: research-only
 - hadith-isnad-matn（profile-ready / religious-tradition-sensitive）
 - mimamsa-hermeneutics（sourced-candidate / lineage-sensitive）
 
-Ifá / Odù、Jingluo、Sefirot、chakra、buddhist-mandala、tibetan-buddhist-mandalaは構造的価値が高い一方、living tradition、医療、宗教、系譜差の境界が重いため、採用を急がず研究レーンに留める。
+Ifá / Odù、Jingluo、Sefirot、chakra、buddhist-mandala、tibetan-buddhist-mandalaは構造的価値が高い一方、living tradition、医療、宗教、系譜差の境界が重いため、採用を急がず研究レーンに留める。Jingluo / Sefirot / chakra は source-packets/ に前段資料層を置き、profile化条件を明示している。
 
 当面は効果比較を増やさない。profile-ready / skill-candidateの母集団を増やし、source basis、lineage、structural core、native operation、de-binding、target-return questionを揃えることを優先する。
