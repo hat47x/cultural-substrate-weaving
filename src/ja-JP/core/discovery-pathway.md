@@ -53,6 +53,7 @@
    - 問い、区別、関係候補、遷移候補、反証条件、観察先、試行、残差を別カードとして扱い、必要ならcompatibleな `affinity-synthesis` へ渡す。
    - framework由来カードにgroupingや表札を先に決めさせない。
    - 統合後の候補を対象側の資料・観察へ戻し、独立に生き残るもの、押し返されるもの、保留するものを分ける。
+   - compatibleな認知足場がある場合、framework由来candidateは同じstable IDのまま、target-return後の変形履歴を追記してよい。生存・弱化・棄却・残差化・再編に相当するstateとtarget-side basisを残せるが、state名はopen vocabularyとし、returnを通ったこと自体を`target_supported`・truth・importanceへ変換しない。
 
 一つの体系について、使える認知操作の例は次のように整理できる。
 
