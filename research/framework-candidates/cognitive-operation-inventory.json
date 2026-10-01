@@ -858,6 +858,212 @@
           "url": "https://www.jstage.jst.go.jp/article/hcs/2014/24/2014_204/_article/-char/en"
         }
       ]
+    },
+    {
+      "id": "nyaya-inference",
+      "names": [
+        "Nyāya",
+        "ニヤーヤ",
+        "Nyaya inference"
+      ],
+      "readiness": "profile-ready",
+      "structural_primitives": [
+        "five-member argument",
+        "thesis",
+        "reason",
+        "general concomitance with example",
+        "application to case",
+        "conclusion"
+      ],
+      "cognitive_operations": [
+        "argument-unfolding",
+        "reason-rule-separation",
+        "example-counterexample-probe",
+        "rule-application-audit",
+        "inference-gap-detection"
+      ],
+      "useful_for": [
+        "unfolding compressed arguments into different epistemic jobs",
+        "making hidden application steps visible",
+        "testing a proposed general relation with positive and negative cases"
+      ],
+      "do_not_assume": [
+        "Nyāya represents all Indian logic",
+        "a well-formed argument is automatically sound or true",
+        "the five-member form is a universal modern proof standard"
+      ],
+      "sources": [
+        {
+          "kind": "scholarly-reference",
+          "title": "Logic in Classical Indian Philosophy",
+          "url": "https://plato.stanford.edu/entries/logic-india/"
+        },
+        {
+          "kind": "scholarly-reference",
+          "title": "Epistemology in Classical Indian Philosophy",
+          "url": "https://plato.stanford.edu/entries/epistemology-india/"
+        },
+        {
+          "kind": "scholarly-reference",
+          "title": "Nyaya",
+          "url": "https://iep.utm.edu/nyaya/"
+        }
+      ],
+      "profile_path": "research/framework-candidates/profiles/nyaya-inference.md"
+    },
+    {
+      "id": "confucian-role-ritual",
+      "names": [
+        "Confucian role / li",
+        "儒家の役割・礼",
+        "li"
+      ],
+      "readiness": "profile-ready",
+      "structural_primitives": [
+        "relation-conditioned conduct",
+        "social roles",
+        "ritualized interaction",
+        "role-name and enacted behavior",
+        "practice-shaped disposition"
+      ],
+      "cognitive_operations": [
+        "role-perspective-switch",
+        "name-behavior-congruence",
+        "relation-obligation-map",
+        "ritual-context-shift",
+        "practice-shapes-disposition-probe"
+      ],
+      "useful_for": [
+        "re-reading the same event from different relation-positions",
+        "detecting mismatch between claimed roles and enacted functions",
+        "examining how patterned interaction changes expectations and attention"
+      ],
+      "do_not_assume": [
+        "historical hierarchy is a modern normative recommendation",
+        "Confucian traditions are one invariant doctrine",
+        "role is a fixed personality or essence"
+      ],
+      "sources": [
+        {
+          "kind": "scholarly-reference",
+          "title": "Confucius",
+          "url": "https://plato.stanford.edu/entries/confucius/"
+        },
+        {
+          "kind": "scholarly-reference",
+          "title": "Chinese Ethics",
+          "url": "https://plato.stanford.edu/entries/ethics-chinese/"
+        }
+      ],
+      "profile_path": "research/framework-candidates/profiles/confucian-role-ritual.md"
+    },
+    {
+      "id": "shinto-threshold-purification",
+      "names": [
+        "Shinto shrine threshold / purification",
+        "神社参拝の境界・清め",
+        "torii / temizu / harae sequence"
+      ],
+      "readiness": "sourced-candidate",
+      "structural_primitives": [
+        "marked threshold",
+        "approach path",
+        "pre-worship purification",
+        "central worship act",
+        "departure / return"
+      ],
+      "cognitive_operations": [
+        "threshold-marking",
+        "before-entry-preparation",
+        "path-to-center",
+        "state-transition-by-practice",
+        "closure-and-return"
+      ],
+      "useful_for": [
+        "finding explicit transition points",
+        "separating entry from preparation and central action",
+        "asking how participant state changes across a bounded sequence"
+      ],
+      "do_not_assume": [
+        "contemporary protocol is timeless and universal",
+        "ritual purification is medical or hygienic efficacy",
+        "sacredness is a target-side fact"
+      ],
+      "sources": [
+        {
+          "kind": "living-tradition-institutional-source",
+          "title": "Entering a Jinja",
+          "url": "https://www.jinjahoncho.or.jp/en/at-a-jinja/entering/"
+        },
+        {
+          "kind": "living-tradition-institutional-source",
+          "title": "参拝方法",
+          "url": "https://www.jinjahoncho.or.jp/omairi/sanpai/"
+        },
+        {
+          "kind": "scholarly-institutional-reference",
+          "title": "Paying Respects at a Shinto Shrine",
+          "url": "https://d-museum.kokugakuin.ac.jp/eos/detail/?id=9876"
+        },
+        {
+          "kind": "scholarly-institutional-reference",
+          "title": "Harae",
+          "url": "https://d-museum.kokugakuin.ac.jp/eos/detail/?id=8732"
+        }
+      ],
+      "profile_path": "research/framework-candidates/profiles/shinto-threshold-purification.md"
+    },
+    {
+      "id": "buddhist-mandala-spatial",
+      "names": [
+        "Buddhist mandala spatial systems",
+        "仏教マンダラ空間構造",
+        "maṇḍala"
+      ],
+      "readiness": "defer-lineage-specific",
+      "structural_primitives": [
+        "distinguished center",
+        "cardinal differentiation",
+        "nested enclosure",
+        "gate / access structure",
+        "outer-to-inner approach"
+      ],
+      "cognitive_operations": [
+        "center-periphery-reframe",
+        "directional-role-map",
+        "nested-boundary-pass",
+        "gate-threshold-probe",
+        "center-approach-sequence"
+      ],
+      "useful_for": [
+        "opening center-periphery questions",
+        "representing multiple nested boundaries",
+        "asking how access and meaning change when moving from outside toward a center"
+      ],
+      "do_not_assume": [
+        "one universal mandala structure",
+        "Buddhist Hindu and Jain mandalas are interchangeable",
+        "religious ritual efficacy becomes a target-side fact",
+        "modern Jungian mandala psychology is the historical Buddhist system"
+      ],
+      "sources": [
+        {
+          "kind": "museum-reference",
+          "title": "Mandala",
+          "url": "https://rubinmuseum.org/highlights/mandala/"
+        },
+        {
+          "kind": "museum-reference",
+          "title": "The Mandala: A Guide to Transformation",
+          "url": "https://rubinmuseum.org/the-mandala-a-guide-to-transformation/"
+        },
+        {
+          "kind": "museum-object-study",
+          "title": "Mandala of the Bodhisattva Monju of the Eight Syllables",
+          "url": "https://www.metmuseum.org/art/collection/search/40137"
+        }
+      ],
+      "profile_path": "research/framework-candidates/profiles/buddhist-mandala-spatial.md"
     }
   ]
 }
