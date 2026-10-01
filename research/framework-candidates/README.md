@@ -85,6 +85,8 @@ Status: research-only
 - second-wave-2026-10-01.md
 - third-wave-2026-10-01.md
 - fourth-wave-2026-10-01.md
+- fifth-wave-2026-10-02.md
+- worked-examples/ 以下のtarget-return例
 - portfolio-qualitative-audit-2026-10-01.md
 - near-neighbor-differentiation-2026-10-01.md
 - profiles/ 以下の各体系profile
