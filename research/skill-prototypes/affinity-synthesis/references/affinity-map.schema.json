@@ -129,6 +129,12 @@
                 "items": {
                   "type": "string"
                 }
+              },
+              "target_response_refs": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
               }
             },
             "additionalProperties": true
