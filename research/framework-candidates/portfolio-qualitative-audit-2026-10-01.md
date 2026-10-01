@@ -253,3 +253,81 @@ near-neighbor-differentiation-2026-10-01.md を追加し、近いoperationを持
 である。
 
 この追加によりroute-networkは「候補が存在しない空白」ではなくなったが、coverage完了とはみなさない。次は同familyの数を増やすより、別伝統との比較でgeneric route planningとの差を明示することを優先する。
+
+
+## 2026-10-02 route-network補強後の再計測
+
+第5波とJingluo補強を反映してinventoryを再計測した。
+
+現在:
+
+- inventory候補数: **29**
+- adopted: **10**
+- profile-ready: **7**
+- sourced-candidate: **9**
+- research-only: **2**
+- defer-lineage-specific: **1**
+- sourceが2件未満の候補: **0**
+- profile / runtime参照をまだ持たない候補: **2**
+  - sefirot
+  - chakra
+
+### Jingluoの段階変更
+
+Jingluoはpre-profileのresearch-onlyから **profile-ready / medical-tradition-sensitive** へ進めた。
+
+今回追加・分離したのは、
+
+- 『黃帝內經・靈樞經・經脈』の古典本文層;
+- WHO 1991 / 2022 のterminology層;
+- ISO/TS 16843-4のcategorial representation層;
+- modern anatomy / physiologyと同一視しないためのboundary review;
+- 非医療target-return worked example;
+- generic graph / dependent origination / Huayanとの差分;
+
+である。
+
+profile-readyは医学的妥当性を意味しない。runtime採用も行わない。CSWが保持するのは、main-vs-collateral / branch / reconvergence / bypass / route-discontinuityというde-bound operationである。
+
+### Marshallese wave navigation追加後のroute family
+
+第5波でMarshallese wave navigationが加わり、route / network familyは少なくとも二つの異質な候補を持つようになった。
+
+- Jingluo: main / collateral route class、branching、continuity、bypass;
+- Marshallese wave navigation: relative cue、model-environment return、situated sensing、disturbance-as-signal.
+
+これにより「route候補が医療体系一つしかない」という空白は解消した。
+
+一方、generic graphとの差を十分に示すためには、次は別の候補を無制限に増やすより、
+
+1. non-maritime / non-medical route traditionとの比較;
+2. route-classとcue-sequenceのtarget-return差;
+3. route candidateを使わない方がよいnegative example;
+
+を優先する。
+
+### 現在の質的ボトルネック
+
+残るprofile未作成候補はSefirot / chakraの2件まで減った。
+
+ただし両者は「あと2ファイル書けば完了」という状態ではない。
+
+- Sefirot: Sefer Yetzirah、medieval theosophical Kabbalah、later Tree of Life diagramを分けたまま扱えること。
+- chakra: Hindu / Buddhist / tantric lineage差と、modern seven-rainbow receptionを分離できること。
+
+ここを急いでprofile化するより、source packetの層分離を厚くする方が品質に寄与する。
+
+### 効果検証への移行判断
+
+広範な効果比較は引き続き開始しない。
+
+候補数29・profile-ready 7まで進んだことで、純粋な「体系数不足」は初期より大幅に改善した。一方、現在の主要課題は、
+
+- lineage-sensitive候補の深さ;
+- living traditionの公開境界;
+- near-neighbor differentiation;
+- non-Western / non-medical route・narrative・oral-performative operationの厚み;
+
+へ移っている。
+
+したがって次の段階も、候補数の単純増加ではなく、**既存候補を独立operationとして成立させる資料品質と差分の強化**を優先する。
