@@ -1174,6 +1174,61 @@
         }
       ],
       "profile_path": "research/framework-candidates/profiles/tibetan-buddhist-mandala.md"
+    },
+    {
+      "id": "classical-stasis-theory",
+      "names": [
+        "classical stasis theory",
+        "status theory",
+        "στάσις",
+        "constitutio",
+        "古典修辞学の争点論"
+      ],
+      "readiness": "profile-ready",
+      "structural_primitives": [
+        "fact / conjecture issue",
+        "definition / naming issue",
+        "quality / evaluation issue",
+        "procedure / competence / translative issue",
+        "historically varying issue taxonomies"
+      ],
+      "cognitive_operations": [
+        "dispute-state-separation",
+        "fact-before-evaluation-probe",
+        "definition-shift-audit",
+        "quality-after-concession-probe",
+        "competence-procedure-probe",
+        "stasis-switch-detection"
+      ],
+      "useful_for": [
+        "distinguishing what kind of question a dispute is actually trying to settle",
+        "detecting arguments that answer a different issue type than the live disagreement",
+        "separating factual, definitional, evaluative, and procedural evidence needs"
+      ],
+      "do_not_assume": [
+        "all ancient rhetoricians used one invariant four-part stasis grid",
+        "identifying a stasis resolves the dispute",
+        "forensic or Roman procedural norms become target-side authority",
+        "a modern classroom simplification is the ancient canonical theory"
+      ],
+      "sources": [
+        {
+          "kind": "primary-classical-text",
+          "title": "Cicero, De Inventione 1.16",
+          "url": "https://www.perseus.tufts.edu/hopper/text?doc=Perseus%3Atext%3A2008.01.0683%3Abook%3D1%3Asection%3D16"
+        },
+        {
+          "kind": "primary-classical-text",
+          "title": "Quintilian, Institutio Oratoria 3.5",
+          "url": "https://www.perseus.tufts.edu/hopper/text?doc=Perseus%3Atext%3A2007.01.0060%3Abook%3D3%3Achapter%3D5"
+        },
+        {
+          "kind": "scholarly-reference",
+          "title": "The Substructure of stasis-theory from Hermagoras to Hermogenes",
+          "url": "https://www.cambridge.org/core/journals/classical-quarterly/article/abs/substructure-of-stasistheory-from-hermagoras-to-hermogenes/3367411C59C61208776EA1E503C2D8D7"
+        }
+      ],
+      "profile_path": "research/framework-candidates/profiles/classical-stasis-theory.md"
     }
   ]
 }
