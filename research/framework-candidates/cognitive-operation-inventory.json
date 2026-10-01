@@ -261,7 +261,7 @@
         "Hwaeom",
         "Kegon"
       ],
-      "readiness": "sourced-candidate",
+      "readiness": "adopted",
       "structural_primitives": [
         "whole-part co-definition",
         "mutual inclusion and interdependence",
@@ -302,8 +302,14 @@
           "kind": "scholarly-reference",
           "title": "Fazang",
           "url": "https://iep.utm.edu/fazang/"
+        },
+        {
+          "kind": "primary-classical-canonical-text",
+          "title": "CBETA T1881 — 華嚴經金師子章註",
+          "url": "https://cbetaonline.dila.edu.tw/zh/T1881"
         }
-      ]
+      ],
+      "runtime_path": "src/ja-JP/frameworks/huayan.md"
     },
     {
       "id": "jingluo",
