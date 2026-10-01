@@ -191,3 +191,16 @@ Maya calendar、Ifá、Shinto、Hadith、Tibetan Buddhist mandala等は、歴史
 この補強後、**inventory上でsourceが2件未満の候補は0件**となった。
 
 これは「各体系の資料が十分」という意味ではない。最低限、単一資料だけに依存して体系構造を再構成する状態を解消したという品質上の節目である。次は件数を増やすより、jingluo / sefirot / chakra のように系譜・医療・宗教上の境界が重い候補について、profile化の前段となるsource packetを厚くする。
+
+
+## 追加補強 — pre-profile source packet
+
+単一資料依存の解消に続き、profileを意図的に保留していた3候補へsource packetを追加した。
+
+- Jingluo: WHO terminology / NCBI MeSH / scholarly reviewを分け、伝統的route-network構造と現代の解剖学・生理学上の主張を分離した。
+- Sefirot: Sefer Yetzirah本文層と中世theosophical Kabbalahを分け、一つの不変なTree of Lifeへ統合しない方針を明示した。profile化前に候補自体を二分する可能性も保持する。
+- Chakra: Hindu / Buddhist等の複数subtle-body systemsを一つに統合せず、Oxford Handbookの専門章を基礎にlineage-specificな採用条件を明示した。近代西洋のseven-rainbow modelは別のreception-history layerとして扱う。
+
+この段階で、未profile 3候補は「資料がないため放置」ではなく、**profileへ進めない理由と、進めるための不足資料が明示された保留状態**になった。
+
+次の質的優先順位は、(1) source packetで示した一次資料・系譜差の追加、(2) 近接体系間の差分表、(3) なお空いているoperation familyの探索、の順とする。広範な効果比較は引き続き開始しない。
