@@ -83,6 +83,7 @@ Status: research-only
 - coverage-map.md
 - first-wave-2026-10-01.md
 - second-wave-2026-10-01.md
+- third-wave-2026-10-01.md
 - profiles/ 以下の各体系profile
 
 ### runtime採用済み
@@ -108,7 +109,10 @@ Status: research-only
 - llull-ars
 - five-aggregates
 - jo-ha-kyu
+- nyaya-inference（profile-ready）
+- confucian-role-ritual（profile-ready）
+- shinto-threshold-purification
 
-Ifá / Odù、Jingluo、Sefirot、chakraは構造的価値が高い一方、living tradition、医療、宗教、系譜差の境界が重いため、採用を急がず研究レーンに留める。
+Ifá / Odù、Jingluo、Sefirot、chakra、buddhist-mandala-spatialは構造的価値が高い一方、living tradition、医療、宗教、系譜差の境界が重いため、採用を急がず研究レーンに留める。
 
 当面は効果比較を増やさない。profile-ready / skill-candidateの母集団を増やし、source basis、lineage、structural core、native operation、de-binding、target-return questionを揃えることを優先する。
