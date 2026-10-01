@@ -9,6 +9,7 @@ This map tracks structural diversity. It does not rank frameworks or claim that 
 | discrete configuration / local change | Yijing | Llull Ars | high-dimensional pruning |
 | dual relational cycle | Wuxing | — | multi-network interaction |
 | production layers / observer split | Sāṅkhya | Sefirot | lineage-safe layered mediation |
+| whole–part reciprocity / role-defined identity | Huayan | — | route-oriented networks and explicit cross-boundary topology |
 | conditional chain / cessation | dependent origination | — | branching conditional networks |
 | binary-frame disruption | catuṣkoṭi | — | explicit boundary-crossing logic |
 | conditioned perspective | Jain sevenfold predication | — | social/role perspective systems |
