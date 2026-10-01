@@ -28,6 +28,8 @@ This map tracks structural diversity. It does not rank frameworks or claim that 
 | social role / relation-conditioned conduct | — | Confucian role / li | historical layer separation and non-hierarchical de-binding |
 | explicit threshold crossing / incorporation / preparation | — | Rites of Passage; Shinto shrine threshold / purification | comparative schema vs culture-native protocol; historical and shrine-variation separation |
 | spatial center-periphery / nested boundary | — | Buddhist mandala; Tibetan Buddhist mandala | lineage-specific structure map and non-ritual spatial contrast before adoption |
+| transmission provenance / chain topology | — | Hadith isnād / matn | classical transmission criticism vs modern historical reconstruction; content/provenance separation |
+| prescriptive hermeneutics / sentence-unit interpretation | — | Mīmāṃsā hermeneutics | Bhāṭṭa / Prābhākara separation and source-grounded interpretive precedence |
 
 ## Priority rule
 
