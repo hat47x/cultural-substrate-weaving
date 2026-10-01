@@ -85,6 +85,7 @@ Status: research-only
 - second-wave-2026-10-01.md
 - third-wave-2026-10-01.md
 - fourth-wave-2026-10-01.md
+- portfolio-qualitative-audit-2026-10-01.md
 - profiles/ 以下の各体系profile
 
 ### runtime採用済み
