@@ -18,6 +18,8 @@ This map tracks structural diversity. It does not rank frameworks or claim that 
 | embodied observation | Taiheki | chakra | lineage-specific embodied practice |
 | coupled periodicity / multi-scale time | Maya calendars | Stems/Branches | more than two independently varying cycles |
 | seasonal phase / boundary | — | Twenty-Four Solar Terms | spatially varying ecological timing |
+| explicit boundary-crossing / liminality | — | Rites of Passage (van Gennep) | culture-native passage structures beyond the comparative model |
+| spatial center-periphery / nested boundary | — | Buddhist mandala | lineage-safe center / gate / direction contract |
 | indexed narrative corpus | — | Ifá / Odù | culturally safe non-ritual abstraction |
 | experience decomposition | — | Five aggregates | non-overlap with existing Buddhist core |
 | route / network topology | — | Jingluo | non-medical network traditions |
