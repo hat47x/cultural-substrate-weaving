@@ -13,7 +13,8 @@ This map tracks structural diversity. It does not rank frameworks or claim that 
 | conditional chain / cessation | dependent origination | — | branching conditional networks |
 | binary-frame disruption | catuṣkoṭi | — | explicit boundary-crossing logic |
 | conditioned perspective | Jain sevenfold predication | — | social/role perspective systems |
-| explanatory pluralism | Aristotle four causes | Nyāya inference | argument/rhetorical issue states beyond inference |
+| explanatory pluralism | Aristotle four causes | Nyāya inference | explanatory modes beyond current cause set |
+| rhetorical issue-state / dispute location | — | Classical stasis theory | non-forensic target-return examples and variant-safe runtime minimum |
 | expression → reception | Rasa | Jo-Ha-Kyū | narrative and ritual sequencing |
 | embodied observation | Taiheki | chakra | lineage-specific embodied practice |
 | coupled periodicity / multi-scale time | Maya calendars | Stems/Branches | more than two independently varying cycles |
