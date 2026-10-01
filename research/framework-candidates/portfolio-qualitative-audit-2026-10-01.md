@@ -204,3 +204,12 @@ Maya calendar、Ifá、Shinto、Hadith、Tibetan Buddhist mandala等は、歴史
 この段階で、未profile 3候補は「資料がないため放置」ではなく、**profileへ進めない理由と、進めるための不足資料が明示された保留状態**になった。
 
 次の質的優先順位は、(1) source packetで示した一次資料・系譜差の追加、(2) 近接体系間の差分表、(3) なお空いているoperation familyの探索、の順とする。広範な効果比較は引き続き開始しない。
+
+
+## 追加補強 — 近接候補の差分固定
+
+near-neighbor-differentiation-2026-10-01.md を追加し、近いoperationを持つ候補どうしについて「何が違うため独立に残すのか」を明示した。
+
+対象には、dependent origination / Huayan、catuṣkoṭi / Jain sevenfold predication、Aristotle / Nyāya / classical stasis、mandala / rites of passage / Shinto threshold、Maya calendar / Stems-Branches、Hadith / generic provenance、Mīmāṃsā / generic close reading、Yijing / Llull Ars等を含む。
+
+これにより、今後の量的拡張は「文化名が違う」だけでは不十分とし、de-binding後にも既存候補で置換しにくいoperationが残ることを候補維持の基準にする。
