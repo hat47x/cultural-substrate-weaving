@@ -86,6 +86,7 @@ Status: research-only
 - third-wave-2026-10-01.md
 - fourth-wave-2026-10-01.md
 - portfolio-qualitative-audit-2026-10-01.md
+- near-neighbor-differentiation-2026-10-01.md
 - profiles/ 以下の各体系profile
 - source-packets/ 以下のpre-profile資料層
 
