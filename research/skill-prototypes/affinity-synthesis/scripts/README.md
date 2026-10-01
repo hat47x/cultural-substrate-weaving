@@ -124,7 +124,7 @@ Design constraints:
 - every mutation is validated before replacing the file;
 - failed mutations leave the previous board unchanged;
 - IDs are stable references, not ontology classes;
-- `trace-card` records framework / operation / location / yield-kind / target-response / as-if provenance on a card; it never changes membership, relation, importance, evidence status, or truth. Operation, yield, and response names remain open strings rather than a closed taxonomy;
+- `trace-card` records framework / operation / location / yield-kind / target-response / as-if provenance on a card; when a target response can be tied to concrete target-side material, `--target-response-ref` may point to source/card refs. Those refs are audit provenance, not automatic verification or support. Operation, yield, and response names remain open strings rather than a closed taxonomy;
 - `status` may expose the framework / operation / yield / target-response mix, `framework_generated` cards whose catalytic trace is absent, and traced cards whose yield is still untyped. These are observation aids for spotting premature convergence or one-operation bias, not coverage or quality scores;
 - `move-card` changes direct membership but preserves the card itself;
 - `audit-group` is a post-grouping audit: inherited / emergent / residual are recorded after a working group/label exists, not used as a pre-grouping taxonomy;
