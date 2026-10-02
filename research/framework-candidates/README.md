@@ -94,6 +94,7 @@ Status: research-only
 - eleventh-wave-2026-10-02.md
 - twelfth-wave-2026-10-02.md
 - thirteenth-wave-2026-10-02.md
+- fourteenth-wave-2026-10-02.md
 - worked-examples/ 以下のtarget-return例
 - comparisons/ 以下のnear-neighbor / comparative collapse test
 - portfolio-qualitative-audit-2026-10-01.md
@@ -139,6 +140,7 @@ Status: research-only
 - inka-khipu-record-structure（profile-ready / undeciphered-semantics-sensitive）
 - chakra
 - ifa-odu（profile-ready / living-tradition-sensitive / not-runtime）
+- vedic-recitation-pathas（profile-ready / living-religious-tradition-sensitive / not-runtime）
 
 医療、宗教、living tradition、系譜差の境界が重い体系は、構造的価値が高くても採用を急がない。採用済みのhadith-isnad-matnとmarshallese-wave-navigationも、宗教上の真正性判定や非公開知識の再現を行わない境界をruntime側に残す。
 
