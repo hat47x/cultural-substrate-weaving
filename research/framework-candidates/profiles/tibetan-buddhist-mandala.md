@@ -1,6 +1,6 @@
 # Tibetan Buddhist mandala candidate profile
 
-Status: sourced-candidate / lineage-sensitive / ritual-sensitive
+Status: adopted / runtime-corpus / religious-lineage-sensitive
 
 ## Source basis
 
@@ -81,6 +81,12 @@ This can fill the current spatial center-periphery gap while also supplying a ri
 4. return every target-side center/boundary claim to independent evidence;
 5. preserve alternate centers, contested boundaries, and non-traversable gaps as residuals.
 
-## Adoption gap
+## Runtime adoption synchronization
 
-The structural value is high, but runtime adoption should first define a deliberately narrow lineage/usage scope. At minimum, a dossier must separate general mandala geometry from deity-specific iconography, initiation practice, school-specific correspondences, and modern museum pedagogy.
+The runtime dossier is `src/ja-JP/frameworks/tibetan-buddhist-mandala.md`.
+
+Runtime scope is intentionally limited to center/periphery, directional differentiation, gates, nested enclosures, and outside-to-center approach. Deity-specific correspondences, colors, initiation, visualization practice, and lineage authority remain outside the common operation layer.
+
+Worked example: `research/framework-candidates/worked-examples/tibetan-buddhist-mandala.md`
+
+Lineage decision: `research/framework-candidates/comparisons/buddhist-mandala-umbrella-vs-tibetan-runtime.md`

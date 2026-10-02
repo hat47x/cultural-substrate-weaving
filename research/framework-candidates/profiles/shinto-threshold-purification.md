@@ -1,6 +1,6 @@
 # Shinto shrine threshold / purification candidate profile
 
-Status: sourced-candidate / research-only
+Status: adopted / runtime-corpus
 
 ## Identity
 
@@ -35,17 +35,21 @@ https://d-museum.kokugakuin.ac.jp/eos/detail/?id=9876
 
 Useful for the provisional standard sequence and for treating actions as meaningful protocol rather than an arbitrary checklist.
 
-### Scholarly / institutional reference
+### Scholarly / institutional references
 
 國學院大學 Encyclopedia of Shinto, Harae
-
 https://d-museum.kokugakuin.ac.jp/eos/detail/?id=8732
 
-國學院大學 Encyclopedia of Shinto, Misogi
+國學院大學 Encyclopedia of Shinto, Shubatsu
+https://d-museum.kokugakuin.ac.jp/eos/detail/?id=9053
 
+國學院大學 Encyclopedia of Shinto, Temizuya
+https://d-museum.kokugakuin.ac.jp/eos/detail/?id=9671
+
+國學院大學 Encyclopedia of Shinto, Misogi
 https://d-museum.kokugakuin.ac.jp/eos/detail/?id=8723
 
-Useful for distinguishing purification concepts and avoiding the claim that temizu exhausts the history or meaning of harae / misogi.
+These references distinguish related purification practices instead of treating temizu, misogi, harae, and shubatsu as one invariant rite.
 
 ## Structural core
 
@@ -114,10 +118,12 @@ The current profile uses the shrine-entry sequence because it is well documented
 4. preserve cases where the target has no meaningful boundary instead of inventing one;
 5. do not turn "prepared/unprepared" into moral worth.
 
-## Adoption gap
+## Runtime adoption synchronization
 
-Needs at least:
+The runtime dossier is `src/ja-JP/frameworks/shinto-threshold-purification.md`.
 
-- historical separation among harae / misogi / shubatsu / ōharae;
-- evidence of variation among shrine contexts rather than one institutional protocol;
-- a target-return example showing useful threshold questions without importing purity judgments.
+Adoption is deliberately narrower than “Shinto ritual.” It licenses threshold, preparation, path-to-center, state-transition-by-practice, and closure/return questions. It does not license target-side claims about purity, sacredness, sin, or ritual efficacy.
+
+Worked example: `research/framework-candidates/worked-examples/shinto-threshold-purification.md`
+
+Near-neighbor comparison: `research/framework-candidates/comparisons/shinto-threshold-vs-rites-of-passage-and-mandala.md`

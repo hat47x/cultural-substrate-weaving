@@ -1,6 +1,6 @@
 # Mīmāṃsā hermeneutics candidate profile
 
-Status: sourced-candidate / research-only / lineage-sensitive
+Status: profile-ready / research-only / lineage-sensitive
 
 ## Identity
 
@@ -99,6 +99,17 @@ Do not flatten these into one algorithm. In particular, keep open whether contex
 
 The current profile uses only distinctions that can be stated without deciding the full dispute.
 
+## Bhāṭṭa / Prābhākara sentence-meaning split
+
+The profile must preserve a major internal difference rather than turning Mīmāṃsā into one context rule.
+
+- Prābhākara accounts treat words in a sentence as conveying meanings already connected in context (anvitābhidhāna).
+- Bhāṭṭa accounts treat words as first conveying meanings that are then connected into sentence meaning (abhihitānvaya).
+
+The current CSW operations do not decide this dispute. They use the shared need to inspect syntactic expectancy, semantic fitness, cognitive proximity, explicit wording, and contextual supplementation while keeping the two theories distinct.
+
+See: `research/framework-candidates/comparisons/mimamsa-sentence-meaning-boundary.md`
+
 ## What not to import by default
 
 - Vedic authority as authority for unrelated target texts;
@@ -126,13 +137,10 @@ The current profile uses only distinctions that can be stated without deciding t
 4. keep competing segmentations when the text does not force one;
 5. return conclusions to the target document and domain rules rather than the framework.
 
-## Adoption gap
+## Profile-ready decision
 
-The candidate is structurally rich but not yet ready for runtime adoption.
+The profile now has a bounded source basis, an explicit Bhāṭṭa / Prābhākara sentence-meaning boundary, a non-religious target-return example, and a stable de-binding route.
 
-Next work should:
+It remains outside runtime because the next product-value question is whether its norm-conflict and prescriptive-unit operations stay distinct from generic close reading after repeated use. Broad efficacy scoring is not required yet; a second structurally different target example is enough for the next adoption decision.
 
-- document the Bhāṭṭa / Prābhākara sentence-meaning split in a compact comparison;
-- source the hierarchy among direct statement, indication, context, syntactic connection, position, and related interpretive devices before using it;
-- add one non-religious target-return example;
-- test whether the profile remains distinct from generic close reading and legal-interpretation heuristics.
+Worked example: `research/framework-candidates/worked-examples/mimamsa-hermeneutics.md`
