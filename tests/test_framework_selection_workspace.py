@@ -16,6 +16,12 @@ assert spec is not None and spec.loader is not None
 workspace = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(workspace)
 
+CONTRACT_SCRIPT = ROOT / "research" / "framework-candidates" / "scripts" / "framework_corpus_contract.py"
+contract_spec = importlib.util.spec_from_file_location("framework_corpus_contract", CONTRACT_SCRIPT)
+assert contract_spec is not None and contract_spec.loader is not None
+contract = importlib.util.module_from_spec(contract_spec)
+contract_spec.loader.exec_module(contract)
+
 
 FIXTURE = {
     "schema": "csw.framework-candidate-inventory/v1",
@@ -67,6 +73,57 @@ FIXTURE = {
         },
     ],
 }
+
+
+class FrameworkCorpusContractTest(unittest.TestCase):
+    def test_repository_inventory_satisfies_readiness_contract(self) -> None:
+        inventory_path = ROOT / "research" / "framework-candidates" / "cognitive-operation-inventory.json"
+        data = json.loads(inventory_path.read_text(encoding="utf-8"))
+        self.assertEqual(contract.validate_inventory(ROOT, data), [])
+
+    def test_profile_ready_requires_examples_cues_and_debinding(self) -> None:
+        row = {
+            "id": "candidate",
+            "readiness": "profile-ready",
+            "names": ["Candidate"],
+            "structural_primitives": ["structure"],
+            "cognitive_operations": ["probe"],
+            "useful_for": ["opening a distinction"],
+            "do_not_assume": ["framework result is target fact"],
+            "sources": [
+                {"kind": "primary", "title": "A", "url": "https://example.com/a"},
+                {"kind": "scholarly", "title": "B", "url": "https://example.com/b"},
+            ],
+            "profile_path": "missing-profile.md",
+        }
+        errors = contract.validate_candidate(ROOT, row)
+        joined = "\n".join(errors)
+        self.assertIn("profile-ready requires an existing profile_path", joined)
+        self.assertIn("profile-ready requires at least two selection_cues", joined)
+        self.assertIn("profile-ready requires worked_example_paths", joined)
+        self.assertIn("profile-ready requires negative_example_paths", joined)
+
+    def test_profile_ready_candidates_are_recallable_when_explicitly_requested(self) -> None:
+        inventory = workspace.load_inventory(
+            ROOT / "research" / "framework-candidates" / "cognitive-operation-inventory.json"
+        )
+        rows = [
+            row for row in workspace.candidates(inventory)
+            if row.get("readiness") == "profile-ready"
+        ]
+        self.assertGreater(len(rows), 0)
+        for row in rows:
+            cue = row["selection_cues"][0]
+            payload = workspace.recall_payload(
+                inventory,
+                cue,
+                ["profile-ready"],
+            )
+            recalled = [
+                item["candidate"]["id"]
+                for item in payload["candidates"]
+            ]
+            self.assertIn(row["id"], recalled, row["id"])
 
 
 class FrameworkSelectionWorkspaceTest(unittest.TestCase):
