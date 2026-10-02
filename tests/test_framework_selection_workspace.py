@@ -2,6 +2,8 @@ from __future__ import annotations
 
 import importlib.util
 import json
+import subprocess
+import sys
 import tempfile
 import unittest
 from pathlib import Path
@@ -56,6 +58,19 @@ FIXTURE = {
 
 
 class FrameworkSelectionWorkspaceTest(unittest.TestCase):
+    def run_tool(
+        self,
+        *args: str,
+        check: bool = True,
+    ) -> subprocess.CompletedProcess[str]:
+        return subprocess.run(
+            [sys.executable, str(SCRIPT), *args],
+            cwd=ROOT,
+            check=check,
+            text=True,
+            capture_output=True,
+        )
+
     def test_shortlist_preserves_inventory_order_without_score(self) -> None:
         payload = workspace.shortlist_payload(FIXTURE, "threshold", "primitive", None)
         self.assertEqual(
@@ -176,6 +191,92 @@ class FrameworkSelectionWorkspaceTest(unittest.TestCase):
             loaded = workspace.load_workspace(path)
             self.assertEqual(loaded["workspace_ref"], "selection://round-05/framework-choice")
             self.assertEqual(loaded["candidates"][0]["role"], "unassigned")
+
+    def test_cli_round_trip_updates_saved_selection_reasoning(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            inventory = Path(tmp) / "inventory.json"
+            selection = Path(tmp) / "selection.json"
+            inventory.write_text(json.dumps(FIXTURE), encoding="utf-8")
+
+            self.run_tool(
+                "worksheet",
+                str(inventory),
+                "--need",
+                "Need another way to inspect boundaries",
+                "--candidate",
+                "alpha",
+                "--candidate",
+                "beta",
+                "--baseline",
+                "Target baseline",
+                "--ref",
+                "selection://round-06/framework-choice",
+                "--output",
+                str(selection),
+            )
+            self.run_tool(
+                "set-candidate",
+                str(selection),
+                "alpha",
+                "--role",
+                "primary",
+                "--job",
+                "test upstream conditions",
+                "--return-question",
+                "What condition would stop the pattern?",
+            )
+            self.run_tool(
+                "set-cross-framework",
+                str(selection),
+                "--primary-job",
+                "expose establishment conditions",
+                "--second-job",
+                "re-identify parts through a node",
+                "--disturb",
+                "fixed one-way condition chain",
+            )
+            self.run_tool(
+                "record-exit",
+                str(selection),
+                "--kind",
+                "residual",
+                "The node boundary remains unresolved.",
+            )
+
+            shown = json.loads(
+                self.run_tool("show", str(selection)).stdout
+            )
+            self.assertEqual(
+                shown["workspace_ref"],
+                "selection://round-06/framework-choice",
+            )
+            self.assertEqual(shown["candidates"][0]["role"], "primary")
+            self.assertEqual(
+                shown["candidates"][0]["target_return_questions"],
+                ["What condition would stop the pattern?"],
+            )
+            self.assertEqual(
+                shown["cross_framework_notes"]["primary_framework_job"],
+                "expose establishment conditions",
+            )
+            self.assertEqual(
+                shown["exit_record"]["residuals_created"],
+                ["The node boundary remains unresolved."],
+            )
+
+            overwrite = self.run_tool(
+                "worksheet",
+                str(inventory),
+                "--need",
+                "Another need",
+                "--candidate",
+                "alpha",
+                "--output",
+                str(selection),
+                check=False,
+            )
+            self.assertNotEqual(overwrite.returncode, 0)
+            self.assertIn("refusing to overwrite existing workspace", overwrite.stderr)
 
     def test_inventory_rejects_duplicate_ids(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
