@@ -147,6 +147,39 @@ class LivingLabValidationTests(unittest.TestCase):
             set(user_disposition["properties"]["state"]["enum"]),
         )
 
+        target_return_rules = target_return["allOf"]
+        self.assertTrue(
+            any(
+                "evidence_refs" in rule.get("then", {}).get("properties", {})
+                and rule["then"]["properties"]["evidence_refs"].get("minItems") == 1
+                for rule in target_return_rules
+            ),
+            "evaluated target-return states must require evidence in JSON Schema",
+        )
+
+        disposition_rules = user_disposition["allOf"]
+        self.assertTrue(
+            any(
+                "source_ref" in rule.get("then", {}).get("required", [])
+                for rule in disposition_rules
+            ),
+            "observed user disposition must require a source_ref in JSON Schema",
+        )
+
+        artifact_trace_rules = artifact_trace["allOf"]
+        self.assertTrue(
+            any(
+                "framework_refs" in rule.get("then", {}).get("required", [])
+                and rule.get("then", {})
+                .get("properties", {})
+                .get("framework_refs", {})
+                .get("minItems")
+                == 1
+                for rule in artifact_trace_rules
+            ),
+            "framework-derived artifact provenance must be required in JSON Schema",
+        )
+
         semantic_rules = self.round_schema["allOf"]
         self.assertTrue(
             any(

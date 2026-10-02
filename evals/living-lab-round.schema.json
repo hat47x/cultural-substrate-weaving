@@ -112,7 +112,33 @@
           "type": "string",
           "minLength": 1
         }
-      }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "state": {
+                "enum": [
+                  "unresolved",
+                  "target_supported",
+                  "target_weakened",
+                  "target_rejected"
+                ]
+              }
+            },
+            "required": [
+              "state"
+            ]
+          },
+          "then": {
+            "properties": {
+              "evidence_refs": {
+                "minItems": 1
+              }
+            }
+          }
+        }
+      ]
     },
     "user_disposition": {
       "type": "object",
@@ -136,7 +162,30 @@
         "notes": {
           "type": "string"
         }
-      }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "state": {
+                "enum": [
+                  "adopted",
+                  "modified",
+                  "withdrawn"
+                ]
+              }
+            },
+            "required": [
+              "state"
+            ]
+          },
+          "then": {
+            "required": [
+              "source_ref"
+            ]
+          }
+        }
+      ]
     },
     "artifact_trace": {
       "type": "object",
@@ -184,7 +233,35 @@
         "notes": {
           "type": "string"
         }
-      }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "origin": {
+                "enum": [
+                  "framework_generated",
+                  "cross_field_emergent",
+                  "mixed"
+                ]
+              }
+            },
+            "required": [
+              "origin"
+            ]
+          },
+          "then": {
+            "required": [
+              "framework_refs"
+            ],
+            "properties": {
+              "framework_refs": {
+                "minItems": 1
+              }
+            }
+          }
+        }
+      ]
     }
   },
   "required": [
