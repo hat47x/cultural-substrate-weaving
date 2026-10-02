@@ -23,10 +23,34 @@ python "$TOOL" worksheet "$INVENTORY" \
   --candidate dependent-origination \
   --candidate huayan \
   --baseline "target-side baseline before framework contact" \
-  --ref "selection://round-03/framework-choice"
+  --ref "selection://round-03/framework-choice" \
+  --output /tmp/selection.json
+
+python "$TOOL" set-candidate /tmp/selection.json dependent-origination \
+  --role primary \
+  --job "establishment / cessation conditionsを開く" \
+  --difference "whole/part identityの再規定とは別の仕事" \
+  --return-question "何を外すとこの現象は成立しなくなるか"
+
+python "$TOOL" set-candidate /tmp/selection.json huayan \
+  --role reflecting \
+  --job "partのroleを別nodeから再同定する"
+
+python "$TOOL" set-cross-framework /tmp/selection.json \
+  --primary-job "成立条件を開く" \
+  --second-job "part/whole identityを揺らす" \
+  --disturb "一方向のcondition-chainへ固定された見方"
+
+python "$TOOL" record-exit /tmp/selection.json \
+  --kind question \
+  "どの条件が対象側で本当に必要か"
+
+python "$TOOL" show /tmp/selection.json
 ```
 
-The shortlist preserves inventory order and computes no score. The contrast is exact-string only and does not infer semantic equivalence. The worksheet deliberately leaves role, intended cognitive job, near-neighbor difference, target-return questions, de-bound target language, and revision conditions blank.
+The shortlist preserves inventory order and computes no score. The contrast is exact-string only and does not infer semantic equivalence. The worksheet deliberately starts with role, intended cognitive job, near-neighbor difference, target-return questions, de-bound target language, and revision conditions unfilled.
+
+When the selection actually progresses, use `set-candidate`, `set-cross-framework`, and `record-exit` to append explicit reasoning to the saved workspace. These operations do not calculate or recommend values; they only preserve what the analyst/skill has explicitly decided or observed.
 
 When a stable `--ref` is supplied, keep that handle with the worksheet and reuse it as `trace-card --selection-ref` on downstream framework-generated cards. The handle is provenance only; it does not make the selection correct or the card target-supported.
 
