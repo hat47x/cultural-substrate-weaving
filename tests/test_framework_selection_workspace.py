@@ -275,6 +275,86 @@ class FrameworkSelectionWorkspaceTest(unittest.TestCase):
             ["beta-alias"],
         )
         self.assertEqual(payload["downstream_cross_field_cards"], ["C003"])
+        candidate_audits = {
+            row["candidate_id"]: row
+            for row in payload["candidate_operation_audits"]
+        }
+        self.assertEqual(
+            candidate_audits["alpha"]["observed_operations"],
+            ["condition-chain"],
+        )
+        self.assertEqual(
+            candidate_audits["alpha"]["planned_not_observed_exact"],
+            [],
+        )
+        self.assertEqual(
+            candidate_audits["beta"]["observed_operations"],
+            [],
+        )
+        self.assertEqual(
+            candidate_audits["beta"]["planned_not_observed_exact"],
+            ["node-perspective"],
+        )
+        self.assertNotIn("score", json.dumps(payload))
+
+    def test_candidate_audit_does_not_credit_another_frameworks_operation(self) -> None:
+        selection = workspace.worksheet_payload(
+            FIXTURE,
+            "Separate framework contribution",
+            ["alpha", "beta"],
+            None,
+            "selection://candidate-attribution",
+        )
+        workspace.update_candidate(
+            selection,
+            "alpha",
+            planned_operations=["condition-chain"],
+        )
+        workspace.update_candidate(
+            selection,
+            "beta",
+            planned_operations=["node-perspective"],
+        )
+        affinity_map = {
+            "format": "affinity-map",
+            "version": "0.1",
+            "cards": [
+                {
+                    "id": "C001",
+                    "text": "Beta happened to use alpha's planned operation",
+                    "input_status": "framework_generated",
+                    "catalytic_trace": {
+                        "selection_refs": ["selection://candidate-attribution"],
+                        "frameworks": ["beta"],
+                        "operations": ["condition-chain"],
+                    },
+                }
+            ],
+        }
+
+        payload = workspace.audit_map_payload(selection, affinity_map)
+        self.assertEqual(payload["planned_not_observed_exact"], ["node-perspective"])
+        self.assertEqual(
+            payload["candidate_operation_audits"],
+            [
+                {
+                    "candidate_id": "alpha",
+                    "linked_card_ids": [],
+                    "planned_operations": ["condition-chain"],
+                    "observed_operations": [],
+                    "planned_not_observed_exact": ["condition-chain"],
+                    "observed_not_planned_exact": [],
+                },
+                {
+                    "candidate_id": "beta",
+                    "linked_card_ids": ["C001"],
+                    "planned_operations": ["node-perspective"],
+                    "observed_operations": ["condition-chain"],
+                    "planned_not_observed_exact": ["node-perspective"],
+                    "observed_not_planned_exact": ["condition-chain"],
+                },
+            ],
+        )
         self.assertNotIn("score", json.dumps(payload))
 
     def test_candidate_rejects_operation_not_available_in_inventory(self) -> None:

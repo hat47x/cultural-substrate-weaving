@@ -58,7 +58,7 @@ When the selection actually progresses, use `set-candidate`, `set-cross-framewor
 
 When a stable `--ref` is supplied, keep that handle with the worksheet and reuse it as `trace-card --selection-ref` on downstream framework-generated cards. The handle is provenance only; it does not make the selection correct or the card target-supported.
 
-`audit-map` can then compare planned operations with exact operation labels observed on cards carrying that selection ref, show candidate-ID label matches/mismatches, target-return states, and downstream cross-field cards. It remains a mechanical provenance audit: a planned operation not observed is not automatically a failure, and an observed unplanned operation is not automatically a defect.
+`audit-map` can then compare planned operations with exact operation labels observed on cards carrying that selection ref, both across the selection and per exact candidate ID. Candidate-level output prevents an operation observed under one framework from being credited to another framework merely because both belonged to the same selection. It also shows candidate-ID label matches/mismatches, target-return states, and downstream cross-field cards. It remains a mechanical provenance audit: a planned operation not observed is not automatically a failure, an observed unplanned operation is not automatically a defect, and an exact candidate match is not an effectiveness score.
 
 A useful workflow is:
 

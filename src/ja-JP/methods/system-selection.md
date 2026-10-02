@@ -73,7 +73,7 @@
 
 これはranking表ではない。空欄を埋めることも目的ではない。「何の認知仕事をさせるためにこの体系へ触れたのか」を後から再検査できるようにする。
 
-repository / research workspaceが利用可能な場合は、`research/framework-candidates/scripts/framework_selection_workspace.py` を任意の補助として使える。literalな候補想起、exact operation labelの近接比較、未記入selection worksheetの生成だけを行い、自動routing・fit score・採用判定は行わない。worksheetへstable `--ref`を与えた場合は、後続のframework-generated cardで同じhandleを`selection-ref`として保持し、選定意図 → operation → yield → target responseを後から辿れるようにしてよい。 `audit-map`はplanned operationと、同じselection-refを持つcard上のactual operation / yield / target-returnをexact labelで照合する補助に使えるが、未観測を失敗、想定外を欠陥として自動判定しない。
+repository / research workspaceが利用可能な場合は、`research/framework-candidates/scripts/framework_selection_workspace.py` を任意の補助として使える。literalな候補想起、exact operation labelの近接比較、未記入selection worksheetの生成だけを行い、自動routing・fit score・採用判定は行わない。worksheetへstable `--ref`を与えた場合は、後続のframework-generated cardで同じhandleを`selection-ref`として保持し、選定意図 → operation → yield → target responseを後から辿れるようにしてよい。 `audit-map`はplanned operationと、同じselection-refを持つcard上のactual operation / yield / target-returnをexact labelで照合する補助に使える。selection全体だけでなくexact candidate IDごとにも分け、別frameworkで観測されたoperationを他frameworkの成果として数えない。ただし未観測を失敗、想定外を欠陥、candidate一致を有効性scoreとして自動判定しない。
 
 ## 3a. 探索利用と帰属利用
 
