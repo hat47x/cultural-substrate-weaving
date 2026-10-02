@@ -428,7 +428,21 @@
       ],
       "source_packet_path": "research/framework-candidates/source-packets/jingluo.md",
       "profile_path": "research/framework-candidates/profiles/jingluo.md",
-      "adoption_hold": "medical-tradition-sensitive"
+      "adoption_hold": "medical-tradition-sensitive",
+      "selection_cues": [
+        "主要経路と補助経路を分けたい",
+        "分岐と合流と迂回経路を見たい",
+        "ノードより経路の連続性を先に見たい",
+        "separate principal and collateral routes",
+        "inspect branching reconvergence and bypass paths",
+        "inspect route continuity before individual nodes"
+      ],
+      "worked_example_paths": [
+        "research/framework-candidates/worked-examples/jingluo-route-network-2.md"
+      ],
+      "negative_example_paths": [
+        "research/framework-candidates/worked-examples/jingluo-route-network-negative.md"
+      ]
     },
     {
       "id": "sefirot",
@@ -906,6 +920,20 @@
         "no authorized or source-bounded operational verse corpus is packaged",
         "CSW must not assign odù or simulate babalawo authority",
         "public structural summaries do not license generation of ese or ritual interpretation"
+      ],
+      "selection_cues": [
+        "小さな索引から大きな物語コーパスへ開きたい",
+        "索引と物語と状況依存の解釈を分けたい",
+        "同じ索引から複数の物語を比較したい",
+        "open a large narrative corpus from a compact index",
+        "separate index corpus and situated interpretation",
+        "compare multiple narratives reached through one index"
+      ],
+      "worked_example_paths": [
+        "research/framework-candidates/worked-examples/ifa-odu-safe-abstraction.md"
+      ],
+      "negative_example_paths": [
+        "research/framework-candidates/worked-examples/ifa-odu-negative-boundary.md"
       ]
     },
     {
@@ -1369,7 +1397,21 @@
           "url": "https://www.cambridge.org/core/books/abs/rites-of-passage/introduction-rites-of-passage/96409189B33DAEF7A22F36F1A28E392D"
         }
       ],
-      "profile_path": "research/framework-candidates/profiles/rites-of-passage.md"
+      "profile_path": "research/framework-candidates/profiles/rites-of-passage.md",
+      "selection_cues": [
+        "旧状態と新状態の間の中間状態を保ちたい",
+        "分離と移行と再統合を分けたい",
+        "移行したのに新状態へ組み込まれていない状態を見たい",
+        "preserve an intermediate state between old and new",
+        "separate separation transition and incorporation",
+        "inspect a transition that separated but never incorporated"
+      ],
+      "worked_example_paths": [
+        "research/framework-candidates/worked-examples/rites-of-passage.md"
+      ],
+      "negative_example_paths": [
+        "research/framework-candidates/worked-examples/rites-of-passage-negative.md"
+      ]
     },
     {
       "id": "tibetan-buddhist-mandala",
@@ -1750,7 +1792,21 @@
         }
       ],
       "source_packet_path": "research/framework-candidates/source-packets/sefer-yetzirah-dimensions.md",
-      "profile_path": "research/framework-candidates/profiles/sefer-yetzirah-dimensions.md"
+      "profile_path": "research/framework-candidates/profiles/sefer-yetzirah-dimensions.md",
+      "selection_cues": [
+        "一つの階層ではなく独立した軸に分けたい",
+        "対向する両端を一つの次元として見たい",
+        "混ざった分類を複数の軸へ分解したい",
+        "separate a mixed hierarchy into independent axes",
+        "treat opposed endpoints as one dimension",
+        "reframe mixed categories through independent extents"
+      ],
+      "worked_example_paths": [
+        "research/framework-candidates/worked-examples/sefer-yetzirah-dimensions.md"
+      ],
+      "negative_example_paths": [
+        "research/framework-candidates/worked-examples/sefer-yetzirah-dimensions-negative.md"
+      ]
     },
     {
       "id": "theosophical-sefirot",
@@ -1801,7 +1857,21 @@
         }
       ],
       "source_packet_path": "research/framework-candidates/source-packets/theosophical-sefirot.md",
-      "profile_path": "research/framework-candidates/profiles/theosophical-sefirot.md"
+      "profile_path": "research/framework-candidates/profiles/theosophical-sefirot.md",
+      "selection_cues": [
+        "直接つながって見える原因と結果の間の媒介を分けたい",
+        "媒介機能同士の緊張や補完を見たい",
+        "単純な階層ではなく異なる媒介機能の関係を見たい",
+        "separate differentiated mediators between source and outcome",
+        "inspect tension and complementarity among mediating functions",
+        "replace a simple hierarchy with relational mediation"
+      ],
+      "worked_example_paths": [
+        "research/framework-candidates/worked-examples/theosophical-sefirot.md"
+      ],
+      "negative_example_paths": [
+        "research/framework-candidates/worked-examples/theosophical-sefirot-negative.md"
+      ]
     }
   ]
 }

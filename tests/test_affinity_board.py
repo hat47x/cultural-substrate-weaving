@@ -488,6 +488,14 @@ class AffinityBoardTest(unittest.TestCase):
                 {"reframed": 1, "weakened": 1},
             )
             self.assertEqual(
+                status["catalytic_trace"]["latest_target_return_states"],
+                {"reframed": 1},
+            )
+            self.assertEqual(
+                status["catalytic_trace"]["latest_target_return_cards"],
+                {"reframed": ["C002"]},
+            )
+            self.assertEqual(
                 status["catalytic_trace"][
                     "framework_generated_cards_without_return_audit"
                 ],
@@ -500,6 +508,14 @@ class AffinityBoardTest(unittest.TestCase):
             self.assertEqual(
                 [audit["state"] for audit in focus["target_return_audits"]],
                 ["weakened", "reframed"],
+            )
+            self.assertEqual(
+                focus["latest_target_return"]["state"],
+                "reframed",
+            )
+            self.assertEqual(
+                focus["latest_target_return"]["basis_refs"],
+                ["S001", "C001"],
             )
 
     def test_target_return_audit_rejects_framework_basis_non_destructively(self) -> None:

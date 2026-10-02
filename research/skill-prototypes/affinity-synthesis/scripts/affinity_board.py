@@ -903,6 +903,9 @@ def focus_payload(data: dict[str, Any], ref: str) -> dict[str, Any]:
         "sources": sources,
         "cards_from_source": cards_from_source,
         "target_return_audits": target_return_audits,
+        "latest_target_return": (
+            target_return_audits[-1] if target_return_audits else None
+        ),
         "handoff": handoff_context,
         "layout_position": layout_position,
     }
@@ -1107,14 +1110,24 @@ def status_payload(data: dict[str, Any]) -> dict[str, Any]:
         and not bool(card["catalytic_trace"].get("target_response_refs"))
     ]
     target_return_state_counts: Counter[str] = Counter()
+    latest_target_return_state_counts: Counter[str] = Counter()
+    latest_target_return_cards: dict[str, list[str]] = {}
     for card in traced_cards:
         audits = card["catalytic_trace"].get("target_return_audits", [])
         if isinstance(audits, list):
-            for audit in audits:
-                if isinstance(audit, dict):
-                    state = str(audit.get("state", "")).strip()
-                    if state:
-                        target_return_state_counts[state] += 1
+            valid_audits = [audit for audit in audits if isinstance(audit, dict)]
+            for audit in valid_audits:
+                state = str(audit.get("state", "")).strip()
+                if state:
+                    target_return_state_counts[state] += 1
+            if valid_audits:
+                latest_state = str(valid_audits[-1].get("state", "")).strip()
+                card_id = str(card.get("id", "")).strip()
+                if latest_state and card_id:
+                    latest_target_return_state_counts[latest_state] += 1
+                    latest_target_return_cards.setdefault(latest_state, []).append(
+                        card_id
+                    )
     framework_generated_without_return_audit = [
         str(card.get("id"))
         for card in traced_cards
@@ -1157,6 +1170,13 @@ def status_payload(data: dict[str, Any]) -> dict[str, Any]:
             ),
             "target_response_cards_without_refs": target_response_without_refs,
             "target_return_states": dict(sorted(target_return_state_counts.items())),
+            "latest_target_return_states": dict(
+                sorted(latest_target_return_state_counts.items())
+            ),
+            "latest_target_return_cards": {
+                state: sorted(card_ids)
+                for state, card_ids in sorted(latest_target_return_cards.items())
+            },
             "framework_generated_cards_without_return_audit": (
                 framework_generated_without_return_audit
             ),

@@ -83,3 +83,7 @@ target-side baseline
 ```
 
 Do not use the helper to convert readiness into fit, prefer a framework because it has more operations/sources, treat operation-name overlap as semantic equivalence, bypass lineage/adoption holds, or turn cross-framework agreement into target evidence.
+
+## Research-candidate recall
+
+profile-ready candidates also carry explicit selection cues. The default `recall` path remains adopted-only. Research work may opt in with `--readiness profile-ready`; this exposes candidates for investigation without treating readiness as a fit score or bypassing adoption holds.

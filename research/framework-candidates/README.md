@@ -140,3 +140,5 @@ Status: research-only
 医療、宗教、living tradition、系譜差の境界が重い体系は、構造的価値が高くても採用を急がない。採用済みのhadith-isnad-matnとmarshallese-wave-navigationも、宗教上の真正性判定や非公開知識の再現を行わない境界をruntime側に残す。
 
 当面は効果比較を増やさない。profile-ready / skill-candidateの母集団を増やし、source basis、lineage、structural core、native operation、de-binding、target-return questionを揃えることを優先する。
+
+readinessの最低条件は `framework-corpus-contract.md` と `scripts/framework_corpus_contract.py` で固定する。profile-readyは通常言語cue、正例、負例、de-bindingまでを必須とし、候補数の増加で品質下限を落とさない。
