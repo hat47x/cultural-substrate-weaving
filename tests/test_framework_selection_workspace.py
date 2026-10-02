@@ -140,6 +140,66 @@ class FrameworkSelectionWorkspaceTest(unittest.TestCase):
             capture_output=True,
         )
 
+    def test_registry_inspect_exposes_provenance_without_authority(self) -> None:
+        fixture = json.loads(json.dumps(FIXTURE))
+        fixture["candidates"][1]["worked_example_paths"] = [
+            "research/framework-candidates/worked-examples/beta.md"
+        ]
+        fixture["candidates"][1]["negative_example_paths"] = [
+            "research/framework-candidates/worked-examples/beta-negative.md"
+        ]
+        fixture["candidates"][1]["adoption_hold"] = "research-only until boundary review"
+
+        payload = workspace.registry_entry_payload(fixture, "beta")
+
+        self.assertEqual(payload["format"], "csw.framework-registry-entry/v0")
+        self.assertEqual(payload["candidate"]["id"], "beta")
+        self.assertEqual(payload["registry"]["readiness"], "profile-ready")
+        self.assertFalse(payload["registry"]["runtime_enabled"])
+        self.assertEqual(
+            payload["registry"]["adoption_hold"],
+            "research-only until boundary review",
+        )
+        self.assertEqual(
+            payload["registry"]["sources"],
+            [{"kind": "scholarly-reference", "title": "B", "url": None}],
+        )
+        self.assertEqual(
+            payload["registry"]["artifacts"]["profile_path"],
+            "research/framework-candidates/profiles/beta.md",
+        )
+        self.assertEqual(
+            payload["target_return_material"]["worked_example_paths"],
+            ["research/framework-candidates/worked-examples/beta.md"],
+        )
+        self.assertIn(
+            "node is essence",
+            payload["authority_boundary"]["do_not_assume"],
+        )
+        encoded = json.dumps(payload)
+        self.assertNotIn('"score"', encoded)
+        self.assertNotIn('"rank"', encoded)
+        self.assertNotIn('"recommendation"', encoded)
+
+    def test_cli_registry_inspect_keeps_adopted_status_separate_from_fit(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            inventory = Path(tmp) / "inventory.json"
+            inventory.write_text(json.dumps(FIXTURE), encoding="utf-8")
+            payload = json.loads(
+                self.run_tool(
+                    "inspect",
+                    str(inventory),
+                    "alpha",
+                ).stdout
+            )
+            self.assertTrue(payload["registry"]["runtime_enabled"])
+            self.assertEqual(payload["candidate"]["readiness"], "adopted")
+            self.assertIn(
+                "not framework fit",
+                payload["registry"]["interpretation"],
+            )
+            self.assertNotIn("score", json.dumps(payload))
+
     def test_shortlist_preserves_inventory_order_without_score(self) -> None:
         payload = workspace.shortlist_payload(FIXTURE, "threshold", "primitive", None)
         self.assertEqual(

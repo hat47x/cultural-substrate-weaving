@@ -15,6 +15,8 @@ It is not a fit scorer, recommendation engine, or adoption gate.
 INVENTORY=research/framework-candidates/cognitive-operation-inventory.json
 TOOL=research/framework-candidates/scripts/framework_selection_workspace.py
 
+python "$TOOL" inspect "$INVENTORY" dependent-origination
+
 python "$TOOL" recall "$INVENTORY" \
   --need "規則の範囲と例外と文脈補完を分けたい"
 
@@ -70,6 +72,8 @@ python "$TOOL" show /tmp/selection.json
 # After framework-generated cards have been traced with the same selection-ref:
 python "$TOOL" audit-map /tmp/selection.json /tmp/board.json
 ```
+
+`inspect` is the Registry-0 boundary view for one candidate. It assembles the candidate's native primitives, operations, ordinary-language cues, full source references, profile/source-packet/runtime paths, positive/negative target-return fixtures, readiness, adoption hold, and `do_not_assume` boundary without computing fit, rank, or activation. Use it before deliberate activation when the model or analyst needs to recover what is actually documented rather than reconstructing a framework from memory.
 
 The `recall` command is the bridge from an ordinary-language missing cognitive function to the adopted corpus. It uses only explicit `selection_cues` stored in the inventory, performs punctuation/spacing normalization, preserves inventory order, and defaults to `adopted` candidates. It does not use embeddings, semantic similarity, scoring, or automatic routing. To inspect a research-only readiness state, pass `--readiness` explicitly.
 

@@ -111,6 +111,77 @@ def candidate_summary(row: dict[str, Any]) -> dict[str, Any]:
     return result
 
 
+def registry_entry_payload(
+    data: dict[str, Any],
+    candidate_id: str,
+) -> dict[str, Any]:
+    index = by_id(data)
+    if candidate_id not in index:
+        raise ValueError(f"unknown candidate id: {candidate_id}")
+
+    row = index[candidate_id]
+    sources = []
+    for source in row.get("sources", []):
+        if not isinstance(source, dict):
+            continue
+        sources.append({
+            "kind": source.get("kind"),
+            "title": source.get("title"),
+            "url": source.get("url"),
+        })
+
+    artifact_keys = (
+        "source_packet_path",
+        "profile_path",
+        "runtime_path",
+        "worked_example_paths",
+        "negative_example_paths",
+    )
+    artifacts = {
+        key: row.get(key)
+        for key in artifact_keys
+        if row.get(key)
+    }
+
+    readiness = str(row.get("readiness", ""))
+    runtime_path = row.get("runtime_path")
+    return {
+        "format": "csw.framework-registry-entry/v0",
+        "candidate": candidate_summary(row),
+        "registry": {
+            "readiness": readiness,
+            "adoption_hold": row.get("adoption_hold"),
+            "runtime_enabled": readiness == "adopted" and bool(runtime_path),
+            "artifacts": artifacts,
+            "sources": sources,
+        },
+        "activation_material": {
+            "selection_cues": list(row.get("selection_cues", [])),
+            "useful_for": list(row.get("useful_for", [])),
+            "structural_primitives": list(row.get("structural_primitives", [])),
+            "cognitive_operations": list(row.get("cognitive_operations", [])),
+        },
+        "authority_boundary": {
+            "do_not_assume": list(row.get("do_not_assume", [])),
+            "interpretation": (
+                "Registry readiness and artifact availability describe research/runtime "
+                "materialization, not framework fit, truth, recommendation strength, "
+                "or target-side evidence."
+            ),
+        },
+        "target_return_material": {
+            "worked_example_paths": list(row.get("worked_example_paths", [])),
+            "negative_example_paths": list(row.get("negative_example_paths", [])),
+        },
+        "interpretation_boundary": (
+            "This view assembles one registry entry for deliberate inspection. "
+            "It does not score, rank, activate, or recommend the framework. "
+            "Source citations and examples remain inputs to human/model reasoning, "
+            "and framework-generated candidates must still return to target material."
+        ),
+    }
+
+
 def _matches(row: dict[str, Any], term: str, field: str) -> dict[str, list[str]]:
     needle = _norm(term)
     if not needle:
@@ -838,6 +909,16 @@ def build_parser() -> argparse.ArgumentParser:
     )
     sub = parser.add_subparsers(dest="command", required=True)
 
+    inspect = sub.add_parser(
+        "inspect",
+        help=(
+            "show one provenance-rich Registry-0 entry without scoring, ranking, "
+            "activation, or routing"
+        ),
+    )
+    inspect.add_argument("inventory", type=Path)
+    inspect.add_argument("candidate_id")
+
     shortlist = sub.add_parser("shortlist")
     shortlist.add_argument("inventory", type=Path)
     shortlist.add_argument("term")
@@ -955,7 +1036,9 @@ def main() -> None:
             args.func(args)
             return
         data = load_inventory(args.inventory)
-        if args.command == "shortlist":
+        if args.command == "inspect":
+            print_json(registry_entry_payload(data, args.candidate_id))
+        elif args.command == "shortlist":
             print_json(shortlist_payload(data, args.term, args.field, args.readiness))
         elif args.command == "recall":
             print_json(recall_payload(data, args.need, args.readiness))

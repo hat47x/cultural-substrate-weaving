@@ -77,6 +77,23 @@ Status: research-only
 - 医療・心理・宗教上の主張の事実認定
 - 後世の対応表を古典構造として固定すること
 
+## Registry-0 boundary
+
+現時点のRegistry-0は新しい重複データベースを作らず、次の既存artifactを一つの境界として扱う。
+
+- `cognitive-operation-inventory.json`
+  - framework identity、readiness、native primitive、cognitive operation、selection cue、source、misuse boundary、artifact pathのmachine-readable正本。
+- `framework-corpus-contract.md` / `scripts/framework_corpus_contract.py`
+  - sourced/profile/runtime materializationの品質下限。
+- `scripts/framework_selection_workspace.py inspect`
+  - 一体系について、source全文、構造、operation、cue、do-not-assume、正負fixture、profile/runtime/source packetを同時に再取得するread-only view。
+- 同toolの `recall / shortlist / contrast / worksheet / review / audit-map`
+  - candidateをrankせず、missing cognitive functionから候補を思い出し、near-neighbor差とnon-activationを外在化し、target-return後のprovenanceを監査する操作面。
+
+Registry-0は文化そのものの正本ではない。文献・系譜・研究資料からCSWが利用できる範囲を明示した**CSW側の表現**である。readinessやsource数をfit scoreへ変換せず、`adopted`も「この対象へ適合する」という意味にはしない。
+
+この境界により、体系数が増えてもモデル記憶から暗黙にframeworkを再構成する割合を下げ、activation前に「何を見せる体系か」「何を仮定してはいけないか」「どの資料へ戻れるか」を同じ場所で確認できる。
+
 ## 現在の入口
 
 - cognitive-operation-inventory.json
