@@ -774,6 +774,7 @@ def audit_map_payload(
     ]
 
     candidate_operation_audits: list[dict[str, Any]] = []
+    candidate_guardrail_contexts: list[dict[str, Any]] = []
     for row in workspace.get("candidates", []):
         candidate_id = str(row.get("id", "")).strip()
         if not candidate_id:
@@ -800,6 +801,21 @@ def audit_map_payload(
                 return_states_for_candidate,
                 card["target_return_states"],
             )
+        candidate_guardrail_contexts.append({
+            "candidate_id": candidate_id,
+            "linked_card_ids": [
+                card["id"] for card in candidate_cards if card["id"]
+            ],
+            "guardrails": dict(row.get("non_force_guardrails", {})),
+            "target_responses": target_responses_for_candidate,
+            "target_return_states": return_states_for_candidate,
+            "interpretation_boundary": (
+                "Guardrails are pre-contact reasoning notes shown beside observed "
+                "target-return context. This audit does not decide whether a guardrail "
+                "was satisfied, violated, or sufficient."
+            ),
+        })
+
         candidate_operation_audits.append({
             "candidate_id": candidate_id,
             "linked_card_ids": [
@@ -852,6 +868,7 @@ def audit_map_payload(
         "cards_by_exact_candidate_id": cards_by_exact_candidate_id,
         "framework_labels_without_exact_candidate_id_match": unmatched_framework_labels,
         "candidate_operation_audits": candidate_operation_audits,
+        "candidate_guardrail_contexts": candidate_guardrail_contexts,
         "yield_kinds": yield_kinds,
         "target_responses": target_responses,
         "target_return_states": return_states,

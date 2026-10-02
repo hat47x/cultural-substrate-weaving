@@ -556,6 +556,13 @@ class FrameworkSelectionWorkspaceTest(unittest.TestCase):
             role="reflecting",
             planned_operations=["node-perspective"],
         )
+        workspace.update_non_force_guardrail(
+            selection,
+            "alpha",
+            contact_if="Open only while an establishment-condition gap remains.",
+            stop_if="Stop if the target no longer exposes an upstream condition.",
+            survive_if="Keep only a de-bound target-checkable condition question.",
+        )
 
         affinity_map = {
             "format": "affinity-map",
@@ -632,6 +639,28 @@ class FrameworkSelectionWorkspaceTest(unittest.TestCase):
             ["beta-alias"],
         )
         self.assertEqual(payload["downstream_cross_field_cards"], ["C003"])
+        guardrail_contexts = {
+            row["candidate_id"]: row
+            for row in payload["candidate_guardrail_contexts"]
+        }
+        self.assertEqual(
+            guardrail_contexts["alpha"]["guardrails"]["stop_if"],
+            "Stop if the target no longer exposes an upstream condition.",
+        )
+        self.assertEqual(
+            guardrail_contexts["alpha"]["target_responses"],
+            ["weakened"],
+        )
+        self.assertEqual(
+            guardrail_contexts["alpha"]["target_return_states"],
+            ["weakened"],
+        )
+        self.assertEqual(
+            guardrail_contexts["beta"]["target_return_states"],
+            [],
+        )
+        self.assertNotIn("pass", json.dumps(guardrail_contexts).casefold())
+        self.assertNotIn("fail", json.dumps(guardrail_contexts).casefold())
         candidate_audits = {
             row["candidate_id"]: row
             for row in payload["candidate_operation_audits"]
