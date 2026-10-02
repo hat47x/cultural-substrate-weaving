@@ -95,6 +95,7 @@ Status: research-only
 - twelfth-wave-2026-10-02.md
 - thirteenth-wave-2026-10-02.md
 - fourteenth-wave-2026-10-02.md
+- fifteenth-wave-2026-10-02.md
 - worked-examples/ 以下のtarget-return例
 - comparisons/ 以下のnear-neighbor / comparative collapse test
 - portfolio-qualitative-audit-2026-10-01.md
@@ -127,8 +128,8 @@ Status: research-only
 
 ### 量を増やす側の候補
 
-- twenty-four-solar-terms
-- heavenly-stems-earthly-branches
+- twenty-four-solar-terms（profile-ready / regional-ecological-context-sensitive）
+- heavenly-stems-earthly-branches（profile-ready / early-calendrical-layer-bounded）
 - five-aggregates（profile-ready / Buddhist-tradition-sensitive）
 - jo-ha-kyu（profile-ready / Zeami-Noh-bounded）
 - rites-of-passage

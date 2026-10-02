@@ -18,8 +18,8 @@ This map tracks structural diversity. It does not rank frameworks or claim that 
 | rhetorical issue-state / dispute location | Classical stasis theory | — | culturally distinct dispute-location systems |
 | expression → reception | Rasa | Jo-Ha-Kyū (profile-ready) | narrative sequencing that is not reducible to reception or pacing |
 | embodied observation | Taiheki | chakra | lineage-specific embodied practice |
-| coupled periodicity / multi-scale time | Maya calendars | Stems/Branches | more than two independently varying cycles |
-| seasonal phase / boundary | — | Twenty-Four Solar Terms | spatially varying ecological timing |
+| coupled periodicity / multi-scale time | Maya calendars | Stems/Branches (profile-ready) | more than two independently varying cycles and other constrained reachability patterns |
+| seasonal phase / boundary | — | Twenty-Four Solar Terms (profile-ready) | other culture-specific phase systems and spatially varying ecological timing |
 | indexed narrative corpus | — | Ifá / Odù (profile-ready / not-runtime) | safe corpus boundary and no simulation of living specialist authority before runtime |
 | experience decomposition | — | Five aggregates (profile-ready) | demonstrate distinctness from generic qualitative coding after de-binding |
 | route / network topology | Marshallese wave navigation | Jingluo | non-maritime route traditions and branching networks without medical claims |
