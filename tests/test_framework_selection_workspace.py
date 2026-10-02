@@ -127,6 +127,7 @@ class FrameworkSelectionWorkspaceTest(unittest.TestCase):
             role="primary",
             job="test upstream conditions",
             difference="condition-chain rather than node perspective",
+            planned_operations=["condition-chain"],
             return_questions=["What condition would stop the pattern?"],
         )
         workspace.update_candidate(
@@ -157,6 +158,7 @@ class FrameworkSelectionWorkspaceTest(unittest.TestCase):
 
         alpha, beta = data["candidates"]
         self.assertEqual(alpha["role"], "primary")
+        self.assertEqual(alpha["planned_operations"], ["condition-chain"])
         self.assertEqual(alpha["intended_cognitive_job"], "test upstream conditions")
         self.assertEqual(
             alpha["target_return_questions"],
@@ -176,6 +178,26 @@ class FrameworkSelectionWorkspaceTest(unittest.TestCase):
             ["The node boundary remains unresolved."],
         )
         self.assertNotIn("score", json.dumps(data))
+
+    def test_candidate_rejects_operation_not_available_in_inventory(self) -> None:
+        data = workspace.worksheet_payload(
+            FIXTURE,
+            "Need another boundary view",
+            ["alpha"],
+            None,
+            "selection://round-ops/framework-choice",
+        )
+        before = json.dumps(data, sort_keys=True)
+        with self.assertRaisesRegex(
+            ValueError,
+            "planned operation is not available for candidate alpha",
+        ):
+            workspace.update_candidate(
+                data,
+                "alpha",
+                planned_operations=["node-perspective"],
+            )
+        self.assertEqual(json.dumps(data, sort_keys=True), before)
 
     def test_workspace_round_trip_is_atomic_and_refuses_overwrite_on_creation(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
@@ -222,6 +244,8 @@ class FrameworkSelectionWorkspaceTest(unittest.TestCase):
                 "primary",
                 "--job",
                 "test upstream conditions",
+                "--operation",
+                "condition-chain",
                 "--return-question",
                 "What condition would stop the pattern?",
             )
@@ -251,6 +275,10 @@ class FrameworkSelectionWorkspaceTest(unittest.TestCase):
                 "selection://round-06/framework-choice",
             )
             self.assertEqual(shown["candidates"][0]["role"], "primary")
+            self.assertEqual(
+                shown["candidates"][0]["planned_operations"],
+                ["condition-chain"],
+            )
             self.assertEqual(
                 shown["candidates"][0]["target_return_questions"],
                 ["What condition would stop the pattern?"],
