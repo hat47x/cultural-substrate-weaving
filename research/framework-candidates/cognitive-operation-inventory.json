@@ -55,7 +55,15 @@
           "url": "https://plato.stanford.edu/entries/chinese-change/appendix.html"
         }
       ],
-      "runtime_path": "src/ja-JP/frameworks/yijing.md"
+      "runtime_path": "src/ja-JP/frameworks/yijing.md",
+      "selection_cues": [
+        "配置の一部を変えたときの全体差",
+        "位置の組合せを変えて見たい",
+        "局所変更と全体状態を比べたい",
+        "change one position and inspect the whole configuration",
+        "recompose a state after a local change",
+        "inspect positions and combinations"
+      ]
     },
     {
       "id": "wuxing",
@@ -102,7 +110,15 @@
           "url": "https://plato.stanford.edu/entries/daoism-religion/"
         }
       ],
-      "runtime_path": "src/ja-JP/frameworks/wuxing.md"
+      "runtime_path": "src/ja-JP/frameworks/wuxing.md",
+      "selection_cues": [
+        "支える関係と抑える関係を分けたい",
+        "生成と制約の循環を見たい",
+        "一方向因果ではなく循環で見たい",
+        "separate enabling and constraining relations",
+        "inspect generation and restraint cycles",
+        "look for relational cycles rather than one-way causation"
+      ]
     },
     {
       "id": "tzolkin",
@@ -154,7 +170,15 @@
         }
       ],
       "runtime_path": "src/ja-JP/frameworks/maya-calendars.md",
-      "adopted_as": "maya-calendars"
+      "adopted_as": "maya-calendars",
+      "selection_cues": [
+        "複数周期と長い時間尺度を同時に見たい",
+        "部分的な再来と全体の再来を分けたい",
+        "周期の位相ずれを見たい",
+        "hold coupled cycles and long time scales together",
+        "separate partial from full recurrence",
+        "inspect phase desynchronization across cycles"
+      ]
     },
     {
       "id": "dependent-origination",
@@ -201,7 +225,15 @@
           "url": "https://suttacentral.net/sn12.41/en/sujato"
         }
       ],
-      "runtime_path": "src/ja-JP/frameworks/dependent-origination.md"
+      "runtime_path": "src/ja-JP/frameworks/dependent-origination.md",
+      "selection_cues": [
+        "成立条件と停止条件を見たい",
+        "上流の条件をたどりたい",
+        "何を外すと成立しなくなるか見たい",
+        "inspect arising and cessation conditions",
+        "trace upstream conditions",
+        "ask what condition would stop the pattern"
+      ]
     },
     {
       "id": "rasa",
@@ -251,7 +283,15 @@
           "url": "https://www.cambridge.org/core/journals/new-theatre-quarterly/article/abs/alchemy-of-rasa-in-the-performerspectator-interaction/AAE15994E99A99227CAA627A2DB31777"
         }
       ],
-      "runtime_path": "src/ja-JP/frameworks/rasa.md"
+      "runtime_path": "src/ja-JP/frameworks/rasa.md",
+      "selection_cues": [
+        "表現内容と受け手の経験を分けたい",
+        "受け手側で何が生じるか見たい",
+        "表現要素と受容効果を分けたい",
+        "separate represented content from receiver experience",
+        "inspect what emerges for the audience",
+        "separate affective composition from reception"
+      ]
     },
     {
       "id": "huayan",
@@ -309,7 +349,15 @@
           "url": "https://cbetaonline.dila.edu.tw/zh/T1881"
         }
       ],
-      "runtime_path": "src/ja-JP/frameworks/huayan.md"
+      "runtime_path": "src/ja-JP/frameworks/huayan.md",
+      "selection_cues": [
+        "部分と全体を相互に規定して見たい",
+        "別のnodeから全体を見直したい",
+        "部分の役割を全体との関係で見たい",
+        "read part and whole as mutually defining",
+        "re-read the whole from another node",
+        "re-identify a part through its containing whole"
+      ]
     },
     {
       "id": "jingluo",
@@ -544,6 +592,14 @@
           "title": "Īśvarakṛṣṇa: Sāṃkhyakārikā (GRETIL)",
           "url": "https://gretil.sub.uni-goettingen.de/gretil/corpustei/transformations/html/sa_IzvarakRSNa-sAMkhyakArikA-alt.htm"
         }
+      ],
+      "selection_cues": [
+        "表面から生成層へ遡りたい",
+        "観察者と生成過程を分けたい",
+        "生成順序を上流へたどりたい",
+        "backtrack from products to production layers",
+        "separate observer from generated process",
+        "trace a production sequence upstream"
       ]
     },
     {
@@ -590,6 +646,14 @@
           "title": "Mūlamadhyamakakārikā — Digital Sanskrit Buddhist Canon",
           "url": "https://www.dsbcproject.org/canon-text/content/931/3060"
         }
+      ],
+      "selection_cues": [
+        "二択そのものを疑いたい",
+        "両方でもどちらでもない可能性を開きたい",
+        "二値の命題枠を崩したい",
+        "break a binary proposition frame",
+        "open both and neither possibilities",
+        "question the predicate behind a binary choice"
       ]
     },
     {
@@ -638,6 +702,14 @@
           "title": "In Some Ways: Syādvāda as the Synthesis of Anekāntavāda and Nayavāda in Akalaṅka’s Philosophical Treatises",
           "url": "https://link.springer.com/article/10.1007/s10781-024-09575-7"
         }
+      ],
+      "selection_cues": [
+        "主張へ視点や条件を戻したい",
+        "断定を条件付きに戻したい",
+        "同じ対象を複数視点から述べたい",
+        "restore standpoint and conditions to a claim",
+        "turn an assertion into a qualified assertion",
+        "rotate perspectives without forcing one absolute statement"
       ]
     },
     {
@@ -683,6 +755,14 @@
           "title": "Aristotle's Metaphysics",
           "url": "https://plato.stanford.edu/entries/aristotle-metaphysics/"
         }
+      ],
+      "selection_cues": [
+        "なぜの種類を分けたい",
+        "原因説明が一種類に偏っていないか見たい",
+        "材料構造起動目的を分けたい",
+        "split different kinds of why-explanation",
+        "inspect missing explanatory modes",
+        "separate material formal efficient and final explanation"
       ]
     },
     {
@@ -1022,7 +1102,15 @@
         }
       ],
       "profile_path": "research/framework-candidates/profiles/nyaya-five-member-inference.md",
-      "runtime_path": "src/ja-JP/frameworks/nyaya-five-member-inference.md"
+      "runtime_path": "src/ja-JP/frameworks/nyaya-five-member-inference.md",
+      "selection_cues": [
+        "理由から結論への橋を検査したい",
+        "主張と理由と適用を分けたい",
+        "推論の飛躍を見つけたい",
+        "inspect the bridge from reason to conclusion",
+        "separate thesis reason example and application",
+        "find a missing inferential bridge"
+      ]
     },
     {
       "id": "confucian-role-ritual",
@@ -1074,7 +1162,15 @@
         }
       ],
       "profile_path": "research/framework-candidates/profiles/confucian-role-ritual.md",
-      "runtime_path": "src/ja-JP/frameworks/confucian-role-ritual.md"
+      "runtime_path": "src/ja-JP/frameworks/confucian-role-ritual.md",
+      "selection_cues": [
+        "役割名と実際の行動を分けたい",
+        "関係ごとの期待を見たい",
+        "定型的なやり取りが意味を変えるか見たい",
+        "separate role name from enacted conduct",
+        "inspect expectations carried by relationships",
+        "ask how patterned interaction changes meaning"
+      ]
     },
     {
       "id": "shinto-threshold-purification",
@@ -1142,7 +1238,15 @@
         }
       ],
       "profile_path": "research/framework-candidates/profiles/shinto-threshold-purification.md",
-      "runtime_path": "src/ja-JP/frameworks/shinto-threshold-purification.md"
+      "runtime_path": "src/ja-JP/frameworks/shinto-threshold-purification.md",
+      "selection_cues": [
+        "明示された境界を越える前後の準備を見たい",
+        "中心的な行為の前の準備を分けたい",
+        "退出や再入場で状態が変わるか見たい",
+        "inspect preparation around an explicitly marked threshold",
+        "separate preparation from the central action",
+        "inspect closure return and re-entry state"
+      ]
     },
     {
       "id": "buddhist-mandala",
@@ -1296,7 +1400,15 @@
       ],
       "profile_path": "research/framework-candidates/profiles/tibetan-buddhist-mandala.md",
       "runtime_path": "src/ja-JP/frameworks/tibetan-buddhist-mandala.md",
-      "adoption_hold": "religious-lineage-sensitive"
+      "adoption_hold": "religious-lineage-sensitive",
+      "selection_cues": [
+        "中心と周辺と門を持つ空間として見たい",
+        "一つの内外ではなく多重境界を見たい",
+        "方位ごとの役割と入口を見たい",
+        "read a field through center directions gates and nested boundaries",
+        "look for multiple enclosures rather than one inside outside split",
+        "inspect directional roles and mediated entry"
+      ]
     },
     {
       "id": "classical-stasis-theory",
@@ -1352,7 +1464,15 @@
         }
       ],
       "profile_path": "research/framework-candidates/profiles/classical-stasis-theory.md",
-      "runtime_path": "src/ja-JP/frameworks/classical-stasis-theory.md"
+      "runtime_path": "src/ja-JP/frameworks/classical-stasis-theory.md",
+      "selection_cues": [
+        "何を争っているのかを分けたい",
+        "事実と定義と評価と手続きを分けたい",
+        "争点が途中で移っていないか見たい",
+        "locate what kind of dispute is active",
+        "separate fact definition evaluation and procedure",
+        "detect an unacknowledged shift in issue type"
+      ]
     },
     {
       "id": "hadith-isnad-matn",
@@ -1411,7 +1531,15 @@
       ],
       "profile_path": "research/framework-candidates/profiles/hadith-isnad-matn.md",
       "runtime_path": "src/ja-JP/frameworks/hadith-isnad-matn.md",
-      "adoption_hold": "religious-tradition-sensitive"
+      "adoption_hold": "religious-tradition-sensitive",
+      "selection_cues": [
+        "内容と伝達経路を分けたい",
+        "複数の伝達経路の分岐と合流を見たい",
+        "来歴の強さと内容の真偽を分けたい",
+        "separate content from transmission path",
+        "compare branching and convergence of transmission",
+        "keep provenance strength separate from proposition truth"
+      ]
     },
     {
       "id": "mimamsa-hermeneutics",
@@ -1473,7 +1601,15 @@
       ],
       "profile_path": "research/framework-candidates/profiles/mimamsa-hermeneutics.md",
       "adoption_hold": "lineage-sensitive",
-      "runtime_path": "src/ja-JP/frameworks/mimamsa-hermeneutics.md"
+      "runtime_path": "src/ja-JP/frameworks/mimamsa-hermeneutics.md",
+      "selection_cues": [
+        "規則の範囲と例外と文脈補完を分けたい",
+        "規定文がどこまで一つの単位か見たい",
+        "規則同士が本当に衝突しているか見たい",
+        "separate rule scope exceptions and contextual supplementation",
+        "identify the boundaries of a prescriptive unit",
+        "decompose an apparent norm conflict"
+      ]
     },
     {
       "id": "marshallese-wave-navigation",
@@ -1535,7 +1671,15 @@
       ],
       "profile_path": "research/framework-candidates/profiles/marshallese-wave-navigation.md",
       "adoption_hold": "living-tradition-sensitive",
-      "runtime_path": "src/ja-JP/frameworks/marshallese-wave-navigation.md"
+      "runtime_path": "src/ja-JP/frameworks/marshallese-wave-navigation.md",
+      "selection_cues": [
+        "地図より局所的な手掛かりで経路を見たい",
+        "事前モデルと現場観察を往復したい",
+        "乱れを手掛かりとして見たい",
+        "reason through local route cues rather than a literal map",
+        "return from a preparatory model to live observations",
+        "ask whether disturbance is informative"
+      ]
     },
     {
       "id": "sefer-yetzirah-dimensions",

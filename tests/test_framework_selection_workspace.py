@@ -28,6 +28,10 @@ FIXTURE = {
             "structural_primitives": ["chain", "threshold"],
             "cognitive_operations": ["condition-chain", "boundary-probe"],
             "useful_for": ["finding upstream conditions"],
+            "selection_cues": [
+                "成立条件と停止条件を見たい",
+                "inspect upstream conditions",
+            ],
             "do_not_assume": ["condition is cause"],
             "sources": [{"kind": "primary-text", "title": "A"}],
             "runtime_path": "src/ja-JP/frameworks/alpha.md",
@@ -39,6 +43,10 @@ FIXTURE = {
             "structural_primitives": ["node", "threshold"],
             "cognitive_operations": ["boundary-probe", "node-perspective"],
             "useful_for": ["changing viewpoint through a node"],
+            "selection_cues": [
+                "別のnodeから全体を見直したい",
+                "change viewpoint through a node",
+            ],
             "do_not_assume": ["node is essence"],
             "sources": [{"kind": "scholarly-reference", "title": "B"}],
             "profile_path": "research/framework-candidates/profiles/beta.md",
@@ -50,6 +58,10 @@ FIXTURE = {
             "structural_primitives": ["cycle"],
             "cognitive_operations": ["phase-offset"],
             "useful_for": ["finding recurrence offset"],
+            "selection_cues": [
+                "周期の位相ずれを見たい",
+                "inspect recurrence offset",
+            ],
             "do_not_assume": [],
             "sources": [],
         },
@@ -87,6 +99,97 @@ class FrameworkSelectionWorkspaceTest(unittest.TestCase):
             [row["candidate"]["id"] for row in payload["candidates"]],
             ["beta"],
         )
+
+    def test_recall_uses_explicit_cues_and_defaults_to_adopted(self) -> None:
+        payload = workspace.recall_payload(
+            FIXTURE,
+            "この対象の成立条件と停止条件を見たい",
+        )
+        self.assertEqual(
+            [row["candidate"]["id"] for row in payload["candidates"]],
+            ["alpha"],
+        )
+        self.assertEqual(payload["readiness"], ["adopted"])
+        self.assertNotIn("score", json.dumps(payload))
+        self.assertIn("not ranking", payload["interpretation_boundary"])
+
+    def test_recall_can_include_explicit_non_adopted_readiness(self) -> None:
+        payload = workspace.recall_payload(
+            FIXTURE,
+            "別のnodeから全体を見直したい",
+            ["profile-ready"],
+        )
+        self.assertEqual(
+            [row["candidate"]["id"] for row in payload["candidates"]],
+            ["beta"],
+        )
+
+    def test_recall_normalizes_width_spacing_and_punctuation_without_semantics(self) -> None:
+        fixture = json.loads(json.dumps(FIXTURE))
+        fixture["candidates"][0]["selection_cues"].append(
+            "center / periphery"
+        )
+        payload = workspace.recall_payload(
+            fixture,
+            "CENTER・PERIPHERYを見直したい",
+        )
+        self.assertEqual(
+            [row["candidate"]["id"] for row in payload["candidates"]],
+            ["alpha"],
+        )
+
+    def test_cli_recall_returns_adopted_candidate_without_ranking(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            inventory = Path(tmp) / "inventory.json"
+            inventory.write_text(json.dumps(FIXTURE), encoding="utf-8")
+            payload = json.loads(
+                self.run_tool(
+                    "recall",
+                    str(inventory),
+                    "--need",
+                    "この対象の成立条件と停止条件を見たい",
+                ).stdout
+            )
+            self.assertEqual(
+                [row["candidate"]["id"] for row in payload["candidates"]],
+                ["alpha"],
+            )
+            self.assertNotIn("score", json.dumps(payload))
+
+    def test_real_inventory_adopted_candidates_have_selection_cues(self) -> None:
+        inventory = workspace.load_inventory(
+            ROOT / "research" / "framework-candidates" / "cognitive-operation-inventory.json"
+        )
+        adopted = [
+            row for row in workspace.candidates(inventory)
+            if row.get("readiness") == "adopted"
+        ]
+        self.assertGreater(len(adopted), 0)
+        for row in adopted:
+            cues = row.get("selection_cues")
+            self.assertIsInstance(cues, list, row["id"])
+            self.assertGreaterEqual(len(cues), 2, row["id"])
+            self.assertTrue(all(str(cue).strip() for cue in cues), row["id"])
+            runtime_path = row.get("runtime_path")
+            self.assertTrue(runtime_path, row["id"])
+            self.assertTrue((ROOT / runtime_path).is_file(), row["id"])
+
+    def test_real_inventory_each_adopted_candidate_is_recallable_by_own_cue(self) -> None:
+        inventory = workspace.load_inventory(
+            ROOT / "research" / "framework-candidates" / "cognitive-operation-inventory.json"
+        )
+        adopted = [
+            row for row in workspace.candidates(inventory)
+            if row.get("readiness") == "adopted"
+        ]
+        for row in adopted:
+            cue = row["selection_cues"][0]
+            payload = workspace.recall_payload(inventory, cue)
+            recalled_ids = [
+                item["candidate"]["id"]
+                for item in payload["candidates"]
+            ]
+            self.assertIn(row["id"], recalled_ids, row["id"])
 
     def test_contrast_exposes_exact_overlap_and_unique_operations(self) -> None:
         payload = workspace.contrast_payload(FIXTURE, ["alpha", "beta"])
