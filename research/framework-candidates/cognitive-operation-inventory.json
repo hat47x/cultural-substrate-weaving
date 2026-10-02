@@ -1709,7 +1709,7 @@
         "ספר יצירה sefirot",
         "セーフェル・イェツィラーのsefirot"
       ],
-      "readiness": "sourced-candidate",
+      "readiness": "profile-ready",
       "adoption_hold": "text-version-sensitive",
       "structural_primitives": [
         "ten sefirot belimah",
@@ -1739,12 +1739,18 @@
           "url": "https://www.sefaria.org/texts/Kabbalah/Sefer%20Yetzirah"
         },
         {
+          "kind": "text-critical-edition",
+          "title": "A. Peter Hayman, Sefer Yesira: Edition, Translation and Text-Critical Commentary",
+          "url": "https://catalogue.bnf.fr/ark:/12148/cb39287777w"
+        },
+        {
           "kind": "scholarly-specialist-reference",
           "title": "Spheres, Sefirot, and the Imaginal Astronomical Discourse of Classical Kabbalah",
           "url": "https://www.cambridge.org/core/journals/harvard-theological-review/article/spheres-sefirot-and-the-imaginal-astronomical-discourse-of-classical-kabbalah/6406AC47AA34ACAFCA9E9F99823AF630"
         }
       ],
-      "source_packet_path": "research/framework-candidates/source-packets/sefer-yetzirah-dimensions.md"
+      "source_packet_path": "research/framework-candidates/source-packets/sefer-yetzirah-dimensions.md",
+      "profile_path": "research/framework-candidates/profiles/sefer-yetzirah-dimensions.md"
     },
     {
       "id": "theosophical-sefirot",
@@ -1752,7 +1758,7 @@
         "theosophical Kabbalistic sefirot",
         "中世以降のtheosophical sefirot"
       ],
-      "readiness": "sourced-candidate",
+      "readiness": "profile-ready",
       "adoption_hold": "religious-lineage-sensitive",
       "structural_primitives": [
         "ten differentiated sefirot",
@@ -1765,7 +1771,8 @@
         "layered-mediation",
         "emanatory-relation",
         "attribute-tension",
-        "relational-ordering"
+        "relational-ordering",
+        "configuration-variant-probe"
       ],
       "useful_for": [
         "asking what mediates between an abstract whole and concrete manifestation",
@@ -1786,9 +1793,15 @@
           "kind": "scholarly-specialist-reference",
           "title": "Spheres, Sefirot, and the Imaginal Astronomical Discourse of Classical Kabbalah",
           "url": "https://www.cambridge.org/core/journals/harvard-theological-review/article/spheres-sefirot-and-the-imaginal-astronomical-discourse-of-classical-kabbalah/6406AC47AA34ACAFCA9E9F99823AF630"
+        },
+        {
+          "kind": "recent-scholarly-history",
+          "title": "Light is Sown: The Cultivation of Kabbalah in Medieval Castile — Sowing the Zohar",
+          "url": "https://academic.oup.com/book/60780/chapter-abstract/528593579"
         }
       ],
-      "source_packet_path": "research/framework-candidates/source-packets/theosophical-sefirot.md"
+      "source_packet_path": "research/framework-candidates/source-packets/theosophical-sefirot.md",
+      "profile_path": "research/framework-candidates/profiles/theosophical-sefirot.md"
     }
   ]
 }

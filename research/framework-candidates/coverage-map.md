@@ -9,7 +9,7 @@ This map tracks structural diversity. It does not rank frameworks or claim that 
 | discrete configuration / local change | Yijing | — | high-dimensional state transition without losing positional meaning |
 | dual relational cycle | Wuxing | — | multi-network interaction |
 | systematic combinatorial crossing / unseen combination | Llull Ars | — | higher-order explosion and target-constraint pruning without treating formal coverage as truth |
-| production layers / observer split | Sāṅkhya | theosophical sefirot | historically bounded layered mediation |
+| production layers / observer split | Sāṅkhya | theosophical sefirot (profile-ready) | historically bounded differentiated mediation without generic hierarchy collapse |
 | whole–part reciprocity / role-defined identity | Huayan | — | explicit cross-boundary topology and center/periphery geometry |
 | conditional chain / cessation | dependent origination | — | branching conditional networks |
 | binary-frame disruption | catuṣkoṭi | — | explicit boundary-crossing logic |
@@ -24,7 +24,7 @@ This map tracks structural diversity. It does not rank frameworks or claim that 
 | experience decomposition | — | Five aggregates | non-overlap with existing Buddhist core |
 | route / network topology | Marshallese wave navigation | Jingluo | non-maritime route traditions and branching networks without medical claims |
 | whole-part reciprocity / multi-perspective network | — | Huayan | primary-text and lineage separation |
-| symbolic mediation network | — | Sefer Yetzirah dimensions; theosophical sefirot | keep early dimensional/extents structure separate from later emanatory mediation |
+| axis/extents reframing vs differentiated mediation | — | Sefer Yetzirah dimensions; theosophical sefirot (both profile-ready) | test distinctness after de-binding while keeping the two historical structures separate |
 | explicit argument / inference structure | Nyāya inference | — | later debate/fallacy layers without flattening Indian logic |
 | social role / relation-conditioned conduct | Confucian role / li | — | additional role systems that do not duplicate relation mapping |
 | explicit threshold crossing / incorporation / preparation | Shinto shrine threshold / purification | Rites of Passage | longer liminal/incorporation processes and other culture-specific threshold systems |
