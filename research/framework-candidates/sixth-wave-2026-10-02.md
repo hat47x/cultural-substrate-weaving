@@ -1,28 +1,31 @@
-# Framework corpus seventh wave — 2026-10-02
+# Framework corpus sixth wave — 2026-10-02
 
 Status: qualitative expansion before broad efficacy evaluation
 
-## Product-value decision
+## Decision
 
-The adopted corpus already covers reasoning, cycles, provenance, roles, and route-oriented cognition. Two structural gaps still affect the encounter function directly: explicit boundary/preparation sequences and center/direction/gated spatial organization.
+The adopted portfolio already covers configuration, cycles, conditionality, proposition framing, perspective qualification, explanatory plurality, aesthetic reception, multi-scale time, whole–part reciprocity, and embodied observation.
 
-This wave adopts two bounded dossiers rather than broad umbrella systems.
+The next product-value gap is not another taxonomy. It is the ability to open different kinds of reasoning and movement through material. Five profile-ready candidates are therefore promoted into the runtime corpus.
 
-- Shinto shrine threshold / purification: marked boundary, preparation before central action, state transition by practice, and return.
-- Tibetan Buddhist mandala spatial structure: center/periphery, directions, gates, nested boundaries, and outside-to-center approach.
+| Framework | New cognitive contribution |
+|---|---|
+| Nyāya five-member inference | exposes the inferential bridge from reason and example to application and conclusion |
+| Confucian role / li | separates role-name, relation, patterned interaction, and enacted conduct |
+| Classical stasis theory | locates whether a dispute is factual, definitional, evaluative, or procedural |
+| Hadith isnād / matn | separates transmitted content from transmission path and compares variants across branches |
+| Marshallese wave navigation | adds relative-route reasoning, cue sequences, model/environment return, and disturbance-as-signal |
 
-Both dossiers keep religious efficacy and authority outside target-side claims.
+## Why these five
 
-## Quality work kept outside runtime
+Each candidate adds an operation family that is weak or absent in the adopted portfolio. Their profiles already contain source basis, variant boundaries, de-binding routes, and target-return questions. This wave also closes the remaining adoption gaps with hypothetical worked examples.
 
-Mīmāṃsā hermeneutics advances to profile-ready after documenting the Bhāṭṭa / Prābhākara sentence-meaning split and adding a non-religious target-return example. It remains lineage-sensitive and is not yet adopted.
+No score or ranking is introduced. Promotion means only that CSW can now load a source-grounded minimal dossier without reconstructing the framework from model memory.
 
-Ifá / Odù remains research-only and living-tradition-sensitive. Its correct UNESCO source is retained, and its value is treated as a compact signature indexing a large, living poetic corpus rather than as a generic retrieval template.
+## Boundaries kept explicit
 
-The old single `sefirot` research candidate is explicitly split into two source packets: Sefer Yetzirah dimensions and later theosophical sefirot. They remain research-only until each historical layer can support a distinct operation without being collapsed into a modern Tree of Life diagram.
+Nyāya is not a universal validator of truth. Confucian role/li does not import historical hierarchy as a modern norm. Stasis theory is not one timeless four-box scheme. Hadith structures do not become a general religious authenticity algorithm. Marshallese navigation remains living-tradition-sensitive and must not be used to simulate restricted expertise or real-world navigation.
 
-The generic `buddhist-mandala` profile remains a research umbrella. Runtime adoption is restricted to the Tibetan Buddhist dossier rather than pretending one pan-Buddhist mandala schema exists.
+## Remaining structural gaps
 
-## Remaining gaps
-
-The largest remaining gaps are indexed narrative corpora that can be used without impersonating living ritual authority, norm-conflict hermeneutics after lineage separation, and mediation/layer systems with historically bounded structure.
+The corpus is still thin in center/periphery and directional spatial systems, explicit threshold/liminal sequences, indexed narrative corpora, norm-conflict hermeneutics, and lineage-safe layered mediation. Those gaps should guide the next research wave.
