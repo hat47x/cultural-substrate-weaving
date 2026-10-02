@@ -49,6 +49,7 @@ def summarize(records: list[dict[str, Any]]) -> dict[str, Any]:
                 "task_constraints": round_record["task"].get("constraints", []),
                 "framework_contacts": round_record["framework_contacts"],
                 "artifacts": round_record["artifacts"],
+                "artifact_traces": round_record.get("artifact_traces", []),
                 "residuals": round_record["residuals"],
                 "reopening_conditions": round_record["reopening_conditions"],
                 "interpretations": round_record.get("interpretations", []),
@@ -83,6 +84,21 @@ def summarize(records: list[dict[str, Any]]) -> dict[str, Any]:
         for interpretation in event.get("interpretations", [])
     ]
 
+    artifact_traces = [
+        trace
+        for record in rounds
+        for trace in record.get("artifact_traces", [])
+    ]
+    target_return_states = [
+        trace["target_return"]["state"]
+        for trace in artifact_traces
+    ]
+    user_dispositions = [
+        trace["user_disposition"]["state"]
+        for trace in artifact_traces
+        if isinstance(trace.get("user_disposition"), dict)
+    ]
+
     return {
         "schema_version": "0.2",
         "interpretation_note": (
@@ -102,6 +118,11 @@ def summarize(records: list[dict[str, Any]]) -> dict[str, Any]:
             "event_types": _counter([record["event_type"] for record in events]),
             "observation_modes": _counter([record["observation_mode"] for record in events]),
             "interpretation_source_types": _counter(interpretation_sources),
+            "artifact_origins": _counter(
+                [trace["origin"] for trace in artifact_traces]
+            ),
+            "target_return_states": _counter(target_return_states),
+            "user_dispositions": _counter(user_dispositions),
         },
         "rounds": round_inventory,
     }

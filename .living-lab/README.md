@@ -30,6 +30,20 @@ Real rounds may refer to private chats, unpublished drafts, client material, int
 - If a case later becomes suitable for publication, create a separate anonymized/public record rather than committing the private original.
 - Before intentionally publishing any record, inspect both the JSON and every referenced artifact for identifying or confidential information.
 
+## 成果物の来歴と対象帰還 / Artifact provenance and target return
+
+schema 0.2の`artifact_traces`は、成果物の「良し悪し」を採点するためではなく、どの経路で生まれ、対象へ戻したあと何が残ったかを追うために使います。
+
+- `origin`では、対象だけから生じたもの、framework由来のもの、cross-fieldで生じたもの、混合したものを区別する。
+- framework由来の成果物では、`framework_refs`を残し、必要に応じて`operation_refs`とframework contactの`selection_ref`を対応させる。
+- `target_return.state`は、未確認、未解決、対象側で支持、弱化、棄却、対象帰還が不適用、を区別する。支持・弱化・棄却を記録するときは`evidence_refs`を必須にする。
+- `user_disposition`は、利用者が成果物を採用、修正、撤回したことが実際に観測できた場合だけ、その参照元とともに記録する。AIが利用者の判断を推測して埋めない。
+- 集計値は観測記録の棚卸しであり、frameworkの勝率、有用性スコア、採用KPIとして扱わない。
+
+`artifacts`は成果物参照の一覧を保ち、`artifact_traces`はその一部にだけ付けても構いません。追跡情報を埋めるために、本来の作業を変えたり、観測用の事例を作ったりしないでください。
+
+In schema 0.2, `artifact_traces` records provenance and target return without turning them into a score. Framework-derived traces identify their framework provenance. Evaluated target-return states require evidence references. User disposition is recorded only when an actual user decision has an attributable source. Summary counts remain review inventory, not effectiveness metrics.
+
 ## ローカル記録の検証 / Validate local records
 
 対応する他の記録が同じ場所にそろっていなくても、個別ファイルの形式は検査できます。

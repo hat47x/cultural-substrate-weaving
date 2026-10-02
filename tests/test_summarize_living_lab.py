@@ -31,6 +31,9 @@ class LivingLabSummaryTests(unittest.TestCase):
         cls.event_example = json.loads(
             (ROOT / "evals" / "living-lab-event.example.json").read_text(encoding="utf-8")
         )
+        cls.round_example = json.loads(
+            (ROOT / "evals" / "living-lab-round.example.json").read_text(encoding="utf-8")
+        )
 
     def test_public_observations_summarize_without_scoring(self) -> None:
         summary = MODULE.summarize(self.records)
@@ -75,6 +78,25 @@ class LivingLabSummaryTests(unittest.TestCase):
         self.assertEqual(second["events"][0]["event_type"], "kj_reconfiguration")
         self.assertEqual(second["events"][0]["observation_mode"], "retrospective")
         self.assertEqual(second["interpretations"][0]["source_type"], "ai")
+
+    def test_summary_surfaces_artifact_provenance_without_scoring(self) -> None:
+        summary = MODULE.summarize([self.round_example])
+        self.assertEqual(
+            summary["inventory"]["artifact_origins"],
+            {"framework_generated": 1},
+        )
+        self.assertEqual(
+            summary["inventory"]["target_return_states"],
+            {"target_weakened": 1},
+        )
+        self.assertEqual(
+            summary["inventory"]["user_dispositions"],
+            {"modified": 1},
+        )
+        trace = summary["rounds"][0]["artifact_traces"][0]
+        self.assertEqual(trace["artifact_ref"], "artifact:draft-v4")
+        self.assertEqual(trace["framework_refs"], ["example-framework"])
+        self.assertIn("not KPIs", summary["interpretation_note"])
 
     def test_summary_requires_event_round_references_to_resolve(self) -> None:
         with self.assertRaises(MODULE.ValidationError):

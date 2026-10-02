@@ -71,6 +71,120 @@
           "type": "string"
         }
       }
+    },
+    "target_return": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "state",
+        "source_type",
+        "evidence_refs"
+      ],
+      "properties": {
+        "state": {
+          "enum": [
+            "not_checked",
+            "unresolved",
+            "target_supported",
+            "target_weakened",
+            "target_rejected",
+            "not_applicable"
+          ]
+        },
+        "source_type": {
+          "enum": [
+            "user",
+            "ai",
+            "external",
+            "mixed",
+            "unknown"
+          ]
+        },
+        "evidence_refs": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "uniqueItems": true
+        },
+        "statement": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "user_disposition": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "state"
+      ],
+      "properties": {
+        "state": {
+          "enum": [
+            "not_observed",
+            "adopted",
+            "modified",
+            "withdrawn"
+          ]
+        },
+        "source_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "notes": {
+          "type": "string"
+        }
+      }
+    },
+    "artifact_trace": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "artifact_ref",
+        "origin",
+        "target_return"
+      ],
+      "properties": {
+        "artifact_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "origin": {
+          "enum": [
+            "target_only",
+            "framework_generated",
+            "cross_field_emergent",
+            "mixed"
+          ]
+        },
+        "framework_refs": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "uniqueItems": true
+        },
+        "operation_refs": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "uniqueItems": true
+        },
+        "target_return": {
+          "$ref": "#/$defs/target_return"
+        },
+        "user_disposition": {
+          "$ref": "#/$defs/user_disposition"
+        },
+        "notes": {
+          "type": "string"
+        }
+      }
     }
   },
   "required": [
@@ -248,6 +362,18 @@
           },
           "notes": {
             "type": "string"
+          },
+          "selection_ref": {
+            "type": "string",
+            "minLength": 1
+          },
+          "operations": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 1
+            },
+            "uniqueItems": true
           }
         }
       }
@@ -335,6 +461,12 @@
     },
     "notes": {
       "type": "string"
+    },
+    "artifact_traces": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/artifact_trace"
+      }
     }
   },
   "allOf": [

@@ -30,6 +30,7 @@ ROUND_ALLOWED = ROUND_REQUIRED | {
     "invocation",
     "unloaded_framework_candidates",
     "kj_snapshot_refs",
+    "artifact_traces",
     "comparison",
     "interpretations",
     "notes",
@@ -41,7 +42,7 @@ TASK_ALLOWED = {"summary", "domain", "source_refs", "constraints"}
 CANDIDATE_REQUIRED = {"framework", "reason", "disposition"}
 CANDIDATE_ALLOWED = CANDIDATE_REQUIRED | {"stop_reason"}
 CONTACT_REQUIRED = {"framework", "depth", "use"}
-CONTACT_ALLOWED = CONTACT_REQUIRED | {"notes"}
+CONTACT_ALLOWED = CONTACT_REQUIRED | {"notes", "selection_ref", "operations"}
 COMPARISON_REQUIRED = {"baseline_chat_ref", "treatment_chat_ref"}
 COMPARISON_ALLOWED = COMPARISON_REQUIRED | {
     "evaluator_chat_ref",
@@ -54,6 +55,18 @@ SOURCED_STATEMENT_REQUIRED = {"source_type", "statement"}
 SOURCED_STATEMENT_ALLOWED = SOURCED_STATEMENT_REQUIRED | {"source_ref", "evidence_refs"}
 MEASUREMENT_REQUIRED = {"label", "value", "source_ref"}
 MEASUREMENT_ALLOWED = MEASUREMENT_REQUIRED | {"unit", "notes"}
+
+ARTIFACT_TRACE_REQUIRED = {"artifact_ref", "origin", "target_return"}
+ARTIFACT_TRACE_ALLOWED = ARTIFACT_TRACE_REQUIRED | {
+    "framework_refs",
+    "operation_refs",
+    "user_disposition",
+    "notes",
+}
+TARGET_RETURN_REQUIRED = {"state", "source_type", "evidence_refs"}
+TARGET_RETURN_ALLOWED = TARGET_RETURN_REQUIRED | {"statement"}
+USER_DISPOSITION_REQUIRED = {"state"}
+USER_DISPOSITION_ALLOWED = USER_DISPOSITION_REQUIRED | {"source_ref", "notes"}
 
 EVENT_REQUIRED = {
     "schema_version",
@@ -93,6 +106,26 @@ EVENT_TYPES = {
 }
 OBSERVATION_MODES = {"prospective", "retrospective"}
 SOURCE_TYPES = {"user", "ai", "external", "mixed", "unknown"}
+ARTIFACT_ORIGINS = {
+    "target_only",
+    "framework_generated",
+    "cross_field_emergent",
+    "mixed",
+}
+FRAMEWORK_DERIVED_ARTIFACT_ORIGINS = {
+    "framework_generated",
+    "cross_field_emergent",
+    "mixed",
+}
+TARGET_RETURN_STATES = {
+    "not_checked",
+    "unresolved",
+    "target_supported",
+    "target_weakened",
+    "target_rejected",
+    "not_applicable",
+}
+USER_DISPOSITIONS = {"not_observed", "adopted", "modified", "withdrawn"}
 ID_RE = re.compile(r"^(round|event)-[A-Za-z0-9._-]+$")
 
 
@@ -202,6 +235,75 @@ def _validate_measurement(value: Any, label: str) -> None:
             _require_string(measurement[field], f"{label}.{field}")
 
 
+def _validate_target_return(value: Any, label: str) -> dict[str, Any]:
+    target_return = _require_object(value, label)
+    _check_keys(target_return, TARGET_RETURN_REQUIRED, TARGET_RETURN_ALLOWED, label)
+    _check_enum(target_return["state"], TARGET_RETURN_STATES, f"{label}.state")
+    _check_enum(target_return["source_type"], SOURCE_TYPES, f"{label}.source_type")
+    _check_string_list(
+        target_return["evidence_refs"],
+        f"{label}.evidence_refs",
+        unique=True,
+    )
+    if (
+        target_return["state"]
+        not in {"not_checked", "not_applicable"}
+        and not target_return["evidence_refs"]
+    ):
+        raise ValidationError(
+            f"{label}.evidence_refs must contain evidence when target return was evaluated"
+        )
+    if "statement" in target_return:
+        _require_nonempty_string(target_return["statement"], f"{label}.statement")
+    return target_return
+
+
+def _validate_user_disposition(value: Any, label: str) -> dict[str, Any]:
+    disposition = _require_object(value, label)
+    _check_keys(disposition, USER_DISPOSITION_REQUIRED, USER_DISPOSITION_ALLOWED, label)
+    _check_enum(disposition["state"], USER_DISPOSITIONS, f"{label}.state")
+    if disposition["state"] != "not_observed":
+        if "source_ref" not in disposition:
+            raise ValidationError(
+                f"{label}.source_ref is required for an observed user disposition"
+            )
+        _require_nonempty_string(disposition["source_ref"], f"{label}.source_ref")
+    elif "source_ref" in disposition:
+        _require_nonempty_string(disposition["source_ref"], f"{label}.source_ref")
+    if "notes" in disposition:
+        _require_string(disposition["notes"], f"{label}.notes")
+    return disposition
+
+
+def _validate_artifact_trace(value: Any, label: str) -> dict[str, Any]:
+    trace = _require_object(value, label)
+    _check_keys(trace, ARTIFACT_TRACE_REQUIRED, ARTIFACT_TRACE_ALLOWED, label)
+    _require_nonempty_string(trace["artifact_ref"], f"{label}.artifact_ref")
+    _check_enum(trace["origin"], ARTIFACT_ORIGINS, f"{label}.origin")
+
+    framework_refs = trace.get("framework_refs", [])
+    _check_string_list(framework_refs, f"{label}.framework_refs", unique=True)
+    if trace["origin"] in FRAMEWORK_DERIVED_ARTIFACT_ORIGINS and not framework_refs:
+        raise ValidationError(
+            f"{label}.framework_refs must identify provenance for framework-derived artifacts"
+        )
+
+    _check_string_list(
+        trace.get("operation_refs", []),
+        f"{label}.operation_refs",
+        unique=True,
+    )
+    _validate_target_return(trace["target_return"], f"{label}.target_return")
+    if "user_disposition" in trace:
+        _validate_user_disposition(
+            trace["user_disposition"],
+            f"{label}.user_disposition",
+        )
+    if "notes" in trace:
+        _require_string(trace["notes"], f"{label}.notes")
+    return trace
+
+
 def validate_round(data: dict[str, Any]) -> None:
     _check_keys(data, ROUND_REQUIRED, ROUND_ALLOWED, "round")
     if data["schema_version"] != SCHEMA_VERSION:
@@ -247,6 +349,24 @@ def validate_round(data: dict[str, Any]) -> None:
     for field in ("material_delta_refs", "kj_snapshot_refs", "artifacts"):
         if field in data:
             _check_string_list(data[field], f"round.{field}", unique=True)
+
+    artifact_refs = set(data["artifacts"])
+    artifact_traces = _require_list(data.get("artifact_traces", []), "round.artifact_traces")
+    traced_artifacts: set[str] = set()
+    for index, raw in enumerate(artifact_traces):
+        label = f"round.artifact_traces[{index}]"
+        trace = _validate_artifact_trace(raw, label)
+        artifact_ref = trace["artifact_ref"]
+        if artifact_ref not in artifact_refs:
+            raise ValidationError(
+                f"{label}.artifact_ref must also appear in round.artifacts: {artifact_ref}"
+            )
+        if artifact_ref in traced_artifacts:
+            raise ValidationError(
+                f"round.artifact_traces must not repeat artifact_ref: {artifact_ref}"
+            )
+        traced_artifacts.add(artifact_ref)
+
     _check_sourced_statement_list(data["residuals"], "round.residuals")
     _check_sourced_statement_list(data["reopening_conditions"], "round.reopening_conditions")
 
@@ -278,6 +398,14 @@ def validate_round(data: dict[str, Any]) -> None:
         _check_enum(contact["use"], USES, f"{label}.use")
         if "notes" in contact:
             _require_string(contact["notes"], f"{label}.notes")
+        if "selection_ref" in contact:
+            _require_nonempty_string(contact["selection_ref"], f"{label}.selection_ref")
+        if "operations" in contact:
+            _check_string_list(
+                contact["operations"],
+                f"{label}.operations",
+                unique=True,
+            )
 
     if data["activation_scope"] == "non_activation" and contacts:
         raise ValidationError("non_activation rounds must not contain framework_contacts")

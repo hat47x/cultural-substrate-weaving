@@ -90,6 +90,22 @@ class LivingLabValidationTests(unittest.TestCase):
         self.assertEqual(MODULE.MEASUREMENT_REQUIRED, set(measurement["required"]))
         self.assertEqual(MODULE.MEASUREMENT_ALLOWED, set(measurement["properties"]))
 
+        artifact_trace = self.round_schema["$defs"]["artifact_trace"]
+        target_return = self.round_schema["$defs"]["target_return"]
+        user_disposition = self.round_schema["$defs"]["user_disposition"]
+        self.assertEqual(MODULE.ARTIFACT_TRACE_REQUIRED, set(artifact_trace["required"]))
+        self.assertEqual(MODULE.ARTIFACT_TRACE_ALLOWED, set(artifact_trace["properties"]))
+        self.assertEqual(MODULE.TARGET_RETURN_REQUIRED, set(target_return["required"]))
+        self.assertEqual(MODULE.TARGET_RETURN_ALLOWED, set(target_return["properties"]))
+        self.assertEqual(
+            MODULE.USER_DISPOSITION_REQUIRED,
+            set(user_disposition["required"]),
+        )
+        self.assertEqual(
+            MODULE.USER_DISPOSITION_ALLOWED,
+            set(user_disposition["properties"]),
+        )
+
         self.assertEqual(MODULE.ROUND_MODES, set(round_properties["mode"]["enum"]))
         self.assertEqual(
             MODULE.ACTIVATION_SCOPES,
@@ -117,6 +133,18 @@ class LivingLabValidationTests(unittest.TestCase):
         self.assertEqual(
             MODULE.SOURCE_TYPES,
             set(event_statement["properties"]["source_type"]["enum"]),
+        )
+        self.assertEqual(
+            MODULE.ARTIFACT_ORIGINS,
+            set(artifact_trace["properties"]["origin"]["enum"]),
+        )
+        self.assertEqual(
+            MODULE.TARGET_RETURN_STATES,
+            set(target_return["properties"]["state"]["enum"]),
+        )
+        self.assertEqual(
+            MODULE.USER_DISPOSITIONS,
+            set(user_disposition["properties"]["state"]["enum"]),
         )
 
         semantic_rules = self.round_schema["allOf"]
@@ -214,6 +242,51 @@ class LivingLabValidationTests(unittest.TestCase):
         record = copy.deepcopy(self.round_record)
         record["activation_scope"] = "non_activation"
         with self.assertRaises(MODULE.ValidationError):
+            MODULE.validate_round(record)
+
+    def test_artifact_trace_requires_declared_artifact(self) -> None:
+        record = copy.deepcopy(self.round_record)
+        record["artifact_traces"][0]["artifact_ref"] = "artifact:not-declared"
+        with self.assertRaisesRegex(
+            MODULE.ValidationError,
+            "must also appear in round.artifacts",
+        ):
+            MODULE.validate_round(record)
+
+    def test_framework_derived_artifact_trace_requires_framework_provenance(self) -> None:
+        record = copy.deepcopy(self.round_record)
+        record["artifact_traces"][0]["framework_refs"] = []
+        with self.assertRaisesRegex(
+            MODULE.ValidationError,
+            "must identify provenance",
+        ):
+            MODULE.validate_round(record)
+
+    def test_evaluated_target_return_requires_evidence(self) -> None:
+        record = copy.deepcopy(self.round_record)
+        record["artifact_traces"][0]["target_return"]["evidence_refs"] = []
+        with self.assertRaisesRegex(
+            MODULE.ValidationError,
+            "must contain evidence",
+        ):
+            MODULE.validate_round(record)
+
+    def test_observed_user_disposition_requires_source_ref(self) -> None:
+        record = copy.deepcopy(self.round_record)
+        record["artifact_traces"][0]["user_disposition"].pop("source_ref")
+        with self.assertRaisesRegex(
+            MODULE.ValidationError,
+            "source_ref is required",
+        ):
+            MODULE.validate_round(record)
+
+    def test_duplicate_artifact_trace_is_rejected(self) -> None:
+        record = copy.deepcopy(self.round_record)
+        record["artifact_traces"].append(copy.deepcopy(record["artifact_traces"][0]))
+        with self.assertRaisesRegex(
+            MODULE.ValidationError,
+            "must not repeat artifact_ref",
+        ):
             MODULE.validate_round(record)
 
     def test_event_requires_evidence_reference(self) -> None:

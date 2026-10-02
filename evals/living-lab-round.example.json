@@ -40,7 +40,11 @@
       "framework": "example-framework",
       "depth": "preview",
       "use": "exploration",
-      "notes": "A preview was opened during the round."
+      "notes": "A preview was opened during the round.",
+      "selection_ref": "selection://example-round/framework-choice",
+      "operations": [
+        "example-operation"
+      ]
     }
   ],
   "kj_snapshot_refs": [
@@ -73,5 +77,30 @@
       "source_ref": "chat:example-source"
     }
   ],
-  "notes": "No score is required. Direct observations and attributed interpretations are kept separate."
+  "notes": "No score is required. Direct observations and attributed interpretations are kept separate.",
+  "artifact_traces": [
+    {
+      "artifact_ref": "artifact:draft-v4",
+      "origin": "framework_generated",
+      "framework_refs": [
+        "example-framework"
+      ],
+      "operation_refs": [
+        "example-operation"
+      ],
+      "target_return": {
+        "state": "target_weakened",
+        "source_type": "mixed",
+        "evidence_refs": [
+          "artifact:kj-snapshot-003"
+        ],
+        "statement": "The target material supported only part of the framework-generated distinction."
+      },
+      "user_disposition": {
+        "state": "modified",
+        "source_ref": "chat:example-source",
+        "notes": "The user retained a revised form rather than adopting the generated artifact unchanged."
+      }
+    }
+  ]
 }
