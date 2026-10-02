@@ -197,6 +197,7 @@ def worksheet_payload(
             "runtime_path": row.get("runtime_path"),
             "source_packet_path": row.get("source_packet_path"),
             "role": "unassigned",
+            "planned_operations": [],
             "intended_cognitive_job": "",
             "near_neighbor_difference": "",
             "target_return_questions": [],
@@ -286,15 +287,40 @@ def update_candidate(
     difference: str | None = None,
     de_bound: str | None = None,
     revisit_if: str | None = None,
+    planned_operations: Iterable[str] | None = None,
     return_questions: Iterable[str] | None = None,
 ) -> None:
     if not any(
         value is not None
         for value in (role, job, difference, de_bound, revisit_if)
-    ) and not list(return_questions or []):
+    ) and not list(planned_operations or []) and not list(return_questions or []):
         raise ValueError("set-candidate requires at least one update")
 
     row = find_workspace_candidate(data, candidate_id)
+
+    planned = [
+        str(value)
+        for value in (planned_operations or [])
+        if str(value).strip()
+    ]
+    if planned:
+        available = {str(value) for value in row.get("available_operations", [])}
+        unknown = [value for value in planned if value not in available]
+        if unknown:
+            raise ValueError(
+                f"planned operation is not available for candidate {candidate_id}: "
+                + ", ".join(unknown)
+            )
+
+        existing_planned = row.get("planned_operations", [])
+        if not isinstance(existing_planned, list):
+            raise ValueError(
+                f"candidate planned_operations must be an array: {candidate_id}"
+            )
+        row["planned_operations"] = list(
+            dict.fromkeys([str(value) for value in existing_planned] + planned)
+        )
+
     for key, value in (
         ("role", role),
         ("intended_cognitive_job", job),
@@ -374,6 +400,7 @@ def cmd_set_candidate(args: argparse.Namespace) -> None:
         difference=args.difference,
         de_bound=args.de_bound,
         revisit_if=args.revisit_if,
+        planned_operations=args.operation,
         return_questions=args.return_question,
     )
     save_workspace(args.workspace, data)
@@ -449,6 +476,11 @@ def build_parser() -> argparse.ArgumentParser:
     set_candidate.add_argument("--difference")
     set_candidate.add_argument("--de-bound")
     set_candidate.add_argument("--revisit-if")
+    set_candidate.add_argument(
+        "--operation",
+        action="append",
+        help="explicit inventory operation to try; must exist for the candidate",
+    )
     set_candidate.add_argument("--return-question", action="append")
     set_candidate.set_defaults(func=cmd_set_candidate)
 

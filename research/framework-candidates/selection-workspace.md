@@ -29,6 +29,7 @@ python "$TOOL" worksheet "$INVENTORY" \
 python "$TOOL" set-candidate /tmp/selection.json dependent-origination \
   --role primary \
   --job "establishment / cessation conditionsを開く" \
+  --operation condition-chain \
   --difference "whole/part identityの再規定とは別の仕事" \
   --return-question "何を外すとこの現象は成立しなくなるか"
 
@@ -50,7 +51,7 @@ python "$TOOL" show /tmp/selection.json
 
 The shortlist preserves inventory order and computes no score. The contrast is exact-string only and does not infer semantic equivalence. The worksheet deliberately starts with role, intended cognitive job, near-neighbor difference, target-return questions, de-bound target language, and revision conditions unfilled.
 
-When the selection actually progresses, use `set-candidate`, `set-cross-framework`, and `record-exit` to append explicit reasoning to the saved workspace. These operations do not calculate or recommend values; they only preserve what the analyst/skill has explicitly decided or observed.
+When the selection actually progresses, use `set-candidate`, `set-cross-framework`, and `record-exit` to append explicit reasoning to the saved workspace. `set-candidate --operation` records the exact inventory operation that is intentionally being tried and rejects operation labels not available on that candidate. These operations do not calculate or recommend values; they only preserve what the analyst/skill has explicitly decided or observed.
 
 When a stable `--ref` is supplied, keep that handle with the worksheet and reuse it as `trace-card --selection-ref` on downstream framework-generated cards. The handle is provenance only; it does not make the selection correct or the card target-supported.
 
