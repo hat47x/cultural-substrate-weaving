@@ -967,7 +967,7 @@
         "ニヤーヤ",
         "Nyaya inference"
       ],
-      "readiness": "profile-ready",
+      "readiness": "adopted",
       "structural_primitives": [
         "five-member argument",
         "thesis",
@@ -1010,7 +1010,8 @@
           "url": "https://iep.utm.edu/nyaya/"
         }
       ],
-      "profile_path": "research/framework-candidates/profiles/nyaya-five-member-inference.md"
+      "profile_path": "research/framework-candidates/profiles/nyaya-five-member-inference.md",
+      "runtime_path": "src/ja-JP/frameworks/nyaya-five-member-inference.md"
     },
     {
       "id": "confucian-role-ritual",
@@ -1019,7 +1020,7 @@
         "儒家の役割・礼",
         "li"
       ],
-      "readiness": "profile-ready",
+      "readiness": "adopted",
       "structural_primitives": [
         "relation-conditioned conduct",
         "social roles",
@@ -1061,7 +1062,8 @@
           "url": "https://plato.stanford.edu/entries/ethics-chinese/"
         }
       ],
-      "profile_path": "research/framework-candidates/profiles/confucian-role-ritual.md"
+      "profile_path": "research/framework-candidates/profiles/confucian-role-ritual.md",
+      "runtime_path": "src/ja-JP/frameworks/confucian-role-ritual.md"
     },
     {
       "id": "shinto-threshold-purification",
@@ -1275,7 +1277,7 @@
         "constitutio",
         "古典修辞学の争点論"
       ],
-      "readiness": "profile-ready",
+      "readiness": "adopted",
       "structural_primitives": [
         "fact / conjecture issue",
         "definition / naming issue",
@@ -1319,7 +1321,8 @@
           "url": "https://www.cambridge.org/core/journals/classical-quarterly/article/abs/substructure-of-stasistheory-from-hermagoras-to-hermogenes/3367411C59C61208776EA1E503C2D8D7"
         }
       ],
-      "profile_path": "research/framework-candidates/profiles/classical-stasis-theory.md"
+      "profile_path": "research/framework-candidates/profiles/classical-stasis-theory.md",
+      "runtime_path": "src/ja-JP/frameworks/classical-stasis-theory.md"
     },
     {
       "id": "hadith-isnad-matn",
@@ -1328,7 +1331,7 @@
         "isnād / matn",
         "ハディース伝承鎖と本文"
       ],
-      "readiness": "profile-ready",
+      "readiness": "adopted",
       "structural_primitives": [
         "report content (matn)",
         "attributed transmission chain (isnād)",
@@ -1376,7 +1379,9 @@
           "url": "https://online.ucpress.edu/jmw/article/1/3/5/51002/Verifying-Source-Citations-in-the-Hadith"
         }
       ],
-      "profile_path": "research/framework-candidates/profiles/hadith-isnad-matn.md"
+      "profile_path": "research/framework-candidates/profiles/hadith-isnad-matn.md",
+      "runtime_path": "src/ja-JP/frameworks/hadith-isnad-matn.md",
+      "adoption_hold": "religious-tradition-sensitive"
     },
     {
       "id": "mimamsa-hermeneutics",
@@ -1447,7 +1452,7 @@
         "wave piloting",
         "マーシャル諸島の波航法"
       ],
-      "readiness": "profile-ready",
+      "readiness": "adopted",
       "structural_primitives": [
         "relative island/atoll placement",
         "wave and current interaction cues",
@@ -1498,7 +1503,8 @@
         }
       ],
       "profile_path": "research/framework-candidates/profiles/marshallese-wave-navigation.md",
-      "adoption_hold": "living-tradition-sensitive"
+      "adoption_hold": "living-tradition-sensitive",
+      "runtime_path": "src/ja-JP/frameworks/marshallese-wave-navigation.md"
     }
   ]
 }

@@ -1,6 +1,6 @@
 # Hadith isnād / matn candidate profile
 
-Status: profile-ready / research-only / religious-tradition-sensitive
+Status: adopted / runtime-corpus
 
 ## Identity
 
@@ -144,12 +144,8 @@ CSW must not collapse these into one "reliability algorithm."
 5. return every factual claim to target-side evidence;
 6. preserve unresolved chain gaps instead of silently filling them.
 
-## Adoption gap
+## Runtime adoption synchronization
 
-This profile is ready for research use without web lookup for the structural operations above.
+The runtime dossier adopts content/transmission separation, branch/convergence comparison, path auditing, and content-variant comparison. Religious authenticity grading and narrator scoring are not generalized into CSW.
 
-Before runtime adoption:
-
-- add a small worked example with two or more chains and textual variants;
-- separate classical narrator criticism from modern isnād-cum-matn analysis in more detail;
-- verify that the operation adds something beyond CSW's generic provenance labels rather than merely renaming them.
+Worked example: `research/framework-candidates/worked-examples/hadith-isnad-matn.md`
