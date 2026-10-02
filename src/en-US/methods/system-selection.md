@@ -69,7 +69,7 @@ Do not collapse these functions into a single fit score. Preserve a target-side 
 
 As the candidate corpus grows, keep selection reasoning outside transient working memory when near-neighbor distinctions become difficult to track.
 
-Useful fields include the target-side baseline, the cognitive function still missing, the cognitive job expected from each candidate, the claimed difference from near-neighbors, what a second framework should disturb, target-return questions/observations/falsifiers, de-bound target language, and what would cause the choice to be revisited.
+Useful fields include the target-side baseline, the cognitive function still missing, the cognitive job expected from each candidate, **the cognitive operation actually intended for trial**, the claimed difference from near-neighbors, what a second framework should disturb, target-return questions/observations/falsifiers, de-bound target language, and what would cause the choice to be revisited.
 
 This is not a ranking table. The record exists so the question "what cognitive work was this framework meant to do?" can be inspected later.
 
