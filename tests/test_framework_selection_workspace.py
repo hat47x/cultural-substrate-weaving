@@ -287,6 +287,15 @@ class FrameworkSelectionWorkspaceTest(unittest.TestCase):
             candidate_audits["alpha"]["planned_not_observed_exact"],
             [],
         )
+        self.assertEqual(candidate_audits["alpha"]["yield_kinds"], ["question"])
+        self.assertEqual(
+            candidate_audits["alpha"]["target_responses"],
+            ["weakened"],
+        )
+        self.assertEqual(
+            candidate_audits["alpha"]["target_return_states"],
+            ["weakened"],
+        )
         self.assertEqual(
             candidate_audits["beta"]["observed_operations"],
             [],
@@ -295,6 +304,9 @@ class FrameworkSelectionWorkspaceTest(unittest.TestCase):
             candidate_audits["beta"]["planned_not_observed_exact"],
             ["node-perspective"],
         )
+        self.assertEqual(candidate_audits["beta"]["yield_kinds"], [])
+        self.assertEqual(candidate_audits["beta"]["target_responses"], [])
+        self.assertEqual(candidate_audits["beta"]["target_return_states"], [])
         self.assertNotIn("score", json.dumps(payload))
 
     def test_candidate_audit_does_not_credit_another_frameworks_operation(self) -> None:
@@ -344,6 +356,9 @@ class FrameworkSelectionWorkspaceTest(unittest.TestCase):
                     "observed_operations": [],
                     "planned_not_observed_exact": ["condition-chain"],
                     "observed_not_planned_exact": [],
+                    "yield_kinds": [],
+                    "target_responses": [],
+                    "target_return_states": [],
                 },
                 {
                     "candidate_id": "beta",
@@ -352,6 +367,9 @@ class FrameworkSelectionWorkspaceTest(unittest.TestCase):
                     "observed_operations": ["condition-chain"],
                     "planned_not_observed_exact": ["node-perspective"],
                     "observed_not_planned_exact": ["condition-chain"],
+                    "yield_kinds": [],
+                    "target_responses": [],
+                    "target_return_states": [],
                 },
             ],
         )
