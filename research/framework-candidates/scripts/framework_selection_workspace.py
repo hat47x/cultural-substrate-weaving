@@ -15,6 +15,17 @@ SEARCH_FIELDS = {
     "all": ("names", "cognitive_operations", "structural_primitives", "useful_for"),
 }
 
+WORKSPACE_FORMAT = "csw.framework-selection-workspace/v1"
+
+EXIT_RECORD_FIELDS = {
+    "question": "questions_created",
+    "distinction": "distinctions_created",
+    "relation-or-transition": "relations_or_transitions_created",
+    "falsifier-or-observation": "falsifiers_or_observations_created",
+    "residual": "residuals_created",
+    "framework-specific-scaffold": "framework_specific_scaffolds_to_keep",
+}
+
 
 def load_inventory(path: Path) -> dict[str, Any]:
     data = json.loads(path.read_text(encoding="utf-8"))
@@ -194,7 +205,7 @@ def worksheet_payload(
         })
 
     return {
-        "format": "csw.framework-selection-workspace/v1",
+        "format": WORKSPACE_FORMAT,
         "workspace_ref": (workspace_ref or "").strip(),
         "missing_cognitive_function": need,
         "target_baseline": baseline or "",
@@ -223,6 +234,177 @@ def worksheet_payload(
     }
 
 
+def load_workspace(path: Path) -> dict[str, Any]:
+    data = json.loads(path.read_text(encoding="utf-8"))
+    if not isinstance(data, dict) or data.get("format") != WORKSPACE_FORMAT:
+        raise ValueError("unsupported framework selection workspace format")
+    rows = data.get("candidates")
+    if not isinstance(rows, list) or any(not isinstance(row, dict) for row in rows):
+        raise ValueError("workspace.candidates must be an array of objects")
+    seen: set[str] = set()
+    for row in rows:
+        item_id = str(row.get("id", "")).strip()
+        if not item_id:
+            raise ValueError("every workspace candidate requires a non-empty id")
+        if item_id in seen:
+            raise ValueError(f"duplicate workspace candidate id: {item_id}")
+        seen.add(item_id)
+    for key in ("cross_framework_notes", "exit_record"):
+        if not isinstance(data.get(key), dict):
+            raise ValueError(f"workspace.{key} must be an object")
+    return data
+
+
+def save_workspace(path: Path, data: dict[str, Any]) -> None:
+    if data.get("format") != WORKSPACE_FORMAT:
+        raise ValueError("unsupported framework selection workspace format")
+    path.parent.mkdir(parents=True, exist_ok=True)
+    tmp = path.with_suffix(path.suffix + ".tmp")
+    tmp.write_text(
+        json.dumps(data, ensure_ascii=False, indent=2) + "\n",
+        encoding="utf-8",
+    )
+    tmp.replace(path)
+
+
+def find_workspace_candidate(
+    data: dict[str, Any],
+    candidate_id: str,
+) -> dict[str, Any]:
+    for row in data["candidates"]:
+        if str(row.get("id", "")) == candidate_id:
+            return row
+    raise ValueError(f"workspace candidate does not exist: {candidate_id}")
+
+
+def update_candidate(
+    data: dict[str, Any],
+    candidate_id: str,
+    *,
+    role: str | None = None,
+    job: str | None = None,
+    difference: str | None = None,
+    de_bound: str | None = None,
+    revisit_if: str | None = None,
+    return_questions: Iterable[str] | None = None,
+) -> None:
+    if not any(
+        value is not None
+        for value in (role, job, difference, de_bound, revisit_if)
+    ) and not list(return_questions or []):
+        raise ValueError("set-candidate requires at least one update")
+
+    row = find_workspace_candidate(data, candidate_id)
+    for key, value in (
+        ("role", role),
+        ("intended_cognitive_job", job),
+        ("near_neighbor_difference", difference),
+        ("de_bound_target_language", de_bound),
+        ("what_would_change_this_choice", revisit_if),
+    ):
+        if value is not None:
+            row[key] = value
+
+    additions = [str(value) for value in (return_questions or []) if str(value).strip()]
+    if additions:
+        existing = row.get("target_return_questions", [])
+        if not isinstance(existing, list):
+            raise ValueError(
+                f"candidate target_return_questions must be an array: {candidate_id}"
+            )
+        row["target_return_questions"] = list(
+            dict.fromkeys([str(value) for value in existing] + additions)
+        )
+
+
+def update_cross_framework(
+    data: dict[str, Any],
+    *,
+    primary_job: str | None = None,
+    second_job: str | None = None,
+    disturb: str | None = None,
+    confusions: Iterable[str] | None = None,
+    pushbacks: Iterable[str] | None = None,
+) -> None:
+    if not any(value is not None for value in (primary_job, second_job, disturb)) \
+        and not list(confusions or []) \
+        and not list(pushbacks or []):
+        raise ValueError("set-cross-framework requires at least one update")
+
+    notes = data["cross_framework_notes"]
+    for key, value in (
+        ("primary_framework_job", primary_job),
+        ("second_framework_job", second_job),
+        ("what_the_second_framework_should_disturb", disturb),
+    ):
+        if value is not None:
+            notes[key] = value
+
+    for key, values in (
+        ("near_neighbor_confusions_to_avoid", confusions),
+        ("target_pushback_to_preserve", pushbacks),
+    ):
+        additions = [str(value) for value in (values or []) if str(value).strip()]
+        if not additions:
+            continue
+        existing = notes.get(key, [])
+        if not isinstance(existing, list):
+            raise ValueError(f"workspace cross-framework {key} must be an array")
+        notes[key] = list(dict.fromkeys([str(value) for value in existing] + additions))
+
+
+def add_exit_record(data: dict[str, Any], kind: str, text_value: str) -> None:
+    value = text_value.strip()
+    if not value:
+        raise ValueError("exit record text must not be empty")
+    key = EXIT_RECORD_FIELDS[kind]
+    values = data["exit_record"].get(key, [])
+    if not isinstance(values, list):
+        raise ValueError(f"workspace exit_record.{key} must be an array")
+    data["exit_record"][key] = list(dict.fromkeys([str(item) for item in values] + [value]))
+
+
+def cmd_set_candidate(args: argparse.Namespace) -> None:
+    data = load_workspace(args.workspace)
+    update_candidate(
+        data,
+        args.candidate_id,
+        role=args.role,
+        job=args.job,
+        difference=args.difference,
+        de_bound=args.de_bound,
+        revisit_if=args.revisit_if,
+        return_questions=args.return_question,
+    )
+    save_workspace(args.workspace, data)
+    print(args.candidate_id)
+
+
+def cmd_set_cross_framework(args: argparse.Namespace) -> None:
+    data = load_workspace(args.workspace)
+    update_cross_framework(
+        data,
+        primary_job=args.primary_job,
+        second_job=args.second_job,
+        disturb=args.disturb,
+        confusions=args.confusion,
+        pushbacks=args.pushback,
+    )
+    save_workspace(args.workspace, data)
+    print(args.workspace)
+
+
+def cmd_record_exit(args: argparse.Namespace) -> None:
+    data = load_workspace(args.workspace)
+    add_exit_record(data, args.kind, args.text)
+    save_workspace(args.workspace, data)
+    print(args.kind)
+
+
+def cmd_show(args: argparse.Namespace) -> None:
+    print_json(load_workspace(args.workspace))
+
+
 def print_json(value: dict[str, Any]) -> None:
     print(json.dumps(value, ensure_ascii=False, indent=2))
 
@@ -249,10 +431,45 @@ def build_parser() -> argparse.ArgumentParser:
     worksheet.add_argument("--candidate", action="append", required=True)
     worksheet.add_argument("--baseline")
     worksheet.add_argument(
+        "--output",
+        type=Path,
+        help="write the new workspace atomically instead of printing it",
+    )
+    worksheet.add_argument(
         "--ref",
         dest="workspace_ref",
         help="stable provenance handle that downstream catalytic traces may reuse",
     )
+
+    set_candidate = sub.add_parser("set-candidate")
+    set_candidate.add_argument("workspace", type=Path)
+    set_candidate.add_argument("candidate_id")
+    set_candidate.add_argument("--role")
+    set_candidate.add_argument("--job")
+    set_candidate.add_argument("--difference")
+    set_candidate.add_argument("--de-bound")
+    set_candidate.add_argument("--revisit-if")
+    set_candidate.add_argument("--return-question", action="append")
+    set_candidate.set_defaults(func=cmd_set_candidate)
+
+    set_cross = sub.add_parser("set-cross-framework")
+    set_cross.add_argument("workspace", type=Path)
+    set_cross.add_argument("--primary-job")
+    set_cross.add_argument("--second-job")
+    set_cross.add_argument("--disturb")
+    set_cross.add_argument("--confusion", action="append")
+    set_cross.add_argument("--pushback", action="append")
+    set_cross.set_defaults(func=cmd_set_cross_framework)
+
+    record_exit = sub.add_parser("record-exit")
+    record_exit.add_argument("workspace", type=Path)
+    record_exit.add_argument("--kind", choices=tuple(EXIT_RECORD_FIELDS), required=True)
+    record_exit.add_argument("text")
+    record_exit.set_defaults(func=cmd_record_exit)
+
+    show = sub.add_parser("show")
+    show.add_argument("workspace", type=Path)
+    show.set_defaults(func=cmd_show)
 
     return parser
 
@@ -261,21 +478,37 @@ def main() -> None:
     parser = build_parser()
     args = parser.parse_args()
     try:
+        if args.command in {"set-candidate", "set-cross-framework", "record-exit", "show"}:
+            args.func(args)
+            return
         data = load_inventory(args.inventory)
         if args.command == "shortlist":
             print_json(shortlist_payload(data, args.term, args.field, args.readiness))
         elif args.command == "contrast":
             print_json(contrast_payload(data, args.candidate_id))
         elif args.command == "worksheet":
-            print_json(
-                worksheet_payload(
-                    data,
-                    args.need,
-                    args.candidate,
-                    args.baseline,
-                    args.workspace_ref,
-                )
+            payload = worksheet_payload(
+                data,
+                args.need,
+                args.candidate,
+                args.baseline,
+                args.workspace_ref,
             )
+            if args.output is not None:
+                if args.output.exists():
+                    raise ValueError(f"refusing to overwrite existing workspace: {args.output}")
+                save_workspace(args.output, payload)
+                print(args.output)
+            else:
+                print_json(payload)
+        elif args.command == "set-candidate":
+            cmd_set_candidate(args)
+        elif args.command == "set-cross-framework":
+            cmd_set_cross_framework(args)
+        elif args.command == "record-exit":
+            cmd_record_exit(args)
+        elif args.command == "show":
+            cmd_show(args)
     except (OSError, ValueError, json.JSONDecodeError) as exc:
         print(f"ERROR: {exc}", file=sys.stderr)
         raise SystemExit(2) from exc
