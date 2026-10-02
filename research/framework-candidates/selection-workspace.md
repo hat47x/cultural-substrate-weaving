@@ -2,7 +2,7 @@
 
 Status: research/toolkit / non-ranking / non-routing
 
-As the framework corpus grows, selection itself becomes a cognitive task. This helper externalizes three parts of that task without deciding them:
+As the framework corpus grows, selection itself becomes a cognitive task. This helper externalizes four parts of that task without deciding them:
 
 1. recall adopted candidates from explicit selection cues written in ordinary Japanese or English;
 2. recall candidates that literally mention a needed operation, primitive, or use;

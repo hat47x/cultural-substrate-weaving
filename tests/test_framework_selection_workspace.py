@@ -170,6 +170,26 @@ class FrameworkSelectionWorkspaceTest(unittest.TestCase):
             self.assertIsInstance(cues, list, row["id"])
             self.assertGreaterEqual(len(cues), 2, row["id"])
             self.assertTrue(all(str(cue).strip() for cue in cues), row["id"])
+            runtime_path = row.get("runtime_path")
+            self.assertTrue(runtime_path, row["id"])
+            self.assertTrue((ROOT / runtime_path).is_file(), row["id"])
+
+    def test_real_inventory_each_adopted_candidate_is_recallable_by_own_cue(self) -> None:
+        inventory = workspace.load_inventory(
+            ROOT / "research" / "framework-candidates" / "cognitive-operation-inventory.json"
+        )
+        adopted = [
+            row for row in workspace.candidates(inventory)
+            if row.get("readiness") == "adopted"
+        ]
+        for row in adopted:
+            cue = row["selection_cues"][0]
+            payload = workspace.recall_payload(inventory, cue)
+            recalled_ids = [
+                item["candidate"]["id"]
+                for item in payload["candidates"]
+            ]
+            self.assertIn(row["id"], recalled_ids, row["id"])
 
     def test_contrast_exposes_exact_overlap_and_unique_operations(self) -> None:
         payload = workspace.contrast_payload(FIXTURE, ["alpha", "beta"])
