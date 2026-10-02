@@ -390,6 +390,145 @@ def add_exit_record(data: dict[str, Any], kind: str, text_value: str) -> None:
     data["exit_record"][key] = list(dict.fromkeys([str(item) for item in values] + [value]))
 
 
+def load_affinity_map(path: Path) -> dict[str, Any]:
+    data = json.loads(path.read_text(encoding="utf-8"))
+    if not isinstance(data, dict) or data.get("format") != "affinity-map":
+        raise ValueError("unsupported affinity map format")
+    cards = data.get("cards", [])
+    if not isinstance(cards, list) or any(not isinstance(card, dict) for card in cards):
+        raise ValueError("affinity map cards must be an array of objects")
+    return data
+
+
+def _append_unique(target: list[str], values: Iterable[Any]) -> None:
+    for value in values:
+        text_value = str(value)
+        if text_value and text_value not in target:
+            target.append(text_value)
+
+
+def audit_map_payload(
+    workspace: dict[str, Any],
+    affinity_map: dict[str, Any],
+) -> dict[str, Any]:
+    workspace_ref = str(workspace.get("workspace_ref", "")).strip()
+    if not workspace_ref:
+        raise ValueError("audit-map requires a workspace_ref")
+
+    linked_cards: list[dict[str, Any]] = []
+    linked_card_ids: list[str] = []
+    observed_operations: list[str] = []
+    framework_labels: list[str] = []
+    yield_kinds: list[str] = []
+    target_responses: list[str] = []
+    return_states: list[str] = []
+
+    for card in affinity_map.get("cards", []):
+        trace = card.get("catalytic_trace")
+        if not isinstance(trace, dict):
+            continue
+        selection_refs = [str(value) for value in trace.get("selection_refs", [])]
+        if workspace_ref not in selection_refs:
+            continue
+
+        card_id = str(card.get("id", "")).strip()
+        if card_id:
+            linked_card_ids.append(card_id)
+        _append_unique(observed_operations, trace.get("operations", []))
+        _append_unique(framework_labels, trace.get("frameworks", []))
+        _append_unique(yield_kinds, trace.get("yield_kinds", []))
+        _append_unique(target_responses, trace.get("target_responses", []))
+        for audit in trace.get("target_return_audits", []):
+            if isinstance(audit, dict) and str(audit.get("state", "")).strip():
+                _append_unique(return_states, [audit["state"]])
+
+        linked_cards.append({
+            "id": card_id,
+            "text": card.get("text"),
+            "frameworks": list(trace.get("frameworks", [])),
+            "operations": list(trace.get("operations", [])),
+            "yield_kinds": list(trace.get("yield_kinds", [])),
+            "target_responses": list(trace.get("target_responses", [])),
+            "target_response_refs": list(trace.get("target_response_refs", [])),
+            "target_return_states": [
+                audit.get("state")
+                for audit in trace.get("target_return_audits", [])
+                if isinstance(audit, dict) and audit.get("state")
+            ],
+        })
+
+    planned_operations: list[str] = []
+    candidate_ids: list[str] = []
+    cards_by_exact_candidate_id: dict[str, list[str]] = {}
+    for row in workspace.get("candidates", []):
+        candidate_id = str(row.get("id", "")).strip()
+        if candidate_id:
+            candidate_ids.append(candidate_id)
+            cards_by_exact_candidate_id[candidate_id] = []
+        _append_unique(planned_operations, row.get("planned_operations", []))
+
+    candidate_id_set = set(candidate_ids)
+    for card in linked_cards:
+        for framework in card["frameworks"]:
+            label = str(framework)
+            if label in candidate_id_set and card["id"]:
+                cards_by_exact_candidate_id[label].append(card["id"])
+
+    unmatched_framework_labels = [
+        label for label in framework_labels if label not in candidate_id_set
+    ]
+
+    downstream_cross_field_cards: list[str] = []
+    linked_id_set = set(linked_card_ids)
+    for card in affinity_map.get("cards", []):
+        if str(card.get("input_status", "")) != "cross_field_emergent":
+            continue
+        trace = card.get("cross_field_trace")
+        if not isinstance(trace, dict):
+            continue
+        framework_refs = {str(value) for value in trace.get("framework_refs", [])}
+        if framework_refs & linked_id_set:
+            card_id = str(card.get("id", "")).strip()
+            if card_id:
+                downstream_cross_field_cards.append(card_id)
+
+    return {
+        "format": "csw.framework-selection-map-audit/v1",
+        "workspace_ref": workspace_ref,
+        "linked_cards": linked_cards,
+        "planned_operations": planned_operations,
+        "observed_operations": observed_operations,
+        "planned_not_observed_exact": [
+            value for value in planned_operations if value not in observed_operations
+        ],
+        "observed_not_planned_exact": [
+            value for value in observed_operations if value not in planned_operations
+        ],
+        "framework_labels": framework_labels,
+        "cards_by_exact_candidate_id": cards_by_exact_candidate_id,
+        "framework_labels_without_exact_candidate_id_match": unmatched_framework_labels,
+        "yield_kinds": yield_kinds,
+        "target_responses": target_responses,
+        "target_return_states": return_states,
+        "downstream_cross_field_cards": downstream_cross_field_cards,
+        "interpretation_boundary": (
+            "This is an exact-string provenance audit. Missing observed operations do "
+            "not mean the selection failed; unmatched framework labels do not mean the "
+            "framework is wrong; observed/unobserved differences require return to the "
+            "actual material and selection reasoning."
+        ),
+    }
+
+
+def cmd_audit_map(args: argparse.Namespace) -> None:
+    print_json(
+        audit_map_payload(
+            load_workspace(args.workspace),
+            load_affinity_map(args.affinity_map),
+        )
+    )
+
+
 def cmd_set_candidate(args: argparse.Namespace) -> None:
     data = load_workspace(args.workspace)
     update_candidate(
@@ -468,6 +607,11 @@ def build_parser() -> argparse.ArgumentParser:
         help="stable provenance handle that downstream catalytic traces may reuse",
     )
 
+    audit_map = sub.add_parser("audit-map")
+    audit_map.add_argument("workspace", type=Path)
+    audit_map.add_argument("affinity_map", type=Path)
+    audit_map.set_defaults(func=cmd_audit_map)
+
     set_candidate = sub.add_parser("set-candidate")
     set_candidate.add_argument("workspace", type=Path)
     set_candidate.add_argument("candidate_id")
@@ -510,7 +654,7 @@ def main() -> None:
     parser = build_parser()
     args = parser.parse_args()
     try:
-        if args.command in {"set-candidate", "set-cross-framework", "record-exit", "show"}:
+        if args.command in {"audit-map", "set-candidate", "set-cross-framework", "record-exit", "show"}:
             args.func(args)
             return
         data = load_inventory(args.inventory)
