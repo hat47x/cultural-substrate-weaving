@@ -339,6 +339,98 @@ class FrameworkSelectionWorkspaceTest(unittest.TestCase):
         )
         self.assertNotIn("score", json.dumps(data))
 
+    def test_consideration_axes_keep_routing_dimensions_separate(self) -> None:
+        data = workspace.worksheet_payload(
+            FIXTURE,
+            "Need a genuinely different boundary view",
+            ["alpha", "beta"],
+            "Target baseline before framework contact",
+            "selection://round-consider/framework-choice",
+        )
+
+        workspace.update_consideration(
+            data,
+            "alpha",
+            target_connection="The target already exposes an upstream condition question.",
+            structural_difference="Adds a chain view rather than a node perspective.",
+            redundancy_or_overlap="Boundary-probe overlaps beta; condition-chain does not.",
+            target_return_feasibility="Can return as a necessary-condition question.",
+            misuse_or_authority_risk="Do not treat a condition-chain as causation.",
+            domain_constraint="Caller requires source-visible justification.",
+        )
+        workspace.update_non_activation(
+            data,
+            reason="The target-side baseline may already expose the missing distinction.",
+            baseline_note="Try the ordinary target-side question before framework contact.",
+            revisit_if="Activate only if the baseline cannot generate a concrete check.",
+        )
+
+        alpha = data["candidates"][0]
+        self.assertEqual(
+            alpha["consideration_axes"]["structural_difference"],
+            "Adds a chain view rather than a node perspective.",
+        )
+        self.assertEqual(
+            data["no_framework_option"]["reason"],
+            "The target-side baseline may already expose the missing distinction.",
+        )
+        self.assertNotIn("score", json.dumps(data))
+        self.assertNotIn("rank", json.dumps(data).lower())
+
+    def test_review_surfaces_unfilled_axes_without_scoring_or_forcing_activation(self) -> None:
+        data = workspace.worksheet_payload(
+            FIXTURE,
+            "Need another way to inspect boundaries",
+            ["alpha"],
+            None,
+            "selection://round-review/framework-choice",
+        )
+        workspace.update_consideration(
+            data,
+            "alpha",
+            target_connection="There is a concrete boundary question.",
+            misuse_or_authority_risk="Do not convert framework fit into target fact.",
+        )
+
+        payload = workspace.review_payload(data)
+        row = payload["candidates"][0]
+        self.assertEqual(row["candidate_id"], "alpha")
+        self.assertIn("structural_difference", row["unfilled_axes"])
+        self.assertNotIn("target_connection", row["unfilled_axes"])
+        self.assertEqual(
+            payload["no_framework_unfilled"],
+            ["reason", "baseline_note", "what_would_change_this"],
+        )
+        self.assertIn("not failures", payload["interpretation_boundary"])
+        self.assertNotIn("score", json.dumps(payload))
+        self.assertNotIn("ranking", json.dumps(payload).lower())
+
+    def test_old_workspace_is_hydrated_without_losing_selection_reasoning(self) -> None:
+        data = workspace.worksheet_payload(
+            FIXTURE,
+            "Need a second relation principle",
+            ["alpha"],
+            "Target baseline",
+            "selection://legacy/framework-choice",
+        )
+        del data["candidates"][0]["consideration_axes"]
+        del data["no_framework_option"]
+
+        workspace.ensure_consideration_fields(data)
+
+        self.assertEqual(
+            set(data["candidates"][0]["consideration_axes"]),
+            set(workspace.CONSIDERATION_FIELDS),
+        )
+        self.assertEqual(
+            data["no_framework_option"],
+            {"reason": "", "baseline_note": "", "what_would_change_this": ""},
+        )
+        self.assertEqual(
+            data["workspace_ref"],
+            "selection://legacy/framework-choice",
+        )
+
     def test_audit_map_compares_planned_and_observed_operations_without_scoring(self) -> None:
         selection = workspace.worksheet_payload(
             FIXTURE,
@@ -606,6 +698,28 @@ class FrameworkSelectionWorkspaceTest(unittest.TestCase):
                 "What condition would stop the pattern?",
             )
             self.run_tool(
+                "set-consideration",
+                str(selection),
+                "alpha",
+                "--target-connection",
+                "A concrete target-side condition question exists.",
+                "--structural-difference",
+                "Condition-chain differs from node perspective.",
+                "--target-return",
+                "Return as a necessary-condition check.",
+                "--misuse-risk",
+                "Do not equate condition with cause.",
+            )
+            self.run_tool(
+                "set-non-activation",
+                str(selection),
+                "--reason",
+                "Baseline may already be sufficient.",
+                "--revisit-if",
+                "Activate if baseline fails to produce a concrete check.",
+            )
+
+            self.run_tool(
                 "set-cross-framework",
                 str(selection),
                 "--primary-job",
@@ -642,6 +756,14 @@ class FrameworkSelectionWorkspaceTest(unittest.TestCase):
             self.assertEqual(
                 shown["cross_framework_notes"]["primary_framework_job"],
                 "expose establishment conditions",
+            )
+            self.assertEqual(
+                shown["candidates"][0]["consideration_axes"]["target_connection"],
+                "A concrete target-side condition question exists.",
+            )
+            self.assertEqual(
+                shown["no_framework_option"]["reason"],
+                "Baseline may already be sufficient.",
             )
             self.assertEqual(
                 shown["exit_record"]["residuals_created"],

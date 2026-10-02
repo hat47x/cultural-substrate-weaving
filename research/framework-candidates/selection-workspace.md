@@ -41,6 +41,21 @@ python "$TOOL" set-candidate /tmp/selection.json huayan \
   --role reflecting \
   --job "partのroleを別nodeから再同定する"
 
+python "$TOOL" set-consideration /tmp/selection.json dependent-origination \
+  --target-connection "対象側に成立条件の空白がある" \
+  --structural-difference "node再同定ではなく条件連鎖を開く" \
+  --redundancy "huayanと重なるのはboundaryだけ" \
+  --target-return "必要条件を対象資料へ戻して確認できる" \
+  --misuse-risk "conditionをcauseへ昇格しない" \
+  --domain-constraint "設計判断はcaller側が行う"
+
+python "$TOOL" set-non-activation /tmp/selection.json \
+  --reason "通常のtarget-side質問だけで十分な可能性を残す" \
+  --baseline-note "framework接触前に同じ問いを一度試す" \
+  --revisit-if "baselineでは具体的な確認項目が出ないときだけ再検討"
+
+python "$TOOL" review /tmp/selection.json
+
 python "$TOOL" set-cross-framework /tmp/selection.json \
   --primary-job "成立条件を開く" \
   --second-job "part/whole identityを揺らす" \
@@ -60,6 +75,10 @@ The `recall` command is the bridge from an ordinary-language missing cognitive f
 
 The shortlist preserves inventory order and computes no score. The contrast is exact-string only and does not infer semantic equivalence. The worksheet deliberately starts with role, intended cognitive job, near-neighbor difference, target-return questions, de-bound target language, and revision conditions unfilled.
 
+Each candidate also has six independent, free-text consideration axes: target connection, structural difference, redundancy/overlap, target-return feasibility, misuse/authority risk, and domain constraint. They are kept separate on purpose; the tool does not collapse them into a score. A distinct `no_framework_option` records why non-activation may be preferable and what would reopen the choice.
+
+`review` only surfaces which consideration fields remain blank. Blank fields are prompts for deliberate thought, not failures, coverage metrics, or requirements to activate a framework. This makes non-activation and unresolved selection visible without turning the workspace into a router.
+
 When the selection actually progresses, use `set-candidate`, `set-cross-framework`, and `record-exit` to append explicit reasoning to the saved workspace. `set-candidate --operation` records the exact inventory operation that is intentionally being tried and rejects operation labels not available on that candidate. These operations do not calculate or recommend values; they only preserve what the analyst/skill has explicitly decided or observed.
 
 When a stable `--ref` is supplied, keep that handle with the worksheet and reuse it as `trace-card --selection-ref` on downstream framework-generated cards. The handle is provenance only; it does not make the selection correct or the card target-supported.
@@ -73,6 +92,8 @@ target-side baseline
   -> name the missing cognitive function
   -> shortlist without ranking
   -> contrast plausible near-neighbors
+  -> keep no-framework as an explicit option
+  -> write target connection / structural difference / redundancy / return feasibility / misuse risk separately
   -> write the intended cognitive job for each candidate
   -> choose primary / reflecting framework under external delegation
   -> run framework operations

@@ -34,6 +34,15 @@ EXIT_RECORD_FIELDS = {
     "framework-specific-scaffold": "framework_specific_scaffolds_to_keep",
 }
 
+CONSIDERATION_FIELDS = {
+    "target_connection": "target_connection",
+    "structural_difference": "structural_difference",
+    "redundancy_or_overlap": "redundancy_or_overlap",
+    "target_return_feasibility": "target_return_feasibility",
+    "misuse_or_authority_risk": "misuse_or_authority_risk",
+    "domain_constraint": "domain_constraint",
+}
+
 
 def load_inventory(path: Path) -> dict[str, Any]:
     data = json.loads(path.read_text(encoding="utf-8"))
@@ -259,6 +268,14 @@ def worksheet_payload(
             "target_return_questions": [],
             "de_bound_target_language": "",
             "what_would_change_this_choice": "",
+            "consideration_axes": {
+                "target_connection": "",
+                "structural_difference": "",
+                "redundancy_or_overlap": "",
+                "target_return_feasibility": "",
+                "misuse_or_authority_risk": "",
+                "domain_constraint": "",
+            },
         })
 
     return {
@@ -267,6 +284,11 @@ def worksheet_payload(
         "missing_cognitive_function": need,
         "target_baseline": baseline or "",
         "candidate_order_note": "Candidate order is working order, not a ranking.",
+        "no_framework_option": {
+            "reason": "",
+            "baseline_note": "",
+            "what_would_change_this": "",
+        },
         "candidates": rows,
         "cross_framework_notes": {
             "primary_framework_job": "",
@@ -309,7 +331,32 @@ def load_workspace(path: Path) -> dict[str, Any]:
     for key in ("cross_framework_notes", "exit_record"):
         if not isinstance(data.get(key), dict):
             raise ValueError(f"workspace.{key} must be an object")
+    ensure_consideration_fields(data)
     return data
+
+
+def ensure_consideration_fields(data: dict[str, Any]) -> None:
+    for row in data.get("candidates", []):
+        axes = row.get("consideration_axes")
+        if axes is None:
+            axes = {}
+            row["consideration_axes"] = axes
+        if not isinstance(axes, dict):
+            raise ValueError(
+                f"candidate consideration_axes must be an object: {row.get('id', '')}"
+            )
+        for key in CONSIDERATION_FIELDS:
+            axes.setdefault(key, "")
+
+    option = data.get("no_framework_option")
+    if option is None:
+        option = {}
+        data["no_framework_option"] = option
+    if not isinstance(option, dict):
+        raise ValueError("workspace.no_framework_option must be an object")
+    option.setdefault("reason", "")
+    option.setdefault("baseline_note", "")
+    option.setdefault("what_would_change_this", "")
 
 
 def save_workspace(path: Path, data: dict[str, Any]) -> None:
@@ -397,6 +444,77 @@ def update_candidate(
         row["target_return_questions"] = list(
             dict.fromkeys([str(value) for value in existing] + additions)
         )
+
+
+def update_consideration(
+    data: dict[str, Any],
+    candidate_id: str,
+    **values: str | None,
+) -> None:
+    row = find_workspace_candidate(data, candidate_id)
+    ensure_consideration_fields(data)
+    axes = row["consideration_axes"]
+    changed = False
+    for arg_name, key in CONSIDERATION_FIELDS.items():
+        value = values.get(arg_name)
+        if value is not None:
+            axes[key] = value
+            changed = True
+    if not changed:
+        raise ValueError("set-consideration requires at least one update")
+
+
+def update_non_activation(
+    data: dict[str, Any],
+    *,
+    reason: str | None = None,
+    baseline_note: str | None = None,
+    revisit_if: str | None = None,
+) -> None:
+    ensure_consideration_fields(data)
+    if reason is None and baseline_note is None and revisit_if is None:
+        raise ValueError("set-non-activation requires at least one update")
+    option = data["no_framework_option"]
+    if reason is not None:
+        option["reason"] = reason
+    if baseline_note is not None:
+        option["baseline_note"] = baseline_note
+    if revisit_if is not None:
+        option["what_would_change_this"] = revisit_if
+
+
+def review_payload(data: dict[str, Any]) -> dict[str, Any]:
+    ensure_consideration_fields(data)
+    rows = []
+    for row in data.get("candidates", []):
+        axes = row["consideration_axes"]
+        rows.append({
+            "candidate_id": row.get("id"),
+            "role": row.get("role"),
+            "consideration_axes": dict(axes),
+            "unfilled_axes": [
+                key for key in CONSIDERATION_FIELDS
+                if not str(axes.get(key, "")).strip()
+            ],
+        })
+
+    option = data["no_framework_option"]
+    return {
+        "format": "csw.framework-selection-review/v1",
+        "workspace_ref": data.get("workspace_ref", ""),
+        "missing_cognitive_function": data.get("missing_cognitive_function", ""),
+        "candidates": rows,
+        "no_framework_option": dict(option),
+        "no_framework_unfilled": [
+            key for key in ("reason", "baseline_note", "what_would_change_this")
+            if not str(option.get(key, "")).strip()
+        ],
+        "interpretation_boundary": (
+            "Unfilled fields are prompts for deliberate consideration, not failures, "
+            "coverage scores, or requirements to activate a framework. This review "
+            "does not rank candidates or choose between activation and non-activation."
+        ),
+    }
 
 
 def update_cross_framework(
@@ -653,6 +771,38 @@ def cmd_set_candidate(args: argparse.Namespace) -> None:
     print(args.candidate_id)
 
 
+def cmd_set_consideration(args: argparse.Namespace) -> None:
+    data = load_workspace(args.workspace)
+    update_consideration(
+        data,
+        args.candidate_id,
+        target_connection=args.target_connection,
+        structural_difference=args.structural_difference,
+        redundancy_or_overlap=args.redundancy,
+        target_return_feasibility=args.target_return,
+        misuse_or_authority_risk=args.misuse_risk,
+        domain_constraint=args.domain_constraint,
+    )
+    save_workspace(args.workspace, data)
+    print(args.candidate_id)
+
+
+def cmd_set_non_activation(args: argparse.Namespace) -> None:
+    data = load_workspace(args.workspace)
+    update_non_activation(
+        data,
+        reason=args.reason,
+        baseline_note=args.baseline_note,
+        revisit_if=args.revisit_if,
+    )
+    save_workspace(args.workspace, data)
+    print(args.workspace)
+
+
+def cmd_review(args: argparse.Namespace) -> None:
+    print_json(review_payload(load_workspace(args.workspace)))
+
+
 def cmd_set_cross_framework(args: argparse.Namespace) -> None:
     data = load_workspace(args.workspace)
     update_cross_framework(
@@ -744,6 +894,28 @@ def build_parser() -> argparse.ArgumentParser:
     set_candidate.add_argument("--return-question", action="append")
     set_candidate.set_defaults(func=cmd_set_candidate)
 
+    set_consideration = sub.add_parser("set-consideration")
+    set_consideration.add_argument("workspace", type=Path)
+    set_consideration.add_argument("candidate_id")
+    set_consideration.add_argument("--target-connection")
+    set_consideration.add_argument("--structural-difference")
+    set_consideration.add_argument("--redundancy")
+    set_consideration.add_argument("--target-return")
+    set_consideration.add_argument("--misuse-risk")
+    set_consideration.add_argument("--domain-constraint")
+    set_consideration.set_defaults(func=cmd_set_consideration)
+
+    set_non_activation = sub.add_parser("set-non-activation")
+    set_non_activation.add_argument("workspace", type=Path)
+    set_non_activation.add_argument("--reason")
+    set_non_activation.add_argument("--baseline-note")
+    set_non_activation.add_argument("--revisit-if")
+    set_non_activation.set_defaults(func=cmd_set_non_activation)
+
+    review = sub.add_parser("review")
+    review.add_argument("workspace", type=Path)
+    review.set_defaults(func=cmd_review)
+
     set_cross = sub.add_parser("set-cross-framework")
     set_cross.add_argument("workspace", type=Path)
     set_cross.add_argument("--primary-job")
@@ -770,7 +942,16 @@ def main() -> None:
     parser = build_parser()
     args = parser.parse_args()
     try:
-        if args.command in {"audit-map", "set-candidate", "set-cross-framework", "record-exit", "show"}:
+        if args.command in {
+            "audit-map",
+            "set-candidate",
+            "set-consideration",
+            "set-non-activation",
+            "set-cross-framework",
+            "record-exit",
+            "review",
+            "show",
+        }:
             args.func(args)
             return
         data = load_inventory(args.inventory)
