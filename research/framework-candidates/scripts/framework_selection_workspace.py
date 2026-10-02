@@ -478,6 +478,40 @@ def audit_map_payload(
         label for label in framework_labels if label not in candidate_id_set
     ]
 
+    candidate_operation_audits: list[dict[str, Any]] = []
+    for row in workspace.get("candidates", []):
+        candidate_id = str(row.get("id", "")).strip()
+        if not candidate_id:
+            continue
+        planned_for_candidate: list[str] = []
+        _append_unique(planned_for_candidate, row.get("planned_operations", []))
+        candidate_cards = [
+            card
+            for card in linked_cards
+            if candidate_id in [str(value) for value in card["frameworks"]]
+        ]
+        observed_for_candidate: list[str] = []
+        for card in candidate_cards:
+            _append_unique(observed_for_candidate, card["operations"])
+        candidate_operation_audits.append({
+            "candidate_id": candidate_id,
+            "linked_card_ids": [
+                card["id"] for card in candidate_cards if card["id"]
+            ],
+            "planned_operations": planned_for_candidate,
+            "observed_operations": observed_for_candidate,
+            "planned_not_observed_exact": [
+                value
+                for value in planned_for_candidate
+                if value not in observed_for_candidate
+            ],
+            "observed_not_planned_exact": [
+                value
+                for value in observed_for_candidate
+                if value not in planned_for_candidate
+            ],
+        })
+
     downstream_cross_field_cards: list[str] = []
     linked_id_set = set(linked_card_ids)
     for card in affinity_map.get("cards", []):
@@ -507,6 +541,7 @@ def audit_map_payload(
         "framework_labels": framework_labels,
         "cards_by_exact_candidate_id": cards_by_exact_candidate_id,
         "framework_labels_without_exact_candidate_id_match": unmatched_framework_labels,
+        "candidate_operation_audits": candidate_operation_audits,
         "yield_kinds": yield_kinds,
         "target_responses": target_responses,
         "target_return_states": return_states,
@@ -514,8 +549,9 @@ def audit_map_payload(
         "interpretation_boundary": (
             "This is an exact-string provenance audit. Missing observed operations do "
             "not mean the selection failed; unmatched framework labels do not mean the "
-            "framework is wrong; observed/unobserved differences require return to the "
-            "actual material and selection reasoning."
+            "framework is wrong; candidate-level exact matches show provenance, not "
+            "framework effectiveness; observed/unobserved differences require return "
+            "to the actual material and selection reasoning."
         ),
     }
 
