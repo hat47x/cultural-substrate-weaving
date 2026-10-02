@@ -1415,7 +1415,7 @@
         "Pūrvamīmāṃsā hermeneutics",
         "ミーマーンサー解釈学"
       ],
-      "readiness": "profile-ready",
+      "readiness": "adopted",
       "structural_primitives": [
         "prescriptive unit",
         "sentence / purpose unity",
@@ -1467,7 +1467,8 @@
         }
       ],
       "profile_path": "research/framework-candidates/profiles/mimamsa-hermeneutics.md",
-      "adoption_hold": "lineage-sensitive"
+      "adoption_hold": "lineage-sensitive",
+      "runtime_path": "src/ja-JP/frameworks/mimamsa-hermeneutics.md"
     },
     {
       "id": "marshallese-wave-navigation",

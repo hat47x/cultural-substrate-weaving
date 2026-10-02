@@ -88,6 +88,7 @@ Status: research-only
 - fifth-wave-2026-10-02.md
 - sixth-wave-2026-10-02.md
 - seventh-wave-2026-10-02.md
+- eighth-wave-2026-10-02.md
 - worked-examples/ 以下のtarget-return例
 - comparisons/ 以下のnear-neighbor / comparative collapse test
 - portfolio-qualitative-audit-2026-10-01.md
@@ -114,6 +115,7 @@ Status: research-only
 - marshallese-wave-navigation
 - shinto-threshold-purification
 - tibetan-buddhist-mandala
+- mimamsa-hermeneutics
 採用済みでも研究を打ち切らない。runtimeが使う最小構造核と、独立Skill相当まで厚くする研究は分ける。
 
 ### 量を増やす側の候補
@@ -125,7 +127,6 @@ Status: research-only
 - jo-ha-kyu
 - rites-of-passage
 - buddhist-mandala
-- mimamsa-hermeneutics（profile-ready / lineage-sensitive）
 - jingluo
 - sefirot（research umbrella / lineage split required）
 - sefer-yetzirah-dimensions

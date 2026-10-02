@@ -1,6 +1,6 @@
 # Mīmāṃsā hermeneutics candidate profile
 
-Status: profile-ready / research-only / lineage-sensitive
+Status: adopted / runtime-corpus / lineage-sensitive
 
 ## Identity
 
@@ -137,10 +137,17 @@ See: `research/framework-candidates/comparisons/mimamsa-sentence-meaning-boundar
 4. keep competing segmentations when the text does not force one;
 5. return conclusions to the target document and domain rules rather than the framework.
 
-## Profile-ready decision
+## Runtime adoption synchronization
 
-The profile now has a bounded source basis, an explicit Bhāṭṭa / Prābhākara sentence-meaning boundary, a non-religious target-return example, and a stable de-binding route.
+The runtime dossier is `src/ja-JP/frameworks/mimamsa-hermeneutics.md`.
 
-It remains outside runtime because the next product-value question is whether its norm-conflict and prescriptive-unit operations stay distinct from generic close reading after repeated use. Broad efficacy scoring is not required yet; a second structurally different target example is enough for the next adoption decision.
+Adoption follows two structurally different target-return examples and an explicit operation boundary against stasis theory and Nyāya. The runtime core keeps prescriptive-unit detection, purpose unity, syntactic expectancy, semantic fitness, explicit/context-supplied distinction, and norm-conflict decomposition while leaving Vedic authority and sub-school-specific claims outside target-side authority.
 
-Worked example: `research/framework-candidates/worked-examples/mimamsa-hermeneutics.md`
+Worked examples:
+
+- `research/framework-candidates/worked-examples/mimamsa-hermeneutics.md`
+- `research/framework-candidates/worked-examples/mimamsa-hermeneutics-2.md`
+
+Comparison:
+
+- `research/framework-candidates/comparisons/mimamsa-vs-stasis-vs-nyaya.md`

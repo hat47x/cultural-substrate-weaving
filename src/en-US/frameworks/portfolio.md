@@ -31,6 +31,7 @@ This file indexes frameworks that CSW carries internally. Adopted does not mean 
 | Marshallese wave navigation | relative route, cue sequence, model/environment return | route cue / training model / situated sensing | marshallese-wave-navigation.md |
 | Shinto shrine threshold / purification | marked boundary, preparation, participant-state change, return | torii / approach / temizu / central act | shinto-threshold-purification.md |
 | Tibetan Buddhist mandala | center, directions, gates, nested boundaries, approach path | center / directions / gates / nested enclosure | tibetan-buddhist-mandala.md |
+| Mīmāṃsā prescriptive hermeneutics | prescriptive units, syntactic expectancy, semantic fit, contextual supplementation, norm conflict | prescription / syntax / context / norm conflict | mimamsa-hermeneutics.md |
 | Taiheki | embodied observation | bodily typology | ../domains/human-and-taiheki.md |
 
 ## Select by the missing cognitive operation
@@ -56,6 +57,7 @@ Do not begin with whichever framework name is easiest to recall. Start with the 
 | reason through local route cues rather than a literal map | Marshallese wave navigation | relative route, cue sequence, model/environment return |
 | inspect preparation around an explicitly marked threshold | Shinto shrine threshold / purification | threshold, preparation, central act, return |
 | read a field through center, directions, gates, and nested boundaries | Tibetan Buddhist mandala | center/periphery, directions, gates, nested enclosure |
+| separate rule scope, exceptions, and contextual supplementation | Mīmāṃsā prescriptive hermeneutics | prescriptive unit, syntax, semantic fit, norm conflict |
 | open an embodied observation axis | Taiheki | bodily response under tension and release |
 
 ### Keep near neighbors distinct
@@ -68,4 +70,4 @@ Do not begin with whichever framework name is easiest to recall. Start with the 
 
 Do not try to explain the whole target with one framework. Open a second framework only when the first pass reveals a different missing cognitive operation.
 
-The portfolio is now materially thicker in long-cycle time, whole–part relations, inference, social roles and ritual context, dispute location, transmission provenance, and route-oriented reasoning. Center/periphery spatial structure and explicit threshold/preparation sequences are now materially thicker. The portfolio remains thin in indexed narrative corpora, norm-conflict hermeneutics, and lineage-safe mediation layers. Framework count is not a success metric, but too narrow a population impoverishes the encounter function. Continue increasing source quality and structural breadth before efficacy testing.
+The portfolio is now materially thicker in long-cycle time, whole–part relations, inference, social roles and ritual context, dispute location, transmission provenance, and route-oriented reasoning. Center/periphery spatial structure and explicit threshold/preparation sequences are now materially thicker. Prescriptive scope, exception, contextual supplementation, and norm-conflict analysis are now materially thicker. The portfolio remains thin in indexed narrative corpora and lineage-safe mediation layers. Framework count is not a success metric, but too narrow a population impoverishes the encounter function. Continue increasing source quality and structural breadth before efficacy testing.

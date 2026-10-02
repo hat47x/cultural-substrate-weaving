@@ -153,6 +153,11 @@
       "skill_reference": "04q-tibetan-buddhist-mandala.md"
     },
     {
+      "id": "framework-mimamsa-hermeneutics",
+      "source": "frameworks/mimamsa-hermeneutics.md",
+      "skill_reference": "04r-mimamsa-hermeneutics.md"
+    },
+    {
       "id": "human-and-taiheki",
       "source": "domains/human-and-taiheki.md",
       "skill_reference": "05-human-and-taiheki.md"
@@ -206,7 +211,8 @@
       "frameworks/hadith-isnad-matn.md",
       "frameworks/marshallese-wave-navigation.md",
       "frameworks/shinto-threshold-purification.md",
-      "frameworks/tibetan-buddhist-mandala.md"
+      "frameworks/tibetan-buddhist-mandala.md",
+      "frameworks/mimamsa-hermeneutics.md"
     ],
     "02-human-and-taiheki.md": [
       "domains/human-and-taiheki.md"
