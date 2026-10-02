@@ -73,7 +73,7 @@ Useful fields include the target-side baseline, the cognitive function still mis
 
 This is not a ranking table. The record exists so the question "what cognitive work was this framework meant to do?" can be inspected later.
 
-When the repository/research workspace is available, `research/framework-candidates/scripts/framework_selection_workspace.py` may be used as an optional aid. It performs literal candidate recall, exact operation-label contrast, and generation of an unfilled selection worksheet. It does not perform automatic routing, fit scoring, or adoption decisions.
+When the repository/research workspace is available, `research/framework-candidates/scripts/framework_selection_workspace.py` may be used as an optional aid. It performs literal candidate recall, exact operation-label contrast, and generation of an unfilled selection worksheet. It does not perform automatic routing, fit scoring, or adoption decisions. If the worksheet has a stable `--ref`, downstream framework-generated cards may retain the same handle as `selection-ref` so selection intent → operation → yield → target response remains inspectable.
 
 ## 3a. Exploratory use and attribution use
 
