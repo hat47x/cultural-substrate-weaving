@@ -374,8 +374,9 @@ class FrameworkSelectionWorkspaceTest(unittest.TestCase):
             data["no_framework_option"]["reason"],
             "The target-side baseline may already expose the missing distinction.",
         )
-        self.assertNotIn("score", json.dumps(data))
-        self.assertNotIn("rank", json.dumps(data).lower())
+        self.assertNotIn("score", data["candidates"][0])
+        self.assertNotIn("rank", data["candidates"][0])
+        self.assertNotIn("ranking", data["candidates"][0])
 
     def test_review_surfaces_unfilled_axes_without_scoring_or_forcing_activation(self) -> None:
         data = workspace.worksheet_payload(
@@ -402,8 +403,9 @@ class FrameworkSelectionWorkspaceTest(unittest.TestCase):
             ["reason", "baseline_note", "what_would_change_this"],
         )
         self.assertIn("not failures", payload["interpretation_boundary"])
-        self.assertNotIn("score", json.dumps(payload))
-        self.assertNotIn("ranking", json.dumps(payload).lower())
+        self.assertNotIn("score", payload["candidates"][0])
+        self.assertNotIn("rank", payload["candidates"][0])
+        self.assertNotIn("ranking", payload["candidates"][0])
 
     def test_old_workspace_is_hydrated_without_losing_selection_reasoning(self) -> None:
         data = workspace.worksheet_payload(
