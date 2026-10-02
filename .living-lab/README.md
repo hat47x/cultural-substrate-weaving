@@ -35,7 +35,7 @@ Real rounds may refer to private chats, unpublished drafts, client material, int
 schema 0.2の`artifact_traces`は、成果物の「良し悪し」を採点するためではなく、どの経路で生まれ、対象へ戻したあと何が残ったかを追うために使います。
 
 - `origin`では、対象だけから生じたもの、framework由来のもの、cross-fieldで生じたもの、混合したものを区別する。
-- framework由来の成果物では、`framework_refs`を残し、必要に応じて`operation_refs`とframework contactの`selection_ref`を対応させる。
+- framework由来の成果物では、`framework_refs`を残す。selection workspaceを使った場合は、その安定したhandleを`selection_refs`へ写し、必要に応じて`operation_refs`も残す。framework contactの`selection_ref`と同じhandleを使うことで、選択理由から成果物までを往復できる。
 - `target_return.state`は、未確認、未解決、対象側で支持、弱化、棄却、対象帰還が不適用、を区別する。支持・弱化・棄却を記録するときは`evidence_refs`を必須にする。
 - `user_disposition`は、利用者が成果物を採用、修正、撤回したことが実際に観測できた場合だけ、その参照元とともに記録する。AIが利用者の判断を推測して埋めない。
 - 集計値は観測記録の棚卸しであり、frameworkの勝率、有用性スコア、採用KPIとして扱わない。

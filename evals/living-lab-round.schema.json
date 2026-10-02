@@ -232,6 +232,14 @@
         },
         "notes": {
           "type": "string"
+        },
+        "selection_refs": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "uniqueItems": true
         }
       },
       "allOf": [

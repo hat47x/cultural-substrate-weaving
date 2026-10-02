@@ -96,6 +96,10 @@ class LivingLabSummaryTests(unittest.TestCase):
         trace = summary["rounds"][0]["artifact_traces"][0]
         self.assertEqual(trace["artifact_ref"], "artifact:draft-v4")
         self.assertEqual(trace["framework_refs"], ["example-framework"])
+        self.assertEqual(
+            trace["selection_refs"],
+            ["selection://example-round/framework-choice"],
+        )
         self.assertIn("not KPIs", summary["interpretation_note"])
 
     def test_summary_requires_event_round_references_to_resolve(self) -> None:

@@ -59,6 +59,7 @@ MEASUREMENT_ALLOWED = MEASUREMENT_REQUIRED | {"unit", "notes"}
 ARTIFACT_TRACE_REQUIRED = {"artifact_ref", "origin", "target_return"}
 ARTIFACT_TRACE_ALLOWED = ARTIFACT_TRACE_REQUIRED | {
     "framework_refs",
+    "selection_refs",
     "operation_refs",
     "user_disposition",
     "notes",
@@ -288,6 +289,11 @@ def _validate_artifact_trace(value: Any, label: str) -> dict[str, Any]:
             f"{label}.framework_refs must identify provenance for framework-derived artifacts"
         )
 
+    _check_string_list(
+        trace.get("selection_refs", []),
+        f"{label}.selection_refs",
+        unique=True,
+    )
     _check_string_list(
         trace.get("operation_refs", []),
         f"{label}.operation_refs",

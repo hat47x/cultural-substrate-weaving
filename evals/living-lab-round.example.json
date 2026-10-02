@@ -100,7 +100,10 @@
         "state": "modified",
         "source_ref": "chat:example-source",
         "notes": "The user retained a revised form rather than adopting the generated artifact unchanged."
-      }
+      },
+      "selection_refs": [
+        "selection://example-round/framework-choice"
+      ]
     }
   ]
 }
