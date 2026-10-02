@@ -4,15 +4,19 @@ Status: research/toolkit / non-ranking / non-routing
 
 As the framework corpus grows, selection itself becomes a cognitive task. This helper externalizes three parts of that task without deciding them:
 
-1. recall candidates that literally mention a needed operation, primitive, or use;
-2. contrast explicitly chosen near-neighbors by exact operation labels;
-3. create an unfilled worksheet that records why each candidate is being considered and how it must return to the target.
+1. recall adopted candidates from explicit selection cues written in ordinary Japanese or English;
+2. recall candidates that literally mention a needed operation, primitive, or use;
+3. contrast explicitly chosen near-neighbors by exact operation labels;
+4. create an unfilled worksheet that records why each candidate is being considered and how it must return to the target.
 
 It is not a fit scorer, recommendation engine, or adoption gate.
 
 ```bash
 INVENTORY=research/framework-candidates/cognitive-operation-inventory.json
 TOOL=research/framework-candidates/scripts/framework_selection_workspace.py
+
+python "$TOOL" recall "$INVENTORY" \
+  --need "規則の範囲と例外と文脈補完を分けたい"
 
 python "$TOOL" shortlist "$INVENTORY" threshold --field primitive
 
@@ -51,6 +55,8 @@ python "$TOOL" show /tmp/selection.json
 # After framework-generated cards have been traced with the same selection-ref:
 python "$TOOL" audit-map /tmp/selection.json /tmp/board.json
 ```
+
+The `recall` command is the bridge from an ordinary-language missing cognitive function to the adopted corpus. It uses only explicit `selection_cues` stored in the inventory, performs punctuation/spacing normalization, preserves inventory order, and defaults to `adopted` candidates. It does not use embeddings, semantic similarity, scoring, or automatic routing. To inspect a research-only readiness state, pass `--readiness` explicitly.
 
 The shortlist preserves inventory order and computes no score. The contrast is exact-string only and does not infer semantic equivalence. The worksheet deliberately starts with role, intended cognitive job, near-neighbor difference, target-return questions, de-bound target language, and revision conditions unfilled.
 

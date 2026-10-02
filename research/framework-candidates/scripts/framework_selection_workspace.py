@@ -3,6 +3,7 @@ from __future__ import annotations
 import argparse
 import json
 import sys
+import unicodedata
 from pathlib import Path
 from typing import Any, Iterable
 
@@ -12,7 +13,14 @@ SEARCH_FIELDS = {
     "operation": ("cognitive_operations",),
     "primitive": ("structural_primitives",),
     "useful": ("useful_for",),
-    "all": ("names", "cognitive_operations", "structural_primitives", "useful_for"),
+    "cue": ("selection_cues",),
+    "all": (
+        "names",
+        "cognitive_operations",
+        "structural_primitives",
+        "useful_for",
+        "selection_cues",
+    ),
 }
 
 WORKSPACE_FORMAT = "csw.framework-selection-workspace/v1"
@@ -81,6 +89,7 @@ def candidate_summary(row: dict[str, Any]) -> dict[str, Any]:
         "cognitive_operations": list(row.get("cognitive_operations", [])),
         "structural_primitives": list(row.get("structural_primitives", [])),
         "useful_for": list(row.get("useful_for", [])),
+        "selection_cues": list(row.get("selection_cues", [])),
         "do_not_assume": list(row.get("do_not_assume", [])),
         "source_basis": {
             "count": len(sources) if isinstance(sources, list) else 0,
@@ -126,6 +135,53 @@ def shortlist_payload(
         "interpretation_boundary": (
             "Inventory order is preserved and no fit score or ranking is computed. "
             "A string match is only a recall aid."
+        ),
+    }
+
+
+
+def _literal_key(value: str) -> str:
+    normalized = unicodedata.normalize("NFKC", value).casefold()
+    return "".join(char for char in normalized if char.isalnum())
+
+
+def recall_payload(
+    data: dict[str, Any],
+    need: str,
+    readiness: Iterable[str] | None = None,
+) -> dict[str, Any]:
+    need_key = _literal_key(need)
+    if not need_key:
+        raise ValueError("need must not be empty")
+
+    accepted = set(readiness or ["adopted"])
+    rows = []
+    for row in candidates(data):
+        if accepted and str(row.get("readiness", "")) not in accepted:
+            continue
+
+        matched_cues = []
+        for cue in _strings(row.get("selection_cues", [])):
+            cue_key = _literal_key(cue)
+            if cue_key and (cue_key in need_key or need_key in cue_key):
+                matched_cues.append(cue)
+
+        if matched_cues:
+            rows.append({
+                "candidate": candidate_summary(row),
+                "matched_selection_cues": matched_cues,
+            })
+
+    return {
+        "format": "csw.framework-need-recall/v1",
+        "need": need,
+        "readiness": sorted(accepted),
+        "candidates": rows,
+        "interpretation_boundary": (
+            "Selection cues are explicit literal recall aids. "
+            "Candidate order is inventory order, not ranking. "
+            "A cue match does not choose a framework, establish semantic fit, "
+            "or bypass adoption and lineage boundaries."
         ),
     }
 
@@ -638,6 +694,15 @@ def build_parser() -> argparse.ArgumentParser:
     shortlist.add_argument("--field", choices=tuple(SEARCH_FIELDS), default="all")
     shortlist.add_argument("--readiness", action="append")
 
+    recall = sub.add_parser("recall")
+    recall.add_argument("inventory", type=Path)
+    recall.add_argument("--need", required=True)
+    recall.add_argument(
+        "--readiness",
+        action="append",
+        help="readiness states to include; defaults to adopted only",
+    )
+
     contrast = sub.add_parser("contrast")
     contrast.add_argument("inventory", type=Path)
     contrast.add_argument("candidate_id", nargs="+")
@@ -711,6 +776,8 @@ def main() -> None:
         data = load_inventory(args.inventory)
         if args.command == "shortlist":
             print_json(shortlist_payload(data, args.term, args.field, args.readiness))
+        elif args.command == "recall":
+            print_json(recall_payload(data, args.need, args.readiness))
         elif args.command == "contrast":
             print_json(contrast_payload(data, args.candidate_id))
         elif args.command == "worksheet":
