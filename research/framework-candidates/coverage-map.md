@@ -19,7 +19,7 @@ This map tracks structural diversity. It does not rank frameworks or claim that 
 | embodied observation | Taiheki | chakra | lineage-specific embodied practice |
 | coupled periodicity / multi-scale time | Maya calendars | Stems/Branches | more than two independently varying cycles |
 | seasonal phase / boundary | — | Twenty-Four Solar Terms | spatially varying ecological timing |
-| indexed narrative corpus | — | Ifá / Odù | culturally safe non-ritual abstraction |
+| indexed narrative corpus | — | Ifá / Odù (profile-ready / not-runtime) | safe corpus boundary and no simulation of living specialist authority before runtime |
 | experience decomposition | — | Five aggregates | non-overlap with existing Buddhist core |
 | route / network topology | Marshallese wave navigation | Jingluo | non-maritime route traditions and branching networks without medical claims |
 | whole-part reciprocity / multi-perspective network | — | Huayan | primary-text and lineage separation |

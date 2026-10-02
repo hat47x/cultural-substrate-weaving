@@ -782,7 +782,7 @@
         "Ifa",
         "Odù Ifá"
       ],
-      "readiness": "research-only",
+      "readiness": "profile-ready",
       "structural_primitives": [
         "256 odù",
         "specific divination signatures",
@@ -821,7 +821,12 @@
         }
       ],
       "profile_path": "research/framework-candidates/profiles/ifa-odu.md",
-      "adoption_hold": "living-tradition-sensitive"
+      "adoption_hold": "living-tradition-sensitive",
+      "runtime_blockers": [
+        "no authorized or source-bounded operational verse corpus is packaged",
+        "CSW must not assign odù or simulate babalawo authority",
+        "public structural summaries do not license generation of ese or ritual interpretation"
+      ]
     },
     {
       "id": "llull-ars",
@@ -1539,7 +1544,7 @@
         "ספר יצירה sefirot",
         "セーフェル・イェツィラーのsefirot"
       ],
-      "readiness": "research-only",
+      "readiness": "sourced-candidate",
       "adoption_hold": "text-version-sensitive",
       "structural_primitives": [
         "ten sefirot belimah",
@@ -1582,7 +1587,7 @@
         "theosophical Kabbalistic sefirot",
         "中世以降のtheosophical sefirot"
       ],
-      "readiness": "research-only",
+      "readiness": "sourced-candidate",
       "adoption_hold": "religious-lineage-sensitive",
       "structural_primitives": [
         "ten differentiated sefirot",
