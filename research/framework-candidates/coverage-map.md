@@ -6,8 +6,9 @@ This map tracks structural diversity. It does not rank frameworks or claim that 
 
 | Operation family | Adopted core | Sourced / research candidates | Main remaining gap |
 |---|---|---|---|
-| discrete configuration / local change | Yijing | Llull Ars | high-dimensional pruning |
+| discrete configuration / local change | Yijing | — | high-dimensional state transition without losing positional meaning |
 | dual relational cycle | Wuxing | — | multi-network interaction |
+| systematic combinatorial crossing / unseen combination | Llull Ars | — | higher-order explosion and target-constraint pruning without treating formal coverage as truth |
 | production layers / observer split | Sāṅkhya | theosophical sefirot | historically bounded layered mediation |
 | whole–part reciprocity / role-defined identity | Huayan | — | explicit cross-boundary topology and center/periphery geometry |
 | conditional chain / cessation | dependent origination | — | branching conditional networks |

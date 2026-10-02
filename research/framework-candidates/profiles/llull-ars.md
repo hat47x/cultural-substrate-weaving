@@ -1,6 +1,6 @@
 # Ramon Llull's Ars candidate profile
 
-Status: sourced-candidate / research-only
+Status: adopted / runtime-corpus / late-ternary-phase-bounded
 
 ## Source basis
 
@@ -36,6 +36,17 @@ Do not import Llull's theological conclusions as target facts. Keep Quaternary a
 - Does the generated combination produce a meaningful target question or only formal coverage?
 - Which combinations can be discarded immediately by target constraints?
 
-## Adoption gap
+## Runtime adoption synchronization
 
-Needs a minimal figure-independent runtime representation and rules for pruning combinatorial explosion.
+The runtime dossier is `src/ja-JP/frameworks/llull-ars.md`.
+
+Runtime scope is restricted to the late Ternary Art rather than the full historical development of Llull's Ars. The figure-independent operation is systematic binary/ternary crossing that produces target-return questions. CSW-added target-constraint pruning is kept separate from the historical framework.
+
+Worked examples:
+
+- `research/framework-candidates/worked-examples/llull-ars.md`
+- `research/framework-candidates/worked-examples/llull-ars-negative-boundary.md`
+
+Near-neighbor comparison:
+
+- `research/framework-candidates/comparisons/llull-vs-yijing-vs-catuskoti.md`

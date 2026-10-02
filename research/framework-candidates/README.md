@@ -90,6 +90,7 @@ Status: research-only
 - seventh-wave-2026-10-02.md
 - eighth-wave-2026-10-02.md
 - ninth-wave-2026-10-02.md
+- tenth-wave-2026-10-02.md
 - worked-examples/ 以下のtarget-return例
 - comparisons/ 以下のnear-neighbor / comparative collapse test
 - portfolio-qualitative-audit-2026-10-01.md
@@ -123,7 +124,6 @@ Status: research-only
 
 - twenty-four-solar-terms
 - heavenly-stems-earthly-branches
-- llull-ars
 - five-aggregates
 - jo-ha-kyu
 - rites-of-passage
