@@ -87,6 +87,7 @@ Status: research-only
 - fourth-wave-2026-10-01.md
 - fifth-wave-2026-10-02.md
 - sixth-wave-2026-10-02.md
+- seventh-wave-2026-10-02.md
 - worked-examples/ 以下のtarget-return例
 - comparisons/ 以下のnear-neighbor / comparative collapse test
 - portfolio-qualitative-audit-2026-10-01.md
@@ -127,7 +128,9 @@ Status: research-only
 - tibetan-buddhist-mandala
 - mimamsa-hermeneutics
 - jingluo
-- sefirot
+- sefirot（research umbrella / lineage split required）
+- sefer-yetzirah-dimensions
+- theosophical-sefirot
 - chakra
 - ifa-odu
 

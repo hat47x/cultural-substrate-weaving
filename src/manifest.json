@@ -143,6 +143,16 @@
       "skill_reference": "04o-marshallese-wave-navigation.md"
     },
     {
+      "id": "framework-shinto-threshold-purification",
+      "source": "frameworks/shinto-threshold-purification.md",
+      "skill_reference": "04p-shinto-threshold-purification.md"
+    },
+    {
+      "id": "framework-tibetan-buddhist-mandala",
+      "source": "frameworks/tibetan-buddhist-mandala.md",
+      "skill_reference": "04q-tibetan-buddhist-mandala.md"
+    },
+    {
       "id": "human-and-taiheki",
       "source": "domains/human-and-taiheki.md",
       "skill_reference": "05-human-and-taiheki.md"
@@ -194,7 +204,9 @@
       "frameworks/confucian-role-ritual.md",
       "frameworks/classical-stasis-theory.md",
       "frameworks/hadith-isnad-matn.md",
-      "frameworks/marshallese-wave-navigation.md"
+      "frameworks/marshallese-wave-navigation.md",
+      "frameworks/shinto-threshold-purification.md",
+      "frameworks/tibetan-buddhist-mandala.md"
     ],
     "02-human-and-taiheki.md": [
       "domains/human-and-taiheki.md"

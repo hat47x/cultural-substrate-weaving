@@ -23,11 +23,11 @@ This map tracks structural diversity. It does not rank frameworks or claim that 
 | experience decomposition | — | Five aggregates | non-overlap with existing Buddhist core |
 | route / network topology | Marshallese wave navigation | Jingluo | non-maritime route traditions and branching networks without medical claims |
 | whole-part reciprocity / multi-perspective network | — | Huayan | primary-text and lineage separation |
-| symbolic mediation network | — | Sefirot | reliable lineage separation |
+| symbolic mediation network | — | Sefer Yetzirah dimensions; theosophical sefirot | keep early dimensional/extents structure separate from later emanatory mediation |
 | explicit argument / inference structure | Nyāya inference | — | later debate/fallacy layers without flattening Indian logic |
 | social role / relation-conditioned conduct | Confucian role / li | — | additional role systems that do not duplicate relation mapping |
 | explicit threshold crossing / incorporation / preparation | — | Rites of Passage; Shinto shrine threshold / purification | comparative schema vs culture-native protocol; historical and shrine-variation separation |
-| spatial center-periphery / nested boundary | — | Buddhist mandala; Tibetan Buddhist mandala | lineage-specific structure map and non-ritual spatial contrast before adoption |
+| spatial center-periphery / nested boundary | Tibetan Buddhist mandala | Buddhist mandala umbrella | other lineage-specific spatial systems without pan-Buddhist collapse |
 | transmission provenance / chain topology | Hadith isnād / matn | — | other transmission traditions with different branch/content relations |
 | prescriptive hermeneutics / sentence-unit interpretation | — | Mīmāṃsā hermeneutics | Bhāṭṭa / Prābhākara separation and source-grounded interpretive precedence |
 

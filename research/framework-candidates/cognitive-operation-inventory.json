@@ -439,7 +439,12 @@
           "url": "https://www.cambridge.org/core/journals/harvard-theological-review/article/spheres-sefirot-and-the-imaginal-astronomical-discourse-of-classical-kabbalah/6406AC47AA34ACAFCA9E9F99823AF630"
         }
       ],
-      "source_packet_path": "research/framework-candidates/source-packets/sefirot.md"
+      "source_packet_path": "research/framework-candidates/source-packets/sefirot.md",
+      "adoption_hold": "lineage-split-required",
+      "related_candidates": [
+        "sefer-yetzirah-dimensions",
+        "theosophical-sefirot"
+      ]
     },
     {
       "id": "chakra",
@@ -807,7 +812,7 @@
         {
           "kind": "institutional-living-heritage-reference",
           "title": "Ifa divination system",
-          "url": "https://ich.unesco.org/en/RL/ifa-divination-system-00146?lang=en"
+          "url": "https://ich.unesco.org/en/RL/ifa-divination-system-00146"
         },
         {
           "kind": "scholarly-encyclopedia-reference",
@@ -815,7 +820,8 @@
           "url": "https://www.rep.routledge.com/articles/thematic/ifa-divination-corpus-the/v-1/sections/the-corpus-of-verses"
         }
       ],
-      "profile_path": "research/framework-candidates/profiles/ifa-odu.md"
+      "profile_path": "research/framework-candidates/profiles/ifa-odu.md",
+      "adoption_hold": "living-tradition-sensitive"
     },
     {
       "id": "llull-ars",
@@ -1072,13 +1078,14 @@
         "神社参拝の境界・清め",
         "torii / temizu / harae sequence"
       ],
-      "readiness": "sourced-candidate",
+      "readiness": "adopted",
       "structural_primitives": [
-        "marked threshold",
+        "marked sacred/ordinary threshold",
         "approach path",
-        "pre-worship purification",
+        "pre-central-act preparation",
         "central worship act",
-        "departure / return"
+        "departure / return",
+        "distinct purification practices rather than one invariant rite"
       ],
       "cognitive_operations": [
         "threshold-marking",
@@ -1110,16 +1117,27 @@
         },
         {
           "kind": "scholarly-institutional-reference",
-          "title": "Paying Respects at a Shinto Shrine",
-          "url": "https://d-museum.kokugakuin.ac.jp/eos/detail/?id=9876"
+          "title": "Harae",
+          "url": "https://d-museum.kokugakuin.ac.jp/eos/detail/?id=8732"
         },
         {
           "kind": "scholarly-institutional-reference",
-          "title": "Harae",
-          "url": "https://d-museum.kokugakuin.ac.jp/eos/detail/?id=8732"
+          "title": "Shubatsu",
+          "url": "https://d-museum.kokugakuin.ac.jp/eos/detail/?id=9053"
+        },
+        {
+          "kind": "scholarly-institutional-reference",
+          "title": "Temizuya",
+          "url": "https://d-museum.kokugakuin.ac.jp/eos/detail/?id=9671"
+        },
+        {
+          "kind": "scholarly-institutional-reference",
+          "title": "Misogi",
+          "url": "https://d-museum.kokugakuin.ac.jp/eos/detail/?id=8723"
         }
       ],
-      "profile_path": "research/framework-candidates/profiles/shinto-threshold-purification.md"
+      "profile_path": "research/framework-candidates/profiles/shinto-threshold-purification.md",
+      "runtime_path": "src/ja-JP/frameworks/shinto-threshold-purification.md"
     },
     {
       "id": "buddhist-mandala",
@@ -1128,7 +1146,7 @@
         "仏教マンダラ空間構造",
         "maṇḍala"
       ],
-      "readiness": "sourced-candidate",
+      "readiness": "research-only",
       "structural_primitives": [
         "distinguished center",
         "cardinal differentiation",
@@ -1172,7 +1190,7 @@
         }
       ],
       "profile_path": "research/framework-candidates/profiles/buddhist-mandala.md",
-      "adoption_hold": "lineage-sensitive",
+      "adoption_hold": "umbrella-lineage-split",
       "related_profiles": [
         "research/framework-candidates/profiles/tibetan-buddhist-mandala.md"
       ]
@@ -1229,7 +1247,7 @@
         "Tibetan Buddhist mandala",
         "チベット仏教マンダラ"
       ],
-      "readiness": "sourced-candidate",
+      "readiness": "adopted",
       "structural_primitives": [
         "center / periphery",
         "directional differentiation",
@@ -1238,11 +1256,11 @@
         "outside-to-center traversal"
       ],
       "cognitive_operations": [
-        "center-periphery",
-        "directional-quadrant",
-        "threshold-gate",
-        "nested-enclosure",
-        "outside-to-center-traversal"
+        "center-periphery-reframe",
+        "directional-role-map",
+        "nested-boundary-pass",
+        "gate-threshold-probe",
+        "center-approach-sequence"
       ],
       "useful_for": [
         "adding lineage-specific depth to spatial center-periphery research",
@@ -1258,7 +1276,12 @@
         {
           "kind": "museum-scholarly-reference",
           "title": "Mandalas: Mapping the Buddhist Art of Tibet",
-          "url": "https://www.metmuseum.org/met-publications/mandalas-mapping-the-buddhist-art-of-tibet"
+          "url": "https://www.metmuseum.org/ja/met-publications/mandalas-mapping-the-buddhist-art-of-tibet"
+        },
+        {
+          "kind": "museum-object-and-practice-reference",
+          "title": "Evoking the Divine: Mental Purification Using a Tibetan Tsakali Mandala",
+          "url": "https://www.metmuseum.org/fr/perspectives/tsakali-mandala"
         },
         {
           "kind": "museum-reference",
@@ -1266,7 +1289,9 @@
           "url": "https://rubinmuseum.org/the-mandala-a-guide-to-transformation/"
         }
       ],
-      "profile_path": "research/framework-candidates/profiles/tibetan-buddhist-mandala.md"
+      "profile_path": "research/framework-candidates/profiles/tibetan-buddhist-mandala.md",
+      "runtime_path": "src/ja-JP/frameworks/tibetan-buddhist-mandala.md",
+      "adoption_hold": "religious-lineage-sensitive"
     },
     {
       "id": "classical-stasis-theory",
@@ -1390,7 +1415,7 @@
         "Pūrvamīmāṃsā hermeneutics",
         "ミーマーンサー解釈学"
       ],
-      "readiness": "sourced-candidate",
+      "readiness": "profile-ready",
       "structural_primitives": [
         "prescriptive unit",
         "sentence / purpose unity",
@@ -1423,12 +1448,12 @@
         {
           "kind": "scholarly-reference",
           "title": "Language and Testimony in Classical Indian Philosophy",
-          "url": "https://plato.stanford.edu/archives/spr2011/entries/language-india/"
+          "url": "https://plato.stanford.edu/archives/fall2016/entries/language-india/"
         },
         {
           "kind": "scholarly-reference",
           "title": "The Literal-Nonliteral Distinction in Classical Indian Philosophy",
-          "url": "https://plato.stanford.edu/archives/spr2018/entries/literal-nonliteral-india/"
+          "url": "https://plato.stanford.edu/archives/spr2021/entries/literal-nonliteral-india/"
         },
         {
           "kind": "scholarly-reference",
@@ -1438,7 +1463,7 @@
         {
           "kind": "scholarly-reference",
           "title": "Duty and Sacrifice: A Logical Analysis of the Mīmāṃsā Theory of Vedic Injunctions",
-          "url": "https://www.tandfonline.com/doi/full/10.1080/01445340.2019.1615366"
+          "url": "https://www.tandfonline.com/doi/abs/10.1080/01445340.2019.1615366"
         }
       ],
       "profile_path": "research/framework-candidates/profiles/mimamsa-hermeneutics.md",
@@ -1505,6 +1530,94 @@
       "profile_path": "research/framework-candidates/profiles/marshallese-wave-navigation.md",
       "adoption_hold": "living-tradition-sensitive",
       "runtime_path": "src/ja-JP/frameworks/marshallese-wave-navigation.md"
+    },
+    {
+      "id": "sefer-yetzirah-dimensions",
+      "names": [
+        "Sefer Yetzirah sefirot",
+        "ספר יצירה sefirot",
+        "セーフェル・イェツィラーのsefirot"
+      ],
+      "readiness": "research-only",
+      "adoption_hold": "text-version-sensitive",
+      "structural_primitives": [
+        "ten sefirot belimah",
+        "directional or dimensional extents",
+        "paired oppositions",
+        "finite count with open depth"
+      ],
+      "cognitive_operations": [
+        "dimension-pairing",
+        "opposed-extents",
+        "axis-reframing",
+        "finite-count-open-depth"
+      ],
+      "useful_for": [
+        "testing whether a problem is better described through independent axes than through levels",
+        "opening opposed directional or temporal extents without importing a later Tree of Life"
+      ],
+      "do_not_assume": [
+        "later theosophical divine attributes are already present in the same structure",
+        "one Sefer Yetzirah edition is the timeless canonical text",
+        "a modern Tree of Life diagram belongs to this candidate"
+      ],
+      "sources": [
+        {
+          "kind": "primary-text-library",
+          "title": "Sefer Yetzirah — Sefaria Library",
+          "url": "https://www.sefaria.org/texts/Kabbalah/Sefer%20Yetzirah"
+        },
+        {
+          "kind": "scholarly-specialist-reference",
+          "title": "Spheres, Sefirot, and the Imaginal Astronomical Discourse of Classical Kabbalah",
+          "url": "https://www.cambridge.org/core/journals/harvard-theological-review/article/spheres-sefirot-and-the-imaginal-astronomical-discourse-of-classical-kabbalah/6406AC47AA34ACAFCA9E9F99823AF630"
+        }
+      ],
+      "source_packet_path": "research/framework-candidates/source-packets/sefer-yetzirah-dimensions.md"
+    },
+    {
+      "id": "theosophical-sefirot",
+      "names": [
+        "theosophical Kabbalistic sefirot",
+        "中世以降のtheosophical sefirot"
+      ],
+      "readiness": "research-only",
+      "adoption_hold": "religious-lineage-sensitive",
+      "structural_primitives": [
+        "ten differentiated sefirot",
+        "emanatory or mediating relation",
+        "attribute network",
+        "tension and balance",
+        "historically changing diagrams and orders"
+      ],
+      "cognitive_operations": [
+        "layered-mediation",
+        "emanatory-relation",
+        "attribute-tension",
+        "relational-ordering"
+      ],
+      "useful_for": [
+        "asking what mediates between an abstract whole and concrete manifestation",
+        "examining differentiated functions that remain connected without collapsing into a generic hierarchy"
+      ],
+      "do_not_assume": [
+        "all medieval and later Kabbalah share one invariant Tree of Life",
+        "Sefer Yetzirah and theosophical sefirot are the same structure",
+        "religious divine attributes are target-side facts"
+      ],
+      "sources": [
+        {
+          "kind": "scholarly-reference",
+          "title": "A Note on the Sefirot — Reading the Zohar",
+          "url": "https://academic.oup.com/book/1782/chapter-abstract/141450127"
+        },
+        {
+          "kind": "scholarly-specialist-reference",
+          "title": "Spheres, Sefirot, and the Imaginal Astronomical Discourse of Classical Kabbalah",
+          "url": "https://www.cambridge.org/core/journals/harvard-theological-review/article/spheres-sefirot-and-the-imaginal-astronomical-discourse-of-classical-kabbalah/6406AC47AA34ACAFCA9E9F99823AF630"
+        }
+      ],
+      "source_packet_path": "research/framework-candidates/source-packets/theosophical-sefirot.md"
     }
   ]
 }

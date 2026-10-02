@@ -6,7 +6,7 @@ Status: research-only / living-tradition-sensitive
 
 UNESCO Intangible Cultural Heritage, Ifa divination system
 
-https://ich.unesco.org/en/RL/ifa-divination-system-00146?lang=en
+https://ich.unesco.org/en/RL/ifa-divination-system-00146
 
 UNESCO describes 256 odù, each with a divination signature, and a much larger evolving corpus of ese verses transmitted and interpreted by trained Yoruba priests.
 
@@ -39,6 +39,12 @@ Do not simulate babalawo authority, detach sacred vocabulary into generic produc
 - What changes when a compact state points to a narrative corpus rather than a label?
 - Can a retrieved story generate a question that survives after sacred/signature mapping is removed?
 - What interpretive authority would be falsely implied by automation?
+
+## Adoption hold
+
+The candidate remains research-only even though the structural value is clear. The corpus is living religious and specialist knowledge, and CSW must not substitute retrieval over public summaries for babalawo training or interpretive authority.
+
+A safe future design would need to show that “compact signature → large narrative corpus → situated interpretation” can be used as an abstract cognitive operation without reproducing sacred assignment, verses, or priestly judgment.
 
 ## Adoption gap
 

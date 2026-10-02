@@ -1,6 +1,6 @@
 # Buddhist mandala spatial-organization candidate profile
 
-Status: sourced-candidate / research-only / lineage-sensitive
+Status: research-only / umbrella / lineage-sensitive
 
 ## Source basis
 
@@ -77,10 +77,10 @@ Before returning a generated candidate to the target:
 - If the presumed center is shifted to another node, which relations remain?
 - After removing mandala vocabulary, which spatial distinctions still survive?
 
-## Adoption gap
+## Runtime decision
 
-The candidate fills the spatial center-periphery gap at research level. Runtime adoption should wait for:
+This generic Buddhist profile remains a research umbrella and is not adopted as a runtime dossier.
 
-- a bounded lineage decision or explicit minimal-cross-lineage structural contract;
-- one worked target-return example demonstrating that "center" is not automatically privileged or true;
-- a clear distinction from Huayan's node/whole-part perspective and from future route/network frameworks such as Jingluo.
+The first runtime adoption is lineage-bounded as `tibetan-buddhist-mandala`. Other Buddhist mandala traditions should be researched as separate lineage-specific dossiers rather than appended to one pan-Buddhist schema.
+
+Decision note: `research/framework-candidates/comparisons/buddhist-mandala-umbrella-vs-tibetan-runtime.md`
