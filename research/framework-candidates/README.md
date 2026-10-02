@@ -112,7 +112,6 @@ Status: research-only
 - classical-stasis-theory
 - hadith-isnad-matn
 - marshallese-wave-navigation
-
 - shinto-threshold-purification
 - tibetan-buddhist-mandala
 採用済みでも研究を打ち切らない。runtimeが使う最小構造核と、独立Skill相当まで厚くする研究は分ける。
