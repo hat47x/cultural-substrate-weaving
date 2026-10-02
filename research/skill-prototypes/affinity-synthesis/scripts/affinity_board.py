@@ -205,12 +205,13 @@ def cmd_trace_card(args: argparse.Namespace) -> None:
                 args.yield_kind,
                 args.target_response,
                 args.target_response_ref,
+                args.selection_ref,
                 args.as_if,
                 args.note,
             )
         ):
             raise ValueError(
-                "trace-card requires framework, operation, location, yield-kind, target-response, target-response-ref, as-if, or note"
+                "trace-card requires framework, operation, location, yield-kind, target-response, target-response-ref, selection-ref, as-if, or note"
             )
 
         card = find_item(data, "card", args.card)
@@ -227,6 +228,7 @@ def cmd_trace_card(args: argparse.Namespace) -> None:
             ("yield_kinds", args.yield_kind),
             ("target_responses", args.target_response),
             ("target_response_refs", args.target_response_ref),
+            ("selection_refs", args.selection_ref),
         ):
             if values is None:
                 continue
@@ -1424,6 +1426,12 @@ def build_parser() -> argparse.ArgumentParser:
     trace_card.add_argument("--yield-kind", action="append", default=None)
     trace_card.add_argument("--target-response", action="append", default=None)
     trace_card.add_argument("--target-response-ref", action="append", default=None)
+    trace_card.add_argument(
+        "--selection-ref",
+        action="append",
+        default=None,
+        help="stable framework-selection workspace handle; provenance only",
+    )
     trace_card.add_argument("--as-if")
     trace_card.add_argument("--note")
     trace_card.set_defaults(func=cmd_trace_card)
