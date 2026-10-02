@@ -22,10 +22,13 @@ python "$TOOL" worksheet "$INVENTORY" \
   --need "separate establishment conditions from whole/part re-identification" \
   --candidate dependent-origination \
   --candidate huayan \
-  --baseline "target-side baseline before framework contact"
+  --baseline "target-side baseline before framework contact" \
+  --ref "selection://round-03/framework-choice"
 ```
 
 The shortlist preserves inventory order and computes no score. The contrast is exact-string only and does not infer semantic equivalence. The worksheet deliberately leaves role, intended cognitive job, near-neighbor difference, target-return questions, de-bound target language, and revision conditions blank.
+
+When a stable `--ref` is supplied, keep that handle with the worksheet and reuse it as `trace-card --selection-ref` on downstream framework-generated cards. The handle is provenance only; it does not make the selection correct or the card target-supported.
 
 A useful workflow is:
 
