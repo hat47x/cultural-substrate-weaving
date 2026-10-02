@@ -93,6 +93,7 @@ Status: research-only
 - tenth-wave-2026-10-02.md
 - eleventh-wave-2026-10-02.md
 - twelfth-wave-2026-10-02.md
+- thirteenth-wave-2026-10-02.md
 - worked-examples/ 以下のtarget-return例
 - comparisons/ 以下のnear-neighbor / comparative collapse test
 - portfolio-qualitative-audit-2026-10-01.md
@@ -135,6 +136,7 @@ Status: research-only
 - sefirot（research umbrella / lineage split required）
 - sefer-yetzirah-dimensions（profile-ready / text-version-sensitive）
 - theosophical-sefirot（profile-ready / religious-lineage-sensitive）
+- inka-khipu-record-structure（profile-ready / undeciphered-semantics-sensitive）
 - chakra
 - ifa-odu（profile-ready / living-tradition-sensitive / not-runtime）
 

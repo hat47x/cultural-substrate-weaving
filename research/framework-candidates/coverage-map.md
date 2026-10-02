@@ -30,6 +30,7 @@ This map tracks structural diversity. It does not rank frameworks or claim that 
 | explicit threshold crossing / incorporation / preparation | Shinto shrine threshold / purification | Rites of Passage | longer liminal/incorporation processes and other culture-specific threshold systems |
 | spatial center-periphery / nested boundary | Tibetan Buddhist mandala | Buddhist mandala umbrella | other lineage-specific spatial systems without pan-Buddhist collapse |
 | transmission provenance / chain topology | Hadith isnād / matn | — | other transmission traditions with different branch/content relations |
+| material / positional record encoding | — | Inka khipu record structure (profile-ready) | other non-textual record systems and tests of distinctness from generic data modeling |
 | prescriptive hermeneutics / sentence-unit interpretation | Mīmāṃsā hermeneutics | — | additional culture-specific norm-conflict systems without collapsing into generic legal interpretation |
 
 ## Priority rule

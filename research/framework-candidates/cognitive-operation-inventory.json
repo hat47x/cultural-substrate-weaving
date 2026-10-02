@@ -1922,6 +1922,86 @@
       "negative_example_paths": [
         "research/framework-candidates/worked-examples/theosophical-sefirot-negative.md"
       ]
+    },
+    {
+      "id": "inka-khipu-record-structure",
+      "names": [
+        "khipu",
+        "quipu",
+        "Inka-style khipu",
+        "インカのキープ"
+      ],
+      "readiness": "profile-ready",
+      "adoption_hold": "undeciphered-semantics-sensitive",
+      "structural_primitives": [
+        "primary / pendant / subsidiary cord attachment hierarchy",
+        "position along a carrier",
+        "knot form and count",
+        "grouping or summary relations",
+        "multiple recorded physical channels with unevenly known semantics"
+      ],
+      "cognitive_operations": [
+        "attachment-hierarchy-preservation",
+        "positional-value-channel",
+        "multichannel-record-probe",
+        "grouping-and-summary-relation",
+        "undeciphered-semantics-preservation",
+        "flattening-loss-audit"
+      ],
+      "useful_for": [
+        "detecting information loss when a structured physical or visual record is flattened into text or rows",
+        "separating item value from attachment position and grouping",
+        "preserving structured but unexplained channels without inventing semantics"
+      ],
+      "do_not_assume": [
+        "all khipus are numerical records",
+        "color twist fiber orientation or non-numerical patterns have universally decoded meanings",
+        "structural regularity licenses narrative decipherment",
+        "khipu is historically equivalent to a modern database spreadsheet or binary code",
+        "Inka archaeological khipus and living or post-Inka Andean traditions form one invariant system"
+      ],
+      "sources": [
+        {
+          "kind": "open-research-repository",
+          "title": "Open Khipu Repository",
+          "url": "https://github.com/khipulab/open-khipu-repository"
+        },
+        {
+          "kind": "archival-dataset",
+          "title": "The Open Khipu Repository — Zenodo",
+          "url": "https://zenodo.org/records/5037552"
+        },
+        {
+          "kind": "museum-object-record",
+          "title": "Quipu — Peabody Museum Collections Online",
+          "url": "https://collections.peabody.harvard.edu/objects/details/80232"
+        },
+        {
+          "kind": "scholarly-institutional-exhibit",
+          "title": "Inka Khipus (1450–1534 CE) — Dumbarton Oaks",
+          "url": "https://www.doaks.org/resources/online-exhibits/written-in-knots/inka"
+        },
+        {
+          "kind": "scholarly-corpus-study",
+          "title": "How Can Data Science Contribute to Understanding the Khipu Code?",
+          "url": "https://www.cambridge.org/core/journals/latin-american-antiquity/article/how-can-data-science-contribute-to-understanding-the-khipu-code/E2D0E68A0515F3F9582A23C63693F4CE"
+        }
+      ],
+      "profile_path": "research/framework-candidates/profiles/inka-khipu-record-structure.md",
+      "selection_cues": [
+        "値だけでなく位置や結び付きにも情報がある記録を見たい",
+        "平坦化で失われる階層や配置の意味を見たい",
+        "意味不明だが構造化された特徴を推測せず残したい",
+        "inspect records where attachment and position carry information beyond values",
+        "audit what hierarchy or layout would be lost by flattening",
+        "preserve structured but undeciphered channels without inventing meaning"
+      ],
+      "worked_example_paths": [
+        "research/framework-candidates/worked-examples/inka-khipu-record-structure.md"
+      ],
+      "negative_example_paths": [
+        "research/framework-candidates/worked-examples/inka-khipu-record-structure-negative.md"
+      ]
     }
   ]
 }
