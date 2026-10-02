@@ -785,7 +785,7 @@
         "二十四節気",
         "Twenty-Four Solar Terms"
       ],
-      "readiness": "sourced-candidate",
+      "readiness": "profile-ready",
       "structural_primitives": [
         "annual solar cycle",
         "twenty-four named segments",
@@ -812,16 +812,36 @@
       "sources": [
         {
           "kind": "institutional-living-heritage-reference",
-          "title": "The Twenty-Four Solar Terms",
-          "url": "https://ich.unesco.org/en/RL/the-twenty-four-solar-terms-knowledge-in-china-of-time-and-practices-developed-through-observation-of-the-suns-annual-motion-00647"
+          "title": "The Twenty-Four Solar Terms — UNESCO Intangible Cultural Heritage",
+          "url": "https://ich.unesco.org/en/RL/the-twenty-four-solar-terms-knowledge-in-china-of-time-and-practices-developed-through-observation-of-the-sun-s-annual-motion-00647"
         },
         {
-          "kind": "scholarly-empirical-reference",
+          "kind": "astronomical-institutional-reference",
+          "title": "The 24 Solar Terms — Hong Kong Observatory",
+          "url": "https://www.hko.gov.hk/en/gts/time/24solarterms.htm"
+        },
+        {
+          "kind": "scholarly-geographic-context",
           "title": "Analysis of geographical origin of solar terms based on the STTMD method",
           "url": "https://www.nature.com/articles/s41598-024-73740-x"
         }
       ],
-      "profile_path": "research/framework-candidates/profiles/twenty-four-solar-terms.md"
+      "profile_path": "research/framework-candidates/profiles/twenty-four-solar-terms.md",
+      "adoption_hold": "regional-ecological-context-sensitive",
+      "selection_cues": [
+        "一年を四季や四半期より細かい位相で見たい",
+        "毎年繰り返す変化の境界を細かく見たい",
+        "暦上のタイミングと実際の地域条件を分けたい",
+        "inspect annual phase more finely than seasons or quarters",
+        "look for repeatable transition boundaries within one year",
+        "separate inherited calendar timing from observed local conditions"
+      ],
+      "worked_example_paths": [
+        "research/framework-candidates/worked-examples/twenty-four-solar-terms.md"
+      ],
+      "negative_example_paths": [
+        "research/framework-candidates/worked-examples/twenty-four-solar-terms-negative.md"
+      ]
     },
     {
       "id": "heavenly-stems-earthly-branches",
@@ -831,29 +851,32 @@
         "Heavenly Stems and Earthly Branches",
         "ganzhi"
       ],
-      "readiness": "sourced-candidate",
+      "readiness": "profile-ready",
       "structural_primitives": [
-        "ten-stem cycle",
-        "twelve-branch cycle",
-        "sequential synchronized pairing",
-        "sixty-position recurrence"
+        "ordered ten-position stem cycle",
+        "ordered twelve-position branch cycle",
+        "synchronized stepwise pairing",
+        "60-step joint recurrence",
+        "shared-divisor constrained reachable pair space"
       ],
       "cognitive_operations": [
-        "coupled-cycle",
-        "phase-offset",
-        "recurrence-distance",
+        "synchronized-cycle-pairing",
         "coordinate-pair",
-        "partial-vs-full-recurrence"
+        "partial-vs-full-recurrence",
+        "recurrence-distance",
+        "unreachable-pair-state-probe",
+        "phase-offset"
       ],
       "useful_for": [
-        "asking how 10- and 12-position cycles create a 60-position joint state",
-        "distinguishing partial recurrence from full recurrence",
-        "tracking offset between periodic coordinates"
+        "distinguishing recurrence of one periodic coordinate from recurrence of the joint state",
+        "finding pair states that are mathematically possible in a cross product but unreachable under synchronized advancement",
+        "testing whether two periodic coordinates are coupled or independently selectable"
       ],
       "do_not_assume": [
-        "later cosmological meanings are identical to earliest calendrical use",
-        "zodiac personality claims follow from cycle mechanics",
-        "calendar coordinates cause target events"
+        "later astrology zodiac medicine or personality correspondences belong to the early calendrical core",
+        "all 10 by 12 mathematical pairs are reachable under synchronous advancement",
+        "a 60-step recurrence carries target-side cultural meaning",
+        "all East Asian historical uses form one invariant system"
       ],
       "sources": [
         {
@@ -867,7 +890,22 @@
           "url": "https://assets.cambridge.org/97805210/35378/excerpt/9780521035378_excerpt.pdf"
         }
       ],
-      "profile_path": "research/framework-candidates/profiles/heavenly-stems-earthly-branches.md"
+      "profile_path": "research/framework-candidates/profiles/heavenly-stems-earthly-branches.md",
+      "adoption_hold": "early-calendrical-layer-bounded",
+      "selection_cues": [
+        "二つの周期が同時に進むとき到達できない組合せを見たい",
+        "片方の周期が戻っても全体状態が戻らないことを見たい",
+        "直積ではなく同期した二周期の到達状態を見たい",
+        "inspect unreachable pair states under two synchronized cycles",
+        "separate recurrence of one coordinate from recurrence of the joint state",
+        "test whether two periodic coordinates traverse a constrained subset rather than a full cross product"
+      ],
+      "worked_example_paths": [
+        "research/framework-candidates/worked-examples/heavenly-stems-earthly-branches.md"
+      ],
+      "negative_example_paths": [
+        "research/framework-candidates/worked-examples/heavenly-stems-earthly-branches-negative.md"
+      ]
     },
     {
       "id": "ifa-odu",
@@ -2001,6 +2039,79 @@
       ],
       "negative_example_paths": [
         "research/framework-candidates/worked-examples/inka-khipu-record-structure-negative.md"
+      ]
+    },
+    {
+      "id": "vedic-recitation-pathas",
+      "names": [
+        "Vedic recitation pathas",
+        "Vedic chanting recitation modes",
+        "ヴェーダ詠唱のrecitation pathas"
+      ],
+      "readiness": "profile-ready",
+      "adoption_hold": "living-religious-tradition-sensitive",
+      "structural_primitives": [
+        "continuous recitation of an ordered sequence",
+        "segmented recitation that exposes unit boundaries",
+        "sequential overlapping adjacency",
+        "patterned repetition across alternate recitation forms",
+        "phonetic and accentual fidelity within living oral transmission"
+      ],
+      "cognitive_operations": [
+        "continuous-vs-segmented-view",
+        "overlapping-adjacency-check",
+        "alternate-sequence-cross-check",
+        "repetition-pattern-probe",
+        "order-and-boundary-fidelity-audit"
+      ],
+      "useful_for": [
+        "checking whether an ordered sequence survived transcription normalization or migration",
+        "making local adjacency explicit when a compact representation hides boundaries",
+        "comparing multiple human-inspectable views of the same sequence before accepting a transformation as faithful"
+      ],
+      "do_not_assume": [
+        "the tradition is historically equivalent to a modern error-correcting code",
+        "all Vedic recensions and regional chanting traditions use one invariant set of techniques",
+        "faithful recitation establishes semantic truth or interpretation",
+        "CSW may certify Sanskrit pronunciation accent ritual correctness or lineage authenticity",
+        "repetition is useful when the target itself has no meaningful order or boundary"
+      ],
+      "sources": [
+        {
+          "kind": "living-tradition-institutional-record",
+          "title": "Tradition of Vedic Chanting — UNESCO Multimedia Archives",
+          "url": "https://www.unesco.org/archives/multimedia/document-4671"
+        },
+        {
+          "kind": "scholarly-regional-overview",
+          "title": "Vedic chanting in Kerala — International Institute for Asian Studies",
+          "url": "https://www.iias.asia/the-newsletter/article/vedic-chanting-kerala"
+        },
+        {
+          "kind": "specialist-monograph",
+          "title": "Nambudiri, Veda recitation — J. F. Staal (1961)",
+          "url": "https://archive.org/details/nambudirivedarec0000jfst"
+        },
+        {
+          "kind": "scholarly-historical-study",
+          "title": "PĀNINI AND THE KRAMAPĀṬHA OF THE ṚGVEDA",
+          "url": "https://www.jstor.org/stable/41693604"
+        }
+      ],
+      "profile_path": "research/framework-candidates/profiles/vedic-recitation-pathas.md",
+      "selection_cues": [
+        "同じ系列を連続形と分節形で照合したい",
+        "順序や単位境界の取り違えを複数表現で検査したい",
+        "隣接関係を重なり窓で明示して変換ミスを見たい",
+        "cross-check one ordered sequence through alternate explicit views",
+        "inspect whether segmentation or adjacency changed during transformation",
+        "audit order and boundary fidelity without treating repetition as proof"
+      ],
+      "worked_example_paths": [
+        "research/framework-candidates/worked-examples/vedic-recitation-pathas.md"
+      ],
+      "negative_example_paths": [
+        "research/framework-candidates/worked-examples/vedic-recitation-pathas-negative.md"
       ]
     }
   ]

@@ -18,8 +18,8 @@ This map tracks structural diversity. It does not rank frameworks or claim that 
 | rhetorical issue-state / dispute location | Classical stasis theory | — | culturally distinct dispute-location systems |
 | expression → reception | Rasa | Jo-Ha-Kyū (profile-ready) | narrative sequencing that is not reducible to reception or pacing |
 | embodied observation | Taiheki | chakra | lineage-specific embodied practice |
-| coupled periodicity / multi-scale time | Maya calendars | Stems/Branches | more than two independently varying cycles |
-| seasonal phase / boundary | — | Twenty-Four Solar Terms | spatially varying ecological timing |
+| coupled periodicity / multi-scale time | Maya calendars | Stems/Branches (profile-ready) | more than two independently varying cycles and other constrained reachability patterns |
+| seasonal phase / boundary | — | Twenty-Four Solar Terms (profile-ready) | other culture-specific phase systems and spatially varying ecological timing |
 | indexed narrative corpus | — | Ifá / Odù (profile-ready / not-runtime) | safe corpus boundary and no simulation of living specialist authority before runtime |
 | experience decomposition | — | Five aggregates (profile-ready) | demonstrate distinctness from generic qualitative coding after de-binding |
 | route / network topology | Marshallese wave navigation | Jingluo | non-maritime route traditions and branching networks without medical claims |
@@ -30,6 +30,7 @@ This map tracks structural diversity. It does not rank frameworks or claim that 
 | explicit threshold crossing / incorporation / preparation | Shinto shrine threshold / purification | Rites of Passage | longer liminal/incorporation processes and other culture-specific threshold systems |
 | spatial center-periphery / nested boundary | Tibetan Buddhist mandala | Buddhist mandala umbrella | other lineage-specific spatial systems without pan-Buddhist collapse |
 | transmission provenance / chain topology | Hadith isnād / matn | — | other transmission traditions with different branch/content relations |
+| oral / performative sequence preservation / alternate-view fidelity | — | Vedic recitation pathas (profile-ready) | compare against a second oral-memory tradition and ordinary diff/checksum practice before runtime |
 | material / positional record encoding | — | Inka khipu record structure (profile-ready) | other non-textual record systems and tests of distinctness from generic data modeling |
 | prescriptive hermeneutics / sentence-unit interpretation | Mīmāṃsā hermeneutics | — | additional culture-specific norm-conflict systems without collapsing into generic legal interpretation |
 
