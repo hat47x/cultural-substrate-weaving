@@ -34,6 +34,12 @@ EXIT_RECORD_FIELDS = {
     "framework-specific-scaffold": "framework_specific_scaffolds_to_keep",
 }
 
+NON_FORCE_GUARDRAIL_FIELDS = (
+    "contact_if",
+    "stop_if",
+    "survive_if",
+)
+
 CONSIDERATION_FIELDS = {
     "target_connection": "target_connection",
     "structural_difference": "structural_difference",
@@ -339,6 +345,11 @@ def worksheet_payload(
             "target_return_questions": [],
             "de_bound_target_language": "",
             "what_would_change_this_choice": "",
+            "non_force_guardrails": {
+                "contact_if": "",
+                "stop_if": "",
+                "survive_if": "",
+            },
             "consideration_axes": {
                 "target_connection": "",
                 "structural_difference": "",
@@ -418,6 +429,17 @@ def ensure_consideration_fields(data: dict[str, Any]) -> None:
             )
         for key in CONSIDERATION_FIELDS:
             axes.setdefault(key, "")
+
+        guardrails = row.get("non_force_guardrails")
+        if guardrails is None:
+            guardrails = {}
+            row["non_force_guardrails"] = guardrails
+        if not isinstance(guardrails, dict):
+            raise ValueError(
+                f"candidate non_force_guardrails must be an object: {row.get('id', '')}"
+            )
+        for key in NON_FORCE_GUARDRAIL_FIELDS:
+            guardrails.setdefault(key, "")
 
     option = data.get("no_framework_option")
     if option is None:
@@ -535,6 +557,29 @@ def update_consideration(
         raise ValueError("set-consideration requires at least one update")
 
 
+def update_non_force_guardrail(
+    data: dict[str, Any],
+    candidate_id: str,
+    *,
+    contact_if: str | None = None,
+    stop_if: str | None = None,
+    survive_if: str | None = None,
+) -> None:
+    ensure_consideration_fields(data)
+    row = find_workspace_candidate(data, candidate_id)
+    if contact_if is None and stop_if is None and survive_if is None:
+        raise ValueError("set-guardrail requires at least one update")
+
+    guardrails = row["non_force_guardrails"]
+    for key, value in (
+        ("contact_if", contact_if),
+        ("stop_if", stop_if),
+        ("survive_if", survive_if),
+    ):
+        if value is not None:
+            guardrails[key] = value
+
+
 def update_non_activation(
     data: dict[str, Any],
     *,
@@ -563,6 +608,11 @@ def review_payload(data: dict[str, Any]) -> dict[str, Any]:
             "candidate_id": row.get("id"),
             "role": row.get("role"),
             "consideration_axes": dict(axes),
+            "non_force_guardrails": dict(row["non_force_guardrails"]),
+            "unfilled_guardrails": [
+                key for key in NON_FORCE_GUARDRAIL_FIELDS
+                if not str(row["non_force_guardrails"].get(key, "")).strip()
+            ],
             "unfilled_axes": [
                 key for key in CONSIDERATION_FIELDS
                 if not str(axes.get(key, "")).strip()
@@ -858,6 +908,19 @@ def cmd_set_consideration(args: argparse.Namespace) -> None:
     print(args.candidate_id)
 
 
+def cmd_set_guardrail(args: argparse.Namespace) -> None:
+    data = load_workspace(args.workspace)
+    update_non_force_guardrail(
+        data,
+        args.candidate_id,
+        contact_if=args.contact_if,
+        stop_if=args.stop_if,
+        survive_if=args.survive_if,
+    )
+    save_workspace(args.workspace, data)
+    print(args.candidate_id)
+
+
 def cmd_set_non_activation(args: argparse.Namespace) -> None:
     data = load_workspace(args.workspace)
     update_non_activation(
@@ -985,6 +1048,20 @@ def build_parser() -> argparse.ArgumentParser:
     set_consideration.add_argument("--misuse-risk")
     set_consideration.add_argument("--domain-constraint")
     set_consideration.set_defaults(func=cmd_set_consideration)
+
+    set_guardrail = sub.add_parser(
+        "set-guardrail",
+        help=(
+            "record explicit contact/stop/survival conditions without turning them "
+            "into an automatic activation gate"
+        ),
+    )
+    set_guardrail.add_argument("workspace", type=Path)
+    set_guardrail.add_argument("candidate_id")
+    set_guardrail.add_argument("--contact-if")
+    set_guardrail.add_argument("--stop-if")
+    set_guardrail.add_argument("--survive-if")
+    set_guardrail.set_defaults(func=cmd_set_guardrail)
 
     set_non_activation = sub.add_parser("set-non-activation")
     set_non_activation.add_argument("workspace", type=Path)

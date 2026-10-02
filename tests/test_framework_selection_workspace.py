@@ -399,6 +399,45 @@ class FrameworkSelectionWorkspaceTest(unittest.TestCase):
         )
         self.assertNotIn("score", json.dumps(data))
 
+    def test_non_force_guardrails_externalize_contact_stop_and_survival(self) -> None:
+        data = workspace.worksheet_payload(
+            FIXTURE,
+            "Need another way to inspect boundaries",
+            ["alpha"],
+            "Target-side baseline before framework contact",
+            "selection://round-guardrail/framework-choice",
+        )
+
+        workspace.update_non_force_guardrail(
+            data,
+            "alpha",
+            contact_if="The target leaves an unresolved establishment-condition gap.",
+            stop_if="The target material has no distinct upstream condition to inspect.",
+            survive_if=(
+                "A de-bound question still points to a concrete target-side "
+                "condition or falsifier."
+            ),
+        )
+
+        alpha = data["candidates"][0]
+        self.assertEqual(
+            alpha["non_force_guardrails"]["contact_if"],
+            "The target leaves an unresolved establishment-condition gap.",
+        )
+        self.assertEqual(
+            alpha["non_force_guardrails"]["stop_if"],
+            "The target material has no distinct upstream condition to inspect.",
+        )
+        self.assertIn(
+            "concrete target-side",
+            alpha["non_force_guardrails"]["survive_if"],
+        )
+
+        review = workspace.review_payload(data)
+        self.assertEqual(review["candidates"][0]["unfilled_guardrails"], [])
+        self.assertNotIn("score", json.dumps(review))
+        self.assertNotIn("rank", json.dumps(review))
+
     def test_consideration_axes_keep_routing_dimensions_separate(self) -> None:
         data = workspace.worksheet_payload(
             FIXTURE,
@@ -483,6 +522,10 @@ class FrameworkSelectionWorkspaceTest(unittest.TestCase):
         self.assertEqual(
             set(data["candidates"][0]["consideration_axes"]),
             set(workspace.CONSIDERATION_FIELDS),
+        )
+        self.assertEqual(
+            data["candidates"][0]["non_force_guardrails"],
+            {"contact_if": "", "stop_if": "", "survive_if": ""},
         )
         self.assertEqual(
             data["no_framework_option"],
@@ -773,6 +816,17 @@ class FrameworkSelectionWorkspaceTest(unittest.TestCase):
                 "Do not equate condition with cause.",
             )
             self.run_tool(
+                "set-guardrail",
+                str(selection),
+                "alpha",
+                "--contact-if",
+                "Open only if a concrete condition gap remains.",
+                "--stop-if",
+                "Stop if the target has no distinct upstream condition.",
+                "--survive-if",
+                "Carry forward only a de-bound target-checkable question.",
+            )
+            self.run_tool(
                 "set-non-activation",
                 str(selection),
                 "--reason",
@@ -822,6 +876,10 @@ class FrameworkSelectionWorkspaceTest(unittest.TestCase):
             self.assertEqual(
                 shown["candidates"][0]["consideration_axes"]["target_connection"],
                 "A concrete target-side condition question exists.",
+            )
+            self.assertEqual(
+                shown["candidates"][0]["non_force_guardrails"]["stop_if"],
+                "Stop if the target has no distinct upstream condition.",
             )
             self.assertEqual(
                 shown["no_framework_option"]["reason"],

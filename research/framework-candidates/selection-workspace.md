@@ -51,6 +51,11 @@ python "$TOOL" set-consideration /tmp/selection.json dependent-origination \
   --misuse-risk "conditionをcauseへ昇格しない" \
   --domain-constraint "設計判断はcaller側が行う"
 
+python "$TOOL" set-guardrail /tmp/selection.json dependent-origination \
+  --contact-if "対象側に成立条件の空白が残るときだけ開く" \
+  --stop-if "上流条件として分けられる材料が無ければ止める" \
+  --survive-if "体系語を外しても対象資料で確認できる問いが残る場合だけ持ち越す"
+
 python "$TOOL" set-non-activation /tmp/selection.json \
   --reason "通常のtarget-side質問だけで十分な可能性を残す" \
   --baseline-note "framework接触前に同じ問いを一度試す" \
@@ -78,6 +83,8 @@ python "$TOOL" audit-map /tmp/selection.json /tmp/board.json
 The `recall` command is the bridge from an ordinary-language missing cognitive function to the adopted corpus. It uses only explicit `selection_cues` stored in the inventory, performs punctuation/spacing normalization, preserves inventory order, and defaults to `adopted` candidates. It does not use embeddings, semantic similarity, scoring, or automatic routing. To inspect a research-only readiness state, pass `--readiness` explicitly.
 
 The shortlist preserves inventory order and computes no score. The contrast is exact-string only and does not infer semantic equivalence. The worksheet deliberately starts with role, intended cognitive job, near-neighbor difference, target-return questions, de-bound target language, and revision conditions unfilled.
+
+`set-guardrail` externalizes three candidate-specific non-force conditions: when framework contact is justified (`contact_if`), what target-side observation should stop or weaken the contact (`stop_if`), and what must still survive after de-binding before material is carried forward (`survive_if`). These are reasoning prompts, not an automatic activation gate. `review` surfaces missing guardrails without scoring them or requiring activation.
 
 Each candidate also has six independent, free-text consideration axes: target connection, structural difference, redundancy/overlap, target-return feasibility, misuse/authority risk, and domain constraint. They are kept separate on purpose; the tool does not collapse them into a score. A distinct `no_framework_option` records why non-activation may be preferable and what would reopen the choice.
 
