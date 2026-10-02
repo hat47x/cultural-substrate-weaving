@@ -118,6 +118,7 @@ Status: research-only
 - shinto-threshold-purification
 - tibetan-buddhist-mandala
 - mimamsa-hermeneutics
+- llull-ars
 採用済みでも研究を打ち切らない。runtimeが使う最小構造核と、独立Skill相当まで厚くする研究は分ける。
 
 ### 量を増やす側の候補

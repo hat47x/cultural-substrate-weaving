@@ -48,7 +48,7 @@ Llullの神学的なDignitiesや宣教上の目的を、対象側の事実や価
 - Stanford Encyclopedia of Philosophy, Ramon Llull
   - https://plato.stanford.edu/entries/llull/
 - Anthony Bonner, The Art and Logic of Ramon Llull
-  - https://uberty.org/wp-content/uploads/2015/12/Anthony_Bonner_The_art_and_logic_of_Ramon_Llull.pdf
+  - https://brill.com/display/title/14655
 - Centre de Documentació Ramon Llull / Narpan, The principles of the Art
   - https://quisestlullus.narpan.net/en/principles-art
 - Science History Institute Digital Collections, Ars brevis manuscript witness

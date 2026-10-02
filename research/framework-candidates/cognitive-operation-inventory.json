@@ -950,7 +950,7 @@
         {
           "kind": "scholarly-monograph",
           "title": "Anthony Bonner, The Art and Logic of Ramon Llull",
-          "url": "https://uberty.org/wp-content/uploads/2015/12/Anthony_Bonner_The_art_and_logic_of_Ramon_Llull.pdf"
+          "url": "https://brill.com/display/title/14655"
         },
         {
           "kind": "specialist-scholarly-educational-resource",
@@ -968,6 +968,7 @@
       "adoption_hold": "late-ternary-phase-bounded",
       "selection_cues": [
         "普段組み合わせない区別を体系的に交差したい",
+        "組み合わせない区別を体系的に交差",
         "未検討の組合せを洗い出したい",
         "二項と三項の組合せから新しい問いを作りたい",
         "systematically cross distinctions that are not usually combined",
