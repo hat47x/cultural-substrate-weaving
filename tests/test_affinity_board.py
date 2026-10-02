@@ -150,6 +150,8 @@ class AffinityBoardTest(unittest.TestCase):
                 "pushback",
                 "--target-response-ref",
                 "S001",
+                "--selection-ref",
+                "selection://round-03/framework-choice",
                 "--as-if",
                 "seen as a generative cycle",
                 "--note",
@@ -177,6 +179,10 @@ class AffinityBoardTest(unittest.TestCase):
             )
             self.assertEqual(trace["target_responses"], ["pushback"])
             self.assertEqual(trace["target_response_refs"], ["S001"])
+            self.assertEqual(
+                trace["selection_refs"],
+                ["selection://round-03/framework-choice"],
+            )
             self.assertEqual(trace["as_if"], "seen as a generative cycle")
             self.assertEqual(data["groups"], [])
             self.assertEqual(data["relations"], [])
@@ -246,6 +252,37 @@ class AffinityBoardTest(unittest.TestCase):
             self.assertNotEqual(result.returncode, 0)
             self.assertIn(
                 "requires at least one framework and one operation",
+                result.stderr,
+            )
+            self.assertEqual(target.read_text(encoding="utf-8"), before)
+
+    def test_empty_selection_ref_is_rejected_without_overwriting_map(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            target = Path(tmp) / "board.json"
+            self.run_board("init", str(target))
+            self.run_board(
+                "add-card",
+                str(target),
+                "Framework-generated candidate",
+                "--status",
+                "framework_generated",
+            )
+            before = target.read_text(encoding="utf-8")
+            result = self.run_board(
+                "trace-card",
+                str(target),
+                "C001",
+                "--framework",
+                "five-phases",
+                "--operation",
+                "transition-path",
+                "--selection-ref",
+                "",
+                check=False,
+            )
+            self.assertNotEqual(result.returncode, 0)
+            self.assertIn(
+                "selection_refs must contain readable strings",
                 result.stderr,
             )
             self.assertEqual(target.read_text(encoding="utf-8"), before)

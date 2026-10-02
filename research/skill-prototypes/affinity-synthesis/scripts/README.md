@@ -39,6 +39,7 @@ python scripts/affinity_board.py trace-card /tmp/board.json C003 \
   --yield-kind "transition-candidate" \
   --target-response "pushback" \
   --target-response-ref S001 \
+  --selection-ref "selection://round-03/framework-choice" \
   --as-if "seen as a generative cycle"
 
 # Append the candidate's transformation after returning it to target-side material.
@@ -143,6 +144,7 @@ Design constraints:
 - every mutation is validated before replacing the file;
 - failed mutations leave the previous board unchanged;
 - IDs are stable references, not ontology classes;
+- `selection-ref` is an external provenance handle back to framework-selection reasoning; it does not alter grouping, evidence status, support, importance, or truth;
 - `trace-card` records framework / operation / location / yield-kind / target-response / as-if provenance on a card; when a target response can be tied to concrete target-side material, `--target-response-ref` may point to source/card refs. Those refs are audit provenance, not automatic verification or support. Operation, yield, and response names remain open strings rather than a closed taxonomy;
 - `audit-return` appends target-return history to an already traced `framework_generated` card. Its state is an open string and its basis refs must resolve to target-side source/card material. It does not mutate input status, grouping, relations, importance, support, or truth; rejected/weakened histories remain visible instead of being erased;
 - `trace-cross-field` is only for `cross_field_emergent` cards and requires both target-side refs and traced `framework_generated` card refs. It may retain preserved / negated-or-revised / newly-recomposed notes, but never promotes the third candidate to a privileged label, relation, support, or fact;

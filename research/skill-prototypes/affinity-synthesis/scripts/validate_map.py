@@ -143,6 +143,17 @@ def validate(data: dict[str, Any]) -> tuple[list[str], list[str]]:
             errors.append(f"card {cid} catalytic_trace must be an object")
             continue
         if isinstance(trace, dict):
+            selection_refs = trace.get("selection_refs", [])
+            if not isinstance(selection_refs, list):
+                errors.append(
+                    f"card {cid} catalytic selection_refs must be an array"
+                )
+            elif any(not str(ref).strip() for ref in selection_refs):
+                errors.append(
+                    f"card {cid} catalytic selection_refs must contain readable strings"
+                )
+
+        if isinstance(trace, dict):
             response_refs = trace.get("target_response_refs", [])
             if not isinstance(response_refs, list):
                 errors.append(

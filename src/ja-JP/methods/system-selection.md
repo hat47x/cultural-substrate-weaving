@@ -73,7 +73,7 @@
 
 これはranking表ではない。空欄を埋めることも目的ではない。「何の認知仕事をさせるためにこの体系へ触れたのか」を後から再検査できるようにする。
 
-repository / research workspaceが利用可能な場合は、`research/framework-candidates/scripts/framework_selection_workspace.py` を任意の補助として使える。literalな候補想起、exact operation labelの近接比較、未記入selection worksheetの生成だけを行い、自動routing・fit score・採用判定は行わない。
+repository / research workspaceが利用可能な場合は、`research/framework-candidates/scripts/framework_selection_workspace.py` を任意の補助として使える。literalな候補想起、exact operation labelの近接比較、未記入selection worksheetの生成だけを行い、自動routing・fit score・採用判定は行わない。worksheetへstable `--ref`を与えた場合は、後続のframework-generated cardで同じhandleを`selection-ref`として保持し、選定意図 → operation → yield → target responseを後から辿れるようにしてよい。
 
 ## 3a. 探索利用と帰属利用
 

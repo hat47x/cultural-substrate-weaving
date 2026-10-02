@@ -151,6 +151,13 @@
                   "type": "string"
                 }
               },
+              "selection_refs": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              },
               "locations": {
                 "type": "array",
                 "items": {

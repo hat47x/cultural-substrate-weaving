@@ -192,7 +192,7 @@ rendering toolが使える場合は、syntaxだけでなく視覚的な誤読も
 このprototypeには `scripts/affinity_board.py` がある。これは**思考を代行する分類器ではなく、思考結果を壊さず操作するための道具**である。
 
 - card / group / relation / narrative / residual / questionへstable IDを付ける。
-- CSW等から来た`framework_generated` cardでは、必要なら`trace-card`でframework / operation / location / yield-kind / target-response / as-ifを残す。target responseを具体的な対象側材料へ戻せる場合は`target-response-ref`でsource/cardを参照してよいが、これは監査来歴でありtarget-supportedへの自動昇格ではない。statusで「どの認知操作から何が生まれ、対象がどう押し返したか」の偏り、未trace / yield未分類card、responseはあるが対象側参照がまだないcardを観測できるが、網羅率・品質点にはしない。
+- CSW等から来た`framework_generated` cardでは、必要なら`trace-card`でframework / operation / location / yield-kind / target-response / as-ifを残す。framework selection workspace等のstable handleがある場合は`selection-ref`で選定意図へ戻れるようにしてよい。target responseを具体的な対象側材料へ戻せる場合は`target-response-ref`でsource/cardを参照してよい。どちらも監査来歴でありtarget-supportedへの自動昇格ではない。statusで「どの認知操作から何が生まれ、対象がどう押し返したか」の偏り、未trace / yield未分類card、responseはあるが対象側参照がまだないcardを観測できるが、網羅率・品質点にはしない。
 - traced `framework_generated` cardを対象へ戻した後は、必要なら`audit-return`で変形を同じstable IDへ追記する。stateはopen stringで、target-side source/cardのbasisを必須とし、noteやnext-checkも保持できる。履歴は上書きせず、生存→弱化→再編のような経路を残す。return auditを`target_supported`、importance、truth、grouping authorityへ変換しない。
 - target側とframework側の緊張から`cross_field_emergent` cardが生じた場合は、必要なら`trace-cross-field`でtarget refsと、catalytic trace済みのframework-generated card refsを別々に残す。preserved / negated-or-revised / newly-recomposedも必要時に外在化するが、第三候補を上位表札・relation・supportへ自動昇格させない。
 - cardをgroup間で移動してもcard IDとsource provenanceを維持する。

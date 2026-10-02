@@ -86,6 +86,11 @@ class FrameworkSelectionWorkspaceTest(unittest.TestCase):
             "Need another way to inspect boundaries",
             ["alpha", "beta"],
             "Target-side baseline before framework contact",
+            "selection://round-03/framework-choice",
+        )
+        self.assertEqual(
+            payload["workspace_ref"],
+            "selection://round-03/framework-choice",
         )
         self.assertEqual(payload["candidates"][0]["role"], "unassigned")
         self.assertEqual(payload["cross_framework_notes"]["primary_framework_job"], "")
