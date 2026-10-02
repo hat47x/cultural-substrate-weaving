@@ -113,6 +113,8 @@ Status: research-only
 - hadith-isnad-matn
 - marshallese-wave-navigation
 
+- shinto-threshold-purification
+- tibetan-buddhist-mandala
 採用済みでも研究を打ち切らない。runtimeが使う最小構造核と、独立Skill相当まで厚くする研究は分ける。
 
 ### 量を増やす側の候補
@@ -122,11 +124,9 @@ Status: research-only
 - llull-ars
 - five-aggregates
 - jo-ha-kyu
-- shinto-threshold-purification
 - rites-of-passage
 - buddhist-mandala
-- tibetan-buddhist-mandala
-- mimamsa-hermeneutics
+- mimamsa-hermeneutics（profile-ready / lineage-sensitive）
 - jingluo
 - sefirot（research umbrella / lineage split required）
 - sefer-yetzirah-dimensions
