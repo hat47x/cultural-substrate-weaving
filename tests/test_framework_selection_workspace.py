@@ -179,6 +179,104 @@ class FrameworkSelectionWorkspaceTest(unittest.TestCase):
         )
         self.assertNotIn("score", json.dumps(data))
 
+    def test_audit_map_compares_planned_and_observed_operations_without_scoring(self) -> None:
+        selection = workspace.worksheet_payload(
+            FIXTURE,
+            "Need another boundary view",
+            ["alpha", "beta"],
+            "Target baseline",
+            "selection://round-audit/framework-choice",
+        )
+        workspace.update_candidate(
+            selection,
+            "alpha",
+            role="primary",
+            planned_operations=["condition-chain"],
+        )
+        workspace.update_candidate(
+            selection,
+            "beta",
+            role="reflecting",
+            planned_operations=["node-perspective"],
+        )
+
+        affinity_map = {
+            "format": "affinity-map",
+            "version": "0.1",
+            "cards": [
+                {
+                    "id": "C001",
+                    "text": "Candidate from alpha",
+                    "input_status": "framework_generated",
+                    "catalytic_trace": {
+                        "selection_refs": ["selection://round-audit/framework-choice"],
+                        "frameworks": ["alpha"],
+                        "operations": ["condition-chain"],
+                        "yield_kinds": ["question"],
+                        "target_responses": ["weakened"],
+                        "target_return_audits": [{"state": "weakened"}],
+                    },
+                },
+                {
+                    "id": "C002",
+                    "text": "Candidate using a noncanonical framework label",
+                    "input_status": "framework_generated",
+                    "catalytic_trace": {
+                        "selection_refs": ["selection://round-audit/framework-choice"],
+                        "frameworks": ["beta-alias"],
+                        "operations": ["boundary-probe"],
+                        "yield_kinds": ["distinction"],
+                    },
+                },
+                {
+                    "id": "C003",
+                    "text": "Cross-field result",
+                    "input_status": "cross_field_emergent",
+                    "cross_field_trace": {
+                        "target_refs": ["S001"],
+                        "framework_refs": ["C001"],
+                    },
+                },
+                {
+                    "id": "C004",
+                    "text": "Another selection",
+                    "input_status": "framework_generated",
+                    "catalytic_trace": {
+                        "selection_refs": ["selection://other"],
+                        "frameworks": ["beta"],
+                        "operations": ["node-perspective"],
+                    },
+                },
+            ],
+        }
+
+        payload = workspace.audit_map_payload(selection, affinity_map)
+        self.assertEqual([card["id"] for card in payload["linked_cards"]], ["C001", "C002"])
+        self.assertEqual(
+            payload["planned_operations"],
+            ["condition-chain", "node-perspective"],
+        )
+        self.assertEqual(
+            payload["observed_operations"],
+            ["condition-chain", "boundary-probe"],
+        )
+        self.assertEqual(
+            payload["planned_not_observed_exact"],
+            ["node-perspective"],
+        )
+        self.assertEqual(
+            payload["observed_not_planned_exact"],
+            ["boundary-probe"],
+        )
+        self.assertEqual(payload["cards_by_exact_candidate_id"]["alpha"], ["C001"])
+        self.assertEqual(payload["cards_by_exact_candidate_id"]["beta"], [])
+        self.assertEqual(
+            payload["framework_labels_without_exact_candidate_id_match"],
+            ["beta-alias"],
+        )
+        self.assertEqual(payload["downstream_cross_field_cards"], ["C003"])
+        self.assertNotIn("score", json.dumps(payload))
+
     def test_candidate_rejects_operation_not_available_in_inventory(self) -> None:
         data = workspace.worksheet_payload(
             FIXTURE,
