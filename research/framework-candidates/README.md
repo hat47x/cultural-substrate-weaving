@@ -4,14 +4,14 @@ Status: research-only
 
 このディレクトリは、CSWが参照する文化体系の量と質を増やすための候補化・資料化レーンである。
 
-現行runtimeの system-selection は複数の体系名を探索アンカーとして持つが、個別体系の厚い資料層はまだ限定的である。ここでは、体系名を増やすこと自体ではなく、異なる認知operationを安全に供給できる体系を、sourceと系譜差を保ったままSkill候補へ育てる。
+現行runtimeのsystem-selectionは複数の体系名を探索アンカーとして持つが、個別体系の厚い資料層はまだ限定的である。ここでは、体系名を増やすこと自体ではなく、異なる認知operationを安全に供給できる体系を、sourceと系譜差を保ったままSkill候補へ育てる。
 
 ## 目的
 
 増やしたいのは次の三つである。
 
 1. operation diversity
-   - position / vacancy / relation / transition / cycle / boundary / scale / practice / counter-view 等、異なる認知仕事を開けること。
+   - position / vacancy / relation / transition / cycle / boundary / scale / practice / counter-view等、異なる認知仕事を開けること。
 2. framework fidelity
    - 体系固有の構造を、一般的な自己啓発語彙や後世の混成対応表へ薄めないこと。
 3. target returnability
@@ -32,7 +32,7 @@ Status: research-only
 - skill-candidate
   - 実際のCSW operationとして使うためのprofileとsource boundaryが揃った。
 - adopted
-  - framework dossier がruntime/packageへ採用された。独立した別Skillとして公開済みという意味ではない。
+  - framework dossierがruntime/packageへ採用された。独立した別Skillとして公開済みという意味ではない。
 
 この段階は価値順位ではない。たとえば、宗教的・医療的文脈が強い体系は認知的に豊かでも、誤用境界を十分に書けるまで研究段階に留める。
 

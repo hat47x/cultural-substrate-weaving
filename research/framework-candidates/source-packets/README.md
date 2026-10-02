@@ -7,7 +7,7 @@ Status: research-only / pre-profile evidence layer
 source packetはruntime dossierでもSkill candidateでもない。目的は、候補を「使える説明」へ早く整えることではなく、まず次を分離することである。
 
 - どの時代・系譜・テキストの構造を見ているか。
-- terminology / tradition-internal claim / historical scholarship / modern empirical claim のどれか。
+- terminology / tradition-internal claim / historical scholarship / modern empirical claimのどれか。
 - 体系固有の認知operationとして残せるものは何か。
 - CSWが対象側へ持ち込んではならない主張は何か。
 - profile-readyへ進む前に、どの資料・判断が不足しているか。

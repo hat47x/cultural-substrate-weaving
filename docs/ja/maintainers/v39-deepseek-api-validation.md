@@ -20,7 +20,7 @@
 - **B1 representation-only**: 文化体系の資料を読めるが、体系固有の操作は行わない。
 - **T1 native-enactment**: 同じ資料を読み、さらに体系固有の操作を行う。
 
-したがって主比較`T1 - B1`が測っていたのは、文化体系を利用すること一般ではない。**一回のfresh contextの中で、native enactmentを追加したときの局所的な差**である。
+したがって主比較`T1 - B1`が測っていたのは、文化体系を利用すること一般ではない。一回のfresh contextの中で、native enactmentを追加したときの局所的な差である。
 
 v39ではT1をcontract-validにするため、少なくとも一つの`native_operation`を実行することが事実上必須だった。この点は、現在の通常利用とは異なる重要な条件である。
 
@@ -28,25 +28,25 @@ v39ではT1をcontract-validにするため、少なくとも一つの`native_op
 
 24 held-out cases、3条件、3反復を基礎とするStage Cでは、主比較は支持されなかった。
 
-- `T1 - B1` blind target-outcome core mean: **-0.2807677469**
-- case bootstrap 95% CI: **[-0.4039351852, -0.1572788066]**
-- exact case-level sign p: **0.0015438795**
-- preregistered support decision: **NOT SUPPORTED**
+- `T1 - B1` blind target-outcome core mean: -0.2807677469
+- case bootstrap 95% CI: [-0.4039351852, -0.1572788066]
+- exact case-level sign p: 0.0015438795
+- preregistered support decision: NOT SUPPORTED
 
 guardrail / dimensionのうち、特に悪化が大きかったのは次である。
 
-- `non_forcing`: **-0.5675154**
-- `provenance_cleanliness`: **-0.5046296**
-- `target_fidelity`: **-0.1967593**
+- `non_forcing`: -0.5675154
+- `provenance_cleanliness`: -0.5046296
+- `target_fidelity`: -0.1967593
 
 `target_fidelity`は、事前登録したnoninferiority guardrailそのものは通過したが、平均差は負だった。
 
 stratum別のcore差もすべて負だった。
 
-- null/simple: **-0.438786**
-- stress: **-0.294496**
-- writing: **-0.135159**
-- general: **-0.254630**
+- null/simple: -0.438786
+- stress: -0.294496
+- writing: -0.135159
+- general: -0.254630
 
 そのため、「null caseで無理に文化体系を開いたことだけ」が負の結果をすべて説明するわけではない。
 
@@ -54,12 +54,12 @@ stratum別のcore差もすべて負だった。
 
 小規模pilotのStage Pでも、主比較は負だった。
 
-- `T1 - B1`: **-0.289969**
+- `T1 - B1`: -0.289969
 
 さらに補助比較では、
 
-- `B1 - B0`: **-0.209722**
-- `T1 - B0`: **-0.499691**
+- `B1 - B0`: -0.209722
+- `T1 - B0`: -0.499691
 
 という結果だった。
 
@@ -73,8 +73,8 @@ Stage Cでは、非nullケースについて原則として、構造適合度の
 
 72 field-cellをrouting理由と対応させると、全体ではseeded openingの悪化が大きかった。一方、null/simpleを除くと、
 
-- structural fit: 約 **-0.234**
-- seeded field-opening: 約 **-0.217**
+- structural fit: 約 -0.234
+- seeded field-opening: 約 -0.217
 
 となり、ほぼ同程度に負だった。
 
@@ -170,7 +170,7 @@ v39は、`cultural-substrate-weaving`全体の有効性試験ではない。
 
 より狭く、
 
-> **厚いframework representationに加えて、少なくとも一つのnative operationを、一回のfresh-context runの中で強制した場合の局所試験**
+> 厚いframework representationに加えて、少なくとも一つのnative operationを、一回のfresh-context runの中で強制した場合の局所試験
 
 として保存する。
 

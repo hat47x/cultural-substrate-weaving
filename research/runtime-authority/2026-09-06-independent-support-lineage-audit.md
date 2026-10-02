@@ -12,7 +12,7 @@
 
 ## 初回公開時点
 
-v0.1.0 初回公開 `cd58044…` の governance には、この規則は存在しない。
+v0.1.0初回公開 `cd58044…` のgovernanceには、この規則は存在しない。
 
 当時は判断理由、棄却案、制約、未確定事項、反証条件、再評価条件を残す設計だったが、独立支持を「原因機構＋採否」で束ねる規則はまだなかった。
 
@@ -22,7 +22,7 @@ v0.1.0 初回公開 `cd58044…` の governance には、この規則は存在�
 
 `2b39432…` で、外部レビュー由来の次の提案が採用された。
 
-- 同じ変更を diagnosis / diff / rule / correction として複数回数えない。
+- 同じ変更をdiagnosis / diff / rule / correctionとして複数回数えない。
 
 コミットメッセージも、採用事項を次のように要約している。
 
@@ -38,7 +38,7 @@ v0.1.0 初回公開 `cd58044…` の governance には、この規則は存在�
 
 `3988e12…` の縮約後もこの規則は残った。
 
-v40 `3dc8777…` では governance の二重計上節へ移され、次の具体例と並べられた。
+v40 `3dc8777…` ではgovernanceの二重計上節へ移され、次の具体例と並べられた。
 
 - 同一資料の転載
 - 一枚のカードから派生した複数カード
@@ -47,7 +47,7 @@ v40 `3dc8777…` では governance の二重計上節へ移され、次の具体
 
 これらの具体例は「元の証拠が増えていない」という共通性を持つ。
 
-また、`0499918…` では repost や derived card を独立した appeal として数えないことが、source と discovery path の分離とともに補強されている。
+また、`0499918…` ではrepostやderived cardを独立したappealとして数えないことが、sourceとdiscovery pathの分離とともに補強されている。
 
 この系列が支えているのは、同じ証拠・同じ派生元・同じ所見の再表現を独立支持へ数えないことである。
 
@@ -78,13 +78,13 @@ v40 `3dc8777…` では governance の二重計上節へ移され、次の具体
 
 とする。
 
-この文は、逆に言えば独立性の判断軸を discovery path の数ではなく evidence source の独立性へ置く方が自然であることを示す。
+この文は、逆に言えば独立性の判断軸をdiscovery pathの数ではなくevidence sourceの独立性へ置く方が自然であることを示す。
 
 また、`framework-application.md` でも複数体系から同じ候補が出ただけでは独立対象証拠が増えないと明示している。
 
 ## 結論
 
-維持するもの:
+維持するもの。
 
 - 同じ変更を診断・差分・一般化・訂正として重複計上しない。
 - 同一資料の転載を独立支持に数えない。
@@ -93,7 +93,7 @@ v40 `3dc8777…` では governance の二重計上節へ移され、次の具体
 - 同じ仮説の言い換えを独立支持に数えない。
 - 発見経路と証拠源を分ける。
 
-再基準化するもの:
+再基準化するもの。
 
 - 「同じ原因機構と採否なら一つの系譜」という一律判定。
 
@@ -114,6 +114,6 @@ v40 `3dc8777…` では governance の二重計上節へ移され、次の具体
 ## 非対象
 
 - `target_supported / framework_generated / cross_field_emergent / unresolved` の帰属語彙
-- repost / derived card / framework rediscovery / paraphrase の重複除去
+- repost / derived card / framework rediscovery / paraphraseの重複除去
 - 採否語彙の開放性
 - 体系固有の寄与と対象側証拠の区別

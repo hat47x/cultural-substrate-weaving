@@ -72,7 +72,7 @@ diagram、配置、connection、名称、Da'atの扱い等は歴史的・系譜�
 ## profile-ready前の不足
 
 1. Sefer Yetzirahのedition / version差を小さな比較表にする。
-2. Bahir → Zohar / Gerona / later systematic Kabbalah のどこからどの構造を取るか決める。
+2. Bahir → Zohar / Gerona / later systematic Kabbalahのどこからどの構造を取るか決める。
 3. sefirotを一candidateに保つか、sefer-yetzirah-dimensionsとtheosophical-sefirotへ分割するか決定する。
 4. theological meaningを外したとき、generic hierarchyでなく独自operationが何として残るか確認する。
 5. target-return例で「古い／神秘的だから権威がある」という転写が起きないことを確認する。

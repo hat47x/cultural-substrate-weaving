@@ -11,7 +11,7 @@ Date: 2026-09-06
 
 複数roundの再開・差分管理が必要な場合は、利用可能なら `iterative-inquiry-synthesis` または同じMethod Definitionを満たすcompatible realizationを用いる。
 
-反復探索側へ委ねるもの:
+反復探索側へ委ねるもの。
 
 - input delta
 - touched-artifact reopen
@@ -53,7 +53,7 @@ framework contact change:
 
 文化体系をprobe / previewした結果、対象側へ戻す新しい問い・対比・残差が生じなかった場合、それを正常な結果として扱う。
 
-例えば:
+例えばは次のとおりです。
 
 ```text
 framework contact: no_useful_increment
@@ -102,7 +102,7 @@ CSW固有に重要なのは、文化体系との接触が変わったことを�
 
 必要なら `framework_contact_change` 相当のeventを記録する。
 
-例:
+例は次のとおりです。
 
 ```text
 framework: FW-A -> FW-B

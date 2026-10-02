@@ -43,7 +43,7 @@ Affinity / Iterativeはsource自体がfrontmatter付きSkill entryであるた�
 transform_mode = normalize_explicit_skill_frontmatter
 ```
 
-責務:
+責務は次のとおりです。
 
 - source `description` を保持
 - `name` をdistribution target `skill_name` に正規化

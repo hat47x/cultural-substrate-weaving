@@ -30,8 +30,8 @@ substantive review criteriaは次の既存packetを引き続き用いる。
 特に次の節・境界は変更しない。
 
 - representation grammarとround template
-- Layer 1 必須不変条件
-- Layer 2 必須不変条件
+- Layer 1必須不変条件
+- Layer 2必須不変条件
 - Cross-layer査読
 - KJ lineage / naming
 - technical asset parity:

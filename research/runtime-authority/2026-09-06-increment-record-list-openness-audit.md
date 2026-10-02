@@ -77,7 +77,7 @@ repo自身が、増分を一つの閉じた分類表へ統一せず、用途に�
 
 最小変更として、7種が代表例であって非網羅であることだけを局所的に明示する。
 
-例:
+例は次のとおりです。
 
 - JA: `...反証条件、追加調査課題などとして記録する。`
 - EN: `...additional research tasks, and other target-side increments.`

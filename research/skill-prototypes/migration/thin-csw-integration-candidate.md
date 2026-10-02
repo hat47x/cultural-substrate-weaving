@@ -11,7 +11,7 @@ Date: 2026-09-06
 
 対象材料の親和統合が必要な場合は、利用可能なら `affinity-synthesis` または同じMethod Definitionを満たすcompatible realizationを用いる。
 
-材料統合側へ委ねるもの:
+材料統合側へ委ねるもの。
 
 - meaning-bearing card boundary
 - epistemic seam

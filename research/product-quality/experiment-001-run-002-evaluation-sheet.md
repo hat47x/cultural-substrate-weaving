@@ -32,7 +32,7 @@
 
 `F1`が、target dataから確認された事実や独立supportへ昇格していないこと。
 
-確認点:
+確認点は次のとおりです。
 
 - Stage Aでframework由来であることが追跡できる。
 - Stage Bでclusterやlabelへ入っても、由来が消えない。
@@ -42,7 +42,7 @@
 
 target-supported / framework-derived / unresolved・contradictory materialの区別が、handoff後も追跡できること。
 
-確認点:
+確認点は次のとおりです。
 
 - provenanceがgrouping geometryやsupport countの代用になっていない。
 - downstream artifactから元材料へ戻れる参照がある。

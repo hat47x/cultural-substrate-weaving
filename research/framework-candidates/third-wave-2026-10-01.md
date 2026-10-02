@@ -30,7 +30,7 @@ CSWでは歴史的な価値判断を借りるのではなく、次を問いの�
 
 - role-conditioned expectation
 - relation-centered perspective
-- name / role と実際の行為のずれ
+- name / roleと実際の行為のずれ
 - 実践が態度・欲求・関係を形づくる可能性
 
 ### operation
@@ -95,9 +95,9 @@ Status: sourced-candidate
   - https://www.jinjahoncho.or.jp/en/at-a-jinja/entering/
 - 神社本庁, 参拝方法
   - https://www.jinjahoncho.or.jp/omairi/sanpai/
-- 國學院大學 Encyclopedia of Shinto, Paying Respects at a Shinto Shrine
+- 國學院大學Encyclopedia of Shinto, Paying Respects at a Shinto Shrine
   - https://d-museum.kokugakuin.ac.jp/eos/detail/?id=9876
-- 國學院大學 Encyclopedia of Shinto, Harae / Misogi
+- 國學院大學Encyclopedia of Shinto, Harae / Misogi
   - https://d-museum.kokugakuin.ac.jp/eos/detail/?id=8732
   - https://d-museum.kokugakuin.ac.jp/eos/detail/?id=8723
 

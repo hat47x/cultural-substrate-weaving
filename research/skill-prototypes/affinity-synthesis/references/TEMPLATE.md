@@ -13,7 +13,7 @@
 
 ## 1A. Reader-facing Overview — fill last
 
-この節は**最初に書かない**。cards / groups / relations / narrative / return-to-source checkを行った後に、下位成果物から作るreader-facing projectionである。
+この節は最初に書かない。cards / groups / relations / narrative / return-to-source checkを行った後に、下位成果物から作るreader-facing projectionである。
 
 ### What the material currently says
 
@@ -28,8 +28,8 @@
 
 **この表の読み方:**
 
-- **Member count** は現在のworking geometryでの記述値であり、truth、importance、independent supportの強さを意味しない。
-- **Anchor refs** は読者が詳細へ降りるためのnavigation用であり、代表例だけを証拠として残すためのものではない。完全なmembershipとlineageは後続節へ残す。
+- Member count は現在のworking geometryでの記述値であり、truth、importance、independent supportの強さを意味しない。
+- Anchor refs は読者が詳細へ降りるためのnavigation用であり、代表例だけを証拠として残すためのものではない。完全なmembershipとlineageは後続節へ残す。
 - 強い少数派、singleton、conflict、薄い違和感を、overviewに入れにくいという理由で落とさない。
 - summaryが詳細map / narrativeと矛盾した場合、summaryを正本にせずsemantic recordへ戻す。
 
@@ -88,7 +88,7 @@ question / hypothesis / correspondenceをcard-like artifactとして扱う必要
 
 同じ形式を必要な群について繰り返す。
 
-`Inherited / Emergent / Residual` は入力カードを先に分類する欄ではない。表札・統合文を立てた**後**に、変換で何が起きたかを監査するために使う。
+`Inherited / Emergent / Residual` は入力カードを先に分類する欄ではない。表札・統合文を立てた後に、変換で何が起きたかを監査するために使う。
 
 ### Compact notation when useful
 
@@ -121,7 +121,7 @@ X01: C007 ~> G01 :: "別group主配置のままG01にも響く理由"
 
 `Read-back audit` はrelationの意味を別fieldへ複製保存するための欄ではない。`From + Predicate + To` を自然な一文として読み返し、directionとbasisへ戻してもその関係が維持できるかを記録する。
 
-向きの最小記法:
+向きの最小記法は次のとおりです。
 
 - `A -> B`: AからBへの方向を主張する。因果を自動では意味しない。
 - `A <-> B`: 相互方向を主張する。
@@ -198,7 +198,7 @@ flowchart LR
     G02 -.->|"gap-as-question"| Q01
 ```
 
-Mermaidはtopology projectionとして使う。近接・離隔・空白など**配置自体**を保持する必要がある場合は、必要に応じてnormalized coordinatesをmachine-readable recordへ残し、自由配置できるdiagram formatへ投影する。
+Mermaidはtopology projectionとして使う。近接・離隔・空白など配置自体を保持する必要がある場合は、必要に応じてnormalized coordinatesをmachine-readable recordへ残し、自由配置できるdiagram formatへ投影する。
 
 ### Projection integrity check
 
@@ -218,30 +218,30 @@ Mermaidはtopology projectionとして使う。近接・離隔・空白など**�
 
 ### Source → Cards / Groups
 
-- 落ちた重要な訴え:
-- 過剰に弱めた表現:
-- 過剰に細分化した箇所:
+- 落ちた重要な訴えは次のとおりです。
+- 過剰に弱めた表現は次のとおりです。
+- 過剰に細分化した箇所は次のとおりです。
 
 ### Groups / Map → Source
 
-- 元にない因果:
-- 元にない人物内面・意図:
-- 元にない一般化:
-- 評価方向の変化:
-- 確度の変化:
-- 行為者・責任方向の脱落:
+- 元にない因果は次のとおりです。
+- 元にない人物内面・意図は次のとおりです。
+- 元にない一般化は次のとおりです。
+- 評価方向の変化は次のとおりです。
+- 確度の変化は次のとおりです。
+- 行為者・責任方向の脱落は次のとおりです。
 - explicit relationをread-backしたとき、source / target / predicate / directionが噛み合わない箇所:
 - questionable relation candidateをreturn-checkなしにrelationへ昇格した箇所:
 - external exploration inputをtarget-side supportへ無言で昇格させた箇所:
 - emergent meaningをsource由来へ遡及させた箇所:
-- その他の違和感:
+- その他の違和感は次のとおりです。
 
 ### Map ↔ Narrative
 
 - MapにあるがNarrativeで落ちた関係:
 - NarrativeにあるがMapにない関係:
-- 新しく生じたが、元材料で再確認できた関係:
-- 新しく生じたが、まだ未検証の関係:
+- 新しく生じたが、元材料で再確認できた関係は次のとおりです。
+- 新しく生じたが、まだ未検証の関係は次のとおりです。
 
 ## 10. Final Residuals
 
@@ -257,7 +257,7 @@ Mermaidはtopology projectionとして使う。近接・離隔・空白など**�
 
 ## 11. Optional Round Handoff Capsule
 
-反復探索へ渡す必要がある場合だけ作る。これは**現在の統合成果物から作るhandoff projection**であり、次roundの開始命令ではない。
+反復探索へ渡す必要がある場合だけ作る。これは現在の統合成果物から作るhandoff projectionであり、次roundの開始命令ではない。
 
 - **Semantic refs to preserve:** C... / G... / X... / R... / N... / U... / Q...
 - **Residual / reopenable anchor refs:**
@@ -267,7 +267,7 @@ Mermaidはtopology projectionとして使う。近接・離隔・空白など**�
 
 ### Handoff rules
 
-1. `Semantic refs to preserve` は、後のroundでも意味同一性を追跡できるよう持ち越すhandleである。**すべてを次roundでreopenするという意味ではない。**
+1. `Semantic refs to preserve` は、後のroundでも意味同一性を追跡できるよう持ち越すhandleである。すべてを次roundでreopenするという意味ではない。
 2. `Residual / reopenable anchor refs` は、後の新材料が実際に触れた場合に再開できるanchorである。残っているだけで探索継続を義務づけない。
 3. `Possible next check candidates` は候補であり、Layer 1自身が次の問い・検索・実験を決定したことを意味しない。
 4. question / hypothesis / correspondence等のincoming statusは、handoffによってobservation / factへ昇格しない。

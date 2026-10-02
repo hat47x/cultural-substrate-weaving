@@ -2,7 +2,7 @@
 
 Status: **retrospective compatibility audit; not a blind rerun**
 
-対象:
+対象は次のとおりです。
 `ひとりぼっちの空_第二部_KJラウンド3D_114枚再統合・A型仮図_v1.md`
 
 ## 1. Why this audit
@@ -15,7 +15,7 @@ Status: **retrospective compatibility audit; not a blind rerun**
 
 ## 2. Mechanical inventory check
 
-Round 3Dの10島 A-J から `U001`〜`U114` を抽出して確認した。
+Round 3Dの10島A-Jから `U001`〜`U114` を抽出して確認した。
 
 - total placements: **114**
 - unique card IDs: **114**
@@ -79,23 +79,23 @@ prototypeの `return to source` は、この現行実践を短いSkill contract�
 
 しかし内容上、いくつかのカードは主島以外にも自然な響きを持つ。
 
-例:
+例は次のとおりです。
 
 - U018「『有言実行』と言われ、約束のあとに力が返ってきた」
-  - 主配置 A: 身体容量・力の戻り
+  - 主配置A: 身体容量・力の戻り
   - secondary resonance D: 言葉が切れた間を通し直す
 
 - U026「謝罪すると、薄かった子どもが腕にしがみついてきた」
-  - 主配置 A: 身体反応
+  - 主配置A: 身体反応
   - secondary resonance D: 謝罪と言葉による修復
 
 - U072「妻が話し終えるまで待ち、夫は嫌そうでもホットミルクを運んだ」
-  - 主配置 A: 待つ／身体へ温かいもの
+  - 主配置A: 待つ／身体へ温かいもの
   - secondary resonance D: 話し終えるまで待つ
   - secondary resonance G/H: 小さな生活行為・持続配置
 
 - U057「大樹に小屋を作る前にも、はしごを掛ける前にも木へ聞いた」
-  - 主配置 G: 育てる／作る
+  - 主配置G: 育てる／作る
   - secondary resonance B: 内側へ入る前に聞く
 
 このような多義性は、カードを複製して複数島へ数えるとfalse repetitionになる。一方、一つの島だけへ固定すると二次的な関係が見えにくくなる。
@@ -118,7 +118,7 @@ U072
   resonates → D, H
 ```
 
-重要:
+重要は次のとおりです。
 
 - secondary resonanceはカードの複製ではない。
 - cluster sizeを増やさない。
@@ -133,7 +133,7 @@ U072
 
 各島の具体カードと、そこから直接戻せる運動。
 
-例:
+例は次のとおりです。
 - Bの「開ける前に聞く」「外側はよいが内側は嫌」「餌は受け取るが撫でられたくない」。
 - Iの「きれい／眩しい」「白／ピンク」「仮面／自然な姿」。
 
@@ -203,4 +203,4 @@ Layer 1分離を止める問題は見つからなかった。
 
 次にprototypeへ入れる価値があるのは、`primary placement / secondary resonance` と、戻し検査時のborderline-member checkである。
 
-Runtime CSW sourceの削減は、dependency / fallback設計と、この refinement のfixture追加後に行う。
+Runtime CSW sourceの削減は、dependency / fallback設計と、このrefinementのfixture追加後に行う。

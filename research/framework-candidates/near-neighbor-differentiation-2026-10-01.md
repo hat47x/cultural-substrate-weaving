@@ -100,10 +100,10 @@ Jain sevenfold predicationはqualified assertion / perspective-bindingが強い�
 
 ### Buddhist mandala
 
-中心:
+中心は次のとおりです。
 center / direction / nested enclosure / gate.
 
-主な仕事:
+主な仕事は次のとおりです。
 空間構造とaccess構造を見直す。
 
 ### Tibetan Buddhist mandala
@@ -114,18 +114,18 @@ center / direction / nested enclosure / gate.
 
 ### rites of passage
 
-中心:
+中心は次のとおりです。
 separation → liminal transition → incorporation.
 
-主な仕事:
+主な仕事は次のとおりです。
 旧状態を離れたことと、新状態に組み込まれたことを分ける。途中状態を保持する。
 
 ### Shinto threshold / purification
 
-中心:
+中心は次のとおりです。
 marked threshold → approach → preparation/purification → central act → return.
 
-主な仕事:
+主な仕事は次のとおりです。
 具体的な境界、事前準備、参加状態の変化を問う。
 
 ### 差分

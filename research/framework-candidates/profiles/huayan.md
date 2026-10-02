@@ -37,7 +37,7 @@ Useful as an independent overview of Fazang and the Indra's Net metaphor in Huay
 
 ### Classical canonical text
 
-CBETA Online, T1881 華嚴經金師子章註
+CBETA Online, T1881華嚴經金師子章註
 
 https://cbetaonline.dila.edu.tw/zh/T1881
 

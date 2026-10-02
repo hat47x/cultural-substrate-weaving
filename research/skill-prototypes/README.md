@@ -146,7 +146,7 @@ production builderへ直接進まず、repository外の一時領域だけを使�
 
 `research/skill-prototypes/scripts/materialize_skill_tree.py`
 
-対象:
+対象は次のとおりです。
 
 - OpenAI Skill tree
 - Claude shared `skills/` tree

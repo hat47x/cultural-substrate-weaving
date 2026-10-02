@@ -231,7 +231,7 @@ adapter metadataについては、source・descriptor・validator contractを静
 
 materializerが実checkout上でunit testを通った後、次を比較できる。
 
-1. research materialized ja-JP / en-US CSW subtree と現行production generated subtree
+1. research materialized ja-JP / en-US CSW subtreeと現行production generated subtree
 2. companion Skill subtreeのfrontmatter / relative reference / locale identity
 3. production builder generalization時に必要な最小共通関数
 4. host metadata materializerをSkill tree materializerへ接続するか

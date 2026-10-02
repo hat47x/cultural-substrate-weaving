@@ -6,7 +6,7 @@ Status: same-authoring-session routing review; not host-behavior evidence
 
 ja-JP companion OpenAI metadata prototypeが、三Skillの責務分離を入口文面で弱めていないかを確認する。
 
-対象:
+対象は次のとおりです。
 
 - `cultural-substrate-weaving`
 - `affinity-synthesis`
@@ -36,7 +36,7 @@ Input intent:
 
 Expected primary entry: **Affinity Synthesis**
 
-理由:
+理由は次のとおりです。
 
 - 一回の統合で足りる。
 - multi-round orchestrationは不要。
@@ -53,7 +53,7 @@ Input intent:
 
 Expected primary entry: **Iterative Inquiry Synthesis**
 
-理由:
+理由は次のとおりです。
 
 - 前roundが明示される。
 - delta / touched region / reopenが中心である。
@@ -69,7 +69,7 @@ Input intent:
 
 Expected primary entry: **Cultural Substrate Weaving**
 
-理由:
+理由は次のとおりです。
 
 - 要求の中心が文化体系による探索である。
 - framework-generated candidateを対象へ戻す境界が必要である。
@@ -127,13 +127,13 @@ interactive profileではAffinity / Iterativeともimplicit invocationを許可�
 
 ## Evidence classification
 
-このreviewで言えること:
+このreviewで言えること。
 
 - metadata文章の責務境界は4ケースで整合する。
 - obviousなcross-layer wording contaminationは見つからない。
 - 複合ケースではhandoffを要求する設計になっている。
 
-このreviewで言えないこと:
+このreviewで言えないこと。
 
 - OpenAI hostが実際に正しいSkillを自動選択する。
 - implicit invocationのprecision/recallが十分である。

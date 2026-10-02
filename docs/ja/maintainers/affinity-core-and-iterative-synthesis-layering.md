@@ -55,7 +55,7 @@ residuals: singleton / tension / gap / unresolved
 - カード化、表札化、上位統合では同じ意味統合コアを粒度を変えて使う。
 - 束が揃う前に表札を固定しない。
 - 元材料に無い因果、人物内面、一般化、評価方向、確度変更等を戻し検査する。
-- source provenance と discovery route を分ける。
+- source provenanceとdiscovery routeを分ける。
 - 派生物や転載を独立反復として二重計上しない。
 - 孤立、対立、曖昧さを早期に均さない。
 - 図解から叙述し、叙述で生じた新しい関係を図解と元材料へ戻す。
@@ -74,21 +74,21 @@ residuals: singleton / tension / gap / unresolved
 
 ### 作業名
 
-日本語候補:
+日本語候補は次のとおりです。
 
-- **反復統合**
-- **反復探索統合**
-- **循環型統合探索**
+- 反復統合
+- 反復探索統合
+- 循環型統合探索
 
-英語候補:
+英語候補は次のとおりです。
 
-- **Iterative Synthesis**
-- **Iterative Inquiry Synthesis**
-- **Recursive Material Synthesis**
+- Iterative Synthesis
+- Iterative Inquiry Synthesis
+- Recursive Material Synthesis
 
-現時点の第一候補は、日本語 **反復探索統合**、英語 **Iterative Inquiry Synthesis** とする。
+現時点の第一候補は、日本語 反復探索統合、英語 Iterative Inquiry Synthesis とする。
 
-理由は、単に同じ要約を繰り返すのではなく、一回の統合から生じた `gap / conflict / singleton / unresolved question` を次の inquiry へ戻し、材料自体を増補・修正してから再統合するためである。
+理由は、単に同じ要約を繰り返すのではなく、一回の統合から生じた `gap / conflict / singleton / unresolved question` を次のinquiryへ戻し、材料自体を増補・修正してから再統合するためである。
 
 ### 責務
 
@@ -127,7 +127,7 @@ Affinity Synthesis Core
 - next-round trigger
 - 前ラウンドから何が変わったか
 
-private chain-of-thought は保存しない。保存するのは外部から意味のある成果物と変化である。
+private chain-of-thoughtは保存しない。保存するのは外部から意味のある成果物と変化である。
 
 ### 次ラウンドを開始する条件
 
@@ -140,7 +140,7 @@ private chain-of-thought は保存しない。保存するのは外部から意�
 - 孤立カードが新しい問題系を示している。
 - 叙述化によって、図解へ戻すべき未検証関係が生じた。
 - 新しい材料が入り、既存の束・表札・関係が変わる可能性がある。
-- inquiry question が変化した。
+- inquiry questionが変化した。
 
 ### 停止条件
 
@@ -158,7 +158,7 @@ private chain-of-thought は保存しない。保存するのは外部から意�
 
 CSWはLayer 1を所有しない。また、Layer 2の一般的な反復制御すべてを所有しない。
 
-CSWの固有責務は、反復探索の途中で文化的・哲学的・伝統的体系を**認知場として接触させること**に限定する。
+CSWの固有責務は、反復探索の途中で文化的・哲学的・伝統的体系を認知場として接触させることに限定する。
 
 ```text
 Iterative Inquiry Synthesis
@@ -187,9 +187,9 @@ Affinity Synthesis Core
 
 依頼が「多数の既存項目を創発テーマへ束ねる」だけなら、既存Affinity Mapping Skillへ委ねる。
 
-ただしLayer 1全体には、意味境界の分割／結合、核融合法的統合、戻し検査、証拠状態の継ぎ目、図解と叙述の往復があるため、現時点では既存Affinity MappingをLayer 1全体の realization とみなさない。
+ただしLayer 1全体には、意味境界の分割／結合、核融合法的統合、戻し検査、証拠状態の継ぎ目、図解と叙述の往復があるため、現時点では既存Affinity MappingをLayer 1全体のrealizationとみなさない。
 
-将来、外部SkillがLayer 1のmethod definitionとevaluation fixturesを満たせば、独自 realization を置換できる。
+将来、外部SkillがLayer 1のmethod definitionとevaluation fixturesを満たせば、独自realizationを置換できる。
 
 ## 命名上の意味
 

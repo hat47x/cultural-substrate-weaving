@@ -2,13 +2,13 @@
 
 ## 位置づけ
 
-`src/skill-set.json` を追加しても、現行 `scripts/build.py` はまだ `src/manifest.json` を直接読む単一 Skill builder である。
+`src/skill-set.json` を追加しても、現行 `scripts/build.py` はまだ `src/manifest.json` を直接読む単一Skill builderである。
 
-この状態で descriptor と builder を並存させると、両者が静かにずれる可能性がある。そのため、multi-Skill build wiringへ進む前の暫定 bridge として、descriptor から解決した production Skill が現行 builder の入力と一致することを検査する。
+この状態でdescriptorとbuilderを並存させると、両者が静かにずれる可能性がある。そのため、multi-Skill build wiringへ進む前の暫定bridgeとして、descriptorから解決したproduction Skillが現行builderの入力と一致することを検査する。
 
 ## Resolver
 
-`scripts/production_skill_set.py` は production descriptor を read-only で解決する。
+`scripts/production_skill_set.py` はproduction descriptorをread-onlyで解決する。
 
 責務は次だけである。
 

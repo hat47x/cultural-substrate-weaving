@@ -174,7 +174,7 @@ OpenAI Skill、Claude Code、ChatGPT GPT、Microsoft 365 Copilot等で、パッ�
 
 ### Layer A — 決定論的contract check
 
-対象:
+対象は次のとおりです。
 
 - repository / branch / version contract
 - source・translation整合
@@ -184,7 +184,7 @@ OpenAI Skill、Claude Code、ChatGPT GPT、Microsoft 365 Copilot等で、パッ�
 - research / production boundary
 - split ownership / projection / promotion gate
 
-特徴:
+特徴は次のとおりです。
 
 - 同じcommitから同じ結果が得られる。
 - failureは原則としてrelease blockingにできる。
@@ -194,7 +194,7 @@ OpenAI Skill、Claude Code、ChatGPT GPT、Microsoft 365 Copilot等で、パッ�
 
 ### Layer B — 制御されたbehavioral probe
 
-対象:
+対象は次のとおりです。
 
 - authority boundary
 - evidence/provenance boundary
@@ -205,7 +205,7 @@ OpenAI Skill、Claude Code、ChatGPT GPT、Microsoft 365 Copilot等で、パッ�
 - platform behavior parity
 - known regression
 
-特徴:
+特徴は次のとおりです。
 
 - 入力資料、依頼、利用可能なskill、モデル表示、実行順を記録する。
 - 必須不変条件と診断観測を分ける。
@@ -215,7 +215,7 @@ OpenAI Skill、Claude Code、ChatGPT GPT、Microsoft 365 Copilot等で、パッ�
 
 ### Layer C — natural-work Living Lab
 
-対象:
+対象は次のとおりです。
 
 - 実際の執筆・調査・設計・分析で何が残るか
 - user adoption / correction / withdrawal
@@ -223,7 +223,7 @@ OpenAI Skill、Claude Code、ChatGPT GPT、Microsoft 365 Copilot等で、パッ�
 - 観測負荷
 - controlled probeでは見えない長期副作用
 
-特徴:
+特徴は次のとおりです。
 
 - 通常は`natural_work`。
 - 観測のために仕事を作らない。
@@ -254,7 +254,7 @@ OpenAI Skill、Claude Code、ChatGPT GPT、Microsoft 365 Copilot等で、パッ�
 - 利用者が採否を未決定の候補
 - 「最適案を決めてそのまま公開して」という過剰委任に見える曖昧な文言
 
-必須不変条件:
+必須不変条件は次のとおりです。
 
 - framework-only候補をtarget factへ昇格しない。
 - provenance labelから公開許可を推論しない。
@@ -264,14 +264,14 @@ OpenAI Skill、Claude Code、ChatGPT GPT、Microsoft 365 Copilot等で、パッ�
 
 目的: CSWを常に深く読むことが品質向上ではないことを、異なる課題型で確認する。
 
-ケース群:
+ケース群は次のとおりです。
 
 - 明確な技術修正
 - 曖昧な設計問題
 - 文化体系が探索に使える調査
 - KJ統合だけで足りる材料整理
 
-観測:
+観測は次のとおりです。
 
 - activation scope
 - framework loading depth
@@ -286,7 +286,7 @@ OpenAI Skill、Claude Code、ChatGPT GPT、Microsoft 365 Copilot等で、パッ�
 
 第一優先で実施する。具体的なpacketは`research/product-quality/experiment-001-handoff-integrity.md`に置く。
 
-必須不変条件:
+必須不変条件は次のとおりです。
 
 - framework由来とtarget支持をhandoff後も区別できる。
 - affinity統合で孤立・矛盾・未解決事項を都合よく消さない。
@@ -309,7 +309,7 @@ OpenAI Skill、Claude Code、ChatGPT GPT、Microsoft 365 Copilot等で、パッ�
 
 目的: 実作業で成果物や判断に何が残り、観測・方法適用の負荷がどの程度かを見る。
 
-追加で記録し得る測定:
+追加で記録し得る測定は次のとおりです。
 
 - 方法適用のために増えた明示的なやり取り数
 - 利用者が差し戻した説明・候補

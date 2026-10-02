@@ -125,7 +125,7 @@ controlled probeは`research/product-quality/`へ分離し、Living Labは自然
 
 ### Priority 1 — E3 split-method handoff integrity
 
-理由:
+理由は次のとおりです。
 
 - v0.5のアーキテクチャ変更に直接対応する。
 - PQ-01/PQ-02/PQ-05/PQ-06を一度に観測できる。

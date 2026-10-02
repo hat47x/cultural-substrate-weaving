@@ -4,13 +4,13 @@ Status: research candidate
 
 ## 1. Purpose
 
-この文書は、親和統合の意味構造を、生成AI・人間・図描画ツールの間でなるべく壊さず受け渡すための**表現契約**を定める。
+この文書は、親和統合の意味構造を、生成AI・人間・図描画ツールの間でなるべく壊さず受け渡すための表現契約を定める。
 
 方法そのものと描画形式を混同しない。
 
-- Method Definition は「何を守るか」を定める。
-- Representation Grammar は「守った結果をどう記述するか」を定める。
-- Mermaid / Excalidraw / SVG / canvas 等は、その記述から作る projection である。
+- Method Definitionは「何を守るか」を定める。
+- Representation Grammarは「守った結果をどう記述するか」を定める。
+- Mermaid / Excalidraw / SVG / canvas等は、その記述から作るprojectionである。
 
 図をきれいにするために、材料の意味、残差、関係の確度、来歴を変更しない。
 
@@ -55,19 +55,19 @@ Status: research candidate
 
 relationは自然言語の短いpredicateとして保持する。
 
-例:
+例は次のとおりです。
 
 - 「反発を弱め、具体的な責任行為へ戻る通路を作る」
 - 「制度上は接続するが、現場の判断基準は共有していない」
 - 「同じ出来事を扱うが、責任の置き場所が逆向きである」
 
-必要なら renderer や downstream tool のために補助tagを付けてもよいが、tagがrelation本文を置き換えてはならない。
+必要ならrendererやdownstream toolのために補助tagを付けてもよいが、tagがrelation本文を置き換えてはならない。
 
 ### R5. Direction and epistemic state are separate from predicate
 
-relationの**意味**、**向き**、**確度・状態**を分ける。
+relationの意味、向き、確度・状態を分ける。
 
-向きの最小記法:
+向きの最小記法は次のとおりです。
 
 - `A -> B`: AからBへの方向を主張する。
 - `A <-> B`: 相互方向を主張する。
@@ -107,7 +107,7 @@ relationの**意味**、**向き**、**確度・状態**を分ける。
 - `R`を撤回する。
 - まだ気になる接続なら `Q` としてquestionable relation candidateへ戻す。
 
-このread-backは**監査操作**であり、同じ意味を別fieldへ重複保存する必須schemaではない。
+このread-backは監査操作であり、同じ意味を別fieldへ重複保存する必須schemaではない。
 
 ## 3. Compact human-readable grammar
 
@@ -197,7 +197,7 @@ Q07? := "G02 と G05 の間に、時間差を介した接続があるか" @arise
 @would_clarify[C021,S08]
 ```
 
-これはmissing linkの**問い**であり、missing relationの存在を主張するものではない。
+これはmissing linkの問いであり、missing relationの存在を主張するものではない。
 
 ## 4. Inventory tables
 
@@ -240,7 +240,7 @@ machine-readable出力が必要な場合は `affinity-map.v0.1` JSONを推奨す
 
 JSONは方法の正本ではなくinterchange formatである。Schema候補は `affinity-map.schema.json` を参照する。
 
-最小例:
+最小例は次のとおりです。
 
 ```json
 {
@@ -277,7 +277,7 @@ relation read-backはcanonical JSONへ同じ意味を複製する必須fieldに�
 
 ### 6.1 Group relationship map — default overview
 
-表示するもの:
+表示するもの。
 
 - group ID + 表札
 - explicit relations
@@ -289,7 +289,7 @@ relation read-backはcanonical JSONへ同じ意味を複製する必須fieldに�
 
 ### 6.2 Membership map — diagnostic
 
-表示するもの:
+表示するもの。
 
 - group boundary
 - member card ID + 短い本文
@@ -302,7 +302,7 @@ explicit relationは必要なものだけ載せる。
 
 ### 6.3 Lineage map — audit
 
-表示するもの:
+表示するもの。
 
 ```text
 source -> card -> group / label -> relation / narrative claim
@@ -312,11 +312,11 @@ source -> card -> group / label -> relation / narrative claim
 
 ### 6.4 Spatial map — when geometry itself matters
 
-近接、離隔、空白、囲み、中心／周縁など、**配置自体**を保持したい場合に使う。
+近接、離隔、空白、囲み、中心／周縁など、配置自体を保持したい場合に使う。
 
 Mermaid等のautomatic layoutだけを正本にしない。必要ならmachine-readable recordへ任意のnormalized coordinatesやlayout hintを保存し、Excalidraw / SVG / canvas等へ投影する。
 
-例:
+例は次のとおりです。
 
 ```json
 "layout": {
@@ -332,7 +332,7 @@ Mermaid等のautomatic layoutだけを正本にしない。必要ならmachine-r
 
 ## 7. Mermaid projection rules
 
-Mermaidは可搬性の高い**topology projection**として使う。
+Mermaidは可搬性の高いtopology projectionとして使う。
 
 ### 7.1 Group map example
 
@@ -370,7 +370,7 @@ flowchart TB
 
 ### 7.4 Rendering limits
 
-Mermaidのautomatic layoutが、元の空間配置を変えることを許容するのは、**topologyだけを見せるprojection**の場合である。
+Mermaidのautomatic layoutが、元の空間配置を変えることを許容するのは、topologyだけを見せるprojectionの場合である。
 
 配置自体が分析対象なら、spatial mapを別成果物として作る。
 

@@ -16,10 +16,10 @@
 
 `10-integration` を初めて追加した `0c19f041f058316cadf5c7c9a0ded3da18a70da3`（2026-07-31）で、英語版には次の配置工程が一括して導入された。
 
-- causal / mutual / opposing / temporal order を区別して関係を描く
-- opposition は opposition のまま描く
+- causal / mutual / opposing / temporal orderを区別して関係を描く
+- oppositionはoppositionのまま描く
 - 未描画の関係を描く
-- whole から downward に描き、grouping と逆順にする
+- wholeからdownwardに描き、groupingと逆順にする
 
 日本語版にも同時に、因果・相互・対立・時間の前後、反対を反対として描くこと、引かなかった関係も描くこと、大局から先に描くことが入った。
 
@@ -27,7 +27,7 @@
 
 ## 一次資料との照合
 
-確認資料:
+確認資料は次のとおりです。
 
 - 川喜田二郎・松沢哲郎・やまだようこ「KJ法の原点と核心を語る――川喜田二郎さんインタビュー」『質的心理学研究』2(1), 6-28, 2003
 - DOI: 10.24525/jaqp.2.1_6

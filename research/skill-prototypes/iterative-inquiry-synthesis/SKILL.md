@@ -109,7 +109,7 @@ stable IDがある場合、次の記号で**change operation**を表せる。
 ?  unresolved / residual remains
 ```
 
-例:
+例は次のとおりです。
 
 ```text
 + C115 := "新材料から立った意味単位"
@@ -157,7 +157,7 @@ representation変更によって新relation candidateに気づくことはある
 
 未解決だからという理由でresidualを削除しない。
 
-例:
+例は次のとおりです。
 
 - gap: 後で確認する価値のある空白・関係不足。
 - conflict: 現材料では整合しない差。
@@ -180,7 +180,7 @@ representation変更によって新relation candidateに気づくことはある
 
 complete explanationやresidual zeroを成功条件にしない。
 
-停止してよい例:
+停止してよい例は次のとおりです。
 
 - 今の問いに対し、追加roundが意味のある構造変化を生まなくなった。
 - 未解決は残るが、現時点で判別可能な新証拠がない。

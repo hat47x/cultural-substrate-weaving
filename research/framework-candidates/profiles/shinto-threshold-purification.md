@@ -29,7 +29,7 @@ Useful for contemporary worship protocol and temizu as preparation before worshi
 
 ### Scholarly / institutional reference
 
-國學院大學 Encyclopedia of Shinto, Paying Respects at a Shinto Shrine
+國學院大學Encyclopedia of Shinto, Paying Respects at a Shinto Shrine
 
 https://d-museum.kokugakuin.ac.jp/eos/detail/?id=9876
 

@@ -42,7 +42,7 @@ make check
 
 このセッションではcomplete checkout上のcommand executionを完了できていない。
 
-確認した実行経路:
+確認した実行経路は次のとおりです。
 
 - authorized remote desktop execution target: currently offline
 - current containerからpublic repositoryを新規cloneする経路: external network / DNS access unavailable
@@ -149,7 +149,7 @@ copy_scope       = entire_locale_tree
 exclusion_filter = none
 ```
 
-具体的な追加・更新:
+具体的な追加・更新は次のとおりです。
 
 - `P4-PRODUCTION-BUILDER-GENERALIZATION-CONTRACT.json`
   - `locale_tree_source_package_purity: true`

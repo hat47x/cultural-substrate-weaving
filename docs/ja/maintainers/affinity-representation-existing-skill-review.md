@@ -10,14 +10,14 @@
 
 ## 1. Research Synthesis系
 
-参照例:
+参照例は次のとおりです。
 https://github.com/SkillMedev/skills/blob/main/skills/research-synthesis/SKILL.md
 
 ### 良かった点
 
 Themeを単なるtopic wordではなく、共有する意味を表すsentenceとして書く。
 
-例の形式:
+例の形式は次のとおりです。
 
 ```text
 Theme: "Remote teams ship faster but report weaker belonging."
@@ -41,7 +41,7 @@ Theme: "Remote teams ship faster but report weaker belonging."
 
 ## 2. Concept Map系
 
-参照例:
+参照例は次のとおりです。
 https://github.com/bajpainaman/solve/blob/main/frameworks/concept-map.md
 
 ### 良かった点
@@ -79,7 +79,7 @@ relationは図の線ではなく、semantic record側にcanonical natural-langua
 
 ## 3. Mermaid Diagram系
 
-参照例:
+参照例は次のとおりです。
 https://github.com/mgranberry/mermaid-diagram-skill/blob/main/SKILL.md
 
 ### 良かった点
@@ -112,7 +112,7 @@ Mermaidはautomatic layoutなので、KJ系A型で距離・空白・中心／周
 
 ## 4. Excalidraw系
 
-参照例:
+参照例は次のとおりです。
 https://github.com/diegosouzapw/awesome-omni-skills/tree/main/skills/excalidraw-studio
 
 ### 良かった点

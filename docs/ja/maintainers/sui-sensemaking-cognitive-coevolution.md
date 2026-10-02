@@ -141,7 +141,7 @@ Arm C/Dでは、最終叙述を元カードまで戻し、次を確認する。
 
 閉じた定型作業ではなく、`core/activation.md`の条件を満たす、開いた問題を使う。
 
-初期候補:
+初期候補は次のとおりです。
 
 - SUI Sensemakingのプロダクト価値と一次利用仕事。
 - AIによる束ね、表札、反対視点の責任境界。
@@ -170,7 +170,7 @@ Arm C/Dの外部表象には、`hat47x/sui-sensemaking`のキャンバスを用�
 
 SUI側の`COGNITIVE-EVAL-01`（`hat47x/sui-sensemaking:01_Plans/issues/issue-COGNITIVE-EVAL-01-factorial-human-ai-cognitive-control-evaluation.md`）は、本書と同じ4条件の比較である。同じ未解決の課題と資料snapshotを使い、外部表象（通常のチャットか、SUI Sensemakingのキャンバスか）とCSWの有無を組み合わせたA〜Dを比べる。Case 001〜003の問い、snapshot、各armの条件、必須出力は凍結済みで、実行順も`C → D → B → A`として事前登録されている。
 
-2026-09-27時点では、CSWの側にもSUIの側にも、A〜Dの生の実行記録はまだない。SUI側の索引が示す現在地も「Case 001 Arm C 実行可能 / 生の実行記録は未取得」である。言えるのは比較の準備が整ったところまでであり、CSWの増分についての結果はまだない。
+2026-09-27時点では、CSWの側にもSUIの側にも、A〜Dの生の実行記録はまだない。SUI側の索引が示す現在地も「Case 001 Arm C実行可能 / 生の実行記録は未取得」である。言えるのは比較の準備が整ったところまでであり、CSWの増分についての結果はまだない。
 
 ### 次に最も情報量の大きい一歩
 

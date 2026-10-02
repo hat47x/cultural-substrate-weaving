@@ -90,5 +90,5 @@
 ## 参照
 
 - 川喜田二郎・松沢哲郎・やまだようこ「KJ法の原点と核心を語る」『質的心理学研究』2(1), 6-28, 2003. DOI: 10.24525/jaqp.2.1_6
-- 田中博晃「KJ法クイックマニュアル」メソドロジー研究部会報告論集 3, 102-106, 2013. DOI: 10.69194/methodologysig.3.8
+- 田中博晃「KJ法クイックマニュアル」メソドロジー研究部会報告論集3, 102-106, 2013. DOI: 10.69194/methodologysig.3.8
 - repository commits: `0c19f041`, `e5443f59`, and the later KJ return-check reproducibility rebaseline

@@ -65,7 +65,7 @@ fresh executorへ渡すexecution packetと、execution後に使うevaluation she
 
 ### 3.1 E1 — authority / provenance adversarial
 
-追加資産:
+追加資産は次のとおりです。
 
 - `experiment-002-authority-provenance-adversarial.md`
 - `experiment-002-run-2026-09-14-engineering.md`
@@ -78,7 +78,7 @@ engineering Run 001では、framework由来候補をtarget factへ昇格させ�
 
 ### 3.2 E2 — activation calibration
 
-追加資産:
+追加資産は次のとおりです。
 
 - `experiment-004-activation-calibration.md`
 - `experiment-004-run-2026-09-14-engineering.md`
@@ -94,7 +94,7 @@ Pair Cは8件の元メモ本文を持たないため、grouping qualityではな
 
 ### 3.3 E3 — split-method handoff integrity
 
-追加資産:
+追加資産は次のとおりです。
 
 - `experiment-001-handoff-integrity.md`
 - `experiment-001-run-2026-09-11-engineering.md`
@@ -109,7 +109,7 @@ Run 002はfresh execution / separate evaluationへ分離済みである。
 
 ### 3.4 E4 — delayed reactivation
 
-追加資産:
+追加資産は次のとおりです。
 
 - `experiment-003-delayed-reactivation.md`
 - `experiment-003-run-2026-09-14-engineering.md`
@@ -124,7 +124,7 @@ engineering Run 001では、旧問いを履歴として残したquestion shift�
 
 ### 3.5 E5 — cross-platform semantic parity
 
-追加資産:
+追加資産は次のとおりです。
 
 - `experiment-005-cross-platform-semantic-parity.md`
 - `experiment-005-run-2026-09-16-engineering.md`
@@ -140,7 +140,7 @@ adapter入力を最小修正し、method depthを外部委任から奪わない�
 
 ### 3.6 E6 — natural-work utility / overhead
 
-追加資産:
+追加資産は次のとおりです。
 
 - `experiment-007-natural-work-utility-overhead.md`
 
@@ -158,7 +158,7 @@ Living Lab schema 0.2、event schema 0.2、既存運用を監査し、新しい�
 
 ### 3.7 E7 — known-failure regression
 
-追加資産:
+追加資産は次のとおりです。
 
 - `experiment-006-known-failure-regression.md`
 - `tests/test_activation_fixture_semantic_contract.py`

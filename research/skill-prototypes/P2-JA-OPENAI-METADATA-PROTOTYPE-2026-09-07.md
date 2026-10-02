@@ -130,7 +130,7 @@ Iterative = prototype
 
 このreviewはsame-authoring-sessionであり独立host evaluationではない。
 
-未確認:
+未確認は次のとおりです。
 
 - OpenAI Skill UI上の実表示。
 - implicit invocationのrouting精度。

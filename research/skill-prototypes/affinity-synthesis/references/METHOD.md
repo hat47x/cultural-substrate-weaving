@@ -24,18 +24,18 @@ Status: research candidate
 
 ### 生成AI向け補正
 
-- meaning-bearing unit と epistemic seam を同時に守るカード境界。
-- source provenance と discovery route の分離。
-- derivation lineage による二重計上防止。
+- meaning-bearing unitとepistemic seamを同時に守るカード境界。
+- source provenanceとdiscovery routeの分離。
+- derivation lineageによる二重計上防止。
 - 流暢な補完で入りやすい因果、人物内面、一般化、評価方向、確度変更等の戻し検査。
 - 図解と叙述の双方向差分検査。
 - 変換後の意味を `inherited / emergent / residual` として監査し、新しい意味を元材料へ遡及させない。
-- membership / explicit relation / secondary resonance / layout を区別し、描画都合による意味混線を防ぐ。
+- membership / explicit relation / secondary resonance / layoutを区別し、描画都合による意味混線を防ぐ。
 - private chain-of-thoughtではなく、外部から再検査できる成果物・来歴・残差を残す。
 
 ## Applicability
 
-適用しやすい場面:
+適用しやすい場面は次のとおりです。
 
 - qualitative synthesis
 - open-ended research
@@ -44,7 +44,7 @@ Status: research candidate
 - material-led structure discovery
 - creative or analytical projects in which source texture and residual difference matter
 
-適用しにくい場面:
+適用しにくい場面は次のとおりです。
 
 - fixed taxonomy coding
 - simple summarization
@@ -86,7 +86,7 @@ Status: research candidate
 
 ### I1. Material-led structure
 
-意味距離は材料内容から立ち上げる。出所、話者属性、陣営、カード種別、既存taxonomyを最初の grouping geometry にしない。
+意味距離は材料内容から立ち上げる。出所、話者属性、陣営、カード種別、既存taxonomyを最初のgrouping geometryにしない。
 
 ### I2. Meaning-bearing unit
 
@@ -104,7 +104,7 @@ I2とI3が衝突する場合は、意味の一体性と証拠状態の双方を�
 
 カード化、表札化、上位表札化、精選、意味重複整理は別々の根幹技術とみなさず、材料から意味単位を立てる同じ核操作を粒度を変えて用いる。
 
-核操作:
+核操作は次のとおりです。
 
 1. 境界を見る。
 2. 何を失えば同じ意味でなくなるかを見る。
@@ -181,7 +181,7 @@ Mermaid、Excalidraw、SVG、canvas等の描画形式は、意味構造から作
 - 行為者を落とし、選択を自然発生した出来事へ変える。
 - 人物内面をもっともらしく補う。
 - 推測・伝聞・仮説を断定へ上げる。
-- 一つの vivid case を一般傾向へ変える。
+- 一つのvivid caseを一般傾向へ変える。
 - 派生カードを独立した多数意見のように扱う。
 - 大きいclusterを重要・真実と同一視する。
 - 表札の巧さで弱いgroup coherenceを覆う。

@@ -31,7 +31,7 @@ CSWから分離した三層を接続したときに、文化体系・認知場�
 
 複数周期・状態軸を交差させる探索場から、次の問いが立ったとする。
 
-`FQ01`:
+`FQ01`は次のとおりです。
 
 > batch windowとdeployment / restart lifecycleの位相が重なるときだけ、queue上昇がincidentへ進む可能性はあるか。
 
@@ -96,7 +96,7 @@ Layer 2は`FQ01`をtarget sourceへ書き換えず、Layer 1へ渡す。
 
 > incident夜にはbatch開始直前からqueueが上がったが、batch自体は他の日にもincidentなしで実行されている。
 
-保持する差:
+保持する差は次のとおりです。
 
 - queue riseは00:58から。
 - batchは01:00開始。
@@ -110,7 +110,7 @@ Layer 2は`FQ01`をtarget sourceへ書き換えず、Layer 1へ渡す。
 
 > incident夜にはdeploymentとconsumer restartが同じ時間帯にあるが、deployment自体は他回にもincidentなしで行われ、restart原因は未確認である。
 
-保持する差:
+保持する差は次のとおりです。
 
 - deploymentは00:55〜01:07。
 - restartは01:04。
@@ -121,13 +121,13 @@ Layer 2は`FQ01`をtarget sourceへ書き換えず、Layer 1へ渡す。
 
 `FQ01` はG01/G02のmemberにしない。
 
-理由:
+理由は次のとおりです。
 
 - target materialそのものではない。
 - `batch × deployment/restart`という交差構造を先にgrouping geometryへすると、frameworkの問いがtarget構造へ昇格する。
 - G01/G02がtarget materialだけから成立するかを先に見る必要がある。
 
-ただしFQ01は、G01とG02を並べた後の**verification question**として有効である。
+ただしFQ01は、G01とG02を並べた後のverification questionとして有効である。
 
 ### Relational reading from target material
 
@@ -159,7 +159,7 @@ target materialだけでは次を確定できない。
 
 ### Residual / next check
 
-`Q01`:
+`Q01`は次のとおりです。
 
 > incidentあり／なしの日を複数集め、batch開始、deployment状態、restart、queue riseの時間関係を比較すると、FQ01のinteraction hypothesisを支持・反証できるか。
 
@@ -183,7 +183,7 @@ target materialだけでは次を確定できない。
 
 `FQ01` itselfは`target_supported`へ移さない。
 
-今回target側で支持されたのは、**同じ時間帯に複数eventが存在したことと、単独eventに非incident例があること**までである。interaction effect / causalityは未確認である。
+今回target側で支持されたのは、同じ時間帯に複数eventが存在したことと、単独eventに非incident例があることまでである。interaction effect / causalityは未確認である。
 
 したがってhistoryは次のように分けて残す。
 
@@ -193,9 +193,9 @@ target materialだけでは次を確定できない。
 
 ### Round continuation
 
-**Continue**, if repeated incident/nonincident timing material can be collected.
+Continue, if repeated incident/nonincident timing material can be collected.
 
-次roundで戻るもの:
+次roundで戻るもの。
 
 - `FQ01` hypothesis
 - `TS01` target-side synthesis
@@ -227,11 +227,11 @@ target materialだけでは次を確定できない。
 1. Layer 2 round templateの `Incoming status / role`, `Origin / operation`, `Target-side support`, `Handoff use`。
 2. Layer 1 templateの `Input status / role` と、external exploration inputをtarget-side supportへ昇格させていないかのcross-check。
 
-このため今回のtemplate補正は、方法の新しい認識論を追加するというより、**既存I11 / provenance invariantsをSkill分離後のinterfaceで失わないための表現補強**と位置づける。
+このため今回のtemplate補正は、方法の新しい認識論を追加するというより、既存I11 / provenance invariantsをSkill分離後のinterfaceで失わないための表現補強と位置づける。
 
 ## Decision
 
-**CONTROLLED PASS at the Method/Skill/template interface level.**
+CONTROLLED PASS at the Method/Skill/template interface level.
 
 ただしM5を完了扱いにはしない。
 

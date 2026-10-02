@@ -4,7 +4,7 @@ Status: research package-tree experiment; production build remains unchanged
 
 ## Purpose
 
-P2で packaging contract を次の四層へ分離した。
+P2でpackaging contractを次の四層へ分離した。
 
 ```text
 locale realization
@@ -98,7 +98,7 @@ skills/iterative-inquiry-synthesis/
 
 `build_preview.py` はhost-specific release packageではなく、三Skill×二localeのgeneric research packageをtemporary directoryへ組み立てる。
 
-確認対象:
+確認対象は次のとおりです。
 
 - `SKILL.md` entryが存在する
 - installable nameが一致する

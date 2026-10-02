@@ -2,13 +2,13 @@
 
 Date: 2026-09-07
 
-Status: review handoff; **review not yet completed**
+Status: review handoff; review not yet completed
 
 ## 目的
 
 `affinity-synthesis` と `iterative-inquiry-synthesis` の英語realizationは、artifactとしては存在するが `translated-draft` である。
 
-このpacketは、production promotion gateにある **English sibling Skill realizations receive independent review** を、単なる「英文として自然か」の確認にしないための査読対象・判断基準・記録形式を定義する。
+このpacketは、production promotion gateにある English sibling Skill realizations receive independent review を、単なる「英文として自然か」の確認にしないための査読対象・判断基準・記録形式を定義する。
 
 この文書を作成したこと自体は査読完了を意味しない。
 
@@ -102,20 +102,20 @@ representation grammarとround templateについても、文章の逐語一致�
 
 英語版は少なくとも次を失ってはならない。
 
-1. **material-led**
+1. material-led
    - 既成taxonomyを先に置かない。
    - metadata / provenanceを初期grouping geometryにしない。
 
-2. **meaning-bearing boundary**
+2. meaning-bearing boundary
    - 機械的な最小単位化をしない。
    - 意味の一体性を守るときは結合する。
    - observation / interpretation、confirmed / inferred等、証拠状態が変わる境界では分ける。
 
-3. **card / group / labelは同じ意味統合核を粒度違いで使う**
+3. card / group / labelは同じ意味統合核を粒度違いで使う
    - cardingを単なるsentence splittingとして説明しない。
    - labelをcategory nameへ薄めない。
 
-4. **source-return correction**
+4. source-return correction
    - unsupported causality
    - invented interior state
    - unsupported generalization
@@ -123,7 +123,7 @@ representation grammarとround templateについても、文章の逐語一致�
    - confidence / evidence-state shift
    を元材料へ戻して点検する。
 
-5. **residual preservation**
+5. residual preservation
    - singleton
    - conflict
    - opposition
@@ -132,17 +132,17 @@ representation grammarとround templateについても、文章の逐語一致�
    - gap
    を「失敗だから消す」対象にしない。
 
-6. **gap is not fact**
+6. gap is not fact
    - diagram/layoutから見えた空白は探索候補であり、対象について確認済みの欠落ではない。
 
-7. **derived material is not independent repetition**
+7. derived material is not independent repetition
    - repost / derivative card / same-event duplicateを独立supportとして数えない。
 
-8. **diagram ↔ narrative round trip**
+8. diagram ↔ narrative round trip
    - proseで新しく生じたrelationはsource / mapへ戻す。
    - fluent narrationがdiagramよりunsupportedに滑らかにならない。
 
-9. **representation distinction**
+9. representation distinction
    - membership
    - semantic relation
    - secondary resonance
@@ -150,43 +150,43 @@ representation grammarとround templateについても、文章の逐語一致�
    を混同しない。
    - `REPRESENTATION.en.md` が、`REPRESENTATION.md` にあるrelation read-back、questionable relation candidate、projection integrityの境界を弱めていない。
 
-10. **no fixed success counts**
+10. no fixed success counts
     - card数、group数、gap数、isolate数を成功quotaにしない。
 
 ## Layer 2 必須不変条件
 
 英語版は少なくとも次を失ってはならない。
 
-1. **delta-first reopening**
+1. delta-first reopening
    - 新材料一件で全体を自動rebuildしない。
    - ただし全体前提を壊す反証ならlineageを辿ってglobal reopenを許す。
 
-2. **stable semantic identity**
+2. stable semantic identity
    - 文面が少し変わるたびに全artifactへ新IDを振らない。
 
-3. **append-only history**
+3. append-only history
    - 過去roundを現在の問い・現在の結論に書き換えない。
 
-4. **question shift is history, not failure**
+4. question shift is history, not failure
    - inquiry変更を前roundの失敗として消さない。
 
-5. **semantic delta != representation delta**
+5. semantic delta != representation delta
    - renderer / layout変更を世界についての新発見にしない。
 
-6. **realization delta != material delta**
+6. realization delta != material delta
    - Skill実装A/Bの違いで生じた出力差を、新しい外部事実としてbankしない。
 
-7. **resonance != duplicated membership**
+7. resonance != duplicated membership
    - secondary resonanceが見えたときcardを複製しない。
 
-8. **normal stop with unresolved material**
+8. normal stop with unresolved material
    - gapゼロ・questionゼロを停止条件にしない。
    - 現在の目的に十分なら未解決とreopen conditionを残して止まれる。
 
-9. **round count is budget, not quota**
+9. round count is budget, not quota
    - max roundsを使い切ることを成功条件にしない。
 
-10. **Layer 2 does not silently own Layer 1**
+10. Layer 2 does not silently own Layer 1
     - material synthesisが必要ならcompatible Layer 1 realizationを利用できる。
     - hard dependencyとして特定実装を絶対条件にしない。
     - Layer 1内部アルゴリズムをLayer 2へ再複製しない。
@@ -207,7 +207,7 @@ Layer 2
   multi-round delta / reopen orchestration
 ```
 
-確認点:
+確認点は次のとおりです。
 
 - CSWがLayer 1のgrouping algorithmを再所有していないか。
 - Layer 1が文化体系の真偽判定を所有していないか。
@@ -225,7 +225,7 @@ research Skill名は歴史的事情で `affinity-synthesis` だが、production 
 
 ### `evidence state` / `epistemic state`
 
-どちらを使う場合も、単なるconfidence scoreではなく、observation / interpretation / confirmed / inferred / hearsay等の**知識状態の違いを保存する境界**として読めること。
+どちらを使う場合も、単なるconfidence scoreではなく、observation / interpretation / confirmed / inferred / hearsay等の知識状態の違いを保存する境界として読めること。
 
 ### `gap` / `blank`
 

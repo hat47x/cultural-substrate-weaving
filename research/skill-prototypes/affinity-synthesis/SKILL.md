@@ -9,7 +9,7 @@ description: Integrates heterogeneous source material bottom-up into traceable m
 
 このSkillは一回の統合ラウンドを担当する。材料の再収集、次の問いの決定、複数ラウンドの進行管理は担当しない。
 
-KJ法、親和図法、質的統合法の系譜を参照しつつ、生成AIで起きやすい過剰細分化、流暢な上書き、来歴消失、派生物の二重計上を防ぐための補正を加えた realization である。特定の伝統的方法の公式実装や完全な再現を称しない。
+KJ法、親和図法、質的統合法の系譜を参照しつつ、生成AIで起きやすい過剰細分化、流暢な上書き、来歴消失、派生物の二重計上を防ぐための補正を加えたrealizationである。特定の伝統的方法の公式実装や完全な再現を称しない。
 
 ## When to Use
 
@@ -178,7 +178,7 @@ compact notation、inventory table、machine-readable JSON、diagram projection�
 
 - **group relationship map**: 表札とexplicit relationを中心にしたoverview。
 - **membership map**: group boundary、card membership、secondary resonanceの監査。
-- **lineage map**: source → card → group / relation / narrative claim の来歴監査。
+- **lineage map**: source → card → group / relation / narrative claimの来歴監査。
 - **spatial map**: 近接、離隔、空白等、配置そのものを保持する必要がある場合。
 
 Mermaidはtopology projectionに向く。自動layoutで元の空間配置が変わるため、配置自体に分析上の意味がある場合はMermaidだけを正本にしない。必要なら位置情報を別に保持し、自由配置できるformatへ投影する。
@@ -209,7 +209,7 @@ rendering toolが使える場合は、syntaxだけでなく視覚的な誤読も
 - ungrouped card、multiple direct membership、singleton group、narrative、residual、questionを一覧化し、綺麗に収まりすぎた構造を再点検する。
 - toolはgroup label、relation predicate、重要度、truthを推論しない。それらは材料を読み、元材料へ戻す作業の中で決める。
 
-最小例:
+最小例は次のとおりです。
 
 ```bash
 python scripts/affinity_board.py init /tmp/board.json \
@@ -296,5 +296,5 @@ handoff capsuleは**次roundの開始・問いの決定・全参照のreopenを�
 - 書式・ID・relation grammar・machine-readable map・diagram projection: `references/REPRESENTATION.md`
 - 標準成果物: `references/TEMPLATE.md`
 - machine-readable schema候補: `references/affinity-map.schema.json`
-- 評価・反例: `evals/CASES.md`
+- 評価・反例: `evals/CASES.md`は次のとおりです。
 - 公開時の根拠と限界: `evidence/dossier.md`

@@ -45,7 +45,7 @@ KJ法由来／親和統合系の独自Skillを設計するとき、既存Skill�
 
 比較対象を複数系統から集める。
 
-優先するもの:
+優先するもの。
 
 - Affinity Mapping / Affinity Diagramming
 - qualitative synthesis
@@ -87,13 +87,13 @@ KJ法由来／親和統合系の独自Skillを設計するとき、既存Skill�
 
 特に次を壊さないこと。
 
-- meaning-bearing unit を機械的atomicityへ戻さない。
-- provenance metadata を最初の意味距離にしない。
-- observation / interpretation 等の epistemic seam を潰さない。
-- derived material を independent repetition として数えない。
-- singleton / tension / unresolved を強制的にテーマへ収容しない。
-- fluent synthesis によって元材料にない因果・内面・一般化を加えない。
-- diagram と narrative の片方だけを正本化しない。
+- meaning-bearing unitを機械的atomicityへ戻さない。
+- provenance metadataを最初の意味距離にしない。
+- observation / interpretation等のepistemic seamを潰さない。
+- derived materialをindependent repetitionとして数えない。
+- singleton / tension / unresolvedを強制的にテーマへ収容しない。
+- fluent synthesisによって元材料にない因果・内面・一般化を加えない。
+- diagramとnarrativeの片方だけを正本化しない。
 
 ## Step 4: Feature classification
 
@@ -103,7 +103,7 @@ KJ法由来／親和統合系の独自Skillを設計するとき、既存Skill�
 
 認知操作そのものとして採用する候補。
 
-例:
+例は次のとおりです。
 
 - `cluster before naming`
 - source itemへの戻り検査
@@ -115,7 +115,7 @@ KJ法由来／親和統合系の独自Skillを設計するとき、既存Skill�
 
 Agent Skillとしての実行しやすさを改善するが、方法定義は変えないもの。
 
-例:
+例は次のとおりです。
 
 - `When to Use / When NOT to Use`
 - step numbering
@@ -129,7 +129,7 @@ method definitionではなくSkill realizationへ入れる。
 
 Skillの保守品質を高めるもの。
 
-例:
+例は次のとおりです。
 
 - evidence dossier
 - output template
@@ -182,7 +182,7 @@ Skillの保守品質を高めるもの。
 
 ## `think-affinity-mapping` から現時点で取り込みたいもの
 
-参照:
+参照は次のとおりです。
 https://github.com/product-on-purpose/thinking-framework-skills/tree/main/skills/think-affinity-mapping
 
 ### Adopt / Adapt候補
@@ -191,7 +191,7 @@ https://github.com/product-on-purpose/thinking-framework-skills/tree/main/skills
    - 現行の「束が揃う前に表札を書かない」と一致する。
    - Skillの起動文とquality checklistでも明示する。
 
-2. **明確な When to Use / When NOT to Use**
+2. **明確なWhen to Use / When NOT to Use**
    - 現行KJ_TECHNIQUEは方法の姿勢は強いが、他Skillとどう使い分けるかが弱い。
    - 独立Skillでは必須にする。
 
@@ -203,18 +203,18 @@ https://github.com/product-on-purpose/thinking-framework-skills/tree/main/skills
    - 現行のprovenance設計と整合する。
    - ただし「代表例だけ」ではなく、必要時に全カードへ戻れることを維持する。
 
-5. **Named theme が weak grouping を laundering し得るという警告**
+5. **Named themeがweak groupingをlaunderingし得るという警告**
    - 現行の「表札が分類名へ逃げる」検査とよく補完する。
    - `coherence` を検査観点として取り込む価値がある。
 
 6. **Evidence dossierをSkill本文から分離する構造**
-   - 方法論上の主張、系譜、一次／二次資料、AIへの transferred evidence を別ファイルで管理する。
+   - 方法論上の主張、系譜、一次／二次資料、AIへのtransferred evidenceを別ファイルで管理する。
    - 公開Skillの本文を根拠説明で肥大化させない。
 
 7. **AI利用についてhuman evidenceからの移転であることを明示する**
    - 生成AI版のKJ／親和統合は直接の実証が乏しい。AI向けに再構成した部分と原方法を区別する。
 
-8. **Template / Example / Checklist の分離**
+8. **Template / Example / Checklistの分離**
    - method definitionと具体的な出力形式を分離し、必要なときだけロードする。
 
 ### そのままは取り込まないもの
@@ -222,7 +222,7 @@ https://github.com/product-on-purpose/thinking-framework-skills/tree/main/skills
 1. **少数項目なら停止する固定基準**
    - KJ由来の統合は少数の強い材料でも意味がある場合がある。適用可否を件数だけで決めない。
 
-2. **theme size / weight を標準成果物とすること**
+2. **theme size / weightを標準成果物とすること**
    - 多数性はsalienceの一情報ではあるが、真実性・重要性とは別。派生・転載の二重計上問題もある。
    - 必要な用途でのみオプションとして扱う。
 

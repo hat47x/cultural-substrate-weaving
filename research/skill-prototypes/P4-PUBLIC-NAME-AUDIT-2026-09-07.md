@@ -53,7 +53,7 @@ KJ法はMethod Definition / evidence上の**系譜**として明記し、公式K
 affinity-synthesis
 ```
 
-表示名:
+表示名は次のとおりです。
 
 ```text
 Affinity Synthesis
@@ -92,7 +92,7 @@ use affinity-synthesis or insight-writer
 
 GitHub exact searchでは同名Skillを確認できなかった。
 
-長所:
+長所は次のとおりです。
 
 - 「分類体系を先に置かず、材料に構造を語らせる」というMethodの中心を表す
 - interview / UX領域へ限定されない
@@ -100,14 +100,14 @@ GitHub exact searchでは同名Skillを確認できなかった。
 - KJ法やAffinity Diagramの公式再現を名乗らない
 - 生成AI向けに追加したsource-return / residual保持とも整合する
 
-弱点:
+弱点は次のとおりです。
 
 - grouping / affinityという操作が名前だけでは見えにくい
 - `material` が英語話者に「物質・素材」と読まれる余地がある
 
 ただしSkill descriptionとdisplay nameで補える範囲と判断する。
 
-候補:
+候補は次のとおりです。
 
 ```text
 installable name: material-led-synthesis
@@ -128,12 +128,12 @@ Japanese display: 素材主導の親和統合
 
 GitHub exact searchで同名を確認できなかった。
 
-長所:
+長所は次のとおりです。
 
 - material-ledとaffinityの両方を明示できる
 - 既存Affinity Mappingとの系譜的近さも伝わる
 
-弱点:
+弱点は次のとおりです。
 
 - installable nameとして長い
 - `affinity-synthesis` collisionを完全には心理的に回避しにくい
@@ -247,14 +247,14 @@ iterative-inquiry-synthesis
 
 をstable research IDとして維持する。
 
-理由:
+理由は次のとおりです。
 
 - eval / representation / package / metadata / testsが大量にこのIDを参照している
 - complete-checkout gate前にrename churnを入れると、方法検証と名称変更の失敗を区別しにくい
 
 ### Production promotion時
 
-第一候補:
+第一候補は次のとおりです。
 
 ```text
 research id:        affinity-synthesis

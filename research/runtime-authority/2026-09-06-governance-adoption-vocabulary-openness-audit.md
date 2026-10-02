@@ -6,7 +6,7 @@
 
 > 採否：`adopted / backgrounded / rejected / distorting / reopened`
 
-PR #251 / #252 では、framework application側で「体系由来のものがどこに残ったか」と「体系利用をどう判断したか」を別軸へ戻した。
+PR #251 / #252では、framework application側で「体系由来のものがどこに残ったか」と「体系利用をどう判断したか」を別軸へ戻した。
 
 その結果、採否判断の記録先としてgovernanceのこの語彙がより重要になる。そこで、5状態が閉じた完全集合として必要なのか、それとも代表的な記録語彙なのかを確認する。
 
@@ -80,7 +80,7 @@ PR #251 / #252 では、framework application側で「体系由来のものが�
 
 ### framework placement/adoption audit
 
-PR #251 / #252 は、成果物への残り方と採否判断を別軸へ戻した。
+PR #251 / #252は、成果物への残り方と採否判断を別軸へ戻した。
 
 これによりgovernanceの採否語彙は、artifact placementを網羅する必要はなくなった。必要なのは、実際に生じた採否・歪み・再開などの判断状態を、主体と根拠とともに追跡できることである。
 
@@ -116,7 +116,7 @@ PR #251 / #252 は、成果物への残り方と採否判断を別軸へ戻し�
 
 のように、既存5語をすべて維持したまま非網羅性を明示できる。
 
-ENも同様に representative / e.g. の意味を持たせる。
+ENも同様にrepresentative / e.g. の意味を持たせる。
 
 新しい具体的状態を追加して別の固定taxonomyを作る必要はない。
 

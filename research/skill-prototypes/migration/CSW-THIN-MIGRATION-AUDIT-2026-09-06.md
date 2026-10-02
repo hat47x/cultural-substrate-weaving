@@ -80,7 +80,7 @@ CSWに残す必要があるのは、**framework contactによって何が新し�
 
 このファイルはthin migration後もCSW canonicalに残す。
 
-特に移管しない核:
+特に移管しない核は次のとおりです。
 
 - 決定権の所在
 - 二重の忠実性
@@ -102,7 +102,7 @@ CSWに残す必要があるのは、**framework contactによって何が新し�
 
 現行 `integration.md` を短い接続文へ置換すると、KJ法の主要書誌・商標注意がCSW側から消える。
 
-対応:
+対応は次のとおりです。
 
 - `affinity-synthesis/evidence/KJ-LINEAGE-CARRYOVER.md` を追加した。
 - public promotion前に一次／公式情報で再確認する。
@@ -113,7 +113,7 @@ Status: **covered for migration; external verification remains a promotion gate.
 
 CSW本文を単に「affinity-synthesisを使う」と書くと、独立SkillがないplatformでCSW自体が動けなくなる。
 
-対応:
+対応は次のとおりです。
 
 - compatible realizationがない場合のfallbackをthin candidateへ明記した。
 - 実行していないKJ／親和統合／multi-round orchestrationを実行済みと称さない。
@@ -124,7 +124,7 @@ Status: **covered.**
 
 分離後、`origin / verification / stable ID / realization` を前景化しすぎると、創作の場面・身体・温度より管理情報が目立つ危険がある。
 
-対応:
+対応は次のとおりです。
 
 - metadataは保存・監査層に厚く保持する。
 - grouping geometryや現在の注意の第一軸にしない。
@@ -136,7 +136,7 @@ Status: **covered as design principle; continue living-task observation.**
 
 責務分離は内部所有権を明確にするためのものであり、ユーザー作業を必ず三段階のUIへ分断するためではない。
 
-対応:
+対応は次のとおりです。
 
 - composite realizationでは三Skillを連続実行してよい。
 - 成果物上で意味・来歴・変換責任へ戻れればよい。
@@ -150,7 +150,7 @@ thin候補では、CSWから詳細なカード化・束ね・表札・図解・B
 
 削減の目的はtoken削減そのものではない。
 
-期待する効果:
+期待する効果は次のとおりです。
 
 1. CSWがcultural-framework explorationへ集中する。
 2. one-round synthesisを単独で改善・置換できる。

@@ -69,7 +69,7 @@ package-target validator:
 - target `skill_name` が単一の安全なpath componentである
 - 同一locale / distribution namespace内でtarget nameが衝突しない
 
-拒否例:
+拒否例は次のとおりです。
 
 ```text
 ""

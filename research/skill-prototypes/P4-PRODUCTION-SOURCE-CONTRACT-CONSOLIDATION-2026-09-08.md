@@ -83,14 +83,14 @@ source mode vocabulary:
 id + source_manifest
 ```
 
-この発想から引き継ぐもの:
+この発想から引き継ぐもの。
 
 - production公開集合をresearch candidate集合から分離する。
 - production builderがresearch suiteを自動発見しない。
 - production descriptorはruntime compositionに必要な情報だけを持つ。
 - research evidence / promotion rationale / maturityをproduction inputへ複製しない。
 
-引き継がないもの:
+引き継がないもの。
 
 - すべてのSkill sourceを`source_manifest`一種類へ押し込むこと。
 - research IDをそのままpublic/installable nameとして扱うこと。
@@ -100,14 +100,14 @@ id + source_manifest
 
 旧#301はread-only resolverとexact-one migration guardを提案した。
 
-引き継ぐもの:
+引き継ぐもの。
 
 - resolverはsourceを解決するだけで、candidate選定やpromotion判断を行わない。
 - resolverはresearch maturityを読まない。
 - current one-Skill builderとの移行中は、二つ目のSkill追加が自動的にbuildへ流れないguardを置く。
 - multi-Skill wiring時にguardを意図的に置き換える。
 
-引き継がないもの:
+引き継がないもの。
 
 - `source_manifest`しか扱えないresolver schema。
 - exact-oneを恒久policyとして残すこと。
@@ -130,7 +130,7 @@ production suiteでは、少なくとも次を同一視しない。
 
 ### Research identity
 
-例:
+例は次のとおりです。
 
 ```text
 affinity-synthesis

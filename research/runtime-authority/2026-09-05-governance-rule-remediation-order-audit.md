@@ -9,7 +9,7 @@
 
 > 規則が過剰に作用する場合は、適用条件を狭める、優先順位を下げる、補助扱いへ移す、機能を確認したうえで削除する、という順で調整する。動的材料を減らすことで、規則整理の代わりにしない。
 
-英語版:
+英語版は次のとおりです。
 
 > When rules become overactive, narrow their conditions, lower their priority, move them to auxiliary status, then remove them if their function cannot be shown. Do not use deletion of dynamic material as a substitute for rule maintenance.
 
@@ -30,7 +30,7 @@
 
 ### 2026-08-09
 
-`2b39432ae98fd0fae6a5f2a000dea1138850dd5f` は、判断起源・保持事項・採否状態・重複計上の扱いを governance に追加した。同コミットの実測は framework removal check に関するもので、規則修正の4段階順序は既存文として残っただけである。
+`2b39432ae98fd0fae6a5f2a000dea1138850dd5f` は、判断起源・保持事項・採否状態・重複計上の扱いをgovernanceに追加した。同コミットの実測はframework removal checkに関するもので、規則修正の4段階順序は既存文として残っただけである。
 
 ### 2026-08-23
 
@@ -40,7 +40,7 @@
 
 という一文へ圧縮した。意味は維持され、順序の有効性は新たに検証されていない。
 
-後続の governance 改定は、観測と評価の分離、判断主体と根拠、event記録などを強化したが、この4段階順序を比較した測定は確認できない。
+後続のgovernance改定は、観測と評価の分離、判断主体と根拠、event記録などを強化したが、この4段階順序を比較した測定は確認できない。
 
 ## 分離すべきもの
 

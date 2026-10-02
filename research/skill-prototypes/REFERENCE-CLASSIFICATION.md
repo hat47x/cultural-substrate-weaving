@@ -69,7 +69,7 @@ Layer 1はmaterial-led one-round synthesisを所有するが、CSW固有の`targ
 
 方法の由来、既存Skill比較、一次・二次資料調査、KJ系譜の持越し判断など。
 
-例:
+例は次のとおりです。
 
 - `affinity-synthesis/evidence/`
 - `iterative-inquiry-synthesis/evidence/`
@@ -96,7 +96,7 @@ Layer 2の `iterative-inquiry-synthesis/evidence/dossier.md` は、autoresearch 
 
 実装・realizationがMethod Definitionの不変条件を保つか検査するための資料。
 
-例:
+例は次のとおりです。
 
 - `affinity-synthesis/evals/`
 - `iterative-inquiry-synthesis/evals/`
@@ -114,7 +114,7 @@ Layer 2の `iterative-inquiry-synthesis/evidence/dossier.md` は、autoresearch 
 
 分離前後の責務移動、削除監査、生成物同期、release判断などの開発資料。
 
-例:
+例は次のとおりです。
 
 - `research/skill-prototypes/migration/`
 - `docs/ja/maintainers/`

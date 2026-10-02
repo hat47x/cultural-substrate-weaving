@@ -22,7 +22,7 @@
 
 `Incoming status / role` は閉じたtaxonomyを要求しない。呼出側が `framework_generated`、`target_supported`、`cross_field_emergent`、`unresolved` 等の語彙を持つ場合は、その語彙を変換せず保持できる。web research、interview、experiment等では各経路の認識状態をそのまま記録してよい。
 
-この欄のstatus / provenanceは**監査とhandoffのための情報**であり、one-round synthesisのgrouping geometryや独立support数へ自動変換しない。外部探索から来た仮説・correspondenceをtarget側の観察事実として渡さない。後にtarget側で独立に支持された場合は、元のoriginを消さず、何が新しく支持したかを別に記録する。
+この欄のstatus / provenanceは監査とhandoffのための情報であり、one-round synthesisのgrouping geometryや独立support数へ自動変換しない。外部探索から来た仮説・correspondenceをtarget側の観察事実として渡さない。後にtarget側で独立に支持された場合は、元のoriginを消さず、何が新しく支持したかを別に記録する。
 
 ### Prior synthesis handoff capsule — when supplied
 
@@ -36,7 +36,7 @@ compatible one-round synthesisが前roundの成果物からcapsuleを出して�
 - **Possible next check candidates received:**
 - **Do not silently assume:**
 
-この欄は、前roundの**持越し候補と意味同一性のhandle**を受け取るためのものである。
+この欄は、前roundの持越し候補と意味同一性のhandleを受け取るためのものである。
 
 - `Semantic refs carried forward` をすべて再開しない。
 - `Possible next check candidates` を、このroundの問い・検索・実験指示へ自動昇格させない。
@@ -84,9 +84,9 @@ compact notationを使う場合、次を変更操作として使える。
 ?  residual / unresolved remains
 ```
 
-これはcardやgroupの意味分類ではない。**round間の変更状態**だけを表す。
+これはcardやgroupの意味分類ではない。round間の変更状態だけを表す。
 
-例:
+例は次のとおりです。
 
 ```text
 + C115 := "新材料から立った意味単位"

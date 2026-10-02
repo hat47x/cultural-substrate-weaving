@@ -37,7 +37,7 @@ CSWからmulti-round inquiry orchestrationを分離しても、現行 `src/ja-JP
 - `M7`: ja-JP / en-US / translation manifest / build adapterの変更単位を決める。
 - `M8`: `make check`相当の全検査を通す。
 
-比較前の既知状態:
+比較前の既知状態は次のとおりです。
 
 - affinity-synthesisにはMETHOD、fixture、authoring dry-run、real-task paired comparison、large-set retrospectiveがある。
 - iterative-inquiry-synthesisにはMETHODとround templateがあるが、今回のdelta以前は独自evalが不足していた。
@@ -173,7 +173,7 @@ canonical migrationへ進めるか、という問いは維持する。
 
 **Continue research; do not begin canonical source migration.**
 
-理由:
+理由は次のとおりです。
 
 1. `M4` は仕様上前進したが、actual executionによるhandoff loss確認がまだない。
 2. `M5` のCSW attribution / return-to-target連鎖は今回未評価。

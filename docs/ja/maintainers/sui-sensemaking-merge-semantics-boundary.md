@@ -20,7 +20,7 @@ SUI Sensemaking側では、次のような製品契約が検討されている�
 
 これらはSUI Sensemakingという外部表象・製品が、方法上の考え方をUI / API / provenanceへどう実現するかという**Realizationの具体化**である。
 
-参照:
+参照は次のとおりです。
 
 - `hat47x/sui-sensemaking:01_Plans/issues/issue-AI-MERGE-SEMANTICS-01-define-card-merge-semantics.md`
 - `hat47x/sui-sensemaking:01_Plans/cross-repo/2026-09-03-kj-merge-method-boundary.md`

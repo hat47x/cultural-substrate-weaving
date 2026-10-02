@@ -16,7 +16,7 @@ Method Definition
     != Method Application Record
 ```
 
-この境界は、別系統で整理済みの Cognitive Method Definition / Realization / Application Record と同じ考え方を採る。方法の核と、現在のプロンプト実装を同一視しない。
+この境界は、別系統で整理済みのCognitive Method Definition / Realization / Application Recordと同じ考え方を採る。方法の核と、現在のプロンプト実装を同一視しない。
 
 ## 方法定義の目的
 
@@ -26,7 +26,7 @@ Method Definition
 
 ## 適用範囲
 
-適する対象:
+適する対象は次のとおりです。
 
 - 多数または異種の断片を、既成カテゴリへ押し込めずに統合したい。
 - 記事、発言、観察、資料、仮説など、証拠状態の異なる材料が混在している。
@@ -95,7 +95,7 @@ Method Definition
 
 ### 来歴と二重計上防止
 
-source provenance と discovery route を区別できること。派生カードや同一出来事の転載を、独立した意味反復として二重に重く扱わないこと。
+source provenanceとdiscovery routeを区別できること。派生カードや同一出来事の転載を、独立した意味反復として二重に重く扱わないこと。
 
 来歴情報は監査に使う。最初の束ねの幾何を、出所・話者・立場・種別で決めない。
 
@@ -134,8 +134,8 @@ CSW側に残す責務は次である。
 - 文化体系から得た構造候補の由来を保持する。
 - `canonical cultural source != derived correspondence != exploration routing authority` を守る。
 - 文化体系から得た問い・仮説を、対象側の観察と同じ階層へ自動昇格させない。
-- 材料統合が必要なとき、独立した方法 realization を呼べるようにする。
-- 統合後の対象所見と、framework-generated / unresolved な候補を再び混同しない。
+- 材料統合が必要なとき、独立した方法realizationを呼べるようにする。
+- 統合後の対象所見と、framework-generated / unresolvedな候補を再び混同しない。
 
 これにより、CSWは文化体系による探索に集中し、材料統合方法の改良や置換をCSWのリリース周期から分離できる。
 
@@ -145,11 +145,11 @@ CSW側に残す責務は次である。
 
 方法定義に属する不変条件と、CSW固有の接続規則を分けてからSkill化する。
 
-将来、既存の外部Skillがこの方法定義の不変条件と評価fixtureを満たすなら、そのSkillを新しい realization として採用し、独自 realization を廃止または縮小できる。したがって「今は既存Skillへ全面移譲できない」ことを、永続的な独自実装の理由にはしない。
+将来、既存の外部Skillがこの方法定義の不変条件と評価fixtureを満たすなら、そのSkillを新しいrealizationとして採用し、独自realizationを廃止または縮小できる。したがって「今は既存Skillへ全面移譲できない」ことを、永続的な独自実装の理由にはしない。
 
 ## 評価fixture候補
 
-分離前後および realization 差し替え時に、少なくとも次を同じ材料で比較する。
+分離前後およびrealization差し替え時に、少なくとも次を同じ材料で比較する。
 
 - 過剰細分化で一つの体験の意味が壊れない。
 - 観察と解釈、確認と推測の継ぎ目が潰れない。
@@ -159,6 +159,6 @@ CSW側に残す責務は次である。
 - 孤立カードと対立を消さない。
 - 空白を事実として捏造しない。
 - 叙述が図解より根拠なく整いすぎない。
-- source provenance と discovery route を区別する。
+- source provenanceとdiscovery routeを区別する。
 
 この評価を満たすことを、Skill名や手順の文面一致より優先する。

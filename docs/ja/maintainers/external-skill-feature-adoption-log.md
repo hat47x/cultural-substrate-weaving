@@ -175,7 +175,7 @@ https://agentskills.io/specification
 
 公開名は系譜ブランドより、Agentが「何をするSkillか」を判断できる記述性を優先する。
 
-現時点の作業名:
+現時点の作業名は次のとおりです。
 
 - `affinity-synthesis`
 - `iterative-inquiry-synthesis`

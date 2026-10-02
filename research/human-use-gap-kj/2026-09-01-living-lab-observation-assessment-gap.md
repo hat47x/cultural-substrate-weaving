@@ -4,7 +4,7 @@
 
 ## 目的
 
-Issue #69 のKJ分析から、当時のLiving Labの記録形式そのものを確認する必要が生じた。
+Issue #69のKJ分析から、当時のLiving Labの記録形式そのものを確認する必要が生じた。
 
 この確認では、`evals/living-lab-event.schema.json`、`evals/living-lab-round.schema.json`、公開済みのround / event、`docs/ja/experiments/web-chat-living-lab.md`、validatorを原文で照合した。
 

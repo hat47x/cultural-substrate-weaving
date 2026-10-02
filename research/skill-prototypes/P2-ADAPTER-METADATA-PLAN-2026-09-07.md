@@ -43,7 +43,7 @@ interactive
 metered
 ```
 
-各 Skill × locale × profile のstatusは次の三状態を取る。
+各Skill × locale × profileのstatusは次の三状態を取る。
 
 ```text
 planned | prototype | existing
@@ -173,7 +173,7 @@ source_kind    = research-prototype
 
 となる。
 
-`prototype` は reviewed / production-approved を意味しない。multi-Skill bundleなので `review_required_for_multi_skill = true` も維持する。
+`prototype` はreviewed / production-approvedを意味しない。multi-Skill bundleなので `review_required_for_multi_skill = true` も維持する。
 
 ## Validator boundary
 

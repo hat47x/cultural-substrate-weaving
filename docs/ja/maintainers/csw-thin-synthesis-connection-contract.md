@@ -13,7 +13,7 @@ KJ法由来の材料統合技能と、複数roundの探索管理をCSWから分�
 
 ### Layer 1 — Affinity Synthesis
 
-所有する:
+所有する。
 
 - meaning-bearing card boundary
 - epistemic seam
@@ -30,7 +30,7 @@ CSWはこれらの内部アルゴリズムを再定義しない。
 
 ### Layer 2 — Iterative Inquiry Synthesis
 
-所有する:
+所有する。
 
 - material delta
 - touched-artifact reopen
@@ -46,16 +46,16 @@ CSWは「新材料が来るたびに既存KJをどう再編するか」を独自
 
 ### Layer 3 — Cultural Substrate Weaving
 
-所有する:
+所有する。
 
 - cultural frameworkを開く必要があるかの判断支援
-- framework index / preview / native operation / depth の管理
+- framework index / preview / native operation / depthの管理
 - framework固有構造を薄めずに扱うこと
-- framework-generated / cross-field-emergent / unresolved の帰属保持
+- framework-generated / cross-field-emergent / unresolvedの帰属保持
 - frameworkから得た問い・対比・対応候補を対象側へ戻すこと
 - target-supportedへ昇格できるのは対象側材料で独立に支えられた部分だけ、という境界
 - 文化体系の利用量・複雑さを成果KPIにしないこと
-- no-load / preview-only / no-useful-increment 等を正常結果として扱うこと
+- no-load / preview-only / no-useful-increment等を正常結果として扱うこと
 
 ## 2. 最小接続契約
 
@@ -153,7 +153,7 @@ verification: target-supported / unresolved
 
 ほぼLayer 1へ移管できる。
 
-移管対象:
+移管対象は次のとおりです。
 
 - カード化
 - 核を抜く／伏せて立てる／戻して照合
@@ -172,7 +172,7 @@ CSWへ残すのは、文化体系由来候補を親和統合へ渡す際の帰�
 
 大部分をLayer 2へ移管できる。
 
-移管対象:
+移管対象は次のとおりです。
 
 - material delta
 - touched residual reopen
@@ -187,7 +187,7 @@ CSWへ残すのは、`framework_contact_change` と、文化体系から得た�
 
 これはCSW固有の正本として残す。
 
-特に残す:
+特に残すは次のとおりです。
 
 - 二重の忠実性
 - 帰属の原則

@@ -14,7 +14,7 @@ Evaluation type: same-model comparative authoring exercise; not an independent r
 
 を三層へ分離したとき、実運用で保持されていた意味・残差・来歴・図解・再開挙動に退行が起きないかを比較する。
 
-比較対象:
+比較対象は次のとおりです。
 
 ### Baseline M — monolithic CSW
 
@@ -34,7 +34,7 @@ Evaluation type: same-model comparative authoring exercise; not an independent r
 
 最終文面の一致は要求しない。
 
-判定軸:
+判定軸は次のとおりです。
 
 1. target materialの意味・温度・具体が保持されるか。
 2. framework由来候補がtarget factへ誤昇格しないか。
@@ -53,7 +53,7 @@ Evaluation type: same-model comparative authoring exercise; not an independent r
 
 既存 `affinity-synthesis/evals/PAIRED-REAL-TASK-2026-09-06.md` のCase Aを再利用する。
 
-中心カード:
+中心カードは次のとおりです。
 
 - C2334: 高圧的な説得を避け、問いと事実を置き、受け手が距離を取れる出口を残す。
 - C2335: 人格全体ではなく、言い方・共有・対象の扱い等の具体的行為へ焦点を戻す。
@@ -126,7 +126,7 @@ F-A1を `framework_generated / unresolved` として出す。
 
 C2334-C2336とF-A1を同じ材料面で読める。ただしprovenance metadataをgrouping geometryの第一軸にしない。
 
-安全な結果:
+安全な結果は次のとおりです。
 
 ```text
 G-A1 := {C2334, C2335, C2336}
@@ -354,7 +354,7 @@ label := 「中心へ出ても、うさぎはまだ薄く張りつめている�
 
 F-B1はG-B3によって反証されたというより、**単線化が耐えられなくなった**と扱うのが適切である。
 
-可能な更新:
+可能な更新は次のとおりです。
 
 ```text
 ~ F-B1:
@@ -380,7 +380,7 @@ F-B1はG-B3によって反証されたというより、**単線化が耐えら�
 
 を概念語の例示へ格下げしない。
 
-禁止する短絡:
+禁止する短絡は次のとおりです。
 
 ```text
 「これらはすべて『器』が人を癒やしていく過程を表している」

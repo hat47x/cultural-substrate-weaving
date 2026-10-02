@@ -7,7 +7,7 @@ Date: 2026-09-06
 
 このfixtureは、三つのSkillを分離した後も、文化体系から得たものが対象事実へ誤昇格せず、親和統合と複数round探索へ安全に受け渡せるかを確認する。
 
-対象とする契約:
+対象とする契約は次のとおりです。
 
 - CSW: cultural-framework exploration and attribution
 - Affinity Synthesis: one-round material synthesis
@@ -138,7 +138,7 @@ T4: 本人は後日の聞き取りで「内容は理解していたが、反論�
 
 対象をF2へ合わせない。
 
-可能な処理:
+可能な処理は次のとおりです。
 
 - F2をwithdraw / weakenedにする。
 - 「沈黙」という観察と「余白」というframework readingをsplitする。
@@ -171,7 +171,7 @@ E1: 「制度上の選択可能性と、実際に通れる心理的・運用的�
 
 E1は、T5の単なる言い換えでもF3の単純転写でもない。
 
-必要なら:
+必要ならは次のとおりです。
 
 ```text
 origin: cross_field_emergent

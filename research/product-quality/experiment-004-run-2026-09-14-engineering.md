@@ -22,7 +22,7 @@
 
 ### A0 — CSWを使わない
 
-観測した状態:
+観測した状態は次のとおりです。
 
 - CSW activation: `non_activation`
 - cultural framework depth: `not_loaded`
@@ -38,7 +38,7 @@
 
 ### A1 — CSWを限定利用する
 
-観測した状態:
+観測した状態は次のとおりです。
 
 - CSW activation: `limited`
 - cultural framework depth: `not_loaded`
@@ -61,7 +61,7 @@ CSW利用によって増えたのは主にこのprovenance表示であり、技�
 
 ### B0 — 通常分析のみ
 
-観測した状態:
+観測した状態は次のとおりです。
 
 - CSW activation: `non_activation`
 - cultural framework depth: `not_loaded`
@@ -73,7 +73,7 @@ CSW利用によって増えたのは主にこのprovenance表示であり、技�
 
 ### B1 — 探索利用を委任する
 
-観測した状態:
+観測した状態は次のとおりです。
 
 - CSW activation: `exploratory`
 - cultural framework depth: `probe`
@@ -96,7 +96,7 @@ B1では調査問いが二つ増えたが、最終制度はB0/B1のどちらで�
 
 ### C0 — affinity synthesisのみ
 
-観測した状態:
+観測した状態は次のとおりです。
 
 - CSW activation: `non_activation`
 - cultural framework depth: `not_loaded`
@@ -108,7 +108,7 @@ B1では調査問いが二つ増えたが、最終制度はB0/B1のどちらで�
 
 ### C1 — CSWから一つの探索問いを渡す
 
-観測した状態:
+観測した状態は次のとおりです。
 
 - CSW activation: `limited`
 - cultural framework depth: `probe`
@@ -130,7 +130,7 @@ CSWの有無とone-round synthesisの有無を分けて扱えた。C1では一�
 
 ## 5. Control U — 外部委任が未確定
 
-観測した状態:
+観測した状態は次のとおりです。
 
 - CSW activation: `external_or_delegated / unresolved from packet alone`
 - cultural framework depth: packetだけでは決定しない
@@ -166,7 +166,7 @@ v0.5の責務分離後は、one-roundのKJ / affinity material synthesisは`affi
 
 これは今回のbehavioral failureではなく、static eval fixtureのresponsibility driftと判断した。
 
-修正方針:
+修正方針は次のとおりです。
 
 - limited例では、CSWの責務を来歴・対象材料との区別等へ限定する。
 - 親和統合が必要なら`affinity-synthesis`へ委ねることを明記する。

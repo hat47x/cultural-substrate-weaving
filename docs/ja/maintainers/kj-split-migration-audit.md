@@ -115,7 +115,7 @@ CSWが他Skillを必須dependencyにするか、利用可能なら委譲し不�
 
 現段階では `src/` を変更しない。
 
-理由:
+理由は次のとおりです。
 
 1. prototype realizationが実タスクで現行 `integration.md` と同等以上に意味を保存できるか未比較である。
 2. Layer 1 / Layer 2へ分けたことで、旧 `integration.md` 内の暗黙の往復が失われる可能性がある。

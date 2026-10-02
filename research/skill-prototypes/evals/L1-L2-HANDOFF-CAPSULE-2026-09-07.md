@@ -90,7 +90,7 @@ not reopened merely because carried:
   G04, X02, Q09, U04
 ```
 
-期待条件:
+期待条件は次のとおりです。
 
 - `G04` を `= unchanged` と記録しない。今回触れていないので、再検査済みとは言えない。
 - `X02` を再評価しない。capsuleにあることはreopen理由ではない。
@@ -167,7 +167,7 @@ actually reopened after reading S15:
   X02, Q09
 ```
 
-期待条件:
+期待条件は次のとおりです。
 
 - `Q09` が `X02` から生じたというquestion provenanceを保持する。
 - `X02` の `from / to` を辿って必要な元card/group/sourceへ戻れるようにする。
@@ -207,9 +207,9 @@ question provenance from resonance
 
 少なくとも、
 
-- carry-forward と reopen の分離
+- carry-forwardとreopenの分離
 - touched subsetの局所再開
-- residual / question とcontinue triggerの分離
+- residual / questionとcontinue triggerの分離
 - secondary resonanceとmembership / independent support / explicit relationの分離
 - resonance由来questionのprovenance維持
 - semantic deltaとrepresentation deltaの分離

@@ -48,7 +48,7 @@ https://www.frontiersin.org/journals/psychology/articles/10.3389/fpsyg.2025.1554
 - center-to-center transition where a source defines it;
 - body as textually / ritually configured field.
 
-保持しないもの:
+保持しないもの。
 
 - 常に7 centersであること;
 - universal color sequence;

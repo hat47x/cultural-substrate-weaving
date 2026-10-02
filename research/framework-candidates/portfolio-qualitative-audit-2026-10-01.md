@@ -75,9 +75,9 @@ primary / classical / primary-edition系sourceを少なくとも1件持つ候補
 
 ### 1. profile接続はかなり改善した
 
-既存profileをinventoryへ接続し直した結果、profile/runtime参照を持たないのは現在 3 候補まで減った。
+既存profileをinventoryへ接続し直した結果、profile/runtime参照を持たないのは現在3候補まで減った。
 
-残る 3 件は、いずれも単純な書き忘れではなく、慎重に扱う理由がある。
+残る3件は、いずれも単純な書き忘れではなく、慎重に扱う理由がある。
 
 - jingluo: 医療体系としての構造と、現代医学上の事実認定を分ける必要がある。
 - sefirot: Sefer Yetzirahと後代Kabbalah、Tree of Life図式の歴史差を先に分ける必要がある。
@@ -132,12 +132,12 @@ Maya calendar、Ifá、Shinto、Hadith、Tibetan Buddhist mandala等は、歴史
 
 ### A. source packetの厚みを増やす
 
-最優先:
+最優先は次のとおりです。
 
-- adoptedだがsourceが薄い Sāṅkhya / catuṣkoṭi / Jain sevenfold predication
+- adoptedだがsourceが薄いSāṅkhya / catuṣkoṭi / Jain sevenfold predication
 - Ifá / Odù のliving-tradition + scholarly source
-- Llull Ars のprimary / scholarly history source
-- Twenty-Four Solar Terms の地域差・living practice source
+- Llull Arsのprimary / scholarly history source
+- Twenty-Four Solar Termsの地域差・living practice source
 
 ### B. profile未作成3件を無理に埋めない
 
@@ -149,7 +149,7 @@ Maya calendar、Ifá、Shinto、Hadith、Tibetan Buddhist mandala等は、歴史
 
 ### C. まだ空いているoperation familyを探索する
 
-候補:
+候補は次のとおりです。
 
 - model / standardを使ったanalogical distinction
 - dialectical give-and-take / unresolved issue preservation
@@ -179,10 +179,10 @@ Maya calendar、Ifá、Shinto、Hadith、Tibetan Buddhist mandala等は、歴史
 
 同日追補として、inventory上でsourceが1件のみだった候補を再調査した。
 
-補強した体系:
+補強した体系は次のとおりです。
 
-- Sāṅkhya: GRETIL / SUB Göttingen の『Sāṃkhyakārikā』デジタル古典本文を追加。
-- catuṣkoṭi: Digital Sanskrit Buddhist Canon の『Mūlamadhyamakakārikā』を、Madhyamakaにおける古典的文脈として追加。四句分別全体の唯一の正本とは扱わない。
+- Sāṅkhya: GRETIL / SUB Göttingenの『Sāṃkhyakārikā』デジタル古典本文を追加。
+- catuṣkoṭi: Digital Sanskrit Buddhist Canonの『Mūlamadhyamakakārikā』を、Madhyamakaにおける古典的文脈として追加。四句分別全体の唯一の正本とは扱わない。
 - Jain sevenfold predication: Akalaṅkaのsyādvāda / anekāntavāda / nayavādaの関係を扱う2024年の専門研究を追加。
 - Twenty-Four Solar Terms: 地域的起源と適用差を検討する2024年Scientific Reports論文を追加。
 - Ifá / Odù: Karin BarberによるRoutledge Encyclopedia of Philosophyのcorpus解説を追加。
@@ -190,7 +190,7 @@ Maya calendar、Ifá、Shinto、Hadith、Tibetan Buddhist mandala等は、歴史
 
 この補強後、**inventory上でsourceが2件未満の候補は0件**となった。
 
-これは「各体系の資料が十分」という意味ではない。最低限、単一資料だけに依存して体系構造を再構成する状態を解消したという品質上の節目である。次は件数を増やすより、jingluo / sefirot / chakra のように系譜・医療・宗教上の境界が重い候補について、profile化の前段となるsource packetを厚くする。
+これは「各体系の資料が十分」という意味ではない。最低限、単一資料だけに依存して体系構造を再構成する状態を解消したという品質上の節目である。次は件数を増やすより、jingluo / sefirot / chakraのように系譜・医療・宗教上の境界が重い候補について、profile化の前段となるsource packetを厚くする。
 
 
 ## 追加補強 — pre-profile source packet
@@ -208,7 +208,7 @@ Maya calendar、Ifá、Shinto、Hadith、Tibetan Buddhist mandala等は、歴史
 
 ## 追加補強 — 近接候補の差分固定
 
-near-neighbor-differentiation-2026-10-01.md を追加し、近いoperationを持つ候補どうしについて「何が違うため独立に残すのか」を明示した。
+near-neighbor-differentiation-2026-10-01.mdを追加し、近いoperationを持つ候補どうしについて「何が違うため独立に残すのか」を明示した。
 
 対象には、dependent origination / Huayan、catuṣkoṭi / Jain sevenfold predication、Aristotle / Nyāya / classical stasis、mandala / rites of passage / Shinto threshold、Maya calendar / Stems-Branches、Hadith / generic provenance、Mīmāṃsā / generic close reading、Yijing / Llull Ars等を含む。
 

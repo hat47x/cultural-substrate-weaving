@@ -63,7 +63,7 @@ validatorはstatusを閉じたenumとして所有しない。
 
 > このlocaleで、suite全体をどの成熟段階として扱うか。
 
-現在:
+現在は次のとおりです。
 
 - `ja-JP`: canonical research line
 - `en-US`: translated-draft
@@ -95,7 +95,7 @@ validatorはstatusを閉じたenumとして所有しない。
 - suite-level research assetsが実在する。
 - distribution prototypeが未知skillを参照しない。
 
-validatorが判定しないもの:
+validatorが判定しないもの。
 
 - translation qualityそのもの。
 - method parityの実証。

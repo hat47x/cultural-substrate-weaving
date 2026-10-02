@@ -16,7 +16,7 @@
 
 固定済みprior snapshotへ、6週間後を模した`D01`〜`D04`だけを追加し、一度停止した調査を局所的に再開する。
 
-このrunの時間差は合成packet上の設定であり、モデルが実際に6週間記憶を保持したことを意味しない。検査対象は、**外部snapshotからの再開契約**である。
+このrunの時間差は合成packet上の設定であり、モデルが実際に6週間記憶を保持したことを意味しない。検査対象は、外部snapshotからの再開契約である。
 
 ## 2. Loaded artifacts
 
@@ -107,7 +107,7 @@ prior `Q01`を`~`で別文へ上書きしなかった。
 
 `Q01`は「説明情報を増やす／減らすことのどちらが初来館者を助けるのか」という当時の問いとして履歴に残し、`D01` / `D02`によってその二分法が粗い可能性が見えたため、現在の問いとして`Q03`を新設した。
 
-これは「旧問いが誤りだった」と消すのではなく、**何が問いを動かしたか**を残すためである。
+これは「旧問いが誤りだった」と消すのではなく、何が問いを動かしたかを残すためである。
 
 ## 9. Semantic vs representation delta
 
@@ -198,7 +198,7 @@ prior `Q01`を`~`で別文へ上書きしなかった。
 
 ### 16.2 stop snapshotが再開品質を支える
 
-prior artifactだけでなく、**なぜ前回停止したか**が明示されていることで、「残差が残っていたから本当は継続中だった」と後から物語化せずに済んだ。
+prior artifactだけでなく、なぜ前回停止したかが明示されていることで、「残差が残っていたから本当は継続中だった」と後から物語化せずに済んだ。
 
 現行iterative-inquiry-synthesisはstop / restart reasonを既に外部化する契約を持つため、新規規則は不要である。
 
@@ -218,7 +218,7 @@ prior artifactだけでなく、**なぜ前回停止したか**が明示され�
 
 ## 18. Decision
 
-**Decision: protocol / representation evidenceのみ追加。runtime / Method Definition変更なし。**
+Decision: protocol / representation evidenceのみ追加。runtime / Method Definition変更なし。
 
 このrunでは、既存の`iterative-inquiry-synthesis`契約で、stop後の局所再開、stable ID、question shift、provenance、再停止まで表現できた。
 

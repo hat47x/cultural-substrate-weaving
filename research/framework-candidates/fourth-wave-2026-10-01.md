@@ -51,7 +51,7 @@ CSWで価値があるのは、宗教上の真正性判定を借りることで�
 ### 境界
 
 - CSWはハディースの宗教上の真正性を判定しない。
-- 古典的ハディース学の分類・評価と、近現代歴史学の isnād-cum-matn analysis を一つの方法へ混ぜない。
+- 古典的ハディース学の分類・評価と、近現代歴史学のisnād-cum-matn analysisを一つの方法へ混ぜない。
 - narrator評価を、人一般の信用度スコアへ転用しない。
 - 伝承鎖を一般的な「信頼チェーン」の権威付けに使わない。
 - isnādが記されていること自体を、内容の事実性の証拠にしない。
@@ -81,7 +81,7 @@ MīmāṃsāはVeda、とくに規範的・祭式的な文章の解釈を中心�
 
 - 一つの規範文が何を行うよう求めているかを特定する。
 - 文のまとまりを、単語列だけでなく目的・統語的期待から見る。
-- Bhāṭṭa系で論じられる proximity / semantic fitness / syntactic expectancy のように、語がどう一つの文意へ結合するかを区別する。
+- Bhāṭṭa系で論じられるproximity / semantic fitness / syntactic expectancyのように、語がどう一つの文意へ結合するかを区別する。
 - 直接述べられたこと、文脈から補われること、含意されたことを同じ強さで扱わない。
 - 見かけ上衝突する規範を、同じ対象・条件・役割を述べているかまで戻って解く。
 
@@ -129,13 +129,13 @@ profile: profiles/mimamsa-hermeneutics.md
 
 両候補ともruntimeへはまだ入れない。
 
-Hadith isnād / matn は、CSWの既存provenance管理に近いようでいて、**内容と伝承経路を別々に保ち、複数経路・本文異同・再構成の境界を同時に見る**点に固有性がある。まずprofile-ready候補として十分な厚みを持たせる。
+Hadith isnād / matnは、CSWの既存provenance管理に近いようでいて、**内容と伝承経路を別々に保ち、複数経路・本文異同・再構成の境界を同時に見る**点に固有性がある。まずprofile-ready候補として十分な厚みを持たせる。
 
 Mīmāṃsāは非常に豊かな解釈体系だが、学派差と宗教的・規範的文脈が重い。現段階では、文のまとまり、命令、直接／間接、統語的期待、意味的適合といった最小構造核に限定して研究する。
 
 ## 次の研究queue
 
-- Hadith: 古典的 narrator criticism / hadith classification と、現代歴史学の isnād-cum-matn analysis を別層に分ける。
+- Hadith: 古典的narrator criticism / hadith classificationと、現代歴史学のisnād-cum-matn analysisを別層に分ける。
 - Hadith: 同一matn・異isnād、異matn・近似isnādの小さなworked exampleを作る。
 - Mīmāṃsā: Bhāṭṭa / Prābhākaraのsentence-meaning差を明示する。
 - Mīmāṃsā: direct statement / implication / context / syntactic connection等の優先関係を、出典ごとに分離して資料化する。

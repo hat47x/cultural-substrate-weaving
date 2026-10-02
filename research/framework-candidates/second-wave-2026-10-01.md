@@ -16,7 +16,7 @@ Status: research-only / qualitative expansion before effectiveness evaluation
 
 第二波では、第一波と似た分類体系を増やすのではなく、まだ薄いoperation空間を埋める。
 
-第二波開始時点の主な空白:
+第二波開始時点の主な空白は次のとおりです。
 
 - network / collateral
 - whole-part reciprocity
@@ -50,7 +50,7 @@ Huayanは「相互依存」の一般論としてではなく、whole / part、mu
 
 Huayanをnetwork候補として扱うとき、Indra's Netだけへ縮約しない。
 
-この候補が補うのは主に:
+この候補が補うのは主には次のとおりです。
 
 - whole-part-reciprocity
 - mutual-inclusion-view
@@ -79,7 +79,7 @@ Huayanをnetwork候補として扱うとき、Indra's Netだけへ縮約しな�
   - https://plato.stanford.edu/entries/analysis/s3.html
 - Internet Encyclopedia of Philosophy, Fazang
   - https://iep.utm.edu/fazang/
-- CBETA Online, T1881 華嚴經金師子章註
+- CBETA Online, T1881華嚴經金師子章註
   - https://cbetaonline.dila.edu.tw/zh/T1881
 
 profile:
@@ -128,7 +128,7 @@ WHO標準用語はterminology sourceとして使えるが、それ自体をbiome
 - balance / tension
 - relation network
 
-主な未解決:
+主な未解決は次のとおりです。
 
 - Sefer Yetzirahとlater Kabbalahの構造差;
 - Tree of Life図の歴史的variant;
@@ -273,7 +273,7 @@ van Gennepの比較モデルだけでexplicit boundary-crossingを完了扱い�
 
 ## 現時点の次候補
 
-優先調査:
+優先調査は次のとおりです。
 
 1. ritual practice sequenceを持つculture-native体系;
 2. culture-native boundary-crossingのsource packet;

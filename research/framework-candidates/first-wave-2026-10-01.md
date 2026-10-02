@@ -14,7 +14,7 @@ CSWの文化体系層は、現時点では方法論の厚みに比べて個別�
 
 ### 1. 易 / Yijing — 離散状態と変化
 
-構造核:
+構造核は次のとおりです。
 
 - 陰陽の線。
 - 三爻の八卦。
@@ -28,7 +28,7 @@ CSWで開ける仕事:
 - 対立・反転・隣接する配置からcounter-viewを作る。
 - 「現在どこに当たるか」より、何が変わると別状態になるかを前景化する。
 
-重要な境界:
+重要な境界は次のとおりです。
 
 - 卦への対応付けをtarget-side factにしない。
 - 後世の配当表を一つの古典的正本として混ぜない。
@@ -45,10 +45,10 @@ profile: profiles/yijing.md
 
 ### 2. 五行 / Wuxing — 複数の関係原理を持つ循環
 
-構造核:
+構造核は次のとおりです。
 
 - 木・火・土・金・水という五つのphase。
-- 生成 sheng と克／制約 ke という異なるrelation。
+- 生成shengと克／制約keという異なるrelation。
 - 周期と相互作用。
 - 歴史的には多様な領域へのcorrelative extensionがある。
 
@@ -59,7 +59,7 @@ CSWで開ける仕事:
 - 同じ対象がcontextにより別phase的に振る舞う可能性を問う。
 - loopの中で促進側と制約側を別々に見る。
 
-重要な境界:
+重要な境界は次のとおりです。
 
 - 五つの物質として固定しない。
 - 歴史上の全対応表を同時に正本化しない。
@@ -76,7 +76,7 @@ profile: profiles/wuxing.md
 
 ### 3. Tzolk’in / Chol Q’ij — 二つの周期の結合
 
-構造核:
+構造核は次のとおりです。
 
 - 20のday glyph。
 - 1〜13のnumber cycle。
@@ -88,7 +88,7 @@ CSWで開ける仕事:
 - 同じ見かけの局面が、別周期の位置によって異なることを問う。
 - recurrence distanceやphase coincidenceを対象の問いへ翻訳する。
 
-重要な境界:
+重要な境界は次のとおりです。
 
 - 一般化された性格診断や運勢ロジックへ変換しない。
 - living Maya communitiesの解釈差を消さない。
@@ -99,7 +99,7 @@ CSWで開ける仕事:
 - Smithsonian National Museum of the American Indian, Living Maya Time: The Calendar System
   - https://maya.nmai.si.edu/calendar/calendar-system
 
-採用後の状態:
+採用後の状態は次のとおりです。
 
 - runtimeではTzolk’in単独でなく、Haab / Calendar Round / Long Countまで含む `maya-calendars` dossierへ拡張した。
 - calendar mechanicsとday-sign interpretation / ritual authorityを分離した。
@@ -107,7 +107,7 @@ CSWで開ける仕事:
 
 ### 4. 縁起 / dependent origination — 条件連鎖と停止点
 
-構造核:
+構造核は次のとおりです。
 
 - 現象が条件に依存して生起するという見方。
 - 伝統的な十二支縁起。
@@ -121,7 +121,7 @@ CSWで開ける仕事:
 - 一つの条件を外したcounterfactualを作る。
 - entity中心の説明をdependency中心へ反転する。
 
-重要な境界:
+重要な境界は次のとおりです。
 
 - 十二支を唯一の歴史的形式としない。
 - generic causal DAGへ薄めない。
@@ -132,14 +132,14 @@ CSWで開ける仕事:
 - Stanford Encyclopedia of Philosophy, Buddha
   - https://plato.stanford.edu/entries/buddha/
 
-採用後の状態:
+採用後の状態は次のとおりです。
 
 - runtimeはconditional arising / cessation / intervention-pointという最小構造核だけを採用した。
 - early Buddhist / Abhidharma / Mahayana等のformulation差は、採用済み核を厚くする追加研究として残す。
 
 ### 5. Rasa — 表現内容と受容経験を分ける
 
-構造核:
+構造核は次のとおりです。
 
 - Nāṭyaśāstraを起点とするaesthetic theory。
 - 表現された感情要素と、受け手が味わうaesthetic experienceを区別する長い議論。
@@ -152,7 +152,7 @@ CSWで開ける仕事:
 - writer / artifact / spectatorの視点を切り替える。
 - target artifactの意味とexperienceを同一視しない。
 
-重要な境界:
+重要な境界は次のとおりです。
 
 - modern universal emotion taxonomyとして使わない。
 - navarasaの固定一覧だけで歴史全体を代表させない。
@@ -165,7 +165,7 @@ CSWで開ける仕事:
 - Oxford Bibliographies, Aesthetics
   - https://academic.oup.com/reference/62357/reference-article-abstract/554506345
 
-採用後の状態:
+採用後の状態は次のとおりです。
 
 - runtimeはproduction / composition / receptionの分離を最小構造核として採用した。
 - NāṭyaśāstraとAbhinavagupta以降の展開、rasa / bhāva語彙の歴史差は追加研究として残す。
@@ -188,7 +188,7 @@ CSWで開ける仕事:
 
 vertical axis / embodied position / practice sequenceを供給し得るが、Hindu/Buddhist tradition間、時代、lineageによる数・配置・意味の差が大きい。
 
-現代の「虹色7 chakra」図を古典的な普遍schemaとして採用しない。lineage-specificなsourceが揃うまで defer-lineage-specific とする。
+現代の「虹色7 chakra」図を古典的な普遍schemaとして採用しない。lineage-specificなsourceが揃うまでdefer-lineage-specificとする。
 
 ## coverageとして見るもの
 

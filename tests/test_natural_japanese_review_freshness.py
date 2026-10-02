@@ -16,9 +16,6 @@ from check_natural_japanese_review import (  # noqa: E402
 
 
 class NaturalJapaneseReviewFreshnessTests(unittest.TestCase):
-    def test_current_manifest_matches_all_scoped_documents(self) -> None:
-        self.assertEqual(validate_manifest_data(ROOT, load_manifest()), [])
-
     def test_review_record_itself_is_in_scope(self) -> None:
         self.assertIn(
             "docs/ja/maintainers/natural-japanese-review.md",

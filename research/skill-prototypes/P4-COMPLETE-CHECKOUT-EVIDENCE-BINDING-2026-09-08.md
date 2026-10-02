@@ -86,7 +86,7 @@ validate reviewed Japanese source snapshot again
 
 preflightが通った後にhash/stateを更新し、postflightでも同じsemantic-review snapshotを保持したまま`synchronized`であることを確認する。
 
-実行後は少なくとも:
+実行後は少なくともは次のとおりです。
 
 ```bash
 git diff -- i18n/translation-manifest.json \
@@ -156,7 +156,7 @@ repositoryの短期branch運用とこのevidence bindingを両立させるため
 
 V must already be present on the originating branch before evidence recording PR.
 
-具体的には:
+具体的にはは次のとおりです。
 
 1. translation preparation等でtracked mutationが必要なら、それを先に通常の短期branch / PRとしてoriginating branchへmergeし、merge後のoriginating branch HEADをrefetchする。
 2. そのmerge済みHEADをVとして固定し、V上でcomplete-checkout commandsを実行する。command実行後にoriginating branchがVから進んだ場合、そのPASSはそのままrecordせず、新しいHEADで再実行する。
@@ -166,7 +166,7 @@ V must already be present on the originating branch before evidence recording PR
 6. merge後にoriginating branchをrefetchし、`python scripts/validate_research_complete_checkout_gate.py`でdirect-parent / changed-path bindingを再確認する。
 7. merge結果を確認したら、repository branch lifecycleに従って**delete the short-lived evidence branch** before marking the task complete. merge済みevidence branchを別タスクへ使い回さない。
 
-この順序により:
+この順序によりは次のとおりです。
 
 ```text
 originating branch
@@ -213,7 +213,7 @@ passed stateでは少なくとも次を拒否する。
 
 translation hash/state transitionはevidence recording commitへ混ぜない。
 
-理由:
+理由は次のとおりです。
 
 - translation changeそのものがvalidation対象source stateだから
 - hash/stateを書き換えたtreeと、それ以前のcommitを同一execution identityにできないから

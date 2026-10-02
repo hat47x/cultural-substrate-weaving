@@ -10,7 +10,7 @@ P2では、P1のlocale realization contractを使って、production `scripts/bu
 
 > そのdistribution shapeが要求するskill/primaryについて、manifest上のlocale realization artifactが揃っている。
 
-意味しないもの:
+意味しないもの。
 
 - production packageが実際に生成・検証済みである。
 - hostがsibling Skillをroutingできる。
@@ -97,7 +97,7 @@ iterative-inquiry-synthesis: translated-draft
 
 `suite-manifest.json` のdistribution prototypeには `implementation_status` を別に持たせる。
 
-現在:
+現在は次のとおりです。
 
 - OpenAI standalone-per-skill: `planned-production-generalization`
 - Claude locale bundle: `planned-production-generalization`
@@ -113,7 +113,7 @@ iterative-inquiry-synthesis: translated-draft
 
 ### OpenAI
 
-将来必要になる変化候補:
+将来必要になる変化候補は次のとおりです。
 
 - skillごとのruntime/source descriptorを受け取る。
 - standalone targetをskill単位で反復する。

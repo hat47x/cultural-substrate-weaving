@@ -153,7 +153,7 @@ distribution composition
 production adapter metadata source
 ```
 
-含めないもの:
+含めないもの。
 
 ```text
 research eval history
@@ -187,7 +187,7 @@ adapters/openai-skill/<locale>/openai.metered.yaml
 
 Sibling prototypeをpromotionする場合は、production adapter directoryへ移す。
 
-候補:
+候補は次のとおりです。
 
 ```text
 adapters/openai-skill/<locale>/material-led-synthesis/openai.interactive.yaml

@@ -78,7 +78,7 @@ translation state -> synchronized
 
 現在のchecked-in treeはすでに`status=synchronized`かつ`expected_stale_files=[]`であり、canonical Japanese source hashもtranslation manifestと一致している。したがって次回の完全checkoutでは、このtargetが**差分を生まないこと（idempotence）を実行で確認する**のがV準備の主目的になる。
 
-実行後は少なくとも:
+実行後は少なくともは次のとおりです。
 
 ```bash
 git diff -- i18n/translation-manifest.json \

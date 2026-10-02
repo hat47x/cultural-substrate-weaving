@@ -345,7 +345,7 @@ production adapter metadata source
 bundle composition
 ```
 
-含めないもの:
+含めないもの。
 
 ```text
 research eval history

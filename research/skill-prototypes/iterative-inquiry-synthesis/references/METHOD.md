@@ -14,7 +14,7 @@ Status: research candidate
 
 この方法はmulti-round inquiry orchestrationを所有する。
 
-所有するもの:
+所有するもの。
 
 - current inquiry / purpose
 - input delta
@@ -26,7 +26,7 @@ Status: research candidate
 - append-only round history
 - restart conditions
 
-所有しないもの:
+所有しないもの。
 
 - one-round synthesis algorithm
 - web/search strategyそのもの
@@ -130,7 +130,7 @@ gap / conflict / singleton / unresolvedを「未完成だから削除する」�
 
 次roundを開始するには、外部から説明できる理由が必要である。
 
-例:
+例は次のとおりです。
 
 - new material exists
 - a residual can now be checked

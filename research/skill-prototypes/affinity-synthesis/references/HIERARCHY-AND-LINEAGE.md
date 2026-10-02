@@ -10,8 +10,8 @@ Status: research candidate
 
 この文書は、その二つを表現層で扱う。
 
-- **recursive grouping** — card / lower group を、さらに higher-order group のmemberにできる。
-- **lineage projection** — source → card → group → higher group / relation / secondary resonance → narrative の来歴を、必要な解像度で表示する。
+- **recursive grouping** — card / lower groupを、さらにhigher-order groupのmemberにできる。
+- **lineage projection** — source → card → group → higher group / relation / secondary resonance → narrativeの来歴を、必要な解像度で表示する。
 
 方法の目的は深い階層を作ることではない。材料から上位の意味単位が立たなければ、一層のままでよい。
 
@@ -147,7 +147,7 @@ narrativeの `basis` が `X` を参照する場合は、`N -> X` の来歴から
 
 ### Zoom 1 — overview
 
-主に表示するもの:
+主に表示するもの。
 
 - higher-order groups
 - leaf groups
@@ -171,7 +171,7 @@ G_ROOT
 
 一つのleaf groupを開く。
 
-表示するもの:
+表示するもの。
 
 - group canonical / display label
 - member cards

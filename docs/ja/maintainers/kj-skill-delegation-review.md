@@ -14,7 +14,7 @@
 
 既存スキルへの**全面移譲は行わない**。
 
-公開されている Affinity Mapping / Affinity Diagramming 系スキルは、先験分類を置かず、生の項目から近いものを集め、後からテーマ名を付け、外れ値を残すところまでをよく扱っている。この範囲は現行技能とかなり重なる。
+公開されているAffinity Mapping / Affinity Diagramming系スキルは、先験分類を置かず、生の項目から近いものを集め、後からテーマ名を付け、外れ値を残すところまでをよく扱っている。この範囲は現行技能とかなり重なる。
 
 しかし、現行の `integration.md` が担っている技能はそこに留まらない。特に次は、確認した既存スキルをそのまま使うだけでは保持できない。
 
@@ -33,29 +33,29 @@
 
 ### `think-affinity-mapping`
 
-参照:
+参照は次のとおりです。
 https://github.com/product-on-purpose/thinking-framework-skills/blob/main/skills/think-affinity-mapping/SKILL.md
 
-このスキルは、多数の既存項目を、あらかじめカテゴリを決めずに類似性から束ね、安定後にテーマ名を付け、各項目の追跡可能性と外れ値を残す。目的と操作が明確で、Affinity Mapping の独立スキルとしてよく整理されている。
+このスキルは、多数の既存項目を、あらかじめカテゴリを決めずに類似性から束ね、安定後にテーマ名を付け、各項目の追跡可能性と外れ値を残す。目的と操作が明確で、Affinity Mappingの独立スキルとしてよく整理されている。
 
-一方、成果物は `clustered theme map` であり、関係配置から叙述までを一巡するものではない。また、項目を discrete / comparable unit として準備すること、テーマの相対的な大きさや強さを読むこと、項目数が少ない場合には適用を止めることなど、現行KJ系技能とは異なる停止条件と評価軸を持つ。
+一方、成果物は `clustered theme map` であり、関係配置から叙述までを一巡するものではない。また、項目をdiscrete / comparable unitとして準備すること、テーマの相対的な大きさや強さを読むこと、項目数が少ない場合には適用を止めることなど、現行KJ系技能とは異なる停止条件と評価軸を持つ。
 
 **判定:** 一般的なボトムアップ・クラスタリングにはそのまま利用できる。現行 `integration.md` 全体の代替にはしない。
 
 ### `think-concept-mapping`
 
-参照:
+参照は次のとおりです。
 https://github.com/product-on-purpose/thinking-framework-skills/blob/main/skills/think-concept-mapping/SKILL.md
 
 概念ノード間を、向きと名称を持つリンクで接続し、各リンクを命題として読み返し、欠落や疑わしい命題を見つける。現行技能の「配置」「空白探索」と一部重なる。
 
-ただし、入力を key concept terms として取り出し、すべての関係を明示的な命題へ変えるため、カードや表札を生きた意味単位のまま配置する現行手順とは対象物が違う。A型図解の無条件な置換に使うと、概念化を一段早める可能性がある。
+ただし、入力をkey concept termsとして取り出し、すべての関係を明示的な命題へ変えるため、カードや表札を生きた意味単位のまま配置する現行手順とは対象物が違う。A型図解の無条件な置換に使うと、概念化を一段早める可能性がある。
 
 **判定:** 明示的な概念関係図が必要な場合の後段スキルとしては利用可能。KJ系配置の既定実装にはしない。
 
 ### `think-evidence-vs-inference-sort`
 
-参照:
+参照は次のとおりです。
 https://github.com/product-on-purpose/thinking-framework-skills/blob/main/skills/think-evidence-vs-inference-sort/SKILL.md
 
 証拠・推論・仮定を明示的に分ける監査スキルであり、生成AIの流暢な推論を事実と混同しない点では現行技能と目的を共有する。
@@ -66,7 +66,7 @@ https://github.com/product-on-purpose/thinking-framework-skills/blob/main/skills
 
 ### `Interview Synthesis` などの調査特化スキル
 
-参照:
+参照は次のとおりです。
 https://github.com/SkillMedev/skills/blob/main/skills/interview-synthesis/SKILL.md
 
 二段階のAffinity Mapping、参加者ID、外れ値保持など、実務的な質的調査としてよく整理されている。ただし、インタビューを前提とし、最小人数、頻度、confidence、洞察の定型、推奨事項までを一体で扱う。
@@ -90,7 +90,7 @@ https://github.com/SkillMedev/skills/blob/main/skills/interview-synthesis/SKILL.
 - 生の多数項目を創発テーマへ束ねるだけなら `think-affinity-mapping`。
 - 既に概念化された項目の関係を命題ネットワークとして点検するなら `think-concept-mapping`。
 - 完成した主張の証拠・推論・仮定を監査するなら `think-evidence-vs-inference-sort`。
-- インタビュー調査固有の頻度・confidence・recommendation まで必要なら、その領域向け synthesis skill。
+- インタビュー調査固有の頻度・confidence・recommendationまで必要なら、その領域向けsynthesis skill。
 
 CSWが独自に保持すべきなのは、これら一般技能の再実装ではなく、**材料の意味を途中で別の表現体系へ固定せず、統合と戻し検査を反復する核**である。
 
@@ -102,11 +102,11 @@ CSWが独自に保持すべきなのは、これら一般技能の再実装で�
 
 第一に、KJ法®は株式会社川喜田研究所の登録商標であり、同研究所自身が狭義のKJ法をラベル化、グループ編成、図解化、叙述化までの一連の方法として説明している。独自の生成AI向け補正を含む本技能が `kj-method` を一般名のように名乗ると、公式・標準的な実装であるかのような強い印象を与えやすい。
 
-参照:
+参照は次のとおりです。
 https://kj-kawakita.co.jp/
 https://kj-kawakita.co.jp/about_kj-method/
 
-第二に、公開済みの `think-affinity-mapping` 自体が description で `(the KJ method)` と説明している。`kj-method` という名前は、既存エコシステム上でも機能境界を十分に区別しない。
+第二に、公開済みの `think-affinity-mapping` 自体がdescriptionで `(the KJ method)` と説明している。`kj-method` という名前は、既存エコシステム上でも機能境界を十分に区別しない。
 
 独立スキルを作る場合は、KJ法を**名称ではなく系譜として明示する**。現段階の候補は次の順で検討する。
 
@@ -125,7 +125,7 @@ https://kj-kawakita.co.jp/about_kj-method/
 
 1. 現行 `integration.md` から、文化体系固有ではない材料統合・意味境界・表札・配置・叙述・戻し検査・空白探索を独立正本へ抽出する。
 2. CSW側には、独立技能をいつ使うか、文化体系から得た候補をどの階層へ置くか、対象側へ戻す際に何を保持するか、という接続契約だけを残す。
-3. Affinity Mapping 等の既存スキルが利用可能で、依頼がその狭い能力境界に収まる場合はそちらへ委ねられるようにする。ただし、独立技能の内部手順を既存スキルの直列実行へ分解しない。
+3. Affinity Mapping等の既存スキルが利用可能で、依頼がその狭い能力境界に収まる場合はそちらへ委ねられるようにする。ただし、独立技能の内部手順を既存スキルの直列実行へ分解しない。
 4. 分離前後で、孤立カード、対立、証拠状態、来歴、空白、A/B双方向照合が失われないことを回帰確認する。
 
 この分離により、CSWは「文化的体系による探索」と、その探索結果を材料面へ接続する責務へ寄せ、材料統合技能は文化体系に依存しない再利用可能な能力として扱える。

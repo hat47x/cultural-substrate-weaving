@@ -13,7 +13,7 @@
 
 E5本試験の前段として、正本から各surfaceへ意味が渡る経路を読み、wrapperが中核契約を上書きしていないかを確認した。
 
-確認対象:
+確認対象は次のとおりです。
 
 - `src/ja-JP/ROUTER.md`
 - `scripts/build.py`
@@ -60,13 +60,13 @@ interactive / meteredの両profileで、Skill本文自体はcanonical Routerか�
 
 これは、明示利用でも文化体系の`not_loaded / probe / preview / full / enacted`を委任に応じて選び、親和統合を必要時にcompatible realizationへ接続する正本契約より強い。とくに「skillが呼ばれた」ことから文化体系とKJの双方を必須化し得るため、P2 activation/loading calibrationとP8 wrapper non-authorityのdriftと判定した。
 
-判定: `semantic_drift`
+判定: `semantic_drift`は次のとおりです。
 
 ## 3. 最小修正
 
 OpenAI adapterの`default_prompt`だけを修正する。interactive / meteredのinvocation policy差はそのまま保持する。
 
-日本語:
+日本語は次のとおりです。
 
 - 旧: 文化的体系とKJ法を使うことを無条件に指示
 - 新: **必要な範囲で**文化的体系による探索やcompatibleな親和統合への接続を使う

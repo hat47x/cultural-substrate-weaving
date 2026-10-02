@@ -72,7 +72,7 @@ https://pmc.ncbi.nlm.nih.gov/articles/PMC3687598/
 
 sourceから安全に保持できる最小構造は、
 
-- main route と collateral route の区別;
+- main routeとcollateral routeの区別;
 - route / passage / connectionというnetwork vocabulary;
 - branching / connection topology;
 - TCM内部でのchannel systemという位置づけ;

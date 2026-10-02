@@ -59,13 +59,13 @@ standalone skill / multi-skill plugin / composite GPT
 
 ### 案A — 三Skillを完全に別リポジトリへ分ける
 
-長所:
+長所は次のとおりです。
 
 - 所有範囲が明確。
 - release cycleを独立できる。
 - `affinity-synthesis` をCSWと無関係に発見・導入しやすい。
 
-短所:
+短所は次のとおりです。
 
 - Agent Skills仕様にdependency resolverがないため、CSWだけ導入された場合の保証がない。
 - 初期段階では三repoのCI、translation、release、issue管理が増える。
@@ -75,12 +75,12 @@ standalone skill / multi-skill plugin / composite GPT
 
 ### 案B — 一つのCSW Skillの内部moduleとしてだけ分離する
 
-長所:
+長所は次のとおりです。
 
 - 現行buildをほぼ維持できる。
 - dependency問題がない。
 
-短所:
+短所は次のとおりです。
 
 - `affinity-synthesis` を単独で利用できない。
 - KJ系統合のrelease cycleがCSWへ縛られる。
@@ -90,7 +90,7 @@ standalone skill / multi-skill plugin / composite GPT
 
 ### 案C — 同一repo・同一plugin bundleに三つの独立Skillを同梱する
 
-例:
+例は次のとおりです。
 
 ```text
 plugin/<locale>/skills/
@@ -99,14 +99,14 @@ plugin/<locale>/skills/
   iterative-inquiry-synthesis/SKILL.md
 ```
 
-長所:
+長所は次のとおりです。
 
 - CSWとcompanion skillsを一度にインストールできる。
 - 標準dependency fieldがなくても、同じplugin package内に必要なSkillが存在する。
 - 各Skillは独立したdescription / activation boundaryを持てる。
 - sourceは一つに保ち、build時に複数Skillへ生成できる。
 
-短所:
+短所は次のとおりです。
 
 - `cultural-substrate-weaving` というplugin名で一般的な親和統合Skillまで入るため、bundle名と内容の射程がずれる。
 - host側がsibling Skillを必ず自動選択・連携するとは限らない。
@@ -116,12 +116,12 @@ plugin/<locale>/skills/
 
 ### 案D — 同一repoから三つを独立packageとしてのみ出す
 
-長所:
+長所は次のとおりです。
 
 - repoは一つ、公開Skill名は独立。
 - standalone利用が明確。
 
-短所:
+短所は次のとおりです。
 
 - CSW利用者がcompanion skillを別途導入しない可能性がある。
 - dependency問題が残る。
@@ -208,7 +208,7 @@ else:
 
 CSW側に残せるfallbackは、方法手順ではなく**安全な接続境界**だけとする。
 
-例えば:
+例えばは次のとおりです。
 
 - framework-generated candidateをtarget-supported findingへ自動昇格させない。
 - target materialの意味を文化体系へ合わせて分類しない。
@@ -255,7 +255,7 @@ repository release versionとcognitive method versionを同一視しない。
 
 ただし三Skillを恒久的に同梱するなら、将来はrepository / marketplace bundleの表示名を中立化する余地がある。
 
-候補例:
+候補例は次のとおりです。
 
 - `material-led-inquiry-skills`
 - `emergent-synthesis-skills`
@@ -280,7 +280,7 @@ repository release versionとcognitive method versionを同一視しない。
 
 runtime `src/manifest.json`とは別に、research用の複数Skill manifestを作る。
 
-検証項目:
+検証項目は次のとおりです。
 
 - skill id/name collision
 - locale parity
@@ -293,7 +293,7 @@ runtime `src/manifest.json`とは別に、research用の複数Skill manifestを�
 
 `manifest()` を単一Skill configではなくsuite configへ拡張する。
 
-重要:
+重要は次のとおりです。
 
 - `build_openai`: skillごとにstandalone directory生成
 - `build_claude`: 一plugin内へ複数skills生成
