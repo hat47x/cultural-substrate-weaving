@@ -16,12 +16,12 @@ This map tracks structural diversity. It does not rank frameworks or claim that 
 | conditioned perspective | Jain sevenfold predication; Confucian role / li | — | institutional and collective role perspectives beyond dyadic relations |
 | explanatory pluralism | Aristotle four causes | — | explanatory modes beyond current cause set |
 | rhetorical issue-state / dispute location | Classical stasis theory | — | culturally distinct dispute-location systems |
-| expression → reception | Rasa | Jo-Ha-Kyū | narrative and ritual sequencing |
+| expression → reception | Rasa | Jo-Ha-Kyū (profile-ready) | narrative sequencing that is not reducible to reception or pacing |
 | embodied observation | Taiheki | chakra | lineage-specific embodied practice |
 | coupled periodicity / multi-scale time | Maya calendars | Stems/Branches | more than two independently varying cycles |
 | seasonal phase / boundary | — | Twenty-Four Solar Terms | spatially varying ecological timing |
 | indexed narrative corpus | — | Ifá / Odù (profile-ready / not-runtime) | safe corpus boundary and no simulation of living specialist authority before runtime |
-| experience decomposition | — | Five aggregates | non-overlap with existing Buddhist core |
+| experience decomposition | — | Five aggregates (profile-ready) | demonstrate distinctness from generic qualitative coding after de-binding |
 | route / network topology | Marshallese wave navigation | Jingluo | non-maritime route traditions and branching networks without medical claims |
 | whole-part reciprocity / multi-perspective network | — | Huayan | primary-text and lineage separation |
 | axis/extents reframing vs differentiated mediation | — | Sefer Yetzirah dimensions; theosophical sefirot (both profile-ready) | test distinctness after de-binding while keeping the two historical structures separate |

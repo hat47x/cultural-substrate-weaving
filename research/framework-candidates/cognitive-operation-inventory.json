@@ -1011,7 +1011,7 @@
         "five aggregates",
         "pañcaskandha"
       ],
-      "readiness": "sourced-candidate",
+      "readiness": "profile-ready",
       "structural_primitives": [
         "form",
         "sensation",
@@ -1039,6 +1039,16 @@
       ],
       "sources": [
         {
+          "kind": "canonical-text-translation",
+          "title": "Saṃyutta Nikāya 22.82 — Puṇṇamā Sutta",
+          "url": "https://suttacentral.net/sn22.82/en/sujato"
+        },
+        {
+          "kind": "parallel-canonical-text-translation",
+          "title": "Saṃyukta Āgama 76 — Bhikkhu Anālayo translation",
+          "url": "https://suttacentral.net/sa76/en/analayo"
+        },
+        {
           "kind": "scholarly-reference",
           "title": "Mind in Indian Buddhist Philosophy",
           "url": "https://plato.stanford.edu/entries/mind-indian-buddhism/"
@@ -1047,9 +1057,29 @@
           "kind": "scholarly-reference",
           "title": "Abhidharma",
           "url": "https://plato.stanford.edu/entries/abhidharma/"
+        },
+        {
+          "kind": "scholarly-history",
+          "title": "The Buddha's ‘skill in means’ and the genesis of the five aggregate teaching",
+          "url": "https://www.cambridge.org/core/journals/journal-of-the-royal-asiatic-society/article/buddhas-skill-in-means-and-the-genesis-of-the-five-aggregate-teaching-winner-of-the2nd-professor-mary-boyce-award/3DB7FEACA0B9EA3DC1DFDC1B4D042478"
         }
       ],
-      "profile_path": "research/framework-candidates/profiles/five-aggregates.md"
+      "profile_path": "research/framework-candidates/profiles/five-aggregates.md",
+      "adoption_hold": "Buddhist-tradition-sensitive",
+      "selection_cues": [
+        "一枚岩の経験記述を感覚や解釈や行動傾向に分けたい",
+        "人の性質に見える記述を複数の過程へ分解したい",
+        "感情と知覚と解釈を混同していないか見たい",
+        "decompose a unitary account of experience into different processes",
+        "separate feeling perception interpretation and action tendency",
+        "question whether a person-label hides changing processes"
+      ],
+      "worked_example_paths": [
+        "research/framework-candidates/worked-examples/five-aggregates.md"
+      ],
+      "negative_example_paths": [
+        "research/framework-candidates/worked-examples/five-aggregates-negative.md"
+      ]
     },
     {
       "id": "jo-ha-kyu",
@@ -1058,7 +1088,7 @@
         "Jo-Ha-Kyū",
         "Jyo-Ha-Kyu"
       ],
-      "readiness": "sourced-candidate",
+      "readiness": "profile-ready",
       "structural_primitives": [
         "opening / development-disruption / rapid-close temporal articulation",
         "acceleration and deceleration in traditional performance",
@@ -1083,9 +1113,9 @@
       ],
       "sources": [
         {
-          "kind": "scholarly-empirical-reference",
-          "title": "Characteristics of actions for sliding walk technique in Japanese traditional performing art",
-          "url": "https://www.jstage.jst.go.jp/article/hcs/2014/24/2014_204/_article/-char/en"
+          "kind": "historical-text-edition-commentary",
+          "title": "世阿弥十六部集評釈 上巻 — National Diet Library",
+          "url": "https://lab.ndl.go.jp/dl/book/1125601?page=1"
         },
         {
           "kind": "scholarly-empirical-reference",
@@ -1093,12 +1123,32 @@
           "url": "https://www.jstage.jst.go.jp/article/aija/81/728/81_2317/_article"
         },
         {
+          "kind": "scholarly-empirical-reference",
+          "title": "Characteristics of actions for sliding walk technique in Japanese traditional performing art",
+          "url": "https://www.jstage.jst.go.jp/article/hcs/2014/24/2014_204/_article/-char/en"
+        },
+        {
           "kind": "tradition-educational-reference",
-          "title": "Johakyū — Noh Terminology",
-          "url": "https://db2.the-noh.com/edic/2009/06/johakyu_1.html"
+          "title": "Jo-Ha-Kyū — Noh performance terminology",
+          "url": "https://www.the-noh.com/en/trivia/079.html"
         }
       ],
-      "profile_path": "research/framework-candidates/profiles/jo-ha-kyu.md"
+      "profile_path": "research/framework-candidates/profiles/jo-ha-kyu.md",
+      "adoption_hold": "Zeami-Noh-bounded",
+      "selection_cues": [
+        "過程の速度や密度がどこで変わるか見たい",
+        "始まり中盤終盤を等分せず時間的な役割で分けたい",
+        "加速減速と締め方の形を見たい",
+        "inspect where pace or interaction density changes within a process",
+        "separate phases by temporal function rather than equal thirds",
+        "inspect acceleration deceleration and closure shape"
+      ],
+      "worked_example_paths": [
+        "research/framework-candidates/worked-examples/jo-ha-kyu.md"
+      ],
+      "negative_example_paths": [
+        "research/framework-candidates/worked-examples/jo-ha-kyu-negative.md"
+      ]
     },
     {
       "id": "nyaya-five-member-inference",
