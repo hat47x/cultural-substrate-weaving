@@ -160,6 +160,7 @@ def worksheet_payload(
     need: str,
     ids: list[str],
     baseline: str | None,
+    workspace_ref: str | None = None,
 ) -> dict[str, Any]:
     if not need.strip():
         raise ValueError("need must not be empty")
@@ -194,6 +195,7 @@ def worksheet_payload(
 
     return {
         "format": "csw.framework-selection-workspace/v1",
+        "workspace_ref": (workspace_ref or "").strip(),
         "missing_cognitive_function": need,
         "target_baseline": baseline or "",
         "candidate_order_note": "Candidate order is working order, not a ranking.",
@@ -246,6 +248,11 @@ def build_parser() -> argparse.ArgumentParser:
     worksheet.add_argument("--need", required=True)
     worksheet.add_argument("--candidate", action="append", required=True)
     worksheet.add_argument("--baseline")
+    worksheet.add_argument(
+        "--ref",
+        dest="workspace_ref",
+        help="stable provenance handle that downstream catalytic traces may reuse",
+    )
 
     return parser
 
@@ -260,7 +267,15 @@ def main() -> None:
         elif args.command == "contrast":
             print_json(contrast_payload(data, args.candidate_id))
         elif args.command == "worksheet":
-            print_json(worksheet_payload(data, args.need, args.candidate, args.baseline))
+            print_json(
+                worksheet_payload(
+                    data,
+                    args.need,
+                    args.candidate,
+                    args.baseline,
+                    args.workspace_ref,
+                )
+            )
     except (OSError, ValueError, json.JSONDecodeError) as exc:
         print(f"ERROR: {exc}", file=sys.stderr)
         raise SystemExit(2) from exc
