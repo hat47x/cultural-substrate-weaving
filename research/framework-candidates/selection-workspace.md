@@ -76,6 +76,9 @@ python "$TOOL" show /tmp/selection.json
 
 # After framework-generated cards have been traced with the same selection-ref:
 python "$TOOL" audit-map /tmp/selection.json /tmp/board.json
+
+# When a natural-work Living Lab round reused the same selection ref:
+python "$TOOL" audit-living-lab /tmp/selection.json /tmp/round.json
 ```
 
 `inspect` is the Registry-0 boundary view for one candidate. It assembles the candidate's native primitives, operations, ordinary-language cues, full source references, profile/source-packet/runtime paths, positive/negative target-return fixtures, readiness, adoption hold, and `do_not_assume` boundary without computing fit, rank, or activation. Use it before deliberate activation when the model or analyst needs to recover what is actually documented rather than reconstructing a framework from memory.
@@ -113,6 +116,8 @@ target-side baseline
   -> de-bind framework language
   -> feed the resulting material back into affinity / iteration
 ```
+
+`audit-living-lab` joins the workspace to one schema 0.2 Living Lab round by the exact stable `selection_ref`. It places planned operations, recorded framework contacts, artifact provenance, target-return states, user dispositions, and the original non-force guardrails in one read-only view. It does not infer that missing provenance is a failure, that a retained artifact was caused by the framework, that a target-return state is correct, or that a guardrail was satisfied. The official Living Lab validator remains responsible for validating the round record itself.
 
 Do not use the helper to convert readiness into fit, prefer a framework because it has more operations/sources, treat operation-name overlap as semantic equivalence, bypass lineage/adoption holds, or turn cross-framework agreement into target evidence.
 

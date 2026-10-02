@@ -695,6 +695,29 @@ def load_affinity_map(path: Path) -> dict[str, Any]:
     return data
 
 
+def load_living_lab_round(path: Path) -> dict[str, Any]:
+    data = json.loads(path.read_text(encoding="utf-8"))
+    if not isinstance(data, dict):
+        raise ValueError("Living Lab round must be a JSON object")
+    if data.get("schema_version") != "0.2":
+        raise ValueError("unsupported Living Lab round schema version")
+    round_id = str(data.get("round_id", "")).strip()
+    if not round_id:
+        raise ValueError("Living Lab round requires a round_id")
+
+    contacts = data.get("framework_contacts", [])
+    traces = data.get("artifact_traces", [])
+    if not isinstance(contacts, list) or any(
+        not isinstance(contact, dict) for contact in contacts
+    ):
+        raise ValueError("Living Lab framework_contacts must be an array of objects")
+    if not isinstance(traces, list) or any(
+        not isinstance(trace, dict) for trace in traces
+    ):
+        raise ValueError("Living Lab artifact_traces must be an array of objects")
+    return data
+
+
 def _append_unique(target: list[str], values: Iterable[Any]) -> None:
     for value in values:
         text_value = str(value)
@@ -883,6 +906,208 @@ def audit_map_payload(
     }
 
 
+def audit_living_lab_payload(
+    workspace: dict[str, Any],
+    round_record: dict[str, Any],
+) -> dict[str, Any]:
+    workspace_ref = str(workspace.get("workspace_ref", "")).strip()
+    if not workspace_ref:
+        raise ValueError("audit-living-lab requires a workspace_ref")
+
+    linked_contacts: list[dict[str, Any]] = []
+    linked_artifacts: list[dict[str, Any]] = []
+    contacted_operations: list[str] = []
+    artifact_operations: list[str] = []
+    framework_labels: list[str] = []
+    target_return_states: list[str] = []
+    user_dispositions: list[str] = []
+
+    for contact in round_record.get("framework_contacts", []):
+        if str(contact.get("selection_ref", "")).strip() != workspace_ref:
+            continue
+        operations = [str(value) for value in contact.get("operations", [])]
+        framework = str(contact.get("framework", "")).strip()
+        if framework:
+            _append_unique(framework_labels, [framework])
+        _append_unique(contacted_operations, operations)
+        linked_contacts.append({
+            "framework": framework,
+            "depth": contact.get("depth"),
+            "use": contact.get("use"),
+            "selection_ref": contact.get("selection_ref"),
+            "operations": operations,
+        })
+
+    for trace in round_record.get("artifact_traces", []):
+        selection_refs = [str(value) for value in trace.get("selection_refs", [])]
+        if workspace_ref not in selection_refs:
+            continue
+        frameworks = [str(value) for value in trace.get("framework_refs", [])]
+        operations = [str(value) for value in trace.get("operation_refs", [])]
+        _append_unique(framework_labels, frameworks)
+        _append_unique(artifact_operations, operations)
+
+        target_return = trace.get("target_return")
+        if not isinstance(target_return, dict):
+            target_return = {}
+        return_state = str(target_return.get("state", "")).strip()
+        if return_state:
+            _append_unique(target_return_states, [return_state])
+
+        user_disposition = trace.get("user_disposition")
+        if not isinstance(user_disposition, dict):
+            user_disposition = None
+        if user_disposition is not None:
+            state = str(user_disposition.get("state", "")).strip()
+            if state:
+                _append_unique(user_dispositions, [state])
+
+        linked_artifacts.append({
+            "artifact_ref": trace.get("artifact_ref"),
+            "origin": trace.get("origin"),
+            "framework_refs": frameworks,
+            "selection_refs": selection_refs,
+            "operation_refs": operations,
+            "target_return": target_return,
+            "user_disposition": user_disposition,
+        })
+
+    planned_operations: list[str] = []
+    candidate_ids: list[str] = []
+    for row in workspace.get("candidates", []):
+        candidate_id = str(row.get("id", "")).strip()
+        if candidate_id:
+            candidate_ids.append(candidate_id)
+        _append_unique(planned_operations, row.get("planned_operations", []))
+
+    candidate_id_set = set(candidate_ids)
+    unmatched_framework_labels = [
+        value for value in framework_labels if value not in candidate_id_set
+    ]
+
+    candidate_audits: list[dict[str, Any]] = []
+    for row in workspace.get("candidates", []):
+        candidate_id = str(row.get("id", "")).strip()
+        if not candidate_id:
+            continue
+
+        planned_for_candidate: list[str] = []
+        _append_unique(planned_for_candidate, row.get("planned_operations", []))
+
+        contacts_for_candidate = [
+            contact
+            for contact in linked_contacts
+            if contact["framework"] == candidate_id
+        ]
+        artifacts_for_candidate = [
+            trace
+            for trace in linked_artifacts
+            if candidate_id in trace["framework_refs"]
+        ]
+
+        contact_operations_for_candidate: list[str] = []
+        artifact_operations_for_candidate: list[str] = []
+        return_states_for_candidate: list[str] = []
+        dispositions_for_candidate: list[str] = []
+
+        for contact in contacts_for_candidate:
+            _append_unique(
+                contact_operations_for_candidate,
+                contact["operations"],
+            )
+        for trace in artifacts_for_candidate:
+            _append_unique(
+                artifact_operations_for_candidate,
+                trace["operation_refs"],
+            )
+            state = str(trace["target_return"].get("state", "")).strip()
+            if state:
+                _append_unique(return_states_for_candidate, [state])
+            disposition = trace.get("user_disposition")
+            if isinstance(disposition, dict):
+                disposition_state = str(disposition.get("state", "")).strip()
+                if disposition_state:
+                    _append_unique(
+                        dispositions_for_candidate,
+                        [disposition_state],
+                    )
+
+        candidate_audits.append({
+            "candidate_id": candidate_id,
+            "role": row.get("role"),
+            "planned_operations": planned_for_candidate,
+            "contact_operations": contact_operations_for_candidate,
+            "artifact_operations": artifact_operations_for_candidate,
+            "planned_not_contacted_exact": [
+                value
+                for value in planned_for_candidate
+                if value not in contact_operations_for_candidate
+            ],
+            "contacted_not_artifact_traced_exact": [
+                value
+                for value in contact_operations_for_candidate
+                if value not in artifact_operations_for_candidate
+            ],
+            "artifact_not_contacted_exact": [
+                value
+                for value in artifact_operations_for_candidate
+                if value not in contact_operations_for_candidate
+            ],
+            "linked_artifact_refs": [
+                str(trace.get("artifact_ref", ""))
+                for trace in artifacts_for_candidate
+                if str(trace.get("artifact_ref", "")).strip()
+            ],
+            "target_return_states": return_states_for_candidate,
+            "user_dispositions": dispositions_for_candidate,
+            "guardrails": dict(row.get("non_force_guardrails", {})),
+        })
+
+    return {
+        "format": "csw.framework-selection-living-lab-audit/v1",
+        "workspace_ref": workspace_ref,
+        "round_id": round_record.get("round_id"),
+        "activation_scope": round_record.get("activation_scope"),
+        "linked_contacts": linked_contacts,
+        "linked_artifacts": linked_artifacts,
+        "planned_operations": planned_operations,
+        "contacted_operations": contacted_operations,
+        "artifact_operations": artifact_operations,
+        "planned_not_contacted_exact": [
+            value for value in planned_operations if value not in contacted_operations
+        ],
+        "contacted_not_artifact_traced_exact": [
+            value for value in contacted_operations if value not in artifact_operations
+        ],
+        "artifact_not_contacted_exact": [
+            value for value in artifact_operations if value not in contacted_operations
+        ],
+        "framework_labels": framework_labels,
+        "framework_labels_without_exact_candidate_id_match": unmatched_framework_labels,
+        "target_return_states": target_return_states,
+        "user_dispositions": user_dispositions,
+        "candidate_audits": candidate_audits,
+        "no_framework_option": dict(workspace.get("no_framework_option", {})),
+        "interpretation_boundary": (
+            "This is an exact-string provenance inventory joining recorded selection "
+            "reasoning to one Living Lab round. Presence or absence of a contact, "
+            "operation, artifact, target-return state, or user disposition does not "
+            "establish usefulness, causation, correctness, guardrail compliance, or "
+            "whether a framework should be activated. Return to the recorded target "
+            "material and user evidence for interpretation."
+        ),
+    }
+
+
+def cmd_audit_living_lab(args: argparse.Namespace) -> None:
+    print_json(
+        audit_living_lab_payload(
+            load_workspace(args.workspace),
+            load_living_lab_round(args.living_lab_round),
+        )
+    )
+
+
 def cmd_audit_map(args: argparse.Namespace) -> None:
     print_json(
         audit_map_payload(
@@ -1039,6 +1264,17 @@ def build_parser() -> argparse.ArgumentParser:
     audit_map.add_argument("affinity_map", type=Path)
     audit_map.set_defaults(func=cmd_audit_map)
 
+    audit_living_lab = sub.add_parser(
+        "audit-living-lab",
+        help=(
+            "join a selection workspace to one Living Lab round by exact selection_ref "
+            "without evaluating framework effectiveness"
+        ),
+    )
+    audit_living_lab.add_argument("workspace", type=Path)
+    audit_living_lab.add_argument("living_lab_round", type=Path)
+    audit_living_lab.set_defaults(func=cmd_audit_living_lab)
+
     set_candidate = sub.add_parser("set-candidate")
     set_candidate.add_argument("workspace", type=Path)
     set_candidate.add_argument("candidate_id")
@@ -1119,8 +1355,10 @@ def main() -> None:
     try:
         if args.command in {
             "audit-map",
+            "audit-living-lab",
             "set-candidate",
             "set-consideration",
+            "set-guardrail",
             "set-non-activation",
             "set-cross-framework",
             "record-exit",

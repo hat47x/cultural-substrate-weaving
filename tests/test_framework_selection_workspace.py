@@ -695,6 +695,216 @@ class FrameworkSelectionWorkspaceTest(unittest.TestCase):
         self.assertEqual(candidate_audits["beta"]["target_return_states"], [])
         self.assertNotIn("score", json.dumps(payload))
 
+    def test_living_lab_audit_joins_selection_contact_and_artifact_provenance(self) -> None:
+        selection = workspace.worksheet_payload(
+            FIXTURE,
+            "Need another boundary view",
+            ["alpha", "beta"],
+            "Target baseline",
+            "selection://living-lab-audit/framework-choice",
+        )
+        workspace.update_candidate(
+            selection,
+            "alpha",
+            role="primary",
+            planned_operations=["condition-chain"],
+        )
+        workspace.update_candidate(
+            selection,
+            "beta",
+            role="reflecting",
+            planned_operations=["node-perspective"],
+        )
+        workspace.update_non_force_guardrail(
+            selection,
+            "alpha",
+            contact_if="Open only while a concrete condition gap remains.",
+            stop_if="Stop if the target exposes no distinct upstream condition.",
+            survive_if="Keep only a de-bound target-checkable question.",
+        )
+
+        round_record = {
+            "schema_version": "0.2",
+            "round_id": "round-living-lab-audit-001",
+            "activation_scope": "exploratory_use",
+            "framework_contacts": [
+                {
+                    "framework": "alpha",
+                    "depth": "preview",
+                    "use": "exploration",
+                    "selection_ref": "selection://living-lab-audit/framework-choice",
+                    "operations": ["condition-chain"],
+                },
+                {
+                    "framework": "beta",
+                    "depth": "preview",
+                    "use": "exploration",
+                    "selection_ref": "selection://other/framework-choice",
+                    "operations": ["node-perspective"],
+                },
+            ],
+            "artifact_traces": [
+                {
+                    "artifact_ref": "artifact:alpha-1",
+                    "origin": "framework_generated",
+                    "framework_refs": ["alpha"],
+                    "selection_refs": [
+                        "selection://living-lab-audit/framework-choice"
+                    ],
+                    "operation_refs": ["condition-chain"],
+                    "target_return": {
+                        "state": "target_weakened",
+                        "source_type": "mixed",
+                        "evidence_refs": ["artifact:target-1"],
+                    },
+                    "user_disposition": {
+                        "state": "modified",
+                        "source_ref": "chat:user-1",
+                    },
+                },
+                {
+                    "artifact_ref": "artifact:beta-other-selection",
+                    "origin": "framework_generated",
+                    "framework_refs": ["beta"],
+                    "selection_refs": ["selection://other/framework-choice"],
+                    "operation_refs": ["node-perspective"],
+                    "target_return": {
+                        "state": "target_supported",
+                        "source_type": "external",
+                        "evidence_refs": ["artifact:target-2"],
+                    },
+                    "user_disposition": {
+                        "state": "adopted",
+                        "source_ref": "chat:user-2",
+                    },
+                },
+            ],
+        }
+
+        payload = workspace.audit_living_lab_payload(selection, round_record)
+
+        self.assertEqual(payload["round_id"], "round-living-lab-audit-001")
+        self.assertEqual(
+            [contact["framework"] for contact in payload["linked_contacts"]],
+            ["alpha"],
+        )
+        self.assertEqual(
+            [trace["artifact_ref"] for trace in payload["linked_artifacts"]],
+            ["artifact:alpha-1"],
+        )
+        self.assertEqual(payload["contacted_operations"], ["condition-chain"])
+        self.assertEqual(payload["artifact_operations"], ["condition-chain"])
+        self.assertEqual(payload["target_return_states"], ["target_weakened"])
+        self.assertEqual(payload["user_dispositions"], ["modified"])
+        self.assertEqual(
+            payload["planned_not_contacted_exact"],
+            ["node-perspective"],
+        )
+
+        audits = {
+            row["candidate_id"]: row
+            for row in payload["candidate_audits"]
+        }
+        self.assertEqual(
+            audits["alpha"]["linked_artifact_refs"],
+            ["artifact:alpha-1"],
+        )
+        self.assertEqual(
+            audits["alpha"]["guardrails"]["stop_if"],
+            "Stop if the target exposes no distinct upstream condition.",
+        )
+        self.assertEqual(
+            audits["alpha"]["target_return_states"],
+            ["target_weakened"],
+        )
+        self.assertEqual(audits["alpha"]["user_dispositions"], ["modified"])
+        self.assertEqual(audits["beta"]["linked_artifact_refs"], [])
+        self.assertEqual(audits["beta"]["target_return_states"], [])
+
+        encoded = json.dumps(payload).casefold()
+        self.assertNotIn('"score"', encoded)
+        self.assertNotIn('"rank"', encoded)
+        self.assertNotIn('"recommendation"', encoded)
+
+    def test_living_lab_audit_cli_uses_exact_workspace_ref(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            selection_path = Path(tmp) / "selection.json"
+            round_path = Path(tmp) / "round.json"
+            selection = workspace.worksheet_payload(
+                FIXTURE,
+                "Need another boundary view",
+                ["alpha"],
+                "Target baseline",
+                "selection://cli-living-lab/framework-choice",
+            )
+            workspace.update_candidate(
+                selection,
+                "alpha",
+                planned_operations=["condition-chain"],
+            )
+            workspace.save_workspace(selection_path, selection)
+            round_path.write_text(
+                json.dumps({
+                    "schema_version": "0.2",
+                    "round_id": "round-cli-living-lab-001",
+                    "activation_scope": "limited_use",
+                    "framework_contacts": [{
+                        "framework": "alpha",
+                        "depth": "preview",
+                        "use": "exploration",
+                        "selection_ref": "selection://cli-living-lab/framework-choice",
+                        "operations": ["condition-chain"],
+                    }],
+                    "artifact_traces": [{
+                        "artifact_ref": "artifact:cli-alpha-1",
+                        "origin": "framework_generated",
+                        "framework_refs": ["alpha"],
+                        "selection_refs": [
+                            "selection://cli-living-lab/framework-choice"
+                        ],
+                        "operation_refs": ["condition-chain"],
+                        "target_return": {
+                            "state": "unresolved",
+                            "source_type": "ai",
+                            "evidence_refs": ["artifact:target-cli"],
+                        },
+                    }],
+                }),
+                encoding="utf-8",
+            )
+
+            payload = json.loads(
+                self.run_tool(
+                    "audit-living-lab",
+                    str(selection_path),
+                    str(round_path),
+                ).stdout
+            )
+            self.assertEqual(
+                payload["workspace_ref"],
+                "selection://cli-living-lab/framework-choice",
+            )
+            self.assertEqual(
+                payload["linked_artifacts"][0]["artifact_ref"],
+                "artifact:cli-alpha-1",
+            )
+            self.assertEqual(payload["target_return_states"], ["unresolved"])
+
+    def test_living_lab_loader_rejects_unknown_schema_version(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            round_path = Path(tmp) / "round.json"
+            round_path.write_text(
+                json.dumps({
+                    "schema_version": "9.9",
+                    "round_id": "round-unknown-schema",
+                    "framework_contacts": [],
+                    "artifact_traces": [],
+                }),
+                encoding="utf-8",
+            )
+            with self.assertRaisesRegex(ValueError, "unsupported Living Lab"):
+                workspace.load_living_lab_round(round_path)
+
     def test_candidate_audit_does_not_credit_another_frameworks_operation(self) -> None:
         selection = workspace.worksheet_payload(
             FIXTURE,
