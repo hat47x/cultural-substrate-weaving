@@ -47,6 +47,9 @@ python "$TOOL" record-exit /tmp/selection.json \
   "どの条件が対象側で本当に必要か"
 
 python "$TOOL" show /tmp/selection.json
+
+# After framework-generated cards have been traced with the same selection-ref:
+python "$TOOL" audit-map /tmp/selection.json /tmp/board.json
 ```
 
 The shortlist preserves inventory order and computes no score. The contrast is exact-string only and does not infer semantic equivalence. The worksheet deliberately starts with role, intended cognitive job, near-neighbor difference, target-return questions, de-bound target language, and revision conditions unfilled.
@@ -54,6 +57,8 @@ The shortlist preserves inventory order and computes no score. The contrast is e
 When the selection actually progresses, use `set-candidate`, `set-cross-framework`, and `record-exit` to append explicit reasoning to the saved workspace. `set-candidate --operation` records the exact inventory operation that is intentionally being tried and rejects operation labels not available on that candidate. These operations do not calculate or recommend values; they only preserve what the analyst/skill has explicitly decided or observed.
 
 When a stable `--ref` is supplied, keep that handle with the worksheet and reuse it as `trace-card --selection-ref` on downstream framework-generated cards. The handle is provenance only; it does not make the selection correct or the card target-supported.
+
+`audit-map` can then compare planned operations with exact operation labels observed on cards carrying that selection ref, show candidate-ID label matches/mismatches, target-return states, and downstream cross-field cards. It remains a mechanical provenance audit: a planned operation not observed is not automatically a failure, and an observed unplanned operation is not automatically a defect.
 
 A useful workflow is:
 
