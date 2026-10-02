@@ -158,6 +158,11 @@
       "skill_reference": "04r-mimamsa-hermeneutics.md"
     },
     {
+      "id": "framework-llull-ars",
+      "source": "frameworks/llull-ars.md",
+      "skill_reference": "04s-llull-ars.md"
+    },
+    {
       "id": "human-and-taiheki",
       "source": "domains/human-and-taiheki.md",
       "skill_reference": "05-human-and-taiheki.md"
@@ -212,7 +217,8 @@
       "frameworks/marshallese-wave-navigation.md",
       "frameworks/shinto-threshold-purification.md",
       "frameworks/tibetan-buddhist-mandala.md",
-      "frameworks/mimamsa-hermeneutics.md"
+      "frameworks/mimamsa-hermeneutics.md",
+      "frameworks/llull-ars.md"
     ],
     "02-human-and-taiheki.md": [
       "domains/human-and-taiheki.md"

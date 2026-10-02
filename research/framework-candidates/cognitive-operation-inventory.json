@@ -916,7 +916,7 @@
         "Ars brevis",
         "ルルスの術"
       ],
-      "readiness": "sourced-candidate",
+      "readiness": "adopted",
       "structural_primitives": [
         "symbolic principles encoded as letters",
         "binary and ternary combinations",
@@ -944,16 +944,37 @@
       "sources": [
         {
           "kind": "scholarly-reference",
-          "title": "Ramon Llull",
+          "title": "Ramon Llull — Stanford Encyclopedia of Philosophy",
           "url": "https://plato.stanford.edu/entries/llull/"
         },
         {
-          "kind": "primary-manuscript-digital-facsimile",
-          "title": "Ars brevis and Ars abbreviata praedicandi, versio latinus II",
+          "kind": "scholarly-monograph",
+          "title": "Anthony Bonner, The Art and Logic of Ramon Llull",
+          "url": "https://brill.com/display/title/14655"
+        },
+        {
+          "kind": "specialist-scholarly-educational-resource",
+          "title": "The principles of the Art — Centre de Documentació Ramon Llull / Narpan",
+          "url": "https://quisestlullus.narpan.net/en/principles-art"
+        },
+        {
+          "kind": "digital-manuscript-witness",
+          "title": "Ars brevis and Ars abbreviata praedicandi",
           "url": "https://digital.sciencehistory.org/works/txt90sk/viewer/sckkfrs"
         }
       ],
-      "profile_path": "research/framework-candidates/profiles/llull-ars.md"
+      "profile_path": "research/framework-candidates/profiles/llull-ars.md",
+      "runtime_path": "src/ja-JP/frameworks/llull-ars.md",
+      "adoption_hold": "late-ternary-phase-bounded",
+      "selection_cues": [
+        "普段組み合わせない区別を体系的に交差したい",
+        "組み合わせない区別を体系的に交差",
+        "未検討の組合せを洗い出したい",
+        "二項と三項の組合せから新しい問いを作りたい",
+        "systematically cross distinctions that are not usually combined",
+        "surface combinations that have never been examined",
+        "generate new questions from binary and ternary combinations"
+      ]
     },
     {
       "id": "five-aggregates",
