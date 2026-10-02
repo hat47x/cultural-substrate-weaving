@@ -2113,6 +2113,83 @@
       "negative_example_paths": [
         "research/framework-candidates/worked-examples/vedic-recitation-pathas-negative.md"
       ]
+    },
+    {
+      "id": "panini-ashtadhyayi-rule-architecture",
+      "names": [
+        "Pāṇini Aṣṭādhyāyī rule architecture",
+        "Pāṇinian grammatical rule system",
+        "パーニニ『アシュターディヤーイー』の規則構造"
+      ],
+      "readiness": "profile-ready",
+      "adoption_hold": "classical-text-and-commentarial-layer-sensitive",
+      "structural_primitives": [
+        "inherited rule or heading context through anuvṛtti",
+        "rule domains and technical metalanguage",
+        "general and more specific rule interaction",
+        "derivational transformation sequence",
+        "object rules and metarules",
+        "historically layered interpretive apparatus"
+      ],
+      "cognitive_operations": [
+        "inherited-context-expansion",
+        "rule-scope-reconstruction",
+        "general-specific-blocking-probe",
+        "derivation-order-audit",
+        "metarule-object-rule-separation",
+        "implicit-dependency-reveal"
+      ],
+      "useful_for": [
+        "making inherited rule context explicit before evaluating a rule in isolation",
+        "checking whether a narrower rule blocks or modifies a more general rule on the same target case",
+        "testing whether refactoring or reordering changes a rule system's target-owned derivation or behavior",
+        "separating base rules from conflict-resolution or interpretation rules"
+      ],
+      "do_not_assume": [
+        "the Aṣṭādhyāyī is historically identical to a modern compiler or business rule engine",
+        "all later paribhāṣās are explicit rules authored by Pāṇini or form one historically uniform layer",
+        "vipratiṣedhe paraṃ kāryam means that the textually later rule always wins in every possible conflict",
+        "a formally successful derivation establishes truth or correctness in an unrelated target domain",
+        "Sanskrit grammatical categories can be transferred directly into target semantics"
+      ],
+      "sources": [
+        {
+          "kind": "scholarly-full-text",
+          "title": "Paul Kiparsky, Pāṇini",
+          "url": "https://web.stanford.edu/~kiparsky/Papers/panini_hist_of_phon_handbook.pdf"
+        },
+        {
+          "kind": "scholarly-architecture-study",
+          "title": "Paul Kiparsky, On the Architecture of Pāṇini's Grammar",
+          "url": "https://www.researchgate.net/publication/221145943_On_the_Architecture_of_Panini%27s_Grammar"
+        },
+        {
+          "kind": "primary-rule-digital-edition",
+          "title": "Aṣṭādhyāyī 1.4.2 — vipratiṣedhe paraṃ kāryam",
+          "url": "https://www.sanskritlibrary.org/grammatical/data/A.1.4.2.html"
+        },
+        {
+          "kind": "scholarly-metagrammar-study",
+          "title": "Studies on some Metarules in Pāṇinian system",
+          "url": "https://www.researchgate.net/publication/47930745_The_paribhasas_arthavadgrahane_nanarthakasya_laksanapratipadoktayoh_pratipadoktasyaiva_grahanam_and_ekadesavikrtam_ananyavat_Studies_on_some_Metarules_in_Paninian_system"
+        }
+      ],
+      "source_packet_path": "research/framework-candidates/source-packets/panini-ashtadhyayi-rule-architecture.md",
+      "profile_path": "research/framework-candidates/profiles/panini-ashtadhyayi-rule-architecture.md",
+      "selection_cues": [
+        "規則本文だけでは見えない継承条件を展開したい",
+        "一般則と狭い例外の競合を分けたい",
+        "規則の並び替えや抽出で結果が変わるか見たい",
+        "expand inherited context that a rule omits",
+        "separate a general rule from a narrower blocking rule",
+        "audit whether refactoring or order changes rule behavior"
+      ],
+      "worked_example_paths": [
+        "research/framework-candidates/worked-examples/panini-ashtadhyayi-rule-architecture.md"
+      ],
+      "negative_example_paths": [
+        "research/framework-candidates/worked-examples/panini-ashtadhyayi-rule-architecture-negative.md"
+      ]
     }
   ]
 }

@@ -33,6 +33,7 @@ This map tracks structural diversity. It does not rank frameworks or claim that 
 | oral / performative sequence preservation / alternate-view fidelity | — | Vedic recitation pathas (profile-ready) | compare against a second oral-memory tradition and ordinary diff/checksum practice before runtime |
 | material / positional record encoding | — | Inka khipu record structure (profile-ready) | other non-textual record systems and tests of distinctness from generic data modeling |
 | prescriptive hermeneutics / sentence-unit interpretation | Mīmāṃsā hermeneutics | — | additional culture-specific norm-conflict systems without collapsing into generic legal interpretation |
+| inherited rule context / general-specific blocking / ordered derivation | — | Pāṇini Aṣṭādhyāyī rule architecture (profile-ready) | test distinctness from generic rule-engine review and Mīmāṃsā after de-binding |
 
 ## Priority rule
 
