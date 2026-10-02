@@ -86,6 +86,7 @@ Status: research-only
 - third-wave-2026-10-01.md
 - fourth-wave-2026-10-01.md
 - fifth-wave-2026-10-02.md
+- sixth-wave-2026-10-02.md
 - worked-examples/ 以下のtarget-return例
 - comparisons/ 以下のnear-neighbor / comparative collapse test
 - portfolio-qualitative-audit-2026-10-01.md
@@ -103,31 +104,33 @@ Status: research-only
 - jain-sevenfold-predication
 - aristotle-four-causes
 - rasa
-- maya-calendars（Tzolk’in / Chol Q’ij, Haab, Calendar Round, Long Count）
-- huayan（法蔵中心のwhole–part reciprocity / mutual inclusion）
+- maya-calendars
+- huayan
+- nyaya-five-member-inference
+- confucian-role-ritual
+- classical-stasis-theory
+- hadith-isnad-matn
+- marshallese-wave-navigation
 
 採用済みでも研究を打ち切らない。runtimeが使う最小構造核と、独立Skill相当まで厚くする研究は分ける。
 
-### 量を増やす側のsourced candidate
+### 量を増やす側の候補
 
-- huayan
 - twenty-four-solar-terms
 - heavenly-stems-earthly-branches
 - llull-ars
 - five-aggregates
 - jo-ha-kyu
-- nyaya-five-member-inference（profile-ready）
-- confucian-role-ritual（profile-ready）
 - shinto-threshold-purification
-- rites-of-passage（profile-ready）
-- classical-stasis-theory（profile-ready / rhetorical issue-state）
-- buddhist-mandala（sourced-candidate / lineage-sensitive）
-- tibetan-buddhist-mandala（sourced-candidate / lineage-sensitive）
-- hadith-isnad-matn（profile-ready / religious-tradition-sensitive）
-- mimamsa-hermeneutics（sourced-candidate / lineage-sensitive）
-- jingluo（profile-ready / medical-tradition-sensitive / route-network）
-- marshallese-wave-navigation（profile-ready / living-tradition-sensitive / non-medical route-network）
+- rites-of-passage
+- buddhist-mandala
+- tibetan-buddhist-mandala
+- mimamsa-hermeneutics
+- jingluo
+- sefirot
+- chakra
+- ifa-odu
 
-Ifá / Odù、Jingluo、Sefirot、chakra、buddhist-mandala、tibetan-buddhist-mandalaは構造的価値が高い一方、living tradition、医療、宗教、系譜差の境界が重いため、採用を急がず研究レーンに留める。Jingluoは古典・標準用語・biomedical boundary・非医療target-returnを分離したprofile-ready段階へ進めたが、source-packetも根拠層として保持する。Sefirot / chakra は引き続き source-packets/ のpre-profile段階に留める。
+医療、宗教、living tradition、系譜差の境界が重い体系は、構造的価値が高くても採用を急がない。採用済みのhadith-isnad-matnとmarshallese-wave-navigationも、宗教上の真正性判定や非公開知識の再現を行わない境界をruntime側に残す。
 
 当面は効果比較を増やさない。profile-ready / skill-candidateの母集団を増やし、source basis、lineage、structural core、native operation、de-binding、target-return questionを揃えることを優先する。

@@ -1,6 +1,6 @@
 # Classical stasis theory candidate profile
 
-Status: profile-ready / research-only / rhetoric-history-sensitive
+Status: adopted / runtime-corpus
 
 ## Identity
 
@@ -132,13 +132,8 @@ Before returning a stasis pass to the target:
 5. identify what evidence would answer each issue type;
 6. keep historical rhetorical taxonomy as provenance, not target-side authority.
 
-## Adoption gap
+## Runtime adoption synchronization
 
-The source basis and operation distinctness are strong enough for research use.
+The runtime dossier adopts a variant-aware cross-source minimum for separating factual, definitional, evaluative, and procedure/competence questions. The worked example includes both a clarifying case and a case where stasis should be rejected as unhelpful.
 
-Before runtime adoption:
-
-- add one worked non-forensic target-return example;
-- add one negative example where stasis classification does not clarify the target;
-- document the chosen cross-source minimum against at least Cicero and Quintilian without silently importing a modern classroom simplification;
-- decide whether “procedure/competence” remains a primary runtime operation or a secondary branch because the ancient schemes vary.
+Worked example: `research/framework-candidates/worked-examples/classical-stasis-theory.md`

@@ -26,6 +26,16 @@ CSW borrows the operation of **making the inferential bridge inspectable**. It d
 - pseudo-reason audit;
 - debate-facing restatement.
 
+### Operation IDs used by the selection workspace
+
+The research inventory groups the operations above under these stable IDs:
+
+- `argument-unfolding`: unfold the five members and restate them in a traceable order;
+- `reason-rule-separation`: separate the observed reason from the general relation used to reach the conclusion;
+- `example-counterexample-probe`: use corroborating and dissimilar cases to inspect the relation's scope;
+- `rule-application-audit`: inspect whether the recognized relation applies to the present target;
+- `inference-gap-detection`: preserve missing bridges, extra assumptions, and pseudo-reasons as residuals.
+
 ## Questions returned to the target
 
 - What exactly is the thesis?

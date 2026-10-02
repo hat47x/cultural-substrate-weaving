@@ -491,8 +491,20 @@ def audit_map_payload(
             if candidate_id in [str(value) for value in card["frameworks"]]
         ]
         observed_for_candidate: list[str] = []
+        yield_kinds_for_candidate: list[str] = []
+        target_responses_for_candidate: list[str] = []
+        return_states_for_candidate: list[str] = []
         for card in candidate_cards:
             _append_unique(observed_for_candidate, card["operations"])
+            _append_unique(yield_kinds_for_candidate, card["yield_kinds"])
+            _append_unique(
+                target_responses_for_candidate,
+                card["target_responses"],
+            )
+            _append_unique(
+                return_states_for_candidate,
+                card["target_return_states"],
+            )
         candidate_operation_audits.append({
             "candidate_id": candidate_id,
             "linked_card_ids": [
@@ -510,6 +522,9 @@ def audit_map_payload(
                 for value in observed_for_candidate
                 if value not in planned_for_candidate
             ],
+            "yield_kinds": yield_kinds_for_candidate,
+            "target_responses": target_responses_for_candidate,
+            "target_return_states": return_states_for_candidate,
         })
 
     downstream_cross_field_cards: list[str] = []
@@ -549,9 +564,9 @@ def audit_map_payload(
         "interpretation_boundary": (
             "This is an exact-string provenance audit. Missing observed operations do "
             "not mean the selection failed; unmatched framework labels do not mean the "
-            "framework is wrong; candidate-level exact matches show provenance, not "
-            "framework effectiveness; observed/unobserved differences require return "
-            "to the actual material and selection reasoning."
+            "framework is wrong; candidate-level exact matches, yields, target responses, "
+            "and return states show provenance, not framework effectiveness; their absence "
+            "or presence requires return to the actual material and selection reasoning."
         ),
     }
 

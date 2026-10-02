@@ -1,6 +1,6 @@
 # Marshallese wave navigation / stick-chart candidate profile
 
-Status: profile-ready / research-only / living-tradition-sensitive
+Status: adopted / runtime-corpus
 
 ## Identity
 
@@ -166,24 +166,8 @@ Affinity layout records analytic geometry chosen by an analyst.
 
 Marshallese wave-navigation structure instead contributes **wayfinding through environmental relations and cue sequences**. Layout alone does not reproduce this operation.
 
-## Adoption gap
+## Runtime adoption synchronization
 
-This profile is sufficiently sourced for research use as a **profile-ready candidate**.
+The runtime dossier adopts relative-route, cue-sequence, model/environment return, disturbance-as-signal, and embodied/abstract complementarity. The second non-navigation example confirms that these operations survive de-binding without reducing the tradition to a generic graph metaphor. Living-tradition and public-source boundaries remain explicit.
 
-A first target-side worked example now exists at:
-
-- `research/framework-candidates/worked-examples/marshallese-wave-navigation.md`
-
-It provisionally shows that relative-route, cue-sequence, model/environment return, disturbance-as-signal, and local route-update operations survive de-binding.
-
-A comparison against the Vaeakau–Taumako wind-compass / navigational-toolkit tradition now exists at:
-
-- `research/framework-candidates/comparisons/marshallese-vs-vaeakau-taumako.md`
-
-The comparison provisionally supports keeping this candidate distinct when it retains **disturbance-as-signal, relative environmental structure, model/environment return, and local cue-sequence update**. It should be rejected as redundant if practical CSW use collapses those operations into generic multi-cue navigation or graph reasoning.
-
-Before runtime adoption:
-
-- keep a living-tradition / public-source boundary explicit;
-- verify the same operation survives in at least one second non-navigation target domain;
-- confirm that runtime use can preserve model/environment return and cue-sequence operations rather than collapsing to “use a network.”
+Worked example: `research/framework-candidates/worked-examples/marshallese-wave-navigation-non-navigation.md`

@@ -26,6 +26,16 @@ CSWが借りるのは、**説明の流暢さの中に隠れた「理由から対
 - pseudo-reason audit: 理由に見える語が、実際には主張の言い換えや関係の未証明部分ではないかを見る。
 - debate-facing restatement: 他者が追える順序へ論証を置き直す。
 
+### selection workspaceで使うoperation ID
+
+研究用profileとselection workspaceでは、上の操作を次のIDに束ねる。
+
+- `argument-unfolding`: 五支へ展開し、他者が追える順序へ置き直す。
+- `reason-rule-separation`: 今回の理由と、理由から結論へ進む一般化を分ける。
+- `example-counterexample-probe`: 例証と反例から一般化の射程を調べる。
+- `rule-application-audit`: 既知例の関係が今回の対象へ適用できるかを確認する。
+- `inference-gap-detection`: 未確認の橋、追加仮定、疑似的な理由を残差として取り出す。
+
 ## 対象へ返す問い
 
 - 今回、本当に立てたい主張は何か。

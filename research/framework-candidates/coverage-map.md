@@ -9,26 +9,26 @@ This map tracks structural diversity. It does not rank frameworks or claim that 
 | discrete configuration / local change | Yijing | Llull Ars | high-dimensional pruning |
 | dual relational cycle | Wuxing | — | multi-network interaction |
 | production layers / observer split | Sāṅkhya | Sefirot | lineage-safe layered mediation |
-| whole–part reciprocity / role-defined identity | Huayan | — | route-oriented networks and explicit cross-boundary topology |
+| whole–part reciprocity / role-defined identity | Huayan | — | explicit cross-boundary topology and center/periphery geometry |
 | conditional chain / cessation | dependent origination | — | branching conditional networks |
 | binary-frame disruption | catuṣkoṭi | — | explicit boundary-crossing logic |
-| conditioned perspective | Jain sevenfold predication | — | social/role perspective systems |
-| explanatory pluralism | Aristotle four causes | Nyāya inference | explanatory modes beyond current cause set |
-| rhetorical issue-state / dispute location | — | Classical stasis theory | non-forensic target-return examples and variant-safe runtime minimum |
+| conditioned perspective | Jain sevenfold predication; Confucian role / li | — | institutional and collective role perspectives beyond dyadic relations |
+| explanatory pluralism | Aristotle four causes | — | explanatory modes beyond current cause set |
+| rhetorical issue-state / dispute location | Classical stasis theory | — | culturally distinct dispute-location systems |
 | expression → reception | Rasa | Jo-Ha-Kyū | narrative and ritual sequencing |
 | embodied observation | Taiheki | chakra | lineage-specific embodied practice |
 | coupled periodicity / multi-scale time | Maya calendars | Stems/Branches | more than two independently varying cycles |
 | seasonal phase / boundary | — | Twenty-Four Solar Terms | spatially varying ecological timing |
 | indexed narrative corpus | — | Ifá / Odù | culturally safe non-ritual abstraction |
 | experience decomposition | — | Five aggregates | non-overlap with existing Buddhist core |
-| route / network topology | — | Jingluo; Marshallese wave navigation | compare medical channel topology with non-medical cue-sequence wayfinding; another non-maritime route tradition remains useful |
+| route / network topology | Marshallese wave navigation | Jingluo | non-maritime route traditions and branching networks without medical claims |
 | whole-part reciprocity / multi-perspective network | — | Huayan | primary-text and lineage separation |
 | symbolic mediation network | — | Sefirot | reliable lineage separation |
-| explicit argument / inference structure | — | Nyāya inference | debate-state and fallacy layers without flattening Indian logic |
-| social role / relation-conditioned conduct | — | Confucian role / li | historical layer separation and non-hierarchical de-binding |
+| explicit argument / inference structure | Nyāya inference | — | later debate/fallacy layers without flattening Indian logic |
+| social role / relation-conditioned conduct | Confucian role / li | — | additional role systems that do not duplicate relation mapping |
 | explicit threshold crossing / incorporation / preparation | — | Rites of Passage; Shinto shrine threshold / purification | comparative schema vs culture-native protocol; historical and shrine-variation separation |
 | spatial center-periphery / nested boundary | — | Buddhist mandala; Tibetan Buddhist mandala | lineage-specific structure map and non-ritual spatial contrast before adoption |
-| transmission provenance / chain topology | — | Hadith isnād / matn | classical transmission criticism vs modern historical reconstruction; content/provenance separation |
+| transmission provenance / chain topology | Hadith isnād / matn | — | other transmission traditions with different branch/content relations |
 | prescriptive hermeneutics / sentence-unit interpretation | — | Mīmāṃsā hermeneutics | Bhāṭṭa / Prābhākara separation and source-grounded interpretive precedence |
 
 ## Priority rule

@@ -24,6 +24,11 @@ This file indexes frameworks that CSW carries internally. Adopted does not mean 
 | Rasa theory | expression–reception relation | bhāva / rasa | rasa.md |
 | Maya calendar systems | coupled cycles, phase difference, partial/full recurrence, long-span time | Tzolk’in / Haab / Calendar Round / Long Count | maya-calendars.md |
 | Huayan | whole–part reciprocity, node perspective, integration with difference | Fazang whole–part analysis and mutual inclusion | huayan.md |
+| Nyāya five-member inference | inference unfolding, reason/rule separation, application audit | thesis / reason / example / application / conclusion | nyaya-five-member-inference.md |
+| Confucian role / li | role perspective, relational expectation, patterned interaction | role / relation / li / practice | confucian-role-ritual.md |
+| Classical stasis theory | dispute-state separation, stasis-switch detection | fact / definition / evaluation / procedure-competence | classical-stasis-theory.md |
+| Hadith isnād / matn | content/transmission separation, branching and textual variants | matn / isnād / variant / provenance | hadith-isnad-matn.md |
+| Marshallese wave navigation | relative route, cue sequence, model/environment return | route cue / training model / situated sensing | marshallese-wave-navigation.md |
 | Taiheki | embodied observation | bodily typology | ../domains/human-and-taiheki.md |
 
-Maya calendar systems make calendar/long-cycle work materially thicker, while Huayan adds whole–part reciprocity and network perspective. The portfolio remains thin in spatial-directional systems, ritual sequences, route-oriented networks, and non-Western rhetoric, law, and narrative form. Framework count is not a success metric, but too narrow a population impoverishes the encounter function. Continue increasing source quality and structural breadth before efficacy testing.
+The portfolio is now materially thicker in long-cycle time, whole–part relations, inference, social roles and ritual context, dispute location, transmission provenance, and route-oriented reasoning. It remains thin in center/periphery spatial systems, explicit threshold sequences, indexed narrative corpora, norm-conflict hermeneutics, and lineage-safe mediation layers. Framework count is not a success metric, but too narrow a population impoverishes the encounter function. Continue increasing source quality and structural breadth before efficacy testing.

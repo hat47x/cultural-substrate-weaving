@@ -1,6 +1,6 @@
 # Confucian role / li candidate profile
 
-Status: profile-ready / research-only
+Status: adopted / runtime-corpus
 
 ## Identity
 
@@ -151,12 +151,8 @@ Each may become a separate layer or candidate.
 4. preserve conflicts among roles instead of forcing harmonization;
 5. do not turn relational identity into a denial of individual agency.
 
-## Adoption gap
+## Runtime adoption synchronization
 
-The profile is sufficiently sourced for research use.
+The runtime dossier adopts role perspective, role-name/behavior comparison, relation-obligation mapping, ritual-context shifts, and practice-as-hypothesis. Historical hierarchy remains outside target-side normative authority.
 
-Before runtime adoption:
-
-- add one primary-text digital source layer for the relevant Analects passages;
-- split source claims about Confucius from later "Confucian" developments;
-- add at least one target-return example where role analysis reveals a conflict without prescribing a historical hierarchy.
+Worked example: `research/framework-candidates/worked-examples/confucian-role-ritual.md`

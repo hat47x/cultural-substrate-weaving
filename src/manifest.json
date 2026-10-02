@@ -118,6 +118,31 @@
       "skill_reference": "04j-huayan.md"
     },
     {
+      "id": "framework-nyaya-five-member-inference",
+      "source": "frameworks/nyaya-five-member-inference.md",
+      "skill_reference": "04k-nyaya-five-member-inference.md"
+    },
+    {
+      "id": "framework-confucian-role-ritual",
+      "source": "frameworks/confucian-role-ritual.md",
+      "skill_reference": "04l-confucian-role-ritual.md"
+    },
+    {
+      "id": "framework-classical-stasis-theory",
+      "source": "frameworks/classical-stasis-theory.md",
+      "skill_reference": "04m-classical-stasis-theory.md"
+    },
+    {
+      "id": "framework-hadith-isnad-matn",
+      "source": "frameworks/hadith-isnad-matn.md",
+      "skill_reference": "04n-hadith-isnad-matn.md"
+    },
+    {
+      "id": "framework-marshallese-wave-navigation",
+      "source": "frameworks/marshallese-wave-navigation.md",
+      "skill_reference": "04o-marshallese-wave-navigation.md"
+    },
+    {
       "id": "human-and-taiheki",
       "source": "domains/human-and-taiheki.md",
       "skill_reference": "05-human-and-taiheki.md"
@@ -164,7 +189,12 @@
       "frameworks/aristotle-four-causes.md",
       "frameworks/rasa.md",
       "frameworks/maya-calendars.md",
-      "frameworks/huayan.md"
+      "frameworks/huayan.md",
+      "frameworks/nyaya-five-member-inference.md",
+      "frameworks/confucian-role-ritual.md",
+      "frameworks/classical-stasis-theory.md",
+      "frameworks/hadith-isnad-matn.md",
+      "frameworks/marshallese-wave-navigation.md"
     ],
     "02-human-and-taiheki.md": [
       "domains/human-and-taiheki.md"

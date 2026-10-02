@@ -1,6 +1,6 @@
 # Nyāya five-member inference candidate profile
 
-Status: profile-ready / research-only
+Status: adopted / runtime-corpus
 
 ## Source basis
 
@@ -75,6 +75,8 @@ Before returning an exploratory Nyāya pass to the target:
 4. ask whether the reason and example are independently supported by target-side material;
 5. preserve failed applications or counterexamples as residuals rather than repairing the argument automatically.
 
-## Adoption note
+## Runtime adoption synchronization
 
-The source basis and operation distinctness are strong enough for a compact runtime dossier, provided CSW keeps the early Nyāya five-member inference separate from later developments and does not present the schema as a universal validator of truth.
+The minimal runtime dossier adopts argument unfolding, reason/rule separation, example/counterexample probing, application audit, and inference-gap detection. It does not treat the five-member form as a universal truth validator or as the whole of Indian logic.
+
+Worked example: `research/framework-candidates/worked-examples/nyaya-five-member-inference.md`
