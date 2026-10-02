@@ -65,6 +65,16 @@
 
 どの機能をどの体系から得るかを、一つの総合fit点数へ畳まない。対象側の基準線と、体系接触後に新しく生じた問い・識別・調査先・試行を比較できる状態にする。
 
+### 選定思考を外在化する
+
+候補層が厚くなり、近接体系の選び分けが作業記憶だけでは不安定になる場合は、選定理由そのものを外在化する。
+
+保持候補は、対象側baseline、不足している認知機能、各候補に期待する認知仕事、近接候補との差、第二体系で何を揺らしたいか、target-returnの問い・観察・反証候補、体系語を外したtarget language、選択を見直す条件である。
+
+これはranking表ではない。空欄を埋めることも目的ではない。「何の認知仕事をさせるためにこの体系へ触れたのか」を後から再検査できるようにする。
+
+repository / research workspaceが利用可能な場合は、`research/framework-candidates/scripts/framework_selection_workspace.py` を任意の補助として使える。literalな候補想起、exact operation labelの近接比較、未記入selection worksheetの生成だけを行い、自動routing・fit score・採用判定は行わない。
+
 ## 3a. 探索利用と帰属利用
 
 ### 探索利用

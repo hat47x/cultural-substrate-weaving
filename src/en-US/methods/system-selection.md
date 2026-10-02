@@ -65,6 +65,16 @@ When multiple frameworks are used, do not optimize for candidate count. Where us
 
 Do not collapse these functions into a single fit score. Preserve a target-side baseline and make it possible to compare which new questions, distinctions, research targets, or trials appeared after framework contact.
 
+### Externalize framework-selection reasoning
+
+As the candidate corpus grows, keep selection reasoning outside transient working memory when near-neighbor distinctions become difficult to track.
+
+Useful fields include the target-side baseline, the cognitive function still missing, the cognitive job expected from each candidate, the claimed difference from near-neighbors, what a second framework should disturb, target-return questions/observations/falsifiers, de-bound target language, and what would cause the choice to be revisited.
+
+This is not a ranking table. The record exists so the question "what cognitive work was this framework meant to do?" can be inspected later.
+
+When the repository/research workspace is available, `research/framework-candidates/scripts/framework_selection_workspace.py` may be used as an optional aid. It performs literal candidate recall, exact operation-label contrast, and generation of an unfilled selection worksheet. It does not perform automatic routing, fit scoring, or adoption decisions.
+
 ## 3a. Exploratory use and attribution use
 
 ### Exploratory use
