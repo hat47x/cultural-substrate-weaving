@@ -91,6 +91,7 @@ Status: research-only
 - eighth-wave-2026-10-02.md
 - ninth-wave-2026-10-02.md
 - tenth-wave-2026-10-02.md
+- eleventh-wave-2026-10-02.md
 - worked-examples/ 以下のtarget-return例
 - comparisons/ 以下のnear-neighbor / comparative collapse test
 - portfolio-qualitative-audit-2026-10-01.md
@@ -131,8 +132,8 @@ Status: research-only
 - buddhist-mandala
 - jingluo
 - sefirot（research umbrella / lineage split required）
-- sefer-yetzirah-dimensions（sourced-candidate / text-version-sensitive）
-- theosophical-sefirot（sourced-candidate / religious-lineage-sensitive）
+- sefer-yetzirah-dimensions（profile-ready / text-version-sensitive）
+- theosophical-sefirot（profile-ready / religious-lineage-sensitive）
 - chakra
 - ifa-odu（profile-ready / living-tradition-sensitive / not-runtime）
 
