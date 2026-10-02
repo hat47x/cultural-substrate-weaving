@@ -2002,6 +2002,79 @@
       "negative_example_paths": [
         "research/framework-candidates/worked-examples/inka-khipu-record-structure-negative.md"
       ]
+    },
+    {
+      "id": "vedic-recitation-pathas",
+      "names": [
+        "Vedic recitation pathas",
+        "Vedic chanting recitation modes",
+        "ヴェーダ詠唱のrecitation pathas"
+      ],
+      "readiness": "profile-ready",
+      "adoption_hold": "living-religious-tradition-sensitive",
+      "structural_primitives": [
+        "continuous recitation of an ordered sequence",
+        "segmented recitation that exposes unit boundaries",
+        "sequential overlapping adjacency",
+        "patterned repetition across alternate recitation forms",
+        "phonetic and accentual fidelity within living oral transmission"
+      ],
+      "cognitive_operations": [
+        "continuous-vs-segmented-view",
+        "overlapping-adjacency-check",
+        "alternate-sequence-cross-check",
+        "repetition-pattern-probe",
+        "order-and-boundary-fidelity-audit"
+      ],
+      "useful_for": [
+        "checking whether an ordered sequence survived transcription normalization or migration",
+        "making local adjacency explicit when a compact representation hides boundaries",
+        "comparing multiple human-inspectable views of the same sequence before accepting a transformation as faithful"
+      ],
+      "do_not_assume": [
+        "the tradition is historically equivalent to a modern error-correcting code",
+        "all Vedic recensions and regional chanting traditions use one invariant set of techniques",
+        "faithful recitation establishes semantic truth or interpretation",
+        "CSW may certify Sanskrit pronunciation accent ritual correctness or lineage authenticity",
+        "repetition is useful when the target itself has no meaningful order or boundary"
+      ],
+      "sources": [
+        {
+          "kind": "living-tradition-institutional-record",
+          "title": "Tradition of Vedic Chanting — UNESCO Multimedia Archives",
+          "url": "https://www.unesco.org/archives/multimedia/document-4671"
+        },
+        {
+          "kind": "scholarly-regional-overview",
+          "title": "Vedic chanting in Kerala — International Institute for Asian Studies",
+          "url": "https://www.iias.asia/the-newsletter/article/vedic-chanting-kerala"
+        },
+        {
+          "kind": "specialist-monograph",
+          "title": "Nambudiri, Veda recitation — J. F. Staal (1961)",
+          "url": "https://archive.org/details/nambudirivedarec0000jfst"
+        },
+        {
+          "kind": "scholarly-historical-study",
+          "title": "PĀNINI AND THE KRAMAPĀṬHA OF THE ṚGVEDA",
+          "url": "https://www.jstor.org/stable/41693604"
+        }
+      ],
+      "profile_path": "research/framework-candidates/profiles/vedic-recitation-pathas.md",
+      "selection_cues": [
+        "同じ系列を連続形と分節形で照合したい",
+        "順序や単位境界の取り違えを複数表現で検査したい",
+        "隣接関係を重なり窓で明示して変換ミスを見たい",
+        "cross-check one ordered sequence through alternate explicit views",
+        "inspect whether segmentation or adjacency changed during transformation",
+        "audit order and boundary fidelity without treating repetition as proof"
+      ],
+      "worked_example_paths": [
+        "research/framework-candidates/worked-examples/vedic-recitation-pathas.md"
+      ],
+      "negative_example_paths": [
+        "research/framework-candidates/worked-examples/vedic-recitation-pathas-negative.md"
+      ]
     }
   ]
 }
