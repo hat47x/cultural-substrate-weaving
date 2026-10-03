@@ -706,11 +706,16 @@ def load_living_lab_round(path: Path) -> dict[str, Any]:
         raise ValueError("Living Lab round requires a round_id")
 
     contacts = data.get("framework_contacts", [])
+    deltas = data.get("catalytic_deltas", [])
     traces = data.get("artifact_traces", [])
     if not isinstance(contacts, list) or any(
         not isinstance(contact, dict) for contact in contacts
     ):
         raise ValueError("Living Lab framework_contacts must be an array of objects")
+    if not isinstance(deltas, list) or any(
+        not isinstance(delta, dict) for delta in deltas
+    ):
+        raise ValueError("Living Lab catalytic_deltas must be an array of objects")
     if not isinstance(traces, list) or any(
         not isinstance(trace, dict) for trace in traces
     ):

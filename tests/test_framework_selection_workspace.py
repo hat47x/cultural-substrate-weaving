@@ -977,6 +977,25 @@ class FrameworkSelectionWorkspaceTest(unittest.TestCase):
             )
             self.assertEqual(payload["target_return_states"], ["unresolved"])
 
+    def test_living_lab_loader_rejects_invalid_catalytic_delta_container(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            round_path = Path(tmp) / "round.json"
+            round_path.write_text(
+                json.dumps({
+                    "schema_version": "0.2",
+                    "round_id": "round-invalid-deltas",
+                    "framework_contacts": [],
+                    "catalytic_deltas": ["not-an-object"],
+                    "artifact_traces": [],
+                }),
+                encoding="utf-8",
+            )
+            with self.assertRaisesRegex(
+                ValueError,
+                "catalytic_deltas must be an array of objects",
+            ):
+                workspace.load_living_lab_round(round_path)
+
     def test_living_lab_loader_rejects_unknown_schema_version(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
             round_path = Path(tmp) / "round.json"
