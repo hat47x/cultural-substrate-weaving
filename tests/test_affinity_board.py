@@ -30,6 +30,179 @@ class AffinityBoardTest(unittest.TestCase):
             capture_output=True,
         )
 
+    def test_import_living_delta_preserves_target_return_and_provenance(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            board = Path(tmp) / "board.json"
+            round_path = Path(tmp) / "round.json"
+            self.run_board("init", str(board))
+            round_path.write_text(
+                json.dumps({
+                    "schema_version": "0.2",
+                    "round_id": "round-import-001",
+                    "catalytic_deltas": [{
+                        "delta_ref": "delta:condition-question",
+                        "kind": "question",
+                        "statement": "Which condition keeps this distinction useful?",
+                        "framework_refs": ["five-phases"],
+                        "selection_refs": ["selection://round/framework"],
+                        "operation_refs": ["opposition-complement"],
+                        "target_return": {
+                            "state": "target_supported",
+                            "source_type": "mixed",
+                            "evidence_refs": ["target://note-1"],
+                            "statement": "The target material keeps the condition question."
+                        },
+                        "pre_contact_relation": {
+                            "state": "newly_explicit",
+                            "source_type": "user",
+                            "evidence_refs": ["target://before-1"],
+                            "statement": "The condition was not explicit before contact."
+                        },
+                        "user_disposition": {
+                            "state": "modified",
+                            "source_ref": "chat://user-1",
+                            "notes": "The user kept the de-bound question."
+                        }
+                    }]
+                }),
+                encoding="utf-8",
+            )
+
+            card_id = self.run_board(
+                "import-living-delta",
+                str(board),
+                str(round_path),
+                "delta:condition-question",
+            ).stdout.strip()
+            self.assertEqual(card_id, "C001")
+
+            data = json.loads(board.read_text(encoding="utf-8"))
+            card = data["cards"][0]
+            self.assertEqual(card["input_status"], "framework_generated")
+            trace = card["catalytic_trace"]
+            self.assertEqual(trace["frameworks"], ["five-phases"])
+            self.assertEqual(trace["operations"], ["opposition-complement"])
+            self.assertEqual(trace["living_lab_delta_refs"], ["delta:condition-question"])
+            self.assertEqual(trace["living_lab_round_refs"], ["round-import-001"])
+            self.assertEqual(trace["target_return_audits"][0]["state"], "target_supported")
+            self.assertEqual(trace["target_return_audits"][0]["basis_refs"], ["S001"])
+            self.assertEqual(trace["pre_contact_relations"][0]["basis_refs"], ["S002"])
+            self.assertEqual(trace["user_dispositions"][0]["source_ref"], "S003")
+            self.assertEqual(
+                [source["ref"] for source in data["sources"]],
+                ["target://note-1", "target://before-1", "chat://user-1"],
+            )
+
+            status = json.loads(
+                self.run_board("status", str(board), "--json").stdout
+            )
+            self.assertEqual(
+                status["catalytic_trace"]["living_lab_delta_cards"],
+                {"delta:condition-question": ["C001"]},
+            )
+
+            before_duplicate = board.read_text(encoding="utf-8")
+            duplicate = self.run_board(
+                "import-living-delta",
+                str(board),
+                str(round_path),
+                "delta:condition-question",
+                check=False,
+            )
+            self.assertNotEqual(duplicate.returncode, 0)
+            self.assertIn("already imported as card C001", duplicate.stderr)
+            self.assertEqual(
+                board.read_text(encoding="utf-8"),
+                before_duplicate,
+            )
+
+    def test_import_living_delta_requires_debound_text_when_weakened(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            board = Path(tmp) / "board.json"
+            round_path = Path(tmp) / "round.json"
+            self.run_board("init", str(board))
+            round_path.write_text(
+                json.dumps({
+                    "schema_version": "0.2",
+                    "round_id": "round-import-002",
+                    "catalytic_deltas": [{
+                        "delta_ref": "delta:weakened",
+                        "kind": "distinction",
+                        "statement": "Original framework-shaped distinction",
+                        "framework_refs": ["five-phases"],
+                        "operation_refs": ["contrast"],
+                        "target_return": {
+                            "state": "target_weakened",
+                            "source_type": "user",
+                            "evidence_refs": ["target://note-2"]
+                        }
+                    }]
+                }),
+                encoding="utf-8",
+            )
+            before = board.read_text(encoding="utf-8")
+            result = self.run_board(
+                "import-living-delta",
+                str(board),
+                str(round_path),
+                "delta:weakened",
+                check=False,
+            )
+            self.assertNotEqual(result.returncode, 0)
+            self.assertIn("requires --text", result.stderr)
+            self.assertEqual(board.read_text(encoding="utf-8"), before)
+
+            self.run_board(
+                "import-living-delta",
+                str(board),
+                str(round_path),
+                "delta:weakened",
+                "--text",
+                "Only the narrower target-side distinction survives.",
+            )
+            data = json.loads(board.read_text(encoding="utf-8"))
+            self.assertEqual(
+                data["cards"][0]["text"],
+                "Only the narrower target-side distinction survives.",
+            )
+
+    def test_import_living_delta_rejects_unreturned_or_rejected_delta(self) -> None:
+        for state in ("not_checked", "unresolved", "target_rejected"):
+            with self.subTest(state=state), tempfile.TemporaryDirectory() as tmp:
+                board = Path(tmp) / "board.json"
+                round_path = Path(tmp) / "round.json"
+                self.run_board("init", str(board))
+                round_path.write_text(
+                    json.dumps({
+                        "schema_version": "0.2",
+                        "round_id": f"round-{state}",
+                        "catalytic_deltas": [{
+                            "delta_ref": f"delta:{state}",
+                            "kind": "question",
+                            "statement": "Candidate",
+                            "framework_refs": ["framework-a"],
+                            "operation_refs": ["operation-a"],
+                            "target_return": {
+                                "state": state,
+                                "source_type": "user",
+                                "evidence_refs": ["target://evidence"]
+                            }
+                        }]
+                    }),
+                    encoding="utf-8",
+                )
+                before = board.read_text(encoding="utf-8")
+                result = self.run_board(
+                    "import-living-delta",
+                    str(board),
+                    str(round_path),
+                    f"delta:{state}",
+                    check=False,
+                )
+                self.assertNotEqual(result.returncode, 0)
+                self.assertIn("target_supported or target_weakened", result.stderr)
+                self.assertEqual(board.read_text(encoding="utf-8"), before)
+
     def test_explicit_card_group_and_provenance_workflow(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
             target = Path(tmp) / "board.json"

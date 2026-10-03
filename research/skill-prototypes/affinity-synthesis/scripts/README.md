@@ -25,6 +25,17 @@ python scripts/affinity_board.py add-card /tmp/board.json \
   "Meaning-bearing card B with a different timing" \
   --source S001
 
+# Explicitly carry one target-returned Living Lab delta into affinity work.
+# The tool never selects deltas by itself and rejects duplicate delta_ref import.
+python scripts/affinity_board.py import-living-delta /tmp/board.json \
+  /tmp/living-lab-round.json delta:condition-question
+
+# If target return weakened the original framework wording, provide the
+# de-bound wording that actually survived.
+python scripts/affinity_board.py import-living-delta /tmp/board.json \
+  /tmp/living-lab-round.json delta:weakened \
+  --text "Only the narrower target-side distinction survives."
+
 # Keep the cultural operation that produced a framework-generated candidate.
 python scripts/affinity_board.py add-card /tmp/board.json \
   "What becomes visible from the complementary position?" \
@@ -143,6 +154,7 @@ Design constraints:
 
 - every mutation is validated before replacing the file;
 - failed mutations leave the previous board unchanged;
+- Living Lab delta import is explicit and fail-closed: only target-supported or explicitly de-bound target-weakened deltas enter affinity cards; rejected/unresolved candidates remain in Living Lab provenance, and one stable delta_ref cannot silently become multiple cards;
 - IDs are stable references, not ontology classes;
 - `selection-ref` is an external provenance handle back to framework-selection reasoning; it does not alter grouping, evidence status, support, importance, or truth;
 - `trace-card` records framework / operation / location / yield-kind / target-response / as-if provenance on a card; when a target response can be tied to concrete target-side material, `--target-response-ref` may point to source/card refs. Those refs are audit provenance, not automatic verification or support. Operation, yield, and response names remain open strings rather than a closed taxonomy;

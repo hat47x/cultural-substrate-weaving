@@ -129,6 +129,8 @@ def validate(data: dict[str, Any]) -> tuple[list[str], list[str]]:
         if item.get("id")
     }
 
+    living_delta_owners: dict[str, str] = {}
+
     for card in sections["card"]:
         cid = str(card.get("id", ""))
         for ref in card.get("source_refs", []):
@@ -152,6 +154,94 @@ def validate(data: dict[str, Any]) -> tuple[list[str], list[str]]:
                 errors.append(
                     f"card {cid} catalytic selection_refs must contain readable strings"
                 )
+
+        if isinstance(trace, dict):
+            living_lab_delta_refs = trace.get("living_lab_delta_refs", [])
+            if living_lab_delta_refs is not None:
+                if not isinstance(living_lab_delta_refs, list):
+                    errors.append(
+                        f"card {cid} catalytic living_lab_delta_refs must be an array"
+                    )
+                else:
+                    for value in living_lab_delta_refs:
+                        delta_ref = str(value).strip()
+                        if not delta_ref:
+                            errors.append(
+                                f"card {cid} catalytic living_lab_delta_refs must "
+                                "contain readable strings"
+                            )
+                            continue
+                        owner = living_delta_owners.get(delta_ref)
+                        if owner and owner != cid:
+                            errors.append(
+                                f"Living Lab delta_ref is attached to multiple cards: "
+                                f"{delta_ref} ({owner}, {cid})"
+                            )
+                        else:
+                            living_delta_owners[delta_ref] = cid
+
+            living_lab_round_refs = trace.get("living_lab_round_refs", [])
+            if living_lab_round_refs is not None:
+                if not isinstance(living_lab_round_refs, list):
+                    errors.append(
+                        f"card {cid} catalytic living_lab_round_refs must be an array"
+                    )
+                elif any(
+                    not str(value).strip() for value in living_lab_round_refs
+                ):
+                    errors.append(
+                        f"card {cid} catalytic living_lab_round_refs must contain "
+                        "readable strings"
+                    )
+
+            pre_contact_relations = trace.get("pre_contact_relations", [])
+            if pre_contact_relations is not None:
+                if not isinstance(pre_contact_relations, list):
+                    errors.append(
+                        f"card {cid} catalytic pre_contact_relations must be an array"
+                    )
+                else:
+                    for index, relation in enumerate(pre_contact_relations):
+                        if not isinstance(relation, dict):
+                            errors.append(
+                                f"card {cid} catalytic pre_contact_relations[{index}] "
+                                "must be an object"
+                            )
+                            continue
+                        basis_refs = relation.get("basis_refs", [])
+                        if not isinstance(basis_refs, list):
+                            errors.append(
+                                f"card {cid} catalytic pre_contact_relations[{index}] "
+                                "basis_refs must be an array"
+                            )
+                            continue
+                        for ref in basis_refs:
+                            if str(ref) not in source_ids | card_ids:
+                                errors.append(
+                                    f"card {cid} catalytic pre-contact basis_ref "
+                                    f"must resolve to source/card: {ref}"
+                                )
+
+            user_dispositions = trace.get("user_dispositions", [])
+            if user_dispositions is not None:
+                if not isinstance(user_dispositions, list):
+                    errors.append(
+                        f"card {cid} catalytic user_dispositions must be an array"
+                    )
+                else:
+                    for index, disposition in enumerate(user_dispositions):
+                        if not isinstance(disposition, dict):
+                            errors.append(
+                                f"card {cid} catalytic user_dispositions[{index}] "
+                                "must be an object"
+                            )
+                            continue
+                        source_ref = str(disposition.get("source_ref", "")).strip()
+                        if source_ref and source_ref not in source_ids | card_ids:
+                            errors.append(
+                                f"card {cid} catalytic user_disposition[{index}] "
+                                f"source_ref must resolve to source/card: {source_ref}"
+                            )
 
         if isinstance(trace, dict):
             response_refs = trace.get("target_response_refs", [])

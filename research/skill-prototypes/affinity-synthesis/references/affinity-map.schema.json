@@ -220,6 +220,76 @@
                   },
                   "additionalProperties": true
                 }
+              },
+              "living_lab_delta_refs": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "uniqueItems": true
+              },
+              "living_lab_round_refs": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "uniqueItems": true
+              },
+              "pre_contact_relations": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "required": [
+                    "state",
+                    "source_type",
+                    "basis_refs"
+                  ],
+                  "properties": {
+                    "state": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "source_type": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "basis_refs": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      },
+                      "uniqueItems": true
+                    },
+                    "statement": {
+                      "type": "string"
+                    }
+                  },
+                  "additionalProperties": true
+                }
+              },
+              "user_dispositions": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "required": [
+                    "state"
+                  ],
+                  "properties": {
+                    "state": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "source_ref": {
+                      "type": "string"
+                    },
+                    "notes": {
+                      "type": "string"
+                    }
+                  },
+                  "additionalProperties": true
+                }
               }
             },
             "additionalProperties": true

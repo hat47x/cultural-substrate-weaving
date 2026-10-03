@@ -194,6 +194,264 @@ def cmd_add_card(args: argparse.Namespace) -> None:
     mutate(args.map, op)
 
 
+def _ensure_external_source_handle(
+    data: dict[str, Any],
+    external_ref: str,
+    *,
+    provenance: str,
+    status: str,
+    discovery_route: str | None = None,
+) -> str:
+    for source in objects(data, "sources"):
+        if str(source.get("ref", "")) != external_ref:
+            continue
+        item_id = str(source.get("id", "")).strip()
+        if not item_id:
+            raise ValueError(
+                f"existing source for {external_ref} is missing a stable id"
+            )
+        existing_status = str(source.get("input_status", "")).strip()
+        if existing_status in {"framework_generated", "cross_field_emergent"}:
+            raise ValueError(
+                f"target-side evidence ref is already registered as "
+                f"{existing_status}: {external_ref}"
+            )
+        return item_id
+
+    item_id = choose_id(data, "source", None)
+    source: dict[str, Any] = {
+        "id": item_id,
+        "ref": external_ref,
+        "provenance": provenance,
+        "input_status": status,
+    }
+    if discovery_route:
+        source["discovery_route"] = discovery_route
+    objects(data, "sources").append(source)
+    return item_id
+
+
+def _load_living_delta(
+    path: Path,
+    delta_ref: str,
+) -> tuple[dict[str, Any], dict[str, Any]]:
+    value = json.loads(path.read_text(encoding="utf-8"))
+    if not isinstance(value, dict):
+        raise ValueError("Living Lab round must be an object")
+    if value.get("schema_version") != "0.2":
+        raise ValueError("Living Lab round schema_version must be 0.2")
+    round_id = str(value.get("round_id", "")).strip()
+    if not round_id:
+        raise ValueError("Living Lab round must have round_id")
+
+    deltas = value.get("catalytic_deltas", [])
+    if not isinstance(deltas, list) or any(
+        not isinstance(item, dict) for item in deltas
+    ):
+        raise ValueError("Living Lab catalytic_deltas must be an array of objects")
+
+    matches = [
+        item
+        for item in deltas
+        if str(item.get("delta_ref", "")).strip() == delta_ref
+    ]
+    if not matches:
+        raise ValueError(f"Living Lab delta does not exist: {delta_ref}")
+    if len(matches) > 1:
+        raise ValueError(f"Living Lab delta_ref is duplicated: {delta_ref}")
+    return value, matches[0]
+
+
+def cmd_import_living_delta(args: argparse.Namespace) -> None:
+    round_data, delta = _load_living_delta(args.round, args.delta_ref)
+
+    frameworks = [
+        str(value)
+        for value in delta.get("framework_refs", [])
+        if str(value).strip()
+    ]
+    operations = [
+        str(value)
+        for value in delta.get("operation_refs", [])
+        if str(value).strip()
+    ]
+    if not frameworks:
+        raise ValueError("Living Lab delta must have framework_refs")
+    if not operations:
+        raise ValueError(
+            "Living Lab delta must have operation_refs before affinity import"
+        )
+
+    target_return = delta.get("target_return")
+    if not isinstance(target_return, dict):
+        raise ValueError("Living Lab delta must have target_return")
+
+    return_state = str(target_return.get("state", "")).strip()
+    if return_state not in {"target_supported", "target_weakened"}:
+        raise ValueError(
+            "affinity import requires target_return state "
+            "target_supported or target_weakened"
+        )
+
+    original_statement = str(delta.get("statement", "")).strip()
+    if not original_statement:
+        raise ValueError("Living Lab delta must have a statement")
+    if return_state == "target_weakened" and not args.text:
+        raise ValueError(
+            "target_weakened delta requires --text with the de-bound wording "
+            "that survived target return"
+        )
+    card_text = args.text or original_statement
+
+    evidence_refs = [
+        str(value)
+        for value in target_return.get("evidence_refs", [])
+        if str(value).strip()
+    ]
+    if not evidence_refs:
+        raise ValueError(
+            "affinity import requires target-return evidence_refs"
+        )
+
+    def op(data: dict[str, Any]) -> None:
+        round_id = str(round_data["round_id"])
+        delta_ref = str(delta["delta_ref"])
+
+        for existing_card in objects(data, "cards"):
+            trace = existing_card.get("catalytic_trace")
+            if (
+                isinstance(trace, dict)
+                and delta_ref in [
+                    str(value)
+                    for value in trace.get("living_lab_delta_refs", [])
+                ]
+            ):
+                raise ValueError(
+                    f"Living Lab delta already imported as card "
+                    f"{existing_card.get('id')}: {delta_ref}"
+                )
+
+        basis_refs = [
+            _ensure_external_source_handle(
+                data,
+                external_ref,
+                provenance=(
+                    f"Living Lab {round_id} catalytic delta {delta_ref} "
+                    "target-return evidence"
+                ),
+                status="target_side_evidence",
+                discovery_route=(
+                    f"living-lab:{round_id}:{delta_ref}:target-return"
+                ),
+            )
+            for external_ref in evidence_refs
+        ]
+
+        pre_contact_records: list[dict[str, Any]] = []
+        pre_contact = delta.get("pre_contact_relation")
+        if isinstance(pre_contact, dict):
+            pre_refs = [
+                str(value)
+                for value in pre_contact.get("evidence_refs", [])
+                if str(value).strip()
+            ]
+            pre_basis = [
+                _ensure_external_source_handle(
+                    data,
+                    external_ref,
+                    provenance=(
+                        f"Living Lab {round_id} catalytic delta {delta_ref} "
+                        "pre-contact evidence"
+                    ),
+                    status="target_side_evidence",
+                    discovery_route=(
+                        f"living-lab:{round_id}:{delta_ref}:pre-contact"
+                    ),
+                )
+                for external_ref in pre_refs
+            ]
+            record: dict[str, Any] = {
+                "state": str(pre_contact.get("state", "")),
+                "source_type": str(pre_contact.get("source_type", "")),
+                "basis_refs": pre_basis,
+            }
+            if pre_contact.get("statement"):
+                record["statement"] = str(pre_contact["statement"])
+            pre_contact_records.append(record)
+
+        disposition_records: list[dict[str, Any]] = []
+        disposition = delta.get("user_disposition")
+        if isinstance(disposition, dict):
+            record: dict[str, Any] = {
+                "state": str(disposition.get("state", "")),
+            }
+            external_ref = str(disposition.get("source_ref", "")).strip()
+            if external_ref:
+                record["source_ref"] = _ensure_external_source_handle(
+                    data,
+                    external_ref,
+                    provenance=(
+                        f"Living Lab {round_id} catalytic delta {delta_ref} "
+                        "user-disposition evidence"
+                    ),
+                    status="user_disposition_evidence",
+                    discovery_route=(
+                        f"living-lab:{round_id}:{delta_ref}:user-disposition"
+                    ),
+                )
+            if disposition.get("notes"):
+                record["notes"] = str(disposition["notes"])
+            disposition_records.append(record)
+
+        card_id = choose_id(data, "card", args.id)
+        trace: dict[str, Any] = {
+            "frameworks": list(dict.fromkeys(frameworks)),
+            "operations": list(dict.fromkeys(operations)),
+            "selection_refs": list(
+                dict.fromkeys(
+                    str(value)
+                    for value in delta.get("selection_refs", [])
+                    if str(value).strip()
+                )
+            ),
+            "yield_kinds": [str(delta.get("kind", ""))],
+            "living_lab_delta_refs": [delta_ref],
+            "living_lab_round_refs": [round_id],
+            "target_return_audits": [
+                {
+                    "state": return_state,
+                    "basis_refs": list(dict.fromkeys(basis_refs)),
+                    **(
+                        {"note": str(target_return["statement"])}
+                        if target_return.get("statement")
+                        else {}
+                    ),
+                }
+            ],
+        }
+        if pre_contact_records:
+            trace["pre_contact_relations"] = pre_contact_records
+        if disposition_records:
+            trace["user_dispositions"] = disposition_records
+        if delta.get("notes"):
+            trace["note"] = str(delta["notes"])
+
+        card: dict[str, Any] = {
+            "id": card_id,
+            "text": card_text,
+            "input_status": "framework_generated",
+            "preservation_note": (
+                "Explicitly imported from a Living Lab catalytic delta after "
+                f"{return_state}; framework origin remains visible."
+            ),
+            "catalytic_trace": trace,
+        }
+        objects(data, "cards").append(card)
+        print(card_id)
+
+    mutate(args.map, op)
+
+
 def cmd_trace_card(args: argparse.Namespace) -> None:
     def op(data: dict[str, Any]) -> None:
         if not any(
@@ -1109,6 +1367,16 @@ def status_payload(data: dict[str, Any]) -> dict[str, Any]:
         and bool(card["catalytic_trace"].get("target_responses"))
         and not bool(card["catalytic_trace"].get("target_response_refs"))
     ]
+    living_lab_delta_cards: dict[str, list[str]] = {}
+    for card in traced_cards:
+        card_id = str(card.get("id", "")).strip()
+        for delta_ref in card["catalytic_trace"].get(
+            "living_lab_delta_refs", []
+        ):
+            delta_ref = str(delta_ref).strip()
+            if delta_ref and card_id:
+                living_lab_delta_cards.setdefault(delta_ref, []).append(card_id)
+
     target_return_state_counts: Counter[str] = Counter()
     latest_target_return_state_counts: Counter[str] = Counter()
     latest_target_return_cards: dict[str, list[str]] = {}
@@ -1169,6 +1437,10 @@ def status_payload(data: dict[str, Any]) -> dict[str, Any]:
                 framework_generated_without_yield_kind
             ),
             "target_response_cards_without_refs": target_response_without_refs,
+            "living_lab_delta_cards": {
+                delta_ref: sorted(card_ids)
+                for delta_ref, card_ids in sorted(living_lab_delta_cards.items())
+            },
             "target_return_states": dict(sorted(target_return_state_counts.items())),
             "latest_target_return_states": dict(
                 sorted(latest_target_return_state_counts.items())
@@ -1430,6 +1702,26 @@ def build_parser() -> argparse.ArgumentParser:
     card.add_argument("--preservation-note")
     card.add_argument("--derived-from", action="append")
     card.set_defaults(func=cmd_add_card)
+
+    import_delta = sub.add_parser(
+        "import-living-delta",
+        help=(
+            "explicitly import one target-returned Living Lab catalytic delta "
+            "as a framework-generated affinity card without auto-grouping"
+        ),
+    )
+    import_delta.add_argument("map", type=Path)
+    import_delta.add_argument("round", type=Path)
+    import_delta.add_argument("delta_ref")
+    add_common_id(import_delta)
+    import_delta.add_argument(
+        "--text",
+        help=(
+            "explicit de-bound card wording; required when target return "
+            "weakened the original delta"
+        ),
+    )
+    import_delta.set_defaults(func=cmd_import_living_delta)
 
     trace_card = sub.add_parser(
         "trace-card",
