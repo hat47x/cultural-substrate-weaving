@@ -915,9 +915,14 @@ def audit_living_lab_payload(
         raise ValueError("audit-living-lab requires a workspace_ref")
 
     linked_contacts: list[dict[str, Any]] = []
+    linked_deltas: list[dict[str, Any]] = []
     linked_artifacts: list[dict[str, Any]] = []
     contacted_operations: list[str] = []
+    delta_operations: list[str] = []
     artifact_operations: list[str] = []
+    delta_kinds: list[str] = []
+    delta_target_return_states: list[str] = []
+    delta_user_dispositions: list[str] = []
     framework_labels: list[str] = []
     target_return_states: list[str] = []
     user_dispositions: list[str] = []
@@ -936,6 +941,46 @@ def audit_living_lab_payload(
             "use": contact.get("use"),
             "selection_ref": contact.get("selection_ref"),
             "operations": operations,
+        })
+
+    for delta in round_record.get("catalytic_deltas", []):
+        selection_refs = [str(value) for value in delta.get("selection_refs", [])]
+        if workspace_ref not in selection_refs:
+            continue
+        frameworks = [str(value) for value in delta.get("framework_refs", [])]
+        operations = [str(value) for value in delta.get("operation_refs", [])]
+        _append_unique(framework_labels, frameworks)
+        _append_unique(delta_operations, operations)
+
+        kind = str(delta.get("kind", "")).strip()
+        if kind:
+            _append_unique(delta_kinds, [kind])
+
+        target_return = delta.get("target_return")
+        if not isinstance(target_return, dict):
+            target_return = {}
+        return_state = str(target_return.get("state", "")).strip()
+        if return_state:
+            _append_unique(delta_target_return_states, [return_state])
+
+        user_disposition = delta.get("user_disposition")
+        if not isinstance(user_disposition, dict):
+            user_disposition = None
+        if user_disposition is not None:
+            state = str(user_disposition.get("state", "")).strip()
+            if state:
+                _append_unique(delta_user_dispositions, [state])
+
+        linked_deltas.append({
+            "delta_ref": delta.get("delta_ref"),
+            "kind": delta.get("kind"),
+            "statement": delta.get("statement"),
+            "framework_refs": frameworks,
+            "selection_refs": selection_refs,
+            "operation_refs": operations,
+            "artifact_refs": [str(value) for value in delta.get("artifact_refs", [])],
+            "target_return": target_return,
+            "user_disposition": user_disposition,
         })
 
     for trace in round_record.get("artifact_traces", []):
@@ -999,6 +1044,11 @@ def audit_living_lab_payload(
             for contact in linked_contacts
             if contact["framework"] == candidate_id
         ]
+        deltas_for_candidate = [
+            delta
+            for delta in linked_deltas
+            if candidate_id in delta["framework_refs"]
+        ]
         artifacts_for_candidate = [
             trace
             for trace in linked_artifacts
@@ -1006,7 +1056,11 @@ def audit_living_lab_payload(
         ]
 
         contact_operations_for_candidate: list[str] = []
+        delta_operations_for_candidate: list[str] = []
         artifact_operations_for_candidate: list[str] = []
+        delta_kinds_for_candidate: list[str] = []
+        delta_return_states_for_candidate: list[str] = []
+        delta_dispositions_for_candidate: list[str] = []
         return_states_for_candidate: list[str] = []
         dispositions_for_candidate: list[str] = []
 
@@ -1037,7 +1091,9 @@ def audit_living_lab_payload(
             "role": row.get("role"),
             "planned_operations": planned_for_candidate,
             "contact_operations": contact_operations_for_candidate,
+            "delta_operations": delta_operations_for_candidate,
             "artifact_operations": artifact_operations_for_candidate,
+            "delta_kinds": delta_kinds_for_candidate,
             "planned_not_contacted_exact": [
                 value
                 for value in planned_for_candidate
@@ -1053,11 +1109,18 @@ def audit_living_lab_payload(
                 for value in artifact_operations_for_candidate
                 if value not in contact_operations_for_candidate
             ],
+            "linked_delta_refs": [
+                str(delta.get("delta_ref", ""))
+                for delta in deltas_for_candidate
+                if str(delta.get("delta_ref", "")).strip()
+            ],
             "linked_artifact_refs": [
                 str(trace.get("artifact_ref", ""))
                 for trace in artifacts_for_candidate
                 if str(trace.get("artifact_ref", "")).strip()
             ],
+            "delta_target_return_states": delta_return_states_for_candidate,
+            "delta_user_dispositions": delta_dispositions_for_candidate,
             "target_return_states": return_states_for_candidate,
             "user_dispositions": dispositions_for_candidate,
             "guardrails": dict(row.get("non_force_guardrails", {})),
@@ -1069,10 +1132,15 @@ def audit_living_lab_payload(
         "round_id": round_record.get("round_id"),
         "activation_scope": round_record.get("activation_scope"),
         "linked_contacts": linked_contacts,
+        "linked_deltas": linked_deltas,
         "linked_artifacts": linked_artifacts,
         "planned_operations": planned_operations,
         "contacted_operations": contacted_operations,
+        "delta_operations": delta_operations,
         "artifact_operations": artifact_operations,
+        "delta_kinds": delta_kinds,
+        "delta_target_return_states": delta_target_return_states,
+        "delta_user_dispositions": delta_user_dispositions,
         "planned_not_contacted_exact": [
             value for value in planned_operations if value not in contacted_operations
         ],
@@ -1091,7 +1159,7 @@ def audit_living_lab_payload(
         "interpretation_boundary": (
             "This is an exact-string provenance inventory joining recorded selection "
             "reasoning to one Living Lab round. Presence or absence of a contact, "
-            "operation, artifact, target-return state, or user disposition does not "
+            "operation, catalytic delta, artifact, target-return state, or user disposition does not "
             "establish usefulness, causation, correctness, guardrail compliance, or "
             "whether a framework should be activated. Return to the recorded target "
             "material and user evidence for interpretation."

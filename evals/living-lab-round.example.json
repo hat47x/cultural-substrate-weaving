@@ -105,5 +105,37 @@
         "selection://example-round/framework-choice"
       ]
     }
+  ],
+  "catalytic_deltas": [
+    {
+      "delta_ref": "delta:example-question-001",
+      "kind": "question",
+      "statement": "Which target-side condition would have to hold for the apparent distinction to remain useful?",
+      "framework_refs": [
+        "example-framework"
+      ],
+      "selection_refs": [
+        "selection://example-round/framework-choice"
+      ],
+      "operation_refs": [
+        "example-operation"
+      ],
+      "artifact_refs": [
+        "artifact:draft-v4"
+      ],
+      "target_return": {
+        "state": "target_weakened",
+        "source_type": "mixed",
+        "evidence_refs": [
+          "artifact:kj-snapshot-003"
+        ],
+        "statement": "The target material kept the condition question but weakened the original distinction."
+      },
+      "user_disposition": {
+        "state": "modified",
+        "source_ref": "chat:example-source",
+        "notes": "The user retained the de-bound question rather than the original framework-shaped wording."
+      }
+    }
   ]
 }

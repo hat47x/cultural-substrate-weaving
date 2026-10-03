@@ -270,6 +270,79 @@
           }
         }
       ]
+    },
+    "catalytic_delta": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "delta_ref",
+        "kind",
+        "statement",
+        "framework_refs",
+        "target_return"
+      ],
+      "properties": {
+        "delta_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "kind": {
+          "enum": [
+            "question",
+            "distinction",
+            "relation-or-transition",
+            "falsifier-or-observation",
+            "residual",
+            "framework-specific-scaffold"
+          ]
+        },
+        "statement": {
+          "type": "string",
+          "minLength": 1
+        },
+        "framework_refs": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "minItems": 1,
+          "uniqueItems": true
+        },
+        "selection_refs": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "uniqueItems": true
+        },
+        "operation_refs": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "uniqueItems": true
+        },
+        "artifact_refs": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "uniqueItems": true
+        },
+        "target_return": {
+          "$ref": "#/$defs/target_return"
+        },
+        "user_disposition": {
+          "$ref": "#/$defs/user_disposition"
+        },
+        "notes": {
+          "type": "string"
+        }
+      }
     }
   },
   "required": [
@@ -552,6 +625,12 @@
       "items": {
         "$ref": "#/$defs/artifact_trace"
       }
+    },
+    "catalytic_deltas": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/catalytic_delta"
+      }
     }
   },
   "allOf": [
@@ -586,6 +665,9 @@
       "then": {
         "properties": {
           "framework_contacts": {
+            "maxItems": 0
+          },
+          "catalytic_deltas": {
             "maxItems": 0
           }
         }

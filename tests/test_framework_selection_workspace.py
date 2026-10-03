@@ -743,6 +743,41 @@ class FrameworkSelectionWorkspaceTest(unittest.TestCase):
                     "operations": ["node-perspective"],
                 },
             ],
+            "catalytic_deltas": [
+                {
+                    "delta_ref": "delta:alpha-condition-question",
+                    "kind": "question",
+                    "statement": "Which upstream condition actually survives target return?",
+                    "framework_refs": ["alpha"],
+                    "selection_refs": [
+                        "selection://living-lab-audit/framework-choice"
+                    ],
+                    "operation_refs": ["condition-chain"],
+                    "artifact_refs": ["artifact:alpha-1"],
+                    "target_return": {
+                        "state": "target_supported",
+                        "source_type": "external",
+                        "evidence_refs": ["artifact:target-delta-1"],
+                    },
+                    "user_disposition": {
+                        "state": "adopted",
+                        "source_ref": "chat:user-delta-1",
+                    },
+                },
+                {
+                    "delta_ref": "delta:beta-other-selection",
+                    "kind": "relation-or-transition",
+                    "statement": "This belongs to another selection workspace.",
+                    "framework_refs": ["beta"],
+                    "selection_refs": ["selection://other/framework-choice"],
+                    "operation_refs": ["node-perspective"],
+                    "target_return": {
+                        "state": "target_supported",
+                        "source_type": "external",
+                        "evidence_refs": ["artifact:target-delta-2"],
+                    },
+                },
+            ],
             "artifact_traces": [
                 {
                     "artifact_ref": "artifact:alpha-1",
@@ -789,10 +824,21 @@ class FrameworkSelectionWorkspaceTest(unittest.TestCase):
             ["alpha"],
         )
         self.assertEqual(
+            [delta["delta_ref"] for delta in payload["linked_deltas"]],
+            ["delta:alpha-condition-question"],
+        )
+        self.assertEqual(
             [trace["artifact_ref"] for trace in payload["linked_artifacts"]],
             ["artifact:alpha-1"],
         )
         self.assertEqual(payload["contacted_operations"], ["condition-chain"])
+        self.assertEqual(payload["delta_operations"], ["condition-chain"])
+        self.assertEqual(payload["delta_kinds"], ["question"])
+        self.assertEqual(
+            payload["delta_target_return_states"],
+            ["target_supported"],
+        )
+        self.assertEqual(payload["delta_user_dispositions"], ["adopted"])
         self.assertEqual(payload["artifact_operations"], ["condition-chain"])
         self.assertEqual(payload["target_return_states"], ["target_weakened"])
         self.assertEqual(payload["user_dispositions"], ["modified"])
@@ -805,6 +851,15 @@ class FrameworkSelectionWorkspaceTest(unittest.TestCase):
             row["candidate_id"]: row
             for row in payload["candidate_audits"]
         }
+        self.assertEqual(
+            audits["alpha"]["linked_delta_refs"],
+            ["delta:alpha-condition-question"],
+        )
+        self.assertEqual(audits["alpha"]["delta_kinds"], ["question"])
+        self.assertEqual(
+            audits["alpha"]["delta_target_return_states"],
+            ["target_supported"],
+        )
         self.assertEqual(
             audits["alpha"]["linked_artifact_refs"],
             ["artifact:alpha-1"],
@@ -855,6 +910,21 @@ class FrameworkSelectionWorkspaceTest(unittest.TestCase):
                         "selection_ref": "selection://cli-living-lab/framework-choice",
                         "operations": ["condition-chain"],
                     }],
+                    "catalytic_deltas": [{
+                        "delta_ref": "delta:cli-alpha-question",
+                        "kind": "question",
+                        "statement": "Which condition remains after return?",
+                        "framework_refs": ["alpha"],
+                        "selection_refs": [
+                            "selection://cli-living-lab/framework-choice"
+                        ],
+                        "operation_refs": ["condition-chain"],
+                        "target_return": {
+                            "state": "unresolved",
+                            "source_type": "ai",
+                            "evidence_refs": ["artifact:target-cli"],
+                        },
+                    }],
                     "artifact_traces": [{
                         "artifact_ref": "artifact:cli-alpha-1",
                         "origin": "framework_generated",
@@ -883,6 +953,10 @@ class FrameworkSelectionWorkspaceTest(unittest.TestCase):
             self.assertEqual(
                 payload["workspace_ref"],
                 "selection://cli-living-lab/framework-choice",
+            )
+            self.assertEqual(
+                payload["linked_deltas"][0]["delta_ref"],
+                "delta:cli-alpha-question",
             )
             self.assertEqual(
                 payload["linked_artifacts"][0]["artifact_ref"],

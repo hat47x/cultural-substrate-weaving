@@ -50,6 +50,7 @@ def summarize(records: list[dict[str, Any]]) -> dict[str, Any]:
                 "framework_contacts": round_record["framework_contacts"],
                 "artifacts": round_record["artifacts"],
                 "artifact_traces": round_record.get("artifact_traces", []),
+                "catalytic_deltas": round_record.get("catalytic_deltas", []),
                 "residuals": round_record["residuals"],
                 "reopening_conditions": round_record["reopening_conditions"],
                 "interpretations": round_record.get("interpretations", []),
@@ -99,6 +100,21 @@ def summarize(records: list[dict[str, Any]]) -> dict[str, Any]:
         if isinstance(trace.get("user_disposition"), dict)
     ]
 
+    catalytic_deltas = [
+        delta
+        for record in rounds
+        for delta in record.get("catalytic_deltas", [])
+    ]
+    catalytic_delta_kinds = [delta["kind"] for delta in catalytic_deltas]
+    catalytic_delta_return_states = [
+        delta["target_return"]["state"] for delta in catalytic_deltas
+    ]
+    catalytic_delta_user_dispositions = [
+        delta["user_disposition"]["state"]
+        for delta in catalytic_deltas
+        if isinstance(delta.get("user_disposition"), dict)
+    ]
+
     return {
         "schema_version": "0.2",
         "interpretation_note": (
@@ -123,6 +139,13 @@ def summarize(records: list[dict[str, Any]]) -> dict[str, Any]:
             ),
             "target_return_states": _counter(target_return_states),
             "user_dispositions": _counter(user_dispositions),
+            "catalytic_delta_kinds": _counter(catalytic_delta_kinds),
+            "catalytic_delta_target_return_states": _counter(
+                catalytic_delta_return_states
+            ),
+            "catalytic_delta_user_dispositions": _counter(
+                catalytic_delta_user_dispositions
+            ),
         },
         "rounds": round_inventory,
     }

@@ -44,6 +44,23 @@ schema 0.2の`artifact_traces`は、成果物の「良し悪し」を採点す�
 
 In schema 0.2, `artifact_traces` records provenance and target return without turning them into a score. Framework-derived traces identify their framework provenance. Evaluated target-return states require evidence references. User disposition is recorded only when an actual user decision has an attributable source. Summary counts remain review inventory, not effectiveness metrics.
 
+## 発見増分の記録 / Catalytic discovery deltas
+
+`catalytic_deltas`は、framework接触によって新しく明示された問い、区別、関係・遷移、反証候補・観察点、残差、framework固有の足場を記録します。最終成果物だけを数えるための欄ではありません。
+
+- `delta_ref`には、後から同じ候補を追える安定した参照を使う。
+- `kind`にはselection workspaceのexit recordと同じ語彙を使う。
+- `framework_refs`を必ず残す。selection workspaceを使った場合は`selection_refs`、具体的な操作が分かる場合は`operation_refs`も残す。
+- 候補が成果物へ具体化した場合だけ`artifact_refs`を付ける。成果物にならなかった問いや残差も消さない。
+- `target_return`は必須とする。まだ対象へ戻していなければ`not_checked`とし、支持・弱化・棄却を記録する場合は対象側の`evidence_refs`を残す。
+- `user_disposition`は、利用者が候補を採用、修正、撤回したことを実際に観測できた場合だけ記録する。
+
+この記録からframeworkの「発見数」「勝率」「有用性」は算出しません。確認するのは、新しい候補が出たことだけではなく、対象へ戻したあと何が残り、何が弱まり、何が棄却されたかです。判断するときは元資料へ戻ります。
+
+`artifact_traces`とは単位が異なります。`catalytic_deltas`は問い、区別、関係、残差などの発見候補を追い、`artifact_traces`は下書き、設計案、KJスナップショットなどの成果物を追います。一つのdeltaが複数のartifactへつながる場合も、artifactにならず問いとして残る場合もあります。
+
+`catalytic_deltas` records newly explicit discovery candidates created through framework contact. It is not a discovery score. Each delta keeps framework provenance and its own target-return state. Use `artifact_refs` only when the candidate materially appears in an artifact.
+
 ## ローカル記録の検証 / Validate local records
 
 対応する他の記録が同じ場所にそろっていなくても、個別ファイルの形式は検査できます。

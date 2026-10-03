@@ -26,6 +26,7 @@ ROUND_REQUIRED = {
 }
 ROUND_ALLOWED = ROUND_REQUIRED | {
     "environment",
+    "catalytic_deltas",
     "material_delta_refs",
     "invocation",
     "unloaded_framework_candidates",
@@ -61,6 +62,21 @@ ARTIFACT_TRACE_ALLOWED = ARTIFACT_TRACE_REQUIRED | {
     "framework_refs",
     "selection_refs",
     "operation_refs",
+    "user_disposition",
+    "notes",
+}
+
+CATALYTIC_DELTA_REQUIRED = {
+    "delta_ref",
+    "kind",
+    "statement",
+    "framework_refs",
+    "target_return",
+}
+CATALYTIC_DELTA_ALLOWED = CATALYTIC_DELTA_REQUIRED | {
+    "selection_refs",
+    "operation_refs",
+    "artifact_refs",
     "user_disposition",
     "notes",
 }
@@ -127,6 +143,14 @@ TARGET_RETURN_STATES = {
     "not_applicable",
 }
 USER_DISPOSITIONS = {"not_observed", "adopted", "modified", "withdrawn"}
+CATALYTIC_DELTA_KINDS = {
+    "question",
+    "distinction",
+    "relation-or-transition",
+    "falsifier-or-observation",
+    "residual",
+    "framework-specific-scaffold",
+}
 ID_RE = re.compile(r"^(round|event)-[A-Za-z0-9._-]+$")
 
 
@@ -310,6 +334,35 @@ def _validate_artifact_trace(value: Any, label: str) -> dict[str, Any]:
     return trace
 
 
+def _validate_catalytic_delta(value: Any, label: str) -> dict[str, Any]:
+    delta = _require_object(value, label)
+    _check_keys(delta, CATALYTIC_DELTA_REQUIRED, CATALYTIC_DELTA_ALLOWED, label)
+    _require_nonempty_string(delta["delta_ref"], f"{label}.delta_ref")
+    _check_enum(delta["kind"], CATALYTIC_DELTA_KINDS, f"{label}.kind")
+    _require_nonempty_string(delta["statement"], f"{label}.statement")
+    _check_string_list(
+        delta["framework_refs"],
+        f"{label}.framework_refs",
+        nonempty=True,
+        unique=True,
+    )
+    for field in ("selection_refs", "operation_refs", "artifact_refs"):
+        _check_string_list(
+            delta.get(field, []),
+            f"{label}.{field}",
+            unique=True,
+        )
+    _validate_target_return(delta["target_return"], f"{label}.target_return")
+    if "user_disposition" in delta:
+        _validate_user_disposition(
+            delta["user_disposition"],
+            f"{label}.user_disposition",
+        )
+    if "notes" in delta:
+        _require_string(delta["notes"], f"{label}.notes")
+    return delta
+
+
 def validate_round(data: dict[str, Any]) -> None:
     _check_keys(data, ROUND_REQUIRED, ROUND_ALLOWED, "round")
     if data["schema_version"] != SCHEMA_VERSION:
@@ -373,6 +426,26 @@ def validate_round(data: dict[str, Any]) -> None:
             )
         traced_artifacts.add(artifact_ref)
 
+    catalytic_deltas = _require_list(
+        data.get("catalytic_deltas", []),
+        "round.catalytic_deltas",
+    )
+    seen_delta_refs: set[str] = set()
+    for index, raw in enumerate(catalytic_deltas):
+        label = f"round.catalytic_deltas[{index}]"
+        delta = _validate_catalytic_delta(raw, label)
+        delta_ref = delta["delta_ref"]
+        if delta_ref in seen_delta_refs:
+            raise ValidationError(
+                f"round.catalytic_deltas must not repeat delta_ref: {delta_ref}"
+            )
+        seen_delta_refs.add(delta_ref)
+        for artifact_ref in delta.get("artifact_refs", []):
+            if artifact_ref not in artifact_refs:
+                raise ValidationError(
+                    f"{label}.artifact_refs must reference round.artifacts: {artifact_ref}"
+                )
+
     _check_sourced_statement_list(data["residuals"], "round.residuals")
     _check_sourced_statement_list(data["reopening_conditions"], "round.reopening_conditions")
 
@@ -415,6 +488,8 @@ def validate_round(data: dict[str, Any]) -> None:
 
     if data["activation_scope"] == "non_activation" and contacts:
         raise ValidationError("non_activation rounds must not contain framework_contacts")
+    if data["activation_scope"] == "non_activation" and catalytic_deltas:
+        raise ValidationError("non_activation rounds must not contain catalytic_deltas")
 
     comparison = data.get("comparison")
     if data["mode"] == "paired_check" and comparison is None:

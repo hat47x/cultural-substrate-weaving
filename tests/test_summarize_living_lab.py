@@ -100,6 +100,21 @@ class LivingLabSummaryTests(unittest.TestCase):
             trace["selection_refs"],
             ["selection://example-round/framework-choice"],
         )
+        self.assertEqual(
+            summary["inventory"]["catalytic_delta_kinds"],
+            {"question": 1},
+        )
+        self.assertEqual(
+            summary["inventory"]["catalytic_delta_target_return_states"],
+            {"target_weakened": 1},
+        )
+        self.assertEqual(
+            summary["inventory"]["catalytic_delta_user_dispositions"],
+            {"modified": 1},
+        )
+        delta = summary["rounds"][0]["catalytic_deltas"][0]
+        self.assertEqual(delta["delta_ref"], "delta:example-question-001")
+        self.assertEqual(delta["kind"], "question")
         self.assertIn("not KPIs", summary["interpretation_note"])
 
     def test_summary_requires_event_round_references_to_resolve(self) -> None:

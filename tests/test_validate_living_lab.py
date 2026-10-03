@@ -91,10 +91,13 @@ class LivingLabValidationTests(unittest.TestCase):
         self.assertEqual(MODULE.MEASUREMENT_ALLOWED, set(measurement["properties"]))
 
         artifact_trace = self.round_schema["$defs"]["artifact_trace"]
+        catalytic_delta = self.round_schema["$defs"]["catalytic_delta"]
         target_return = self.round_schema["$defs"]["target_return"]
         user_disposition = self.round_schema["$defs"]["user_disposition"]
         self.assertEqual(MODULE.ARTIFACT_TRACE_REQUIRED, set(artifact_trace["required"]))
         self.assertEqual(MODULE.ARTIFACT_TRACE_ALLOWED, set(artifact_trace["properties"]))
+        self.assertEqual(MODULE.CATALYTIC_DELTA_REQUIRED, set(catalytic_delta["required"]))
+        self.assertEqual(MODULE.CATALYTIC_DELTA_ALLOWED, set(catalytic_delta["properties"]))
         self.assertEqual(MODULE.TARGET_RETURN_REQUIRED, set(target_return["required"]))
         self.assertEqual(MODULE.TARGET_RETURN_ALLOWED, set(target_return["properties"]))
         self.assertEqual(
@@ -137,6 +140,10 @@ class LivingLabValidationTests(unittest.TestCase):
         self.assertEqual(
             MODULE.ARTIFACT_ORIGINS,
             set(artifact_trace["properties"]["origin"]["enum"]),
+        )
+        self.assertEqual(
+            MODULE.CATALYTIC_DELTA_KINDS,
+            set(catalytic_delta["properties"]["kind"]["enum"]),
         )
         self.assertEqual(
             MODULE.TARGET_RETURN_STATES,
@@ -277,6 +284,16 @@ class LivingLabValidationTests(unittest.TestCase):
         with self.assertRaises(MODULE.ValidationError):
             MODULE.validate_round(record)
 
+    def test_non_activation_rejects_catalytic_deltas(self) -> None:
+        record = copy.deepcopy(self.round_record)
+        record["activation_scope"] = "non_activation"
+        record["framework_contacts"] = []
+        with self.assertRaisesRegex(
+            MODULE.ValidationError,
+            "must not contain catalytic_deltas",
+        ):
+            MODULE.validate_round(record)
+
     def test_artifact_trace_requires_declared_artifact(self) -> None:
         record = copy.deepcopy(self.round_record)
         record["artifact_traces"][0]["artifact_ref"] = "artifact:not-declared"
@@ -319,6 +336,41 @@ class LivingLabValidationTests(unittest.TestCase):
         with self.assertRaisesRegex(
             MODULE.ValidationError,
             "must not repeat artifact_ref",
+        ):
+            MODULE.validate_round(record)
+
+    def test_catalytic_delta_requires_framework_provenance(self) -> None:
+        record = copy.deepcopy(self.round_record)
+        record["catalytic_deltas"][0]["framework_refs"] = []
+        with self.assertRaises(MODULE.ValidationError):
+            MODULE.validate_round(record)
+
+    def test_catalytic_delta_evaluated_return_requires_evidence(self) -> None:
+        record = copy.deepcopy(self.round_record)
+        record["catalytic_deltas"][0]["target_return"]["evidence_refs"] = []
+        with self.assertRaisesRegex(
+            MODULE.ValidationError,
+            "must contain evidence",
+        ):
+            MODULE.validate_round(record)
+
+    def test_duplicate_catalytic_delta_ref_is_rejected(self) -> None:
+        record = copy.deepcopy(self.round_record)
+        record["catalytic_deltas"].append(
+            copy.deepcopy(record["catalytic_deltas"][0])
+        )
+        with self.assertRaisesRegex(
+            MODULE.ValidationError,
+            "must not repeat delta_ref",
+        ):
+            MODULE.validate_round(record)
+
+    def test_catalytic_delta_artifact_refs_must_be_declared(self) -> None:
+        record = copy.deepcopy(self.round_record)
+        record["catalytic_deltas"][0]["artifact_refs"] = ["artifact:not-declared"]
+        with self.assertRaisesRegex(
+            MODULE.ValidationError,
+            "must reference round.artifacts",
         ):
             MODULE.validate_round(record)
 
