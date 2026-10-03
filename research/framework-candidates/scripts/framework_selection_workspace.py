@@ -128,6 +128,7 @@ def target_structure_catalog_payload(
 ) -> dict[str, Any]:
     return {
         "format": "csw.target-structure-catalog/v0",
+        "typology_date": typology.get("date"),
         "typology_status": typology.get("status"),
         "target_structures": [
             {"id": structure_id, "definition": definition}
@@ -194,6 +195,7 @@ def target_structure_candidates_payload(
 
     return {
         "format": "csw.target-structure-candidate-view/v0",
+        "typology_date": typology.get("date"),
         "typology_status": typology.get("status"),
         "target_structures": structures,
         "candidate_order_note": (
@@ -610,6 +612,24 @@ def ensure_consideration_fields(data: dict[str, Any]) -> None:
             )
         row.setdefault("basis", "")
 
+        source_typology = row.get("source_typology")
+        if source_typology is None:
+            source_typology = {"schema": "", "date": "", "status": ""}
+            row["source_typology"] = source_typology
+        if not isinstance(source_typology, dict):
+            raise ValueError(
+                f"target structure hypothesis source_typology must be an object: "
+                f"{structure_id}"
+            )
+        for key in ("schema", "date", "status"):
+            value = source_typology.get(key, "")
+            if not isinstance(value, str):
+                raise ValueError(
+                    f"target structure hypothesis source_typology.{key} must be a string: "
+                    f"{structure_id}"
+                )
+            source_typology.setdefault(key, "")
+
     option = data.get("no_framework_option")
     if option is None:
         option = {}
@@ -638,6 +658,11 @@ def set_target_structure_hypothesis(
         if row["id"] != structure_id:
             continue
         row["definition"] = typology["target_structures"][structure_id]
+        row["source_typology"] = {
+            "schema": str(typology.get("schema", "")),
+            "date": str(typology.get("date", "")),
+            "status": str(typology.get("status", "")),
+        }
         if basis is not None:
             row["basis"] = basis
         return
@@ -646,6 +671,11 @@ def set_target_structure_hypothesis(
         "id": structure_id,
         "definition": typology["target_structures"][structure_id],
         "basis": basis or "",
+        "source_typology": {
+            "schema": str(typology.get("schema", "")),
+            "date": str(typology.get("date", "")),
+            "status": str(typology.get("status", "")),
+        },
     })
 
 

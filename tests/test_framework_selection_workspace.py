@@ -26,6 +26,7 @@ contract_spec.loader.exec_module(contract)
 TYPOLOGY_FIXTURE = {
     "schema": "csw.efficacy-framework-typology/v1",
     "status": "research-only / provisional classification",
+    "date": "2026-10-03",
     "super_families": {
         "SF-A": "condition and relation",
         "SF-B": "viewpoint and node",
@@ -510,6 +511,11 @@ class FrameworkSelectionWorkspaceTest(unittest.TestCase):
                 "id": "TS-condition-chain",
                 "definition": "an outcome depends on upstream conditions",
                 "basis": "The target shows an unresolved upstream dependency.",
+                "source_typology": {
+                    "schema": "csw.efficacy-framework-typology/v1",
+                    "date": "2026-10-03",
+                    "status": "research-only / provisional classification",
+                },
             }],
         )
         self.assertEqual(
@@ -520,6 +526,10 @@ class FrameworkSelectionWorkspaceTest(unittest.TestCase):
         self.assertEqual(
             review["target_structure_hypotheses"][0]["id"],
             "TS-condition-chain",
+        )
+        self.assertEqual(
+            review["target_structure_hypotheses"][0]["source_typology"]["date"],
+            "2026-10-03",
         )
         self.assertNotIn("score", json.dumps(review))
 
