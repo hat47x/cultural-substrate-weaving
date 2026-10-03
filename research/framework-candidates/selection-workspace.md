@@ -13,7 +13,11 @@ It is not a fit scorer, recommendation engine, or adoption gate.
 
 ```bash
 INVENTORY=research/framework-candidates/cognitive-operation-inventory.json
+TYPOLOGY=research/efficacy-cheap-llm/framework-typology.json
 TOOL=research/framework-candidates/scripts/framework_selection_workspace.py
+
+python "$TOOL" list-target-structures "$TYPOLOGY"
+python "$TOOL" structure-lookup "$TYPOLOGY" "$INVENTORY" TS-condition-chain
 
 python "$TOOL" inspect "$INVENTORY" dependent-origination
 
@@ -31,6 +35,10 @@ python "$TOOL" worksheet "$INVENTORY" \
   --baseline "target-side baseline before framework contact" \
   --ref "selection://round-03/framework-choice" \
   --output /tmp/selection.json
+
+python "$TOOL" set-target-structure /tmp/selection.json "$TYPOLOGY" \
+  TS-condition-chain \
+  --basis "対象側で上流条件の欠落が未解決の仮説として残っている"
 
 python "$TOOL" set-candidate /tmp/selection.json dependent-origination \
   --role primary \
@@ -83,6 +91,10 @@ python "$TOOL" audit-living-lab /tmp/selection.json /tmp/round.json
 
 `inspect` is the Registry-0 boundary view for one candidate. It assembles the candidate's native primitives, operations, ordinary-language cues, full source references, profile/source-packet/runtime paths, positive/negative target-return fixtures, readiness, adoption hold, and `do_not_assume` boundary without computing fit, rank, or activation. Use it before deliberate activation when the model or analyst needs to recover what is actually documented rather than reconstructing a framework from memory.
 
+The provisional target-structure vocabulary is intentionally a separate first step. `list-target-structures` shows the human-authored target-side vocabulary from the research typology. `structure-lookup` accepts exact target-structure IDs and exposes every mapped framework in framework-inventory order. It does not classify natural language into a target structure and does not choose among the mapped frameworks. This boundary responds to the selection experiments in which direct model/Jev framework choice concentrated on a small number of frameworks: the toolkit makes the target-side structural hypothesis explicit instead of hiding that judgment inside a router.
+
+`set-target-structure` records an exact target-structure ID, its current typology definition, and an optional target-side basis in the saved workspace. This is a provisional hypothesis, not a diagnosis or evidence that a mapped framework fits. The hypothesis remains separate from candidate role assignment, no-framework consideration, and activation.
+
 The `recall` command is the bridge from an ordinary-language missing cognitive function to the adopted corpus. It uses only explicit `selection_cues` stored in the inventory, performs punctuation/spacing normalization, preserves inventory order, and defaults to `adopted` candidates. It does not use embeddings, semantic similarity, scoring, or automatic routing. To inspect a research-only readiness state, pass `--readiness` explicitly.
 
 The shortlist preserves inventory order and computes no score. The contrast is exact-string only and does not infer semantic equivalence. The worksheet deliberately starts with role, intended cognitive job, near-neighbor difference, target-return questions, de-bound target language, and revision conditions unfilled.
@@ -104,6 +116,8 @@ A useful workflow is:
 ```text
 target-side baseline
   -> name the missing cognitive function
+  -> optionally state an exact target-structure hypothesis
+  -> inspect the typology mapping without ranking
   -> shortlist without ranking
   -> contrast plausible near-neighbors
   -> keep no-framework as an explicit option

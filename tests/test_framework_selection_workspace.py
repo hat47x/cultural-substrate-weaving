@@ -23,6 +23,36 @@ contract = importlib.util.module_from_spec(contract_spec)
 contract_spec.loader.exec_module(contract)
 
 
+TYPOLOGY_FIXTURE = {
+    "schema": "csw.efficacy-framework-typology/v1",
+    "status": "research-only / provisional classification",
+    "super_families": {
+        "SF-A": "condition and relation",
+        "SF-B": "viewpoint and node",
+    },
+    "target_structures": {
+        "TS-condition-chain": "an outcome depends on upstream conditions",
+        "TS-node-view": "a role changes when viewed through another node",
+    },
+    "frameworks": [
+        {
+            "id": "alpha",
+            "sf": "SF-A",
+            "structure_kind": "conditional chain",
+            "ts": ["TS-condition-chain"],
+            "tier": "A",
+        },
+        {
+            "id": "beta",
+            "sf": "SF-B",
+            "structure_kind": "node-conditioned relation",
+            "ts": ["TS-node-view"],
+            "tier": "B",
+        },
+    ],
+}
+
+
 FIXTURE = {
     "schema": "csw.framework-candidate-inventory/v1",
     "status": "research-only",
@@ -200,6 +230,65 @@ class FrameworkSelectionWorkspaceTest(unittest.TestCase):
             )
             self.assertNotIn("score", json.dumps(payload))
 
+    def test_target_structure_lookup_uses_exact_mapping_without_ranking(self) -> None:
+        payload = workspace.target_structure_candidates_payload(
+            TYPOLOGY_FIXTURE,
+            FIXTURE,
+            ["TS-condition-chain"],
+        )
+        structure = payload["target_structures"][0]
+        self.assertEqual(structure["id"], "TS-condition-chain")
+        self.assertEqual(
+            [row["candidate"]["id"] for row in structure["mapped_candidates"]],
+            ["alpha"],
+        )
+        self.assertEqual(
+            structure["mapped_candidates"][0]["mapping"]["super_family"],
+            "SF-A",
+        )
+        encoded = json.dumps(payload).casefold()
+        self.assertNotIn('"score"', encoded)
+        self.assertNotIn('"rank"', encoded)
+        self.assertNotIn('"recommendation"', encoded)
+        self.assertIn("no semantic classification", payload["interpretation_boundary"])
+
+    def test_target_structure_lookup_requires_exact_known_id(self) -> None:
+        with self.assertRaisesRegex(ValueError, "unknown target structure"):
+            workspace.target_structure_candidates_payload(
+                TYPOLOGY_FIXTURE,
+                FIXTURE,
+                ["conditions"],
+            )
+
+    def test_typology_rejects_unknown_target_structure_reference(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            path = Path(tmp) / "typology.json"
+            broken = json.loads(json.dumps(TYPOLOGY_FIXTURE))
+            broken["frameworks"][0]["ts"] = ["TS-missing"]
+            path.write_text(json.dumps(broken), encoding="utf-8")
+            with self.assertRaisesRegex(ValueError, "unknown target structure"):
+                workspace.load_typology(path)
+
+    def test_cli_structure_lookup_preserves_inventory_order_without_routing(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            inventory = Path(tmp) / "inventory.json"
+            typology = Path(tmp) / "typology.json"
+            inventory.write_text(json.dumps(FIXTURE), encoding="utf-8")
+            typology.write_text(json.dumps(TYPOLOGY_FIXTURE), encoding="utf-8")
+            payload = json.loads(
+                self.run_tool(
+                    "structure-lookup",
+                    str(typology),
+                    str(inventory),
+                    "TS-condition-chain",
+                ).stdout
+            )
+            self.assertEqual(
+                payload["target_structures"][0]["mapped_candidates"][0]["candidate"]["id"],
+                "alpha",
+            )
+            self.assertIn("not a ranking", payload["candidate_order_note"])
+
     def test_shortlist_preserves_inventory_order_without_score(self) -> None:
         payload = workspace.shortlist_payload(FIXTURE, "threshold", "primitive", None)
         self.assertEqual(
@@ -328,6 +417,7 @@ class FrameworkSelectionWorkspaceTest(unittest.TestCase):
             "selection://round-03/framework-choice",
         )
         self.assertEqual(payload["candidates"][0]["role"], "unassigned")
+        self.assertEqual(payload["target_structure_hypotheses"], [])
         self.assertEqual(payload["cross_framework_notes"]["primary_framework_job"], "")
         self.assertEqual(payload["exit_record"]["questions_created"], [])
         self.assertIn("does not choose a framework", payload["interpretation_boundary"])
@@ -398,6 +488,40 @@ class FrameworkSelectionWorkspaceTest(unittest.TestCase):
             ["The node boundary remains unresolved."],
         )
         self.assertNotIn("score", json.dumps(data))
+
+    def test_target_structure_hypothesis_is_separate_from_framework_choice(self) -> None:
+        data = workspace.worksheet_payload(
+            FIXTURE,
+            "Need another way to inspect conditions",
+            ["alpha", "beta"],
+            "Target baseline",
+            "selection://target-structure-hypothesis",
+        )
+        workspace.set_target_structure_hypothesis(
+            data,
+            TYPOLOGY_FIXTURE,
+            "TS-condition-chain",
+            basis="The target shows an unresolved upstream dependency.",
+        )
+
+        self.assertEqual(
+            data["target_structure_hypotheses"],
+            [{
+                "id": "TS-condition-chain",
+                "definition": "an outcome depends on upstream conditions",
+                "basis": "The target shows an unresolved upstream dependency.",
+            }],
+        )
+        self.assertEqual(
+            [row["role"] for row in data["candidates"]],
+            ["unassigned", "unassigned"],
+        )
+        review = workspace.review_payload(data)
+        self.assertEqual(
+            review["target_structure_hypotheses"][0]["id"],
+            "TS-condition-chain",
+        )
+        self.assertNotIn("score", json.dumps(review))
 
     def test_non_force_guardrails_externalize_contact_stop_and_survival(self) -> None:
         data = workspace.worksheet_payload(
@@ -516,6 +640,7 @@ class FrameworkSelectionWorkspaceTest(unittest.TestCase):
         )
         del data["candidates"][0]["consideration_axes"]
         del data["no_framework_option"]
+        del data["target_structure_hypotheses"]
 
         workspace.ensure_consideration_fields(data)
 
@@ -531,6 +656,7 @@ class FrameworkSelectionWorkspaceTest(unittest.TestCase):
             data["no_framework_option"],
             {"reason": "", "baseline_note": "", "what_would_change_this": ""},
         )
+        self.assertEqual(data["target_structure_hypotheses"], [])
         self.assertEqual(
             data["workspace_ref"],
             "selection://legacy/framework-choice",
@@ -1128,8 +1254,10 @@ class FrameworkSelectionWorkspaceTest(unittest.TestCase):
     def test_cli_round_trip_updates_saved_selection_reasoning(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
             inventory = Path(tmp) / "inventory.json"
+            typology = Path(tmp) / "typology.json"
             selection = Path(tmp) / "selection.json"
             inventory.write_text(json.dumps(FIXTURE), encoding="utf-8")
+            typology.write_text(json.dumps(TYPOLOGY_FIXTURE), encoding="utf-8")
 
             self.run_tool(
                 "worksheet",
@@ -1146,6 +1274,14 @@ class FrameworkSelectionWorkspaceTest(unittest.TestCase):
                 "selection://round-06/framework-choice",
                 "--output",
                 str(selection),
+            )
+            self.run_tool(
+                "set-target-structure",
+                str(selection),
+                str(typology),
+                "TS-condition-chain",
+                "--basis",
+                "The target shows an unresolved upstream dependency.",
             )
             self.run_tool(
                 "set-candidate",
@@ -1219,6 +1355,10 @@ class FrameworkSelectionWorkspaceTest(unittest.TestCase):
                 "selection://round-06/framework-choice",
             )
             self.assertEqual(shown["candidates"][0]["role"], "primary")
+            self.assertEqual(
+                shown["target_structure_hypotheses"][0]["id"],
+                "TS-condition-chain",
+            )
             self.assertEqual(
                 shown["candidates"][0]["planned_operations"],
                 ["condition-chain"],
