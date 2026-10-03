@@ -180,19 +180,21 @@ def validate(data: dict[str, Any]) -> tuple[list[str], list[str]]:
                         else:
                             living_delta_owners[delta_ref] = cid
 
-            living_lab_round_refs = trace.get("living_lab_round_refs", [])
-            if living_lab_round_refs is not None:
-                if not isinstance(living_lab_round_refs, list):
-                    errors.append(
-                        f"card {cid} catalytic living_lab_round_refs must be an array"
-                    )
-                elif any(
-                    not str(value).strip() for value in living_lab_round_refs
-                ):
-                    errors.append(
-                        f"card {cid} catalytic living_lab_round_refs must contain "
-                        "readable strings"
-                    )
+            for field_name in (
+                "living_lab_round_refs",
+                "living_lab_artifact_refs",
+            ):
+                values = trace.get(field_name, [])
+                if values is not None:
+                    if not isinstance(values, list):
+                        errors.append(
+                            f"card {cid} catalytic {field_name} must be an array"
+                        )
+                    elif any(not str(value).strip() for value in values):
+                        errors.append(
+                            f"card {cid} catalytic {field_name} must contain "
+                            "readable strings"
+                        )
 
             pre_contact_relations = trace.get("pre_contact_relations", [])
             if pre_contact_relations is not None:

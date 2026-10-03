@@ -417,9 +417,17 @@ def cmd_import_living_delta(args: argparse.Namespace) -> None:
             "yield_kinds": [str(delta.get("kind", ""))],
             "living_lab_delta_refs": [delta_ref],
             "living_lab_round_refs": [round_id],
+            "living_lab_artifact_refs": list(
+                dict.fromkeys(
+                    str(value)
+                    for value in delta.get("artifact_refs", [])
+                    if str(value).strip()
+                )
+            ),
             "target_return_audits": [
                 {
                     "state": return_state,
+                    "source_type": str(target_return.get("source_type", "")),
                     "basis_refs": list(dict.fromkeys(basis_refs)),
                     **(
                         {"note": str(target_return["statement"])}

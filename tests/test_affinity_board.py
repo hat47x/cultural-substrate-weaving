@@ -46,6 +46,7 @@ class AffinityBoardTest(unittest.TestCase):
                         "framework_refs": ["five-phases"],
                         "selection_refs": ["selection://round/framework"],
                         "operation_refs": ["opposition-complement"],
+                        "artifact_refs": ["artifact:draft-v4"],
                         "target_return": {
                             "state": "target_supported",
                             "source_type": "mixed",
@@ -84,7 +85,9 @@ class AffinityBoardTest(unittest.TestCase):
             self.assertEqual(trace["operations"], ["opposition-complement"])
             self.assertEqual(trace["living_lab_delta_refs"], ["delta:condition-question"])
             self.assertEqual(trace["living_lab_round_refs"], ["round-import-001"])
+            self.assertEqual(trace["living_lab_artifact_refs"], ["artifact:draft-v4"])
             self.assertEqual(trace["target_return_audits"][0]["state"], "target_supported")
+            self.assertEqual(trace["target_return_audits"][0]["source_type"], "mixed")
             self.assertEqual(trace["target_return_audits"][0]["basis_refs"], ["S001"])
             self.assertEqual(trace["pre_contact_relations"][0]["basis_refs"], ["S002"])
             self.assertEqual(trace["user_dispositions"][0]["source_ref"], "S003")
