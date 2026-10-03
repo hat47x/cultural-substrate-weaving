@@ -104,6 +104,8 @@ GitHub Actions are currently disabled. Validation is performed in a local or equ
 
 From cultural frameworks, the skill mainly extracts typologies that divide the whole world as one system, transitions and topology between states, and practical wisdom about where to direct attention in each state and how to connect it to reality. Lineage is shown, but cultural variation and ornament receive one step lower priority. Framework rules are treated provisionally as generative rules that produce a world, not as summaries induced from observation, and are run boldly while the assumption stays explicit.
 
+The author expects a second role from cultural frameworks. A framework is not a candidate compared with a problem in the same space; it is a higher-order structure that encompasses a group of problems and supplies a viewpoint from which to evaluate them. Placing the problem group within the framework's axes identifies its essential structure and re-illuminates the distances and relations among problems with a new index. Crossing several mutually orthogonal viewpoints refines the cognitive grid further. This is the author's claim; its effect is still under verification.
+
 The pathway for bringing resulting candidates into real use is still a hypothesis. Rather than installing uniform safety gates, the skill illuminates candidates through a sequence of shifting viewpoints: origin, assumption, complementary positions within the whole framework, pushback from the target, and concretization. It is testing a design in which refinement happens naturally within the flow, so that candidates that have lost their marks do not erode reality. The Japanese design policy is **[根幹価値と具現化方針](docs/ja/maintainers/core-value-and-embodiment-policy.md)**.
 
 ## Core principles
