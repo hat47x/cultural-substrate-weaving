@@ -25,6 +25,10 @@ python scripts/affinity_board.py add-card /tmp/board.json \
   "Meaning-bearing card B with a different timing" \
   --source S001
 
+# Review all deltas before choosing any one to carry forward.
+python scripts/affinity_board.py review-living-deltas \
+  /tmp/living-lab-round.json
+
 # Explicitly carry one target-returned Living Lab delta into affinity work.
 # The tool never selects deltas by itself and rejects duplicate delta_ref import.
 python scripts/affinity_board.py import-living-delta /tmp/board.json \

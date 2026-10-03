@@ -30,6 +30,108 @@ class AffinityBoardTest(unittest.TestCase):
             capture_output=True,
         )
 
+    def test_review_living_deltas_separates_ready_hold_rejected_and_blocked(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            round_path = Path(tmp) / "round.json"
+            round_path.write_text(
+                json.dumps({
+                    "schema_version": "0.2",
+                    "round_id": "round-review-001",
+                    "case_id": "case-review",
+                    "catalytic_deltas": [
+                        {
+                            "delta_ref": "delta:ready",
+                            "kind": "question",
+                            "statement": "Ready question",
+                            "framework_refs": ["framework-a"],
+                            "operation_refs": ["operation-a"],
+                            "target_return": {
+                                "state": "target_supported",
+                                "source_type": "user",
+                                "evidence_refs": ["target://1"]
+                            }
+                        },
+                        {
+                            "delta_ref": "delta:weakened",
+                            "kind": "distinction",
+                            "statement": "Needs de-binding",
+                            "framework_refs": ["framework-a"],
+                            "operation_refs": ["operation-b"],
+                            "target_return": {
+                                "state": "target_weakened",
+                                "source_type": "mixed",
+                                "evidence_refs": ["target://2"]
+                            }
+                        },
+                        {
+                            "delta_ref": "delta:hold",
+                            "kind": "relation-or-transition",
+                            "statement": "Still unresolved",
+                            "framework_refs": ["framework-b"],
+                            "operation_refs": ["operation-c"],
+                            "target_return": {
+                                "state": "unresolved",
+                                "source_type": "unknown",
+                                "evidence_refs": ["target://3"]
+                            }
+                        },
+                        {
+                            "delta_ref": "delta:rejected",
+                            "kind": "question",
+                            "statement": "Rejected candidate",
+                            "framework_refs": ["framework-c"],
+                            "operation_refs": ["operation-d"],
+                            "target_return": {
+                                "state": "target_rejected",
+                                "source_type": "user",
+                                "evidence_refs": ["target://4"]
+                            }
+                        },
+                        {
+                            "delta_ref": "delta:blocked",
+                            "kind": "question",
+                            "statement": "Missing operation provenance",
+                            "framework_refs": ["framework-d"],
+                            "target_return": {
+                                "state": "target_supported",
+                                "source_type": "user",
+                                "evidence_refs": ["target://5"]
+                            }
+                        }
+                    ]
+                }),
+                encoding="utf-8",
+            )
+
+            payload = json.loads(
+                self.run_board(
+                    "review-living-deltas",
+                    str(round_path),
+                    "--json",
+                ).stdout
+            )
+            states = {
+                row["delta_ref"]: row["handoff_state"]
+                for row in payload["deltas"]
+            }
+            self.assertEqual(
+                states,
+                {
+                    "delta:ready": "ready",
+                    "delta:weakened": "requires_debound_text",
+                    "delta:hold": "hold",
+                    "delta:rejected": "rejected",
+                    "delta:blocked": "blocked",
+                },
+            )
+            blocked = next(
+                row
+                for row in payload["deltas"]
+                if row["delta_ref"] == "delta:blocked"
+            )
+            self.assertEqual(blocked["blockers"], ["missing_operation_refs"])
+            self.assertIn("does not rank deltas", payload["interpretation_boundary"])
+
     def test_import_living_delta_preserves_target_return_and_provenance(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
             board = Path(tmp) / "board.json"

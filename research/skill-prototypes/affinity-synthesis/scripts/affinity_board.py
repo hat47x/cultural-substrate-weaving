@@ -231,10 +231,7 @@ def _ensure_external_source_handle(
     return item_id
 
 
-def _load_living_delta(
-    path: Path,
-    delta_ref: str,
-) -> tuple[dict[str, Any], dict[str, Any]]:
+def _load_living_round(path: Path) -> dict[str, Any]:
     value = json.loads(path.read_text(encoding="utf-8"))
     if not isinstance(value, dict):
         raise ValueError("Living Lab round must be an object")
@@ -249,10 +246,17 @@ def _load_living_delta(
         not isinstance(item, dict) for item in deltas
     ):
         raise ValueError("Living Lab catalytic_deltas must be an array of objects")
+    return value
 
+
+def _load_living_delta(
+    path: Path,
+    delta_ref: str,
+) -> tuple[dict[str, Any], dict[str, Any]]:
+    value = _load_living_round(path)
     matches = [
         item
-        for item in deltas
+        for item in value.get("catalytic_deltas", [])
         if str(item.get("delta_ref", "")).strip() == delta_ref
     ]
     if not matches:
@@ -260,6 +264,114 @@ def _load_living_delta(
     if len(matches) > 1:
         raise ValueError(f"Living Lab delta_ref is duplicated: {delta_ref}")
     return value, matches[0]
+
+
+def living_delta_review(delta: dict[str, Any]) -> dict[str, Any]:
+    frameworks = [
+        str(value)
+        for value in delta.get("framework_refs", [])
+        if str(value).strip()
+    ]
+    operations = [
+        str(value)
+        for value in delta.get("operation_refs", [])
+        if str(value).strip()
+    ]
+    target_return = delta.get("target_return")
+    target_return = target_return if isinstance(target_return, dict) else {}
+    state = str(target_return.get("state", "")).strip()
+    evidence_refs = [
+        str(value)
+        for value in target_return.get("evidence_refs", [])
+        if str(value).strip()
+    ]
+
+    blockers: list[str] = []
+    if not frameworks:
+        blockers.append("missing_framework_refs")
+    if not operations:
+        blockers.append("missing_operation_refs")
+    if state in {"target_supported", "target_weakened"} and not evidence_refs:
+        blockers.append("missing_target_return_evidence")
+
+    if blockers:
+        handoff_state = "blocked"
+    elif state == "target_supported":
+        handoff_state = "ready"
+    elif state == "target_weakened":
+        handoff_state = "requires_debound_text"
+    elif state in {"not_checked", "unresolved", ""}:
+        handoff_state = "hold"
+    elif state == "target_rejected":
+        handoff_state = "rejected"
+    else:
+        handoff_state = "blocked"
+        blockers.append("unknown_target_return_state")
+
+    pre_contact = delta.get("pre_contact_relation")
+    disposition = delta.get("user_disposition")
+
+    return {
+        "delta_ref": str(delta.get("delta_ref", "")),
+        "kind": str(delta.get("kind", "")),
+        "statement": str(delta.get("statement", "")),
+        "framework_refs": frameworks,
+        "operation_refs": operations,
+        "selection_refs": [
+            str(value)
+            for value in delta.get("selection_refs", [])
+            if str(value).strip()
+        ],
+        "artifact_refs": [
+            str(value)
+            for value in delta.get("artifact_refs", [])
+            if str(value).strip()
+        ],
+        "target_return_state": state,
+        "target_return_evidence_refs": evidence_refs,
+        "pre_contact_state": (
+            str(pre_contact.get("state", ""))
+            if isinstance(pre_contact, dict)
+            else None
+        ),
+        "user_disposition_state": (
+            str(disposition.get("state", ""))
+            if isinstance(disposition, dict)
+            else None
+        ),
+        "handoff_state": handoff_state,
+        "blockers": blockers,
+    }
+
+
+def cmd_review_living_deltas(args: argparse.Namespace) -> None:
+    round_data = _load_living_round(args.round)
+    rows = [
+        living_delta_review(delta)
+        for delta in round_data.get("catalytic_deltas", [])
+    ]
+    payload = {
+        "round_id": round_data.get("round_id"),
+        "case_id": round_data.get("case_id"),
+        "deltas": rows,
+        "interpretation_boundary": (
+            "handoff_state is a mechanical provenance/target-return readiness view. "
+            "It does not rank deltas, judge usefulness, or select affinity material."
+        ),
+    }
+    if args.json:
+        print(json.dumps(payload, ensure_ascii=False, indent=2))
+        return
+
+    for row in rows:
+        blockers = ",".join(row["blockers"]) or "-"
+        print(
+            f"{row['delta_ref']} "
+            f"kind={row['kind']} "
+            f"target_return={row['target_return_state'] or '-'} "
+            f"handoff={row['handoff_state']} "
+            f"blockers={blockers}"
+        )
 
 
 def cmd_import_living_delta(args: argparse.Namespace) -> None:
@@ -1710,6 +1822,17 @@ def build_parser() -> argparse.ArgumentParser:
     card.add_argument("--preservation-note")
     card.add_argument("--derived-from", action="append")
     card.set_defaults(func=cmd_add_card)
+
+    review_delta = sub.add_parser(
+        "review-living-deltas",
+        help=(
+            "review all Living Lab catalytic deltas mechanically before any "
+            "explicit affinity import; no ranking or auto-selection"
+        ),
+    )
+    review_delta.add_argument("round", type=Path)
+    review_delta.add_argument("--json", action="store_true")
+    review_delta.set_defaults(func=cmd_review_living_deltas)
 
     import_delta = sub.add_parser(
         "import-living-delta",
