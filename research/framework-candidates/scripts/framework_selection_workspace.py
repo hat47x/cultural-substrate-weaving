@@ -24,6 +24,7 @@ SEARCH_FIELDS = {
 }
 
 WORKSPACE_FORMAT = "csw.framework-selection-workspace/v1"
+TYPOLOGY_SCHEMA = "csw.efficacy-framework-typology/v1"
 
 EXIT_RECORD_FIELDS = {
     "question": "questions_created",
@@ -68,6 +69,146 @@ def load_inventory(path: Path) -> dict[str, Any]:
             raise ValueError(f"duplicate candidate id: {item_id}")
         seen.add(item_id)
     return data
+
+
+def load_typology(path: Path) -> dict[str, Any]:
+    data = json.loads(path.read_text(encoding="utf-8"))
+    if not isinstance(data, dict):
+        raise ValueError("framework typology must be a JSON object")
+    if data.get("schema") != TYPOLOGY_SCHEMA:
+        raise ValueError("unsupported framework typology schema")
+
+    target_structures = data.get("target_structures")
+    if not isinstance(target_structures, dict):
+        raise ValueError("typology.target_structures must be an object")
+    for structure_id, definition in target_structures.items():
+        if not str(structure_id).strip():
+            raise ValueError("target structure id must not be empty")
+        if not isinstance(definition, str) or not definition.strip():
+            raise ValueError(
+                f"target structure definition must be non-empty: {structure_id}"
+            )
+
+    rows = data.get("frameworks")
+    if not isinstance(rows, list) or any(not isinstance(row, dict) for row in rows):
+        raise ValueError("typology.frameworks must be an array of objects")
+
+    seen: set[str] = set()
+    known_structures = set(map(str, target_structures))
+    for row in rows:
+        item_id = str(row.get("id", "")).strip()
+        if not item_id:
+            raise ValueError("every typology framework requires a non-empty id")
+        if item_id in seen:
+            raise ValueError(f"duplicate typology framework id: {item_id}")
+        seen.add(item_id)
+
+        structure_refs = row.get("ts", [])
+        if not isinstance(structure_refs, list) or any(
+            not isinstance(value, str) or not value.strip()
+            for value in structure_refs
+        ):
+            raise ValueError(
+                f"typology framework ts must be an array of target structure ids: {item_id}"
+            )
+        unknown = [
+            value for value in structure_refs
+            if value not in known_structures
+        ]
+        if unknown:
+            raise ValueError(
+                f"typology framework references unknown target structure {item_id}: "
+                + ", ".join(unknown)
+            )
+    return data
+
+
+def target_structure_catalog_payload(
+    typology: dict[str, Any],
+) -> dict[str, Any]:
+    return {
+        "format": "csw.target-structure-catalog/v0",
+        "typology_date": typology.get("date"),
+        "typology_status": typology.get("status"),
+        "target_structures": [
+            {"id": structure_id, "definition": definition}
+            for structure_id, definition in typology["target_structures"].items()
+        ],
+        "interpretation_boundary": (
+            "Target structures are a provisional human-authored research vocabulary. "
+            "They are prompts for describing target-side structure, not diagnoses, "
+            "framework selections, scores, or routing decisions."
+        ),
+    }
+
+
+def target_structure_candidates_payload(
+    typology: dict[str, Any],
+    inventory: dict[str, Any],
+    structure_ids: list[str],
+) -> dict[str, Any]:
+    requested = [str(value).strip() for value in structure_ids if str(value).strip()]
+    if not requested:
+        raise ValueError("structure-lookup requires at least one target structure id")
+    if len(set(requested)) != len(requested):
+        raise ValueError("target structure ids must be unique")
+
+    target_structures = typology["target_structures"]
+    missing = [value for value in requested if value not in target_structures]
+    if missing:
+        raise ValueError("unknown target structure id(s): " + ", ".join(missing))
+
+    inventory_index = by_id(inventory)
+    mapping_by_id: dict[str, dict[str, Any]] = {}
+    for row in typology["frameworks"]:
+        item_id = str(row["id"])
+        if item_id not in inventory_index:
+            raise ValueError(
+                f"typology framework is missing from candidate inventory: {item_id}"
+            )
+        mapping_by_id[item_id] = row
+
+    structures = []
+    for structure_id in requested:
+        mapped_candidates = []
+        for candidate in candidates(inventory):
+            item_id = str(candidate["id"])
+            mapping = mapping_by_id.get(item_id)
+            if mapping is None or structure_id not in mapping.get("ts", []):
+                continue
+            mapped_candidates.append({
+                "candidate": candidate_summary(candidate),
+                "mapping": {
+                    "super_family": mapping.get("sf"),
+                    "super_family_label": typology.get("super_families", {}).get(
+                        mapping.get("sf")
+                    ),
+                    "structure_kind": mapping.get("structure_kind"),
+                },
+            })
+
+        structures.append({
+            "id": structure_id,
+            "definition": target_structures[structure_id],
+            "mapped_candidates": mapped_candidates,
+        })
+
+    return {
+        "format": "csw.target-structure-candidate-view/v0",
+        "typology_date": typology.get("date"),
+        "typology_status": typology.get("status"),
+        "target_structures": structures,
+        "candidate_order_note": (
+            "Mapped candidates preserve framework inventory order. "
+            "The order is not a ranking."
+        ),
+        "interpretation_boundary": (
+            "This view uses exact target-structure ids from a provisional human-authored "
+            "research typology. It performs no semantic classification, fit scoring, "
+            "ranking, activation, or recommendation. A mapping means only that the "
+            "typology records the framework as intended to address that target structure."
+        ),
+    }
 
 
 def candidates(data: dict[str, Any]) -> list[dict[str, Any]]:
@@ -365,6 +506,7 @@ def worksheet_payload(
         "workspace_ref": (workspace_ref or "").strip(),
         "missing_cognitive_function": need,
         "target_baseline": baseline or "",
+        "target_structure_hypotheses": [],
         "candidate_order_note": "Candidate order is working order, not a ranking.",
         "no_framework_option": {
             "reason": "",
@@ -441,6 +583,53 @@ def ensure_consideration_fields(data: dict[str, Any]) -> None:
         for key in NON_FORCE_GUARDRAIL_FIELDS:
             guardrails.setdefault(key, "")
 
+    hypotheses = data.get("target_structure_hypotheses")
+    if hypotheses is None:
+        hypotheses = []
+        data["target_structure_hypotheses"] = hypotheses
+    if not isinstance(hypotheses, list) or any(
+        not isinstance(row, dict) for row in hypotheses
+    ):
+        raise ValueError("workspace.target_structure_hypotheses must be an array of objects")
+
+    seen_structure_ids: set[str] = set()
+    for row in hypotheses:
+        structure_id = str(row.get("id", "")).strip()
+        definition = row.get("definition")
+        if not structure_id:
+            raise ValueError("target structure hypothesis requires a non-empty id")
+        if structure_id in seen_structure_ids:
+            raise ValueError(f"duplicate target structure hypothesis id: {structure_id}")
+        seen_structure_ids.add(structure_id)
+        if not isinstance(definition, str) or not definition.strip():
+            raise ValueError(
+                f"target structure hypothesis requires a definition: {structure_id}"
+            )
+        basis = row.get("basis", "")
+        if not isinstance(basis, str):
+            raise ValueError(
+                f"target structure hypothesis basis must be a string: {structure_id}"
+            )
+        row.setdefault("basis", "")
+
+        source_typology = row.get("source_typology")
+        if source_typology is None:
+            source_typology = {"schema": "", "date": "", "status": ""}
+            row["source_typology"] = source_typology
+        if not isinstance(source_typology, dict):
+            raise ValueError(
+                f"target structure hypothesis source_typology must be an object: "
+                f"{structure_id}"
+            )
+        for key in ("schema", "date", "status"):
+            value = source_typology.get(key, "")
+            if not isinstance(value, str):
+                raise ValueError(
+                    f"target structure hypothesis source_typology.{key} must be a string: "
+                    f"{structure_id}"
+                )
+            source_typology.setdefault(key, "")
+
     option = data.get("no_framework_option")
     if option is None:
         option = {}
@@ -450,6 +639,44 @@ def ensure_consideration_fields(data: dict[str, Any]) -> None:
     option.setdefault("reason", "")
     option.setdefault("baseline_note", "")
     option.setdefault("what_would_change_this", "")
+
+
+def set_target_structure_hypothesis(
+    data: dict[str, Any],
+    typology: dict[str, Any],
+    structure_id: str,
+    *,
+    basis: str | None = None,
+) -> None:
+    ensure_consideration_fields(data)
+    structure_id = structure_id.strip()
+    if structure_id not in typology["target_structures"]:
+        raise ValueError(f"unknown target structure id: {structure_id}")
+
+    hypotheses = data["target_structure_hypotheses"]
+    for row in hypotheses:
+        if row["id"] != structure_id:
+            continue
+        row["definition"] = typology["target_structures"][structure_id]
+        row["source_typology"] = {
+            "schema": str(typology.get("schema", "")),
+            "date": str(typology.get("date", "")),
+            "status": str(typology.get("status", "")),
+        }
+        if basis is not None:
+            row["basis"] = basis
+        return
+
+    hypotheses.append({
+        "id": structure_id,
+        "definition": typology["target_structures"][structure_id],
+        "basis": basis or "",
+        "source_typology": {
+            "schema": str(typology.get("schema", "")),
+            "date": str(typology.get("date", "")),
+            "status": str(typology.get("status", "")),
+        },
+    })
 
 
 def save_workspace(path: Path, data: dict[str, Any]) -> None:
@@ -624,6 +851,9 @@ def review_payload(data: dict[str, Any]) -> dict[str, Any]:
         "format": "csw.framework-selection-review/v1",
         "workspace_ref": data.get("workspace_ref", ""),
         "missing_cognitive_function": data.get("missing_cognitive_function", ""),
+        "target_structure_hypotheses": [
+            dict(row) for row in data["target_structure_hypotheses"]
+        ],
         "candidates": rows,
         "no_framework_option": dict(option),
         "no_framework_unfilled": [
@@ -1195,6 +1425,9 @@ def audit_living_lab_payload(
         "workspace_ref": workspace_ref,
         "round_id": round_record.get("round_id"),
         "activation_scope": round_record.get("activation_scope"),
+        "target_structure_hypotheses": [
+            dict(row) for row in workspace.get("target_structure_hypotheses", [])
+        ],
         "linked_contacts": linked_contacts,
         "linked_deltas": linked_deltas,
         "linked_artifacts": linked_artifacts,
@@ -1229,6 +1462,36 @@ def audit_living_lab_payload(
             "material and user evidence for interpretation."
         ),
     }
+
+
+def cmd_list_target_structures(args: argparse.Namespace) -> None:
+    print_json(
+        target_structure_catalog_payload(
+            load_typology(args.typology),
+        )
+    )
+
+
+def cmd_structure_lookup(args: argparse.Namespace) -> None:
+    print_json(
+        target_structure_candidates_payload(
+            load_typology(args.typology),
+            load_inventory(args.inventory),
+            args.target_structure_id,
+        )
+    )
+
+
+def cmd_set_target_structure(args: argparse.Namespace) -> None:
+    data = load_workspace(args.workspace)
+    set_target_structure_hypothesis(
+        data,
+        load_typology(args.typology),
+        args.target_structure_id,
+        basis=args.basis,
+    )
+    save_workspace(args.workspace, data)
+    print(args.target_structure_id)
 
 
 def cmd_audit_living_lab(args: argparse.Namespace) -> None:
@@ -1356,6 +1619,28 @@ def build_parser() -> argparse.ArgumentParser:
     inspect.add_argument("inventory", type=Path)
     inspect.add_argument("candidate_id")
 
+    list_target_structures = sub.add_parser(
+        "list-target-structures",
+        help=(
+            "show the provisional target-side structure vocabulary without selecting "
+            "a framework"
+        ),
+    )
+    list_target_structures.add_argument("typology", type=Path)
+    list_target_structures.set_defaults(func=cmd_list_target_structures)
+
+    structure_lookup = sub.add_parser(
+        "structure-lookup",
+        help=(
+            "show exact typology mappings for explicit target-structure ids without "
+            "semantic classification, scoring, or ranking"
+        ),
+    )
+    structure_lookup.add_argument("typology", type=Path)
+    structure_lookup.add_argument("inventory", type=Path)
+    structure_lookup.add_argument("target_structure_id", nargs="+")
+    structure_lookup.set_defaults(func=cmd_structure_lookup)
+
     shortlist = sub.add_parser("shortlist")
     shortlist.add_argument("inventory", type=Path)
     shortlist.add_argument("term")
@@ -1406,6 +1691,19 @@ def build_parser() -> argparse.ArgumentParser:
     audit_living_lab.add_argument("workspace", type=Path)
     audit_living_lab.add_argument("living_lab_round", type=Path)
     audit_living_lab.set_defaults(func=cmd_audit_living_lab)
+
+    set_target_structure = sub.add_parser(
+        "set-target-structure",
+        help=(
+            "record an explicit provisional target-structure hypothesis in the "
+            "selection workspace"
+        ),
+    )
+    set_target_structure.add_argument("workspace", type=Path)
+    set_target_structure.add_argument("typology", type=Path)
+    set_target_structure.add_argument("target_structure_id")
+    set_target_structure.add_argument("--basis")
+    set_target_structure.set_defaults(func=cmd_set_target_structure)
 
     set_candidate = sub.add_parser("set-candidate")
     set_candidate.add_argument("workspace", type=Path)
@@ -1486,6 +1784,9 @@ def main() -> None:
     args = parser.parse_args()
     try:
         if args.command in {
+            "list-target-structures",
+            "structure-lookup",
+            "set-target-structure",
             "audit-map",
             "audit-living-lab",
             "set-candidate",
