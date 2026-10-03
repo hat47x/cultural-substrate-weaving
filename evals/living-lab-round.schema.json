@@ -341,8 +341,78 @@
         },
         "notes": {
           "type": "string"
+        },
+        "pre_contact_relation": {
+          "$ref": "#/$defs/pre_contact_relation"
         }
       }
+    },
+    "pre_contact_relation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "state",
+        "source_type",
+        "evidence_refs"
+      ],
+      "properties": {
+        "state": {
+          "enum": [
+            "not_checked",
+            "already_explicit",
+            "reframed_existing",
+            "newly_explicit",
+            "unclear"
+          ]
+        },
+        "source_type": {
+          "enum": [
+            "user",
+            "ai",
+            "external",
+            "mixed",
+            "unknown"
+          ]
+        },
+        "evidence_refs": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "uniqueItems": true
+        },
+        "statement": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "state": {
+                "enum": [
+                  "already_explicit",
+                  "reframed_existing",
+                  "newly_explicit",
+                  "unclear"
+                ]
+              }
+            },
+            "required": [
+              "state"
+            ]
+          },
+          "then": {
+            "properties": {
+              "evidence_refs": {
+                "minItems": 1
+              }
+            }
+          }
+        }
+      ]
     }
   },
   "required": [

@@ -109,6 +109,11 @@ def summarize(records: list[dict[str, Any]]) -> dict[str, Any]:
     catalytic_delta_return_states = [
         delta["target_return"]["state"] for delta in catalytic_deltas
     ]
+    catalytic_delta_pre_contact_states = [
+        delta["pre_contact_relation"]["state"]
+        for delta in catalytic_deltas
+        if isinstance(delta.get("pre_contact_relation"), dict)
+    ]
     catalytic_delta_user_dispositions = [
         delta["user_disposition"]["state"]
         for delta in catalytic_deltas
@@ -142,6 +147,9 @@ def summarize(records: list[dict[str, Any]]) -> dict[str, Any]:
             "catalytic_delta_kinds": _counter(catalytic_delta_kinds),
             "catalytic_delta_target_return_states": _counter(
                 catalytic_delta_return_states
+            ),
+            "catalytic_delta_pre_contact_states": _counter(
+                catalytic_delta_pre_contact_states
             ),
             "catalytic_delta_user_dispositions": _counter(
                 catalytic_delta_user_dispositions

@@ -109,6 +109,10 @@ class LivingLabSummaryTests(unittest.TestCase):
             {"target_weakened": 1},
         )
         self.assertEqual(
+            summary["inventory"]["catalytic_delta_pre_contact_states"],
+            {"reframed_existing": 1},
+        )
+        self.assertEqual(
             summary["inventory"]["catalytic_delta_user_dispositions"],
             {"modified": 1},
         )

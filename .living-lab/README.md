@@ -51,11 +51,12 @@ In schema 0.2, `artifact_traces` records provenance and target return without tu
 - `delta_ref`には、後から同じ候補を追える安定した参照を使う。
 - `kind`にはselection workspaceのexit recordと同じ語彙を使う。
 - `framework_refs`を必ず残す。selection workspaceを使った場合は`selection_refs`、具体的な操作が分かる場合は`operation_refs`も残す。
+- 接触前の対象側材料と比較できる場合は`pre_contact_relation`を記録する。`already_explicit`、`reframed_existing`、`newly_explicit`、`unclear`を区別し、評価した場合は接触前材料の`evidence_refs`を残す。比較できない場合は省略するか`not_checked`とし、noveltyを推測しない。
 - 候補が成果物へ具体化した場合だけ`artifact_refs`を付ける。成果物にならなかった問いや残差も消さない。
 - `target_return`は必須とする。まだ対象へ戻していなければ`not_checked`とし、支持・弱化・棄却を記録する場合は対象側の`evidence_refs`を残す。
 - `user_disposition`は、利用者が候補を採用、修正、撤回したことを実際に観測できた場合だけ記録する。
 
-この記録からframeworkの「発見数」「勝率」「有用性」は算出しません。確認するのは、新しい候補が出たことだけではなく、対象へ戻したあと何が残り、何が弱まり、何が棄却されたかです。判断するときは元資料へ戻ります。
+この記録からframeworkの「発見数」「勝率」「有用性」は算出しません。`newly_explicit`も、それだけで有用性や因果効果を意味しません。確認するのは、新しい候補が出たことだけではなく、対象へ戻したあと何が残り、何が弱まり、何が棄却されたかです。判断するときは元資料へ戻ります。
 
 `artifact_traces`とは単位が異なります。`catalytic_deltas`は問い、区別、関係、残差などの発見候補を追い、`artifact_traces`は下書き、設計案、KJスナップショットなどの成果物を追います。一つのdeltaが複数のartifactへつながる場合も、artifactにならず問いとして残る場合もあります。
 

@@ -926,6 +926,7 @@ def audit_living_lab_payload(
     delta_operations: list[str] = []
     artifact_operations: list[str] = []
     delta_kinds: list[str] = []
+    delta_pre_contact_states: list[str] = []
     delta_target_return_states: list[str] = []
     delta_user_dispositions: list[str] = []
     framework_labels: list[str] = []
@@ -961,6 +962,14 @@ def audit_living_lab_payload(
         if kind:
             _append_unique(delta_kinds, [kind])
 
+        pre_contact_relation = delta.get("pre_contact_relation")
+        if not isinstance(pre_contact_relation, dict):
+            pre_contact_relation = None
+        if pre_contact_relation is not None:
+            state = str(pre_contact_relation.get("state", "")).strip()
+            if state:
+                _append_unique(delta_pre_contact_states, [state])
+
         target_return = delta.get("target_return")
         if not isinstance(target_return, dict):
             target_return = {}
@@ -984,6 +993,7 @@ def audit_living_lab_payload(
             "selection_refs": selection_refs,
             "operation_refs": operations,
             "artifact_refs": [str(value) for value in delta.get("artifact_refs", [])],
+            "pre_contact_relation": pre_contact_relation,
             "target_return": target_return,
             "user_disposition": user_disposition,
         })
@@ -1064,6 +1074,7 @@ def audit_living_lab_payload(
         delta_operations_for_candidate: list[str] = []
         artifact_operations_for_candidate: list[str] = []
         delta_kinds_for_candidate: list[str] = []
+        delta_pre_contact_states_for_candidate: list[str] = []
         delta_return_states_for_candidate: list[str] = []
         delta_dispositions_for_candidate: list[str] = []
         return_states_for_candidate: list[str] = []
@@ -1082,6 +1093,14 @@ def audit_living_lab_payload(
             kind = str(delta.get("kind", "")).strip()
             if kind:
                 _append_unique(delta_kinds_for_candidate, [kind])
+            pre_contact = delta.get("pre_contact_relation")
+            if isinstance(pre_contact, dict):
+                pre_contact_state = str(pre_contact.get("state", "")).strip()
+                if pre_contact_state:
+                    _append_unique(
+                        delta_pre_contact_states_for_candidate,
+                        [pre_contact_state],
+                    )
             state = str(delta["target_return"].get("state", "")).strip()
             if state:
                 _append_unique(delta_return_states_for_candidate, [state])
@@ -1163,6 +1182,7 @@ def audit_living_lab_payload(
                 for trace in artifacts_for_candidate
                 if str(trace.get("artifact_ref", "")).strip()
             ],
+            "delta_pre_contact_states": delta_pre_contact_states_for_candidate,
             "delta_target_return_states": delta_return_states_for_candidate,
             "delta_user_dispositions": delta_dispositions_for_candidate,
             "target_return_states": return_states_for_candidate,
@@ -1203,7 +1223,7 @@ def audit_living_lab_payload(
         "interpretation_boundary": (
             "This is an exact-string provenance inventory joining recorded selection "
             "reasoning to one Living Lab round. Presence or absence of a contact, "
-            "operation, catalytic delta, artifact, target-return state, or user disposition does not "
+            "operation, catalytic delta, pre-contact relation, artifact, target-return state, or user disposition does not "
             "establish usefulness, causation, correctness, guardrail compliance, or "
             "whether a framework should be activated. Return to the recorded target "
             "material and user evidence for interpretation."

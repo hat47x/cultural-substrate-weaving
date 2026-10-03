@@ -74,12 +74,15 @@ CATALYTIC_DELTA_REQUIRED = {
     "target_return",
 }
 CATALYTIC_DELTA_ALLOWED = CATALYTIC_DELTA_REQUIRED | {
+    "pre_contact_relation",
     "selection_refs",
     "operation_refs",
     "artifact_refs",
     "user_disposition",
     "notes",
 }
+PRE_CONTACT_RELATION_REQUIRED = {"state", "source_type", "evidence_refs"}
+PRE_CONTACT_RELATION_ALLOWED = PRE_CONTACT_RELATION_REQUIRED | {"statement"}
 TARGET_RETURN_REQUIRED = {"state", "source_type", "evidence_refs"}
 TARGET_RETURN_ALLOWED = TARGET_RETURN_REQUIRED | {"statement"}
 USER_DISPOSITION_REQUIRED = {"state"}
@@ -133,6 +136,13 @@ FRAMEWORK_DERIVED_ARTIFACT_ORIGINS = {
     "framework_generated",
     "cross_field_emergent",
     "mixed",
+}
+PRE_CONTACT_RELATION_STATES = {
+    "not_checked",
+    "already_explicit",
+    "reframed_existing",
+    "newly_explicit",
+    "unclear",
 }
 TARGET_RETURN_STATES = {
     "not_checked",
@@ -260,6 +270,34 @@ def _validate_measurement(value: Any, label: str) -> None:
             _require_string(measurement[field], f"{label}.{field}")
 
 
+def _validate_pre_contact_relation(value: Any, label: str) -> dict[str, Any]:
+    relation = _require_object(value, label)
+    _check_keys(
+        relation,
+        PRE_CONTACT_RELATION_REQUIRED,
+        PRE_CONTACT_RELATION_ALLOWED,
+        label,
+    )
+    _check_enum(
+        relation["state"],
+        PRE_CONTACT_RELATION_STATES,
+        f"{label}.state",
+    )
+    _check_enum(relation["source_type"], SOURCE_TYPES, f"{label}.source_type")
+    _check_string_list(
+        relation["evidence_refs"],
+        f"{label}.evidence_refs",
+        unique=True,
+    )
+    if relation["state"] != "not_checked" and not relation["evidence_refs"]:
+        raise ValidationError(
+            f"{label}.evidence_refs must contain evidence when pre-contact relation was evaluated"
+        )
+    if "statement" in relation:
+        _require_nonempty_string(relation["statement"], f"{label}.statement")
+    return relation
+
+
 def _validate_target_return(value: Any, label: str) -> dict[str, Any]:
     target_return = _require_object(value, label)
     _check_keys(target_return, TARGET_RETURN_REQUIRED, TARGET_RETURN_ALLOWED, label)
@@ -351,6 +389,11 @@ def _validate_catalytic_delta(value: Any, label: str) -> dict[str, Any]:
             delta.get(field, []),
             f"{label}.{field}",
             unique=True,
+        )
+    if "pre_contact_relation" in delta:
+        _validate_pre_contact_relation(
+            delta["pre_contact_relation"],
+            f"{label}.pre_contact_relation",
         )
     _validate_target_return(delta["target_return"], f"{label}.target_return")
     if "user_disposition" in delta:

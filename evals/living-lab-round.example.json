@@ -135,6 +135,14 @@
         "state": "modified",
         "source_ref": "chat:example-source",
         "notes": "The user retained the de-bound question rather than the original framework-shaped wording."
+      },
+      "pre_contact_relation": {
+        "state": "reframed_existing",
+        "source_type": "mixed",
+        "evidence_refs": [
+          "chat:example-source"
+        ],
+        "statement": "The target already contained the concern, while framework contact made a condition question explicit."
       }
     }
   ]

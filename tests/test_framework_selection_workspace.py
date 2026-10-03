@@ -749,6 +749,11 @@ class FrameworkSelectionWorkspaceTest(unittest.TestCase):
                     "kind": "question",
                     "statement": "Which upstream condition actually survives target return?",
                     "framework_refs": ["alpha"],
+                    "pre_contact_relation": {
+                        "state": "reframed_existing",
+                        "source_type": "mixed",
+                        "evidence_refs": ["artifact:baseline-alpha"],
+                    },
                     "selection_refs": [
                         "selection://living-lab-audit/framework-choice"
                     ],
@@ -835,6 +840,10 @@ class FrameworkSelectionWorkspaceTest(unittest.TestCase):
         self.assertEqual(payload["delta_operations"], ["condition-chain"])
         self.assertEqual(payload["delta_kinds"], ["question"])
         self.assertEqual(
+            payload["delta_pre_contact_states"],
+            ["reframed_existing"],
+        )
+        self.assertEqual(
             payload["delta_target_return_states"],
             ["target_supported"],
         )
@@ -860,6 +869,10 @@ class FrameworkSelectionWorkspaceTest(unittest.TestCase):
             ["delta:alpha-condition-question"],
         )
         self.assertEqual(audits["alpha"]["delta_kinds"], ["question"])
+        self.assertEqual(
+            audits["alpha"]["delta_pre_contact_states"],
+            ["reframed_existing"],
+        )
         self.assertEqual(
             audits["alpha"]["delta_target_return_states"],
             ["target_supported"],

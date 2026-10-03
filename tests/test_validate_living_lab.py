@@ -92,12 +92,21 @@ class LivingLabValidationTests(unittest.TestCase):
 
         artifact_trace = self.round_schema["$defs"]["artifact_trace"]
         catalytic_delta = self.round_schema["$defs"]["catalytic_delta"]
+        pre_contact_relation = self.round_schema["$defs"]["pre_contact_relation"]
         target_return = self.round_schema["$defs"]["target_return"]
         user_disposition = self.round_schema["$defs"]["user_disposition"]
         self.assertEqual(MODULE.ARTIFACT_TRACE_REQUIRED, set(artifact_trace["required"]))
         self.assertEqual(MODULE.ARTIFACT_TRACE_ALLOWED, set(artifact_trace["properties"]))
         self.assertEqual(MODULE.CATALYTIC_DELTA_REQUIRED, set(catalytic_delta["required"]))
         self.assertEqual(MODULE.CATALYTIC_DELTA_ALLOWED, set(catalytic_delta["properties"]))
+        self.assertEqual(
+            MODULE.PRE_CONTACT_RELATION_REQUIRED,
+            set(pre_contact_relation["required"]),
+        )
+        self.assertEqual(
+            MODULE.PRE_CONTACT_RELATION_ALLOWED,
+            set(pre_contact_relation["properties"]),
+        )
         self.assertEqual(MODULE.TARGET_RETURN_REQUIRED, set(target_return["required"]))
         self.assertEqual(MODULE.TARGET_RETURN_ALLOWED, set(target_return["properties"]))
         self.assertEqual(
@@ -144,6 +153,10 @@ class LivingLabValidationTests(unittest.TestCase):
         self.assertEqual(
             MODULE.CATALYTIC_DELTA_KINDS,
             set(catalytic_delta["properties"]["kind"]["enum"]),
+        )
+        self.assertEqual(
+            MODULE.PRE_CONTACT_RELATION_STATES,
+            set(pre_contact_relation["properties"]["state"]["enum"]),
         )
         self.assertEqual(
             MODULE.TARGET_RETURN_STATES,
@@ -343,6 +356,15 @@ class LivingLabValidationTests(unittest.TestCase):
         record = copy.deepcopy(self.round_record)
         record["catalytic_deltas"][0]["framework_refs"] = []
         with self.assertRaises(MODULE.ValidationError):
+            MODULE.validate_round(record)
+
+    def test_catalytic_delta_evaluated_pre_contact_relation_requires_evidence(self) -> None:
+        record = copy.deepcopy(self.round_record)
+        record["catalytic_deltas"][0]["pre_contact_relation"]["evidence_refs"] = []
+        with self.assertRaisesRegex(
+            MODULE.ValidationError,
+            "pre-contact relation was evaluated",
+        ):
             MODULE.validate_round(record)
 
     def test_catalytic_delta_evaluated_return_requires_evidence(self) -> None:
