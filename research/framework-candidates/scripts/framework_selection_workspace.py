@@ -1069,6 +1069,25 @@ def audit_living_lab_payload(
                 contact_operations_for_candidate,
                 contact["operations"],
             )
+        for delta in deltas_for_candidate:
+            _append_unique(
+                delta_operations_for_candidate,
+                delta["operation_refs"],
+            )
+            kind = str(delta.get("kind", "")).strip()
+            if kind:
+                _append_unique(delta_kinds_for_candidate, [kind])
+            state = str(delta["target_return"].get("state", "")).strip()
+            if state:
+                _append_unique(delta_return_states_for_candidate, [state])
+            disposition = delta.get("user_disposition")
+            if isinstance(disposition, dict):
+                disposition_state = str(disposition.get("state", "")).strip()
+                if disposition_state:
+                    _append_unique(
+                        delta_dispositions_for_candidate,
+                        [disposition_state],
+                    )
         for trace in artifacts_for_candidate:
             _append_unique(
                 artifact_operations_for_candidate,
@@ -1098,6 +1117,26 @@ def audit_living_lab_payload(
                 value
                 for value in planned_for_candidate
                 if value not in contact_operations_for_candidate
+            ],
+            "contacted_not_delta_traced_exact": [
+                value
+                for value in contact_operations_for_candidate
+                if value not in delta_operations_for_candidate
+            ],
+            "delta_not_contacted_exact": [
+                value
+                for value in delta_operations_for_candidate
+                if value not in contact_operations_for_candidate
+            ],
+            "delta_not_artifact_traced_exact": [
+                value
+                for value in delta_operations_for_candidate
+                if value not in artifact_operations_for_candidate
+            ],
+            "artifact_not_delta_traced_exact": [
+                value
+                for value in artifact_operations_for_candidate
+                if value not in delta_operations_for_candidate
             ],
             "contacted_not_artifact_traced_exact": [
                 value

@@ -846,6 +846,10 @@ class FrameworkSelectionWorkspaceTest(unittest.TestCase):
             payload["planned_not_contacted_exact"],
             ["node-perspective"],
         )
+        self.assertEqual(payload["contacted_not_delta_traced_exact"], [])
+        self.assertEqual(payload["delta_not_contacted_exact"], [])
+        self.assertEqual(payload["delta_not_artifact_traced_exact"], [])
+        self.assertEqual(payload["artifact_not_delta_traced_exact"], [])
 
         audits = {
             row["candidate_id"]: row
@@ -860,6 +864,15 @@ class FrameworkSelectionWorkspaceTest(unittest.TestCase):
             audits["alpha"]["delta_target_return_states"],
             ["target_supported"],
         )
+        self.assertEqual(
+            audits["alpha"]["delta_operations"],
+            ["condition-chain"],
+        )
+        self.assertEqual(audits["alpha"]["delta_user_dispositions"], ["adopted"])
+        self.assertEqual(audits["alpha"]["contacted_not_delta_traced_exact"], [])
+        self.assertEqual(audits["alpha"]["delta_not_contacted_exact"], [])
+        self.assertEqual(audits["alpha"]["delta_not_artifact_traced_exact"], [])
+        self.assertEqual(audits["alpha"]["artifact_not_delta_traced_exact"], [])
         self.assertEqual(
             audits["alpha"]["linked_artifact_refs"],
             ["artifact:alpha-1"],
