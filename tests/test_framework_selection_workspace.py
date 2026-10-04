@@ -368,6 +368,38 @@ class FrameworkSelectionWorkspaceTest(unittest.TestCase):
                 payload["candidate_order_note"],
             )
 
+    def test_real_typology_structure_contrast_keeps_known_candidates_without_ranking(self) -> None:
+        inventory = workspace.load_inventory(
+            ROOT / "research" / "framework-candidates" / "cognitive-operation-inventory.json"
+        )
+        typology = workspace.load_typology(
+            ROOT / "research" / "efficacy-cheap-llm" / "framework-typology.json"
+        )
+        payload = workspace.target_structure_contrast_payload(
+            typology,
+            inventory,
+            ["TS-condition-chain", "TS-provenance-chain"],
+        )
+        candidate_ids = [
+            row["candidate"]["id"]
+            for row in payload["candidates"]
+        ]
+        self.assertIn("dependent-origination", candidate_ids)
+        self.assertIn("hadith-isnad-matn", candidate_ids)
+        inventory_order = {
+            row["id"]: index
+            for index, row in enumerate(workspace.candidates(inventory))
+        }
+        self.assertEqual(
+            candidate_ids,
+            sorted(candidate_ids, key=inventory_order.__getitem__),
+        )
+        self.assertTrue(payload["no_framework_option"]["available"])
+        encoded = json.dumps(payload).casefold()
+        self.assertNotIn('"score"', encoded)
+        self.assertNotIn('"rank"', encoded)
+        self.assertNotIn('"recommendation"', encoded)
+
     def test_shortlist_preserves_inventory_order_without_score(self) -> None:
         payload = workspace.shortlist_payload(FIXTURE, "threshold", "primitive", None)
         self.assertEqual(
