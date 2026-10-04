@@ -26,6 +26,7 @@ This map tracks structural diversity. It does not rank frameworks or claim that 
 | whole-part reciprocity / multi-perspective network | — | Huayan | primary-text and lineage separation |
 | axis/extents reframing vs differentiated mediation | — | Sefer Yetzirah dimensions; theosophical sefirot (both profile-ready) | test distinctness after de-binding while keeping the two historical structures separate |
 | explicit argument / inference structure | Nyāya inference | — | later debate/fallacy layers without flattening Indian logic |
+| adversarial objection preservation / pointwise reply | — | Scholastic disputed question (profile-ready) | compare against ordinary design review, stasis, and Nyāya; do not import master authority or force premature determination |
 | social role / relation-conditioned conduct | Confucian role / li | — | additional role systems that do not duplicate relation mapping |
 | explicit threshold crossing / incorporation / preparation | Shinto shrine threshold / purification | Rites of Passage | longer liminal/incorporation processes and other culture-specific threshold systems |
 | spatial center-periphery / nested boundary | Tibetan Buddhist mandala | Buddhist mandala umbrella | other lineage-specific spatial systems without pan-Buddhist collapse |
