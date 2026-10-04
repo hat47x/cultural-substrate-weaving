@@ -211,6 +211,127 @@ def target_structure_candidates_payload(
     }
 
 
+def target_structure_contrast_payload(
+    typology: dict[str, Any],
+    inventory: dict[str, Any],
+    structure_ids: list[str],
+) -> dict[str, Any]:
+    lookup = target_structure_candidates_payload(
+        typology,
+        inventory,
+        structure_ids,
+    )
+    requested = [
+        str(item["id"])
+        for item in lookup["target_structures"]
+    ]
+    definitions = {
+        str(item["id"]): str(item["definition"])
+        for item in lookup["target_structures"]
+    }
+
+    mapping_by_id = {
+        str(row["id"]): row
+        for row in typology["frameworks"]
+    }
+    displayed = [
+        row
+        for row in candidates(inventory)
+        if any(
+            structure_id in mapping_by_id.get(str(row["id"]), {}).get("ts", [])
+            for structure_id in requested
+        )
+    ]
+    operation_sets = {
+        str(row["id"]): set(map(str, row.get("cognitive_operations", [])))
+        for row in displayed
+    }
+
+    rows = []
+    for candidate in displayed:
+        candidate_id = str(candidate["id"])
+        mapping = mapping_by_id[candidate_id]
+        mapped = [
+            structure_id
+            for structure_id in requested
+            if structure_id in mapping.get("ts", [])
+        ]
+        other_operations: set[str] = set()
+        overlap = []
+        for other in displayed:
+            other_id = str(other["id"])
+            if other_id == candidate_id:
+                continue
+            other_set = operation_sets[other_id]
+            other_operations.update(other_set)
+            common = sorted(operation_sets[candidate_id] & other_set)
+            if common:
+                overlap.append({
+                    "candidate_id": other_id,
+                    "exact_common_operations": common,
+                })
+
+        rows.append({
+            "candidate": candidate_summary(candidate),
+            "mapped_target_structures": [
+                {
+                    "id": structure_id,
+                    "definition": definitions[structure_id],
+                }
+                for structure_id in mapped
+            ],
+            "unmapped_requested_target_structures": [
+                structure_id
+                for structure_id in requested
+                if structure_id not in mapped
+            ],
+            "mapping": {
+                "super_family": mapping.get("sf"),
+                "super_family_label": typology.get("super_families", {}).get(
+                    mapping.get("sf")
+                ),
+                "structure_kind": mapping.get("structure_kind"),
+            },
+            "exact_unique_operations_vs_displayed": sorted(
+                operation_sets[candidate_id] - other_operations
+            ),
+            "exact_operation_overlap": overlap,
+        })
+
+    return {
+        "format": "csw.target-structure-contrast/v0",
+        "typology_date": typology.get("date"),
+        "typology_status": typology.get("status"),
+        "target_structures": [
+            {
+                "id": structure_id,
+                "definition": definitions[structure_id],
+            }
+            for structure_id in requested
+        ],
+        "candidates": rows,
+        "no_framework_option": {
+            "available": True,
+            "reasoning_prompt": (
+                "Exact typology mappings are recall material only. "
+                "Keep the target-side baseline and non-activation available "
+                "when framework contact adds no useful cognitive job."
+            ),
+        },
+        "candidate_order_note": (
+            "Candidates preserve framework inventory order. "
+            "Mapping breadth, readiness, source count, and operation count are not rankings."
+        ),
+        "interpretation_boundary": (
+            "This view mechanically joins exact target-structure mappings with exact-string "
+            "operation overlap. It does not infer semantic fit, novelty, complementarity, "
+            "activation priority, or recommendation. A candidate mapped to more requested "
+            "structures is not therefore better, and an exact-unique operation label is not "
+            "therefore a useful or novel operation for the target."
+        ),
+    }
+
+
 def candidates(data: dict[str, Any]) -> list[dict[str, Any]]:
     return list(data.get("candidates", []))
 
@@ -1482,6 +1603,16 @@ def cmd_structure_lookup(args: argparse.Namespace) -> None:
     )
 
 
+def cmd_structure_contrast(args: argparse.Namespace) -> None:
+    print_json(
+        target_structure_contrast_payload(
+            load_typology(args.typology),
+            load_inventory(args.inventory),
+            args.target_structure_id,
+        )
+    )
+
+
 def cmd_set_target_structure(args: argparse.Namespace) -> None:
     data = load_workspace(args.workspace)
     set_target_structure_hypothesis(
@@ -1640,6 +1771,18 @@ def build_parser() -> argparse.ArgumentParser:
     structure_lookup.add_argument("inventory", type=Path)
     structure_lookup.add_argument("target_structure_id", nargs="+")
     structure_lookup.set_defaults(func=cmd_structure_lookup)
+
+    structure_contrast = sub.add_parser(
+        "structure-contrast",
+        help=(
+            "compare candidates mapped to explicit target-structure ids using exact "
+            "mapping and exact operation overlap only, without scoring or ranking"
+        ),
+    )
+    structure_contrast.add_argument("typology", type=Path)
+    structure_contrast.add_argument("inventory", type=Path)
+    structure_contrast.add_argument("target_structure_id", nargs="+")
+    structure_contrast.set_defaults(func=cmd_structure_contrast)
 
     shortlist = sub.add_parser("shortlist")
     shortlist.add_argument("inventory", type=Path)
