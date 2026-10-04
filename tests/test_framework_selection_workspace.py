@@ -290,6 +290,84 @@ class FrameworkSelectionWorkspaceTest(unittest.TestCase):
             )
             self.assertIn("not a ranking", payload["candidate_order_note"])
 
+    def test_target_structure_contrast_exposes_mapping_and_exact_operation_overlap(self) -> None:
+        payload = workspace.target_structure_contrast_payload(
+            TYPOLOGY_FIXTURE,
+            FIXTURE,
+            ["TS-condition-chain", "TS-node-view"],
+        )
+        self.assertEqual(payload["format"], "csw.target-structure-contrast/v0")
+        self.assertEqual(
+            [row["candidate"]["id"] for row in payload["candidates"]],
+            ["alpha", "beta"],
+        )
+
+        alpha, beta = payload["candidates"]
+        self.assertEqual(
+            [item["id"] for item in alpha["mapped_target_structures"]],
+            ["TS-condition-chain"],
+        )
+        self.assertEqual(
+            alpha["unmapped_requested_target_structures"],
+            ["TS-node-view"],
+        )
+        self.assertEqual(
+            alpha["exact_unique_operations_vs_displayed"],
+            ["condition-chain"],
+        )
+        self.assertEqual(
+            alpha["exact_operation_overlap"],
+            [
+                {
+                    "candidate_id": "beta",
+                    "exact_common_operations": ["boundary-probe"],
+                }
+            ],
+        )
+        self.assertEqual(
+            beta["exact_unique_operations_vs_displayed"],
+            ["node-perspective"],
+        )
+        self.assertTrue(payload["no_framework_option"]["available"])
+        self.assertIn(
+            "not rankings",
+            payload["candidate_order_note"],
+        )
+
+        encoded = json.dumps(payload).casefold()
+        self.assertNotIn('"score"', encoded)
+        self.assertNotIn('"rank"', encoded)
+        self.assertNotIn('"recommendation"', encoded)
+        self.assertIn(
+            "does not infer semantic fit",
+            payload["interpretation_boundary"],
+        )
+
+    def test_cli_structure_contrast_keeps_no_framework_and_inventory_order(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            inventory = Path(tmp) / "inventory.json"
+            typology = Path(tmp) / "typology.json"
+            inventory.write_text(json.dumps(FIXTURE), encoding="utf-8")
+            typology.write_text(json.dumps(TYPOLOGY_FIXTURE), encoding="utf-8")
+            payload = json.loads(
+                self.run_tool(
+                    "structure-contrast",
+                    str(typology),
+                    str(inventory),
+                    "TS-condition-chain",
+                    "TS-node-view",
+                ).stdout
+            )
+            self.assertEqual(
+                [row["candidate"]["id"] for row in payload["candidates"]],
+                ["alpha", "beta"],
+            )
+            self.assertTrue(payload["no_framework_option"]["available"])
+            self.assertIn(
+                "inventory order",
+                payload["candidate_order_note"],
+            )
+
     def test_shortlist_preserves_inventory_order_without_score(self) -> None:
         payload = workspace.shortlist_payload(FIXTURE, "threshold", "primitive", None)
         self.assertEqual(
