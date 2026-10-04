@@ -76,6 +76,8 @@ python "$TOOL" set-non-activation /tmp/selection.json \
 
 python "$TOOL" review /tmp/selection.json
 
+python "$TOOL" audit-target-structure /tmp/selection.json "$TYPOLOGY" "$INVENTORY"
+
 python "$TOOL" set-cross-framework /tmp/selection.json \
   --primary-job "成立条件を開く" \
   --second-job "part/whole identityを揺らす" \
@@ -102,6 +104,8 @@ The provisional target-structure vocabulary is intentionally a separate first st
 
 `set-target-structure` records an exact target-structure ID, its current typology definition, the typology schema/date/status, and an optional target-side basis in the saved workspace. Keeping the typology snapshot metadata matters because this classification is provisional and may change. The record is a hypothesis, not a diagnosis or evidence that a mapped framework fits. It remains separate from candidate role assignment, no-framework consideration, and activation.
 
+`audit-target-structure` reconnects a saved workspace to the typology only when the stored hypothesis snapshot still matches the supplied typology schema/date/status and definition. In that case it reports which workspace candidates are exact-mapped to the recorded hypotheses, which selected candidates sit outside those exact mappings, and which exact-mapped candidates were not placed in the workspace. None of those states are pass/fail: selecting outside the provisional typology can be deliberate, and omitting a mapped candidate is not an error. If the stored snapshot has drifted, the audit stops candidate comparison rather than reinterpret historical selection reasoning through a newer typology.
+
 The `recall` command is the bridge from an ordinary-language missing cognitive function to the adopted corpus. It uses only explicit `selection_cues` stored in the inventory, performs punctuation/spacing normalization, preserves inventory order, and defaults to `adopted` candidates. It does not use embeddings, semantic similarity, scoring, or automatic routing. To inspect a research-only readiness state, pass `--readiness` explicitly.
 
 The shortlist preserves inventory order and computes no score. The contrast is exact-string only and does not infer semantic equivalence. The worksheet deliberately starts with role, intended cognitive job, near-neighbor difference, target-return questions, de-bound target language, and revision conditions unfilled.
@@ -126,6 +130,7 @@ target-side baseline
   -> optionally state an exact target-structure hypothesis
   -> inspect the typology mapping without ranking
   -> when several target-structure hypotheses remain plausible, contrast exact mappings/operation overlap without ranking
+  -> after candidate reasoning is saved, audit whether the recorded typology snapshot still matches before comparing selection against mappings
   -> shortlist without ranking
   -> contrast plausible near-neighbors
   -> keep no-framework as an explicit option
