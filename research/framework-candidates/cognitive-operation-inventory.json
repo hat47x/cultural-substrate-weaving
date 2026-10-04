@@ -2190,6 +2190,77 @@
       "negative_example_paths": [
         "research/framework-candidates/worked-examples/panini-ashtadhyayi-rule-architecture-negative.md"
       ]
+    },
+    {
+      "id": "scholastic-disputed-question",
+      "names": [
+        "Scholastic disputed question",
+        "quaestio disputata",
+        "scholastic disputation",
+        "スコラ学の討論・問答形式"
+      ],
+      "readiness": "profile-ready",
+      "structural_primitives": [
+        "explicit question or thesis",
+        "multiple distinct objections",
+        "contrary position or consideration",
+        "determination / main response",
+        "pointwise replies to prior objections",
+        "institutionally structured disputation"
+      ],
+      "cognitive_operations": [
+        "question-boundary",
+        "objection-preservation",
+        "adverse-case-coverage",
+        "pointwise-reply",
+        "distinction-before-dismissal",
+        "unresolved-objection-carry-forward"
+      ],
+      "useful_for": [
+        "preserving materially different objections through a design or policy decision",
+        "checking whether a final rationale answers every earlier objection",
+        "turning unanswered objections into explicit residual review items"
+      ],
+      "do_not_assume": [
+        "the master's historical determination is target-side truth or authority",
+        "a sed contra authority quotation is target evidence",
+        "all medieval scholastic practice used one invariant disputed-question form",
+        "every exploratory task should be forced into one thesis and its objections",
+        "all objections can or should be reconciled"
+      ],
+      "sources": [
+        {
+          "kind": "scholarly-reference",
+          "title": "Literary Forms of Medieval Philosophy — Disputation, Quaestio, Quodlibetal Question",
+          "url": "https://plato.stanford.edu/entries/medieval-literary/"
+        },
+        {
+          "kind": "scholarly-reference",
+          "title": "Thomas Aquinas — Stanford Encyclopedia of Philosophy",
+          "url": "https://plato.stanford.edu/entries/aquinas/"
+        },
+        {
+          "kind": "primary-work-translation",
+          "title": "Summa Theologiae I, q.2, a.2 — Whether it can be demonstrated that God exists?",
+          "url": "https://www.newadvent.org/summa/1002.htm"
+        }
+      ],
+      "profile_path": "research/framework-candidates/profiles/scholastic-disputed-question.md",
+      "adoption_hold": "compare-with-stasis-nyaya-and-ordinary-design-review",
+      "selection_cues": [
+        "反対論をまとめず個別に残したい",
+        "最終判断が各懸念へ答えたか確認したい",
+        "未回答の反対論を設計残差として残したい",
+        "preserve distinct objections through a determination",
+        "check whether the final rationale answers each objection",
+        "carry unanswered objections forward explicitly"
+      ],
+      "worked_example_paths": [
+        "research/framework-candidates/worked-examples/scholastic-disputed-question.md"
+      ],
+      "negative_example_paths": [
+        "research/framework-candidates/worked-examples/scholastic-disputed-question-negative.md"
+      ]
     }
   ]
 }
