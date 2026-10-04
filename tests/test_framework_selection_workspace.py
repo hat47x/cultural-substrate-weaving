@@ -368,6 +368,164 @@ class FrameworkSelectionWorkspaceTest(unittest.TestCase):
                 payload["candidate_order_note"],
             )
 
+    def test_target_structure_selection_audit_marks_mapped_and_outside_candidates(self) -> None:
+        selection = workspace.worksheet_payload(
+            FIXTURE,
+            "inspect the target-side condition structure",
+            ["alpha", "beta"],
+            "target-side baseline",
+            "selection://audit-target-structure",
+        )
+        workspace.set_target_structure_hypothesis(
+            selection,
+            TYPOLOGY_FIXTURE,
+            "TS-condition-chain",
+            basis="upstream conditions remain unresolved",
+        )
+        payload = workspace.target_structure_selection_audit_payload(
+            selection,
+            TYPOLOGY_FIXTURE,
+            FIXTURE,
+        )
+        self.assertEqual(
+            payload["typology_snapshot_state"],
+            "matching",
+        )
+        self.assertEqual(
+            payload["comparison_state"],
+            "compared_against_matching_typology_snapshot",
+        )
+        audits = {
+            row["candidate_id"]: row
+            for row in payload["candidate_audits"]
+        }
+        self.assertEqual(
+            audits["alpha"]["comparison_state"],
+            "mapped_to_recorded_hypothesis",
+        )
+        self.assertEqual(
+            audits["alpha"]["mapped_target_structures"],
+            ["TS-condition-chain"],
+        )
+        self.assertEqual(
+            audits["beta"]["comparison_state"],
+            "outside_exact_typology_mapping",
+        )
+        self.assertEqual(
+            payload["workspace_candidates_outside_exact_mapping"],
+            ["beta"],
+        )
+        self.assertEqual(
+            payload["mapped_candidates_not_in_workspace"],
+            [],
+        )
+        encoded = json.dumps(payload).casefold()
+        self.assertNotIn('"score"', encoded)
+        self.assertNotIn('"rank"', encoded)
+        self.assertNotIn('"recommendation"', encoded)
+
+    def test_target_structure_selection_audit_stops_on_typology_snapshot_drift(self) -> None:
+        selection = workspace.worksheet_payload(
+            FIXTURE,
+            "inspect the target-side condition structure",
+            ["alpha", "beta"],
+            "target-side baseline",
+            "selection://audit-target-structure-drift",
+        )
+        workspace.set_target_structure_hypothesis(
+            selection,
+            TYPOLOGY_FIXTURE,
+            "TS-condition-chain",
+            basis="upstream conditions remain unresolved",
+        )
+        drifted_typology = json.loads(json.dumps(TYPOLOGY_FIXTURE))
+        drifted_typology["date"] = "2026-10-05"
+        drifted_typology["target_structures"]["TS-condition-chain"] = (
+            "a revised research definition"
+        )
+
+        payload = workspace.target_structure_selection_audit_payload(
+            selection,
+            drifted_typology,
+            FIXTURE,
+        )
+        self.assertEqual(
+            payload["typology_snapshot_state"],
+            "drifted",
+        )
+        self.assertEqual(
+            payload["comparison_state"],
+            "not_compared_due_to_typology_snapshot_drift",
+        )
+        self.assertTrue(
+            all(
+                row["comparison_state"]
+                == "not_compared_due_to_typology_snapshot_drift"
+                for row in payload["candidate_audits"]
+            )
+        )
+        self.assertEqual(
+            payload["workspace_candidates_outside_exact_mapping"],
+            [],
+        )
+        self.assertEqual(
+            payload["mapped_candidates_not_in_workspace"],
+            [],
+        )
+        self.assertFalse(
+            payload["hypotheses"][0]["snapshot_matches_current"],
+        )
+        self.assertIn(
+            "not reinterpreted",
+            payload["interpretation_boundary"],
+        )
+
+    def test_cli_target_structure_selection_audit_preserves_non_activation(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            inventory = Path(tmp) / "inventory.json"
+            typology = Path(tmp) / "typology.json"
+            selection_path = Path(tmp) / "selection.json"
+            inventory.write_text(json.dumps(FIXTURE), encoding="utf-8")
+            typology.write_text(json.dumps(TYPOLOGY_FIXTURE), encoding="utf-8")
+
+            selection = workspace.worksheet_payload(
+                FIXTURE,
+                "inspect the target-side condition structure",
+                ["alpha"],
+                "target-side baseline",
+                "selection://audit-target-structure-cli",
+            )
+            workspace.set_target_structure_hypothesis(
+                selection,
+                TYPOLOGY_FIXTURE,
+                "TS-condition-chain",
+                basis="upstream conditions remain unresolved",
+            )
+            selection["no_framework_option"]["reason"] = (
+                "target-side baseline may already be sufficient"
+            )
+            selection_path.write_text(
+                json.dumps(selection),
+                encoding="utf-8",
+            )
+
+            payload = json.loads(
+                self.run_tool(
+                    "audit-target-structure",
+                    str(selection_path),
+                    str(typology),
+                    str(inventory),
+                ).stdout
+            )
+            self.assertEqual(
+                payload["candidate_audits"][0]["comparison_state"],
+                "mapped_to_recorded_hypothesis",
+            )
+            self.assertEqual(
+                payload["no_framework_option"]["reason"],
+                "target-side baseline may already be sufficient",
+            )
+
     def test_real_typology_structure_contrast_keeps_known_candidates_without_ranking(self) -> None:
         inventory = workspace.load_inventory(
             ROOT / "research" / "framework-candidates" / "cognitive-operation-inventory.json"
