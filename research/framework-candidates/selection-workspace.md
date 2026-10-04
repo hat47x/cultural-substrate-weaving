@@ -2,12 +2,13 @@
 
 Status: research/toolkit / non-ranking / non-routing
 
-As the framework corpus grows, selection itself becomes a cognitive task. This helper externalizes four parts of that task without deciding them:
+As the framework corpus grows, selection itself becomes a cognitive task. This helper externalizes five parts of that task without deciding them:
 
-1. recall adopted candidates from explicit selection cues written in ordinary Japanese or English;
-2. recall candidates that literally mention a needed operation, primitive, or use;
-3. contrast explicitly chosen near-neighbors by exact operation labels;
-4. create an unfilled worksheet that records why each candidate is being considered and how it must return to the target.
+1. state target-side structure hypotheses before framework choice;
+2. compare exact typology mappings and exact operation overlap without ranking;
+3. recall adopted candidates from explicit selection cues written in ordinary Japanese or English;
+4. contrast explicitly chosen near-neighbors by exact operation labels;
+5. create an unfilled worksheet that records why each candidate is being considered and how it must return to the target.
 
 It is not a fit scorer, recommendation engine, or adoption gate.
 
@@ -18,6 +19,10 @@ TOOL=research/framework-candidates/scripts/framework_selection_workspace.py
 
 python "$TOOL" list-target-structures "$TYPOLOGY"
 python "$TOOL" structure-lookup "$TYPOLOGY" "$INVENTORY" TS-condition-chain
+
+python "$TOOL" structure-contrast "$TYPOLOGY" "$INVENTORY" \
+  TS-condition-chain \
+  TS-provenance-chain
 
 python "$TOOL" inspect "$INVENTORY" dependent-origination
 
@@ -71,6 +76,8 @@ python "$TOOL" set-non-activation /tmp/selection.json \
 
 python "$TOOL" review /tmp/selection.json
 
+python "$TOOL" audit-target-structure /tmp/selection.json "$TYPOLOGY" "$INVENTORY"
+
 python "$TOOL" set-cross-framework /tmp/selection.json \
   --primary-job "成立条件を開く" \
   --second-job "part/whole identityを揺らす" \
@@ -93,7 +100,11 @@ python "$TOOL" audit-living-lab /tmp/selection.json /tmp/round.json
 
 The provisional target-structure vocabulary is intentionally a separate first step. `list-target-structures` shows the human-authored target-side vocabulary from the research typology. `structure-lookup` accepts exact target-structure IDs and exposes every mapped framework in framework-inventory order. It does not classify natural language into a target structure and does not choose among the mapped frameworks. This boundary responds to the selection experiments in which direct model/Jev framework choice concentrated on a small number of frameworks: the toolkit makes the target-side structural hypothesis explicit instead of hiding that judgment inside a router.
 
+`structure-contrast` is the next deliberation surface when more than one explicit target-structure hypothesis is still plausible. It takes the union of exact-mapped candidates in inventory order and shows, per candidate, which requested structures it maps to, which it does not, exact-string operation overlap with other displayed candidates, and exact-unique operation labels. These are not fit, novelty, complementarity, or coverage scores. Mapping to more requested structures is not evidence that a candidate is better, and a unique operation label is not evidence that it will be useful. The output therefore keeps a no-framework option visible and leaves activation to the saved worksheet/reasoning step.
+
 `set-target-structure` records an exact target-structure ID, its current typology definition, the typology schema/date/status, and an optional target-side basis in the saved workspace. Keeping the typology snapshot metadata matters because this classification is provisional and may change. The record is a hypothesis, not a diagnosis or evidence that a mapped framework fits. It remains separate from candidate role assignment, no-framework consideration, and activation.
+
+`audit-target-structure` reconnects a saved workspace to the typology only when the stored hypothesis snapshot still matches the supplied typology schema/date/status and definition. In that case it reports which workspace candidates are exact-mapped to the recorded hypotheses, which selected candidates sit outside those exact mappings, and which exact-mapped candidates were not placed in the workspace. None of those states are pass/fail: selecting outside the provisional typology can be deliberate, and omitting a mapped candidate is not an error. If the stored snapshot has drifted, the audit stops candidate comparison rather than reinterpret historical selection reasoning through a newer typology.
 
 The `recall` command is the bridge from an ordinary-language missing cognitive function to the adopted corpus. It uses only explicit `selection_cues` stored in the inventory, performs punctuation/spacing normalization, preserves inventory order, and defaults to `adopted` candidates. It does not use embeddings, semantic similarity, scoring, or automatic routing. To inspect a research-only readiness state, pass `--readiness` explicitly.
 
@@ -118,6 +129,8 @@ target-side baseline
   -> name the missing cognitive function
   -> optionally state an exact target-structure hypothesis
   -> inspect the typology mapping without ranking
+  -> when several target-structure hypotheses remain plausible, contrast exact mappings/operation overlap without ranking
+  -> after candidate reasoning is saved, audit whether the recorded typology snapshot still matches before comparing selection against mappings
   -> shortlist without ranking
   -> contrast plausible near-neighbors
   -> keep no-framework as an explicit option
