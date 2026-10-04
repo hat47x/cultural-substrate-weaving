@@ -658,6 +658,148 @@ def worksheet_payload(
     }
 
 
+def target_structure_selection_audit_payload(
+    workspace: dict[str, Any],
+    typology: dict[str, Any],
+    inventory: dict[str, Any],
+) -> dict[str, Any]:
+    ensure_consideration_fields(workspace)
+    hypotheses = list(workspace.get("target_structure_hypotheses", []))
+    current_typology = {
+        "schema": str(typology.get("schema", "")),
+        "date": str(typology.get("date", "")),
+        "status": str(typology.get("status", "")),
+    }
+
+    hypothesis_audits = []
+    drifted = False
+    for row in hypotheses:
+        structure_id = str(row["id"])
+        source_typology = dict(row.get("source_typology", {}))
+        current_definition = typology["target_structures"].get(structure_id)
+        definition_matches = (
+            isinstance(current_definition, str)
+            and current_definition == row.get("definition")
+        )
+        provenance_matches = all(
+            str(source_typology.get(key, "")) == current_typology[key]
+            for key in ("schema", "date", "status")
+        )
+        snapshot_matches = definition_matches and provenance_matches
+        if not snapshot_matches:
+            drifted = True
+        hypothesis_audits.append({
+            "id": structure_id,
+            "basis": row.get("basis", ""),
+            "snapshot_definition": row.get("definition"),
+            "current_definition": current_definition,
+            "snapshot_typology": source_typology,
+            "current_typology": current_typology,
+            "definition_matches_current": definition_matches,
+            "typology_provenance_matches_current": provenance_matches,
+            "snapshot_matches_current": snapshot_matches,
+        })
+
+    workspace_candidates = [
+        {
+            "candidate_id": str(row["id"]),
+            "role": row.get("role"),
+            "planned_operations": list(row.get("planned_operations", [])),
+        }
+        for row in workspace.get("candidates", [])
+    ]
+
+    if not hypotheses:
+        comparison_state = "no_recorded_target_structure_hypothesis"
+        candidate_audits = [
+            {
+                **row,
+                "comparison_state": comparison_state,
+                "mapped_target_structures": [],
+            }
+            for row in workspace_candidates
+        ]
+        mapped_not_in_workspace: list[str] = []
+        outside_mapping: list[str] = []
+    elif drifted:
+        comparison_state = "not_compared_due_to_typology_snapshot_drift"
+        candidate_audits = [
+            {
+                **row,
+                "comparison_state": comparison_state,
+                "mapped_target_structures": [],
+            }
+            for row in workspace_candidates
+        ]
+        mapped_not_in_workspace = []
+        outside_mapping = []
+    else:
+        comparison_state = "compared_against_matching_typology_snapshot"
+        structure_ids = [str(row["id"]) for row in hypotheses]
+        contrast = target_structure_contrast_payload(
+            typology,
+            inventory,
+            structure_ids,
+        )
+        mapped_by_id = {
+            str(row["candidate"]["id"]): [
+                str(item["id"])
+                for item in row["mapped_target_structures"]
+            ]
+            for row in contrast["candidates"]
+        }
+        workspace_ids = [
+            str(row["candidate_id"])
+            for row in workspace_candidates
+        ]
+        candidate_audits = []
+        outside_mapping = []
+        for row in workspace_candidates:
+            candidate_id = str(row["candidate_id"])
+            mapped = mapped_by_id.get(candidate_id, [])
+            state = (
+                "mapped_to_recorded_hypothesis"
+                if mapped
+                else "outside_exact_typology_mapping"
+            )
+            if not mapped:
+                outside_mapping.append(candidate_id)
+            candidate_audits.append({
+                **row,
+                "comparison_state": state,
+                "mapped_target_structures": mapped,
+            })
+        mapped_not_in_workspace = [
+            candidate_id
+            for candidate_id in mapped_by_id
+            if candidate_id not in workspace_ids
+        ]
+
+    return {
+        "format": "csw.target-structure-selection-audit/v0",
+        "workspace_ref": workspace.get("workspace_ref", ""),
+        "typology_snapshot_state": (
+            "drifted"
+            if drifted
+            else ("matching" if hypotheses else "not-recorded")
+        ),
+        "hypotheses": hypothesis_audits,
+        "candidate_audits": candidate_audits,
+        "mapped_candidates_not_in_workspace": mapped_not_in_workspace,
+        "workspace_candidates_outside_exact_mapping": outside_mapping,
+        "no_framework_option": dict(workspace.get("no_framework_option", {})),
+        "comparison_state": comparison_state,
+        "interpretation_boundary": (
+            "This audit checks explicit provenance and exact typology mappings only. "
+            "A workspace candidate outside the exact mapping is not therefore wrong, "
+            "and a mapped candidate omitted from the workspace is not therefore missing. "
+            "If the stored typology snapshot has drifted, historical candidate mapping is "
+            "not reinterpreted against the current typology; the audit stops at drift. "
+            "Neither mapping nor drift establishes framework fit, target truth, or error."
+        ),
+    }
+
+
 def load_workspace(path: Path) -> dict[str, Any]:
     data = json.loads(path.read_text(encoding="utf-8"))
     if not isinstance(data, dict) or data.get("format") != WORKSPACE_FORMAT:
@@ -1625,6 +1767,16 @@ def cmd_set_target_structure(args: argparse.Namespace) -> None:
     print(args.target_structure_id)
 
 
+def cmd_audit_target_structure(args: argparse.Namespace) -> None:
+    print_json(
+        target_structure_selection_audit_payload(
+            load_workspace(args.workspace),
+            load_typology(args.typology),
+            load_inventory(args.inventory),
+        )
+    )
+
+
 def cmd_audit_living_lab(args: argparse.Namespace) -> None:
     print_json(
         audit_living_lab_payload(
@@ -1783,6 +1935,18 @@ def build_parser() -> argparse.ArgumentParser:
     structure_contrast.add_argument("inventory", type=Path)
     structure_contrast.add_argument("target_structure_id", nargs="+")
     structure_contrast.set_defaults(func=cmd_structure_contrast)
+
+    audit_target_structure = sub.add_parser(
+        "audit-target-structure",
+        help=(
+            "audit saved candidate choices against the exact recorded target-structure "
+            "snapshot without reinterpreting drifted typology"
+        ),
+    )
+    audit_target_structure.add_argument("workspace", type=Path)
+    audit_target_structure.add_argument("typology", type=Path)
+    audit_target_structure.add_argument("inventory", type=Path)
+    audit_target_structure.set_defaults(func=cmd_audit_target_structure)
 
     shortlist = sub.add_parser("shortlist")
     shortlist.add_argument("inventory", type=Path)
