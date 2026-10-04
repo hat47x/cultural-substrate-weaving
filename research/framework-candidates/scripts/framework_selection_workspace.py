@@ -2093,7 +2093,9 @@ def main() -> None:
         if args.command in {
             "list-target-structures",
             "structure-lookup",
+            "structure-contrast",
             "set-target-structure",
+            "audit-target-structure",
             "audit-map",
             "audit-living-lab",
             "set-candidate",
