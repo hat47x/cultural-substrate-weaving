@@ -2261,6 +2261,84 @@
       "negative_example_paths": [
         "research/framework-candidates/worked-examples/scholastic-disputed-question-negative.md"
       ]
+    },
+    {
+      "id": "greco-roman-method-of-loci",
+      "names": [
+        "Greco-Roman method of loci",
+        "method of loci",
+        "loci and imagines",
+        "artificial memory of places and images",
+        "古代ギリシア・ローマ系の場所法"
+      ],
+      "readiness": "profile-ready",
+      "structural_primitives": [
+        "stable ordered loci / backgrounds",
+        "replaceable images or signs bound to loci",
+        "distinguishable positions",
+        "fixed traversal order",
+        "persistent scaffold vs variable content",
+        "cue-driven reconstruction"
+      ],
+      "cognitive_operations": [
+        "stable-scaffold-variable-content-separation",
+        "locus-binding",
+        "ordered-traversal-reconstruction",
+        "cue-to-content-reconstruction",
+        "sequence-position-localization",
+        "scaffold-reuse-rebinding"
+      ],
+      "useful_for": [
+        "separating a reusable ordered review scaffold from version-specific content",
+        "localizing omissions, duplicates, or swaps in a long ordered target",
+        "reconstructing an ordered target from sparse cues while returning every item to the source of truth"
+      ],
+      "do_not_assume": [
+        "mnemonic recall is target truth",
+        "spatial adjacency is semantic or causal relation",
+        "every target has one correct linear order",
+        "a vivid mnemonic image improves every task or user",
+        "the scaffold can replace records, tests, logs, checklists, or version control",
+        "ancient Roman sources, medieval ars memoriae, Renaissance systems, and modern memory-palace practice are one invariant technique"
+      ],
+      "sources": [
+        {
+          "kind": "primary-text-translation",
+          "title": "Rhetorica ad Herennium, Book III — artificial memory of backgrounds and images",
+          "url": "https://penelope.uchicago.edu/Thayer/E/Roman/Texts/Rhetorica_ad_Herennium/3%2A.html"
+        },
+        {
+          "kind": "primary-text",
+          "title": "Quintilian, Institutio Oratoria, Book XI, chapter 2 — memory and places",
+          "url": "https://www.perseus.tufts.edu/hopper/text?doc=Perseus%3Atext%3A2007.01.0068%3Abook%3D11%3Achapter%3D2"
+        },
+        {
+          "kind": "scholarly-reference",
+          "title": "Janet Coleman, Ancient and Medieval Memories — Cicero",
+          "url": "https://www.cambridge.org/core/books/abs/ancient-and-medieval-memories/cicero/C93AC479FC8B42D4AFAC4E4C17F53F71"
+        },
+        {
+          "kind": "scholarly-reference",
+          "title": "Kimberley Skelton, The Physicality of Early Modern Memory Spaces",
+          "url": "https://www.journals.uchicago.edu/doi/10.1086/731965"
+        }
+      ],
+      "profile_path": "research/framework-candidates/profiles/greco-roman-method-of-loci.md",
+      "adoption_hold": "compare-with-checklist-vedic-khipu-and-navigation",
+      "selection_cues": [
+        "順序のある長い対象を安定した場所列で再確認したい",
+        "可変内容と安定した索引を分けたい",
+        "抜けや順序違いを位置から局所化したい",
+        "separate stable retrieval scaffold from replaceable content",
+        "walk a fixed sequence of checkpoints to reconstruct an ordered target",
+        "localize omissions or swaps without treating location as semantic relation"
+      ],
+      "worked_example_paths": [
+        "research/framework-candidates/worked-examples/greco-roman-method-of-loci.md"
+      ],
+      "negative_example_paths": [
+        "research/framework-candidates/worked-examples/greco-roman-method-of-loci-negative.md"
+      ]
     }
   ]
 }
