@@ -135,3 +135,9 @@ This record does not authorize production promotion. Translation hash synchroniz
 The runtime was restructured around essential-structure reading, framework-native discovery, and concrete proposals based on existing material and qualitative judgment. Changed Japanese/English pairs were compared for semantic alignment, with the tension, third-structure, independent-support, and external-delegation boundaries retained. Public method naming now uses affinity diagramming; historical lineage remains in separate research evidence. Origin remains distinct from later verification.
 
 The Japanese prose received a separate yomiyasu pass. The protected source blobs in the paired JSON were refreshed for the current source after this alignment check. Translation hashes were refreshed separately. This is the authoring AI's alignment check, not independent English review and not approval to promote sibling research Skills.
+
+## Orthogonality-intent correction re-review — 2026-10-05
+
+The Japanese and English transformation reference was re-read after the caller clarified orthogonality. Both now prioritize minimal conceptual overlap and mutual dependence, close approximation to mathematical orthogonality or statistical independence, and highly independent elements isolated through intersection. Qualitative selection remains available without requiring experiments, and origin, target support, and third-structure boundaries are retained. The corresponding perspective-analysis and system-selection pairs were also compared.
+
+Only the transformation source blob in this protected snapshot changed. Translation hashes were refreshed after semantic alignment and the Japanese prose pass. This is the authoring AI's bilingual alignment check, not independent English review or sibling-Skill promotion approval.

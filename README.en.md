@@ -102,7 +102,9 @@ GitHub Actions are currently disabled. Validation is performed in a local or equ
 
 > **Change the perspective, re-read the target's structure, and turn discoveries into human inquiry and concrete compositions.**
 
-Essential structure means the relations, conditions, and changes that explain how targets arise or differ for the current purpose. A cultural framework supplies a perspective across a problem set. Explain qualitative placements with reasons, and add distinct partitions when useful. Do not assume mathematical orthogonality or framework truth.
+Essential structure means the relations, conditions, and changes that explain how targets arise or differ for the current purpose. A cultural framework supplies a perspective across a problem set. Explain qualitative placements with reasons. When intersecting perspectives, select combinations with minimal conceptual overlap and mutual dependence that can isolate highly independent elements.
+
+Orthogonality here prioritizes close approximation to mathematical orthogonality or statistical independence. Wuxing and the five great elements are a highly orthogonal combination illustrating this intent. Explain selection and placement through qualitative judgments grounded in sources and human judgment. Neither numerical scoring nor new experiments are prerequisites; distinguish these judgments from mathematical proof or statistical measurement.
 
 Read the framework's own partitions, relations, changes, and practice, then revise the reading against target documents, examples, and exceptions. Existing research and human experience or judgment can support decisions; empirical experiments are not a mandatory stage in every task. When selection is delegated, choose a concrete proposal and explain why.
 

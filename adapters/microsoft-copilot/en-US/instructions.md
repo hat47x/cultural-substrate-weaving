@@ -14,7 +14,11 @@ Select by the distinctions and questions sought, rather than structural distance
 
 For a problem set, align actors, situations, periods, and scales. Situate targets qualitatively through the same perspective, with reasons and competing readings. Placement is a framework-derived reading, not an established target fact.
 
-Explain closeness and difference by shared relations, conditions, or changes; numerical fit scoring is not required. When intersecting perspectives, state the added distinction, form each reading separately, and compare. Different framework names do not establish mathematical orthogonality or statistical independence. Retain empty or unmapped positions.
+Explain closeness and difference by shared relations, conditions, or changes; numerical fit scoring is not required. When intersecting perspectives, state the added distinction, form each reading separately, and compare.
+
+Orthogonality means minimizing conceptual overlap and mutual dependence so intersections can isolate highly independent elements. Select combinations closely approximating mathematical orthogonality or statistical independence using sources and human judgment. Explain whether variation in one position or state determines the other, and which dependencies remain.
+
+Wuxing and the five great elements illustrate the intended high orthogonality. Check lineages and partition principles; shared element names do not establish identical concepts. Distinguish qualitative judgment from mathematical proof or statistical measurement. Retain empty or unmapped positions.
 
 ## Discover through native operations
 

@@ -31,7 +31,7 @@ After reading the source, select operations that connect a native structure to a
 
 Adopting a framework does not require exhausting all of its elements, interpretive vocabulary, or transitions. Depth can be recorded using `00-activation.md`; reading volume is not the outcome.
 
-For multiple frameworks, explain the added distinction. The second is not a vote for the first. See `02b-perspective-analysis.md` for intersection and qualitative placement.
+For multiple frameworks, explain the added distinction. When the aim is to isolate highly independent elements, select combinations with minimal conceptual overlap and mutual dependence that closely approximate mathematical orthogonality or statistical independence. Explain the qualitative rationale. The second is not a vote for the first. See `02b-perspective-analysis.md` for intersection and qualitative placement.
 
 ## Separate exploration and attribution
 
