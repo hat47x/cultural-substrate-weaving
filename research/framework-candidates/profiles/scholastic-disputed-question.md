@@ -145,9 +145,23 @@ Before returning a disputed-question pass to the target:
 
 Do not adopt into runtime yet.
 
-The candidate fills a real operation gap — objection-preserving adversarial review — but needs comparison against ordinary design review, stasis theory, and Nyāya before runtime inclusion. The first worked examples therefore test whether pointwise objection preservation survives de-binding without importing medieval institutional or theological authority.
+The same-target comparison now shows strong structural distinctness from classical stasis theory and Nyāya, but only weak-to-moderate distinctness from a mature ordinary design-review baseline.
+
+The residual contribution is narrower than "adversarial review" in general:
+
+```text
+stable objection identity
+  -> candidate determination
+  -> pointwise reply coverage
+  -> unresolved objection carry-forward
+```
+
+This is useful when review comments are being collapsed, globally answered, or silently dropped. It is redundant when the caller already maintains stable concern IDs, pointwise responses, and explicit unresolved-item carry-forward.
+
+Runtime adoption therefore remains on hold. The next adoption decision should ask whether CSW needs this portable objection-coverage primitive often enough to justify a runtime framework, rather than treating cultural distinctness or historical richness as sufficient reason.
 
 Worked examples:
 
 - `research/framework-candidates/worked-examples/scholastic-disputed-question.md`
 - `research/framework-candidates/worked-examples/scholastic-disputed-question-negative.md`
+- `research/framework-candidates/worked-examples/scholastic-disputed-question-comparison.md`
