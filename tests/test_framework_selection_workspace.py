@@ -840,6 +840,121 @@ class FrameworkSelectionWorkspaceTest(unittest.TestCase):
         self.assertNotIn("score", json.dumps(review))
         self.assertNotIn("rank", json.dumps(review))
 
+    def test_contact_record_freezes_selection_reasoning_without_becoming_fit(self) -> None:
+        data = workspace.worksheet_payload(
+            FIXTURE,
+            "Need another way to inspect conditions",
+            ["alpha", "beta"],
+            "Target baseline before framework contact",
+            "selection://contact-record/framework-choice",
+        )
+        workspace.set_target_structure_hypothesis(
+            data,
+            TYPOLOGY_FIXTURE,
+            "TS-condition-chain",
+            basis="A concrete upstream dependency remains unresolved.",
+        )
+        workspace.update_candidate(
+            data,
+            "alpha",
+            role="primary",
+            job="inspect the upstream condition chain",
+            planned_operations=["condition-chain"],
+            return_questions=["Which condition survives target return?"],
+        )
+        workspace.update_consideration(
+            data,
+            "alpha",
+            target_connection="The target already exposes an upstream condition question.",
+            structural_difference="Adds a chain view rather than a node perspective.",
+            target_return_feasibility="Can return as a concrete necessary-condition check.",
+        )
+        workspace.update_non_force_guardrail(
+            data,
+            "alpha",
+            contact_if="A concrete condition gap remains after baseline inspection.",
+            stop_if="No distinct upstream condition can be found in target material.",
+            survive_if="A de-bound target-checkable condition question remains.",
+        )
+        workspace.update_non_activation(
+            data,
+            reason="The ordinary target-side baseline may still be sufficient.",
+            baseline_note="Try the baseline question before importing framework structure.",
+            revisit_if="Reopen contact only if baseline inspection stalls.",
+        )
+
+        workspace.record_contact_disposition(
+            data,
+            "alpha",
+            contacted=True,
+            reason="Baseline inspection stalled on the upstream-condition gap.",
+        )
+        workspace.record_contact_disposition(
+            data,
+            "beta",
+            contacted=False,
+            reason="Node perspective did not address the explicit condition-chain question.",
+        )
+
+        alpha, beta = data["candidates"]
+        self.assertTrue(alpha["contact_record"]["contacted"])
+        self.assertFalse(beta["contact_record"]["contacted"])
+        snapshot = alpha["contact_record"]["selection_snapshot"]
+        self.assertEqual(
+            snapshot["target_structure_hypotheses"][0]["id"],
+            "TS-condition-chain",
+        )
+        self.assertEqual(
+            snapshot["candidate_reasoning"]["planned_operations"],
+            ["condition-chain"],
+        )
+        self.assertEqual(
+            snapshot["candidate_reasoning"]["non_force_guardrails"]["stop_if"],
+            "No distinct upstream condition can be found in target material.",
+        )
+        self.assertEqual(
+            snapshot["no_framework_option"]["reason"],
+            "The ordinary target-side baseline may still be sufficient.",
+        )
+
+        data["candidates"][0]["intended_cognitive_job"] = "later revised wording"
+        data["target_structure_hypotheses"][0]["basis"] = "later revised basis"
+        self.assertEqual(
+            snapshot["candidate_reasoning"]["intended_cognitive_job"],
+            "inspect the upstream condition chain",
+        )
+        self.assertEqual(
+            snapshot["target_structure_hypotheses"][0]["basis"],
+            "A concrete upstream dependency remains unresolved.",
+        )
+
+        encoded = json.dumps(data).casefold()
+        self.assertNotIn('"score"', encoded)
+        self.assertNotIn('"rank"', encoded)
+        self.assertNotIn('"recommendation"', encoded)
+
+    def test_no_framework_post_contact_viability_is_recorded_as_provenance(self) -> None:
+        data = workspace.worksheet_payload(
+            FIXTURE,
+            "Need another boundary view",
+            ["alpha"],
+            "Target-side baseline",
+            "selection://no-framework-after-contact",
+        )
+        workspace.update_non_activation(
+            data,
+            reason="Baseline may already expose the missing distinction.",
+            remained_viable_after_contact=True,
+            post_contact_note=(
+                "Framework contact added one question, but the baseline remains a "
+                "credible path for the next iteration."
+            ),
+        )
+        option = data["no_framework_option"]
+        self.assertTrue(option["remained_viable_after_contact"])
+        self.assertIn("baseline remains", option["post_contact_note"])
+        self.assertNotIn("recommendation", json.dumps(option).casefold())
+
     def test_consideration_axes_keep_routing_dimensions_separate(self) -> None:
         data = workspace.worksheet_payload(
             FIXTURE,
@@ -931,8 +1046,18 @@ class FrameworkSelectionWorkspaceTest(unittest.TestCase):
             {"contact_if": "", "stop_if": "", "survive_if": ""},
         )
         self.assertEqual(
+            data["candidates"][0]["contact_record"],
+            {"contacted": None, "reason": "", "selection_snapshot": None},
+        )
+        self.assertEqual(
             data["no_framework_option"],
-            {"reason": "", "baseline_note": "", "what_would_change_this": ""},
+            {
+                "reason": "",
+                "baseline_note": "",
+                "what_would_change_this": "",
+                "remained_viable_after_contact": None,
+                "post_contact_note": "",
+            },
         )
         self.assertEqual(data["target_structure_hypotheses"], [])
         self.assertEqual(
@@ -1606,6 +1731,29 @@ class FrameworkSelectionWorkspaceTest(unittest.TestCase):
                 "--revisit-if",
                 "Activate if baseline fails to produce a concrete check.",
             )
+            self.run_tool(
+                "record-contact",
+                str(selection),
+                "alpha",
+                "--contacted",
+                "--reason",
+                "The baseline left the condition gap unresolved.",
+            )
+            self.run_tool(
+                "record-contact",
+                str(selection),
+                "beta",
+                "--not-contacted",
+                "--reason",
+                "The node view did not address the current target-side question.",
+            )
+            self.run_tool(
+                "set-non-activation",
+                str(selection),
+                "--remained-viable-after-contact",
+                "--post-contact-note",
+                "Keep the baseline available as a control for the next pass.",
+            )
 
             self.run_tool(
                 "set-cross-framework",
@@ -1660,6 +1808,17 @@ class FrameworkSelectionWorkspaceTest(unittest.TestCase):
             self.assertEqual(
                 shown["no_framework_option"]["reason"],
                 "Baseline may already be sufficient.",
+            )
+            self.assertTrue(
+                shown["no_framework_option"]["remained_viable_after_contact"]
+            )
+            self.assertTrue(shown["candidates"][0]["contact_record"]["contacted"])
+            self.assertFalse(shown["candidates"][1]["contact_record"]["contacted"])
+            self.assertEqual(
+                shown["candidates"][0]["contact_record"]["selection_snapshot"][
+                    "target_structure_hypotheses"
+                ][0]["id"],
+                "TS-condition-chain",
             )
             self.assertEqual(
                 shown["exit_record"]["residuals_created"],
