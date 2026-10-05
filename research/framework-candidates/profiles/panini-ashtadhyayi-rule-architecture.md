@@ -124,9 +124,14 @@ Vedic recitation pathas候補は、同じ系列を複数の明示表現で照合
 
 資料上の構造核、operation、歴史層の境界、de-binding、target-return questions、正例と負例を揃えられるため、research上はprofile-readyとする。
 
-runtimeには採用しない。次の検証では、一般的なrule-engine reviewやMīmāṃsāによる規定文読解と比べ、継承scopeと規則相互作用に固有の探索差が残るかを確認する。
+一般的なruntimeには採用しない。
 
-Worked examples:
+同一のYAML移行targetでordinary rule-system reviewと比較したところ、継承scopeの展開、一般則と限定則の重複、順序依存、object ruleと適用制御ruleの分離は、target側のpredicate / dependency / priorityを明示する通常レビューで再現できた。Mīmāṃsāとの差は残るが、それだけではruntimeの認知coverage増加にならない。
+
+再検討するのは、圧縮された継承文脈そのものがtargetの主要問題であり、通常のrule normalizationやMīmāṃsāでは出ない問いが残る場合に限る。
+
+Worked examples and comparison:
 
 - `research/framework-candidates/worked-examples/panini-ashtadhyayi-rule-architecture.md`
 - `research/framework-candidates/worked-examples/panini-ashtadhyayi-rule-architecture-negative.md`
+- `research/framework-candidates/comparisons/panini-vs-rule-system-review.md`
