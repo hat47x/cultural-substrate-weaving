@@ -1636,7 +1636,14 @@ class FrameworkSelectionWorkspaceTest(unittest.TestCase):
             ["boundary-probe"],
         )
         operation = payload["operations"][0]
-        self.assertEqual(operation["framework_refs"], ["alpha", "beta"])
+        self.assertEqual(
+            operation["planned_candidate_refs"],
+            ["alpha", "beta"],
+        )
+        self.assertEqual(
+            operation["observed_framework_refs"],
+            ["alpha", "beta"],
+        )
         self.assertEqual(
             [row["candidate_id"] for row in operation["planned_contexts"]],
             ["alpha", "beta"],
@@ -1676,6 +1683,68 @@ class FrameworkSelectionWorkspaceTest(unittest.TestCase):
         self.assertIn(
             "does not establish that the operation caused",
             payload["interpretation_boundary"],
+        )
+
+    def test_operation_return_audit_does_not_present_uncontacted_plan_as_observed(self) -> None:
+        selection = workspace.worksheet_payload(
+            FIXTURE,
+            "Separate current planning from observed framework provenance",
+            ["alpha", "beta"],
+            "Target baseline",
+            "selection://operation-plan-vs-observed",
+        )
+        workspace.update_candidate(
+            selection,
+            "alpha",
+            planned_operations=["boundary-probe"],
+        )
+        workspace.update_candidate(
+            selection,
+            "beta",
+            planned_operations=["boundary-probe"],
+        )
+        workspace.record_contact_disposition(
+            selection,
+            "alpha",
+            contacted=True,
+            reason="Contact alpha for this pass.",
+        )
+        workspace.record_contact_disposition(
+            selection,
+            "beta",
+            contacted=False,
+            reason="Keep beta as an uncontacted comparison candidate.",
+        )
+        round_record = {
+            "schema_version": "0.2",
+            "round_id": "round-plan-vs-observed",
+            "activation_scope": "limited_use",
+            "framework_contacts": [{
+                "framework": "alpha",
+                "depth": "preview",
+                "use": "exploration",
+                "selection_ref": "selection://operation-plan-vs-observed",
+                "operations": ["boundary-probe"],
+            }],
+            "catalytic_deltas": [],
+            "artifact_traces": [],
+        }
+
+        payload = workspace.operation_return_audit_payload(
+            selection,
+            round_record,
+        )
+        operation = payload["operations"][0]
+        self.assertEqual(
+            operation["planned_candidate_refs"],
+            ["alpha", "beta"],
+        )
+        self.assertEqual(
+            operation["observed_framework_refs"],
+            ["alpha"],
+        )
+        self.assertFalse(
+            operation["planned_contexts"][1]["workspace_contact_record"]["contacted"]
         )
 
     def test_operation_return_audit_cli_dispatches_without_routing(self) -> None:
