@@ -840,6 +840,126 @@ class FrameworkSelectionWorkspaceTest(unittest.TestCase):
         self.assertNotIn("score", json.dumps(review))
         self.assertNotIn("rank", json.dumps(review))
 
+    def test_contact_record_freezes_selection_reasoning_without_becoming_fit(self) -> None:
+        data = workspace.worksheet_payload(
+            FIXTURE,
+            "Need another way to inspect conditions",
+            ["alpha", "beta"],
+            "Target baseline before framework contact",
+            "selection://contact-record/framework-choice",
+        )
+        workspace.set_target_structure_hypothesis(
+            data,
+            TYPOLOGY_FIXTURE,
+            "TS-condition-chain",
+            basis="A concrete upstream dependency remains unresolved.",
+        )
+        workspace.update_candidate(
+            data,
+            "alpha",
+            role="primary",
+            job="inspect the upstream condition chain",
+            planned_operations=["condition-chain"],
+            return_questions=["Which condition survives target return?"],
+        )
+        workspace.update_consideration(
+            data,
+            "alpha",
+            target_connection="The target already exposes an upstream condition question.",
+            structural_difference="Adds a chain view rather than a node perspective.",
+            target_return_feasibility="Can return as a concrete necessary-condition check.",
+        )
+        workspace.update_non_force_guardrail(
+            data,
+            "alpha",
+            contact_if="A concrete condition gap remains after baseline inspection.",
+            stop_if="No distinct upstream condition can be found in target material.",
+            survive_if="A de-bound target-checkable condition question remains.",
+        )
+        workspace.update_non_activation(
+            data,
+            reason="The ordinary target-side baseline may still be sufficient.",
+            baseline_note="Try the baseline question before importing framework structure.",
+            revisit_if="Reopen contact only if baseline inspection stalls.",
+        )
+
+        workspace.record_contact_disposition(
+            data,
+            "alpha",
+            contacted=True,
+            reason="Baseline inspection stalled on the upstream-condition gap.",
+        )
+        workspace.record_contact_disposition(
+            data,
+            "beta",
+            contacted=False,
+            reason="Node perspective did not address the explicit condition-chain question.",
+        )
+
+        alpha, beta = data["candidates"]
+        self.assertTrue(alpha["contact_record"]["contacted"])
+        self.assertFalse(beta["contact_record"]["contacted"])
+        snapshot = alpha["contact_record"]["selection_snapshot"]
+        self.assertEqual(
+            snapshot["target_structure_hypotheses"][0]["id"],
+            "TS-condition-chain",
+        )
+        self.assertEqual(
+            snapshot["candidate_reasoning"]["planned_operations"],
+            ["condition-chain"],
+        )
+        self.assertEqual(
+            snapshot["candidate_reasoning"]["non_force_guardrails"]["stop_if"],
+            "No distinct upstream condition can be found in target material.",
+        )
+        self.assertEqual(
+            snapshot["no_framework_option"]["reason"],
+            "The ordinary target-side baseline may still be sufficient.",
+        )
+
+        data["candidates"][0]["intended_cognitive_job"] = "later revised wording"
+        data["target_structure_hypotheses"][0]["basis"] = "later revised basis"
+        data["target_structure_hypotheses"][0]["source_typology"]["date"] = "later"
+        self.assertEqual(
+            snapshot["candidate_reasoning"]["intended_cognitive_job"],
+            "inspect the upstream condition chain",
+        )
+        self.assertEqual(
+            snapshot["target_structure_hypotheses"][0]["basis"],
+            "A concrete upstream dependency remains unresolved.",
+        )
+        self.assertEqual(
+            snapshot["target_structure_hypotheses"][0]["source_typology"]["date"],
+            "2026-10-03",
+        )
+
+        encoded = json.dumps(data).casefold()
+        self.assertNotIn('"score"', encoded)
+        self.assertNotIn('"rank"', encoded)
+        self.assertNotIn('"recommendation"', encoded)
+
+    def test_no_framework_post_contact_viability_is_recorded_as_provenance(self) -> None:
+        data = workspace.worksheet_payload(
+            FIXTURE,
+            "Need another boundary view",
+            ["alpha"],
+            "Target-side baseline",
+            "selection://no-framework-after-contact",
+        )
+        workspace.update_non_activation(
+            data,
+            reason="Baseline may already expose the missing distinction.",
+            remained_viable_after_contact=True,
+            post_contact_note=(
+                "Framework contact added one question, but the baseline remains a "
+                "credible path for the next iteration."
+            ),
+        )
+        option = data["no_framework_option"]
+        self.assertTrue(option["remained_viable_after_contact"])
+        self.assertIn("baseline remains", option["post_contact_note"])
+        self.assertNotIn("recommendation", json.dumps(option).casefold())
+
     def test_consideration_axes_keep_routing_dimensions_separate(self) -> None:
         data = workspace.worksheet_payload(
             FIXTURE,
@@ -931,8 +1051,18 @@ class FrameworkSelectionWorkspaceTest(unittest.TestCase):
             {"contact_if": "", "stop_if": "", "survive_if": ""},
         )
         self.assertEqual(
+            data["candidates"][0]["contact_record"],
+            {"contacted": None, "reason": "", "selection_snapshot": None},
+        )
+        self.assertEqual(
             data["no_framework_option"],
-            {"reason": "", "baseline_note": "", "what_would_change_this": ""},
+            {
+                "reason": "",
+                "baseline_note": "",
+                "what_would_change_this": "",
+                "remained_viable_after_contact": None,
+                "post_contact_note": "",
+            },
         )
         self.assertEqual(data["target_structure_hypotheses"], [])
         self.assertEqual(
@@ -1394,6 +1524,287 @@ class FrameworkSelectionWorkspaceTest(unittest.TestCase):
             )
             self.assertEqual(payload["target_return_states"], ["unresolved"])
 
+    def test_operation_return_audit_keeps_exact_operation_and_framework_provenance(self) -> None:
+        selection = workspace.worksheet_payload(
+            FIXTURE,
+            "Inspect a boundary without attributing framework effectiveness",
+            ["alpha", "beta"],
+            "Target baseline",
+            "selection://operation-return-audit",
+        )
+        workspace.update_candidate(
+            selection,
+            "alpha",
+            role="primary",
+            planned_operations=["boundary-probe"],
+        )
+        workspace.update_candidate(
+            selection,
+            "beta",
+            role="reflecting",
+            planned_operations=["boundary-probe"],
+        )
+        workspace.record_contact_disposition(
+            selection,
+            "alpha",
+            contacted=True,
+            reason="Use the shared label from alpha's condition context.",
+        )
+        workspace.record_contact_disposition(
+            selection,
+            "beta",
+            contacted=True,
+            reason="Use the shared label from beta's node context.",
+        )
+        workspace.update_non_activation(
+            selection,
+            reason="The target-side baseline remains a valid control.",
+            remained_viable_after_contact=True,
+            post_contact_note="Keep the baseline available after both contacts.",
+        )
+
+        round_record = {
+            "schema_version": "0.2",
+            "round_id": "round-operation-return-001",
+            "activation_scope": "exploratory_use",
+            "framework_contacts": [
+                {
+                    "framework": "alpha",
+                    "depth": "preview",
+                    "use": "exploration",
+                    "selection_ref": "selection://operation-return-audit",
+                    "operations": ["boundary-probe"],
+                },
+                {
+                    "framework": "beta",
+                    "depth": "preview",
+                    "use": "exploration",
+                    "selection_ref": "selection://operation-return-audit",
+                    "operations": ["boundary-probe"],
+                },
+            ],
+            "catalytic_deltas": [
+                {
+                    "delta_ref": "delta:alpha-boundary",
+                    "kind": "question",
+                    "statement": "Which boundary belongs to the target rather than the framework?",
+                    "framework_refs": ["alpha"],
+                    "selection_refs": ["selection://operation-return-audit"],
+                    "operation_refs": ["boundary-probe"],
+                    "target_return": {
+                        "state": "target_supported",
+                        "source_type": "external",
+                        "evidence_refs": ["artifact:target-boundary"],
+                    },
+                    "user_disposition": {
+                        "state": "adopted",
+                        "source_ref": "chat:user-boundary",
+                    },
+                },
+            ],
+            "artifact_traces": [
+                {
+                    "artifact_ref": "artifact:beta-boundary",
+                    "origin": "framework_generated",
+                    "framework_refs": ["beta"],
+                    "selection_refs": ["selection://operation-return-audit"],
+                    "operation_refs": ["boundary-probe"],
+                    "target_return": {
+                        "state": "target_weakened",
+                        "source_type": "mixed",
+                        "evidence_refs": ["artifact:target-beta-boundary"],
+                    },
+                    "user_disposition": {
+                        "state": "modified",
+                        "source_ref": "chat:user-beta-boundary",
+                    },
+                },
+            ],
+        }
+
+        payload = workspace.operation_return_audit_payload(
+            selection,
+            round_record,
+        )
+
+        self.assertEqual(
+            payload["format"],
+            "csw.framework-operation-return-audit/v0",
+        )
+        self.assertEqual(
+            [row["operation"] for row in payload["operations"]],
+            ["boundary-probe"],
+        )
+        operation = payload["operations"][0]
+        self.assertEqual(
+            operation["planned_candidate_refs"],
+            ["alpha", "beta"],
+        )
+        self.assertEqual(
+            operation["observed_framework_refs"],
+            ["alpha", "beta"],
+        )
+        self.assertEqual(
+            [row["candidate_id"] for row in operation["planned_contexts"]],
+            ["alpha", "beta"],
+        )
+        self.assertEqual(
+            [row["framework"] for row in operation["observed_contact_contexts"]],
+            ["alpha", "beta"],
+        )
+        self.assertEqual(
+            operation["delta_contexts"][0]["framework_refs"],
+            ["alpha"],
+        )
+        self.assertEqual(
+            operation["artifact_contexts"][0]["framework_refs"],
+            ["beta"],
+        )
+        self.assertEqual(
+            operation["delta_contexts"][0]["target_return"]["state"],
+            "target_supported",
+        )
+        self.assertEqual(
+            operation["artifact_contexts"][0]["target_return"]["state"],
+            "target_weakened",
+        )
+        self.assertTrue(
+            payload["no_framework_option"]["remained_viable_after_contact"]
+        )
+
+        encoded = json.dumps(payload).casefold()
+        self.assertNotIn('"score"', encoded)
+        self.assertNotIn('"rank"', encoded)
+        self.assertNotIn('"recommendation"', encoded)
+        self.assertIn(
+            "does not establish semantic equivalence",
+            payload["interpretation_boundary"],
+        )
+        self.assertIn(
+            "does not establish that the operation caused",
+            payload["interpretation_boundary"],
+        )
+
+    def test_operation_return_audit_does_not_present_uncontacted_plan_as_observed(self) -> None:
+        selection = workspace.worksheet_payload(
+            FIXTURE,
+            "Separate current planning from observed framework provenance",
+            ["alpha", "beta"],
+            "Target baseline",
+            "selection://operation-plan-vs-observed",
+        )
+        workspace.update_candidate(
+            selection,
+            "alpha",
+            planned_operations=["boundary-probe"],
+        )
+        workspace.update_candidate(
+            selection,
+            "beta",
+            planned_operations=["boundary-probe"],
+        )
+        workspace.record_contact_disposition(
+            selection,
+            "alpha",
+            contacted=True,
+            reason="Contact alpha for this pass.",
+        )
+        workspace.record_contact_disposition(
+            selection,
+            "beta",
+            contacted=False,
+            reason="Keep beta as an uncontacted comparison candidate.",
+        )
+        round_record = {
+            "schema_version": "0.2",
+            "round_id": "round-plan-vs-observed",
+            "activation_scope": "limited_use",
+            "framework_contacts": [{
+                "framework": "alpha",
+                "depth": "preview",
+                "use": "exploration",
+                "selection_ref": "selection://operation-plan-vs-observed",
+                "operations": ["boundary-probe"],
+            }],
+            "catalytic_deltas": [],
+            "artifact_traces": [],
+        }
+
+        payload = workspace.operation_return_audit_payload(
+            selection,
+            round_record,
+        )
+        operation = payload["operations"][0]
+        self.assertEqual(
+            operation["planned_candidate_refs"],
+            ["alpha", "beta"],
+        )
+        self.assertEqual(
+            operation["observed_framework_refs"],
+            ["alpha"],
+        )
+        self.assertFalse(
+            operation["planned_contexts"][1]["workspace_contact_record"]["contacted"]
+        )
+
+    def test_operation_return_audit_cli_dispatches_without_routing(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            selection_path = Path(tmp) / "selection.json"
+            round_path = Path(tmp) / "round.json"
+            selection = workspace.worksheet_payload(
+                FIXTURE,
+                "Inspect operation provenance",
+                ["alpha"],
+                "Target baseline",
+                "selection://operation-return-cli",
+            )
+            workspace.update_candidate(
+                selection,
+                "alpha",
+                planned_operations=["condition-chain"],
+            )
+            workspace.record_contact_disposition(
+                selection,
+                "alpha",
+                contacted=True,
+                reason="The baseline left the upstream condition unresolved.",
+            )
+            workspace.save_workspace(selection_path, selection)
+            round_path.write_text(
+                json.dumps({
+                    "schema_version": "0.2",
+                    "round_id": "round-operation-return-cli",
+                    "activation_scope": "limited_use",
+                    "framework_contacts": [{
+                        "framework": "alpha",
+                        "depth": "preview",
+                        "use": "exploration",
+                        "selection_ref": "selection://operation-return-cli",
+                        "operations": ["condition-chain"],
+                    }],
+                    "catalytic_deltas": [],
+                    "artifact_traces": [],
+                }),
+                encoding="utf-8",
+            )
+
+            payload = json.loads(
+                self.run_tool(
+                    "audit-operations",
+                    str(selection_path),
+                    str(round_path),
+                ).stdout
+            )
+            self.assertEqual(
+                payload["operations"][0]["operation"],
+                "condition-chain",
+            )
+            self.assertEqual(
+                payload["operations"][0]["observed_contact_contexts"][0]["framework"],
+                "alpha",
+            )
+            self.assertNotIn("score", json.dumps(payload).casefold())
+
     def test_living_lab_loader_rejects_invalid_catalytic_delta_container(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
             round_path = Path(tmp) / "round.json"
@@ -1606,6 +2017,29 @@ class FrameworkSelectionWorkspaceTest(unittest.TestCase):
                 "--revisit-if",
                 "Activate if baseline fails to produce a concrete check.",
             )
+            self.run_tool(
+                "record-contact",
+                str(selection),
+                "alpha",
+                "--contacted",
+                "--reason",
+                "The baseline left the condition gap unresolved.",
+            )
+            self.run_tool(
+                "record-contact",
+                str(selection),
+                "beta",
+                "--not-contacted",
+                "--reason",
+                "The node view did not address the current target-side question.",
+            )
+            self.run_tool(
+                "set-non-activation",
+                str(selection),
+                "--remained-viable-after-contact",
+                "--post-contact-note",
+                "Keep the baseline available as a control for the next pass.",
+            )
 
             self.run_tool(
                 "set-cross-framework",
@@ -1660,6 +2094,17 @@ class FrameworkSelectionWorkspaceTest(unittest.TestCase):
             self.assertEqual(
                 shown["no_framework_option"]["reason"],
                 "Baseline may already be sufficient.",
+            )
+            self.assertTrue(
+                shown["no_framework_option"]["remained_viable_after_contact"]
+            )
+            self.assertTrue(shown["candidates"][0]["contact_record"]["contacted"])
+            self.assertFalse(shown["candidates"][1]["contact_record"]["contacted"])
+            self.assertEqual(
+                shown["candidates"][0]["contact_record"]["selection_snapshot"][
+                    "target_structure_hypotheses"
+                ][0]["id"],
+                "TS-condition-chain",
             )
             self.assertEqual(
                 shown["exit_record"]["residuals_created"],
