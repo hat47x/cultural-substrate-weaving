@@ -1,7 +1,7 @@
 {
   "schema": "csw.efficacy-framework-typology/v1",
   "status": "research-only / provisional classification",
-  "date": "2026-10-03",
+  "date": "2026-10-05",
   "note": "analysis_tier is the order in which candidates are brought into efficacy analysis. It is not a value ranking and not a routing rule. super_family and target_structures are provisional human judgments to be revised after the framework x target-structure matrix is measured.",
   "super_families": {
     "SF1": "configuration / combinatorial space",
@@ -41,7 +41,10 @@
     "TS-sequence-fidelity": "an ordered sequence must survive transformation with boundaries intact",
     "TS-indexed-analogy": "a compact signature opens a large corpus of non-local analogies",
     "TS-axis-vs-level": "independent axes describe the problem better than levels",
-    "TS-mediation-whole-concrete": "what mediates between an abstract whole and a concrete manifestation"
+    "TS-mediation-whole-concrete": "what mediates between an abstract whole and a concrete manifestation",
+    "TS-objection-coverage": "a proposed determination risks leaving materially different objections unanswered",
+    "TS-stable-index-rebinding": "a stable ordered index is reused while version-specific content is rebound and reconstructed",
+    "TS-typed-condition-network": "several heterogeneous condition modes converge, fan out, or interact around one target state"
   },
   "frameworks": [
     {"id": "yijing", "sf": "SF1", "structure_kind": "discrete configuration space with local change", "ts": ["TS-closed-set-vacancy"], "tier": "A", "tested": "T1", "reason": "tested; unique family"},
@@ -77,7 +80,10 @@
     {"id": "marshallese-wave-navigation", "sf": "SF7", "structure_kind": "relative route model with cue updates", "ts": ["TS-route-network"], "tier": "B", "reason": "adopted; non-medical route family; plantable"},
     {"id": "jingluo", "sf": "SF7", "structure_kind": "main and collateral route network", "ts": ["TS-route-network"], "tier": "E", "reason": "profile-ready but medical claims; use only its non-medical structural examples"},
     {"id": "rasa", "sf": "SF8", "structure_kind": "expression-to-reception relation", "ts": ["TS-reception-gap"], "tier": "A", "tested": "T7", "reason": "tested"},
-    {"id": "confucian-role-ritual", "sf": "SF8", "structure_kind": "relation-conditioned conduct", "ts": ["TS-role-relation-mismatch"], "tier": "B", "reason": "adopted; distinct target; common in organizational cases"}
+    {"id": "confucian-role-ritual", "sf": "SF8", "structure_kind": "relation-conditioned conduct", "ts": ["TS-role-relation-mismatch"], "tier": "B", "reason": "adopted; distinct target; common in organizational cases"},
+    {"id": "theravada-patthana-conditional-relations", "sf": "SF2", "structure_kind": "typed multi-condition convergence with relation-mode differentiation", "ts": ["TS-typed-condition-network"], "tier": "C", "reason": "profile-ready; fills branching/typed condition-network gap; distinctness from ordinary dependency graphs and fault trees unproven"},
+    {"id": "scholastic-disputed-question", "sf": "SF5", "structure_kind": "objection-preserving determination with pointwise replies", "ts": ["TS-objection-coverage"], "tier": "C", "reason": "profile-ready; ordinary design-review overlap is confirmed enough to block general runtime promotion unless portable objection-coverage value is justified"},
+    {"id": "greco-roman-method-of-loci", "sf": "SF6", "structure_kind": "stable ordered index with replaceable bound content", "ts": ["TS-stable-index-rebinding", "TS-sequence-fidelity"], "tier": "C", "reason": "profile-ready research asset; ordinary numbered checklist reproduces general AI-review value, so no runtime promotion unless a memory-specific target is in scope"}
   ],
   "tier_definitions": {
     "A": "tested already or adopted with an obvious matched target; extend with matched tasks and a larger task count",
