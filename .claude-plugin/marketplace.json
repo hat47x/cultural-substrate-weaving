@@ -3,13 +3,13 @@
   "owner": {
     "name": "hat47x"
   },
-  "description": "Localized skills for cultural-framework exploration, KJ integration, and provenance-aware structural work.",
+  "description": "Localized skills for cultural perspective analysis, discovery, and provenance-aware target return.",
   "version": "0.5.0",
   "plugins": [
     {
       "name": "cultural-substrate-weaving-ja",
       "source": "./plugins/cultural-substrate-weaving-ja",
-      "description": "文化的体系による構造候補の探索とKJ法による断片統合を組み合わせ、問い・関係・状態・空白・来歴を扱います。利用範囲と採否は外部の委任に従います。",
+      "description": "文化体系の視点から対象や問題群の本質構造を捉え直し、発見を問い・比較・構成へ具体化します。材料統合と継続管理は別スキルへ接続します。",
       "version": "0.5.0",
       "category": "productivity",
       "tags": [
@@ -23,7 +23,7 @@
     {
       "name": "cultural-substrate-weaving-en",
       "source": "./plugins/cultural-substrate-weaving-en",
-      "description": "Combines cultural-framework exploration with KJ integration to work with questions, relations, states, gaps, and provenance. Usage scope and adoption follow delegation outside the skill.",
+      "description": "Reinterpret essential structures through cultural perspectives and turn discoveries into questions, comparisons, and compositions. Material synthesis and continuation connect to separate skills.",
       "version": "0.5.0",
       "category": "productivity",
       "tags": [

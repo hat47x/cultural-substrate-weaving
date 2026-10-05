@@ -1,3 +1,3 @@
-## Structural exploration and KJ integration
+## Cultural substrate weaving
 
-When cultural-framework exploration or KJ integration is within the author's request or the project's delegated scope, the installed `cultural-substrate-weaving-en` may be used. Explicit versus implicit invocation, usage scope, and adoption follow project-side settings and instructions. Store target-specific hypotheses and decision records in the project.
+Use the installed `cultural-substrate-weaving` when reading structure or making discoveries through cultural perspectives is within the author's request or project delegation. Return candidates to existing material and qualitative judgment, then make them usable as questions, comparisons, or compositions. Delegate affinity-diagramming synthesis to a separate skill. Task category alone does not automatically suppress use. Domain knowledge and quality criteria come from project material, instructions, or domain skills. An available external `yomiyasu` may polish settled Japanese prose when appropriate.

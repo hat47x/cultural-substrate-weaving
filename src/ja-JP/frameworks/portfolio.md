@@ -14,26 +14,26 @@
 
 | 体系 | 主に開く認知操作 | 強い構造 | 参照 |
 |---|---|---|---|
-| 易・八卦／六十四卦 | 再分節、位置、変化、入れ子 | 2種の爻、8卦、64卦 | yijing.md |
-| 五行 | 生成と抑制、循環、関係役割 | 5相、相生・相剋 | wuxing.md |
-| サーンキヤ | 層、生成順序、観察者と生成物の分離 | 25原理、三グナ | sankhya.md |
-| 縁起 | 条件依存、発生と消滅、介入点 | 条件式、複数長の系列 | dependent-origination.md |
-| 四句分別 | 二値枠の解体、命題空間の拡張 | P / 非P / 両方 / どちらでもない | catuskoti.md |
-| ジャイナの多面説・七分法 | 視点条件、限定付き叙述 | syatを伴う七種の述定 | jain-sevenfold-predication.md |
-| アリストテレス四原因 | 「なぜ」の説明軸を分ける | 質料・形相・作用・目的 | aristotle-four-causes.md |
-| ラサ論 | 表現と受容経験の生成関係 | bhavaとrasa | rasa.md |
-| マヤ暦体系 | 複数周期、位相差、部分／全体再来、長期時間座標 | Tzolk’in / Haab / Calendar Round / Long Count | maya-calendars.md |
-| 華厳 | 全体・部分の相互規定、node視点、差異を残す統合 | 法蔵のwhole-part分析・相互包摂 | huayan.md |
-| ニヤーヤ五支推論 | 推論の展開、理由と規則の分離、適用の監査 | 主張・理由・例・適用・結論 | nyaya-five-member-inference.md |
-| 儒家の役割・礼 | 役割視点、関係上の期待、定型的相互作用 | role / relation / li / practice | confucian-role-ritual.md |
-| 古典stasis theory | 争点の分離、争点移動の検出 | 事実・定義・評価・手続き／権限 | classical-stasis-theory.md |
-| ハディースisnād / matn | 内容と伝承経路の分離、枝分かれ・本文異同 | matn / isnād / variant / provenance | hadith-isnad-matn.md |
-| マーシャル諸島の波航海術 | 相対経路、手掛かり系列、モデルと現場の往復 | route cue / training model / situated sensing | marshallese-wave-navigation.md |
-| 神社参拝の境界・清め | 境界、事前準備、参加状態の変化、退出 | torii / approach / temizu / central act | shinto-threshold-purification.md |
-| チベット仏教マンダラ | 中心・方位・門・多重境界・接近経路 | center / directions / gates / nested enclosure | tibetan-buddhist-mandala.md |
-| ミーマーンサー規定文解釈 | 規定単位、統語的期待、意味適合、文脈補完、規範衝突 | prescription / syntax / context / norm conflict | mimamsa-hermeneutics.md |
-| Llullの後期Ars | 系統的な二項・三項交差、未検討組合せの発見 | binary / ternary combination / rotation / question | llull-ars.md |
-| 体癖 | 身体反応・緊張弛緩の観察軸 | 身体論的類型 | ../domains/human-and-taiheki.md |
+| 易・八卦／六十四卦 | 再分節、位置、変化、入れ子 | 2種の爻、8卦、64卦 | [yijing.md](yijing.md) |
+| 五行 | 生成と抑制、循環、関係役割 | 5相、相生・相剋 | [wuxing.md](wuxing.md) |
+| サーンキヤ | 層、生成順序、観察者と生成物の分離 | 25原理、三グナ | [sankhya.md](sankhya.md) |
+| 縁起 | 条件依存、発生と消滅、介入点 | 条件式、複数長の系列 | [dependent-origination.md](dependent-origination.md) |
+| 四句分別 | 二値枠の解体、命題空間の拡張 | P / 非P / 両方 / どちらでもない | [catuskoti.md](catuskoti.md) |
+| ジャイナの多面説・七分法 | 視点条件、限定付き叙述 | syatを伴う七種の述定 | [jain-sevenfold-predication.md](jain-sevenfold-predication.md) |
+| アリストテレス四原因 | 「なぜ」の説明軸を分ける | 質料・形相・作用・目的 | [aristotle-four-causes.md](aristotle-four-causes.md) |
+| ラサ論 | 表現と受容経験の生成関係 | bhavaとrasa | [rasa.md](rasa.md) |
+| マヤ暦体系 | 複数周期、位相差、部分／全体再来、長期時間座標 | Tzolk’in / Haab / Calendar Round / Long Count | [maya-calendars.md](maya-calendars.md) |
+| 華厳 | 全体・部分の相互規定、node視点、差異を残す統合 | 法蔵のwhole-part分析・相互包摂 | [huayan.md](huayan.md) |
+| ニヤーヤ五支推論 | 推論の展開、理由と規則の分離、適用の監査 | 主張・理由・例・適用・結論 | [nyaya-five-member-inference.md](nyaya-five-member-inference.md) |
+| 儒家の役割・礼 | 役割視点、関係上の期待、定型的相互作用 | role / relation / li / practice | [confucian-role-ritual.md](confucian-role-ritual.md) |
+| 古典stasis theory | 争点の分離、争点移動の検出 | 事実・定義・評価・手続き／権限 | [classical-stasis-theory.md](classical-stasis-theory.md) |
+| ハディースisnād / matn | 内容と伝承経路の分離、枝分かれ・本文異同 | matn / isnād / variant / provenance | [hadith-isnad-matn.md](hadith-isnad-matn.md) |
+| マーシャル諸島の波航海術 | 相対経路、手掛かり系列、モデルと現場の往復 | route cue / training model / situated sensing | [marshallese-wave-navigation.md](marshallese-wave-navigation.md) |
+| 神社参拝の境界・清め | 境界、事前準備、参加状態の変化、退出 | torii / approach / temizu / central act | [shinto-threshold-purification.md](shinto-threshold-purification.md) |
+| チベット仏教マンダラ | 中心・方位・門・多重境界・接近経路 | center / directions / gates / nested enclosure | [tibetan-buddhist-mandala.md](tibetan-buddhist-mandala.md) |
+| ミーマーンサー規定文解釈 | 規定単位、統語的期待、意味適合、文脈補完、規範衝突 | prescription / syntax / context / norm conflict | [mimamsa-hermeneutics.md](mimamsa-hermeneutics.md) |
+| Llullの後期Ars | 系統的な二項・三項交差、未検討組合せの発見 | binary / ternary combination / rotation / question | [llull-ars.md](llull-ars.md) |
+| 体癖 | 身体反応・緊張弛緩の観察軸 | 身体論的類型 | [human-and-taiheki.md](../domains/human-and-taiheki.md) |
 
 ## 欲しい認知操作から引く
 

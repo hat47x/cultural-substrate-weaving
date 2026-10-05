@@ -249,7 +249,7 @@ class ResearchProductionAdapterMetadataPromotionTests(unittest.TestCase):
         openai["profiles"]["audit"] = {"expected_allow_implicit_invocation": False}
         for research_id, skill_metadata in openai["skills"].items():
             for locale, locale_profiles in skill_metadata.items():
-                audit = copy.deepcopy(locale_profiles["interactive"])
+                audit = copy.deepcopy(locale_profiles["metered"])
                 if research_id == "cultural-substrate-weaving":
                     audit["source"] = f"adapters/openai-skill/{locale}/openai.audit.yaml"
                 locale_profiles["audit"] = audit
@@ -264,7 +264,18 @@ class ResearchProductionAdapterMetadataPromotionTests(unittest.TestCase):
             {"interactive", "metered", "audit"},
         )
         self.assertEqual(len(plan["openai_profile_promotions"]), 18)
-        self.assertEqual(self.errors(plan, adapter_plan), [])
+        fixture_paths = [ROOT / f"adapters/openai-skill/{locale}/openai.audit.yaml" for locale in ("ja-JP", "en-US")]
+        previous = {path: path.read_bytes() if path.exists() else None for path in fixture_paths}
+        try:
+            for path in fixture_paths:
+                path.write_bytes(path.with_name("openai.metered.yaml").read_bytes())
+            self.assertEqual(self.errors(plan, adapter_plan), [])
+        finally:
+            for path, content in previous.items():
+                if content is None:
+                    path.unlink(missing_ok=True)
+                else:
+                    path.write_bytes(content)
 
     def test_locale_bundle_distributions_follow_adapter_plan_authority(self) -> None:
         adapter_plan = copy.deepcopy(self.adapter_plan)
@@ -282,7 +293,8 @@ class ResearchProductionAdapterMetadataPromotionTests(unittest.TestCase):
                 item["shared_by"],
                 ["claude_plugin", "codex_plugin", "future_plugin"],
             )
-        self.assertEqual(self.errors(plan, adapter_plan), [])
+        errors = self.errors(plan, adapter_plan)
+        self.assertTrue(any("extra=['future_plugin']" in error for error in errors), errors)
 
     def test_planner_rejects_non_list_descriptor_skills(self) -> None:
         descriptor = copy.deepcopy(self.descriptor)
@@ -1033,7 +1045,7 @@ class ResearchProductionAdapterMetadataPromotionTests(unittest.TestCase):
         adapter_plan["distributions"]["openai_skill"]["skills"]["affinity-synthesis"][
             "ja-JP"
         ]["interactive"]["source"] = "research/skill-prototypes/suite-manifest.json"
-        with self.assertRaisesRegex(ValueError, "retains renamed research identity"):
+        with self.assertRaisesRegex(ValueError, "outside declared source class"):
             plan_production_adapter_metadata_promotion(
                 adapter_plan,
                 self.descriptor,

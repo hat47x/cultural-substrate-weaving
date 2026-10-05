@@ -1,13 +1,14 @@
 from __future__ import annotations
 
 import json
+import os
 import re
 import sys
 from pathlib import Path
 
 from common import (
     DIST, PLUGINS, ROOT, locale_source, locales, manifest, read_json,
-    sha256, version, write_text
+    project_reference_links, sha256, version, write_text
 )
 
 
@@ -21,12 +22,13 @@ def check_projected_reference(
     source: Path,
     generated: Path,
     source_label: str,
+    expected_content: str | None = None,
 ) -> None:
     """Check one generated reference against its already-resolved source."""
 
     if not generated.exists():
         fail(errors, f"Missing generated reference: {generated.relative_to(ROOT)}")
-    elif generated.read_bytes() != source.read_bytes():
+    elif generated.read_bytes() != (source.read_bytes() if expected_content is None else expected_content.encode("utf-8")):
         fail(errors, f"Generated reference differs from {source_label}")
 
 
@@ -46,13 +48,16 @@ def check_skill_entry_budget(
 
 
 def check_json_files(errors: list[str]) -> None:
-    for path in ROOT.rglob("*.json"):
-        if any(part in {".git", "dist", "__pycache__"} for part in path.parts):
-            continue
-        try:
-            json.loads(path.read_text(encoding="utf-8"))
-        except Exception as exc:
-            fail(errors, f"Invalid JSON: {path.relative_to(ROOT)}: {exc}")
+    for directory, subdirectories, filenames in os.walk(ROOT):
+        subdirectories[:] = [name for name in subdirectories if name not in {".git", "dist", "__pycache__"}]
+        for filename in filenames:
+            if not filename.endswith(".json"):
+                continue
+            path = Path(directory) / filename
+            try:
+                json.loads(path.read_text(encoding="utf-8"))
+            except Exception as exc:
+                fail(errors, f"Invalid JSON: {path.relative_to(ROOT)}: {exc}")
     for path in DIST.rglob("*.json"):
         try:
             json.loads(path.read_text(encoding="utf-8"))
@@ -202,12 +207,19 @@ def check_modules(errors: list[str]) -> None:
     config = manifest()
     for locale in locales():
         router = (locale_source(locale) / config["router"]).read_text(encoding="utf-8")
+        portfolio = (locale_source(locale) / "frameworks/portfolio.md").read_text(encoding="utf-8")
         for module in config["modules"]:
             source = locale_source(locale) / module["source"]
             if not source.exists():
                 fail(errors, f"{locale}: missing source module {module['source']}")
-            if module["source"] not in router:
-                fail(errors, f"{locale}: router does not reference {module['source']}")
+            directly_routed = module["source"] in router
+            dossier_routed = (
+                module["source"].startswith("frameworks/")
+                and "frameworks/portfolio.md" in router
+                and f"]({Path(module['source']).name})" in portfolio
+            )
+            if not directly_routed and not dossier_routed:
+                fail(errors, f"{locale}: module is unreachable from router or framework portfolio: {module['source']}")
             for profile in ("interactive", "metered"):
                 generated = (
                     DIST
@@ -223,6 +235,7 @@ def check_modules(errors: list[str]) -> None:
                     source=source,
                     generated=generated,
                     source_label=f"{locale}/{module['source']}",
+                    expected_content=project_reference_links(source.read_text(encoding="utf-8"), config["modules"], module["source"]),
                 )
 
 

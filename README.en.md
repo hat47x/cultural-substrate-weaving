@@ -2,9 +2,9 @@
 
 [日本語](README.md) | [English](README.en.md)
 
-Researchers sometimes encounter an unfamiliar concept in everyday life and use it as a catalyst for deep discovery. This is **a complementary AI skill for approximating that experience within generative AI cognition**. It opens time-tested cultural, philosophical, and traditional frameworks as temporary cognitive fields, then returns the questions, relations, states, and transition candidates they produce to the target for validation. Cultural frameworks are not treated as answers or classifiers. Only portions independently supported by target-side material are treated as findings about the target.
+**A complementary AI skill for re-reading essential structure through cultural perspectives and turning discoveries into usable questions, comparisons, and compositions.** It starts from the experience of researchers who encounter unfamiliar concepts and use them as catalysts for discovery. Open cultural, philosophical, and traditional frameworks as temporary cognitive fields, combining problem-set analysis with framework-native discovery as the request requires.
 
-> **This research branch is testing a method split.** Both the Japanese canonical source and the English CSW runtime now use the thin-CSW boundary: one-round material synthesis is delegated to `affinity-synthesis`, while multi-round delta/reopen orchestration is delegated to `iterative-inquiry-synthesis`. The two sibling prototypes now also have initial English `SKILL.en.md` and `METHOD.en.md` drafts alongside their Japanese research realizations. This does not mean that a three-Skill distribution has already been publicly released. Multi-skill distribution generation/rebuild, independent review of the English prototype realizations, and classification or translation of ancillary research references/evals remain incomplete.
+> **This research branch is testing a method split.** Both the Japanese canonical source and the English CSW runtime now use the thin-CSW boundary: one-round material synthesis is delegated to `affinity-synthesis`, while multi-round delta/reopen orchestration is delegated to `iterative-inquiry-synthesis`. The two sibling prototypes now also have initial English `SKILL.en.md` and `METHOD.en.md` drafts alongside their Japanese research realizations. This does not mean that a three-Skill distribution has already been publicly released. CSW distribution artifacts are rebuilt; public three-Skill distribution, independent review of English prototypes, and ancillary research-reference/eval localization remain incomplete.
 
 These methods do **not** replace domain expertise or quality criteria in writing, management, software engineering, law, or other fields. Domain capability comes from the caller's context or another domain-specific skill used alongside them.
 
@@ -18,14 +18,14 @@ cultural-substrate-weaving
   -> preserve attribution of framework-generated candidates
   -> return them to the target
 
-        ↓ material / handoff
+        ↕ optional material / handoff
 
 affinity-synthesis   [research prototype]
   one-round material-led synthesis
   -> card / group / label / relation
   -> diagram <-> narrative <-> source checks
 
-        ↓ delta / residual
+        ↕ optional delta / residual
 
 iterative-inquiry-synthesis   [research prototype]
   multi-round delta-based reopening
@@ -100,13 +100,13 @@ GitHub Actions are currently disabled. Validation is performed in a local or equ
 
 ## Core value
 
-> **Approximate, within generative AI cognition, the experience of a researcher who encounters concepts in everyday life and uses them as catalysts for deep discovery.**
+> **Change the perspective, re-read the target's structure, and turn discoveries into human inquiry and concrete compositions.**
 
-From cultural frameworks, the skill mainly extracts typologies that divide the whole world as one system, transitions and topology between states, and practical wisdom about where to direct attention in each state and how to connect it to reality. Lineage is shown, but cultural variation and ornament receive one step lower priority. Framework rules are treated provisionally as generative rules that produce a world, not as summaries induced from observation, and are run boldly while the assumption stays explicit.
+Essential structure means the relations, conditions, and changes that explain how targets arise or differ for the current purpose. A cultural framework supplies a perspective across a problem set. Explain qualitative placements with reasons, and add distinct partitions when useful. Do not assume mathematical orthogonality or framework truth.
 
-The author expects a second role from cultural frameworks. A framework is not a candidate compared with a problem in the same space; it is a higher-order structure that encompasses a group of problems and supplies a viewpoint from which to evaluate them. Placing the problem group within the framework's axes identifies its essential structure and re-illuminates the distances and relations among problems with a new index. Crossing several mutually orthogonal viewpoints refines the cognitive grid further. This is the author's claim; its effect is still under verification.
+Read the framework's own partitions, relations, changes, and practice, then revise the reading against target documents, examples, and exceptions. Existing research and human experience or judgment can support decisions; empirical experiments are not a mandatory stage in every task. When selection is delegated, choose a concrete proposal and explain why.
 
-The pathway for bringing resulting candidates into real use is still a hypothesis. Rather than installing uniform safety gates, the skill illuminates candidates through a sequence of shifting viewpoints: origin, assumption, complementary positions within the whole framework, pushback from the target, and concretization. It is testing a design in which refinement happens naturally within the flow, so that candidates that have lost their marks do not erode reality. The Japanese design policy is **[根幹価値と具現化方針](docs/ja/maintainers/core-value-and-embodiment-policy.md)**.
+The runtime and distribution are rebuilt around this value. Affinity-diagramming synthesis and multi-round continuity remain separate responsibilities. An available external `yomiyasu` may polish settled Japanese prose. None is a hard dependency for CSW. See the Japanese [product design](docs/ja/maintainers/value-first-product-design.md) and [material-synthesis record](docs/ja/maintainers/value-first-material-synthesis.md).
 
 ## Core principles
 
@@ -114,11 +114,11 @@ The CSW boundary is:
 
 > **Return structures obtained from external frameworks to the target for validation. Treat only the parts independently supported by target-side material as findings about the target.**
 
-The research Method Definition for `affinity-synthesis` draws from KJ-method, affinity-diagram, and qualitative-synthesis lineage while recording AI-era implementation corrections separately. A central boundary rule is:
+The separate `affinity-synthesis` research realization supports material-led affinity diagramming. Its lineage and AI-specific additions are documented in the [Method Definition](research/skill-prototypes/affinity-synthesis/references/METHOD.en.md) and research evidence.
 
 > **Join when semantic unity must be preserved; split when epistemic state must be preserved.**
 
-KJ Method is a registered trademark of Kawakita Research Institute. This prototype does not claim to be an official KJ Method Agent Skill or a complete reproduction of the method.
+The public method name is affinity diagramming. The prototype does not claim to be an official implementation or complete reproduction of its historical source method.
 
 ## Why use an external framework? A hypothesis
 

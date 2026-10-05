@@ -8,7 +8,7 @@ from pathlib import Path
 from common import (
     ADAPTERS, DIST, PLUGINS, ROOT, clean_generated, copy_file,
     locale_short, locale_source, locales, manifest,
-    replace_router_links, version, write_text
+    project_reference_links, replace_router_links, version, write_text
 )
 
 
@@ -36,6 +36,7 @@ def write_skill_tree(
     body: str,
     references: list[tuple[Path, str]],
     explicit_invocation: bool = False,
+    reference_modules: list[dict] | None = None,
 ) -> None:
     """Write one host-independent Skill tree from already-resolved inputs."""
 
@@ -47,12 +48,30 @@ def write_skill_tree(
     content += body
     write_text(target / "SKILL.md", content)
     for source, reference_name in references:
-        copy_file(source, target / "references" / reference_name)
+        if reference_modules is None:
+            copy_file(source, target / "references" / reference_name)
+        else:
+            source_relative = next(
+                module["source"] for module in reference_modules
+                if module["skill_reference"] == reference_name
+            )
+            write_text(
+                target / "references" / reference_name,
+                project_reference_links(source.read_text(encoding="utf-8"), reference_modules, source_relative),
+            )
 
 
 def concatenate_modules(locale: str, config: dict, module_paths: list[str]) -> str:
     source_root = locale_source(locale)
-    sections = [(source_root / rel).read_text(encoding="utf-8").rstrip() for rel in module_paths]
+    grouped_modules = [
+        {"source": source, "skill_reference": filename, "aliases": [next(module["skill_reference"] for module in config["modules"] if module["source"] == source)]}
+        for filename, sources in config["knowledge_groups"].items()
+        for source in sources
+    ]
+    sections = [
+        project_reference_links((source_root / rel).read_text(encoding="utf-8"), grouped_modules, rel).rstrip()
+        for rel in module_paths
+    ]
     return "\n\n---\n\n".join(sections) + "\n"
 
 
@@ -68,6 +87,7 @@ def build_openai(locale: str, config: dict, router: str) -> None:
             description=locale_info["description"],
             body=body,
             references=references,
+            reference_modules=config["modules"],
         )
         copy_file(
             ADAPTERS / "openai-skill" / locale / f"openai.{profile}.yaml",
@@ -99,6 +119,7 @@ def build_claude(locale: str, config: dict, router: str, claude_config: dict) ->
         description=config["locales"][locale]["description"],
         body=replace_router_links(router, config["modules"]),
         references=canonical_reference_files(locale, config),
+        reference_modules=config["modules"],
         explicit_invocation=True,
     )
 
@@ -189,7 +210,12 @@ def write_root_codex_marketplace(plugin_entries: list[dict]) -> None:
 def build_gpt(locale: str, config: dict, router: str) -> None:
     target = DIST / locale / "chatgpt-gpt"
     prefix = (ADAPTERS / "chatgpt-gpt" / locale / "instructions-prefix.md").read_text(encoding="utf-8").rstrip()
-    write_text(target / "instructions.md", prefix + "\n\n" + router)
+    knowledge_modules = [
+        {"source": source, "skill_reference": "knowledge/" + filename}
+        for filename, sources in config["knowledge_groups"].items()
+        for source in sources
+    ]
+    write_text(target / "instructions.md", prefix + "\n\n" + replace_router_links(router, knowledge_modules, prefix=""))
     for filename, modules in config["knowledge_groups"].items():
         write_text(target / "knowledge" / filename, concatenate_modules(locale, config, modules))
     copy_file(
@@ -235,8 +261,8 @@ def build_m365(locale: str, config: dict) -> None:
         (adapter_root / "conversation-starters.json").read_text(encoding="utf-8")
     )
     names = {
-        "ja-JP": ("Cultural Substrate Weaving — 日本語", "文化的体系とKJ法で問い・関係・状態・空白・来歴を探索・統合します。"),
-        "en-US": ("Cultural Substrate Weaving — English", "Explores and integrates questions, relations, states, gaps, and provenance with cultural frameworks and KJ."),
+        "ja-JP": ("Cultural Substrate Weaving — 日本語", "文化体系の視点から本質構造を捉え直し、発見を問い・比較・構成へ具体化します。"),
+        "en-US": ("Cultural Substrate Weaving — English", "Reads essential structure through cultural perspectives and turns discoveries into usable questions, comparisons, and compositions."),
     }
     agent = {
         "$schema": "https://developer.microsoft.com/json-schemas/copilot/declarative-agent/v1.8/schema.json",
@@ -291,7 +317,7 @@ def write_root_marketplace(plugin_entries: list[dict]) -> None:
     marketplace = {
         "name": "cultural-substrate-weaving",
         "owner": {"name": "hat47x"},
-        "description": "Localized skills for cultural-framework exploration, KJ integration, and provenance-aware structural work.",
+        "description": "Localized skills for cultural perspective analysis, discovery, and provenance-aware target return.",
         "version": version(),
         "plugins": plugin_entries,
     }

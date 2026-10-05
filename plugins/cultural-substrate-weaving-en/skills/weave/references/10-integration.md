@@ -64,7 +64,7 @@ negated_or_revised:
 newly_recomposed:
 ```
 
-This does not ask Layer 1 to implement dialectics or cultural-framework interpretation. It exists so **the third structure remains traceable to the tension that produced it and affinity synthesis can treat the tension itself as material**.
+This does not ask Layer 1 to implement dialectics or cultural-framework interpretation. It exists so **the third structure remains traceable to the tension that produced it and affinity synthesis can treat the tension itself as material**. In a compatible Affinity Board, a `cross_field_emergent` card may use `trace-cross-field` to retain target-side refs separately from traced framework-card refs. That is lineage externalization, not adoption or truth assignment for the third candidate.
 
 Layer 1 does not treat the `cross_field_candidate` as a privileged higher-order label. It may keep the target-side resistance, framework-side reading, and third candidate as separate meaning-bearing units and integrate them again from the material upward.
 
@@ -87,7 +87,8 @@ origin: framework_generated | cross_field_emergent | target-side material lineag
 verification: target_supported | unresolved | other explicit state
 ```
 
-This is not a fixed schema.
+This is not a fixed schema. When a compatible Affinity Board records a `target_response`, it may also retain source/card refs when the response can be tied back to concrete target-side material. The presence of such refs does not itself mean `target_supported`; keep origin and verification state separate.
+After a framework-derived candidate is returned to the target, its transformation may also be kept as append-only history on the same stable card. In a compatible Affinity Board, `audit-return` may append an open-string state, target-side basis refs, a revision note, and possible next checks. This audit is not a pre-grouping taxonomy; it is history carried back into ordinary material-led affinity synthesis.
 
 If the third structure changes further inside affinity synthesis, retain lineage back to the original target/framework tension. Do not delete the history of tension merely because the resulting prose has become smooth.
 
@@ -117,7 +118,7 @@ If `affinity-synthesis` or another compatible realization is unavailable, CSW ca
 - target-side verification questions; and
 - preparation of handoff material.
 
-Do not describe KJ / affinity synthesis as executed when it was not actually run.
+Do not describe affinity synthesis as executed when it was not actually run.
 
 If a simple summary or fixed classification is used instead, do not relabel it as affinity synthesis.
 
@@ -136,7 +137,7 @@ Do not duplicate the complete history every time.
 
 ## CSW canonical responsibilities
 
-Higher-level principles remain in `core/principles-and-constraints.md`.
+Higher-level principles remain in `00-principles-and-constraints.md`.
 
 In particular, CSW retains:
 

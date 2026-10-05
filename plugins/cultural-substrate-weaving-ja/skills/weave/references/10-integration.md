@@ -66,7 +66,7 @@ newly_recomposed:
 
 を持たせる。
 
-これはLayer 1に弁証法や文化体系処理を実装させるためではない。**第三構造が何との緊張から生じたのかを失わず、親和統合がその緊張自体も材料として扱えるようにするため**である。
+これはLayer 1に弁証法や文化体系処理を実装させるためではない。**第三構造が何との緊張から生じたのかを失わず、親和統合がその緊張自体も材料として扱えるようにするため**である。compatibleなAffinity Boardでは、`cross_field_emergent` cardに`trace-cross-field`を使い、target側refとtrace済みframework card refを別々に保持してよい。これはlineageの外在化であり、第三候補の採用や真偽判定ではない。
 
 Layer 1は、`cross_field_candidate` を特権的な上位表札として扱わない。対象側の抵抗、体系側の読み、第三候補を必要に応じて別々のmeaning-bearing unitとして保持し、そこから改めて材料主導で統合する。
 
@@ -89,7 +89,8 @@ origin: framework_generated | cross_field_emergent | target-side material lineag
 verification: target_supported | unresolved | other explicit state
 ```
 
-固定schemaではない。
+固定schemaではない。compatibleなAffinity Boardで`target_response`を記録する場合、具体的な対象側材料へ戻せるときはsource/card参照を併記してよい。参照があること自体は`target_supported`を意味せず、由来と検証状態を別に保つ。
+framework由来candidateを対象へ戻した後の変形も、必要なら同じstable cardのappend-only auditとして保持できる。compatibleなAffinity Boardでは`audit-return`でopen-stringのstate、target-side basis ref、修正note、次確認候補を追記してよい。このauditは親和図法で束ねる前の分類ではなく、通常の材料主導統合へ戻すための履歴である。
 
 第三構造が親和統合の中でさらに変化した場合も、元のtarget/framework tensionへ戻れるlineageを残す。統合後の文が滑らかになったことを理由に、緊張の履歴を削除しない。
 
@@ -119,7 +120,7 @@ CSWの目的は、文化体系を対象へ当てはめ切ることではない�
 - target-side verification question
 - handoff materialの整理
 
-ただし、実行していないKJ／親和統合を「実行済み」と記述しない。
+ただし、実行していない親和図法による統合を「実行済み」と記述しない。
 
 単純な要約・固定分類で代用した場合も、それを親和統合と称しない。
 
@@ -138,7 +139,7 @@ CSWの目的は、文化体系を対象へ当てはめ切ることではない�
 
 ## CSW固有の正本
 
-この接続より上位の原則は `core/principles-and-constraints.md` に置く。
+この接続より上位の原則は `00-principles-and-constraints.md` に置く。
 
 特に次はCSW側に残す。
 

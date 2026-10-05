@@ -16,7 +16,7 @@ REQUIRED: dict[str, tuple[str, ...]] = {
     "src/ja-JP/ROUTER.md": (
         "体系との一致だけでなく、対象が体系を押し返す不一致・抵抗・逆転にも注意し",
         "**対応 ≠ 統合**",
-        "第三構造が生じても、対象側の独立supportなしに事実へ昇格させない",
+        "第三構造が生じても、対象側の独立した支持なしに事実へ昇格させない",
     ),
     "src/en-US/ROUTER.md": (
         "misfit, resistance, reversal, or excess",

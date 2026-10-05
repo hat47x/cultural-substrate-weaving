@@ -5,7 +5,7 @@ Read this before finalizing an application result to check skill-specific increm
 ## 11. Check the result
 
 1. A domain-method **baseline** and preservation set were established.
-2. When KJ was used, semantic units, evidence state, provenance, isolates, and unresolved material were preserved.
+2. When affinity synthesis was used, semantic units, evidence state, provenance, isolates, and unresolved material were preserved.
 3. When a cultural framework was used, target-side unresolved structure and the questions or relations actually supplied by the framework remained distinguishable.
 4. `not_loaded / probe / preview / full / enacted` were distinguished, and depth itself was not treated as success.
 5. **Exploratory use and attribution use** were not mixed. Attribution use applied the needed homogeneity, assignment, lineage, convention, and transition checks.
@@ -25,7 +25,7 @@ Look at target-side or real-work changes rather than framework count or mapping 
 
 - A concrete question, falsification condition, or research target appeared.
 - Search or observation targets changed.
-- KJ groupings, relations, or blanks were reconfigured.
+- affinity-synthesis groupings, relations, or blanks were reconfigured.
 - New findings gained support from target-side material.
 - Target/framework misfit produced a distinction, relation, or recomposition candidate that had not been visible before.
 - Target-side contradiction caused the framework reading itself to be narrowed or revised.

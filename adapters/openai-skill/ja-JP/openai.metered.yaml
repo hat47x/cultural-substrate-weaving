@@ -1,6 +1,6 @@
 interface:
   display_name: "Cultural Substrate Weaving — 日本語"
-  short_description: "文化的体系から問い・関係・状態・来歴の候補を探る"
-  default_prompt: "著者からの委任範囲を確認し、文化的体系から得た問いを対象側の材料に照らして扱ってください。材料を親和統合する必要がある場合は、利用できるcompatible realizationへ委ねてください。採否や価値判断も、その委任範囲に従ってください。"
+  short_description: "文化体系の視点で本質構造を捉え直し、問い・比較・構成へ具体化する"
+  default_prompt: "Use $cultural-substrate-weaving. この対象の本質構造を文化体系の視点から捉え直し、既存資料と定性的な判断をもとに、使える問い・比較・構成案へ具体化してください。親和図法による材料統合が必要なら、利用可能な別スキルへ委ねてください。"
 policy:
   allow_implicit_invocation: false

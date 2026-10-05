@@ -12,7 +12,7 @@ If you maintain the repository, `python scripts/build.py` generates the same con
 
 1. Open GPT creation in ChatGPT.
 2. Enter the localized name and description.
-3. Enable Web Search under Capabilities when the intended work needs current facts, external context, or additional source discovery. It is not required for KJ integration or structural exploration over a closed set of supplied material. If search is unavailable, do not guess missing external facts.
+3. Enable Web Search under Capabilities when the intended work needs current facts, external context, or additional source discovery. It is not required for perspective analysis or discovery over a closed set of supplied material. If search is unavailable, do not guess missing external facts.
 4. Paste `instructions.md` into Instructions.
 5. Upload all files under `knowledge/`.
 6. Add the examples from `conversation-starters.md`.

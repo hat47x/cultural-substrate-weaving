@@ -118,7 +118,7 @@ CSW固有の完了条件として、一定数の文化体系、一定round数、
 
 追加のframework contactが対象側の問い・材料配置・成果物・判断を動かさない場合は、`no_useful_increment`を保ったまま止まってよい。
 
-停止・採用・行動への移行の決定権は `core/principles-and-constraints.md` の委任境界に従う。
+停止・採用・行動への移行の決定権は `00-principles-and-constraints.md` の委任境界に従う。
 
 ## 最小handoff
 
@@ -135,6 +135,6 @@ CSW固有の完了条件として、一定数の文化体系、一定round数、
 
 ## CSW固有の正本
 
-この接続より上位の原則は `core/principles-and-constraints.md` に置く。
+この接続より上位の原則は `00-principles-and-constraints.md` に置く。
 
 とくに、可能性と採用、認知と事実、保存と現在の注意を混同しない。

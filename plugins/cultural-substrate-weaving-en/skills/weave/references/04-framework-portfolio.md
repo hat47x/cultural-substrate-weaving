@@ -14,22 +14,26 @@ This file indexes frameworks that CSW carries internally. Adopted does not mean 
 
 | Framework | Primary contribution | Strong structure | Reference |
 |---|---|---|---|
-| Yijing | re-segmentation, position, change, nesting | two line types, 8 trigrams, 64 hexagrams | yijing.md |
-| Wuxing | generation/restraint, cycles, relational roles | five phases, sheng / ke | wuxing.md |
-| Sāṅkhya | layers, production order, observer/process split | 25 tattvas, three guṇas | sankhya.md |
-| Dependent origination | conditionality, arising/cessation, intervention | conditional formula, variable chains | dependent-origination.md |
-| Catuṣkoṭi | break binary framing | P / not-P / both / neither | catuskoti.md |
-| Jain syādvāda | perspectival qualification | sevenfold predication | jain-sevenfold-predication.md |
-| Aristotle's four causes | pluralize why-explanations | material / formal / efficient / final | aristotle-four-causes.md |
-| Rasa theory | expression–reception relation | bhāva / rasa | rasa.md |
-| Maya calendar systems | coupled cycles, phase difference, partial/full recurrence, long-span time | Tzolk’in / Haab / Calendar Round / Long Count | maya-calendars.md |
-| Huayan | whole–part reciprocity, node perspective, integration with difference | Fazang whole–part analysis and mutual inclusion | huayan.md |
-| Nyāya five-member inference | inference unfolding, reason/rule separation, application audit | thesis / reason / example / application / conclusion | nyaya-five-member-inference.md |
-| Confucian role / li | role perspective, relational expectation, patterned interaction | role / relation / li / practice | confucian-role-ritual.md |
-| Classical stasis theory | dispute-state separation, stasis-switch detection | fact / definition / evaluation / procedure-competence | classical-stasis-theory.md |
-| Hadith isnād / matn | content/transmission separation, branching and textual variants | matn / isnād / variant / provenance | hadith-isnad-matn.md |
-| Marshallese wave navigation | relative route, cue sequence, model/environment return | route cue / training model / situated sensing | marshallese-wave-navigation.md |
-| Taiheki | embodied observation | bodily typology | ../domains/human-and-taiheki.md |
+| Yijing | re-segmentation, position, change, nesting | two line types, 8 trigrams, 64 hexagrams | [yijing.md](04a-yijing.md) |
+| Wuxing | generation/restraint, cycles, relational roles | five phases, sheng / ke | [wuxing.md](04b-wuxing.md) |
+| Sāṅkhya | layers, production order, observer/process split | 25 tattvas, three guṇas | [sankhya.md](04c-sankhya.md) |
+| Dependent origination | conditionality, arising/cessation, intervention | conditional formula, variable chains | [dependent-origination.md](04d-dependent-origination.md) |
+| Catuṣkoṭi | break binary framing | P / not-P / both / neither | [catuskoti.md](04e-catuskoti.md) |
+| Jain syādvāda | perspectival qualification | sevenfold predication | [jain-sevenfold-predication.md](04f-jain-sevenfold-predication.md) |
+| Aristotle's four causes | pluralize why-explanations | material / formal / efficient / final | [aristotle-four-causes.md](04g-aristotle-four-causes.md) |
+| Rasa theory | expression–reception relation | bhāva / rasa | [rasa.md](04h-rasa.md) |
+| Maya calendar systems | coupled cycles, phase difference, partial/full recurrence, long-span time | Tzolk’in / Haab / Calendar Round / Long Count | [maya-calendars.md](04i-maya-calendars.md) |
+| Huayan | whole–part reciprocity, node perspective, integration with difference | Fazang whole–part analysis and mutual inclusion | [huayan.md](04j-huayan.md) |
+| Nyāya five-member inference | inference unfolding, reason/rule separation, application audit | thesis / reason / example / application / conclusion | [nyaya-five-member-inference.md](04k-nyaya-five-member-inference.md) |
+| Confucian role / li | role perspective, relational expectation, patterned interaction | role / relation / li / practice | [confucian-role-ritual.md](04l-confucian-role-ritual.md) |
+| Classical stasis theory | dispute-state separation, stasis-switch detection | fact / definition / evaluation / procedure-competence | [classical-stasis-theory.md](04m-classical-stasis-theory.md) |
+| Hadith isnād / matn | content/transmission separation, branching and textual variants | matn / isnād / variant / provenance | [hadith-isnad-matn.md](04n-hadith-isnad-matn.md) |
+| Marshallese wave navigation | relative route, cue sequence, model/environment return | route cue / training model / situated sensing | [marshallese-wave-navigation.md](04o-marshallese-wave-navigation.md) |
+| Shinto shrine threshold / purification | marked boundary, preparation, participant-state change, return | torii / approach / temizu / central act | [shinto-threshold-purification.md](04p-shinto-threshold-purification.md) |
+| Tibetan Buddhist mandala | center, directions, gates, nested boundaries, approach path | center / directions / gates / nested enclosure | [tibetan-buddhist-mandala.md](04q-tibetan-buddhist-mandala.md) |
+| Mīmāṃsā prescriptive hermeneutics | prescriptive units, syntactic expectancy, semantic fit, contextual supplementation, norm conflict | prescription / syntax / context / norm conflict | [mimamsa-hermeneutics.md](04r-mimamsa-hermeneutics.md) |
+| Llull's late Ars | systematic binary/ternary crossing and unseen-combination probes | binary / ternary combination / rotation / question | [llull-ars.md](04s-llull-ars.md) |
+| Taiheki | embodied observation | bodily typology | [human-and-taiheki.md](05-human-and-taiheki.md) |
 
 ## Select by the missing cognitive operation
 
@@ -52,6 +56,10 @@ Do not begin with whichever framework name is easiest to recall. Start with the 
 | locate what kind of dispute is active | Classical stasis theory | fact, definition, evaluation, procedure/competence |
 | separate content from transmission path | Hadith isnād / matn | content, chain, branching/convergence, variants |
 | reason through local route cues rather than a literal map | Marshallese wave navigation | relative route, cue sequence, model/environment return |
+| inspect preparation around an explicitly marked threshold | Shinto shrine threshold / purification | threshold, preparation, central act, return |
+| read a field through center, directions, gates, and nested boundaries | Tibetan Buddhist mandala | center/periphery, directions, gates, nested enclosure |
+| separate rule scope, exceptions, and contextual supplementation | Mīmāṃsā prescriptive hermeneutics | prescriptive unit, syntax, semantic fit, norm conflict |
+| systematically cross distinctions that are not usually combined | Llull's late Ars | binary/ternary crossing, rotation, unseen combination |
 | open an embodied observation axis | Taiheki | bodily response under tension and release |
 
 ### Keep near neighbors distinct
@@ -64,4 +72,4 @@ Do not begin with whichever framework name is easiest to recall. Start with the 
 
 Do not try to explain the whole target with one framework. Open a second framework only when the first pass reveals a different missing cognitive operation.
 
-The portfolio is now materially thicker in long-cycle time, whole–part relations, inference, social roles and ritual context, dispute location, transmission provenance, and route-oriented reasoning. It remains thin in center/periphery spatial systems, explicit threshold sequences, indexed narrative corpora, norm-conflict hermeneutics, and lineage-safe mediation layers. Framework count is not a success metric, but too narrow a population impoverishes the encounter function. Continue increasing source quality and structural breadth before efficacy testing.
+The portfolio is now materially thicker in long-cycle time, whole–part relations, inference, social roles and ritual context, dispute location, transmission provenance, and route-oriented reasoning. Center/periphery spatial structure and explicit threshold/preparation sequences are now materially thicker. Prescriptive scope and norm-conflict analysis are materially thicker, and the portfolio now includes systematic unseen-combination generation. It remains thin in indexed narrative corpora and lineage-safe mediation layers. Framework count is not a success metric, but too narrow a population impoverishes the encounter function. Continue increasing source quality and structural breadth before efficacy testing.

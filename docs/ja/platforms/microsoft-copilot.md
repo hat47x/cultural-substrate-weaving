@@ -8,23 +8,21 @@
 
 Microsoft 365 Copilotでは、Knowledgeは主として事実のグラウンディングに使うものであり、エージェントの実行指示をInstructionsからKnowledgeへ退避する用途は前提にできません。
 
-そのため、Microsoft 365向けには、8,000文字以内で自己完結する**限定composite adapter**を用意しています。エージェントの実行指示として扱うのは`instructions.txt`に書かれた範囲だけです。
+そのため、Microsoft 365向けには、8,000文字以内で自己完結する**限定アダプター**を用意しています。エージェントの実行指示として扱うのは、`instructions.txt`に書かれた範囲だけです。
 
-このadapterの中心は、CSWが担当する文化体系探索、帰属保持、対象へのreturnです。ただし、Microsoft 365では独立した兄弟Skillを常に呼べるとは限らないため、材料が複数・異種である場合にも安全に作業できるよう、**親和統合コアの最小互換手順を`instructions.txt`へ埋め込んでいます。** これはCSW本体が材料統合アルゴリズムを所有するという意味ではありません。また、`affinity-synthesis`の完全なrepresentation／lineage機能や、`iterative-inquiry-synthesis`の完全な複数round管理を再現したものでもありません。
-
-埋め込みの材料統合は、KJ法・親和図法・質的統合法の系譜を参照し、意味単位、証拠状態、先に分類名を置かない束ね、元材料への戻し検査などの中核を限定的に保持します。KJ法は株式会社川喜田研究所の登録商標であり、このadapterはKJ法の公式実装を称しません。
+このアダプターは、文化体系の視点による構造読解、発見、帰属保持、対象への返却、具体化を扱います。親和図法の材料統合と複数回の継続管理は別スキルへ委ね、内部手順を埋め込みません。別スキルを呼べない環境では、その不足を示します。CSWの構造読解と発見だけで足りる依頼は、その範囲で進められます。
 
 `method-reference/`には、CSW runtimeや関連する方法資料を、人間が確認するための参照として同梱します。Agent BuilderやSharePointのKnowledgeへアップロードして、`instructions.txt`の続きをエージェントに実行させるためのファイルではありません。
 
 対象となる業務資料、調査資料、組織内文書などをKnowledgeへ追加し、対象側の事実グラウンディングに使うことはできます。
 
-この限定adapterは、他の対応プラットフォームと同等の完全なCSW／分離Method実行を保証しません。詳細な体系固有操作、Taihekiの特例、高度な長期研究設計、完全な親和統合の図解・lineage、完全なround履歴管理などが必要な場合は、より適した実行形態を使ってください。設計経緯と境界の整理はIssue #96に残しています。
+この限定アダプターは、他の対応プラットフォームと同等の完全なCSW／分離Method実行を保証しません。詳細な体系固有操作、Taihekiの特例、高度な長期研究設計、完全な親和統合の図解・lineage、完全なround履歴管理などが必要な場合は、より適した実行形態を使ってください。設計経緯と境界の整理はIssue #96に残しています。
 
 ## パッケージを取得する
 
 [GitHub Releases](https://github.com/hat47x/cultural-substrate-weaving/releases)から`cultural-substrate-weaving-m365-copilot-ja-JP-vX.Y.Z.zip`を取得し、展開します。中には次が含まれています。
 
-- `instructions.txt`: Microsoft 365 Copilotへ設定する自己完結した限定composite adapter
+- `instructions.txt`: Microsoft 365 Copilotへ設定する自己完結した限定アダプター
 - `method-reference/`: CSW runtimeと関連方法を人間が確認するための参照資料
 - `README.txt`: パッケージ内の役割分担と制約
 - `agent-project/`: Agents Toolkit CLI向けのプロジェクト
@@ -43,7 +41,7 @@ Microsoft 365 Copilotライセンスがあれば、CLIやコード編集を使�
 4. 「Instructions」に、展開した`instructions.txt`の内容をそのまま貼り付けます。8,000文字の制限内に収まることは、ビルドと検証処理で確認します。
 5. 対象となる業務資料や調査資料を使う場合は、「Knowledge」へ追加します。端末から直接アップロードする埋め込みファイルは、知識ソースとして最大20件まで追加できます。パッケージ内の`method-reference/`は、Instructionsの続きを実行させる目的ではアップロードしません。
 6. 現在の事実や外部情報を調べる用途がある場合は、「Knowledge」で「すべてのWebサイトを検索します。」を有効にします。手元の資料だけを対象にする場合は必須ではありません。
-7. 「Try it」タブで、文化体系を使う例、使わない例、埋め込みの材料統合だけで足りる例を試します。必要な作業が限定adapterの範囲内に収まっているかも確認してください。
+7. 「Try it」タブで、問題群を読み直す依頼や、発見を構成案にする依頼を試します。必要な作業が限定アダプターの範囲内に収まっているかも確認してください。
 8. 作成後は、「Share」ボタンから特定の人やグループへ直接共有できます。組織全体で使えるようにする場合は、右上の「…」メニューから「Submit to your org catalog」を選び、管理者の承認を経て組織のAgent Storeへ公開します。
 
 ## 方法B：Agents Toolkit CLI（組織展開などの高度な構成向け）
@@ -57,7 +55,7 @@ AppSourceへの配布、テナント全体での管理配布、SharePointサイ�
 
 ### 1. SharePoint Knowledgeへ対象資料を用意する
 
-SharePointをKnowledgeとして使う場合は、CSWや親和統合の実行規則ではなく、エージェントが対象について参照する業務資料・調査資料・組織内文書を置きます。パッケージ内の`method-reference/`をSharePointへ置き、`instructions`の続きを実行させる構成にはしません。
+SharePointをKnowledgeとして使う場合は、CSWや親和図法の実行規則ではなく、エージェントが対象について参照する業務資料・調査資料・組織内文書を置きます。パッケージ内の`method-reference/`をSharePointへ置き、`instructions`の続きを実行させる構成にはしません。
 
 1. エージェントが参照する対象資料を、一つのSharePointサイトまたはドキュメントライブラリへ用意します。
 2. リポジトリをクローンします。

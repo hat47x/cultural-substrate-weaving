@@ -1,6 +1,6 @@
 # Cultural Substrate Weaving — English
 
-A complementary skill that opens cultural frameworks as temporary cognitive fields, preserves the provenance of the questions and structure candidates they generate, and returns those candidates to target-side material for validation. When one-round material synthesis or multi-round delta/reopen work is needed, it delegates to a compatible realization when available.
+A complementary skill for reading essential structure in targets and problem sets through cultural perspectives, then making discoveries usable as questions, comparisons, or compositions. Return candidates to existing material and qualitative judgment. Affinity-diagramming synthesis and multi-round continuity are delegated to available separate skills.
 
 Version 0.5.0 · MIT · [Repository](https://github.com/hat47x/cultural-substrate-weaving)
 
@@ -21,11 +21,12 @@ The skill is **explicit-invocation only**.
 
 The skill does not replace domain expertise. Where appropriate, establish a baseline with a domain skill first and use this skill alongside it.
 
-Examples:
-- `Use ordinary analysis as the baseline, then apply a cultural framework narrowly and check for new questions.`
-- `Return the correspondence candidate produced by the framework to target-side material and separate support from counterevidence.`
+Example requests:
 
-Cultural frameworks are sources of structure candidates, not truths for prediction or diagnosis. On this research branch, material-synthesis capabilities derived from KJ-method, affinity-diagram, and qualitative-synthesis lineage are being separated into sibling Method prototypes. Taiheki is used only on explicit request or when bodily consistency itself is the inquiry.
+- `Read this problem set through distinct cultural perspectives and explain shared structure and differences.`
+- `Infer the essential value from these documents and choose a concrete composition that embodies it.`
+
+Keep framework-generated questions and compositions distinct from target facts. Empirical experiments are not a mandatory stage in every task. Separate affinity-diagramming skills such as `affinity-synthesis` are not bundled. Use Taiheki only when explicitly requested or bodily coherence itself is the exploration target. An available external `yomiyasu` may polish settled Japanese prose when appropriate.
 
 ## Documentation
 

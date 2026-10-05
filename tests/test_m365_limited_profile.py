@@ -34,7 +34,7 @@ class M365LimitedProfileTests(unittest.TestCase):
                 (ROOT / "adapters" / "microsoft-copilot" / locale / "instructions.md").is_file()
             )
 
-    def test_m365_profile_is_explicitly_composite_and_limited_in_both_locales(self) -> None:
+    def test_m365_profile_delegates_material_synthesis_in_both_locales(self) -> None:
         ja = (
             ROOT / "adapters/microsoft-copilot/ja-JP/instructions.md"
         ).read_text(encoding="utf-8")
@@ -42,8 +42,10 @@ class M365LimitedProfileTests(unittest.TestCase):
             ROOT / "adapters/microsoft-copilot/en-US/instructions.md"
         ).read_text(encoding="utf-8")
 
-        self.assertIn("親和統合コアの最小互換手順を埋め込んでいます", ja)
-        self.assertIn("This limited profile embeds a minimal compatible material-synthesis fallback", en)
+        self.assertIn("親和図法の材料統合は別スキルへ委ねます", ja)
+        self.assertIn("親和図法の内部手順をこのプロファイルへ埋め込みません", ja)
+        self.assertIn("Delegate affinity-diagramming material synthesis to a separate skill", en)
+        self.assertNotIn("This limited profile embeds a minimal compatible material-synthesis fallback", en)
         self.assertIn("完全なmulti-round orchestrationではありません", ja)
         self.assertIn("This is not complete multi-round orchestration", en)
         self.assertIn("AI解釈を混ぜない", ja)

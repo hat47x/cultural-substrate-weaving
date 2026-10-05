@@ -2,7 +2,7 @@
 
 This GitHub repository can be used as a Claude Plugin Marketplace.
 
-When a task needs current facts, external context, or additional source discovery, confirm that Claude Code's WebSearch/WebFetch tools are available. They are not required for KJ integration or structural exploration that can be completed from the supplied repository or material alone. Treat search availability as part of the available information surface; whether unsupported areas may be handled as inference, hypothesis, or assertion follows the evidence standard and delegation supplied by the requester.
+When a task needs current facts, external context, or additional source discovery, confirm that Claude Code's WebSearch/WebFetch tools are available. They are not required for perspective analysis or discovery that can be completed from the supplied repository or material alone. Treat search availability as part of the available information surface; whether unsupported areas may be handled as inference, hypothesis, or assertion follows the evidence standard and delegation supplied by the requester.
 
 `/plugin` opens the interactive plugin manager in terminal Claude Code. Installation details vary by surface.
 
@@ -56,7 +56,7 @@ If the Plugin Marketplace route is inconvenient, you can use Claude's Skills fea
 2. If your Claude surface provides Skills upload, upload the ZIP as-is.
 3. After installation, check invocation behavior under that surface's workspace and project settings.
 
-Neither the Plugin package nor the uploaded Skill package uses a repository-level setting that forces explicit-only invocation. If you want explicit-only invocation, or want to allow implicit invocation, configure that through Claude-side settings, project instructions, or the author's operating policy.
+The Claude Plugin declares `disable-model-invocation: true` and therefore uses explicit invocation. An uploaded Skill follows its package profile and the host surface's behavior; do not assume it has the same activation policy as the plugin.
 
 ## WSL
 
@@ -74,7 +74,7 @@ For explicit invocation, for example:
 /cultural-substrate-weaving-en:weave Review the responsibility boundaries and time-lag effects in this architecture.
 ```
 
-This is one invocation route, not a requirement imposed by the skill. Actual activation scope follows Claude product settings, workspace/project settings, and the instructions or delegation supplied by the author.
+The plugin uses explicit invocation. The scope of the work follows the request or project delegation, together with the settings supported by the Claude surface.
 
 ## Update
 

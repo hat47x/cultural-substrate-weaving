@@ -1,25 +1,20 @@
 cultural-substrate-weaving — Microsoft 365 limited profile
 
-This package is a self-contained composite adapter for the current Microsoft 365 Copilot contract.
+This package is a self-contained limited adapter for CSW on Microsoft 365 Copilot.
 
 ■ instructions.txt
-A self-contained instruction set for Microsoft 365 Copilot Instructions.
-It includes the CSW responsibilities of cultural-framework exploration, attribution, and return to the target, plus a minimal compatible material-synthesis fallback so the adapter can operate safely when independent sibling Skills cannot be invoked.
-This does not mean CSW itself owns the material-synthesis algorithm, and it does not claim to be the full `affinity-synthesis` realization or an official KJ Method implementation.
-It also does not claim the complete multi-round governance of `iterative-inquiry-synthesis`.
+Instructions for perspective analysis, discovery, attribution, target return, and concrete proposals. Affinity-diagramming synthesis and multi-round continuity are delegated to separate skills; their algorithms are not embedded. Surface the missing capability when a compatible realization is unavailable.
 
 ■ method-reference/
-Human-readable reference material for the CSW runtime and related method material. It may include supporting material for understanding the split-method research work.
-Do not upload these files to Agent Builder or SharePoint Knowledge with the expectation that they will extend instructions.txt.
+Human-readable references for CSW details. Do not upload these files to Agent Builder or SharePoint Knowledge expecting them to extend instructions.txt.
 
 ■ Microsoft 365 Copilot Knowledge
-Use Knowledge for target-side business documents, research material, organization documents, and other factual grounding needed for the task.
-This has a different role from the bundled method-reference/ directory.
+Use Knowledge for target-side business documents, research, organizational material, and factual grounding. Its role differs from method-reference/.
 
-The current Microsoft 365 package does not claim full CSW or split-method parity with the other supported platforms. Detailed framework-specific operations, the Taiheki special case, advanced longitudinal research design, the full Affinity Synthesis representation/lineage layer, and complete multi-round governance are outside this limited profile unless explicitly present in instructions.txt.
+This limited profile does not guarantee full execution parity with the other supported platforms. Detailed framework-native operations, the Taiheki special case, full material synthesis, and multi-round history management are outside its scope unless provided in instructions.txt.
 
-Usage and current constraints:
+Usage and constraints:
 https://github.com/hat47x/cultural-substrate-weaving/blob/main/docs/en/platforms/microsoft-copilot.md
 
-Microsoft 365 adapter redesign tracking:
+Adapter design history:
 https://github.com/hat47x/cultural-substrate-weaving/issues/96

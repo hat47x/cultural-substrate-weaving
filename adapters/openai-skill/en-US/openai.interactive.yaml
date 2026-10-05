@@ -1,6 +1,6 @@
 interface:
   display_name: "Cultural Substrate Weaving — English"
-  short_description: "Explore questions, relations, states, gaps, and provenance through cultural frameworks"
-  default_prompt: "Read the author-defined or externally delegated scope. Explore cultural frameworks and return candidates to target-side material for checking. When needed, use an available compatible realization for affinity synthesis. Follow the delegation for adoption and value judgments."
+  short_description: "Read essential structure through cultural perspectives"
+  default_prompt: "Use $cultural-substrate-weaving. Re-read this target through cultural perspectives and turn the result into usable questions, comparisons, or a proposed composition. Use existing material and qualitative judgment. Delegate material synthesis to an available separate affinity-diagramming skill when needed."
 policy:
   allow_implicit_invocation: true

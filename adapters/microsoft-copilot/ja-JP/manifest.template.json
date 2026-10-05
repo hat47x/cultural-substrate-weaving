@@ -14,12 +14,12 @@
     "color": "color.png"
   },
   "name": {
-    "short": "文化体系＋KJ",
+    "short": "文化体系の視点",
     "full": "Cultural Substrate Weaving — 日本語"
   },
   "description": {
-    "short": "文化的体系とKJ法で構造候補と空白を探索します。",
-    "full": "文化的体系による構造候補の供給とKJ法による断片統合・空白探索を組み合わせ、領域固有手法の基準線になかった所見を対象側で検証するMicrosoft 365 Copilotエージェントです。"
+    "short": "文化体系の視点で対象の本質構造を捉え直す",
+    "full": "文化体系の視点から構造を読み、発見を問い・比較・構成へ具体化する限定アダプター。親和図法の材料統合は別スキルへ委ねます。"
   },
   "accentColor": "#F4F1EA",
   "copilotAgents": {

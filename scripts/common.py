@@ -2,6 +2,8 @@ from __future__ import annotations
 
 import hashlib
 import json
+import posixpath
+import re
 import shutil
 import subprocess
 from pathlib import Path
@@ -90,6 +92,25 @@ def replace_router_links(router: str, modules: list[dict], prefix: str = "refere
     for module in modules:
         output = output.replace(module["source"], prefix + module["skill_reference"])
     return output
+
+
+def project_reference_links(text: str, modules: list[dict], source_relative: str) -> str:
+    """Render source-root pointers and local Markdown links in flat references."""
+    names = {module["source"]: module["skill_reference"] for module in modules}
+    for module in modules:
+        for alias in module.get("aliases", []):
+            names[alias] = module["skill_reference"]
+
+    def local_link(match: re.Match) -> str:
+        target = match.group(1)
+        path, separator, anchor = target.partition("#")
+        resolved = posixpath.normpath(posixpath.join(posixpath.dirname(source_relative), path))
+        replacement = names.get(path, names.get(resolved))
+        return "](" + (replacement + separator + anchor if replacement else target) + ")"
+
+    output = re.sub(r"\]\(([^)]+)\)", local_link, text)
+    pattern = r"(?<![A-Za-z0-9_./-])(" + "|".join(re.escape(name) for name in sorted(names, key=len, reverse=True)) + r")(?=$|[\s`),;.!?\]])"
+    return re.sub(pattern, lambda match: names[match.group(1)], output)
 
 
 def load_env_file(path: Path) -> dict[str, str]:

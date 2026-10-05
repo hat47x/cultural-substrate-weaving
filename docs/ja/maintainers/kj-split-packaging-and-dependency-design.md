@@ -208,7 +208,7 @@ else:
 
 CSW側に残せるfallbackは、方法手順ではなく**安全な接続境界**だけとする。
 
-例えばは次のとおりです。
+例えば、次のような境界です。
 
 - framework-generated candidateをtarget-supported findingへ自動昇格させない。
 - target materialの意味を文化体系へ合わせて分類しない。
@@ -293,7 +293,7 @@ runtime `src/manifest.json`とは別に、research用の複数Skill manifestを�
 
 `manifest()` を単一Skill configではなくsuite configへ拡張する。
 
-重要は次のとおりです。
+重要な変更点は次のとおりです。
 
 - `build_openai`: skillごとにstandalone directory生成
 - `build_claude`: 一plugin内へ複数skills生成

@@ -16,8 +16,8 @@ These are vocabulary for recording the current execution state. They do not enco
 ## 1. Usage scope
 
 - **`non_activation`**: the skill's operations are not being used under the current external decision or delegated decision.
-- **`limited`**: selected operations are being used, such as KJ, provenance, temporal structure, connections, or part of a cultural framework.
-- **`exploratory`**: several operations such as cultural-framework exploration, KJ, and transformation are being used iteratively.
+- **`limited`**: selected operations are being used, such as perspective analysis, provenance, temporal structure, connections, or part of a cultural framework.
+- **`exploratory`**: several operations such as perspective analysis, cultural-framework discovery, and transformation are being used iteratively.
 
 Whether the task is simple or complex, open or closed, proofreading, translation, calculation, implementation, or creative work may be relevant context, but task category is not an automatic activation or suppression rule owned by this skill.
 
@@ -33,7 +33,22 @@ Whether the skill was explicitly invoked or not, usage scope is handled through 
 
 A probe that generates no new question, a preview that mostly duplicates existing understanding, or a full read that mostly adds framework-specific information can be recorded as **observed differences**. Those observations are not automatic triggers to deepen, return, or stop.
 
-A candidate framework may have been explicitly named, arisen from context, or come from the recall anchors in `methods/system-selection.md`; that entry provenance can also be recorded. Which entry to use, how many candidates to inspect, and how deeply to load them follows the external delegation.
+A candidate framework may have been explicitly named, arisen from context, or come from the recall anchors in `02-system-selection.md`; that entry provenance can also be recorded. Which entry to use, how many candidates to inspect, and how deeply to load them follows the external delegation.
+
+### Use depth as a surface of cognitive work
+
+Even when the external purpose or delegation calls for broad cognitive contribution from cultural frameworks, do not treat `probe / preview / full / enacted` as a ladder of reading volume. Distinguish the **cognitive work** opened at each depth.
+
+| Depth | Main cognitive work opened |
+|---|---|
+| `probe` | lightly test whether the target's current segmentation can open into different questions, relations, states, or transitions; form framework and cognitive-function candidates |
+| `preview` | before target mapping, recover the framework's structural core as a whole — positions, relations, cycles, boundaries, transitions, practice — and open several operational directions |
+| `full` | open primary sources, lineage, compound structure, interpretive language, practice, and material variants so that opposing positions, exceptions, assumptions, and lineage differences can enter exploration |
+| `enacted` | actually run framework-native operations and return them to the target as questions, contrasts, falsifiers, observations, or small trials |
+
+Maximal use does not require passing through every depth in order. What matters is whether changing depth opens **new cognitive operations and target-return differences**.
+
+At the same depth, rotating into unused relation, transition, practice, boundary, or other operations may contribute more than simply loading more material. Conversely, a `full` read may add only internal framework explanation without adding target-side questions, distinctions, or trials; record that state as observed rather than treating depth itself as value.
 
 ## 3. Decision material for changing depth
 

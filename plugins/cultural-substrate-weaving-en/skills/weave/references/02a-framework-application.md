@@ -8,9 +8,15 @@ In **exploratory use**, treat positions, paths, cycles, symbols, and relation vo
 
 In **attribution use**, the claim is that the target itself has a framework-shaped position, state, transition, or gap. Then use the assignment, transition, and post-use checks below.
 
-In exploratory use, a framework may be run as a provisional generative rule. For deriving placement, vacancies, transitions, complementary positions, and practice, and for handling the assumption clause, follow `core/discovery-pathway.md`.
+In exploratory use, a framework may be run as a provisional generative rule. For deriving placement, vacancies, transitions, complementary positions, and practice, and for handling the assumption clause, follow `00-discovery-pathway.md`.
 
 Do not silently switch from exploration to attribution.
+
+## Separate perspective placement from target findings
+
+Use `02b-perspective-analysis.md` to situate a problem set qualitatively through a framework perspective. Such placements are framework-derived readings, distinct from attribution below. They can inform reasoned interpretations, recommendations, and compositions without establishing target positions, causes, or absences as facts.
+
+Discovery operations and realization belong in `00-discovery-pathway.md`. Target return can use existing sources and qualitative judgment. Attribution checks the target basis needed for a particular claim; it does not require a new empirical experiment every time.
 
 ## 3a. Fix the assignment
 
@@ -112,7 +118,7 @@ A third structure arising from contact among frameworks remains `cross_field_eme
 
 ### Landing in practice and action
 
-Make points of attention and candidate actions from the practice layer concrete step by step through questions, observations, small trials, composition, and judgments. Follow `core/discovery-pathway.md` for the steps of concretization and for illumination. Receive domain quality and safety standards and decisions about execution from the caller's context or domain skills; do not replace them with the framework's practical wisdom.
+Make points of attention and candidate actions from the practice layer concrete step by step through questions, observations, small trials, composition, and judgments. Follow `00-discovery-pathway.md` for the steps of concretization and for illumination. Receive domain quality and safety standards and decisions about execution from the caller's context or domain skills; do not replace them with the framework's practical wisdom.
 
 ## 3d. Placement, adoption judgment, and over-application
 

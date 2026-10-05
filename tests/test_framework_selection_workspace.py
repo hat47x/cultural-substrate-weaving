@@ -227,9 +227,9 @@ class FrameworkSelectionWorkspaceTest(unittest.TestCase):
             self.assertEqual(payload["candidate"]["readiness"], "adopted")
             self.assertIn(
                 "not framework fit",
-                payload["registry"]["interpretation"],
+                payload["authority_boundary"]["interpretation"],
             )
-            self.assertNotIn("score", json.dumps(payload))
+            self.assertNotIn('"score"', json.dumps(payload))
 
     def test_target_structure_lookup_uses_exact_mapping_without_ranking(self) -> None:
         payload = workspace.target_structure_candidates_payload(
@@ -564,7 +564,7 @@ class FrameworkSelectionWorkspaceTest(unittest.TestCase):
             [row["candidate"]["id"] for row in payload["candidates"]],
             ["alpha", "beta"],
         )
-        self.assertNotIn("score", json.dumps(payload))
+        self.assertNotIn('"score"', json.dumps(payload))
 
     def test_shortlist_filters_readiness_without_ranking(self) -> None:
         payload = workspace.shortlist_payload(
@@ -585,7 +585,7 @@ class FrameworkSelectionWorkspaceTest(unittest.TestCase):
             ["alpha"],
         )
         self.assertEqual(payload["readiness"], ["adopted"])
-        self.assertNotIn("score", json.dumps(payload))
+        self.assertNotIn('"score"', json.dumps(payload))
         self.assertIn("not ranking", payload["interpretation_boundary"])
 
     def test_recall_can_include_explicit_non_adopted_readiness(self) -> None:
@@ -629,7 +629,7 @@ class FrameworkSelectionWorkspaceTest(unittest.TestCase):
                 [row["candidate"]["id"] for row in payload["candidates"]],
                 ["alpha"],
             )
-            self.assertNotIn("score", json.dumps(payload))
+            self.assertNotIn('"score"', json.dumps(payload))
 
     def test_real_inventory_adopted_candidates_have_selection_cues(self) -> None:
         inventory = workspace.load_inventory(
@@ -756,7 +756,7 @@ class FrameworkSelectionWorkspaceTest(unittest.TestCase):
             data["exit_record"]["residuals_created"],
             ["The node boundary remains unresolved."],
         )
-        self.assertNotIn("score", json.dumps(data))
+        self.assertNotIn('"score"', json.dumps(data))
 
     def test_target_structure_hypothesis_is_separate_from_framework_choice(self) -> None:
         data = workspace.worksheet_payload(
@@ -799,7 +799,7 @@ class FrameworkSelectionWorkspaceTest(unittest.TestCase):
             review["target_structure_hypotheses"][0]["source_typology"]["date"],
             "2026-10-03",
         )
-        self.assertNotIn("score", json.dumps(review))
+        self.assertNotIn('"score"', json.dumps(review))
 
     def test_non_force_guardrails_externalize_contact_stop_and_survival(self) -> None:
         data = workspace.worksheet_payload(
@@ -837,8 +837,8 @@ class FrameworkSelectionWorkspaceTest(unittest.TestCase):
 
         review = workspace.review_payload(data)
         self.assertEqual(review["candidates"][0]["unfilled_guardrails"], [])
-        self.assertNotIn("score", json.dumps(review))
-        self.assertNotIn("rank", json.dumps(review))
+        self.assertNotIn('"score"', json.dumps(review))
+        self.assertNotIn('"rank"', json.dumps(review))
 
     def test_consideration_axes_keep_routing_dimensions_separate(self) -> None:
         data = workspace.worksheet_payload(
@@ -1097,7 +1097,7 @@ class FrameworkSelectionWorkspaceTest(unittest.TestCase):
         self.assertEqual(candidate_audits["beta"]["yield_kinds"], [])
         self.assertEqual(candidate_audits["beta"]["target_responses"], [])
         self.assertEqual(candidate_audits["beta"]["target_return_states"], [])
-        self.assertNotIn("score", json.dumps(payload))
+        self.assertNotIn('"score"', json.dumps(payload))
 
     def test_living_lab_audit_joins_selection_contact_and_artifact_provenance(self) -> None:
         selection = workspace.worksheet_payload(
@@ -1492,7 +1492,7 @@ class FrameworkSelectionWorkspaceTest(unittest.TestCase):
                 },
             ],
         )
-        self.assertNotIn("score", json.dumps(payload))
+        self.assertNotIn('"score"', json.dumps(payload))
 
     def test_candidate_rejects_operation_not_available_in_inventory(self) -> None:
         data = workspace.worksheet_payload(

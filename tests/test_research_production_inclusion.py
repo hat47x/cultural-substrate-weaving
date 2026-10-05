@@ -234,6 +234,7 @@ class ResearchProductionInclusionTests(unittest.TestCase):
         suite = copy.deepcopy(self.suite)
         iterative = self.skill(suite, "iterative-inquiry-synthesis")
         iterative["locale_realizations"]["en-US"]["status"] = "planned"
+        iterative["locale_realizations"]["en-US"].pop("package_source")
 
         plan = copy.deepcopy(self.plan)
         self.assert_has_error_with_suite(
@@ -249,6 +250,7 @@ class ResearchProductionInclusionTests(unittest.TestCase):
         suite = copy.deepcopy(self.suite)
         affinity_suite = self.skill(suite, "affinity-synthesis")
         affinity_suite["locale_realizations"]["en-US"]["status"] = "planned"
+        affinity_suite["locale_realizations"]["en-US"].pop("package_source")
 
         plan = copy.deepcopy(self.plan)
         affinity = plan["skills"]["affinity-synthesis"]

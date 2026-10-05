@@ -1699,6 +1699,19 @@ def audit_living_lab_payload(
         "delta_operations": delta_operations,
         "artifact_operations": artifact_operations,
         "delta_kinds": delta_kinds,
+        "delta_pre_contact_states": delta_pre_contact_states,
+        "contacted_not_delta_traced_exact": [
+            value for value in contacted_operations if value not in delta_operations
+        ],
+        "delta_not_contacted_exact": [
+            value for value in delta_operations if value not in contacted_operations
+        ],
+        "delta_not_artifact_traced_exact": [
+            value for value in delta_operations if value not in artifact_operations
+        ],
+        "artifact_not_delta_traced_exact": [
+            value for value in artifact_operations if value not in delta_operations
+        ],
         "delta_target_return_states": delta_target_return_states,
         "delta_user_dispositions": delta_user_dispositions,
         "planned_not_contacted_exact": [

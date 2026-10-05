@@ -70,7 +70,7 @@ def check_relation_readback_contract() -> None:
         "representation grammar must keep proposition read-back for explicit semantic relations",
     )
     assert_true(
-        "read-backは**監査操作**" in representation,
+        "このread-backは監査操作" in representation,
         "relation read-back must remain an audit operation rather than duplicated canonical meaning",
     )
     assert_true(
@@ -78,7 +78,7 @@ def check_relation_readback_contract() -> None:
         "representation grammar must keep questionable relations as question candidates",
     )
     assert_true(
-        "missing linkの**問い**" in representation,
+        "missing linkの問い" in representation,
         "missing-link notation must remain a question rather than a relation assertion",
     )
 

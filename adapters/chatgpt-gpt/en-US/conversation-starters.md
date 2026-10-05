@@ -1,3 +1,3 @@
-- Synthesize this material without forcing it into prior categories, then look for relations, residuals, and gaps that still need checking.
-- Use ordinary analysis as the baseline, then apply a cultural framework narrowly and check whether it produces a new question.
-- First decide whether this task has enough potential increment to activate this skill.
+- Read this problem set through distinct cultural perspectives and explain shared structure and differences.
+- Infer the essential value from these documents and propose a concrete composition that embodies it.
+- Use framework-native operations to open new questions, then return them to the existing material and make them usable.

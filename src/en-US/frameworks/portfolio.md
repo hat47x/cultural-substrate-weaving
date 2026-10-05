@@ -14,26 +14,26 @@ This file indexes frameworks that CSW carries internally. Adopted does not mean 
 
 | Framework | Primary contribution | Strong structure | Reference |
 |---|---|---|---|
-| Yijing | re-segmentation, position, change, nesting | two line types, 8 trigrams, 64 hexagrams | yijing.md |
-| Wuxing | generation/restraint, cycles, relational roles | five phases, sheng / ke | wuxing.md |
-| Sāṅkhya | layers, production order, observer/process split | 25 tattvas, three guṇas | sankhya.md |
-| Dependent origination | conditionality, arising/cessation, intervention | conditional formula, variable chains | dependent-origination.md |
-| Catuṣkoṭi | break binary framing | P / not-P / both / neither | catuskoti.md |
-| Jain syādvāda | perspectival qualification | sevenfold predication | jain-sevenfold-predication.md |
-| Aristotle's four causes | pluralize why-explanations | material / formal / efficient / final | aristotle-four-causes.md |
-| Rasa theory | expression–reception relation | bhāva / rasa | rasa.md |
-| Maya calendar systems | coupled cycles, phase difference, partial/full recurrence, long-span time | Tzolk’in / Haab / Calendar Round / Long Count | maya-calendars.md |
-| Huayan | whole–part reciprocity, node perspective, integration with difference | Fazang whole–part analysis and mutual inclusion | huayan.md |
-| Nyāya five-member inference | inference unfolding, reason/rule separation, application audit | thesis / reason / example / application / conclusion | nyaya-five-member-inference.md |
-| Confucian role / li | role perspective, relational expectation, patterned interaction | role / relation / li / practice | confucian-role-ritual.md |
-| Classical stasis theory | dispute-state separation, stasis-switch detection | fact / definition / evaluation / procedure-competence | classical-stasis-theory.md |
-| Hadith isnād / matn | content/transmission separation, branching and textual variants | matn / isnād / variant / provenance | hadith-isnad-matn.md |
-| Marshallese wave navigation | relative route, cue sequence, model/environment return | route cue / training model / situated sensing | marshallese-wave-navigation.md |
-| Shinto shrine threshold / purification | marked boundary, preparation, participant-state change, return | torii / approach / temizu / central act | shinto-threshold-purification.md |
-| Tibetan Buddhist mandala | center, directions, gates, nested boundaries, approach path | center / directions / gates / nested enclosure | tibetan-buddhist-mandala.md |
-| Mīmāṃsā prescriptive hermeneutics | prescriptive units, syntactic expectancy, semantic fit, contextual supplementation, norm conflict | prescription / syntax / context / norm conflict | mimamsa-hermeneutics.md |
-| Llull's late Ars | systematic binary/ternary crossing and unseen-combination probes | binary / ternary combination / rotation / question | llull-ars.md |
-| Taiheki | embodied observation | bodily typology | ../domains/human-and-taiheki.md |
+| Yijing | re-segmentation, position, change, nesting | two line types, 8 trigrams, 64 hexagrams | [yijing.md](yijing.md) |
+| Wuxing | generation/restraint, cycles, relational roles | five phases, sheng / ke | [wuxing.md](wuxing.md) |
+| Sāṅkhya | layers, production order, observer/process split | 25 tattvas, three guṇas | [sankhya.md](sankhya.md) |
+| Dependent origination | conditionality, arising/cessation, intervention | conditional formula, variable chains | [dependent-origination.md](dependent-origination.md) |
+| Catuṣkoṭi | break binary framing | P / not-P / both / neither | [catuskoti.md](catuskoti.md) |
+| Jain syādvāda | perspectival qualification | sevenfold predication | [jain-sevenfold-predication.md](jain-sevenfold-predication.md) |
+| Aristotle's four causes | pluralize why-explanations | material / formal / efficient / final | [aristotle-four-causes.md](aristotle-four-causes.md) |
+| Rasa theory | expression–reception relation | bhāva / rasa | [rasa.md](rasa.md) |
+| Maya calendar systems | coupled cycles, phase difference, partial/full recurrence, long-span time | Tzolk’in / Haab / Calendar Round / Long Count | [maya-calendars.md](maya-calendars.md) |
+| Huayan | whole–part reciprocity, node perspective, integration with difference | Fazang whole–part analysis and mutual inclusion | [huayan.md](huayan.md) |
+| Nyāya five-member inference | inference unfolding, reason/rule separation, application audit | thesis / reason / example / application / conclusion | [nyaya-five-member-inference.md](nyaya-five-member-inference.md) |
+| Confucian role / li | role perspective, relational expectation, patterned interaction | role / relation / li / practice | [confucian-role-ritual.md](confucian-role-ritual.md) |
+| Classical stasis theory | dispute-state separation, stasis-switch detection | fact / definition / evaluation / procedure-competence | [classical-stasis-theory.md](classical-stasis-theory.md) |
+| Hadith isnād / matn | content/transmission separation, branching and textual variants | matn / isnād / variant / provenance | [hadith-isnad-matn.md](hadith-isnad-matn.md) |
+| Marshallese wave navigation | relative route, cue sequence, model/environment return | route cue / training model / situated sensing | [marshallese-wave-navigation.md](marshallese-wave-navigation.md) |
+| Shinto shrine threshold / purification | marked boundary, preparation, participant-state change, return | torii / approach / temizu / central act | [shinto-threshold-purification.md](shinto-threshold-purification.md) |
+| Tibetan Buddhist mandala | center, directions, gates, nested boundaries, approach path | center / directions / gates / nested enclosure | [tibetan-buddhist-mandala.md](tibetan-buddhist-mandala.md) |
+| Mīmāṃsā prescriptive hermeneutics | prescriptive units, syntactic expectancy, semantic fit, contextual supplementation, norm conflict | prescription / syntax / context / norm conflict | [mimamsa-hermeneutics.md](mimamsa-hermeneutics.md) |
+| Llull's late Ars | systematic binary/ternary crossing and unseen-combination probes | binary / ternary combination / rotation / question | [llull-ars.md](llull-ars.md) |
+| Taiheki | embodied observation | bodily typology | [human-and-taiheki.md](../domains/human-and-taiheki.md) |
 
 ## Select by the missing cognitive operation
 

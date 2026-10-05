@@ -1,6 +1,6 @@
 # Use with Codex
 
-When a task needs current facts, external context, or additional source discovery, confirm that Codex network access or web search is available. It is not required for KJ integration or structural exploration that can be completed from the supplied repository or material alone. If search is unavailable, do not guess missing external facts.
+When a task needs current facts, external context, or additional source discovery, confirm that Codex network access or web search is available. It is not required for perspective analysis or discovery that can be completed from the supplied repository or material alone. If search is unavailable, do not guess missing external facts.
 
 ## Recommended: install as a plugin
 
@@ -61,7 +61,7 @@ Do not assume that a cloud task can see the local machine's `~/.agents/skills/`.
 $cultural-substrate-weaving Review the responsibility boundaries, information flow, and irreversible choices in this design.
 ```
 
-Do not use the method for routine implementation, simple proofreading, or a bounded local bug.
+Usage scope follows the request or project delegation. Task category alone does not determine activation.
 
 ## Project instructions
 

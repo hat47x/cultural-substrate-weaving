@@ -31,6 +31,24 @@
       "english_runtime_reference": true,
       "english_package_required": true,
       "independent_review_required_for_public_parity": true
+    },
+    {
+      "research_id": "affinity-synthesis",
+      "role": "board_cli",
+      "shared": "research/skill-prototypes/affinity-synthesis/scripts/affinity_board.py",
+      "localization_status": "language-neutral-shared",
+      "english_runtime_reference": true,
+      "english_package_required": true,
+      "independent_review_required_for_public_parity": false
+    },
+    {
+      "research_id": "affinity-synthesis",
+      "role": "board_validator",
+      "shared": "research/skill-prototypes/affinity-synthesis/scripts/validate_map.py",
+      "localization_status": "language-neutral-shared",
+      "english_runtime_reference": true,
+      "english_package_required": true,
+      "independent_review_required_for_public_parity": false
     }
   ],
   "classified_non_runtime_or_not_required_in_english_package": [

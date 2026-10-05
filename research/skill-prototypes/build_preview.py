@@ -18,6 +18,9 @@ if str(PLANNER_DIR) not in sys.path:
 
 from plan_suite_layout import plan_suite  # noqa: E402
 
+sys.path.insert(0, str(ROOT / "scripts"))
+from common import project_reference_links  # noqa: E402
+
 FRONTMATTER_NAME = re.compile(
     r"\A---\s*\n.*?^name:\s*([^\n]+)$.*?\n---\s*\n",
     re.MULTILINE | re.DOTALL,
@@ -137,7 +140,10 @@ def build_canonical_manifest_preview(
         source = locale_root / module["source"]
         if not source.is_file():
             raise FileNotFoundError(source)
-        shutil.copyfile(source, references / module["skill_reference"])
+        (references / module["skill_reference"]).write_text(
+            project_reference_links(source.read_text(encoding="utf-8"), source_manifest["modules"], module["source"]),
+            encoding="utf-8",
+        )
 
     write_origin(
         target,

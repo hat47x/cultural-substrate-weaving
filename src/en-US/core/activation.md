@@ -16,8 +16,8 @@ These are vocabulary for recording the current execution state. They do not enco
 ## 1. Usage scope
 
 - **`non_activation`**: the skill's operations are not being used under the current external decision or delegated decision.
-- **`limited`**: selected operations are being used, such as KJ, provenance, temporal structure, connections, or part of a cultural framework.
-- **`exploratory`**: several operations such as cultural-framework exploration, KJ, and transformation are being used iteratively.
+- **`limited`**: selected operations are being used, such as perspective analysis, provenance, temporal structure, connections, or part of a cultural framework.
+- **`exploratory`**: several operations such as perspective analysis, cultural-framework discovery, and transformation are being used iteratively.
 
 Whether the task is simple or complex, open or closed, proofreading, translation, calculation, implementation, or creative work may be relevant context, but task category is not an automatic activation or suppression rule owned by this skill.
 

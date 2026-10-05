@@ -114,7 +114,8 @@ class ResearchSkillSubtreePlanTests(unittest.TestCase):
         )
         self.assertEqual(csw["target_root"], "skills/weave")
         self.assertEqual(csw["source_mode"], "canonical_manifest")
-        self.assertEqual(len(csw["mappings"]), 14)
+        config = json.loads((ROOT / "src/manifest.json").read_text(encoding="utf-8"))
+        self.assertEqual(len(csw["mappings"]), 1 + len(config["modules"]))
         by_target = {item["target"]: item for item in csw["mappings"]}
         self.assertEqual(by_target["skills/weave/SKILL.md"]["operation"], "render_runtime_entry")
         self.assertEqual(by_target["skills/weave/SKILL.md"]["source"], "src/ja-JP/ROUTER.md")
@@ -129,16 +130,8 @@ class ResearchSkillSubtreePlanTests(unittest.TestCase):
         affinity["locale_realizations"]["ja-JP"]["package_targets"]["claude_plugin"][
             "skill_name"
         ] = "weave"
-        plan = plan_skill_subtrees(manifest, ROOT)
-        claude = self.distribution(plan, "ja-JP", "claude_plugin")
-        self.assertEqual(claude["subtree_state"], "collision")
-        self.assertIn(
-            {
-                "target": "skills/weave/SKILL.md",
-                "skill_ids": ["cultural-substrate-weaving", "affinity-synthesis"],
-            },
-            claude["collisions"],
-        )
+        with self.assertRaisesRegex(ValueError, "skill_name collision"):
+            plan_skill_subtrees(manifest, ROOT)
 
     def test_composite_surfaces_do_not_invent_sibling_skill_subtrees(self) -> None:
         plan = plan_skill_subtrees(self.manifest, ROOT)

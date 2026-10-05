@@ -129,3 +129,9 @@ make check
 ## Promotion boundary
 
 This record does not authorize production promotion. Translation hash synchronization is distinct from independent English review, complete-checkout execution evidence, and production promotion authorization.
+
+## Value-first reconstruction re-review — 2026-10-05
+
+The runtime was restructured around essential-structure reading, framework-native discovery, and concrete proposals based on existing material and qualitative judgment. Changed Japanese/English pairs were compared for semantic alignment, with the tension, third-structure, independent-support, and external-delegation boundaries retained. Public method naming now uses affinity diagramming; historical lineage remains in separate research evidence. Origin remains distinct from later verification.
+
+The Japanese prose received a separate yomiyasu pass. The protected source blobs in the paired JSON were refreshed for the current source after this alignment check. Translation hashes were refreshed separately. This is the authoring AI's alignment check, not independent English review and not approval to promote sibling research Skills.

@@ -4,7 +4,7 @@ Read this when handling static rules, dynamic material, decision provenance, and
 
 ## 9. Separate static, framework-resource, and dynamic layers
 
-1. **Static layer**: activation conditions, principles, framework application and validation, and KJ practice.
+1. **Static layer**: activation conditions, principles, framework application and validation, and handoff contracts with separate skills.
 2. **Semi-static framework-resource layer**: reusable sources, lineages, positions, relations, cycles, symbols, and other material about the framework itself.
 3. **Dynamic layer**: target-specific material, cards, questions, hypotheses, compositional resources, decisions, and residuals.
 
@@ -29,7 +29,7 @@ Do not fill every field on every round. **Record only enough detail where losing
 
 When recording a judgment or interpretation, link it to who made it whenever practical. Do not treat a user's stated judgment, an AI interpretation added during the round, and an assessment written in an external source as if they had the same origin.
 
-For `framework_generated → target_supported`, retain a reference to target-side support independent of the cultural framework. Removal of framework vocabulary alone is not a reason for the transition.
+For `framework_generated → target_supported`, retain a reference to target-side support independent of the cultural framework. Removal of framework vocabulary alone is not a reason for the transition. Here, transition means adding independent target-side support. Preserve discovery origin and track origin and verification separately.
 
 ## 11. Avoid double counting
 
@@ -58,7 +58,7 @@ In long-running work, do not turn every message into a record. Keep only events 
 
 Event names should describe **what happened** as neutrally as practical. Do not encode judgments such as useful, harmful, or appropriate in the event type itself.
 
-When useful, attach the round, source material or KJ snapshot, framework loading depth, adopted or rejected content, and reopening condition. If an assessment or interpretation also needs to be retained, record it separately with enough provenance to identify who made the judgment and what it relied on.
+When useful, attach the round, source material or affinity-synthesis snapshot, framework loading depth, adopted or rejected content, and reopening condition. If an assessment or interpretation also needs to be retained, record it separately with enough provenance to identify who made the judgment and what it relied on.
 
 For example, a round may record that no cultural framework was opened through its `activation_scope`. Whether that state was appropriate, useful, or avoided harm is a separate judgment and must not be inferred from the state alone.
 
@@ -81,6 +81,6 @@ If a judgment is later corrected or withdrawn, prefer a traceable history of the
 
 ## 14. Preservation and working window
 
-Do not make deletion of old material the default way to lighten context. New material, touched residuals, KJ snapshots, and probe/preview are foregrounding examples; choose what current work needs.
+Do not make deletion of old material the default way to lighten context. New material, touched residuals, affinity-synthesis snapshots, and probe/preview are foregrounding examples; choose what current work needs.
 
 When rules become overactive, choose among narrower conditions, lower priority, auxiliary status, or removal according to the cause; before removal, identify the rule's function. Do not delete dynamic material instead of maintaining the rule.

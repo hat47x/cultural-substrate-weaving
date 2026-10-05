@@ -12,21 +12,11 @@ In exploratory use, a framework may be run as a provisional generative rule. For
 
 Do not silently switch from exploration to attribution.
 
-## 3.0a Exploratory operation passes for using a framework fully
+## Separate perspective placement from target findings
 
-When exploratory use is meant to draw broad cognitive contribution from a framework, do not stop at the first correspondence. Apply the structural core that the framework actually has as **separate cognitive operations** on the target. Not every pass is mandatory. If the analyst adds an operation absent from the framework, keep it distinct from framework-native structure.
+Use `methods/perspective-analysis.md` to situate a problem set qualitatively through a framework perspective. Such placements are framework-derived readings, distinct from attribution below. They can inform reasoned interpretations, recommendations, and compositions without establishing target positions, causes, or absences as facts.
 
-- **position pass**: ask what distinctions appear when target elements, actors, or phases are viewed from different positions;
-- **vacancy pass**: where a closed position set exists, turn empty positions into unasked questions rather than target gaps;
-- **relation pass**: re-question the target with framework-native relation verbs such as adjacency, opposition, complementarity, generation, restraint, or center/periphery;
-- **transition pass**: provisionally run before/after, phase, cycles, return, irreversibility, and unreachable states;
-- **boundary / scale pass**: when the framework has layers, boundaries, inside/outside, scales, or multiple time horizons, disturb how the target unit and boundary are cut;
-- **practice pass**: derive candidate points of attention, observations, questions, or small trials from state-specific practice knowledge;
-- **counter-view pass**: use complementary or opposing positions, another lineage, or another framework to see what the current reading hides.
-
-Outputs of these passes are not target assignments. Treat them first as `framework_generated` questions, hypotheses, contrasts, observation items, falsification conditions, or trial candidates.
-
-Return especially useful candidates to the target and then reintegrate them through KJ / affinity. Allow the correspondence to disappear, weaken, move under another label, or remain residual after target material is included. **Using the framework fully is different from forcing the framework to remain fully visible in the result.**
+Discovery operations and realization belong in `core/discovery-pathway.md`. Target return can use existing sources and qualitative judgment. Attribution checks the target basis needed for a particular claim; it does not require a new empirical experiment every time.
 
 ## 3a. Fix the assignment
 

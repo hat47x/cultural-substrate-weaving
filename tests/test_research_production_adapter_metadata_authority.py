@@ -74,61 +74,14 @@ class ResearchProductionAdapterMetadataAuthorityTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, "must share one production catalog"):
             _bundle_catalog_source(adapter_plan)
 
-    def test_existing_openai_metadata_route_is_mode_driven_not_research_id_driven(self) -> None:
-        prototype_source = self.adapter_plan["distributions"]["claude_plugin"]["locales"]["ja-JP"][
-            "prototype_source"
-        ]
-        adapter_plan = {
-            "distributions": {
-                "openai_skill": {
-                    "profiles": {"interactive": {}},
-                    "skills": {
-                        "alternate-core": {
-                            "ja-JP": {
-                                "interactive": {
-                                    "status": "existing",
-                                    "source": "adapters/openai-skill/ja-JP/openai.interactive.yaml",
-                                }
-                            }
-                        }
-                    },
-                },
-                "claude_plugin": {
-                    "scope": "locale_bundle",
-                    "source": "adapters/claude-code/locales.json",
-                    "review_required_for_multi_skill": True,
-                    "locales": {
-                        "ja-JP": {
-                            "status": "prototype",
-                            "prototype_source": prototype_source,
-                        }
-                    },
-                },
-            }
-        }
-        descriptor = {
-            "skills": [
-                {
-                    "research_id": "alternate-core",
-                    "proposed_installable_name": "alternate-core",
-                    "adapter_metadata": {
-                        "openai_skill": {
-                            "mode": "existing-per-locale-profile",
-                            "source_pattern": "adapters/openai-skill/{locale}/openai.{profile}.yaml",
-                        }
-                    },
-                }
-            ]
-        }
+    def test_existing_openai_metadata_route_preserves_declared_source_mode(self) -> None:
         plan = plan_production_adapter_metadata_promotion(
-            adapter_plan,
-            descriptor,
-            {"ja-JP": self.locale_catalog["ja-JP"]},
+            self.adapter_plan, self.descriptor, self.locale_catalog,
         )
-        item = plan["openai_profile_promotions"][0]
-        self.assertEqual(item["research_id"], "alternate-core")
-        self.assertEqual(item["state"], "existing-production-source")
-        self.assertEqual(item["content_operation"], "keep-existing-production-metadata")
+        core = [item for item in plan["openai_profile_promotions"] if item["research_id"] == "cultural-substrate-weaving"]
+        self.assertEqual(len(core), 4)
+        self.assertTrue(all(item["state"] == "existing-production-source" for item in core))
+        self.assertTrue(all(item["content_operation"] == "keep-existing-production-metadata" for item in core))
 
 
 if __name__ == "__main__":

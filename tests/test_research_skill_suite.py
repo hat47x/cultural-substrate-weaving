@@ -315,6 +315,8 @@ class ResearchSkillSuiteTests(unittest.TestCase):
             "references/REPRESENTATION.md",
             "references/TEMPLATE.md",
             "references/affinity-map.schema.json",
+            "scripts/affinity_board.py",
+            "scripts/validate_map.py",
             "evals/CASES.md",
             "evidence/dossier.md",
         }
@@ -330,6 +332,8 @@ class ResearchSkillSuiteTests(unittest.TestCase):
                 "references/METHOD.en.md",
                 "references/REPRESENTATION.en.md",
                 "references/affinity-map.schema.json",
+                "scripts/affinity_board.py",
+                "scripts/validate_map.py",
             },
         )
         self.assertNotIn("references/METHOD.md", files)

@@ -624,7 +624,7 @@ def validate_production_source_promotion_plan(
         errors.append(f"production source plan has unknown Skills: {extra_plan_ids}")
 
     mappings_by_source: dict[str, list[dict]] = {}
-    for skill in plan.get("skills", []):
+    for skill in plan_skills:
         if not isinstance(skill, dict):
             errors.append("production source promotion Skill entries must be objects")
             continue

@@ -25,13 +25,13 @@ DESCRIPTOR_PATH = (
     / "P4-PRODUCTION-SUITE-DESCRIPTOR-PROTOTYPE.json"
 )
 PACKET_RELATIVE = Path(
-    "research/skill-prototypes/P4-ENGLISH-INDEPENDENT-REVIEW-PACKET-2026-09-08.md"
+    "research/skill-prototypes/P4-ENGLISH-INDEPENDENT-REVIEW-PACKET-2026-10-05.md"
 )
 TARGETS_RELATIVE = Path(
-    "research/skill-prototypes/P4-ENGLISH-INDEPENDENT-REVIEW-TARGETS-2026-09-08-v3.json"
+    "research/skill-prototypes/P4-ENGLISH-INDEPENDENT-REVIEW-TARGETS-2026-10-05-v4.json"
 )
 PREVIOUS_TARGETS_RELATIVE = Path(
-    "research/skill-prototypes/P4-ENGLISH-INDEPENDENT-REVIEW-TARGETS-2026-09-07-v2.json"
+    "research/skill-prototypes/P4-ENGLISH-INDEPENDENT-REVIEW-TARGETS-2026-09-08-v3.json"
 )
 LOCALIZATION_RELATIVE = Path(
     "research/skill-prototypes/P4-TECHNICAL-ASSET-LOCALIZATION-2026-09-07.json"
@@ -103,7 +103,7 @@ class ResearchEnglishReviewGateTests(unittest.TestCase):
         self.assertIsNone(gate["completed_review"])
         self.assertFalse(gate["production_promotion_authorized"])
 
-    def test_v3_snapshot_contains_runtime_method_and_direct_technical_assets(self) -> None:
+    def test_current_snapshot_contains_runtime_method_and_direct_technical_assets(self) -> None:
         pairs = {
             (item["research_id"], item["artifact"])
             for item in self.targets["targets"]
@@ -125,7 +125,7 @@ class ResearchEnglishReviewGateTests(unittest.TestCase):
         )
         self.assertEqual(
             self.targets["review_source_commit"],
-            "6a9118cd71959dcebaf09e64f235d650eb2e1ff8",
+            "c917f1e05d52584473d0fdc966c3bfc943635d37",
         )
 
     def test_pending_gate_cannot_claim_completed_review(self) -> None:

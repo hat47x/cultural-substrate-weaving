@@ -19,6 +19,8 @@ EXPECTED_SCHEMA = "csw.technical-asset-localization/v1"
 EXPECTED_ASSETS = {
     ("affinity-synthesis", "representation_grammar"),
     ("affinity-synthesis", "machine_readable_schema"),
+    ("affinity-synthesis", "board_cli"),
+    ("affinity-synthesis", "board_validator"),
     ("iterative-inquiry-synthesis", "round_template"),
 }
 SIBLING_RESEARCH_IDS = {research_id for research_id, _ in EXPECTED_ASSETS}

@@ -12,8 +12,8 @@ LOCAL_MARKDOWN_LINK = re.compile(r"\[[^\]]+\]\((?!https?://|mailto:|#)[^)]+\)")
 REQUIRED_INSTRUCTION_MARKERS = {
     "ja-JP": (
         "Microsoft 365限定プロファイル",
-        "親和統合コアの最小互換手順を埋め込んでいます",
-        "意味の一体性を守る必要があるときは結合",
+        "親和図法の材料統合は別スキルへ委ねます",
+        "問題群",
         "委ねられた範囲を、勝手に広げず",
         "target_supported",
         "観測、測定、利用者判断、AI解釈を混ぜない",
@@ -21,8 +21,8 @@ REQUIRED_INSTRUCTION_MARKERS = {
     ),
     "en-US": (
         "Microsoft 365 limited profile",
-        "This limited profile embeds a minimal compatible material-synthesis fallback",
-        "Join material when semantic unity must be preserved",
+        "Delegate affinity-diagramming material synthesis to a separate skill",
+        "problem set",
         "Do not expand the scope entrusted by the user",
         "target_supported",
         "Separate observation, measurement, user judgment, and AI interpretation",
@@ -33,9 +33,11 @@ REQUIRED_INSTRUCTION_MARKERS = {
 FORBIDDEN_OWNERSHIP_MARKERS = {
     "ja-JP": (
         "文化的体系による構造探索とKJ法による統合の中核だけを扱います",
+        "親和統合コアの最小互換手順を埋め込んでいます",
     ),
     "en-US": (
         "It keeps the core of cultural-framework exploration and KJ integration",
+        "This limited profile embeds a minimal compatible material-synthesis fallback",
     ),
 }
 
@@ -44,14 +46,14 @@ README_MARKERS = {
         "instructions.txt",
         "method-reference/",
         "Knowledge",
-        "composite adapter",
+        "limited adapter",
         "続きを実行させるためのファイルではありません",
     ),
     "en-US": (
         "instructions.txt",
         "method-reference/",
         "Knowledge",
-        "composite adapter",
+        "limited adapter",
         "Do not upload these files",
     ),
 }

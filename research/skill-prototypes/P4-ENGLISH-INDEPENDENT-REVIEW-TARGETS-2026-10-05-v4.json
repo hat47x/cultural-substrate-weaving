@@ -1,0 +1,83 @@
+{
+  "schema": "csw.english-independent-review-targets/v1",
+  "status": "review-target-snapshot",
+  "captured_at": "2026-10-05",
+  "branch": "codex/value-first-reconstruction",
+  "review_source_commit": "c917f1e05d52584473d0fdc966c3bfc943635d37",
+  "supersedes": "research/skill-prototypes/P4-ENGLISH-INDEPENDENT-REVIEW-TARGETS-2026-09-08-v3.json",
+  "note": "Pending independent review targets refreshed to the existing develop baseline. The v3 snapshot is retained as history. This preparation is not an independent review or production-promotion approval.",
+  "targets": [
+    {
+      "research_id": "affinity-synthesis",
+      "artifact": "runtime",
+      "ja": {
+        "path": "research/skill-prototypes/affinity-synthesis/SKILL.md",
+        "blob_sha": "ed00bc28875c1ea7a1ecd9b19ebeabb35959bd1e"
+      },
+      "en": {
+        "path": "research/skill-prototypes/affinity-synthesis/SKILL.en.md",
+        "blob_sha": "5f20262664443b99a5a7e8b34393a9e2dcc7bc95"
+      }
+    },
+    {
+      "research_id": "affinity-synthesis",
+      "artifact": "method_definition",
+      "ja": {
+        "path": "research/skill-prototypes/affinity-synthesis/references/METHOD.md",
+        "blob_sha": "f8e4c7be0933b0b92a9f39b9ac5f47be37abece0"
+      },
+      "en": {
+        "path": "research/skill-prototypes/affinity-synthesis/references/METHOD.en.md",
+        "blob_sha": "e10e2a7246af0ac97c78d80a4df00f0e4536ea46"
+      }
+    },
+    {
+      "research_id": "affinity-synthesis",
+      "artifact": "representation_grammar",
+      "ja": {
+        "path": "research/skill-prototypes/affinity-synthesis/references/REPRESENTATION.md",
+        "blob_sha": "9e6fc9bb7a9c0d79f42f87aa0e6e6c9a04b541db"
+      },
+      "en": {
+        "path": "research/skill-prototypes/affinity-synthesis/references/REPRESENTATION.en.md",
+        "blob_sha": "b8b2986e10c005841f9f572339d001233e2bdfe7"
+      }
+    },
+    {
+      "research_id": "iterative-inquiry-synthesis",
+      "artifact": "runtime",
+      "ja": {
+        "path": "research/skill-prototypes/iterative-inquiry-synthesis/SKILL.md",
+        "blob_sha": "744f753304fdca2a98903b63b567355e56561afb"
+      },
+      "en": {
+        "path": "research/skill-prototypes/iterative-inquiry-synthesis/SKILL.en.md",
+        "blob_sha": "23a0b3ddfcc2f2e0f151d23bf6abe46eeea2fad6"
+      }
+    },
+    {
+      "research_id": "iterative-inquiry-synthesis",
+      "artifact": "method_definition",
+      "ja": {
+        "path": "research/skill-prototypes/iterative-inquiry-synthesis/references/METHOD.md",
+        "blob_sha": "d2f664ea348821464ac0a1c3c9546f9cecd667ea"
+      },
+      "en": {
+        "path": "research/skill-prototypes/iterative-inquiry-synthesis/references/METHOD.en.md",
+        "blob_sha": "c66b428a5573b5cf96962a69bdcd1401f0c75bdf"
+      }
+    },
+    {
+      "research_id": "iterative-inquiry-synthesis",
+      "artifact": "round_template",
+      "ja": {
+        "path": "research/skill-prototypes/iterative-inquiry-synthesis/references/ROUND-TEMPLATE.md",
+        "blob_sha": "f49409a5688350d8f12862dbb1be54896759cfd3"
+      },
+      "en": {
+        "path": "research/skill-prototypes/iterative-inquiry-synthesis/references/ROUND-TEMPLATE.en.md",
+        "blob_sha": "cf37494be5bfb0a8aafdb6ca87a82f9af5fd9eb1"
+      }
+    }
+  ]
+}

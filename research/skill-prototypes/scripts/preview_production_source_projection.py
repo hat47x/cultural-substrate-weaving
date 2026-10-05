@@ -404,6 +404,7 @@ def build_preview() -> dict:
         descriptor,
         inventory,
         suite=suite,
+        migration=migration,
     )
     if plan_errors:
         raise ProjectionError("; ".join(plan_errors))

@@ -58,6 +58,7 @@ class ResearchProductionSourcePromotionAuthorityTests(unittest.TestCase):
             self.descriptor,
             self.inventory,
             suite=self.suite,
+            migration=self.migration,
         )
         self.assertEqual(errors, [])
 
@@ -91,87 +92,29 @@ class ResearchProductionSourcePromotionAuthorityTests(unittest.TestCase):
             _locale_tree_source_prefixes(suite, descriptor),
         )
 
-    def test_canonical_manifest_route_is_source_mode_driven_not_research_id_driven(self) -> None:
-        suite = {
-            "skills": [
-                {
-                    "id": "alternate-core",
-                    "source_root": "src",
-                    "locale_realizations": {},
-                }
-            ]
-        }
-        descriptor = {
-            "skills": [
-                {
-                    "research_id": "alternate-core",
-                    "proposed_installable_name": "alternate-core",
-                    "production_source": {
-                        "mode": "canonical_manifest",
-                        "manifest": "src/manifest.json",
-                    },
-                }
-            ]
-        }
-        migration = {"research_to_production_name": {"alternate-core": "alternate-core"}}
-        plan = plan_production_source_promotion(suite, descriptor, migration, {"content_projection": []})
-        self.assertEqual(plan["skills"][0]["state"], "existing-canonical-manifest")
-        self.assertEqual(plan["skills"][0]["locales"], {})
-        self.assertEqual(
-            validate_production_source_promotion_plan(
-                plan,
-                descriptor,
-                {"content_projection": []},
-                suite=suite,
-            ),
-            [],
+    def test_canonical_manifest_route_preserves_declared_source_mode(self) -> None:
+        plan = plan_production_source_promotion(
+            self.suite, self.descriptor, self.migration, self.inventory,
         )
+        core = next(item for item in plan["skills"] if item["research_id"] == "cultural-substrate-weaving")
+        self.assertEqual(core["state"], "existing-canonical-manifest")
+        self.assertEqual(core["source"], {
+            "mode": "canonical_manifest", "manifest": "src/manifest.json",
+        })
+        self.assertEqual(validate_production_source_promotion_plan(
+            plan, self.descriptor, self.inventory, suite=self.suite, migration=self.migration,
+        ), [])
 
-    def test_descriptor_name_is_the_only_public_name_authority_in_validator(self) -> None:
-        descriptor = {
-            "skills": [
-                {
-                    "research_id": "affinity-synthesis",
-                    "proposed_installable_name": "different-valid-name",
-                    "production_source": {
-                        "mode": "locale_tree",
-                        "root_pattern": "src/skills/different-valid-name/{locale}",
-                    },
-                }
-            ]
-        }
-        plan = {
-            "schema": PLAN_SCHEMA,
-            "status": "design-only",
-            "selection_basis": "research locale package_source.files",
-            "skills": [
-                {
-                    "research_id": "affinity-synthesis",
-                    "production_name": "different-valid-name",
-                    "state": "planned-locale-tree-promotion",
-                    "source": descriptor["skills"][0]["production_source"],
-                    "locales": {
-                        "ja-JP": {
-                            "production_source_mode": "locale_tree",
-                            "production_root": "src/skills/different-valid-name/ja-JP",
-                            "runtime_entry": "src/skills/different-valid-name/ja-JP/SKILL.md",
-                            "target_collision": False,
-                            "mappings": [
-                                {
-                                    "source": "research/skill-prototypes/affinity-synthesis/SKILL.md",
-                                    "source_relative": "SKILL.md",
-                                    "target_relative": "SKILL.md",
-                                    "target": "src/skills/different-valid-name/ja-JP/SKILL.md",
-                                    "content_transforms": [],
-                                }
-                            ],
-                        }
-                    },
-                }
-            ],
-        }
-        errors = validate_production_source_promotion_plan(plan, descriptor)
-        self.assertEqual(errors, [])
+    def test_plan_name_must_match_descriptor_and_migration_authority(self) -> None:
+        plan = plan_production_source_promotion(
+            self.suite, self.descriptor, self.migration, self.inventory,
+        )
+        layer1 = next(item for item in plan["skills"] if item["research_id"] == "affinity-synthesis")
+        layer1["production_name"] = "different-valid-name"
+        errors = validate_production_source_promotion_plan(
+            plan, self.descriptor, self.inventory, suite=self.suite, migration=self.migration,
+        )
+        self.assertTrue(any("name" in error and "affinity-synthesis" in error for error in errors), errors)
 
     def test_inventory_coverage_uses_declared_locale_tree_source_root(self) -> None:
         suite = {

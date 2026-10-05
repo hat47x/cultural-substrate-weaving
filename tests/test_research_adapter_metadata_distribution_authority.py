@@ -5,6 +5,7 @@ import json
 import sys
 import tempfile
 import unittest
+from unittest.mock import patch
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -12,6 +13,7 @@ SCRIPTS_DIR = ROOT / "scripts"
 if str(SCRIPTS_DIR) not in sys.path:
     sys.path.insert(0, str(SCRIPTS_DIR))
 
+import validate_research_adapter_metadata as adapter_validator
 from validate_research_adapter_metadata import validate_adapter_metadata  # noqa: E402
 
 SUITE_PATH = ROOT / "research" / "skill-prototypes" / "suite-manifest.json"
@@ -37,14 +39,14 @@ class ResearchAdapterMetadataDistributionAuthorityTests(unittest.TestCase):
             "prototype_source"
         ] = "research/skill-prototypes/DOES-NOT-EXIST.json"
 
-        with tempfile.TemporaryDirectory(prefix="adapter-metadata-suite-", dir=ROOT) as temp_dir:
-            suite_path = Path(temp_dir) / "suite.json"
-            suite_path.write_text(
-                json.dumps(suite, ensure_ascii=False, indent=2) + "\n",
-                encoding="utf-8",
-            )
-            metadata["suite_manifest"] = suite_path.relative_to(ROOT).as_posix()
+        original_loader = adapter_validator._load_json
 
+        def load_fixture_suite(path, field, errors):
+            if path == SUITE_PATH:
+                return suite
+            return original_loader(path, field, errors)
+
+        with patch.object(adapter_validator, "_load_json", side_effect=load_fixture_suite):
             errors = validate_adapter_metadata(ROOT, metadata)
 
         self.assertTrue(

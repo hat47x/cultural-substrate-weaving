@@ -6,13 +6,13 @@
     "ja-JP": {
       "label": "日本語",
       "status": "canonical",
-      "description": "文化的体系による構造候補の探索とKJ法による断片統合を組み合わせ、問い・関係・状態・空白・来歴を扱う補助AIスキル。利用範囲、採否、価値判断は著者またはスキル外の委任に従う。"
+      "description": "文化体系の視点から対象や問題群の本質構造を捉え直し、発見を問い・比較・構成へ具体化する補助スキル。材料統合と継続管理は別の実現へ接続する。"
     },
     "en-US": {
       "label": "English",
       "status": "translated",
       "review_note": "The thin-CSW ownership migration is translated on this research branch. Initial English SKILL/Method Definition drafts now also exist for affinity-synthesis and iterative-inquiry-synthesis as separate research realizations. Independent human review and ancillary research-material localization remain pending; this does not imply public three-Skill distribution parity.",
-      "description": "A complementary AI skill that keeps its interpretation revisable by the target, opens cultural frameworks as temporary cognitive fields, and combines them with KJ integration to raise semantic units, relations, and gaps from material. Usage scope, adoption, and value judgments follow the author or delegation outside the skill."
+      "description": "Reinterpret essential structures in targets and problem sets through cultural perspectives, then turn discoveries into questions, comparisons, and compositions. Connect material synthesis and continuation to separate realizations."
     }
   },
   "router": "ROUTER.md",
@@ -56,6 +56,11 @@
       "id": "framework-application",
       "source": "methods/framework-application.md",
       "skill_reference": "02a-framework-application.md"
+    },
+    {
+      "id": "perspective-analysis",
+      "source": "methods/perspective-analysis.md",
+      "skill_reference": "02b-perspective-analysis.md"
     },
     {
       "id": "transformation",
@@ -186,19 +191,22 @@
   "knowledge_groups": {
     "00-core.md": [
       "core/cognitive-stance.md",
-      "core/discovery-pathway.md",
       "core/activation.md",
-      "core/principles-and-constraints.md",
-      "core/iteration.md"
+      "core/principles-and-constraints.md"
     ],
-    "01-framework-and-kj.md": [
+    "01-perspectives-and-discovery.md": [
       "methods/scope-and-facts.md",
       "methods/system-selection.md",
+      "methods/perspective-analysis.md",
+      "core/discovery-pathway.md"
+    ],
+    "02-target-return-and-connections.md": [
       "methods/framework-application.md",
       "methods/transformation.md",
-      "methods/integration.md"
+      "methods/integration.md",
+      "core/iteration.md"
     ],
-    "01a-framework-library.md": [
+    "03-framework-library.md": [
       "frameworks/portfolio.md",
       "frameworks/yijing.md",
       "frameworks/wuxing.md",
@@ -220,10 +228,10 @@
       "frameworks/mimamsa-hermeneutics.md",
       "frameworks/llull-ars.md"
     ],
-    "02-human-and-taiheki.md": [
+    "04-optional-body-framework.md": [
       "domains/human-and-taiheki.md"
     ],
-    "03-governance-and-evaluation.md": [
+    "05-records-and-reflection.md": [
       "governance/governance-and-records.md",
       "governance/evaluation.md"
     ]

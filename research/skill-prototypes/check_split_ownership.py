@@ -283,8 +283,8 @@ def main() -> None:
     require(
         "adapters/microsoft-copilot/ja-JP/instructions.md",
         (
-            "親和統合コアの最小互換手順を埋め込んでいます",
-            "これはCSW本体が材料統合アルゴリズムを所有するという意味ではなく",
+            "親和図法の材料統合は別スキルへ委ねます",
+            "親和図法の内部手順をこのプロファイルへ埋め込みません",
             "完全なmulti-round orchestrationではありません",
         ),
         errors,
@@ -297,8 +297,8 @@ def main() -> None:
     require(
         "adapters/microsoft-copilot/en-US/instructions.md",
         (
-            "This limited profile embeds a minimal compatible material-synthesis fallback",
-            "That does not mean CSW itself owns the material-synthesis algorithm",
+            "Delegate affinity-diagramming material synthesis to a separate skill",
+            "Do not embed its internal procedures in this profile",
             "This is not complete multi-round orchestration",
         ),
         errors,

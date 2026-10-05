@@ -17,27 +17,27 @@
   },
   "files": {
     "ROUTER.md": {
-      "ja_sha256": "0a235f53d0354aa957cd895f2b1f336bfae50eaaebcb7477f9608bdf49811190",
+      "ja_sha256": "6003692c186d4d7175cf385235538efbfaeb1c3b382eb06d964cf18e6d1dc757",
       "en_present": true,
-      "en_source_ja_sha256": "0a235f53d0354aa957cd895f2b1f336bfae50eaaebcb7477f9608bdf49811190",
+      "en_source_ja_sha256": "6003692c186d4d7175cf385235538efbfaeb1c3b382eb06d964cf18e6d1dc757",
       "en_status": "translated"
     },
     "core/activation.md": {
-      "ja_sha256": "5a089b7c5823fa2eea7a0ee74265d8b42c6801c4a12c27a5720a0c0747c7c48b",
+      "ja_sha256": "d5a95ea48c46c663b81db67784bb265207b038d7c00f7fc08dc4c17b60931973",
       "en_present": true,
-      "en_source_ja_sha256": "5a089b7c5823fa2eea7a0ee74265d8b42c6801c4a12c27a5720a0c0747c7c48b",
+      "en_source_ja_sha256": "d5a95ea48c46c663b81db67784bb265207b038d7c00f7fc08dc4c17b60931973",
       "en_status": "translated"
     },
     "core/cognitive-stance.md": {
-      "ja_sha256": "77933bab4413baa3ee6327ffe4d0a602fea4ad75a3ab9156be3d365d9b843c99",
+      "ja_sha256": "4e029d496c834a7c641d7bacd23aff427989875d9bf728cf22666aef39f78a1f",
       "en_present": true,
-      "en_source_ja_sha256": "77933bab4413baa3ee6327ffe4d0a602fea4ad75a3ab9156be3d365d9b843c99",
+      "en_source_ja_sha256": "4e029d496c834a7c641d7bacd23aff427989875d9bf728cf22666aef39f78a1f",
       "en_status": "translated"
     },
     "core/discovery-pathway.md": {
-      "ja_sha256": "f885d36dfdcb23cf9df552ef9e228678d08e484e44a2e9829e8ea4c4ded4c120",
+      "ja_sha256": "2ea6f7532a8e6102964d4069b1cb750306c5bc7487b21fa21f927a09667bb3a0",
       "en_present": true,
-      "en_source_ja_sha256": "f885d36dfdcb23cf9df552ef9e228678d08e484e44a2e9829e8ea4c4ded4c120",
+      "en_source_ja_sha256": "2ea6f7532a8e6102964d4069b1cb750306c5bc7487b21fa21f927a09667bb3a0",
       "en_status": "translated"
     },
     "core/iteration.md": {
@@ -47,9 +47,9 @@
       "en_status": "translated"
     },
     "core/principles-and-constraints.md": {
-      "ja_sha256": "15603ccdfca389721f2537cbd952cc642aa69a636c862376b7ec86ff8fbe1073",
+      "ja_sha256": "2aa79928cb26eaf1d14a33f73e2a4a81508aa610c7083b82a0cb1e133a48a8b7",
       "en_present": true,
-      "en_source_ja_sha256": "15603ccdfca389721f2537cbd952cc642aa69a636c862376b7ec86ff8fbe1073",
+      "en_source_ja_sha256": "2aa79928cb26eaf1d14a33f73e2a4a81508aa610c7083b82a0cb1e133a48a8b7",
       "en_status": "translated"
     },
     "domains/human-and-taiheki.md": {
@@ -58,46 +58,172 @@
       "en_source_ja_sha256": "279aac7470d514a1ef6d6ea81cdcfed411d2693c30683de8520accfecefe3bef",
       "en_status": "translated"
     },
-    "governance/evaluation.md": {
-      "ja_sha256": "4e048dbe13819e0fcf0855bf3a3207a43ef974c88c0cbf0385b5aa4eede98bdf",
+    "frameworks/aristotle-four-causes.md": {
+      "ja_sha256": "8072e41b6e555b476ae6136da7b6792e38c5b00307c78e17f1e5a36156be37b5",
       "en_present": true,
-      "en_source_ja_sha256": "4e048dbe13819e0fcf0855bf3a3207a43ef974c88c0cbf0385b5aa4eede98bdf",
+      "en_source_ja_sha256": "8072e41b6e555b476ae6136da7b6792e38c5b00307c78e17f1e5a36156be37b5",
+      "en_status": "translated"
+    },
+    "frameworks/catuskoti.md": {
+      "ja_sha256": "996f19f47dc1ba9654f2e4aece502bedbcb5af0e0b4a253678ac4b4518efae0b",
+      "en_present": true,
+      "en_source_ja_sha256": "996f19f47dc1ba9654f2e4aece502bedbcb5af0e0b4a253678ac4b4518efae0b",
+      "en_status": "translated"
+    },
+    "frameworks/classical-stasis-theory.md": {
+      "ja_sha256": "60a5ffb364b4a26da6cc8ad586af0ac4a0ef389adf607e200801ebe65b18a000",
+      "en_present": true,
+      "en_source_ja_sha256": "60a5ffb364b4a26da6cc8ad586af0ac4a0ef389adf607e200801ebe65b18a000",
+      "en_status": "translated"
+    },
+    "frameworks/confucian-role-ritual.md": {
+      "ja_sha256": "dbb5a333c84b419b5b1294694f6b59ac2940323188e25dc7d13175983b891c75",
+      "en_present": true,
+      "en_source_ja_sha256": "dbb5a333c84b419b5b1294694f6b59ac2940323188e25dc7d13175983b891c75",
+      "en_status": "translated"
+    },
+    "frameworks/dependent-origination.md": {
+      "ja_sha256": "6ac21ec9b986e26812d3415fd8b28d81de7c25a8d52de206be0dd12d26df16bb",
+      "en_present": true,
+      "en_source_ja_sha256": "6ac21ec9b986e26812d3415fd8b28d81de7c25a8d52de206be0dd12d26df16bb",
+      "en_status": "translated"
+    },
+    "frameworks/hadith-isnad-matn.md": {
+      "ja_sha256": "3a19f1abde8ed60e4785244d1b0b737232d643c5e877bd6c8cb11fb884002658",
+      "en_present": true,
+      "en_source_ja_sha256": "3a19f1abde8ed60e4785244d1b0b737232d643c5e877bd6c8cb11fb884002658",
+      "en_status": "translated"
+    },
+    "frameworks/huayan.md": {
+      "ja_sha256": "ac360fba7203efef5f4baf070e0dd4d0e6d61b2a1430c8cd8bff14c024407544",
+      "en_present": true,
+      "en_source_ja_sha256": "ac360fba7203efef5f4baf070e0dd4d0e6d61b2a1430c8cd8bff14c024407544",
+      "en_status": "translated"
+    },
+    "frameworks/jain-sevenfold-predication.md": {
+      "ja_sha256": "23e923b488b6ef7e2290a922a2d5f39ce0b1f9a472413101e444121681b3fa5b",
+      "en_present": true,
+      "en_source_ja_sha256": "23e923b488b6ef7e2290a922a2d5f39ce0b1f9a472413101e444121681b3fa5b",
+      "en_status": "translated"
+    },
+    "frameworks/llull-ars.md": {
+      "ja_sha256": "ee49d48f476982efe82810985036a8593c105993e2d0cb94a570d69d5c2fbc81",
+      "en_present": true,
+      "en_source_ja_sha256": "ee49d48f476982efe82810985036a8593c105993e2d0cb94a570d69d5c2fbc81",
+      "en_status": "translated"
+    },
+    "frameworks/marshallese-wave-navigation.md": {
+      "ja_sha256": "48791edef789fc709981caa0ed5e9a2da4d0e60b2a1854bc6c94902b5da08ddd",
+      "en_present": true,
+      "en_source_ja_sha256": "48791edef789fc709981caa0ed5e9a2da4d0e60b2a1854bc6c94902b5da08ddd",
+      "en_status": "translated"
+    },
+    "frameworks/maya-calendars.md": {
+      "ja_sha256": "988cfc3699e54441573ecfb1989dbadd350fc370d4d22415ed09146daa29c0f5",
+      "en_present": true,
+      "en_source_ja_sha256": "988cfc3699e54441573ecfb1989dbadd350fc370d4d22415ed09146daa29c0f5",
+      "en_status": "translated"
+    },
+    "frameworks/mimamsa-hermeneutics.md": {
+      "ja_sha256": "a983826f95771f0fa2236d96566e5efaee3ba76d1fc82bf7e43646d0e341d9e3",
+      "en_present": true,
+      "en_source_ja_sha256": "a983826f95771f0fa2236d96566e5efaee3ba76d1fc82bf7e43646d0e341d9e3",
+      "en_status": "translated"
+    },
+    "frameworks/nyaya-five-member-inference.md": {
+      "ja_sha256": "219bb0dd6c9a3e033845dce6a8e0a7a7e848d622449b15dcd01a00ca79b8a2e0",
+      "en_present": true,
+      "en_source_ja_sha256": "219bb0dd6c9a3e033845dce6a8e0a7a7e848d622449b15dcd01a00ca79b8a2e0",
+      "en_status": "translated"
+    },
+    "frameworks/portfolio.md": {
+      "ja_sha256": "5e94f35b446bc813901a732571db69efd6fc4d61a3536e34ff3ee6baecec0819",
+      "en_present": true,
+      "en_source_ja_sha256": "5e94f35b446bc813901a732571db69efd6fc4d61a3536e34ff3ee6baecec0819",
+      "en_status": "translated"
+    },
+    "frameworks/rasa.md": {
+      "ja_sha256": "dcbeeea457f303ee0c376c2adcbf4f87baadb7d45f9ea9e8d4d6609fb5c955d9",
+      "en_present": true,
+      "en_source_ja_sha256": "dcbeeea457f303ee0c376c2adcbf4f87baadb7d45f9ea9e8d4d6609fb5c955d9",
+      "en_status": "translated"
+    },
+    "frameworks/sankhya.md": {
+      "ja_sha256": "675725a739edffb06e259f50ca107b88ccaa7f8c50940b10780ccf687352794c",
+      "en_present": true,
+      "en_source_ja_sha256": "675725a739edffb06e259f50ca107b88ccaa7f8c50940b10780ccf687352794c",
+      "en_status": "translated"
+    },
+    "frameworks/shinto-threshold-purification.md": {
+      "ja_sha256": "d9188f310132b3055157e4d51d93d0a3833665e5450b0c8c98c54939ee674ba4",
+      "en_present": true,
+      "en_source_ja_sha256": "d9188f310132b3055157e4d51d93d0a3833665e5450b0c8c98c54939ee674ba4",
+      "en_status": "translated"
+    },
+    "frameworks/tibetan-buddhist-mandala.md": {
+      "ja_sha256": "cb54e7ad5c17178e81bf3c6266b7d4ce84120da138758b88e65c8398eb5d563a",
+      "en_present": true,
+      "en_source_ja_sha256": "cb54e7ad5c17178e81bf3c6266b7d4ce84120da138758b88e65c8398eb5d563a",
+      "en_status": "translated"
+    },
+    "frameworks/wuxing.md": {
+      "ja_sha256": "cba81110d49980a88d92607f3fbbe25f613074082b75a1ea9d2291cee5695c3c",
+      "en_present": true,
+      "en_source_ja_sha256": "cba81110d49980a88d92607f3fbbe25f613074082b75a1ea9d2291cee5695c3c",
+      "en_status": "translated"
+    },
+    "frameworks/yijing.md": {
+      "ja_sha256": "e5b6bec2a0a24b2d62ad60127042769a02e76745b9c78be8533c084b8587a898",
+      "en_present": true,
+      "en_source_ja_sha256": "e5b6bec2a0a24b2d62ad60127042769a02e76745b9c78be8533c084b8587a898",
+      "en_status": "translated"
+    },
+    "governance/evaluation.md": {
+      "ja_sha256": "dae444654ce7066ec826697fb5f96d949292d827f54033c3bd35e34a520ed611",
+      "en_present": true,
+      "en_source_ja_sha256": "dae444654ce7066ec826697fb5f96d949292d827f54033c3bd35e34a520ed611",
       "en_status": "translated"
     },
     "governance/governance-and-records.md": {
-      "ja_sha256": "22dda99cf923c16374bd87fc2098649cd6bf4b74abb2e9322057453174f95c3f",
+      "ja_sha256": "c743948a08effaae3f1c0c09abb1064ef10edaf33690062d98d4a0233275cda0",
       "en_present": true,
-      "en_source_ja_sha256": "22dda99cf923c16374bd87fc2098649cd6bf4b74abb2e9322057453174f95c3f",
+      "en_source_ja_sha256": "c743948a08effaae3f1c0c09abb1064ef10edaf33690062d98d4a0233275cda0",
       "en_status": "translated"
     },
     "methods/framework-application.md": {
-      "ja_sha256": "d61f1bf2953efe9fe303b616f661d3aa43ae44b5a92cb2bb9103df5f5d85c100",
+      "ja_sha256": "fdaf90d38da6f19ac827cb6fcddeec69592f7d256f9e76aa11fd4f82f1c980ec",
       "en_present": true,
-      "en_source_ja_sha256": "d61f1bf2953efe9fe303b616f661d3aa43ae44b5a92cb2bb9103df5f5d85c100",
+      "en_source_ja_sha256": "fdaf90d38da6f19ac827cb6fcddeec69592f7d256f9e76aa11fd4f82f1c980ec",
       "en_status": "translated"
     },
     "methods/integration.md": {
-      "ja_sha256": "edf735d07656a53aac97be3f1304e53452a048360faf9143ec8f4a22a42ee349",
+      "ja_sha256": "7816f784ca2746ce15e0e82e8781c5a35c0014799d246cbbdbbe5f603a893b71",
       "en_present": true,
-      "en_source_ja_sha256": "edf735d07656a53aac97be3f1304e53452a048360faf9143ec8f4a22a42ee349",
+      "en_source_ja_sha256": "7816f784ca2746ce15e0e82e8781c5a35c0014799d246cbbdbbe5f603a893b71",
+      "en_status": "translated"
+    },
+    "methods/perspective-analysis.md": {
+      "ja_sha256": "59b250dfead91b7c8dead671c48f1c2c4fe67444f36f78f5cdaee247ac32eee1",
+      "en_present": true,
+      "en_source_ja_sha256": "59b250dfead91b7c8dead671c48f1c2c4fe67444f36f78f5cdaee247ac32eee1",
       "en_status": "translated"
     },
     "methods/scope-and-facts.md": {
-      "ja_sha256": "0e954c38b757d6046d70e92a35ef79a84a201b25fb805ee0dcf9a3fa29d4797f",
+      "ja_sha256": "3e17bf0b93e8a034a5991b516e05425bde513bed19eededd50f0b04d5458f268",
       "en_present": true,
-      "en_source_ja_sha256": "0e954c38b757d6046d70e92a35ef79a84a201b25fb805ee0dcf9a3fa29d4797f",
+      "en_source_ja_sha256": "3e17bf0b93e8a034a5991b516e05425bde513bed19eededd50f0b04d5458f268",
       "en_status": "translated"
     },
     "methods/system-selection.md": {
-      "ja_sha256": "7d4858aeed476c38db2ae57a4eeb6f2a448c1f9f23dc3c38962aa7b73af5db36",
+      "ja_sha256": "c130a8839ac515645c3c66b7c49961294a291022dd274a7ff65b5d3617a92ce4",
       "en_present": true,
-      "en_source_ja_sha256": "7d4858aeed476c38db2ae57a4eeb6f2a448c1f9f23dc3c38962aa7b73af5db36",
+      "en_source_ja_sha256": "c130a8839ac515645c3c66b7c49961294a291022dd274a7ff65b5d3617a92ce4",
       "en_status": "translated"
     },
     "methods/transformation.md": {
-      "ja_sha256": "d19a89badc8765a3da2c1838d6b0e67d29180a6b813edf756f514473c0c77d28",
+      "ja_sha256": "7c65d5b70617b9ac7d01302c45c92292759581596fd574cc4aaf15f2c66bfe20",
       "en_present": true,
-      "en_source_ja_sha256": "d19a89badc8765a3da2c1838d6b0e67d29180a6b813edf756f514473c0c77d28",
+      "en_source_ja_sha256": "7c65d5b70617b9ac7d01302c45c92292759581596fd574cc4aaf15f2c66bfe20",
       "en_status": "translated"
     }
   }

@@ -1,6 +1,6 @@
 # 日本語文書の推敲記録
 
-- 最新の全体見直し: 2026-09-04
+- 最新の更新文書の見直し: 2026-10-05
 - 初回の開発文書一括見直し: 2026-09-01
 - 対象: 公開トップページ、利用者向けガイド、公開リリース文、日本語で記述する利用者向け実行文、開発・保守・研究・実験・運用文書
 - 原則: 内容と技術的な意味を確定した後、自然な日本語であることを最優先して文書全体を読み直す
@@ -44,6 +44,9 @@ Microsoft 365向けのこの2ファイルは、生成物そのものではなく
 - `docs/ja/architecture.md`
 - `docs/ja/maintainers/affinity-representation-existing-skill-review.md`
 - `docs/ja/maintainers/core-value-and-embodiment-policy.md`
+- `docs/ja/maintainers/value-first-product-design.md`
+- `docs/ja/maintainers/value-first-material-synthesis.md`
+- `docs/ja/maintainers/framework-corpus-expansion-2026-10-01.md`
 - `docs/ja/maintainers/csw-tension-emergence-and-aufhebung-contract.md`
 - `docs/ja/maintainers/csw-thin-synthesis-connection-contract.md`
 - `docs/ja/maintainers/development.md`
@@ -194,3 +197,13 @@ KJ法由来の技能をCSWから分離する検討として、新しく七つの
 SUI Sensemakingに関する保守者向け文書の本文、見出し、参照先、ファイル名を一括して現行表記へ揃えた。変更した日本語文書を通読し、製品名の置換によって同じ語を重ねた文や、過去の名称変更を説明する不要な記述を整理した。KJ法を方法の系譜として述べる箇所はそのまま保った。研究索引とLiving Lab以外の記録についても、名称と参照先の文脈を読み直した。
 
 鮮度管理の対象外である`research/skill-prototypes/REFERENCE-CLASSIFICATION.md`にも、SEIの`sei.cognitive-method`との対応を示す付録Aを加えた。同じ基準で付録を通読し、`!=`の連鎖をそのまま文の目的語にしていた箇所を日本語の文へ改めた。方法論正本である`src/ja-JP/`は変更していない。
+
+## 2026-10-05の再構成と推敲
+
+本質価値を明確にした設計文書と材料統合記録、公開トップページ、アーキテクチャ、プラットフォーム別ガイド、配布用の日本語指示を、内容確定後に全文で読み直した。変更した日本語実行本文も同じ工程で確認した。外部の`yomiyasu`を併用し、助詞、語順、主述の対応を直した。識別子、来歴、確度、責務の境界は保っている。
+
+静的な文章検査の指摘と初稿との差分を確認した。説明文を依頼文へ変える修正は戻した。比較表、操作一覧、識別に必要な英語、主張の意味を担う否定は残した。Claudeの呼び出し方の説明は、プラグインが実際に宣言する設定に合わせた内容修正であり、文体だけの変更とは区別している。
+
+鮮度記録が古かった既存の保守・研究文書とLiving Labの案内も全文で通読した。開発手順のパス一覧や、接続契約と配布設計にあった助詞の不足を直した。歴史的な研究計画、手法名の系譜、実験記録は当時の意味を保ち、不要な文体差分は作らず確認日を更新した。今回の設計方針は日付付きの新しい文書で示し、過去の観測を今回の構成の観測結果として書き換えていない。
+
+以上は今回の担当AIによる文章確認であり、独立した人手査読や方法の有効性測定ではない。

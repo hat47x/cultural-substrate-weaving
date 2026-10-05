@@ -14,22 +14,26 @@
 
 | 体系 | 主に開く認知操作 | 強い構造 | 参照 |
 |---|---|---|---|
-| 易・八卦／六十四卦 | 再分節、位置、変化、入れ子 | 2種の爻、8卦、64卦 | yijing.md |
-| 五行 | 生成と抑制、循環、関係役割 | 5相、相生・相剋 | wuxing.md |
-| サーンキヤ | 層、生成順序、観察者と生成物の分離 | 25原理、三グナ | sankhya.md |
-| 縁起 | 条件依存、発生と消滅、介入点 | 条件式、複数長の系列 | dependent-origination.md |
-| 四句分別 | 二値枠の解体、命題空間の拡張 | P / 非P / 両方 / どちらでもない | catuskoti.md |
-| ジャイナの多面説・七分法 | 視点条件、限定付き叙述 | syatを伴う七種の述定 | jain-sevenfold-predication.md |
-| アリストテレス四原因 | 「なぜ」の説明軸を分ける | 質料・形相・作用・目的 | aristotle-four-causes.md |
-| ラサ論 | 表現と受容経験の生成関係 | bhavaとrasa | rasa.md |
-| マヤ暦体系 | 複数周期、位相差、部分／全体再来、長期時間座標 | Tzolk’in / Haab / Calendar Round / Long Count | maya-calendars.md |
-| 華厳 | 全体・部分の相互規定、node視点、差異を残す統合 | 法蔵のwhole-part分析・相互包摂 | huayan.md |
-| ニヤーヤ五支推論 | 推論の展開、理由と規則の分離、適用の監査 | 主張・理由・例・適用・結論 | nyaya-five-member-inference.md |
-| 儒家の役割・礼 | 役割視点、関係上の期待、定型的相互作用 | role / relation / li / practice | confucian-role-ritual.md |
-| 古典stasis theory | 争点の分離、争点移動の検出 | 事実・定義・評価・手続き／権限 | classical-stasis-theory.md |
-| ハディースisnād / matn | 内容と伝承経路の分離、枝分かれ・本文異同 | matn / isnād / variant / provenance | hadith-isnad-matn.md |
-| マーシャル諸島の波航海術 | 相対経路、手掛かり系列、モデルと現場の往復 | route cue / training model / situated sensing | marshallese-wave-navigation.md |
-| 体癖 | 身体反応・緊張弛緩の観察軸 | 身体論的類型 | ../domains/human-and-taiheki.md |
+| 易・八卦／六十四卦 | 再分節、位置、変化、入れ子 | 2種の爻、8卦、64卦 | [yijing.md](04a-yijing.md) |
+| 五行 | 生成と抑制、循環、関係役割 | 5相、相生・相剋 | [wuxing.md](04b-wuxing.md) |
+| サーンキヤ | 層、生成順序、観察者と生成物の分離 | 25原理、三グナ | [sankhya.md](04c-sankhya.md) |
+| 縁起 | 条件依存、発生と消滅、介入点 | 条件式、複数長の系列 | [dependent-origination.md](04d-dependent-origination.md) |
+| 四句分別 | 二値枠の解体、命題空間の拡張 | P / 非P / 両方 / どちらでもない | [catuskoti.md](04e-catuskoti.md) |
+| ジャイナの多面説・七分法 | 視点条件、限定付き叙述 | syatを伴う七種の述定 | [jain-sevenfold-predication.md](04f-jain-sevenfold-predication.md) |
+| アリストテレス四原因 | 「なぜ」の説明軸を分ける | 質料・形相・作用・目的 | [aristotle-four-causes.md](04g-aristotle-four-causes.md) |
+| ラサ論 | 表現と受容経験の生成関係 | bhavaとrasa | [rasa.md](04h-rasa.md) |
+| マヤ暦体系 | 複数周期、位相差、部分／全体再来、長期時間座標 | Tzolk’in / Haab / Calendar Round / Long Count | [maya-calendars.md](04i-maya-calendars.md) |
+| 華厳 | 全体・部分の相互規定、node視点、差異を残す統合 | 法蔵のwhole-part分析・相互包摂 | [huayan.md](04j-huayan.md) |
+| ニヤーヤ五支推論 | 推論の展開、理由と規則の分離、適用の監査 | 主張・理由・例・適用・結論 | [nyaya-five-member-inference.md](04k-nyaya-five-member-inference.md) |
+| 儒家の役割・礼 | 役割視点、関係上の期待、定型的相互作用 | role / relation / li / practice | [confucian-role-ritual.md](04l-confucian-role-ritual.md) |
+| 古典stasis theory | 争点の分離、争点移動の検出 | 事実・定義・評価・手続き／権限 | [classical-stasis-theory.md](04m-classical-stasis-theory.md) |
+| ハディースisnād / matn | 内容と伝承経路の分離、枝分かれ・本文異同 | matn / isnād / variant / provenance | [hadith-isnad-matn.md](04n-hadith-isnad-matn.md) |
+| マーシャル諸島の波航海術 | 相対経路、手掛かり系列、モデルと現場の往復 | route cue / training model / situated sensing | [marshallese-wave-navigation.md](04o-marshallese-wave-navigation.md) |
+| 神社参拝の境界・清め | 境界、事前準備、参加状態の変化、退出 | torii / approach / temizu / central act | [shinto-threshold-purification.md](04p-shinto-threshold-purification.md) |
+| チベット仏教マンダラ | 中心・方位・門・多重境界・接近経路 | center / directions / gates / nested enclosure | [tibetan-buddhist-mandala.md](04q-tibetan-buddhist-mandala.md) |
+| ミーマーンサー規定文解釈 | 規定単位、統語的期待、意味適合、文脈補完、規範衝突 | prescription / syntax / context / norm conflict | [mimamsa-hermeneutics.md](04r-mimamsa-hermeneutics.md) |
+| Llullの後期Ars | 系統的な二項・三項交差、未検討組合せの発見 | binary / ternary combination / rotation / question | [llull-ars.md](04s-llull-ars.md) |
+| 体癖 | 身体反応・緊張弛緩の観察軸 | 身体論的類型 | [human-and-taiheki.md](05-human-and-taiheki.md) |
 
 ## 欲しい認知操作から引く
 
@@ -52,6 +56,10 @@
 | 何を争っているのかを分けたい | 古典stasis theory | 事実、定義、評価、手続き・権限 |
 | 内容と伝達経路を分けたい | ハディースisnād / matn | 本文、伝承鎖、分岐・合流、異同 |
 | 地図より局所的な手掛かりで経路を見たい | マーシャル諸島の波航海術 | 相対経路、cue sequence、model / environment return |
+| 明示された境界を越える前後の準備を見たい | 神社参拝の境界・清め | threshold、preparation、central act、return |
+| 中心・方位・門を持つ空間として見たい | チベット仏教マンダラ | center / periphery、directions、gates、nested boundaries |
+| 規則の範囲・例外・文脈補完を分けたい | ミーマーンサー規定文解釈 | prescriptive unit、syntax、semantic fit、norm conflict |
+| 普段組み合わせない区別を体系的に交差したい | Llullの後期Ars | binary / ternary crossing、rotation、unseen combination |
 | 身体反応から観察軸を開きたい | 体癖 | 緊張・弛緩を含む身体論的な観察 |
 
 ### 近接体系を混ぜない
@@ -66,6 +74,6 @@
 
 ## ポートフォリオとしての不足を残す
 
-暦・長周期、whole-part、論証、役割・礼、争点定位、伝承経路、経路探索は一段厚くなった。一方、中心と周縁を含む空間方位、明示的な境界通過、索引付き物語コーパス、規範衝突の解釈、系譜差を保った媒介層などはまだ薄い。似た体系の数を埋めるのでなく、現在ない認知操作を優先して増やす。
+暦・長周期、whole-part、論証、役割・礼、争点定位、伝承経路、経路探索は一段厚くなった。中心・周縁・方位を持つ空間構造と、明示的な境界通過・事前準備は一段厚くなった。規定文の単位・例外・文脈補完・規範衝突に加え、未検討の組合せを体系的に開く操作も一段厚くなった。一方、索引付き物語コーパスと、系譜差を保った媒介層はまだ薄い。似た体系の数を埋めるのでなく、現在ない認知操作を優先して増やす。
 
 体系数自体は成功指標ではない。ただし異質な構造へ接触できる母集団が狭ければ「出会う」機能そのものが痩せる。効果検証を急ぐ前に、構造的な重複を抑えながら質と量を増やす。

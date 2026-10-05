@@ -80,7 +80,7 @@ A third structure may be recorded as `cross_field_emergent`, but do not promote 
 
 When layers of differing depth are involved, make the layer distinction explicit. Representative examples include the unspoken bodily response held by one person, the shared experience accumulated in a place or an object, and the isomorphic structure that recurs locally and across the whole. Different frameworks may be used for different layers, or different layers of one framework may be used. When multiple frameworks are used, preserve not only shared change principles but also partitions on which the frameworks do not agree.
 
-**Layering orthogonal frameworks produces structure no single framework yields. Reach for it.** Where one framework supplies the positions and another cuts the same target by a different classification principle, the intersections of the two grids hold places neither framework can name on its own.
+**Use distinct framework partitions together when they help the purpose.** Read each perspective independently before examining intersections. Explain which distinction each contributes; do not assume mathematical orthogonality or statistical independence. See `methods/perspective-analysis.md` for qualitative comparison. When one framework supplies positions and another partitions the same target differently, their intersections provide an entry for considering positions neither framework names alone.
 
 When combining multiple frameworks, verify axis independence. Each axis needs a rationale independent of the target and a distinct classification principle. Do not derive a global axis from one member of the comparison group. Extract structures independently from each target before comparison.
 

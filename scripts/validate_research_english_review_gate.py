@@ -19,15 +19,15 @@ DESCRIPTOR_PATH = (
 SUITE_PATH = ROOT / "research" / "skill-prototypes" / "suite-manifest.json"
 EXPECTED_PACKET = (
     "research/skill-prototypes/"
-    "P4-ENGLISH-INDEPENDENT-REVIEW-PACKET-2026-09-08.md"
+    "P4-ENGLISH-INDEPENDENT-REVIEW-PACKET-2026-10-05.md"
 )
 EXPECTED_TARGETS = (
     "research/skill-prototypes/"
-    "P4-ENGLISH-INDEPENDENT-REVIEW-TARGETS-2026-09-08-v3.json"
+    "P4-ENGLISH-INDEPENDENT-REVIEW-TARGETS-2026-10-05-v4.json"
 )
 EXPECTED_PREVIOUS_TARGETS = (
     "research/skill-prototypes/"
-    "P4-ENGLISH-INDEPENDENT-REVIEW-TARGETS-2026-09-07-v2.json"
+    "P4-ENGLISH-INDEPENDENT-REVIEW-TARGETS-2026-09-08-v3.json"
 )
 EXPECTED_LOCALIZATION = (
     "research/skill-prototypes/"
@@ -172,7 +172,7 @@ def _validate_targets(root: Path, targets_path: Path, errors: list[str]) -> None
 
     supersedes = snapshot.get("supersedes")
     if supersedes != EXPECTED_PREVIOUS_TARGETS:
-        errors.append("English review target v3 must preserve the v2 snapshot reference")
+        errors.append("English review target v4 must preserve the v3 snapshot reference")
 
     targets = snapshot.get("targets")
     if not isinstance(targets, list):
@@ -330,7 +330,7 @@ def validate_english_review_gate(root: Path, descriptor: dict) -> list[str]:
                     )
             if EXPECTED_TARGETS not in review_text:
                 errors.append(
-                    "completed English review record must identify the canonical v3 target snapshot"
+                    "completed English review record must identify the canonical v4 target snapshot"
                 )
 
     if gate.get("production_promotion_authorized") is not False:

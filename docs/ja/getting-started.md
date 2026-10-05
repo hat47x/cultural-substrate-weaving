@@ -21,8 +21,8 @@ Microsoft 365 Copilot版は、現時点では`instructions.txt`に収録され�
 
 ## 方法論を保守・配布する方
 
-- 意味上の正本: `src/ja-JP/`は次のとおりです。
-- 英語翻訳: `src/en-US/`は次のとおりです。
+- 意味上の正本: `src/ja-JP/`
+- 英語翻訳: `src/en-US/`
 - 翻訳状態と正本ハッシュ: `i18n/translation-manifest.json`
 
 正本を変更した場合は、対応する翻訳を更新してから`make check`を実行します。各プラットフォーム向けのファイルは、ビルド処理から生成します。

@@ -1,7 +1,7 @@
 {
   "name": "cultural-substrate-weaving-en",
   "version": "0.5.0",
-  "description": "Combines cultural-framework exploration with KJ integration to work with questions, relations, states, gaps, and provenance. Usage scope and adoption follow delegation outside the skill.",
+  "description": "Reinterpret essential structures through cultural perspectives and turn discoveries into questions, comparisons, and compositions. Material synthesis and continuation connect to separate skills.",
   "author": {
     "name": "hat47x"
   },
@@ -18,7 +18,7 @@
   "skills": "./skills/",
   "interface": {
     "displayName": "Cultural Substrate Weaving — English",
-    "shortDescription": "Combines cultural-framework exploration with KJ integration to work with questions, relations, states, gaps, and provenance. Usage scope and adoption follow delegation outside the skill.",
+    "shortDescription": "Reinterpret essential structures through cultural perspectives and turn discoveries into questions, comparisons, and compositions. Material synthesis and continuation connect to separate skills.",
     "developerName": "hat47x",
     "category": "Productivity"
   }

@@ -118,7 +118,7 @@ If `affinity-synthesis` or another compatible realization is unavailable, CSW ca
 - target-side verification questions; and
 - preparation of handoff material.
 
-Do not describe KJ / affinity synthesis as executed when it was not actually run.
+Do not describe affinity synthesis as executed when it was not actually run.
 
 If a simple summary or fixed classification is used instead, do not relabel it as affinity synthesis.
 

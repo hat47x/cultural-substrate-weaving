@@ -36,38 +36,28 @@ class ResearchProductionSuiteRenameAuthorityTests(unittest.TestCase):
             if item["research_id"] != item["proposed_installable_name"]
         )
 
-    def test_rename_check_follows_descriptor_pair_not_layer1_literals(self) -> None:
+    def test_undeclared_research_identity_cannot_replace_suite_authority(self) -> None:
         descriptor = copy.deepcopy(self.descriptor)
-        renamed = self.renamed_skill(descriptor)
-        renamed["research_id"] = "legacy-material-research"
-        renamed["proposed_installable_name"] = "future-material-synthesis"
-
-        projected = project_production_suite_manifest(descriptor)
-
-        self.assertIn(
-            "future-material-synthesis",
-            [item["id"] for item in projected["skills"]],
-        )
-        self.assertEqual(validate_projected_production_suite(projected, descriptor), [])
+        self.renamed_skill(descriptor)["research_id"] = "legacy-material-research"
+        with self.assertRaisesRegex(ValueError, "exactly the three research suite Skills"):
+            project_production_suite_manifest(descriptor)
 
     def test_declared_renamed_research_id_cannot_reenter_production_ids(self) -> None:
         descriptor = copy.deepcopy(self.descriptor)
         renamed = self.renamed_skill(descriptor)
-        renamed["research_id"] = "legacy-material-research"
-        renamed["proposed_installable_name"] = "future-material-synthesis"
         projected = project_production_suite_manifest(descriptor)
 
         projected_skill = next(
             item
             for item in projected["skills"]
-            if item["id"] == "future-material-synthesis"
+            if item["id"] == renamed["proposed_installable_name"]
         )
-        projected_skill["id"] = "legacy-material-research"
+        projected_skill["id"] = renamed["research_id"]
 
         errors = validate_projected_production_suite(projected, descriptor)
         self.assertTrue(
             any(
-                "renamed research ID legacy-material-research must not become a production Skill id"
+                f"renamed research ID {renamed['research_id']} must not become a production Skill id"
                 in error
                 for error in errors
             ),

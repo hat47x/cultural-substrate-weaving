@@ -80,15 +80,14 @@ class MultilingualBuildTests(unittest.TestCase):
     def test_gpt_knowledge_group_count_for_each_locale(self):
         for locale in LOCALES:
             files = list((ROOT / f"dist/{locale}/chatgpt-gpt/knowledge").glob("*.md"))
-            self.assertEqual(len(files), 4)
+            self.assertEqual({path.name for path in files}, set(MANIFEST["knowledge_groups"]))
 
     def test_skill_frontmatter_uses_expected_language_description(self):
-        ja = (ROOT / "dist/ja-JP/openai-skill/metered/cultural-substrate-weaving/SKILL.md").read_text(encoding="utf-8")
-        en = (ROOT / "dist/en-US/openai-skill/metered/cultural-substrate-weaving/SKILL.md").read_text(encoding="utf-8")
-        self.assertIn("文化的体系", ja)
-        self.assertIn("KJ法", ja)
-        self.assertIn("cultural frameworks", en)
-        self.assertIn("KJ", en)
+        for locale in LOCALES:
+            path = ROOT / f"dist/{locale}/openai-skill/metered/cultural-substrate-weaving/SKILL.md"
+            frontmatter = path.read_text(encoding="utf-8").split("---", 2)[1]
+            self.assertIn("description: " + MANIFEST["locales"][locale]["description"], frontmatter)
+            self.assertNotIn("KJ", frontmatter)
 
     def test_openai_reference_sets_match_manifest(self):
         for locale in LOCALES:

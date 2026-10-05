@@ -1,115 +1,50 @@
-# 02-system-selection
+# Select a framework
 
-Read this when choosing a cultural framework and deciding why and how deeply to use it.
+Start with the distinctions or relations needed in the target, rather than a list of framework names. Follow any specified framework or depth. When selection is delegated, choose by purpose, material, and constraints, and explain the rationale.
 
-## 3. Search from the target side or the framework side
+## Selection for essential structure
 
-Normally, search for candidate frameworks from target-side structures that are still hard to hold. Representative examples include:
+For structural interpretation, ask which perspective can address the problem set at a consistent scope and explain shared structures and differences. For discovery, ask which view can direct attention toward questions the current view has not opened. One framework may support both.
 
-- multiple states or positions
-- paths, intermediate points, branches, return paths
-- cycles, phases, accumulation, recurrence, offset
-- boundaries, transition bands, center/periphery
-- multiple timescales
-- flow, connection, bottlenecks
-- continua and partitioning
-- questions outside the current problem framing
+Similarity or structural distance alone is insufficient as a rationale. Explain, for example, that state categories do not distinguish transition conditions, so the framework's transitions will be used. A not-yet-articulated concern can also justify brief contact.
 
-### Do not leave candidate recall to the model's spontaneous associations
+Structural distance is one means of discovery. Center selection on the relations or comparison axes the view could make available. Do not convert age, fame, position count, or apparent fit into truth or an overall selection score. Do not set a fixed fit threshold.
 
-In exploratory use, do not end candidate search with frameworks already close to the target's current vocabulary. Give **high recall/search priority** to frameworks that offer structures different from the target's present partitioning, such as state grids, cycles and calendars, paths and flows, directions, layers, and paths between layers. Structural distance can become the catalytic force that reorganizes how a question looks.
+## Open structure from sources
 
-The following names are search anchors for reaching different structural families, not adoption recommendations or a complete candidate list.
+For adopted frameworks, consult `04-framework-portfolio.md` and the dossier first. Use external sources for new frameworks, lineage differences, disputed interpretations, and missing material. Do not complete positions, mappings, transitions, or conventions from model memory alone.
 
-- **Anchors for states, positions, and partitioning**: the four seasons, Wuxing (Five Phases), Godai (Five Great Elements), Bagua (Eight Trigrams), directional schemes such as east/west/north/south or five-direction schemes including a center, the seven colors of the rainbow, and chakras.
-- **Anchors for cycles, calendars, and multiple timescales**: the four seasons, the Heavenly Stems, the Earthly Branches, and the Tzolk'in.
-- **Anchors for paths, flows, layers, and paths between positions**: meridian networks, chakras, sefirot and paths, Bagua, and other frameworks that structure relation or change.
+| Aspect | Read | Contribution to the target |
+|---|---|---|
+| Distinctions | Partition principle, positions, and states | Distinguish apparently similar problems and seek shared structure across different ones |
+| Relations | Adjacency, opposition, complementarity, generation, restraint, center and periphery | Move from isolated features to relational structures |
+| Change | Transitions, sequence, cycles, phase, and reversibility | Distinguish current states from conditions and paths of change |
+| Practice | What to attend to, do, or avoid in each state | Generate attention, questions, compositions, and action candidates |
 
-One framework may appear under more than one exploration family. Do not treat these groupings as traditional classifications or claims that the frameworks are equivalent. Prefer raising a small number of candidates from structurally different families rather than accumulating many near-duplicates from one family.
+Do not assume every framework has every aspect. Check closure, exclusivity, and coverage separately. Do not force procedures or open relational networks into closed classifications.
 
-These names are not substitutes for framework knowledge. When a framework is actually used, return to sources to confirm its element count, correspondences, transition rules, historical meaning, lineage differences, variants that bear on the structural core, and limits. Do not fill missing details from model memory alone.
+Identify lineage and sources sufficiently to return to them. Check disputed interpretations that change structure first. Open symbols, cultural texture, and further detail where relevant to the reading or composition. Preserve the structural core and its cultural meaning rather than flattening it into generic balance or multiple viewpoints.
 
-Do not rush adoption or rejection during candidate recall. A local mismatch or a probe that initially produces no question does not by itself negate the framework's broader exploratory value. Preview its main cognitive structure and limits, then ask whether it generates questions, contrasts, or research targets worth returning to the target.
+## Select operations
 
-In exploratory use, external use conditions and delegated discretion may instead lead into a framework-led preview. Do not first cut the framework down to what already fits the current question. Before mapping it to the target, inspect the framework's main overall distinctions—what it treats as positions, paths, cycles, relations, transitions, and boundaries.
+After reading the source, select operations that connect a native structure to a target question: read from a complementary position, view the same problem at another phase, or question a relation from its opposite side.
 
-### Extract the structural core first
+Adopting a framework does not require exhausting all of its elements, interpretive vocabulary, or transitions. Depth can be recorded using `00-activation.md`; reading volume is not the outcome.
 
-Whichever entry is used, extract the following structural core from the framework first.
+For multiple frameworks, explain the added distinction. The second is not a vote for the first. See `02b-perspective-analysis.md` for intersection and qualitative placement.
 
-1. **Partition of the whole**: the partitioning principle that tries to divide the whole world as one system without gaps or overlaps, and the closed position set. The more closed the set, the more directly an empty position becomes a question.
-2. **Transitions and topology**: adjacency, opposition, cycles, generation and restraint, center and periphery, reversibility and irreversibility, and unreachable positions.
-3. **Practical wisdom for each state**: where attention belongs in each state, what actions fit, what to avoid, and how the state connects to reality.
+## Separate exploration and attribution
 
-Also confirm the original domain of use, lineage, and limits. Show lineage well enough that the tradition, source, or line of transmission can be traced later. Among cultural variation, ornament, and variant readings, check first those that change the structural core; open the rest when, for example, generation or composition needs cultural texture. Do not assume that every framework has all three layers. When the analyst supplies a missing layer, keep it distinct from the framework's canonical structure.
+Exploration produces questions, hypotheses, comparisons, and compositional resources. Heterogeneous units may be brought into contact to generate questions.
 
-Do not collapse candidates into one fit score. On the target-led path, ask what different way of seeing the unresolved target structure the framework can supply. On the framework-led path, ask what distinctions or questions appear that the current problem framing does not yet contain. Do not turn this into unlimited enumeration of unrelated frameworks, or discard parts of a framework merely because one use case did not foreground them.
+Attribution makes target claims about positions, causes, transitions, or absences. Check unit types, partition principles, assignment conditions, and target sources. Homogeneity concerns the framework-layer-target combination. Even identical unit types do not imply comparable partition principles or establish an absence.
 
-## 3a. Exploratory use and attribution use
+Do not silently switch from exploration to attribution. Specific conditions belong in `02a-framework-application.md`.
 
-### Exploratory use
+## Retain rationale when useful
 
-Use the framework as a cognitive field that generates questions, contrasts, hypotheses, research targets, and compositional candidates. The target need not be assigned to every framework position.
+If selection must remain revisable, briefly retain current understanding, the distinction sought, candidate structures, proposed operations, selection rationale, and competing readings. Do not turn the record into a mandatory scoring sheet or ranking.
 
-What emerges remains `framework_generated` until independently supported on the target side. Exploratory usefulness does not make it a target fact, gap, or cause.
+When repository research tooling is available, `research/framework-candidates/scripts/framework_selection_workspace.py` is optional. `recall` suggests candidates through registered literal cues; comparison and worksheets support recording rationale. It does not automatically select, calculate semantic similarity or fit, or judge truth. Prose can perform the same record function.
 
-### Attribution use
-
-Use this when claiming that the target has a framework-shaped position, missing transition, or other structure.
-
-Then inspect homogeneity between framework and target units, the assignment procedure, external conventions, and lineage differences. See `02a-framework-application.md`.
-
-**Do not silently switch from exploration to attribution.** Re-satisfy the attribution conditions when the claim changes.
-
-## 3b. Model use
-
-Examples include:
-
-1. **Structural model**: inspect relation and placement.
-2. **Consistency model**: compare the behavior of one target with an externally derived pattern.
-3. **Temporal model**: inspect cycles, accumulation, recurrence, and stage change.
-4. **Transition model**: test states and transitions, looking for unreachable states, transitions that never occur, and states that do not return.
-
-The exit differs by use. Exploration produces questions and comparison axes. Attribution requires target-side evidence for cycles, transitions, or irreversibility before they become findings.
-
-Model choice, application scope, and loading depth are separate. Adopting a framework does not require exhausting all of its elements, interpretive vocabulary, or transitions.
-
-Temporal and transition models can generate questions not visible in static placement, but **running the framework produces candidate target structure, not a target property by itself**.
-
-## 3c. Homogeneity
-
-Before attributing a gap or bias to the target, ask whether framework elements and target structural units are homogeneous.
-
-Homogeneity belongs to the **framework-layer-target combination**, not to the framework alone. The same framework may be homogeneous at one layer and heterogeneous at another. Even units of the same apparent type may differ in classification principle.
-
-Heterogeneous frameworks can still be used exploratorily. Representative exploratory uses include:
-
-- obtain verbs for relations;
-- establish contrast axes;
-- turn blanks into questions;
-- generate expression or composition candidates;
-- unsettle units fixed by the current problem framing.
-
-## 3d. Loading depth
-
-Use `probe / preview / full / enacted` from `core/activation.md`.
-
-Do not set a fixed fit threshold. High apparent fit guarantees neither valid attribution nor usefulness.
-
-## 3e. Observation signals and use state
-
-During contact with a framework, the following states can be observed and recorded.
-
-- every outcome can be made to fit, so a falsifiable difference is hard to establish;
-- target-side questions are not increasing while only framework vocabulary grows;
-- gaps or causes are about to be attributed without homogeneity or an assignment procedure;
-- irreversibility, asymmetry, locality, or evidence state is becoming thinner;
-- target material is being reread merely to complete the framework.
-
-These are not automatic stopping conditions that decide continuation, loading-depth changes, or rejection. If external use conditions reserve judgment to the requester, return them as decision material. If judgment is delegated to the executing AI, use them within that delegation.
-
-Keep exploratory use state separate from whether a claim can be attributed to the target. A candidate that does not satisfy homogeneity, assignment, or other attribution requirements is not promoted directly to target fact, but may remain `framework_generated` or `unresolved`.
-
-Rejecting a framework does not require deleting every question it generated. Keep what survives return to the target with provenance intact.
-
-When continuing, carry the declared **exploration/attribution mode, model use, application scope, and loading depth** into `02a-framework-application.md`.
+No immediate question, misfit, or growth in vocabulary alone can inform reconsideration. Continuing, changing, or declining a framework follows the caller's purpose or delegated judgment. Declining a framework need not withdraw target-relevant questions obtained from it.

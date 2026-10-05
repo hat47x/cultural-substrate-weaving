@@ -25,7 +25,7 @@ for path in (PLANNER_DIR, SCRIPTS_DIR):
         sys.path.insert(0, str(path))
 
 from build import skill_frontmatter  # noqa: E402
-from common import replace_router_links  # noqa: E402
+from common import project_reference_links, replace_router_links  # noqa: E402
 from plan_adapter_metadata import plan_adapter_metadata  # noqa: E402
 from plan_skill_entry_transforms import (  # noqa: E402
     plan_skill_entry_transforms,
@@ -255,8 +255,16 @@ def materialize_skill_tree(
                 target.write_text(text, encoding="utf-8")
                 action = "render"
             else:
-                shutil.copyfile(source, target)
-                action = "copy"
+                skill = next(item for item in suite["skills"] if item["id"] == skill_id)
+                package = skill["locale_realizations"][locale]["package_source"]
+                if package.get("mode") == "canonical_manifest" and source.suffix == ".md":
+                    config = _load_json(root / package["manifest"])
+                    source_relative = source.relative_to(root / "src" / locale).as_posix()
+                    target.write_text(project_reference_links(source.read_text(encoding="utf-8"), config["modules"], source_relative), encoding="utf-8")
+                    action = "render-reference"
+                else:
+                    shutil.copyfile(source, target)
+                    action = "copy"
 
             written.append(
                 {

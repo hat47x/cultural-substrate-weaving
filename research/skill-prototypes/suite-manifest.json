@@ -92,7 +92,9 @@
         "research/skill-prototypes/affinity-synthesis/references/REPRESENTATION.md",
         "research/skill-prototypes/affinity-synthesis/references/REPRESENTATION.en.md",
         "research/skill-prototypes/affinity-synthesis/references/HIERARCHY-AND-LINEAGE.md",
-        "research/skill-prototypes/affinity-synthesis/references/affinity-map.schema.json"
+        "research/skill-prototypes/affinity-synthesis/references/affinity-map.schema.json",
+        "research/skill-prototypes/affinity-synthesis/scripts/affinity_board.py",
+        "research/skill-prototypes/affinity-synthesis/scripts/validate_map.py"
       ],
       "evidence": [
         "research/skill-prototypes/affinity-synthesis/evidence/dossier.md",
@@ -328,7 +330,9 @@
     "research/skill-prototypes/migration/CSW-THIN-MIGRATION-AUDIT-2026-09-06.md",
     "research/skill-prototypes/migration/CSW-THIN-SOURCE-RETENTION-CHECK-2026-09-06.md",
     "research/skill-prototypes/migration/CSW-THIN-POST-APPLY-AUDIT-2026-09-06.md",
-    "docs/ja/maintainers/csw-thin-synthesis-connection-contract.md"
+    "docs/ja/maintainers/csw-thin-synthesis-connection-contract.md",
+    "research/skill-prototypes/P4-ENGLISH-INDEPENDENT-REVIEW-PACKET-2026-10-05.md",
+    "research/skill-prototypes/P4-ENGLISH-INDEPENDENT-REVIEW-TARGETS-2026-10-05-v4.json"
   ],
   "distribution_prototypes": {
     "openai_skill": {
@@ -409,7 +413,7 @@
     "cross-layer CSW handoff and three-layer paired regressions remain acceptable",
     "Japanese and English thin-CSW runtimes retain attribution and delegation boundaries",
     "split ownership regression check passes",
-    "Microsoft 365 composite adapter preserves its embedded-fallback boundary without claiming full sibling-method parity",
+    "Microsoft 365 limited adapter delegates material synthesis to a separate realization and does not claim full sibling-method parity",
     "generated artifacts are rebuilt and repository validation passes after thin-CSW migration",
     "English runtime-referenced technical assets are localized or language-neutral, while research-only ancillary material is explicitly classified",
     "English sibling Skill realizations receive independent review",

@@ -118,7 +118,7 @@ If a framework produces a concrete new question that justifies reopening, hand t
 
 If additional framework contact does not move target-side questions, material arrangement, artifacts, or decisions, stopping with `no_useful_increment` intact is valid.
 
-Authority over stopping, adoption, and action follows the delegation boundary in `core/principles-and-constraints.md`.
+Authority over stopping, adoption, and action follows the delegation boundary in `00-principles-and-constraints.md`.
 
 ## Minimal handoff
 
@@ -135,6 +135,6 @@ Do not copy the complete text of prior rounds.
 
 ## CSW canonical responsibilities
 
-Higher-level principles remain in `core/principles-and-constraints.md`.
+Higher-level principles remain in `00-principles-and-constraints.md`.
 
 In particular, keep possibility separate from adoption, cognition separate from fact, and preservation separate from current attention.
