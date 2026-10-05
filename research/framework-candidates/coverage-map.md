@@ -11,7 +11,8 @@ This map tracks structural diversity. It does not rank frameworks or claim that 
 | systematic combinatorial crossing / unseen combination | Llull Ars | — | higher-order explosion and target-constraint pruning without treating formal coverage as truth |
 | production layers / observer split | Sāṅkhya | theosophical sefirot (profile-ready) | historically bounded differentiated mediation without generic hierarchy collapse |
 | whole–part reciprocity / role-defined identity | Huayan | — | explicit cross-boundary topology and center/periphery geometry |
-| conditional chain / cessation | dependent origination | — | branching conditional networks |
+| conditional chain / cessation | dependent origination | — | compare chain-oriented upstream/cessation work against typed networks when several relation modes coexist |
+| typed conditional network / multi-condition convergence | — | Theravāda Paṭṭhāna conditional relations (profile-ready) | compare against ordinary typed dependency graphs / fault trees before runtime; do not import the twenty-four-condition taxonomy |
 | binary-frame disruption | catuṣkoṭi | — | explicit boundary-crossing logic |
 | conditioned perspective | Jain sevenfold predication; Confucian role / li | — | institutional and collective role perspectives beyond dyadic relations |
 | explanatory pluralism | Aristotle four causes | — | explanatory modes beyond current cause set |
@@ -51,9 +52,9 @@ Do not start broad efficacy comparison yet.
 Registry snapshot on 2026-10-05:
 
 - adopted: 19
-- profile-ready: 14
+- profile-ready: 15
 - research-only: 2
 - defer-lineage-specific: 1
-- total: 36
+- total: 37
 
 The profile-ready population is now substantial but still smaller than the adopted core. Continue filling genuinely different operation families and resolving lineage-bounded candidates before broad efficacy comparison. Do not use the counts themselves as a quality score.

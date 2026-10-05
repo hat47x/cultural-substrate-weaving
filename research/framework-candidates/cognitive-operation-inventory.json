@@ -2340,6 +2340,91 @@
       "negative_example_paths": [
         "research/framework-candidates/worked-examples/greco-roman-method-of-loci-negative.md"
       ]
+    },
+    {
+      "id": "theravada-patthana-conditional-relations",
+      "names": [
+        "Theravāda Paṭṭhāna conditional relations",
+        "Paṭṭhāna paccaya",
+        "Conditional Relations",
+        "上座部アビダンマ『発趣論』の条件関係"
+      ],
+      "readiness": "profile-ready",
+      "structural_primitives": [
+        "conditioning item",
+        "conditioned item",
+        "differentiated relation mode",
+        "multi-condition convergence",
+        "one-to-many conditioning spread",
+        "simultaneous vs sequential relation",
+        "reciprocal support candidate"
+      ],
+      "cognitive_operations": [
+        "conditioning-role-separation",
+        "relation-mode-differentiation",
+        "multi-condition-convergence",
+        "one-to-many-conditioning-spread",
+        "simultaneous-vs-sequential-audit",
+        "reciprocal-support-probe",
+        "relation-mode-uncertainty-preservation"
+      ],
+      "useful_for": [
+        "separating heterogeneous condition modes that converge on one operational outcome",
+        "distinguishing simultaneous, sequential, reciprocal, and persistence-like dependencies before collapsing them into one generic arrow",
+        "turning uncertain dependency modes into explicit target-side tests or evidence requests"
+      ],
+      "do_not_assume": [
+        "the twenty-four paccaya are a mandatory target taxonomy",
+        "a formal relation map proves target causation",
+        "Theravāda Abhidhamma ontology applies to software, organizations, or other target domains",
+        "every target event must have multiple conditions",
+        "reciprocal or simultaneous conditioning exists without target evidence",
+        "canonical religious status creates target-side epistemic authority"
+      ],
+      "sources": [
+        {
+          "kind": "canonical-text-reference",
+          "title": "Pali Text Society — Paṭṭhāna",
+          "url": "https://palitextsociety.org/product/pa%E1%B9%AD%E1%B9%ADhana/"
+        },
+        {
+          "kind": "translation-guide-reference",
+          "title": "Pali Text Society — Guide to Conditional Relations, Ven. U Narada",
+          "url": "https://palitextsociety.org/product/guide-to-conditional-relations/"
+        },
+        {
+          "kind": "scholarly-reference",
+          "title": "Relations in Buddhism — Encyclopedia of Sciences and Religions",
+          "url": "https://link.springer.com/rwe/10.1007/978-1-4020-8265-8_1597"
+        },
+        {
+          "kind": "scholarly-synthesis",
+          "title": "Y. Karunadasa — The Theravada Abhidhamma: Inquiry into the Nature of Conditioned Reality",
+          "url": "https://wisdomexperience.org/product/the-theravada-abhidhamma/"
+        },
+        {
+          "kind": "practice-oriented-outline",
+          "title": "Conditionality of Life — An outline of the 24 Conditions as taught in the Abhidhamma",
+          "url": "https://www.wisdomlib.org/buddhism/book/conditions/d/doc2899.html"
+        }
+      ],
+      "profile_path": "research/framework-candidates/profiles/theravada-patthana-conditional-relations.md",
+      "adoption_hold": "compare-with-dependent-origination-and-ordinary-dependency-analysis",
+      "selection_cues": [
+        "複数の異質な条件が一つの結果へ収束している",
+        "同じdependency edgeとして扱うと条件の仕方の違いが消える",
+        "同時条件と継起条件を分けたい",
+        "一つの共有条件が複数の下流へ波及している",
+        "preserve heterogeneous condition modes in one dependency network",
+        "separate simultaneous sequential reciprocal and persistence-like dependencies",
+        "turn uncertain relation modes into explicit target-side tests"
+      ],
+      "worked_example_paths": [
+        "research/framework-candidates/worked-examples/theravada-patthana-conditional-relations.md"
+      ],
+      "negative_example_paths": [
+        "research/framework-candidates/worked-examples/theravada-patthana-conditional-relations-negative.md"
+      ]
     }
   ]
 }
