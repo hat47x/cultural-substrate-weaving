@@ -1863,20 +1863,72 @@ def operation_return_audit_payload(
         if str(row.get("id", "")).strip()
     }
 
+    for candidate in workspace_candidates.values():
+        contact_record = candidate.get("contact_record", {})
+        if not isinstance(contact_record, dict):
+            continue
+        snapshot = contact_record.get("selection_snapshot")
+        if not isinstance(snapshot, dict):
+            continue
+        candidate_reasoning = snapshot.get("candidate_reasoning")
+        if not isinstance(candidate_reasoning, dict):
+            continue
+        snapshot_operations = candidate_reasoning.get("planned_operations", [])
+        if not isinstance(snapshot_operations, list):
+            continue
+        _append_unique(
+            operation_order,
+            [
+                str(operation).strip()
+                for operation in snapshot_operations
+                if str(operation).strip()
+            ],
+        )
+
     rows: list[dict[str, Any]] = []
     for operation in operation_order:
         planned_contexts = []
         for candidate_audit in base["candidate_audits"]:
-            if operation not in candidate_audit["planned_operations"]:
-                continue
             candidate_id = str(candidate_audit["candidate_id"])
             candidate = workspace_candidates.get(candidate_id, {})
+            current_planned_operations = list(
+                candidate_audit.get("planned_operations", [])
+            )
+            contact_record = candidate.get("contact_record", {})
+            if not isinstance(contact_record, dict):
+                contact_record = {}
+            snapshot_reasoning: dict[str, Any] = {}
+            snapshot = contact_record.get("selection_snapshot")
+            if isinstance(snapshot, dict):
+                candidate_reasoning = snapshot.get("candidate_reasoning")
+                if isinstance(candidate_reasoning, dict):
+                    snapshot_reasoning = candidate_reasoning
+            snapshot_planned_operations = snapshot_reasoning.get(
+                "planned_operations",
+                [],
+            )
+            if not isinstance(snapshot_planned_operations, list):
+                snapshot_planned_operations = []
+            if (
+                operation not in current_planned_operations
+                and operation not in snapshot_planned_operations
+            ):
+                continue
             planned_contexts.append({
                 "candidate_id": candidate_id,
-                "role": candidate_audit.get("role"),
-                "workspace_contact_record": dict(
-                    candidate.get("contact_record", {})
+                "role": snapshot_reasoning.get(
+                    "role",
+                    candidate_audit.get("role"),
                 ),
+                "current_role": candidate_audit.get("role"),
+                "contact_snapshot_role": snapshot_reasoning.get("role"),
+                "planned_in_current_workspace": (
+                    operation in current_planned_operations
+                ),
+                "planned_in_contact_snapshot": (
+                    operation in snapshot_planned_operations
+                ),
+                "workspace_contact_record": dict(contact_record),
             })
 
         contact_contexts = []
@@ -1948,7 +2000,9 @@ def operation_return_audit_payload(
         "operations": rows,
         "no_framework_option": dict(base["no_framework_option"]),
         "interpretation_boundary": (
-            "Operations are grouped by exact string label only. Planned candidate refs are "
+            "Operations are grouped by exact string label only. Current workspace planning "
+            "and the frozen contact-time planning snapshot are shown separately so later edits "
+            "do not silently rewrite earlier selection provenance. Planned candidate refs are "
             "kept separate from framework refs observed in contact/delta/artifact records, "
             "and framework provenance is retained on every context. Sharing an exact "
             "operation label across frameworks does not establish semantic equivalence. "
