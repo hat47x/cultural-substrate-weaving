@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+- Corrected orthogonality to prioritize minimal conceptual overlap and mutual dependence, close approximation to mathematical orthogonality or statistical independence, and independently usable elements isolated by intersection. Added Wuxing / five great elements as the intended reference example; aligned selection, transformation, guides, and the limited profile without requiring empirical experiments.
+
 - Rebuilt CSW around purpose-led cultural perspective analysis and discovery, with qualitative problem-set comparison and concrete recommendations from existing material. Clarified essential structure, structural distance, multi-perspective composition, and target return without making empirical experiments a prerequisite.
 - Reorganized bilingual runtime and distribution inputs, kept affinity diagramming and iterative inquiry in separate Skills, and added optional external yomiyasu polishing. Corrected generated reference links, limited-profile ownership, stale review metadata, and associated repository contracts; sibling independent-English review and public promotion remain pending.
 

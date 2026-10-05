@@ -9,11 +9,11 @@
       "reviewed_at": "2026-10-05"
     },
     "README.md": {
-      "git_blob_sha": "ca5b992ee4252a5c4a9939722e8e631a448034b9",
+      "git_blob_sha": "e594ae0f18974ed79ec796fc694fb368b35af0c4",
       "reviewed_at": "2026-10-05"
     },
     "adapters/microsoft-copilot/ja-JP/instructions.md": {
-      "git_blob_sha": "54bd007d5c3582d6b8286ade172b2654700e4fec",
+      "git_blob_sha": "8ff1987a3bf75be643eb60bf824de677e7962aa3",
       "reviewed_at": "2026-10-05"
     },
     "adapters/microsoft-copilot/ja-JP/package-readme.txt": {
@@ -101,7 +101,7 @@
       "reviewed_at": "2026-10-05"
     },
     "docs/ja/maintainers/natural-japanese-review.md": {
-      "git_blob_sha": "fd08782031f3c8435d06b4c55377423bbb86facb",
+      "git_blob_sha": "9d76d69cb19af729da9425f8b62f4dc1b200fb73",
       "reviewed_at": "2026-10-05"
     },
     "docs/ja/maintainers/official-sources.md": {
@@ -161,7 +161,7 @@
       "reviewed_at": "2026-10-05"
     },
     "docs/ja/maintainers/value-first-product-design.md": {
-      "git_blob_sha": "456f926fa683fef5cbd7b29eb1373098275d99fd",
+      "git_blob_sha": "1ead98d2c715f8bcab21be124ce5f11984723611",
       "reviewed_at": "2026-10-05"
     },
     "docs/ja/maintainers/versioning.md": {

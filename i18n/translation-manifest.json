@@ -203,9 +203,9 @@
       "en_status": "translated"
     },
     "methods/perspective-analysis.md": {
-      "ja_sha256": "59b250dfead91b7c8dead671c48f1c2c4fe67444f36f78f5cdaee247ac32eee1",
+      "ja_sha256": "b7e787cae61dce8efa0094079054bfc4b0ed4a7b755a5768890a5c982ae5e4dc",
       "en_present": true,
-      "en_source_ja_sha256": "59b250dfead91b7c8dead671c48f1c2c4fe67444f36f78f5cdaee247ac32eee1",
+      "en_source_ja_sha256": "b7e787cae61dce8efa0094079054bfc4b0ed4a7b755a5768890a5c982ae5e4dc",
       "en_status": "translated"
     },
     "methods/scope-and-facts.md": {
@@ -215,15 +215,15 @@
       "en_status": "translated"
     },
     "methods/system-selection.md": {
-      "ja_sha256": "c130a8839ac515645c3c66b7c49961294a291022dd274a7ff65b5d3617a92ce4",
+      "ja_sha256": "041bef2a1bc86bd285721bcf12f07f241b1647b734ef8641fc9e97073b9fe001",
       "en_present": true,
-      "en_source_ja_sha256": "c130a8839ac515645c3c66b7c49961294a291022dd274a7ff65b5d3617a92ce4",
+      "en_source_ja_sha256": "041bef2a1bc86bd285721bcf12f07f241b1647b734ef8641fc9e97073b9fe001",
       "en_status": "translated"
     },
     "methods/transformation.md": {
-      "ja_sha256": "7c65d5b70617b9ac7d01302c45c92292759581596fd574cc4aaf15f2c66bfe20",
+      "ja_sha256": "74bd46bb0a67ca27106ecf5b965c3da1f0a800540d7a54399ceb27f5acfdd06e",
       "en_present": true,
-      "en_source_ja_sha256": "7c65d5b70617b9ac7d01302c45c92292759581596fd574cc4aaf15f2c66bfe20",
+      "en_source_ja_sha256": "74bd46bb0a67ca27106ecf5b965c3da1f0a800540d7a54399ceb27f5acfdd06e",
       "en_status": "translated"
     }
   }

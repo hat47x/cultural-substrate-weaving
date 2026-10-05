@@ -34,7 +34,17 @@ Explain closeness or distance relative to the selected view: shared transition c
 
 Explain the second perspective by the distinction the first could not make. Distinguish repeating one classification under another framework name from adding a different view.
 
-In ordinary language, orthogonal can mean cutting the target differently. Do not claim mathematical orthogonality or statistical independence without establishing it. State what each view asks, such as temporal phase versus relational direction. Different names alone do not establish independent perspectives.
+Here, orthogonality means minimizing conceptual overlap and mutual dependence between perspectives so that their intersection can isolate elements with high independence. Prioritize close approximation to mathematical orthogonality or statistical independence. Different framework names or partition principles alone are insufficient.
+
+Judge orthogonality qualitatively when selecting a combination:
+
+- Is one set of concepts or classifications a paraphrase or derivative of the other?
+- Can a position or state in one view vary without determining the position or state in the other, allowing them to vary separately?
+- Can the elements isolated by intersection be understood separately and used in comparison or composition? Which dependencies remain?
+
+Treat Wuxing and the five great elements as a highly orthogonal combination of distinct conceptions. This is a reference example of the product's design intent. In use, identify the chosen lineages and partition principles, and read them without imposing one-to-one element correspondence. Shared element names do not establish identical concepts.
+
+Use framework sources, concrete target examples, domain knowledge, and human judgment. Neither numerical scoring nor empirical experiments are prerequisites for selection. Explain where independence appears high and where overlap or dependence remains. Record this qualitative judgment separately from mathematical proof or statistical measurement.
 
 If using a matrix, form each reading separately, then compare the same targets at their intersections. Do not tailor the second placement to agree with the first. Cells need not all be filled. Distinguish target absence, an unread case, out-of-scope material, and insufficient sources.
 
