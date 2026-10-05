@@ -143,11 +143,25 @@ Before returning a loci-based pass to the target:
 
 ## Runtime decision
 
-Do not adopt into runtime yet.
+Do not adopt into runtime for general CSW analysis.
 
-The candidate adds a currently explicit but unfilled operation family: stable spatial indexing with separable mutable content and ordered reconstruction. However, de-binding may collapse most of its practical value into an ordinary checklist or outline. Runtime adoption therefore requires a direct comparison against that baseline and against Vedic sequence preservation, khipu positional recording, and Marshallese route navigation.
+The direct same-target comparison against an ordinary numbered checklist resolves the strongest counter-hypothesis against promotion. On the migration-plan review target, the checklist reproduces every target-relevant de-bound operation:
 
-Worked examples:
+- stable scaffold vs replaceable binding;
+- ordered traversal;
+- omission / duplicate / swap localization;
+- explicit rebinding after revision;
+- return to source-of-truth material.
+
+It also produces the same L4 restore-rehearsal and L12 post-rollback-verification questions with a simpler representation.
+
+The method-specific residue is the human mnemonic use of places, imagery, and learned spatial traversal. That may be relevant when the target itself concerns human recall or rehearsal, but it is not a distinct generative operation for the current document-grounded AI review use.
+
+Accordingly, the candidate remains a sourced research reference rather than a runtime-queue gap. Reconsider it only for a memory-specific target with a new justification; cultural distinctness alone is not sufficient.
+
+Comparisons and worked examples:
 
 - `research/framework-candidates/worked-examples/greco-roman-method-of-loci.md`
 - `research/framework-candidates/worked-examples/greco-roman-method-of-loci-negative.md`
+- `research/framework-candidates/comparisons/method-of-loci-vs-sequence-record-route.md`
+- `research/framework-candidates/comparisons/method-of-loci-vs-numbered-checklist.md`
