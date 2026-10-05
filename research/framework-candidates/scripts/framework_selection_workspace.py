@@ -1846,6 +1846,126 @@ def audit_living_lab_payload(
     }
 
 
+def operation_return_audit_payload(
+    workspace: dict[str, Any],
+    round_record: dict[str, Any],
+) -> dict[str, Any]:
+    base = audit_living_lab_payload(workspace, round_record)
+    operation_order: list[str] = []
+    _append_unique(operation_order, base["planned_operations"])
+    _append_unique(operation_order, base["contacted_operations"])
+    _append_unique(operation_order, base["delta_operations"])
+    _append_unique(operation_order, base["artifact_operations"])
+
+    workspace_candidates = {
+        str(row.get("id", "")).strip(): row
+        for row in workspace.get("candidates", [])
+        if str(row.get("id", "")).strip()
+    }
+
+    rows: list[dict[str, Any]] = []
+    for operation in operation_order:
+        planned_contexts = []
+        for candidate_audit in base["candidate_audits"]:
+            if operation not in candidate_audit["planned_operations"]:
+                continue
+            candidate_id = str(candidate_audit["candidate_id"])
+            candidate = workspace_candidates.get(candidate_id, {})
+            planned_contexts.append({
+                "candidate_id": candidate_id,
+                "role": candidate_audit.get("role"),
+                "workspace_contact_record": dict(
+                    candidate.get("contact_record", {})
+                ),
+            })
+
+        contact_contexts = []
+        for contact in base["linked_contacts"]:
+            if operation not in contact["operations"]:
+                continue
+            contact_contexts.append({
+                "framework": contact.get("framework"),
+                "depth": contact.get("depth"),
+                "use": contact.get("use"),
+            })
+
+        delta_contexts = []
+        for delta in base["linked_deltas"]:
+            if operation not in delta["operation_refs"]:
+                continue
+            delta_contexts.append({
+                "delta_ref": delta.get("delta_ref"),
+                "framework_refs": list(delta.get("framework_refs", [])),
+                "kind": delta.get("kind"),
+                "pre_contact_relation": delta.get("pre_contact_relation"),
+                "target_return": dict(delta.get("target_return", {})),
+                "user_disposition": delta.get("user_disposition"),
+            })
+
+        artifact_contexts = []
+        for trace in base["linked_artifacts"]:
+            if operation not in trace["operation_refs"]:
+                continue
+            artifact_contexts.append({
+                "artifact_ref": trace.get("artifact_ref"),
+                "framework_refs": list(trace.get("framework_refs", [])),
+                "origin": trace.get("origin"),
+                "target_return": dict(trace.get("target_return", {})),
+                "user_disposition": trace.get("user_disposition"),
+            })
+
+        framework_refs: list[str] = []
+        for row in planned_contexts:
+            _append_unique(framework_refs, [row["candidate_id"]])
+        for row in contact_contexts:
+            framework = str(row.get("framework", "")).strip()
+            if framework:
+                _append_unique(framework_refs, [framework])
+        for row in delta_contexts:
+            _append_unique(framework_refs, row["framework_refs"])
+        for row in artifact_contexts:
+            _append_unique(framework_refs, row["framework_refs"])
+
+        rows.append({
+            "operation": operation,
+            "framework_refs": framework_refs,
+            "planned_contexts": planned_contexts,
+            "observed_contact_contexts": contact_contexts,
+            "delta_contexts": delta_contexts,
+            "artifact_contexts": artifact_contexts,
+        })
+
+    return {
+        "format": "csw.framework-operation-return-audit/v0",
+        "workspace_ref": base["workspace_ref"],
+        "round_id": base["round_id"],
+        "activation_scope": base["activation_scope"],
+        "target_structure_hypotheses": [
+            dict(row) for row in base["target_structure_hypotheses"]
+        ],
+        "operations": rows,
+        "no_framework_option": dict(base["no_framework_option"]),
+        "interpretation_boundary": (
+            "Operations are grouped by exact string label only while framework provenance "
+            "is retained on every planned/contact/delta/artifact context. Sharing an exact "
+            "operation label across frameworks does not establish semantic equivalence. "
+            "Presence in a target-return state or user disposition does not establish that "
+            "the operation caused, improved, or justified the result. Missing stages are "
+            "provenance gaps to inspect, not failures, and no score, ranking, recommendation, "
+            "or effectiveness claim is computed."
+        ),
+    }
+
+
+def cmd_audit_operations(args: argparse.Namespace) -> None:
+    print_json(
+        operation_return_audit_payload(
+            load_workspace(args.workspace),
+            load_living_lab_round(args.living_lab_round),
+        )
+    )
+
+
 def cmd_list_target_structures(args: argparse.Namespace) -> None:
     print_json(
         target_structure_catalog_payload(
@@ -2137,6 +2257,17 @@ def build_parser() -> argparse.ArgumentParser:
     audit_living_lab.add_argument("living_lab_round", type=Path)
     audit_living_lab.set_defaults(func=cmd_audit_living_lab)
 
+    audit_operations = sub.add_parser(
+        "audit-operations",
+        help=(
+            "group planned/contacted/delta/artifact provenance by exact cognitive "
+            "operation label while retaining framework origin and target-return context"
+        ),
+    )
+    audit_operations.add_argument("workspace", type=Path)
+    audit_operations.add_argument("living_lab_round", type=Path)
+    audit_operations.set_defaults(func=cmd_audit_operations)
+
     set_target_structure = sub.add_parser(
         "set-target-structure",
         help=(
@@ -2273,6 +2404,7 @@ def main() -> None:
             "audit-target-structure",
             "audit-map",
             "audit-living-lab",
+            "audit-operations",
             "set-candidate",
             "set-consideration",
             "set-guardrail",
