@@ -919,6 +919,7 @@ class FrameworkSelectionWorkspaceTest(unittest.TestCase):
 
         data["candidates"][0]["intended_cognitive_job"] = "later revised wording"
         data["target_structure_hypotheses"][0]["basis"] = "later revised basis"
+        data["target_structure_hypotheses"][0]["source_typology"]["date"] = "later"
         self.assertEqual(
             snapshot["candidate_reasoning"]["intended_cognitive_job"],
             "inspect the upstream condition chain",
@@ -926,6 +927,10 @@ class FrameworkSelectionWorkspaceTest(unittest.TestCase):
         self.assertEqual(
             snapshot["target_structure_hypotheses"][0]["basis"],
             "A concrete upstream dependency remains unresolved.",
+        )
+        self.assertEqual(
+            snapshot["target_structure_hypotheses"][0]["source_typology"]["date"],
+            "2026-10-03",
         )
 
         encoded = json.dumps(data).casefold()
