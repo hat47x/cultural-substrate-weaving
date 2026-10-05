@@ -2246,7 +2246,7 @@
         }
       ],
       "profile_path": "research/framework-candidates/profiles/scholastic-disputed-question.md",
-      "adoption_hold": "compare-with-stasis-nyaya-and-ordinary-design-review",
+      "adoption_hold": "ordinary-design-review-overlap: keep profile-ready until portable objection-coverage value is justified",
       "selection_cues": [
         "反対論をまとめず個別に残したい",
         "最終判断が各懸念へ答えたか確認したい",
@@ -2256,7 +2256,8 @@
         "carry unanswered objections forward explicitly"
       ],
       "worked_example_paths": [
-        "research/framework-candidates/worked-examples/scholastic-disputed-question.md"
+        "research/framework-candidates/worked-examples/scholastic-disputed-question.md",
+        "research/framework-candidates/worked-examples/scholastic-disputed-question-comparison.md"
       ],
       "negative_example_paths": [
         "research/framework-candidates/worked-examples/scholastic-disputed-question-negative.md"
