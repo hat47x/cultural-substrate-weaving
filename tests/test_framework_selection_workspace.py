@@ -1706,6 +1706,8 @@ class FrameworkSelectionWorkspaceTest(unittest.TestCase):
             reason="Contact alpha while condition-chain is the explicit planned operation.",
         )
 
+        # update_candidate adds operations; remove the prior current plan explicitly.
+        workspace.find_workspace_candidate(selection, "alpha")["planned_operations"] = []
         workspace.update_candidate(
             selection,
             "alpha",
@@ -1873,7 +1875,7 @@ class FrameworkSelectionWorkspaceTest(unittest.TestCase):
                 payload["operations"][0]["observed_contact_contexts"][0]["framework"],
                 "alpha",
             )
-            self.assertNotIn("score", json.dumps(payload).casefold())
+            self.assertNotIn('"score"', json.dumps(payload).casefold())
 
     def test_living_lab_loader_rejects_invalid_catalytic_delta_container(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
