@@ -112,6 +112,20 @@ class FrameworkCorpusContractTest(unittest.TestCase):
         data = json.loads(inventory_path.read_text(encoding="utf-8"))
         self.assertEqual(contract.validate_inventory(ROOT, data), [])
 
+    def test_repository_typology_covers_inventory_candidate_ids_exactly(self) -> None:
+        inventory = workspace.load_inventory(
+            ROOT / "research" / "framework-candidates" / "cognitive-operation-inventory.json"
+        )
+        typology = workspace.load_typology(
+            ROOT / "research" / "efficacy-cheap-llm" / "framework-typology.json"
+        )
+
+        inventory_ids = [str(row["id"]) for row in workspace.candidates(inventory)]
+        typology_ids = [str(row["id"]) for row in typology["frameworks"]]
+
+        self.assertEqual(len(typology_ids), len(set(typology_ids)))
+        self.assertEqual(set(typology_ids), set(inventory_ids))
+
     def test_profile_ready_requires_examples_cues_and_debinding(self) -> None:
         row = {
             "id": "candidate",
