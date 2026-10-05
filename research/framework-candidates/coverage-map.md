@@ -1,4 +1,4 @@
-# Cognitive-operation coverage map — 2026-10-01
+# Cognitive-operation coverage map — 2026-10-05
 
 Status: research planning / not an efficacy benchmark
 
@@ -35,6 +35,7 @@ This map tracks structural diversity. It does not rank frameworks or claim that 
 | material / positional record encoding | — | Inka khipu record structure (profile-ready) | other non-textual record systems and tests of distinctness from generic data modeling |
 | prescriptive hermeneutics / sentence-unit interpretation | Mīmāṃsā hermeneutics | — | additional culture-specific norm-conflict systems without collapsing into generic legal interpretation |
 | inherited rule context / general-specific blocking / ordered derivation | — | Pāṇini Aṣṭādhyāyī rule architecture (profile-ready) | test distinctness from generic rule-engine review and Mīmāṃsā after de-binding |
+| stable spatial index / variable-content rebinding / ordered reconstruction | — | Greco-Roman method of loci (profile-ready) | compare against ordinary numbered checklist first; then Vedic sequence preservation, khipu positional record, and Marshallese live-route return |
 
 ## Priority rule
 
