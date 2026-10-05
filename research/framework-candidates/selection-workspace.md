@@ -107,6 +107,9 @@ python "$TOOL" audit-map /tmp/selection.json /tmp/board.json
 
 # When a natural-work Living Lab round reused the same selection ref:
 python "$TOOL" audit-living-lab /tmp/selection.json /tmp/round.json
+
+# Re-read the same round by exact cognitive-operation label, preserving framework origin:
+python "$TOOL" audit-operations /tmp/selection.json /tmp/round.json
 ```
 
 `inspect` is the Registry-0 boundary view for one candidate. It assembles the candidate's native primitives, operations, ordinary-language cues, full source references, profile/source-packet/runtime paths, positive/negative target-return fixtures, readiness, adoption hold, and `do_not_assume` boundary without computing fit, rank, or activation. Use it before deliberate activation when the model or analyst needs to recover what is actually documented rather than reconstructing a framework from memory.
@@ -164,6 +167,8 @@ target-side baseline
 ```
 
 `audit-living-lab` joins the workspace to one schema 0.2 Living Lab round by the exact stable `selection_ref`. It places planned operations, the workspace's frozen contact/non-contact record, recorded Living Lab framework contacts, artifact provenance, target-return states, user dispositions, the original non-force guardrails, and the no-framework post-contact state in one read-only view. `audit-map` likewise shows each candidate's contact record beside observed cards and return states. The two records are intentionally not collapsed: a workspace may say a candidate was intended to be contacted while a downstream trace is missing, or vice versa, and that discrepancy is provenance to inspect rather than an automatic failure. Neither audit infers that a retained artifact was caused by the framework, that a target-return state is correct, or that a guardrail was satisfied. The official Living Lab validator remains responsible for validating the round record itself.
+
+`audit-operations` provides the complementary operation-centered view. It groups planned operations, observed framework contacts, catalytic deltas, artifacts, target-return records, and user dispositions by **exact operation label**, while retaining the originating framework refs on every context. This is useful when the product question is not "which framework won?" but "what path did this cognitive operation actually take through contact and target return?" Exact label identity is deliberately weak: if two frameworks both use `boundary-probe`, the audit does not claim that their native operations are semantically identical. Likewise, an operation appearing beside a `target_supported` return state does not establish causation or effectiveness. The view contains provenance only and computes no counts-as-quality, score, rank, or recommendation.
 
 Do not use the helper to convert readiness into fit, prefer a framework because it has more operations/sources, treat operation-name overlap as semantic equivalence, bypass lineage/adoption holds, or turn cross-framework agreement into target evidence.
 
