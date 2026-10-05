@@ -1524,6 +1524,218 @@ class FrameworkSelectionWorkspaceTest(unittest.TestCase):
             )
             self.assertEqual(payload["target_return_states"], ["unresolved"])
 
+    def test_operation_return_audit_keeps_exact_operation_and_framework_provenance(self) -> None:
+        selection = workspace.worksheet_payload(
+            FIXTURE,
+            "Inspect a boundary without attributing framework effectiveness",
+            ["alpha", "beta"],
+            "Target baseline",
+            "selection://operation-return-audit",
+        )
+        workspace.update_candidate(
+            selection,
+            "alpha",
+            role="primary",
+            planned_operations=["boundary-probe"],
+        )
+        workspace.update_candidate(
+            selection,
+            "beta",
+            role="reflecting",
+            planned_operations=["boundary-probe"],
+        )
+        workspace.record_contact_disposition(
+            selection,
+            "alpha",
+            contacted=True,
+            reason="Use the shared label from alpha's condition context.",
+        )
+        workspace.record_contact_disposition(
+            selection,
+            "beta",
+            contacted=True,
+            reason="Use the shared label from beta's node context.",
+        )
+        workspace.update_non_activation(
+            selection,
+            reason="The target-side baseline remains a valid control.",
+            remained_viable_after_contact=True,
+            post_contact_note="Keep the baseline available after both contacts.",
+        )
+
+        round_record = {
+            "schema_version": "0.2",
+            "round_id": "round-operation-return-001",
+            "activation_scope": "exploratory_use",
+            "framework_contacts": [
+                {
+                    "framework": "alpha",
+                    "depth": "preview",
+                    "use": "exploration",
+                    "selection_ref": "selection://operation-return-audit",
+                    "operations": ["boundary-probe"],
+                },
+                {
+                    "framework": "beta",
+                    "depth": "preview",
+                    "use": "exploration",
+                    "selection_ref": "selection://operation-return-audit",
+                    "operations": ["boundary-probe"],
+                },
+            ],
+            "catalytic_deltas": [
+                {
+                    "delta_ref": "delta:alpha-boundary",
+                    "kind": "question",
+                    "statement": "Which boundary belongs to the target rather than the framework?",
+                    "framework_refs": ["alpha"],
+                    "selection_refs": ["selection://operation-return-audit"],
+                    "operation_refs": ["boundary-probe"],
+                    "target_return": {
+                        "state": "target_supported",
+                        "source_type": "external",
+                        "evidence_refs": ["artifact:target-boundary"],
+                    },
+                    "user_disposition": {
+                        "state": "adopted",
+                        "source_ref": "chat:user-boundary",
+                    },
+                },
+            ],
+            "artifact_traces": [
+                {
+                    "artifact_ref": "artifact:beta-boundary",
+                    "origin": "framework_generated",
+                    "framework_refs": ["beta"],
+                    "selection_refs": ["selection://operation-return-audit"],
+                    "operation_refs": ["boundary-probe"],
+                    "target_return": {
+                        "state": "target_weakened",
+                        "source_type": "mixed",
+                        "evidence_refs": ["artifact:target-beta-boundary"],
+                    },
+                    "user_disposition": {
+                        "state": "modified",
+                        "source_ref": "chat:user-beta-boundary",
+                    },
+                },
+            ],
+        }
+
+        payload = workspace.operation_return_audit_payload(
+            selection,
+            round_record,
+        )
+
+        self.assertEqual(
+            payload["format"],
+            "csw.framework-operation-return-audit/v0",
+        )
+        self.assertEqual(
+            [row["operation"] for row in payload["operations"]],
+            ["boundary-probe"],
+        )
+        operation = payload["operations"][0]
+        self.assertEqual(operation["framework_refs"], ["alpha", "beta"])
+        self.assertEqual(
+            [row["candidate_id"] for row in operation["planned_contexts"]],
+            ["alpha", "beta"],
+        )
+        self.assertEqual(
+            [row["framework"] for row in operation["observed_contact_contexts"]],
+            ["alpha", "beta"],
+        )
+        self.assertEqual(
+            operation["delta_contexts"][0]["framework_refs"],
+            ["alpha"],
+        )
+        self.assertEqual(
+            operation["artifact_contexts"][0]["framework_refs"],
+            ["beta"],
+        )
+        self.assertEqual(
+            operation["delta_contexts"][0]["target_return"]["state"],
+            "target_supported",
+        )
+        self.assertEqual(
+            operation["artifact_contexts"][0]["target_return"]["state"],
+            "target_weakened",
+        )
+        self.assertTrue(
+            payload["no_framework_option"]["remained_viable_after_contact"]
+        )
+
+        encoded = json.dumps(payload).casefold()
+        self.assertNotIn('"score"', encoded)
+        self.assertNotIn('"rank"', encoded)
+        self.assertNotIn('"recommendation"', encoded)
+        self.assertIn(
+            "does not establish semantic equivalence",
+            payload["interpretation_boundary"],
+        )
+        self.assertIn(
+            "does not establish that the operation caused",
+            payload["interpretation_boundary"],
+        )
+
+    def test_operation_return_audit_cli_dispatches_without_routing(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            selection_path = Path(tmp) / "selection.json"
+            round_path = Path(tmp) / "round.json"
+            selection = workspace.worksheet_payload(
+                FIXTURE,
+                "Inspect operation provenance",
+                ["alpha"],
+                "Target baseline",
+                "selection://operation-return-cli",
+            )
+            workspace.update_candidate(
+                selection,
+                "alpha",
+                planned_operations=["condition-chain"],
+            )
+            workspace.record_contact_disposition(
+                selection,
+                "alpha",
+                contacted=True,
+                reason="The baseline left the upstream condition unresolved.",
+            )
+            workspace.save_workspace(selection_path, selection)
+            round_path.write_text(
+                json.dumps({
+                    "schema_version": "0.2",
+                    "round_id": "round-operation-return-cli",
+                    "activation_scope": "limited_use",
+                    "framework_contacts": [{
+                        "framework": "alpha",
+                        "depth": "preview",
+                        "use": "exploration",
+                        "selection_ref": "selection://operation-return-cli",
+                        "operations": ["condition-chain"],
+                    }],
+                    "catalytic_deltas": [],
+                    "artifact_traces": [],
+                }),
+                encoding="utf-8",
+            )
+
+            payload = json.loads(
+                self.run_tool(
+                    "audit-operations",
+                    str(selection_path),
+                    str(round_path),
+                ).stdout
+            )
+            self.assertEqual(
+                payload["operations"][0]["operation"],
+                "condition-chain",
+            )
+            self.assertEqual(
+                payload["operations"][0]["observed_contact_contexts"][0]["framework"],
+                "alpha",
+            )
+            self.assertNotIn("score", json.dumps(payload).casefold())
+
     def test_living_lab_loader_rejects_invalid_catalytic_delta_container(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
             round_path = Path(tmp) / "round.json"
