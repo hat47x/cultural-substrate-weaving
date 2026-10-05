@@ -1914,21 +1914,23 @@ def operation_return_audit_payload(
                 "user_disposition": trace.get("user_disposition"),
             })
 
-        framework_refs: list[str] = []
+        planned_candidate_refs: list[str] = []
+        observed_framework_refs: list[str] = []
         for row in planned_contexts:
-            _append_unique(framework_refs, [row["candidate_id"]])
+            _append_unique(planned_candidate_refs, [row["candidate_id"]])
         for row in contact_contexts:
             framework = str(row.get("framework", "")).strip()
             if framework:
-                _append_unique(framework_refs, [framework])
+                _append_unique(observed_framework_refs, [framework])
         for row in delta_contexts:
-            _append_unique(framework_refs, row["framework_refs"])
+            _append_unique(observed_framework_refs, row["framework_refs"])
         for row in artifact_contexts:
-            _append_unique(framework_refs, row["framework_refs"])
+            _append_unique(observed_framework_refs, row["framework_refs"])
 
         rows.append({
             "operation": operation,
-            "framework_refs": framework_refs,
+            "planned_candidate_refs": planned_candidate_refs,
+            "observed_framework_refs": observed_framework_refs,
             "planned_contexts": planned_contexts,
             "observed_contact_contexts": contact_contexts,
             "delta_contexts": delta_contexts,
@@ -1946,8 +1948,9 @@ def operation_return_audit_payload(
         "operations": rows,
         "no_framework_option": dict(base["no_framework_option"]),
         "interpretation_boundary": (
-            "Operations are grouped by exact string label only while framework provenance "
-            "is retained on every planned/contact/delta/artifact context. Sharing an exact "
+            "Operations are grouped by exact string label only. Planned candidate refs are "
+            "kept separate from framework refs observed in contact/delta/artifact records, "
+            "and framework provenance is retained on every context. Sharing an exact "
             "operation label across frameworks does not establish semantic equivalence. "
             "Presence in a target-return state or user disposition does not establish that "
             "the operation caused, improved, or justified the result. Missing stages are "
