@@ -612,6 +612,11 @@ def worksheet_payload(
                 "stop_if": "",
                 "survive_if": "",
             },
+            "contact_record": {
+                "contacted": None,
+                "reason": "",
+                "selection_snapshot": None,
+            },
             "consideration_axes": {
                 "target_connection": "",
                 "structural_difference": "",
@@ -633,6 +638,8 @@ def worksheet_payload(
             "reason": "",
             "baseline_note": "",
             "what_would_change_this": "",
+            "remained_viable_after_contact": None,
+            "post_contact_note": "",
         },
         "candidates": rows,
         "cross_framework_notes": {
@@ -846,6 +853,39 @@ def ensure_consideration_fields(data: dict[str, Any]) -> None:
         for key in NON_FORCE_GUARDRAIL_FIELDS:
             guardrails.setdefault(key, "")
 
+        contact_record = row.get("contact_record")
+        if contact_record is None:
+            contact_record = {
+                "contacted": None,
+                "reason": "",
+                "selection_snapshot": None,
+            }
+            row["contact_record"] = contact_record
+        if not isinstance(contact_record, dict):
+            raise ValueError(
+                f"candidate contact_record must be an object: {row.get('id', '')}"
+            )
+        contacted = contact_record.get("contacted")
+        if contacted is not None and not isinstance(contacted, bool):
+            raise ValueError(
+                f"candidate contact_record.contacted must be boolean or null: "
+                f"{row.get('id', '')}"
+            )
+        reason = contact_record.get("reason", "")
+        if not isinstance(reason, str):
+            raise ValueError(
+                f"candidate contact_record.reason must be a string: {row.get('id', '')}"
+            )
+        snapshot = contact_record.get("selection_snapshot")
+        if snapshot is not None and not isinstance(snapshot, dict):
+            raise ValueError(
+                f"candidate contact_record.selection_snapshot must be an object or null: "
+                f"{row.get('id', '')}"
+            )
+        contact_record.setdefault("contacted", None)
+        contact_record.setdefault("reason", "")
+        contact_record.setdefault("selection_snapshot", None)
+
     hypotheses = data.get("target_structure_hypotheses")
     if hypotheses is None:
         hypotheses = []
@@ -902,6 +942,18 @@ def ensure_consideration_fields(data: dict[str, Any]) -> None:
     option.setdefault("reason", "")
     option.setdefault("baseline_note", "")
     option.setdefault("what_would_change_this", "")
+    option.setdefault("remained_viable_after_contact", None)
+    option.setdefault("post_contact_note", "")
+    remained_viable = option.get("remained_viable_after_contact")
+    if remained_viable is not None and not isinstance(remained_viable, bool):
+        raise ValueError(
+            "workspace.no_framework_option.remained_viable_after_contact "
+            "must be boolean or null"
+        )
+    if not isinstance(option.get("post_contact_note", ""), str):
+        raise ValueError(
+            "workspace.no_framework_option.post_contact_note must be a string"
+        )
 
 
 def set_target_structure_hypothesis(
@@ -1070,15 +1122,75 @@ def update_non_force_guardrail(
             guardrails[key] = value
 
 
+def _selection_snapshot_for_candidate(
+    data: dict[str, Any],
+    row: dict[str, Any],
+) -> dict[str, Any]:
+    ensure_consideration_fields(data)
+    option = data["no_framework_option"]
+    return {
+        "target_baseline": data.get("target_baseline", ""),
+        "target_structure_hypotheses": json.loads(
+            json.dumps(data.get("target_structure_hypotheses", []))
+        ),
+        "candidate_reasoning": {
+            "role": row.get("role"),
+            "planned_operations": list(row.get("planned_operations", [])),
+            "intended_cognitive_job": row.get("intended_cognitive_job", ""),
+            "near_neighbor_difference": row.get("near_neighbor_difference", ""),
+            "target_return_questions": list(row.get("target_return_questions", [])),
+            "de_bound_target_language": row.get("de_bound_target_language", ""),
+            "what_would_change_this_choice": row.get(
+                "what_would_change_this_choice",
+                "",
+            ),
+            "consideration_axes": dict(row.get("consideration_axes", {})),
+            "non_force_guardrails": dict(row.get("non_force_guardrails", {})),
+        },
+        "no_framework_option": {
+            "reason": option.get("reason", ""),
+            "baseline_note": option.get("baseline_note", ""),
+            "what_would_change_this": option.get("what_would_change_this", ""),
+        },
+    }
+
+
+def record_contact_disposition(
+    data: dict[str, Any],
+    candidate_id: str,
+    *,
+    contacted: bool,
+    reason: str,
+) -> None:
+    ensure_consideration_fields(data)
+    reason = reason.strip()
+    if not reason:
+        raise ValueError("record-contact requires a non-empty reason")
+    row = find_workspace_candidate(data, candidate_id)
+    row["contact_record"] = {
+        "contacted": contacted,
+        "reason": reason,
+        "selection_snapshot": _selection_snapshot_for_candidate(data, row),
+    }
+
+
 def update_non_activation(
     data: dict[str, Any],
     *,
     reason: str | None = None,
     baseline_note: str | None = None,
     revisit_if: str | None = None,
+    remained_viable_after_contact: bool | None = None,
+    post_contact_note: str | None = None,
 ) -> None:
     ensure_consideration_fields(data)
-    if reason is None and baseline_note is None and revisit_if is None:
+    if (
+        reason is None
+        and baseline_note is None
+        and revisit_if is None
+        and remained_viable_after_contact is None
+        and post_contact_note is None
+    ):
         raise ValueError("set-non-activation requires at least one update")
     option = data["no_framework_option"]
     if reason is not None:
@@ -1087,6 +1199,10 @@ def update_non_activation(
         option["baseline_note"] = baseline_note
     if revisit_if is not None:
         option["what_would_change_this"] = revisit_if
+    if remained_viable_after_contact is not None:
+        option["remained_viable_after_contact"] = remained_viable_after_contact
+    if post_contact_note is not None:
+        option["post_contact_note"] = post_contact_note
 
 
 def review_payload(data: dict[str, Any]) -> dict[str, Any]:
@@ -1099,6 +1215,7 @@ def review_payload(data: dict[str, Any]) -> dict[str, Any]:
             "role": row.get("role"),
             "consideration_axes": dict(axes),
             "non_force_guardrails": dict(row["non_force_guardrails"]),
+            "contact_record": dict(row["contact_record"]),
             "unfilled_guardrails": [
                 key for key in NON_FORCE_GUARDRAIL_FIELDS
                 if not str(row["non_force_guardrails"].get(key, "")).strip()
@@ -1328,6 +1445,7 @@ def audit_map_payload(
                 card["id"] for card in candidate_cards if card["id"]
             ],
             "guardrails": dict(row.get("non_force_guardrails", {})),
+            "contact_record": dict(row.get("contact_record", {})),
             "target_responses": target_responses_for_candidate,
             "target_return_states": return_states_for_candidate,
             "interpretation_boundary": (
@@ -1681,6 +1799,7 @@ def audit_living_lab_payload(
             "target_return_states": return_states_for_candidate,
             "user_dispositions": dispositions_for_candidate,
             "guardrails": dict(row.get("non_force_guardrails", {})),
+            "contact_record": dict(row.get("contact_record", {})),
         })
 
     return {
@@ -1738,6 +1857,183 @@ def audit_living_lab_payload(
             "material and user evidence for interpretation."
         ),
     }
+
+
+def operation_return_audit_payload(
+    workspace: dict[str, Any],
+    round_record: dict[str, Any],
+) -> dict[str, Any]:
+    base = audit_living_lab_payload(workspace, round_record)
+    operation_order: list[str] = []
+    _append_unique(operation_order, base["planned_operations"])
+    _append_unique(operation_order, base["contacted_operations"])
+    _append_unique(operation_order, base["delta_operations"])
+    _append_unique(operation_order, base["artifact_operations"])
+
+    workspace_candidates = {
+        str(row.get("id", "")).strip(): row
+        for row in workspace.get("candidates", [])
+        if str(row.get("id", "")).strip()
+    }
+
+    for candidate in workspace_candidates.values():
+        contact_record = candidate.get("contact_record", {})
+        if not isinstance(contact_record, dict):
+            continue
+        snapshot = contact_record.get("selection_snapshot")
+        if not isinstance(snapshot, dict):
+            continue
+        candidate_reasoning = snapshot.get("candidate_reasoning")
+        if not isinstance(candidate_reasoning, dict):
+            continue
+        snapshot_operations = candidate_reasoning.get("planned_operations", [])
+        if not isinstance(snapshot_operations, list):
+            continue
+        _append_unique(
+            operation_order,
+            [
+                str(operation).strip()
+                for operation in snapshot_operations
+                if str(operation).strip()
+            ],
+        )
+
+    rows: list[dict[str, Any]] = []
+    for operation in operation_order:
+        planned_contexts = []
+        for candidate_audit in base["candidate_audits"]:
+            candidate_id = str(candidate_audit["candidate_id"])
+            candidate = workspace_candidates.get(candidate_id, {})
+            current_planned_operations = list(
+                candidate_audit.get("planned_operations", [])
+            )
+            contact_record = candidate.get("contact_record", {})
+            if not isinstance(contact_record, dict):
+                contact_record = {}
+            snapshot_reasoning: dict[str, Any] = {}
+            snapshot = contact_record.get("selection_snapshot")
+            if isinstance(snapshot, dict):
+                candidate_reasoning = snapshot.get("candidate_reasoning")
+                if isinstance(candidate_reasoning, dict):
+                    snapshot_reasoning = candidate_reasoning
+            snapshot_planned_operations = snapshot_reasoning.get(
+                "planned_operations",
+                [],
+            )
+            if not isinstance(snapshot_planned_operations, list):
+                snapshot_planned_operations = []
+            if (
+                operation not in current_planned_operations
+                and operation not in snapshot_planned_operations
+            ):
+                continue
+            planned_contexts.append({
+                "candidate_id": candidate_id,
+                "role": snapshot_reasoning.get(
+                    "role",
+                    candidate_audit.get("role"),
+                ),
+                "current_role": candidate_audit.get("role"),
+                "contact_snapshot_role": snapshot_reasoning.get("role"),
+                "planned_in_current_workspace": (
+                    operation in current_planned_operations
+                ),
+                "planned_in_contact_snapshot": (
+                    operation in snapshot_planned_operations
+                ),
+                "workspace_contact_record": dict(contact_record),
+            })
+
+        contact_contexts = []
+        for contact in base["linked_contacts"]:
+            if operation not in contact["operations"]:
+                continue
+            contact_contexts.append({
+                "framework": contact.get("framework"),
+                "depth": contact.get("depth"),
+                "use": contact.get("use"),
+            })
+
+        delta_contexts = []
+        for delta in base["linked_deltas"]:
+            if operation not in delta["operation_refs"]:
+                continue
+            delta_contexts.append({
+                "delta_ref": delta.get("delta_ref"),
+                "framework_refs": list(delta.get("framework_refs", [])),
+                "kind": delta.get("kind"),
+                "pre_contact_relation": delta.get("pre_contact_relation"),
+                "target_return": dict(delta.get("target_return", {})),
+                "user_disposition": delta.get("user_disposition"),
+            })
+
+        artifact_contexts = []
+        for trace in base["linked_artifacts"]:
+            if operation not in trace["operation_refs"]:
+                continue
+            artifact_contexts.append({
+                "artifact_ref": trace.get("artifact_ref"),
+                "framework_refs": list(trace.get("framework_refs", [])),
+                "origin": trace.get("origin"),
+                "target_return": dict(trace.get("target_return", {})),
+                "user_disposition": trace.get("user_disposition"),
+            })
+
+        planned_candidate_refs: list[str] = []
+        observed_framework_refs: list[str] = []
+        for row in planned_contexts:
+            _append_unique(planned_candidate_refs, [row["candidate_id"]])
+        for row in contact_contexts:
+            framework = str(row.get("framework", "")).strip()
+            if framework:
+                _append_unique(observed_framework_refs, [framework])
+        for row in delta_contexts:
+            _append_unique(observed_framework_refs, row["framework_refs"])
+        for row in artifact_contexts:
+            _append_unique(observed_framework_refs, row["framework_refs"])
+
+        rows.append({
+            "operation": operation,
+            "planned_candidate_refs": planned_candidate_refs,
+            "observed_framework_refs": observed_framework_refs,
+            "planned_contexts": planned_contexts,
+            "observed_contact_contexts": contact_contexts,
+            "delta_contexts": delta_contexts,
+            "artifact_contexts": artifact_contexts,
+        })
+
+    return {
+        "format": "csw.framework-operation-return-audit/v0",
+        "workspace_ref": base["workspace_ref"],
+        "round_id": base["round_id"],
+        "activation_scope": base["activation_scope"],
+        "target_structure_hypotheses": [
+            dict(row) for row in base["target_structure_hypotheses"]
+        ],
+        "operations": rows,
+        "no_framework_option": dict(base["no_framework_option"]),
+        "interpretation_boundary": (
+            "Operations are grouped by exact string label only. Current workspace planning "
+            "and the frozen contact-time planning snapshot are shown separately so later edits "
+            "do not silently rewrite earlier selection provenance. Planned candidate refs are "
+            "kept separate from framework refs observed in contact/delta/artifact records, "
+            "and framework provenance is retained on every context. Sharing an exact "
+            "operation label across frameworks does not establish semantic equivalence. "
+            "Presence in a target-return state or user disposition does not establish that "
+            "the operation caused, improved, or justified the result. Missing stages are "
+            "provenance gaps to inspect, not failures, and no score, ranking, recommendation, "
+            "or effectiveness claim is computed."
+        ),
+    }
+
+
+def cmd_audit_operations(args: argparse.Namespace) -> None:
+    print_json(
+        operation_return_audit_payload(
+            load_workspace(args.workspace),
+            load_living_lab_round(args.living_lab_round),
+        )
+    )
 
 
 def cmd_list_target_structures(args: argparse.Namespace) -> None:
@@ -1854,13 +2150,32 @@ def cmd_set_guardrail(args: argparse.Namespace) -> None:
     print(args.candidate_id)
 
 
+def cmd_record_contact(args: argparse.Namespace) -> None:
+    data = load_workspace(args.workspace)
+    record_contact_disposition(
+        data,
+        args.candidate_id,
+        contacted=args.contacted,
+        reason=args.reason,
+    )
+    save_workspace(args.workspace, data)
+    print(args.candidate_id)
+
+
 def cmd_set_non_activation(args: argparse.Namespace) -> None:
     data = load_workspace(args.workspace)
+    remained_viable_after_contact = None
+    if args.remained_viable_after_contact:
+        remained_viable_after_contact = True
+    elif args.no_longer_viable_after_contact:
+        remained_viable_after_contact = False
     update_non_activation(
         data,
         reason=args.reason,
         baseline_note=args.baseline_note,
         revisit_if=args.revisit_if,
+        remained_viable_after_contact=remained_viable_after_contact,
+        post_contact_note=args.post_contact_note,
     )
     save_workspace(args.workspace, data)
     print(args.workspace)
@@ -2012,6 +2327,17 @@ def build_parser() -> argparse.ArgumentParser:
     audit_living_lab.add_argument("living_lab_round", type=Path)
     audit_living_lab.set_defaults(func=cmd_audit_living_lab)
 
+    audit_operations = sub.add_parser(
+        "audit-operations",
+        help=(
+            "group planned/contacted/delta/artifact provenance by exact cognitive "
+            "operation label while retaining framework origin and target-return context"
+        ),
+    )
+    audit_operations.add_argument("workspace", type=Path)
+    audit_operations.add_argument("living_lab_round", type=Path)
+    audit_operations.set_defaults(func=cmd_audit_operations)
+
     set_target_structure = sub.add_parser(
         "set-target-structure",
         help=(
@@ -2066,11 +2392,48 @@ def build_parser() -> argparse.ArgumentParser:
     set_guardrail.add_argument("--survive-if")
     set_guardrail.set_defaults(func=cmd_set_guardrail)
 
+    record_contact = sub.add_parser(
+        "record-contact",
+        help=(
+            "record whether a deliberately considered candidate was actually contacted, "
+            "with a snapshot of the selection reasoning at that moment"
+        ),
+    )
+    record_contact.add_argument("workspace", type=Path)
+    record_contact.add_argument("candidate_id")
+    contact_state = record_contact.add_mutually_exclusive_group(required=True)
+    contact_state.add_argument(
+        "--contacted",
+        dest="contacted",
+        action="store_true",
+        help="record that framework contact occurred",
+    )
+    contact_state.add_argument(
+        "--not-contacted",
+        dest="contacted",
+        action="store_false",
+        help="record that the candidate was deliberately left unused",
+    )
+    record_contact.add_argument("--reason", required=True)
+    record_contact.set_defaults(func=cmd_record_contact)
+
     set_non_activation = sub.add_parser("set-non-activation")
     set_non_activation.add_argument("workspace", type=Path)
     set_non_activation.add_argument("--reason")
     set_non_activation.add_argument("--baseline-note")
     set_non_activation.add_argument("--revisit-if")
+    post_contact_viability = set_non_activation.add_mutually_exclusive_group()
+    post_contact_viability.add_argument(
+        "--remained-viable-after-contact",
+        action="store_true",
+        help="record that no-framework remained a viable option after framework contact",
+    )
+    post_contact_viability.add_argument(
+        "--no-longer-viable-after-contact",
+        action="store_true",
+        help="record that no-framework was no longer viable after contact; this is provenance, not a recommendation",
+    )
+    set_non_activation.add_argument("--post-contact-note")
     set_non_activation.set_defaults(func=cmd_set_non_activation)
 
     review = sub.add_parser("review")
@@ -2111,9 +2474,11 @@ def main() -> None:
             "audit-target-structure",
             "audit-map",
             "audit-living-lab",
+            "audit-operations",
             "set-candidate",
             "set-consideration",
             "set-guardrail",
+            "record-contact",
             "set-non-activation",
             "set-cross-framework",
             "record-exit",

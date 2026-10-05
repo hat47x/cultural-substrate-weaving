@@ -1,4 +1,4 @@
-# Cognitive-operation coverage map — 2026-10-01
+# Cognitive-operation coverage map — 2026-10-05
 
 Status: research planning / not an efficacy benchmark
 
@@ -17,24 +17,24 @@ This map tracks structural diversity. It does not rank frameworks or claim that 
 | explanatory pluralism | Aristotle four causes | — | explanatory modes beyond current cause set |
 | rhetorical issue-state / dispute location | Classical stasis theory | — | culturally distinct dispute-location systems |
 | expression → reception | Rasa | Jo-Ha-Kyū (profile-ready) | narrative sequencing that is not reducible to reception or pacing |
-| embodied observation | Taiheki | chakra | lineage-specific embodied practice |
-| coupled periodicity / multi-scale time | Maya calendars | Stems/Branches (profile-ready) | more than two independently varying cycles and other constrained reachability patterns |
+| embodied observation | — | chakra (defer-lineage-specific) | no current adopted Registry entry; add only with lineage-specific source basis and a distinct embodied operation |
+| coupled periodicity / multi-scale time | Tzolk’in | Stems/Branches (profile-ready) | more than two independently varying cycles and other constrained reachability patterns |
 | seasonal phase / boundary | — | Twenty-Four Solar Terms (profile-ready) | other culture-specific phase systems and spatially varying ecological timing |
 | indexed narrative corpus | — | Ifá / Odù (profile-ready / not-runtime) | safe corpus boundary and no simulation of living specialist authority before runtime |
 | experience decomposition | — | Five aggregates (profile-ready) | demonstrate distinctness from generic qualitative coding after de-binding |
-| route / network topology | Marshallese wave navigation | Jingluo | non-maritime route traditions and branching networks without medical claims |
-| whole-part reciprocity / multi-perspective network | — | Huayan | primary-text and lineage separation |
+| route / network topology | Marshallese wave navigation | Jingluo (profile-ready) | non-maritime route traditions and branching networks without medical claims |
 | axis/extents reframing vs differentiated mediation | — | Sefer Yetzirah dimensions; theosophical sefirot (both profile-ready) | test distinctness after de-binding while keeping the two historical structures separate |
 | explicit argument / inference structure | Nyāya inference | — | later debate/fallacy layers without flattening Indian logic |
 | adversarial objection preservation / pointwise reply | — | Scholastic disputed question (profile-ready) | compare against ordinary design review, stasis, and Nyāya; do not import master authority or force premature determination |
 | social role / relation-conditioned conduct | Confucian role / li | — | additional role systems that do not duplicate relation mapping |
-| explicit threshold crossing / incorporation / preparation | Shinto shrine threshold / purification | Rites of Passage | longer liminal/incorporation processes and other culture-specific threshold systems |
-| spatial center-periphery / nested boundary | Tibetan Buddhist mandala | Buddhist mandala umbrella | other lineage-specific spatial systems without pan-Buddhist collapse |
+| explicit threshold crossing / incorporation / preparation | Shinto shrine threshold / purification | Rites of Passage (profile-ready) | longer liminal/incorporation processes and other culture-specific threshold systems |
+| spatial center-periphery / nested boundary | Tibetan Buddhist mandala | Buddhist mandala umbrella (research-only) | other lineage-specific spatial systems without pan-Buddhist collapse |
 | transmission provenance / chain topology | Hadith isnād / matn | — | other transmission traditions with different branch/content relations |
 | oral / performative sequence preservation / alternate-view fidelity | — | Vedic recitation pathas (profile-ready) | compare against a second oral-memory tradition and ordinary diff/checksum practice before runtime |
 | material / positional record encoding | — | Inka khipu record structure (profile-ready) | other non-textual record systems and tests of distinctness from generic data modeling |
 | prescriptive hermeneutics / sentence-unit interpretation | Mīmāṃsā hermeneutics | — | additional culture-specific norm-conflict systems without collapsing into generic legal interpretation |
 | inherited rule context / general-specific blocking / ordered derivation | — | Pāṇini Aṣṭādhyāyī rule architecture (profile-ready) | test distinctness from generic rule-engine review and Mīmāṃsā after de-binding |
+| stable spatial index / variable-content rebinding / ordered reconstruction | — | Greco-Roman method of loci (profile-ready) | compare against ordinary numbered checklist first; then Vedic sequence preservation, khipu positional record, and Marshallese live-route return |
 
 ## Priority rule
 
@@ -46,4 +46,14 @@ A candidate moves toward runtime only after its source basis, lineage/variant bo
 
 ## Current decision
 
-Do not start broad efficacy comparison yet. First make the sourced/profile-ready population materially larger than the adopted core, then revisit whether the framework portfolio is broad enough for the encounter function to appear reliably.
+Do not start broad efficacy comparison yet.
+
+Registry snapshot on 2026-10-05:
+
+- adopted: 19
+- profile-ready: 14
+- research-only: 2
+- defer-lineage-specific: 1
+- total: 36
+
+The profile-ready population is now substantial but still smaller than the adopted core. Continue filling genuinely different operation families and resolving lineage-bounded candidates before broad efficacy comparison. Do not use the counts themselves as a quality score.

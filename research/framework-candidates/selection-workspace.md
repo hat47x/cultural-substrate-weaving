@@ -2,13 +2,14 @@
 
 Status: research/toolkit / non-ranking / non-routing
 
-As the framework corpus grows, selection itself becomes a cognitive task. This helper externalizes five parts of that task without deciding them:
+As the framework corpus grows, selection itself becomes a cognitive task. This helper externalizes six parts of that task without deciding them:
 
 1. state target-side structure hypotheses before framework choice;
 2. compare exact typology mappings and exact operation overlap without ranking;
 3. recall adopted candidates from explicit selection cues written in ordinary Japanese or English;
 4. contrast explicitly chosen near-neighbors by exact operation labels;
-5. create an unfilled worksheet that records why each candidate is being considered and how it must return to the target.
+5. create an unfilled worksheet that records why each candidate is being considered and how it must return to the target;
+6. preserve the factual contact / non-contact decision and its selection snapshot so later target-return audit can explain what was actually tried without rewriting the earlier rationale.
 
 It is not a fit scorer, recommendation engine, or adoption gate.
 
@@ -74,6 +75,18 @@ python "$TOOL" set-non-activation /tmp/selection.json \
   --baseline-note "framework接触前に同じ問いを一度試す" \
   --revisit-if "baselineでは具体的な確認項目が出ないときだけ再検討"
 
+python "$TOOL" record-contact /tmp/selection.json dependent-origination \
+  --contacted \
+  --reason "baselineでは成立条件の空白が残ったため、このoperationだけを試す"
+
+python "$TOOL" record-contact /tmp/selection.json huayan \
+  --not-contacted \
+  --reason "現在の問いはnode再同定より成立条件の確認が先だった"
+
+python "$TOOL" set-non-activation /tmp/selection.json \
+  --remained-viable-after-contact \
+  --post-contact-note "framework接触後もbaselineだけで進める経路を対照として残す"
+
 python "$TOOL" review /tmp/selection.json
 
 python "$TOOL" audit-target-structure /tmp/selection.json "$TYPOLOGY" "$INVENTORY"
@@ -94,6 +107,9 @@ python "$TOOL" audit-map /tmp/selection.json /tmp/board.json
 
 # When a natural-work Living Lab round reused the same selection ref:
 python "$TOOL" audit-living-lab /tmp/selection.json /tmp/round.json
+
+# Re-read the same round by exact cognitive-operation label, preserving framework origin:
+python "$TOOL" audit-operations /tmp/selection.json /tmp/round.json
 ```
 
 `inspect` is the Registry-0 boundary view for one candidate. It assembles the candidate's native primitives, operations, ordinary-language cues, full source references, profile/source-packet/runtime paths, positive/negative target-return fixtures, readiness, adoption hold, and `do_not_assume` boundary without computing fit, rank, or activation. Use it before deliberate activation when the model or analyst needs to recover what is actually documented rather than reconstructing a framework from memory.
@@ -113,6 +129,10 @@ The shortlist preserves inventory order and computes no score. The contrast is e
 `set-guardrail` externalizes three candidate-specific non-force conditions: when framework contact is justified (`contact_if`), what target-side observation should stop or weaken the contact (`stop_if`), and what must still survive after de-binding before material is carried forward (`survive_if`). These are reasoning prompts, not an automatic activation gate. `review` surfaces missing guardrails without scoring them or requiring activation.
 
 Each candidate also has six independent, free-text consideration axes: target connection, structural difference, redundancy/overlap, target-return feasibility, misuse/authority risk, and domain constraint. They are kept separate on purpose; the tool does not collapse them into a score. A distinct `no_framework_option` records why non-activation may be preferable and what would reopen the choice.
+
+`record-contact` records a factual action after deliberation: whether a candidate was actually contacted or deliberately left unused, plus a required free-text reason. At that moment it freezes a small selection snapshot containing the target baseline, recorded target-structure hypotheses, the candidate's role / planned operations / intended job / consideration axes / guardrails, and the pre-contact no-framework rationale. The snapshot is provenance, not evidence that the candidate fit the target. A later edit to the workspace therefore does not silently rewrite why the earlier contact happened.
+
+After contact, `set-non-activation --remained-viable-after-contact` or `--no-longer-viable-after-contact` can record whether the no-framework path still remained available, with an optional `--post-contact-note`. This is also historical reasoning, not a recommendation or automatic stop condition.
 
 `review` only surfaces which consideration fields remain blank. Blank fields are prompts for deliberate thought, not failures, coverage metrics, or requirements to activate a framework. This makes non-activation and unresolved selection visible without turning the workspace into a router.
 
@@ -137,14 +157,18 @@ target-side baseline
   -> write target connection / structural difference / redundancy / return feasibility / misuse risk separately
   -> write the intended cognitive job for each candidate
   -> choose primary / reflecting framework under external delegation
+  -> record contacted / not-contacted candidates and freeze the selection snapshot
   -> run framework operations
+  -> record whether no-framework still remained viable after contact
   -> return generated material to target-side sources/observations
   -> preserve pushback / survival / residuals
   -> de-bind framework language
   -> feed the resulting material back into affinity / iteration
 ```
 
-`audit-living-lab` joins the workspace to one schema 0.2 Living Lab round by the exact stable `selection_ref`. It places planned operations, recorded framework contacts, artifact provenance, target-return states, user dispositions, and the original non-force guardrails in one read-only view. It does not infer that missing provenance is a failure, that a retained artifact was caused by the framework, that a target-return state is correct, or that a guardrail was satisfied. The official Living Lab validator remains responsible for validating the round record itself.
+`audit-living-lab` joins the workspace to one schema 0.2 Living Lab round by the exact stable `selection_ref`. It places planned operations, the workspace's frozen contact/non-contact record, recorded Living Lab framework contacts, artifact provenance, target-return states, user dispositions, the original non-force guardrails, and the no-framework post-contact state in one read-only view. `audit-map` likewise shows each candidate's contact record beside observed cards and return states. The two records are intentionally not collapsed: a workspace may say a candidate was intended to be contacted while a downstream trace is missing, or vice versa, and that discrepancy is provenance to inspect rather than an automatic failure. Neither audit infers that a retained artifact was caused by the framework, that a target-return state is correct, or that a guardrail was satisfied. The official Living Lab validator remains responsible for validating the round record itself.
+
+`audit-operations` provides the complementary operation-centered view. It groups planned operations, observed framework contacts, catalytic deltas, artifacts, target-return records, and user dispositions by **exact operation label**. For planning provenance it keeps the current workspace plan and the plan frozen inside the contact-time selection snapshot distinct. A later change to `planned_operations` or candidate role is therefore visible as a change rather than silently rewriting what had been planned when contact was recorded. Planned candidate refs and actually observed framework refs are kept as separate fields, while each contact/delta/artifact context retains its own origin. This is useful when the product question is not "which framework won?" but "what path did this cognitive operation actually take through contact and target return?" Exact label identity is deliberately weak: if two frameworks both use `boundary-probe`, the audit does not claim that their native operations are semantically identical. Likewise, an operation appearing beside a `target_supported` return state does not establish causation or effectiveness. The view contains provenance only and computes no counts-as-quality, score, rank, or recommendation.
 
 Do not use the helper to convert readiness into fit, prefer a framework because it has more operations/sources, treat operation-name overlap as semantic equivalence, bypass lineage/adoption holds, or turn cross-framework agreement into target evidence.
 
