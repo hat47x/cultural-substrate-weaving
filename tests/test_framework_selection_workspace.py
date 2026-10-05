@@ -1685,6 +1685,76 @@ class FrameworkSelectionWorkspaceTest(unittest.TestCase):
             payload["interpretation_boundary"],
         )
 
+    def test_operation_return_audit_preserves_contact_time_plan_after_workspace_edit(self) -> None:
+        selection = workspace.worksheet_payload(
+            FIXTURE,
+            "Preserve the operation plan that existed when contact was recorded",
+            ["alpha"],
+            "Target baseline",
+            "selection://operation-plan-history",
+        )
+        workspace.update_candidate(
+            selection,
+            "alpha",
+            role="primary",
+            planned_operations=["condition-chain"],
+        )
+        workspace.record_contact_disposition(
+            selection,
+            "alpha",
+            contacted=True,
+            reason="Contact alpha while condition-chain is the explicit planned operation.",
+        )
+
+        workspace.update_candidate(
+            selection,
+            "alpha",
+            role="reflecting",
+            planned_operations=["boundary-probe"],
+        )
+
+        round_record = {
+            "schema_version": "0.2",
+            "round_id": "round-operation-plan-history",
+            "activation_scope": "limited_use",
+            "framework_contacts": [{
+                "framework": "alpha",
+                "depth": "preview",
+                "use": "exploration",
+                "selection_ref": "selection://operation-plan-history",
+                "operations": ["condition-chain"],
+            }],
+            "catalytic_deltas": [],
+            "artifact_traces": [],
+        }
+
+        payload = workspace.operation_return_audit_payload(
+            selection,
+            round_record,
+        )
+        by_operation = {
+            row["operation"]: row
+            for row in payload["operations"]
+        }
+
+        historical = by_operation["condition-chain"]["planned_contexts"][0]
+        self.assertFalse(historical["planned_in_current_workspace"])
+        self.assertTrue(historical["planned_in_contact_snapshot"])
+        self.assertEqual(historical["current_role"], "reflecting")
+        self.assertEqual(historical["contact_snapshot_role"], "primary")
+        self.assertEqual(historical["role"], "primary")
+
+        current = by_operation["boundary-probe"]["planned_contexts"][0]
+        self.assertTrue(current["planned_in_current_workspace"])
+        self.assertFalse(current["planned_in_contact_snapshot"])
+        self.assertEqual(current["current_role"], "reflecting")
+        self.assertEqual(current["contact_snapshot_role"], "primary")
+
+        self.assertIn(
+            "later edits do not silently rewrite earlier selection provenance",
+            payload["interpretation_boundary"],
+        )
+
     def test_operation_return_audit_does_not_present_uncontacted_plan_as_observed(self) -> None:
         selection = workspace.worksheet_payload(
             FIXTURE,
