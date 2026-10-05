@@ -81,4 +81,6 @@ Possible residual distinctness would need to come from the explicit separation b
 
 No runtime promotion.
 
-First compare the loci-derived pass against a plain numbered checklist on realistic SIer review tasks. If the same useful questions appear with lower overhead in the checklist condition, keep method of loci research-only or remove it from the runtime candidate queue.
+The direct same-target comparison against a plain numbered checklist is now recorded in `method-of-loci-vs-numbered-checklist.md`. On the migration-review target, the checklist reproduces the target-relevant de-bound operations and the same useful questions with lower representational overhead.
+
+Method of loci therefore does not currently fill a general CSW runtime gap. Keep it as a sourced research reference and reconsider only for a target where human memory, rehearsal, or spatial mnemonic binding is itself materially relevant.
