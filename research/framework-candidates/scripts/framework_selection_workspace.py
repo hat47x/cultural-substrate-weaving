@@ -1130,9 +1130,9 @@ def _selection_snapshot_for_candidate(
     option = data["no_framework_option"]
     return {
         "target_baseline": data.get("target_baseline", ""),
-        "target_structure_hypotheses": [
-            dict(item) for item in data.get("target_structure_hypotheses", [])
-        ],
+        "target_structure_hypotheses": json.loads(
+            json.dumps(data.get("target_structure_hypotheses", []))
+        ),
         "candidate_reasoning": {
             "role": row.get("role"),
             "planned_operations": list(row.get("planned_operations", [])),
