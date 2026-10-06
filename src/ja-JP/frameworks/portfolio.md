@@ -31,7 +31,6 @@
 | マーシャル諸島の波航海術 | 相対経路、手掛かり系列、モデルと現場の往復 | route cue / training model / situated sensing | [marshallese-wave-navigation.md](marshallese-wave-navigation.md) |
 | 神社参拝の境界・清め | 境界、事前準備、参加状態の変化、退出 | torii / approach / temizu / central act | [shinto-threshold-purification.md](shinto-threshold-purification.md) |
 | チベット仏教マンダラ | 中心・方位・門・多重境界・接近経路 | center / directions / gates / nested enclosure | [tibetan-buddhist-mandala.md](tibetan-buddhist-mandala.md) |
-| ミーマーンサー規定文解釈 | 規定単位、統語的期待、意味適合、文脈補完、規範衝突 | prescription / syntax / context / norm conflict | [mimamsa-hermeneutics.md](mimamsa-hermeneutics.md) |
 | Llullの後期Ars | 系統的な二項・三項交差、未検討組合せの発見 | binary / ternary combination / rotation / question | [llull-ars.md](llull-ars.md) |
 | 体癖 | 身体反応・緊張弛緩の観察軸 | 身体論的類型 | [human-and-taiheki.md](../domains/human-and-taiheki.md) |
 
@@ -58,7 +57,6 @@
 | 地図より局所的な手掛かりで経路を見たい | マーシャル諸島の波航海術 | 相対経路、cue sequence、model / environment return |
 | 明示された境界を越える前後の準備を見たい | 神社参拝の境界・清め | threshold、preparation、central act、return |
 | 中心・方位・門を持つ空間として見たい | チベット仏教マンダラ | center / periphery、directions、gates、nested boundaries |
-| 規則の範囲・例外・文脈補完を分けたい | ミーマーンサー規定文解釈 | prescriptive unit、syntax、semantic fit、norm conflict |
 | 普段組み合わせない区別を体系的に交差したい | Llullの後期Ars | binary / ternary crossing、rotation、unseen combination |
 | 身体反応から観察軸を開きたい | 体癖 | 緊張・弛緩を含む身体論的な観察 |
 
@@ -74,6 +72,6 @@
 
 ## ポートフォリオとしての不足を残す
 
-暦・長周期、whole-part、論証、役割・礼、争点定位、伝承経路、経路探索は一段厚くなった。中心・周縁・方位を持つ空間構造と、明示的な境界通過・事前準備は一段厚くなった。規定文の単位・例外・文脈補完・規範衝突に加え、未検討の組合せを体系的に開く操作も一段厚くなった。一方、索引付き物語コーパスと、系譜差を保った媒介層はまだ薄い。似た体系の数を埋めるのでなく、現在ない認知操作を優先して増やす。
+暦・長周期、whole-part、論証、役割・礼、争点定位、伝承経路、経路探索は一段厚くなった。中心・周縁・方位を持つ空間構造と、明示的な境界通過・事前準備も一段厚く、未検討の組合せを体系的に開く操作も備える。規定文の単位・例外・文脈補完・規範衝突については、Mīmāṃsāを現行基準で再資格した結果、通常のpolicy／requirements reviewで再現できる範囲をdefault runtimeから外した。比較解釈学や明示指定ではresearch candidateを参照できる。一方、索引付き物語コーパスと、系譜差を保った媒介層はまだ薄い。似た体系の数を埋めるのでなく、現在ない認知操作を優先して増やす。
 
 体系数自体は成功指標ではない。ただし異質な構造へ接触できる母集団が狭ければ「出会う」機能そのものが痩せる。効果検証を急ぐ前に、構造的な重複を抑えながら質と量を増やす。

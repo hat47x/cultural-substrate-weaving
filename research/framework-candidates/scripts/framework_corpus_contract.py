@@ -197,29 +197,29 @@ def validate_candidate(root: Path, row: dict[str, Any]) -> list[str]:
         if not _list_of_nonempty_strings(cues) or len(cues) < 2:
             errors.append(f"{item_id}: adopted requires at least two selection_cues")
 
-        requalification = row.get("runtime_requalification")
-        if requalification is not None:
-            if not isinstance(requalification, dict):
-                errors.append(
-                    f"{item_id}: runtime_requalification must be an object when present"
-                )
-            else:
-                for field in RUNTIME_REQUALIFICATION_PATH_FIELDS:
-                    values = requalification.get(field)
-                    if values is None:
-                        continue
-                    if not _list_of_nonempty_strings(values):
+    requalification = row.get("runtime_requalification")
+    if requalification is not None:
+        if not isinstance(requalification, dict):
+            errors.append(
+                f"{item_id}: runtime_requalification must be an object when present"
+            )
+        else:
+            for field in RUNTIME_REQUALIFICATION_PATH_FIELDS:
+                values = requalification.get(field)
+                if values is None:
+                    continue
+                if not _list_of_nonempty_strings(values):
+                    errors.append(
+                        f"{item_id}: runtime_requalification.{field} "
+                        "must be a non-empty string list when present"
+                    )
+                    continue
+                for value in values:
+                    if not (root / value).is_file():
                         errors.append(
-                            f"{item_id}: runtime_requalification.{field} "
-                            "must be a non-empty string list when present"
+                            f"{item_id}: missing runtime_requalification."
+                            f"{field} file: {value}"
                         )
-                        continue
-                    for value in values:
-                        if not (root / value).is_file():
-                            errors.append(
-                                f"{item_id}: missing runtime_requalification."
-                                f"{field} file: {value}"
-                            )
 
     return errors
 

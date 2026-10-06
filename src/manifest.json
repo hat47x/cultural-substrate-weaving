@@ -158,11 +158,6 @@
       "skill_reference": "04q-tibetan-buddhist-mandala.md"
     },
     {
-      "id": "framework-mimamsa-hermeneutics",
-      "source": "frameworks/mimamsa-hermeneutics.md",
-      "skill_reference": "04r-mimamsa-hermeneutics.md"
-    },
-    {
       "id": "framework-llull-ars",
       "source": "frameworks/llull-ars.md",
       "skill_reference": "04s-llull-ars.md"
@@ -225,7 +220,6 @@
       "frameworks/marshallese-wave-navigation.md",
       "frameworks/shinto-threshold-purification.md",
       "frameworks/tibetan-buddhist-mandala.md",
-      "frameworks/mimamsa-hermeneutics.md",
       "frameworks/llull-ars.md"
     ],
     "04-optional-body-framework.md": [

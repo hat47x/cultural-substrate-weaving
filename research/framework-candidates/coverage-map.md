@@ -1,4 +1,4 @@
-# Cognitive-operation coverage map — 2026-10-05
+# Cognitive-operation coverage map — 2026-10-06
 
 Status: research planning / not an efficacy benchmark
 
@@ -33,7 +33,7 @@ This map tracks structural diversity. It does not rank frameworks or claim that 
 | transmission provenance / chain topology | Hadith isnād / matn | — | other transmission traditions with different branch/content relations |
 | oral / performative sequence preservation / alternate-view fidelity | — | Vedic recitation pathas (profile-ready) | compare against a second oral-memory tradition and ordinary diff/checksum practice before runtime |
 | material / positional record encoding | — | Inka khipu record structure (profile-ready) | other non-textual record systems and tests of distinctness from generic data modeling |
-| prescriptive hermeneutics / sentence-unit interpretation | Mīmāṃsā hermeneutics | — | additional culture-specific norm-conflict systems without collapsing into generic legal interpretation |
+| prescriptive hermeneutics / sentence-unit interpretation | — | Mīmāṃsā hermeneutics (profile-ready / no-runtime) | ordinary policy/requirements review reproduces the tested SIer operations; reconsider only for comparative hermeneutics, explicit requests, or a distinct future operation |
 | inherited rule context / general-specific blocking / ordered derivation | — | Pāṇini Aṣṭādhyāyī rule architecture (profile-ready / no-runtime) | ordinary rule-system normalization reproduces the tested SIer operations; not a current runtime gap unless compressed inherited context yields distinct questions |
 | stable spatial index / variable-content rebinding / ordered reconstruction | — | Greco-Roman method of loci (profile-ready / no-runtime) | ordinary numbered checklist reproduces the target-relevant AI-review operation; not a current runtime gap. Reconsider only for a memory-specific target |
 
@@ -55,12 +55,12 @@ Use [runtime-requalification.md](runtime-requalification.md) and the read-only `
 
 Do not start broad efficacy comparison yet.
 
-Registry snapshot on 2026-10-05:
+Registry snapshot on 2026-10-06:
 
-- adopted: 19
-- profile-ready: 15
+- adopted: 18
+- profile-ready: 16
 - research-only: 2
 - defer-lineage-specific: 1
 - total: 37
 
-The profile-ready population is now substantial but still smaller than the adopted core. Continue filling genuinely different operation families and resolving lineage-bounded candidates before broad efficacy comparison. Do not use the counts themselves as a quality score.
+The first adopted-core requalification has now produced an actual runtime demotion: Mīmāṃsā moved to profile-ready after an ordinary policy/requirements baseline reproduced the tested de-bound operations. Continue requalifying the adopted core and filling genuinely different operation families before broad efficacy comparison. Do not use the counts themselves as a quality score.
