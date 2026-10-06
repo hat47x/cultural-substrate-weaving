@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+- Requalified Aristotle's four causes against strong ordinary systems/design review. Stakeholder objectives, constraints/resources, architecture, and behavior/mechanism review reproduced the tested de-bound SIer operations, so the framework was removed from the default runtime corpus while its sourced research profile, examples, comparisons, typology mapping, and explicit-request path remain available.
+
 - Requalified classical stasis theory against strong ordinary incident/issue triage. The tested dispute-location and issue-switch operations were reproducible without the cultural substrate, so stasis theory was removed from the default runtime corpus while its sourced research profile, examples, comparisons, typology mapping, and explicit-request path remain available.
 
 - Requalified dependent origination against strong ordinary root-cause, fault-tree, dependency, and counterfactual analysis. The tested de-bound SIer operations were reproducible without the cultural substrate, so dependent origination was removed from the default runtime corpus while its sourced research profile, examples, comparisons, typology mapping, and explicit-request path remain available.

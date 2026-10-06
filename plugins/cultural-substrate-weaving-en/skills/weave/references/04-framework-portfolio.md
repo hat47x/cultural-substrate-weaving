@@ -19,7 +19,6 @@ This file indexes frameworks that CSW carries internally. Adopted does not mean 
 | Sāṅkhya | layers, production order, observer/process split | 25 tattvas, three guṇas | [sankhya.md](04c-sankhya.md) |
 | Catuṣkoṭi | break binary framing | P / not-P / both / neither | [catuskoti.md](04e-catuskoti.md) |
 | Jain syādvāda | perspectival qualification | sevenfold predication | [jain-sevenfold-predication.md](04f-jain-sevenfold-predication.md) |
-| Aristotle's four causes | pluralize why-explanations | material / formal / efficient / final | [aristotle-four-causes.md](04g-aristotle-four-causes.md) |
 | Rasa theory | expression–reception relation | bhāva / rasa | [rasa.md](04h-rasa.md) |
 | Maya calendar systems | coupled cycles, phase difference, partial/full recurrence, long-span time | Tzolk’in / Haab / Calendar Round / Long Count | [maya-calendars.md](04i-maya-calendars.md) |
 | Huayan | whole–part reciprocity, node perspective, integration with difference | Fazang whole–part analysis and mutual inclusion | [huayan.md](04j-huayan.md) |
@@ -43,7 +42,6 @@ Do not begin with whichever framework name is easiest to recall. Start with the 
 | backtrack from products to production layers | Sāṅkhya | production order and observer/process separation |
 | break a binary proposition frame | Catuṣkoṭi | P, not-P, both, neither |
 | restore standpoint and conditions to a claim | Jain sevenfold predication | conditioned assertion and inexpressible residual |
-| split different kinds of why-explanation | Aristotle's four causes | material, formal, efficient, final |
 | separate represented content from receiver experience | Rasa theory | expression, composition, reception |
 | hold coupled cycles and long time scales together | Maya calendar systems | phase difference, partial/full recurrence, long-span coordinate |
 | read part and whole as mutually defining | Huayan | whole–part reciprocity and node perspective |
@@ -66,4 +64,4 @@ Do not begin with whichever framework name is easiest to recall. Start with the 
 
 Do not try to explain the whole target with one framework. Open a second framework only when the first pass reveals a different missing cognitive operation.
 
-The portfolio is now materially thicker in long-cycle time, whole–part relations, inference, social roles and ritual context, transmission provenance, route-oriented reasoning, center/periphery spatial structure, explicit threshold/preparation sequences, and systematic unseen-combination generation. Mīmāṃsā was demoted after ordinary policy/requirements review reproduced its tested operations. Dependent origination was likewise demoted after ordinary root-cause, fault-tree, dependency, and counterfactual analysis reproduced its tested SIer operations. Classical stasis theory was demoted after ordinary incident/issue triage reproduced its tested dispute-location operations. All three remain available as research candidates for explicit, comparative, or historically situated use. The runtime portfolio remains thin in indexed narrative corpora and lineage-safe mediation layers. Framework count is not a success metric; continue increasing source quality and structural breadth before efficacy testing.
+The portfolio is now materially thicker in long-cycle time, whole–part relations, inference, social roles and ritual context, transmission provenance, route-oriented reasoning, center/periphery spatial structure, explicit threshold/preparation sequences, and systematic unseen-combination generation. Mīmāṃsā was demoted after ordinary policy/requirements review reproduced its tested operations. Dependent origination was likewise demoted after ordinary root-cause, fault-tree, dependency, and counterfactual analysis reproduced its tested SIer operations. Classical stasis theory was demoted after ordinary incident/issue triage reproduced its tested dispute-location operations. Aristotle's four causes was demoted after ordinary systems/design review reproduced its tested explanation-splitting operations. All four remain available as research candidates for explicit, comparative, historical, or educational use. The runtime portfolio remains thin in indexed narrative corpora and lineage-safe mediation layers. Framework count is not a success metric; continue increasing source quality and structural breadth before efficacy testing.

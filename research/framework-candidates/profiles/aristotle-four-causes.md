@@ -1,6 +1,6 @@
 # Aristotle's four causes runtime requalification profile
 
-Status: runtime requalification / adopted candidate
+Status: profile-ready / research-only / no-runtime
 
 ## Identity
 
@@ -149,7 +149,9 @@ No additional target-side question remains that requires the Aristotelian substr
 
 The strongest residue is historical explanatory vocabulary and a compact philosophical reminder that "why" is not one question. That remains useful for explicit Aristotle, history-of-philosophy, comparative explanation, or educational work, but it does not currently justify general default runtime selection complexity for SIer design analysis.
 
-The research evidence therefore supports removing Aristotle's four causes from general default runtime while preserving this sourced research candidate.
+The former runtime dossier has now been removed from the default corpus. The research evidence supports preserving Aristotle's four causes as a sourced research candidate while not exposing it as a general default runtime framework.
+
+Reconsider runtime use only for explicit Aristotle, history-of-philosophy, comparative-explanation, educational work, or a future target where a de-bound operation survives strong ordinary-baseline comparison.
 
 ## Ordinary-baseline references
 

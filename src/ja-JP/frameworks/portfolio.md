@@ -19,7 +19,6 @@
 | サーンキヤ | 層、生成順序、観察者と生成物の分離 | 25原理、三グナ | [sankhya.md](sankhya.md) |
 | 四句分別 | 二値枠の解体、命題空間の拡張 | P / 非P / 両方 / どちらでもない | [catuskoti.md](catuskoti.md) |
 | ジャイナの多面説・七分法 | 視点条件、限定付き叙述 | syatを伴う七種の述定 | [jain-sevenfold-predication.md](jain-sevenfold-predication.md) |
-| アリストテレス四原因 | 「なぜ」の説明軸を分ける | 質料・形相・作用・目的 | [aristotle-four-causes.md](aristotle-four-causes.md) |
 | ラサ論 | 表現と受容経験の生成関係 | bhavaとrasa | [rasa.md](rasa.md) |
 | マヤ暦体系 | 複数周期、位相差、部分／全体再来、長期時間座標 | Tzolk’in / Haab / Calendar Round / Long Count | [maya-calendars.md](maya-calendars.md) |
 | 華厳 | 全体・部分の相互規定、node視点、差異を残す統合 | 法蔵のwhole-part分析・相互包摂 | [huayan.md](huayan.md) |
@@ -43,7 +42,6 @@
 | 表面から生成層へ遡りたい | サーンキヤ | 生成順序、観察者と生成過程の分離 |
 | 二択そのものを疑いたい | 四句分別 | P、非P、両方、どちらでもない |
 | 主張へ視点や条件を戻したい | ジャイナ七分法 | 条件付き述定、言表不能な残差 |
-| 「なぜ」の種類を分けたい | アリストテレス四原因 | 材料、構造、起動、目的 |
 | 表現内容と受け手の経験を分けたい | ラサ論 | 表現、構成、受容の生成関係 |
 | 複数周期と長い時間尺度を同時に見たい | マヤ暦体系 | 位相差、部分再来、全体再来、長期座標 |
 | 部分と全体を相互に規定して見たい | 華厳 | whole-part reciprocity、node視点 |
@@ -68,6 +66,6 @@
 
 ## ポートフォリオとしての不足を残す
 
-暦・長周期、whole-part、論証、役割・礼、伝承経路、経路探索は一段厚くなった。中心・周縁・方位を持つ空間構造と、明示的な境界通過・事前準備も一段厚く、未検討の組合せを体系的に開く操作も備える。Mīmāṃsāは通常のpolicy／requirements review、縁起は通常のroot-cause／fault-tree／dependency analysis、古典stasis theoryは通常のincident／issue triageでtested de-bound operationsを再現できたため、default runtimeから外した。いずれも明示指定・比較研究・歴史的対象ではresearch candidateを参照できる。一方、索引付き物語コーパスと、系譜差を保った媒介層はまだ薄い。似た体系の数を埋めるのでなく、現在ない認知操作を優先して増やす。
+暦・長周期、whole-part、論証、役割・礼、伝承経路、経路探索は一段厚くなった。中心・周縁・方位を持つ空間構造と、明示的な境界通過・事前準備も一段厚く、未検討の組合せを体系的に開く操作も備える。Mīmāṃsāは通常のpolicy／requirements review、縁起は通常のroot-cause／fault-tree／dependency analysis、古典stasis theoryは通常のincident／issue triage、アリストテレス四原因は通常のsystems／design reviewでtested de-bound operationsを再現できたため、default runtimeから外した。いずれも明示指定・比較研究・歴史的対象ではresearch candidateを参照できる。一方、索引付き物語コーパスと、系譜差を保った媒介層はまだ薄い。似た体系の数を埋めるのでなく、現在ない認知操作を優先して増やす。
 
 体系数自体は成功指標ではない。ただし異質な構造へ接触できる母集団が狭ければ「出会う」機能そのものが痩せる。効果検証を急ぐ前に、構造的な重複を抑えながら質と量を増やす。

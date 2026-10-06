@@ -58,12 +58,6 @@
       "en_source_ja_sha256": "279aac7470d514a1ef6d6ea81cdcfed411d2693c30683de8520accfecefe3bef",
       "en_status": "translated"
     },
-    "frameworks/aristotle-four-causes.md": {
-      "ja_sha256": "8072e41b6e555b476ae6136da7b6792e38c5b00307c78e17f1e5a36156be37b5",
-      "en_present": true,
-      "en_source_ja_sha256": "8072e41b6e555b476ae6136da7b6792e38c5b00307c78e17f1e5a36156be37b5",
-      "en_status": "translated"
-    },
     "frameworks/catuskoti.md": {
       "ja_sha256": "996f19f47dc1ba9654f2e4aece502bedbcb5af0e0b4a253678ac4b4518efae0b",
       "en_present": true,
@@ -119,9 +113,9 @@
       "en_status": "translated"
     },
     "frameworks/portfolio.md": {
-      "ja_sha256": "e7e402c8b11a4c03121ee7fa979df3d5e920a538d161839b69eed8747bc8301e",
+      "ja_sha256": "6f3e3c4313b7b9d9f57dd7a79a555a07a07bead2b3a87dcfd51c695a97c209e6",
       "en_present": true,
-      "en_source_ja_sha256": "e7e402c8b11a4c03121ee7fa979df3d5e920a538d161839b69eed8747bc8301e",
+      "en_source_ja_sha256": "6f3e3c4313b7b9d9f57dd7a79a555a07a07bead2b3a87dcfd51c695a97c209e6",
       "en_status": "translated"
     },
     "frameworks/rasa.md": {
