@@ -70,6 +70,10 @@ frameworkの有効性、優劣、適合度、真偽を判定しない。証拠�
 
 現在の`adopted` candidateは18件である。
 
+Mīmāṃsāに続き、dependent origination（縁起）についても現行基準の再資格を実施した。same-targetでFive Whys、NASA型のfault-tree expansion、通常のdependency analysis、counterfactual / intervention questionと比較した結果、現在runtimeが提供するcondition-chain、upstream-condition、cessation-counterfactual、dependency-reframing、intervention-pointの各操作はordinary baselineで再現された。
+
+このため、dependent originationもgeneral SIer runtime retentionを支持しない研究判断まで進んでいる。現時点のこの文書段階では機械的なruntime removalとは分離しており、source basis、研究profile、正例・non-activation例、Paṭṭhāna近接比較は保持する。
+
 Mīmāṃsā demotion前に`profile_path`がRegistryに記録されていたadopted candidateは次の9件だった。
 
 - `llull-ars`
