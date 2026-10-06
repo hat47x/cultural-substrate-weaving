@@ -31,7 +31,6 @@ This file indexes frameworks that CSW carries internally. Adopted does not mean 
 | Marshallese wave navigation | relative route, cue sequence, model/environment return | route cue / training model / situated sensing | [marshallese-wave-navigation.md](marshallese-wave-navigation.md) |
 | Shinto shrine threshold / purification | marked boundary, preparation, participant-state change, return | torii / approach / temizu / central act | [shinto-threshold-purification.md](shinto-threshold-purification.md) |
 | Tibetan Buddhist mandala | center, directions, gates, nested boundaries, approach path | center / directions / gates / nested enclosure | [tibetan-buddhist-mandala.md](tibetan-buddhist-mandala.md) |
-| Mīmāṃsā prescriptive hermeneutics | prescriptive units, syntactic expectancy, semantic fit, contextual supplementation, norm conflict | prescription / syntax / context / norm conflict | [mimamsa-hermeneutics.md](mimamsa-hermeneutics.md) |
 | Llull's late Ars | systematic binary/ternary crossing and unseen-combination probes | binary / ternary combination / rotation / question | [llull-ars.md](llull-ars.md) |
 | Taiheki | embodied observation | bodily typology | [human-and-taiheki.md](../domains/human-and-taiheki.md) |
 
@@ -58,7 +57,6 @@ Do not begin with whichever framework name is easiest to recall. Start with the 
 | reason through local route cues rather than a literal map | Marshallese wave navigation | relative route, cue sequence, model/environment return |
 | inspect preparation around an explicitly marked threshold | Shinto shrine threshold / purification | threshold, preparation, central act, return |
 | read a field through center, directions, gates, and nested boundaries | Tibetan Buddhist mandala | center/periphery, directions, gates, nested enclosure |
-| separate rule scope, exceptions, and contextual supplementation | Mīmāṃsā prescriptive hermeneutics | prescriptive unit, syntax, semantic fit, norm conflict |
 | systematically cross distinctions that are not usually combined | Llull's late Ars | binary/ternary crossing, rotation, unseen combination |
 | open an embodied observation axis | Taiheki | bodily response under tension and release |
 
@@ -72,4 +70,4 @@ Do not begin with whichever framework name is easiest to recall. Start with the 
 
 Do not try to explain the whole target with one framework. Open a second framework only when the first pass reveals a different missing cognitive operation.
 
-The portfolio is now materially thicker in long-cycle time, whole–part relations, inference, social roles and ritual context, dispute location, transmission provenance, and route-oriented reasoning. Center/periphery spatial structure and explicit threshold/preparation sequences are now materially thicker. Prescriptive scope and norm-conflict analysis are materially thicker, and the portfolio now includes systematic unseen-combination generation. It remains thin in indexed narrative corpora and lineage-safe mediation layers. Framework count is not a success metric, but too narrow a population impoverishes the encounter function. Continue increasing source quality and structural breadth before efficacy testing.
+The portfolio is now materially thicker in long-cycle time, whole–part relations, inference, social roles and ritual context, dispute location, transmission provenance, route-oriented reasoning, center/periphery spatial structure, explicit threshold/preparation sequences, and systematic unseen-combination generation. Mīmāṃsā was requalified against a strong ordinary policy/requirements review; the target-relevant prescriptive-scope and norm-conflict operations were reproducible without the cultural substrate, so it is no longer in the default runtime portfolio. It remains available as a research candidate for comparative hermeneutics or explicit requests. The runtime portfolio remains thin in indexed narrative corpora and lineage-safe mediation layers. Framework count is not a success metric; continue increasing source quality and structural breadth before efficacy testing.
