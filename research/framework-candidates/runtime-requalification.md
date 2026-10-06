@@ -86,12 +86,11 @@ Mīmāṃsā demotion前に`profile_path`がRegistryに記録されていたadop
 - `mimamsa-hermeneutics`
 - `marshallese-wave-navigation`
 
-次の10件は、現時点のRegistry metadataでは`profile_path`を持たない。
+最初の監査時点では、次の10件がRegistry metadata上`profile_path`を持たなかった。dependent originationは今回の再資格でprofileを追加したため、現在この未整備群に残るのは9件である。
 
 - `yijing`
 - `wuxing`
 - `tzolkin`
-- `dependent-origination`
 - `rasa`
 - `huayan`
 - `sankhya`
