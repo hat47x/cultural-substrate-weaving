@@ -45,6 +45,12 @@ Next research should fill an empty operation family or add a genuinely different
 
 A candidate moves toward runtime only after its source basis, lineage/variant boundary, structural core, native operations, exploratory outputs, prohibited shortcuts, de-binding route, target-return questions, and non-license statements are explicit enough to use without silently reconstructing the tradition from model memory.
 
+## Adopted-core requalification
+
+New `profile-ready` candidates are now challenged against ordinary/no-framework baselines and nearby frameworks before runtime promotion. The older adopted core must not be exempt from the same principle merely because it predates the current Registry contract.
+
+Use [runtime-requalification.md](runtime-requalification.md) and the read-only `framework_corpus_contract.py --audit-adopted` surface to expose which modern requalification artifacts are recorded for each adopted framework. Missing artifacts are provenance gaps, not automatic demotion or evidence of poor quality.
+
 ## Current decision
 
 Do not start broad efficacy comparison yet.

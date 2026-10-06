@@ -112,6 +112,93 @@ class FrameworkCorpusContractTest(unittest.TestCase):
         data = json.loads(inventory_path.read_text(encoding="utf-8"))
         self.assertEqual(contract.validate_inventory(ROOT, data), [])
 
+    def test_repository_adopted_requalification_audit_is_non_authoritative(self) -> None:
+        inventory_path = ROOT / "research" / "framework-candidates" / "cognitive-operation-inventory.json"
+        data = json.loads(inventory_path.read_text(encoding="utf-8"))
+        payload = contract.adopted_requalification_payload(ROOT, data)
+
+        adopted = [
+            row for row in data["candidates"]
+            if row.get("readiness") == "adopted"
+        ]
+        self.assertEqual(payload["adopted_count"], len(adopted))
+        self.assertEqual(
+            [row["candidate_id"] for row in payload["candidates"]],
+            [row["id"] for row in adopted],
+        )
+        self.assertTrue(
+            any(row["evidence_gaps"] for row in payload["candidates"]),
+            "the current adopted corpus should expose legacy requalification evidence gaps",
+        )
+
+        encoded = json.dumps(payload).casefold()
+        self.assertNotIn('"score"', encoded)
+        self.assertNotIn('"rank"', encoded)
+        self.assertNotIn('"recommendation"', encoded)
+        self.assertNotIn('"demote"', encoded)
+        self.assertIn(
+            "not a quality score",
+            payload["interpretation_boundary"],
+        )
+
+    def test_adopted_requalification_can_record_complete_modern_evidence_without_scoring(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            paths = {
+                "runtime_path": "runtime.md",
+                "profile_path": "profile.md",
+                "worked": "worked.md",
+                "negative": "negative.md",
+                "baseline": "baseline.md",
+                "neighbor": "neighbor.md",
+            }
+            for value in paths.values():
+                target = root / value
+                target.parent.mkdir(parents=True, exist_ok=True)
+                target.write_text("fixture\n", encoding="utf-8")
+
+            candidate = {
+                "id": "qualified-adopted",
+                "readiness": "adopted",
+                "names": ["Qualified adopted"],
+                "structural_primitives": ["structure"],
+                "cognitive_operations": ["distinct-operation"],
+                "useful_for": ["opening a distinct question"],
+                "selection_cues": [
+                    "この違いを見たい",
+                    "inspect this distinction",
+                ],
+                "do_not_assume": ["framework result is target fact"],
+                "sources": [
+                    {"kind": "primary", "title": "A", "url": "https://example.com/a"},
+                    {"kind": "scholarly", "title": "B", "url": "https://example.com/b"},
+                ],
+                "runtime_path": paths["runtime_path"],
+                "profile_path": paths["profile_path"],
+                "worked_example_paths": [paths["worked"]],
+                "negative_example_paths": [paths["negative"]],
+                "runtime_requalification": {
+                    "ordinary_baseline_comparison_paths": [paths["baseline"]],
+                    "near_neighbor_comparison_paths": [paths["neighbor"]],
+                },
+            }
+            data = {
+                "schema": "csw.framework-candidate-inventory/v1",
+                "status": "research-only",
+                "candidates": [candidate],
+            }
+
+            self.assertEqual(contract.validate_candidate(root, candidate), [])
+            payload = contract.adopted_requalification_payload(root, data)
+            self.assertEqual(payload["candidates"][0]["evidence_gaps"], [])
+            self.assertEqual(
+                payload["candidates"][0]["recorded_evidence"][
+                    "ordinary_baseline_comparison_paths"
+                ],
+                ["baseline.md"],
+            )
+            self.assertNotIn('"score"', json.dumps(payload).casefold())
+
     def test_repository_typology_covers_inventory_candidate_ids_exactly(self) -> None:
         inventory = workspace.load_inventory(
             ROOT / "research" / "framework-candidates" / "cognitive-operation-inventory.json"
@@ -222,6 +309,36 @@ class FrameworkSelectionWorkspaceTest(unittest.TestCase):
             payload["authority_boundary"]["do_not_assume"],
         )
         encoded = json.dumps(payload)
+        self.assertNotIn('"score"', encoded)
+        self.assertNotIn('"rank"', encoded)
+        self.assertNotIn('"recommendation"', encoded)
+
+    def test_registry_inspect_exposes_runtime_requalification_as_provenance_only(self) -> None:
+        fixture = json.loads(json.dumps(FIXTURE))
+        fixture["candidates"][0]["runtime_requalification"] = {
+            "ordinary_baseline_comparison_paths": [
+                "research/framework-candidates/comparisons/alpha-vs-baseline.md"
+            ],
+            "near_neighbor_comparison_paths": [
+                "research/framework-candidates/comparisons/alpha-vs-beta.md"
+            ],
+        }
+
+        payload = workspace.registry_entry_payload(fixture, "alpha")
+
+        self.assertEqual(
+            payload["runtime_requalification"]["ordinary_baseline_comparison_paths"],
+            ["research/framework-candidates/comparisons/alpha-vs-baseline.md"],
+        )
+        self.assertEqual(
+            payload["runtime_requalification"]["near_neighbor_comparison_paths"],
+            ["research/framework-candidates/comparisons/alpha-vs-beta.md"],
+        )
+        self.assertIn(
+            "provenance only",
+            payload["runtime_requalification"]["interpretation"],
+        )
+        encoded = json.dumps(payload).casefold()
         self.assertNotIn('"score"', encoded)
         self.assertNotIn('"rank"', encoded)
         self.assertNotIn('"recommendation"', encoded)
