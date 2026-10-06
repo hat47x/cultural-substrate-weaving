@@ -124,12 +124,6 @@
       "en_source_ja_sha256": "988cfc3699e54441573ecfb1989dbadd350fc370d4d22415ed09146daa29c0f5",
       "en_status": "translated"
     },
-    "frameworks/mimamsa-hermeneutics.md": {
-      "ja_sha256": "a983826f95771f0fa2236d96566e5efaee3ba76d1fc82bf7e43646d0e341d9e3",
-      "en_present": true,
-      "en_source_ja_sha256": "a983826f95771f0fa2236d96566e5efaee3ba76d1fc82bf7e43646d0e341d9e3",
-      "en_status": "translated"
-    },
     "frameworks/nyaya-five-member-inference.md": {
       "ja_sha256": "219bb0dd6c9a3e033845dce6a8e0a7a7e848d622449b15dcd01a00ca79b8a2e0",
       "en_present": true,
@@ -137,9 +131,9 @@
       "en_status": "translated"
     },
     "frameworks/portfolio.md": {
-      "ja_sha256": "5e94f35b446bc813901a732571db69efd6fc4d61a3536e34ff3ee6baecec0819",
+      "ja_sha256": "48dcf926a1d0705433411670faf05b676707ae3b6c54e49f6804f227c1a20f41",
       "en_present": true,
-      "en_source_ja_sha256": "5e94f35b446bc813901a732571db69efd6fc4d61a3536e34ff3ee6baecec0819",
+      "en_source_ja_sha256": "48dcf926a1d0705433411670faf05b676707ae3b6c54e49f6804f227c1a20f41",
       "en_status": "translated"
     },
     "frameworks/rasa.md": {
