@@ -25,7 +25,6 @@
 | 華厳 | 全体・部分の相互規定、node視点、差異を残す統合 | 法蔵のwhole-part分析・相互包摂 | [huayan.md](huayan.md) |
 | ニヤーヤ五支推論 | 推論の展開、理由と規則の分離、適用の監査 | 主張・理由・例・適用・結論 | [nyaya-five-member-inference.md](nyaya-five-member-inference.md) |
 | 儒家の役割・礼 | 役割視点、関係上の期待、定型的相互作用 | role / relation / li / practice | [confucian-role-ritual.md](confucian-role-ritual.md) |
-| 古典stasis theory | 争点の分離、争点移動の検出 | 事実・定義・評価・手続き／権限 | [classical-stasis-theory.md](classical-stasis-theory.md) |
 | ハディースisnād / matn | 内容と伝承経路の分離、枝分かれ・本文異同 | matn / isnād / variant / provenance | [hadith-isnad-matn.md](hadith-isnad-matn.md) |
 | マーシャル諸島の波航海術 | 相対経路、手掛かり系列、モデルと現場の往復 | route cue / training model / situated sensing | [marshallese-wave-navigation.md](marshallese-wave-navigation.md) |
 | 神社参拝の境界・清め | 境界、事前準備、参加状態の変化、退出 | torii / approach / temizu / central act | [shinto-threshold-purification.md](shinto-threshold-purification.md) |
@@ -50,7 +49,6 @@
 | 部分と全体を相互に規定して見たい | 華厳 | whole-part reciprocity、node視点 |
 | 理由から結論への橋を検査したい | ニヤーヤ五支論証 | 理由、例証、適用、結論の接続 |
 | 役割名、関係、実際の行動を分けたい | 儒家の役割・礼 | relation-conditioned action、定型的相互作用 |
-| 何を争っているのかを分けたい | 古典stasis theory | 事実、定義、評価、手続き・権限 |
 | 内容と伝達経路を分けたい | ハディースisnād / matn | 本文、伝承鎖、分岐・合流、異同 |
 | 地図より局所的な手掛かりで経路を見たい | マーシャル諸島の波航海術 | 相対経路、cue sequence、model / environment return |
 | 明示された境界を越える前後の準備を見たい | 神社参拝の境界・清め | threshold、preparation、central act、return |
@@ -70,6 +68,6 @@
 
 ## ポートフォリオとしての不足を残す
 
-暦・長周期、whole-part、論証、役割・礼、争点定位、伝承経路、経路探索は一段厚くなった。中心・周縁・方位を持つ空間構造と、明示的な境界通過・事前準備も一段厚く、未検討の組合せを体系的に開く操作も備える。Mīmāṃsāは通常のpolicy／requirements review、縁起は通常のroot-cause／fault-tree／dependency analysisでtested de-bound operationsを再現できたため、default runtimeから外した。いずれも明示指定・比較研究・歴史的対象ではresearch candidateを参照できる。一方、索引付き物語コーパスと、系譜差を保った媒介層はまだ薄い。似た体系の数を埋めるのでなく、現在ない認知操作を優先して増やす。
+暦・長周期、whole-part、論証、役割・礼、伝承経路、経路探索は一段厚くなった。中心・周縁・方位を持つ空間構造と、明示的な境界通過・事前準備も一段厚く、未検討の組合せを体系的に開く操作も備える。Mīmāṃsāは通常のpolicy／requirements review、縁起は通常のroot-cause／fault-tree／dependency analysis、古典stasis theoryは通常のincident／issue triageでtested de-bound operationsを再現できたため、default runtimeから外した。いずれも明示指定・比較研究・歴史的対象ではresearch candidateを参照できる。一方、索引付き物語コーパスと、系譜差を保った媒介層はまだ薄い。似た体系の数を埋めるのでなく、現在ない認知操作を優先して増やす。
 
 体系数自体は成功指標ではない。ただし異質な構造へ接触できる母集団が狭ければ「出会う」機能そのものが痩せる。効果検証を急ぐ前に、構造的な重複を抑えながら質と量を増やす。
