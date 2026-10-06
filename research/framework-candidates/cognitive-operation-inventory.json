@@ -1751,8 +1751,23 @@
         }
       ],
       "profile_path": "research/framework-candidates/profiles/mimamsa-hermeneutics.md",
-      "adoption_hold": "lineage-sensitive",
+      "adoption_hold": "runtime-removal-supported: ordinary policy/requirements review reproduces the tested de-bound operations",
       "runtime_path": "src/ja-JP/frameworks/mimamsa-hermeneutics.md",
+      "worked_example_paths": [
+        "research/framework-candidates/worked-examples/mimamsa-hermeneutics.md",
+        "research/framework-candidates/worked-examples/mimamsa-hermeneutics-2.md"
+      ],
+      "negative_example_paths": [
+        "research/framework-candidates/worked-examples/mimamsa-hermeneutics-negative.md"
+      ],
+      "runtime_requalification": {
+        "ordinary_baseline_comparison_paths": [
+          "research/framework-candidates/comparisons/mimamsa-vs-ordinary-policy-review.md"
+        ],
+        "near_neighbor_comparison_paths": [
+          "research/framework-candidates/comparisons/mimamsa-vs-stasis-vs-nyaya.md"
+        ]
+      },
       "selection_cues": [
         "規則の範囲と例外と文脈補完を分けたい",
         "規定文がどこまで一つの単位か見たい",
