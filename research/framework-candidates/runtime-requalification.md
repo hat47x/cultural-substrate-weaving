@@ -68,11 +68,13 @@ frameworkの有効性、優劣、適合度、真偽を判定しない。証拠�
 
 2026-10-06の最初の監査時点では、Registry上の`adopted` candidateは19件だった。その後、Mīmāṃsāを現行基準で再資格し、ordinary policy / requirements reviewがtested de-bound operationsを再現したため、general runtimeから外して`profile-ready`へ戻した。
 
-現在の`adopted` candidateは17件である。
+現在の`adopted` candidateは16件である。
 
 Mīmāṃsāに続き、dependent origination（縁起）についても現行基準の再資格を実施した。same-targetでFive Whys、NASA型のfault-tree expansion、通常のdependency analysis、counterfactual / intervention questionと比較した結果、現在runtimeが提供していたcondition-chain、upstream-condition、cessation-counterfactual、dependency-reframing、intervention-pointの各操作はordinary baselineで再現された。
 
 このため、dependent originationもgeneral default runtimeから外して`profile-ready`へ戻した。source basis、研究profile、正例・non-activation例、Paṭṭhāna近接比較、selection cueは保持しており、明示的なBuddhist / comparative-philosophy / historically situated useから再検討できる。
+
+続いてclassical stasis theoryを、既存のrelease-incident target上でordinary incident / issue triageと比較した。事実、定義、評価、手続き・権限の分離、争点移動、issueごとの証拠適合は、target-languageのissue tableとreply-to-issue対応で再現でき、追加のtarget-side questionは残らなかった。このためstasisもgeneral default runtimeから外して`profile-ready`へ戻した。classical rhetoric / historical rhetoric / comparative argumentation / explicit requestではresearch candidateとして保持する。
 
 Mīmāṃsā demotion前に`profile_path`がRegistryに記録されていたadopted candidateは次の9件だった。
 
