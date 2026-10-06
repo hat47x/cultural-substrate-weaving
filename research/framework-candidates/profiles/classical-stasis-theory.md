@@ -1,6 +1,6 @@
 # Classical stasis theory candidate profile
 
-Status: adopted / runtime-corpus
+Status: profile-ready / research-only / no-runtime
 
 ## Identity
 
@@ -134,7 +134,7 @@ Before returning a stasis pass to the target:
 
 ## Runtime requalification
 
-The current runtime dossier uses a variant-aware cross-source minimum for separating factual, definitional, evaluative, and procedure/competence questions. The modern requalification review no longer supports keeping that operation in the general default runtime.
+The former runtime dossier has been removed from the default corpus because the modern requalification review no longer supports keeping that operation in the general default runtime. The research profile, source basis, examples, and comparisons remain available.
 
 On the existing release-incident target, a strong ordinary incident / issue-triage baseline reproduced the target-relevant de-bound operations:
 
