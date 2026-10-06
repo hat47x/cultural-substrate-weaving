@@ -137,17 +137,35 @@ See: `research/framework-candidates/comparisons/mimamsa-sentence-meaning-boundar
 4. keep competing segmentations when the text does not force one;
 5. return conclusions to the target document and domain rules rather than the framework.
 
-## Runtime adoption synchronization
+## Runtime requalification
 
-The runtime dossier is `src/ja-JP/frameworks/mimamsa-hermeneutics.md`.
+The current runtime dossier is `src/ja-JP/frameworks/mimamsa-hermeneutics.md`, but the modern requalification review no longer supports general runtime retention.
 
-Adoption follows two structurally different target-return examples and an explicit operation boundary against stasis theory and Nyāya. The runtime core keeps prescriptive-unit detection, purpose unity, syntactic expectancy, semantic fitness, explicit/context-supplied distinction, and norm-conflict decomposition while leaving Vedic authority and sub-school-specific claims outside target-side authority.
+The two target-return examples and the Stasis / Nyāya boundary remain valid descriptions of the candidate. However, the same deployment-policy and runbook targets were re-read with a strong ordinary policy / requirements review. After de-binding, the target-relevant operations were reproduced directly:
+
+- prescriptive-unit segmentation;
+- grammatical attachment / syntactic dependency review;
+- semantic consistency;
+- explicit versus inferred requirement marking;
+- exception scope;
+- actor / action / time / condition / purpose conflict decomposition.
+
+No additional target-side question remained that required the Mīmāṃsā substrate for these SIer uses.
+
+This is not a judgment against the historical tradition. It is a product-boundary judgment: general policy / requirements analysis can supply the tested cognitive operations with less cultural overhead.
+
+The research candidate should therefore be preserved, while general runtime removal is supported. Reconsider runtime use only for comparative hermeneutics, explicit user-requested Mīmāṃsā analysis, historically situated work, or a future target where an operation survives ordinary-baseline comparison.
 
 Worked examples:
 
 - `research/framework-candidates/worked-examples/mimamsa-hermeneutics.md`
 - `research/framework-candidates/worked-examples/mimamsa-hermeneutics-2.md`
 
-Comparison:
+Non-activation:
 
+- `research/framework-candidates/worked-examples/mimamsa-hermeneutics-negative.md`
+
+Comparisons:
+
+- `research/framework-candidates/comparisons/mimamsa-vs-ordinary-policy-review.md`
 - `research/framework-candidates/comparisons/mimamsa-vs-stasis-vs-nyaya.md`
