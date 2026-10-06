@@ -441,6 +441,24 @@ def registry_entry_payload(
             "worked_example_paths": list(row.get("worked_example_paths", [])),
             "negative_example_paths": list(row.get("negative_example_paths", [])),
         },
+        "runtime_requalification": {
+            "ordinary_baseline_comparison_paths": list(
+                row.get("runtime_requalification", {}).get(
+                    "ordinary_baseline_comparison_paths",
+                    [],
+                )
+            ) if isinstance(row.get("runtime_requalification"), dict) else [],
+            "near_neighbor_comparison_paths": list(
+                row.get("runtime_requalification", {}).get(
+                    "near_neighbor_comparison_paths",
+                    [],
+                )
+            ) if isinstance(row.get("runtime_requalification"), dict) else [],
+            "interpretation": (
+                "These paths are recorded requalification provenance only. "
+                "They do not establish fit, truth, effectiveness, or continued runtime adoption."
+            ),
+        },
         "interpretation_boundary": (
             "This view assembles one registry entry for deliberate inspection. "
             "It does not score, rank, activate, or recommend the framework. "
