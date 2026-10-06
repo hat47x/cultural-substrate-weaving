@@ -68,7 +68,7 @@ frameworkの有効性、優劣、適合度、真偽を判定しない。証拠�
 
 2026-10-06の最初の監査時点では、Registry上の`adopted` candidateは19件だった。その後、Mīmāṃsāを現行基準で再資格し、ordinary policy / requirements reviewがtested de-bound operationsを再現したため、general runtimeから外して`profile-ready`へ戻した。
 
-現在の`adopted` candidateは16件である。
+現在の`adopted` candidateは15件である。
 
 Mīmāṃsāに続き、dependent origination（縁起）についても現行基準の再資格を実施した。same-targetでFive Whys、NASA型のfault-tree expansion、通常のdependency analysis、counterfactual / intervention questionと比較した結果、現在runtimeが提供していたcondition-chain、upstream-condition、cessation-counterfactual、dependency-reframing、intervention-pointの各操作はordinary baselineで再現された。
 
@@ -76,9 +76,9 @@ Mīmāṃsāに続き、dependent origination（縁起）についても現行�
 
 続いてclassical stasis theoryを、既存のrelease-incident target上でordinary incident / issue triageと比較した。事実、定義、評価、手続き・権限の分離、争点移動、issueごとの証拠適合は、target-languageのissue tableとreply-to-issue対応で再現でき、追加のtarget-side questionは残らなかった。このためstasisもgeneral default runtimeから外して`profile-ready`へ戻した。classical rhetoric / historical rhetoric / comparative argumentation / explicit requestではresearch candidateとして保持する。
 
-Aristotle's four causesについても現行基準の再資格を実施した。multi-tenant rate-limiterをsame-targetとして、NASA型systems engineeringのstakeholder expectations、constraints、logical decomposition、design solution / behaviorと比較した結果、現在runtimeが提供するwhy-splitting、explanation-gap、causal-category-audit、multi-cause-composition、artifact-design-probeはordinary baselineで再現された。
+Aristotle's four causesについても現行基準の再資格を実施した。multi-tenant rate-limiterをsame-targetとして、NASA型systems engineeringのstakeholder expectations、constraints、logical decomposition、design solution / behaviorと比較した結果、runtimeが提供していたwhy-splitting、explanation-gap、causal-category-audit、multi-cause-composition、artifact-design-probeはordinary baselineで再現された。
 
-このため、Aristotle's four causesもgeneral SIer runtime retentionを支持しない研究判断まで進んでいる。現時点では機械的なruntime removalとは分離し、source basis、研究profile、正例・non-activation例、dependent-origination近接比較を保持する。
+このため、Aristotle's four causesもgeneral default runtimeから外して`profile-ready`へ戻した。source basis、研究profile、正例・non-activation例、dependent-origination近接比較、selection cueは保持しており、explicit Aristotle / history-of-philosophy / comparative-explanation / educational useから再検討できる。
 
 Mīmāṃsā demotion前に`profile_path`がRegistryに記録されていたadopted candidateは次の9件だった。
 
@@ -92,7 +92,7 @@ Mīmāṃsā demotion前に`profile_path`がRegistryに記録されていたadop
 - `mimamsa-hermeneutics`
 - `marshallese-wave-navigation`
 
-最初の監査時点では、次の10件がRegistry metadata上`profile_path`を持たなかった。dependent originationは今回の再資格でprofileを追加したため、現在この未整備群に残るのは9件である。
+最初の監査時点では、次の10件がRegistry metadata上`profile_path`を持たなかった。dependent originationは今回の再資格でprofileを追加したため、現在この未整備群に残るのは8件である。
 
 - `yijing`
 - `wuxing`
@@ -102,7 +102,6 @@ Mīmāṃsā demotion前に`profile_path`がRegistryに記録されていたadop
 - `sankhya`
 - `catuskoti`
 - `jain-sevenfold-predication`
-- `aristotle-four-causes`
 
 最初の監査時点では、19件すべてについてcandidate metadataに`worked_example_paths`、`negative_example_paths`、`runtime_requalification`が記録されていなかった。
 
