@@ -232,6 +232,39 @@ class FrameworkCorpusContractTest(unittest.TestCase):
             [item["candidate_id"] for item in audit["candidates"]],
         )
 
+    def test_aristotle_four_causes_requalification_has_complete_modern_evidence(self) -> None:
+        inventory_path = ROOT / "research" / "framework-candidates" / "cognitive-operation-inventory.json"
+        data = json.loads(inventory_path.read_text(encoding="utf-8"))
+        row = next(
+            item for item in data["candidates"]
+            if item["id"] == "aristotle-four-causes"
+        )
+
+        self.assertEqual(row["readiness"], "adopted")
+        self.assertEqual(contract.validate_candidate(ROOT, row), [])
+
+        audit = contract.adopted_requalification_payload(ROOT, data)
+        audited = next(
+            item for item in audit["candidates"]
+            if item["candidate_id"] == "aristotle-four-causes"
+        )
+        self.assertEqual(audited["evidence_gaps"], [])
+        self.assertIn(
+            "research/framework-candidates/comparisons/aristotle-four-causes-vs-ordinary-systems-design-review.md",
+            audited["recorded_evidence"]["ordinary_baseline_comparison_paths"],
+        )
+        self.assertIn(
+            "research/framework-candidates/comparisons/aristotle-four-causes-vs-dependent-origination.md",
+            audited["recorded_evidence"]["near_neighbor_comparison_paths"],
+        )
+
+        registry = workspace.registry_entry_payload(data, "aristotle-four-causes")
+        self.assertTrue(registry["registry"]["runtime_enabled"])
+        self.assertIn(
+            "runtime-removal-supported",
+            registry["registry"]["adoption_hold"],
+        )
+
     def test_mimamsa_requalification_evidence_survives_runtime_demotion(self) -> None:
         inventory_path = ROOT / "research" / "framework-candidates" / "cognitive-operation-inventory.json"
         data = json.loads(inventory_path.read_text(encoding="utf-8"))
