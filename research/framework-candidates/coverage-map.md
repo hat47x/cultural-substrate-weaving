@@ -16,7 +16,7 @@ This map tracks structural diversity. It does not rank frameworks or claim that 
 | binary-frame disruption | catuṣkoṭi | — | explicit boundary-crossing logic |
 | conditioned perspective | Jain sevenfold predication; Confucian role / li | — | institutional and collective role perspectives beyond dyadic relations |
 | explanatory pluralism | Aristotle four causes | — | explanatory modes beyond current cause set |
-| rhetorical issue-state / dispute location | Classical stasis theory | — | culturally distinct dispute-location systems |
+| rhetorical issue-state / dispute location | — | Classical stasis theory (profile-ready / no-runtime) | ordinary incident/issue triage reproduces the tested SIer operations; reconsider for explicit rhetoric, historical, comparative, or distinct future use |
 | expression → reception | Rasa | Jo-Ha-Kyū (profile-ready) | narrative sequencing that is not reducible to reception or pacing |
 | embodied observation | — | chakra (defer-lineage-specific) | no current adopted Registry entry; add only with lineage-specific source basis and a distinct embodied operation |
 | coupled periodicity / multi-scale time | Tzolk’in | Stems/Branches (profile-ready) | more than two independently varying cycles and other constrained reachability patterns |
@@ -57,10 +57,10 @@ Do not start broad efficacy comparison yet.
 
 Registry snapshot on 2026-10-06:
 
-- adopted: 17
-- profile-ready: 17
+- adopted: 16
+- profile-ready: 18
 - research-only: 2
 - defer-lineage-specific: 1
 - total: 37
 
-Adopted-core requalification has now produced two runtime demotions. Mīmāṃsā moved to profile-ready after ordinary policy/requirements review reproduced its tested SIer operations, and dependent origination moved to profile-ready after ordinary RCA / fault-tree / dependency analysis reproduced its tested de-bound incident-analysis operations. Continue requalifying the adopted core and filling genuinely different operation families before broad efficacy comparison. Do not use the counts themselves as a quality score.
+Adopted-core requalification has now produced three runtime demotions. Mīmāṃsā moved to profile-ready after ordinary policy/requirements review reproduced its tested SIer operations; dependent origination moved to profile-ready after ordinary RCA / fault-tree / dependency analysis reproduced its tested de-bound incident-analysis operations; classical stasis theory moved to profile-ready after ordinary incident/issue triage reproduced its tested dispute-location operations. Continue requalifying the adopted core and filling genuinely different operation families before broad efficacy comparison. Do not use the counts themselves as a quality score.

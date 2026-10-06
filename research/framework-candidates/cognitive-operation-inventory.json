@@ -1585,7 +1585,7 @@
         "constitutio",
         "古典修辞学の争点論"
       ],
-      "readiness": "adopted",
+      "readiness": "profile-ready",
       "structural_primitives": [
         "fact / conjecture issue",
         "definition / naming issue",
@@ -1630,7 +1630,6 @@
         }
       ],
       "profile_path": "research/framework-candidates/profiles/classical-stasis-theory.md",
-      "runtime_path": "src/ja-JP/frameworks/classical-stasis-theory.md",
       "selection_cues": [
         "何を争っているのかを分けたい",
         "事実と定義と評価と手続きを分けたい",
@@ -1654,7 +1653,7 @@
           "research/framework-candidates/worked-examples/scholastic-disputed-question-comparison.md"
         ]
       },
-      "adoption_hold": "runtime-removal-supported: ordinary incident/issue triage reproduces the tested de-bound operations"
+      "adoption_hold": "general-runtime-demoted: ordinary incident/issue triage reproduces the tested de-bound operations"
     },
     {
       "id": "hadith-isnad-matn",
