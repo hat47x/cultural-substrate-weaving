@@ -66,9 +66,11 @@ frameworkの有効性、優劣、適合度、真偽を判定しない。証拠�
 
 ## Current Registry snapshot
 
-2026-10-06時点の`develop/v0.5.0`では、Registry上の`adopted` candidateは19件である。
+2026-10-06の最初の監査時点では、Registry上の`adopted` candidateは19件だった。その後、Mīmāṃsāを現行基準で再資格し、ordinary policy / requirements reviewがtested de-bound operationsを再現したため、general runtimeから外して`profile-ready`へ戻した。
 
-そのうち、`profile_path`がRegistryに記録されているのは次の9件。
+現在の`adopted` candidateは18件である。
+
+Mīmāṃsā demotion前に`profile_path`がRegistryに記録されていたadopted candidateは次の9件だった。
 
 - `llull-ars`
 - `nyaya-five-member-inference`
@@ -93,9 +95,11 @@ frameworkの有効性、優劣、適合度、真偽を判定しない。証拠�
 - `jain-sevenfold-predication`
 - `aristotle-four-causes`
 
-また、19件すべてについて、現時点のcandidate metadataには`worked_example_paths`、`negative_example_paths`、`runtime_requalification`が記録されていない。
+最初の監査時点では、19件すべてについてcandidate metadataに`worked_example_paths`、`negative_example_paths`、`runtime_requalification`が記録されていなかった。
 
-これは「正例・負例・比較研究が存在しない」という意味ではない。既存profileや過去のresearch documentに相当する材料があっても、現在のRegistry entryから構造化された再資格根拠として辿れない、という意味である。
+Mīmāṃsāではこれらを構造化して再資格した結果、監査上のevidence gapを解消したうえでruntime維持を支持しない結論になった。これは監査が「採用を守るための証拠集め」ではなく、採用撤回も含む品質管理であることを示す最初のケースである。
+
+他の候補についてmetadataが空いていることは、「正例・負例・比較研究が存在しない」という意味ではない。既存profileや過去のresearch documentに相当する材料があっても、現在のRegistry entryから構造化された再資格根拠として辿れない、という意味である。
 
 ## Requalification order
 
