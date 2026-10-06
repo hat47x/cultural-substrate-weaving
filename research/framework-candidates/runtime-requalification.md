@@ -76,6 +76,10 @@ Mīmāṃsāに続き、dependent origination（縁起）についても現行�
 
 続いてclassical stasis theoryを、既存のrelease-incident target上でordinary incident / issue triageと比較した。事実、定義、評価、手続き・権限の分離、争点移動、issueごとの証拠適合は、target-languageのissue tableとreply-to-issue対応で再現でき、追加のtarget-side questionは残らなかった。このためstasisもgeneral default runtimeから外して`profile-ready`へ戻した。classical rhetoric / historical rhetoric / comparative argumentation / explicit requestではresearch candidateとして保持する。
 
+Aristotle's four causesについても現行基準の再資格を実施した。multi-tenant rate-limiterをsame-targetとして、NASA型systems engineeringのstakeholder expectations、constraints、logical decomposition、design solution / behaviorと比較した結果、現在runtimeが提供するwhy-splitting、explanation-gap、causal-category-audit、multi-cause-composition、artifact-design-probeはordinary baselineで再現された。
+
+このため、Aristotle's four causesもgeneral SIer runtime retentionを支持しない研究判断まで進んでいる。現時点では機械的なruntime removalとは分離し、source basis、研究profile、正例・non-activation例、dependent-origination近接比較を保持する。
+
 Mīmāṃsā demotion前に`profile_path`がRegistryに記録されていたadopted candidateは次の9件だった。
 
 - `llull-ars`
