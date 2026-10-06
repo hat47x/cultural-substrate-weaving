@@ -313,6 +313,36 @@ class FrameworkSelectionWorkspaceTest(unittest.TestCase):
         self.assertNotIn('"rank"', encoded)
         self.assertNotIn('"recommendation"', encoded)
 
+    def test_registry_inspect_exposes_runtime_requalification_as_provenance_only(self) -> None:
+        fixture = json.loads(json.dumps(FIXTURE))
+        fixture["candidates"][0]["runtime_requalification"] = {
+            "ordinary_baseline_comparison_paths": [
+                "research/framework-candidates/comparisons/alpha-vs-baseline.md"
+            ],
+            "near_neighbor_comparison_paths": [
+                "research/framework-candidates/comparisons/alpha-vs-beta.md"
+            ],
+        }
+
+        payload = workspace.registry_entry_payload(fixture, "alpha")
+
+        self.assertEqual(
+            payload["runtime_requalification"]["ordinary_baseline_comparison_paths"],
+            ["research/framework-candidates/comparisons/alpha-vs-baseline.md"],
+        )
+        self.assertEqual(
+            payload["runtime_requalification"]["near_neighbor_comparison_paths"],
+            ["research/framework-candidates/comparisons/alpha-vs-beta.md"],
+        )
+        self.assertIn(
+            "provenance only",
+            payload["runtime_requalification"]["interpretation"],
+        )
+        encoded = json.dumps(payload).casefold()
+        self.assertNotIn('"score"', encoded)
+        self.assertNotIn('"rank"', encoded)
+        self.assertNotIn('"recommendation"', encoded)
+
     def test_cli_registry_inspect_keeps_adopted_status_separate_from_fit(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
             inventory = Path(tmp) / "inventory.json"
