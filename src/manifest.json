@@ -88,11 +88,6 @@
       "skill_reference": "04c-sankhya.md"
     },
     {
-      "id": "framework-dependent-origination",
-      "source": "frameworks/dependent-origination.md",
-      "skill_reference": "04d-dependent-origination.md"
-    },
-    {
       "id": "framework-catuskoti",
       "source": "frameworks/catuskoti.md",
       "skill_reference": "04e-catuskoti.md"
@@ -206,7 +201,6 @@
       "frameworks/yijing.md",
       "frameworks/wuxing.md",
       "frameworks/sankhya.md",
-      "frameworks/dependent-origination.md",
       "frameworks/catuskoti.md",
       "frameworks/jain-sevenfold-predication.md",
       "frameworks/aristotle-four-causes.md",
