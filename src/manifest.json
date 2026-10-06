@@ -98,11 +98,6 @@
       "skill_reference": "04f-jain-sevenfold-predication.md"
     },
     {
-      "id": "framework-aristotle-four-causes",
-      "source": "frameworks/aristotle-four-causes.md",
-      "skill_reference": "04g-aristotle-four-causes.md"
-    },
-    {
       "id": "framework-rasa",
       "source": "frameworks/rasa.md",
       "skill_reference": "04h-rasa.md"
@@ -198,7 +193,6 @@
       "frameworks/sankhya.md",
       "frameworks/catuskoti.md",
       "frameworks/jain-sevenfold-predication.md",
-      "frameworks/aristotle-four-causes.md",
       "frameworks/rasa.md",
       "frameworks/maya-calendars.md",
       "frameworks/huayan.md",
