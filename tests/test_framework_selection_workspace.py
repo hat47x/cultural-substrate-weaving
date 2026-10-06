@@ -199,6 +199,39 @@ class FrameworkCorpusContractTest(unittest.TestCase):
             )
             self.assertNotIn('"score"', json.dumps(payload).casefold())
 
+    def test_dependent_origination_requalification_has_complete_modern_evidence(self) -> None:
+        inventory_path = ROOT / "research" / "framework-candidates" / "cognitive-operation-inventory.json"
+        data = json.loads(inventory_path.read_text(encoding="utf-8"))
+        row = next(
+            item for item in data["candidates"]
+            if item["id"] == "dependent-origination"
+        )
+
+        self.assertEqual(row["readiness"], "adopted")
+        self.assertEqual(contract.validate_candidate(ROOT, row), [])
+
+        audit = contract.adopted_requalification_payload(ROOT, data)
+        audited = next(
+            item for item in audit["candidates"]
+            if item["candidate_id"] == "dependent-origination"
+        )
+        self.assertEqual(audited["evidence_gaps"], [])
+        self.assertIn(
+            "research/framework-candidates/comparisons/dependent-origination-vs-ordinary-root-cause-analysis.md",
+            audited["recorded_evidence"]["ordinary_baseline_comparison_paths"],
+        )
+        self.assertIn(
+            "research/framework-candidates/comparisons/patthana-vs-dependent-origination-vs-dependency-analysis.md",
+            audited["recorded_evidence"]["near_neighbor_comparison_paths"],
+        )
+
+        registry = workspace.registry_entry_payload(data, "dependent-origination")
+        self.assertTrue(registry["registry"]["runtime_enabled"])
+        self.assertIn(
+            "runtime-removal-supported",
+            registry["registry"]["adoption_hold"],
+        )
+
     def test_mimamsa_requalification_evidence_survives_runtime_demotion(self) -> None:
         inventory_path = ROOT / "research" / "framework-candidates" / "cognitive-operation-inventory.json"
         data = json.loads(inventory_path.read_text(encoding="utf-8"))
