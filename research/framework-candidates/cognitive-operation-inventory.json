@@ -747,8 +747,7 @@
         "アリストテレス四原因",
         "Aristotle's four causes"
       ],
-      "readiness": "adopted",
-      "runtime_path": "src/ja-JP/frameworks/aristotle-four-causes.md",
+      "readiness": "profile-ready",
       "structural_primitives": [
         "material cause",
         "formal cause",
@@ -794,7 +793,7 @@
         "separate material formal efficient and final explanation"
       ],
       "profile_path": "research/framework-candidates/profiles/aristotle-four-causes.md",
-      "adoption_hold": "runtime-removal-supported: ordinary systems/design review reproduces the tested de-bound SIer artifact-analysis operations",
+      "adoption_hold": "general-runtime-demoted: ordinary systems/design review reproduces the tested de-bound SIer artifact-analysis operations",
       "worked_example_paths": [
         "research/framework-candidates/worked-examples/aristotle-four-causes.md"
       ],
