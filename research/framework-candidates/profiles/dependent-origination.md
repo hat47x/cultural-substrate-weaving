@@ -1,6 +1,6 @@
 # Dependent origination runtime requalification profile
 
-Status: runtime requalification / adopted candidate / Buddhist-tradition-sensitive
+Status: profile-ready / research-only / Buddhist-tradition-sensitive / no-runtime
 
 ## Identity
 
@@ -168,7 +168,9 @@ No additional target-side question remains that requires the dependent-originati
 
 The strongest framework-specific residue is philosophical provenance: a historically important paired arising/cessation formulation and an anti-essentialist orientation. That remains valuable for explicit Buddhist, comparative-philosophy, or historically situated work, but it does not currently justify default runtime selection complexity for general SIer analysis.
 
-The research evidence therefore supports removing dependent origination from general default runtime while preserving it as a sourced research candidate. Reconsider only if a future target demonstrates an operation that survives strong ordinary-baseline comparison.
+The former runtime dossier has now been removed from the default corpus. The research evidence supports preserving dependent origination as a sourced research candidate while not exposing it as a general default runtime framework.
+
+Reconsider runtime use only for explicit Buddhist or comparative-philosophy work, historically situated targets, or a future target where a de-bound operation survives strong ordinary-baseline comparison.
 
 ## References for ordinary baseline
 
