@@ -792,7 +792,23 @@
         "split different kinds of why-explanation",
         "inspect missing explanatory modes",
         "separate material formal efficient and final explanation"
-      ]
+      ],
+      "profile_path": "research/framework-candidates/profiles/aristotle-four-causes.md",
+      "adoption_hold": "runtime-removal-supported: ordinary systems/design review reproduces the tested de-bound SIer artifact-analysis operations",
+      "worked_example_paths": [
+        "research/framework-candidates/worked-examples/aristotle-four-causes.md"
+      ],
+      "negative_example_paths": [
+        "research/framework-candidates/worked-examples/aristotle-four-causes-negative.md"
+      ],
+      "runtime_requalification": {
+        "ordinary_baseline_comparison_paths": [
+          "research/framework-candidates/comparisons/aristotle-four-causes-vs-ordinary-systems-design-review.md"
+        ],
+        "near_neighbor_comparison_paths": [
+          "research/framework-candidates/comparisons/aristotle-four-causes-vs-dependent-origination.md"
+        ]
+      }
     },
     {
       "id": "twenty-four-solar-terms",
