@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+- Added adopted-framework runtime requalification auditing and applied it to Mīmāṃsā. A strong ordinary policy/requirements review reproduced the tested de-bound operations, so Mīmāṃsā was removed from the default runtime corpus while its sourced research profile, examples, comparisons, and explicit-request path remain available.
+
 - Corrected orthogonality to prioritize minimal conceptual overlap and mutual dependence, close approximation to mathematical orthogonality or statistical independence, and independently usable elements isolated by intersection. Added Wuxing / five great elements as the intended reference example; aligned selection, transformation, guides, and the limited profile without requiring empirical experiments.
 
 - Rebuilt CSW around purpose-led cultural perspective analysis and discovery, with qualitative problem-set comparison and concrete recommendations from existing material. Clarified essential structure, structural distance, multi-perspective composition, and target return without making empirical experiments a prerequisite.
