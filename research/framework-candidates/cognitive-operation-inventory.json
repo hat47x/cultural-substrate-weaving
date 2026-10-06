@@ -1638,7 +1638,23 @@
         "locate what kind of dispute is active",
         "separate fact definition evaluation and procedure",
         "detect an unacknowledged shift in issue type"
-      ]
+      ],
+      "worked_example_paths": [
+        "research/framework-candidates/worked-examples/classical-stasis-theory.md"
+      ],
+      "negative_example_paths": [
+        "research/framework-candidates/worked-examples/classical-stasis-theory-negative.md"
+      ],
+      "runtime_requalification": {
+        "ordinary_baseline_comparison_paths": [
+          "research/framework-candidates/comparisons/classical-stasis-vs-ordinary-issue-triage.md"
+        ],
+        "near_neighbor_comparison_paths": [
+          "research/framework-candidates/comparisons/mimamsa-vs-stasis-vs-nyaya.md",
+          "research/framework-candidates/worked-examples/scholastic-disputed-question-comparison.md"
+        ]
+      },
+      "adoption_hold": "runtime-removal-supported: ordinary incident/issue triage reproduces the tested de-bound operations"
     },
     {
       "id": "hadith-isnad-matn",
