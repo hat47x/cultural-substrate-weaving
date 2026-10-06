@@ -11,7 +11,7 @@ This map tracks structural diversity. It does not rank frameworks or claim that 
 | systematic combinatorial crossing / unseen combination | Llull Ars | — | higher-order explosion and target-constraint pruning without treating formal coverage as truth |
 | production layers / observer split | Sāṅkhya | theosophical sefirot (profile-ready) | historically bounded differentiated mediation without generic hierarchy collapse |
 | whole–part reciprocity / role-defined identity | Huayan | — | explicit cross-boundary topology and center/periphery geometry |
-| conditional chain / cessation | dependent origination | — | compare chain-oriented upstream/cessation work against typed networks when several relation modes coexist |
+| conditional chain / cessation | — | dependent origination (profile-ready / no-runtime) | ordinary RCA / fault-tree / dependency analysis reproduces the tested SIer operations; not a current runtime gap unless a distinct future operation survives baseline comparison |
 | typed conditional network / multi-condition convergence | — | Theravāda Paṭṭhāna conditional relations (profile-ready) | compare against ordinary typed dependency graphs / fault trees before runtime; do not import the twenty-four-condition taxonomy |
 | binary-frame disruption | catuṣkoṭi | — | explicit boundary-crossing logic |
 | conditioned perspective | Jain sevenfold predication; Confucian role / li | — | institutional and collective role perspectives beyond dyadic relations |
@@ -57,10 +57,10 @@ Do not start broad efficacy comparison yet.
 
 Registry snapshot on 2026-10-06:
 
-- adopted: 18
-- profile-ready: 16
+- adopted: 17
+- profile-ready: 17
 - research-only: 2
 - defer-lineage-specific: 1
 - total: 37
 
-The first adopted-core requalification has now produced an actual runtime demotion: Mīmāṃsā moved to profile-ready after an ordinary policy/requirements baseline reproduced the tested de-bound operations. Continue requalifying the adopted core and filling genuinely different operation families before broad efficacy comparison. Do not use the counts themselves as a quality score.
+Adopted-core requalification has now produced two runtime demotions. Mīmāṃsā moved to profile-ready after ordinary policy/requirements review reproduced its tested SIer operations, and dependent origination moved to profile-ready after ordinary RCA / fault-tree / dependency analysis reproduced its tested de-bound incident-analysis operations. Continue requalifying the adopted core and filling genuinely different operation families before broad efficacy comparison. Do not use the counts themselves as a quality score.
