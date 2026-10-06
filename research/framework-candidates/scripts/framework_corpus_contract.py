@@ -24,6 +24,11 @@ PROFILE_DEBINDING_MARKERS = (
     "## De-binding route",
 )
 
+RUNTIME_REQUALIFICATION_PATH_FIELDS = (
+    "ordinary_baseline_comparison_paths",
+    "near_neighbor_comparison_paths",
+)
+
 
 def _list_of_nonempty_strings(value: Any) -> bool:
     return (
@@ -35,6 +40,95 @@ def _list_of_nonempty_strings(value: Any) -> bool:
 
 def _path_exists(root: Path, value: Any) -> bool:
     return isinstance(value, str) and bool(value.strip()) and (root / value).is_file()
+
+
+def _existing_path_list(root: Path, value: Any) -> tuple[list[str], list[str]]:
+    if not _list_of_nonempty_strings(value):
+        return [], []
+    paths = [str(item) for item in value]
+    missing = [path for path in paths if not (root / path).is_file()]
+    return paths, missing
+
+
+def adopted_requalification_payload(
+    root: Path,
+    data: dict[str, Any],
+) -> dict[str, Any]:
+    rows: list[dict[str, Any]] = []
+    for row in data.get("candidates", []):
+        if not isinstance(row, dict) or row.get("readiness") != ADOPTED:
+            continue
+
+        profile_path = row.get("profile_path")
+        profile_recorded = _path_exists(root, profile_path)
+
+        worked_paths, missing_worked = _existing_path_list(
+            root,
+            row.get("worked_example_paths"),
+        )
+        negative_paths, missing_negative = _existing_path_list(
+            root,
+            row.get("negative_example_paths"),
+        )
+
+        requalification = row.get("runtime_requalification")
+        if not isinstance(requalification, dict):
+            requalification = {}
+
+        baseline_paths, missing_baseline = _existing_path_list(
+            root,
+            requalification.get("ordinary_baseline_comparison_paths"),
+        )
+        near_neighbor_paths, missing_near_neighbor = _existing_path_list(
+            root,
+            requalification.get("near_neighbor_comparison_paths"),
+        )
+
+        evidence_gaps: list[str] = []
+        if not profile_recorded:
+            evidence_gaps.append("profile")
+        if not worked_paths or missing_worked:
+            evidence_gaps.append("positive-target-return-fixture")
+        if not negative_paths or missing_negative:
+            evidence_gaps.append("non-activation-fixture")
+        if not baseline_paths or missing_baseline:
+            evidence_gaps.append("ordinary-or-no-framework-baseline-comparison")
+        if not near_neighbor_paths or missing_near_neighbor:
+            evidence_gaps.append("near-neighbor-comparison")
+
+        rows.append({
+            "candidate_id": row.get("id"),
+            "runtime_path": row.get("runtime_path"),
+            "adoption_hold": row.get("adoption_hold"),
+            "recorded_evidence": {
+                "profile_path": profile_path if profile_recorded else None,
+                "worked_example_paths": worked_paths,
+                "negative_example_paths": negative_paths,
+                "ordinary_baseline_comparison_paths": baseline_paths,
+                "near_neighbor_comparison_paths": near_neighbor_paths,
+            },
+            "missing_files": sorted(set(
+                missing_worked
+                + missing_negative
+                + missing_baseline
+                + missing_near_neighbor
+            )),
+            "evidence_gaps": evidence_gaps,
+        })
+
+    return {
+        "format": "csw.runtime-framework-requalification-audit/v0",
+        "adopted_count": len(rows),
+        "candidates": rows,
+        "interpretation_boundary": (
+            "This is a provenance audit for runtime adoption evidence, not a quality score, "
+            "ranking, fit test, or automatic demotion rule. A missing artifact means that "
+            "the current Registry does not record that part of the modern requalification "
+            "case. It does not establish that the framework is weak, invalid, or should be "
+            "removed. Requalification decisions remain explicit research and product "
+            "judgments."
+        ),
+    }
 
 
 def validate_candidate(root: Path, row: dict[str, Any]) -> list[str]:
@@ -103,6 +197,30 @@ def validate_candidate(root: Path, row: dict[str, Any]) -> list[str]:
         if not _list_of_nonempty_strings(cues) or len(cues) < 2:
             errors.append(f"{item_id}: adopted requires at least two selection_cues")
 
+        requalification = row.get("runtime_requalification")
+        if requalification is not None:
+            if not isinstance(requalification, dict):
+                errors.append(
+                    f"{item_id}: runtime_requalification must be an object when present"
+                )
+            else:
+                for field in RUNTIME_REQUALIFICATION_PATH_FIELDS:
+                    values = requalification.get(field)
+                    if values is None:
+                        continue
+                    if not _list_of_nonempty_strings(values):
+                        errors.append(
+                            f"{item_id}: runtime_requalification.{field} "
+                            "must be a non-empty string list when present"
+                        )
+                        continue
+                    for value in values:
+                        if not (root / value).is_file():
+                            errors.append(
+                                f"{item_id}: missing runtime_requalification."
+                                f"{field} file: {value}"
+                            )
+
     return errors
 
 
@@ -146,6 +264,14 @@ def main() -> None:
         default=Path("."),
         help="repository root used to resolve profile/runtime/example paths",
     )
+    parser.add_argument(
+        "--audit-adopted",
+        action="store_true",
+        help=(
+            "emit a read-only runtime requalification evidence audit for adopted "
+            "frameworks after validating the inventory"
+        ),
+    )
     args = parser.parse_args()
 
     try:
@@ -159,6 +285,14 @@ def main() -> None:
         for error in errors:
             print(f"ERROR: {error}", file=sys.stderr)
         raise SystemExit(1)
+
+    if args.audit_adopted:
+        print(json.dumps(
+            adopted_requalification_payload(args.root, data),
+            ensure_ascii=False,
+            indent=2,
+        ))
+        return
 
     print("framework corpus contract: ok")
 
