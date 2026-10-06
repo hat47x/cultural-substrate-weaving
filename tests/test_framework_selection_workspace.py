@@ -199,6 +199,25 @@ class FrameworkCorpusContractTest(unittest.TestCase):
             )
             self.assertNotIn('"score"', json.dumps(payload).casefold())
 
+    def test_mimamsa_runtime_requalification_evidence_is_complete(self) -> None:
+        inventory_path = ROOT / "research" / "framework-candidates" / "cognitive-operation-inventory.json"
+        data = json.loads(inventory_path.read_text(encoding="utf-8"))
+        payload = contract.adopted_requalification_payload(ROOT, data)
+        row = next(
+            item for item in payload["candidates"]
+            if item["candidate_id"] == "mimamsa-hermeneutics"
+        )
+
+        self.assertEqual(row["evidence_gaps"], [])
+        self.assertIn(
+            "research/framework-candidates/comparisons/mimamsa-vs-ordinary-policy-review.md",
+            row["recorded_evidence"]["ordinary_baseline_comparison_paths"],
+        )
+        self.assertIn(
+            "research/framework-candidates/comparisons/mimamsa-vs-stasis-vs-nyaya.md",
+            row["recorded_evidence"]["near_neighbor_comparison_paths"],
+        )
+
     def test_repository_typology_covers_inventory_candidate_ids_exactly(self) -> None:
         inventory = workspace.load_inventory(
             ROOT / "research" / "framework-candidates" / "cognitive-operation-inventory.json"
