@@ -1699,7 +1699,7 @@
         "Pūrvamīmāṃsā hermeneutics",
         "ミーマーンサー解釈学"
       ],
-      "readiness": "adopted",
+      "readiness": "profile-ready",
       "structural_primitives": [
         "prescriptive unit",
         "sentence / purpose unity",
@@ -1751,8 +1751,7 @@
         }
       ],
       "profile_path": "research/framework-candidates/profiles/mimamsa-hermeneutics.md",
-      "adoption_hold": "runtime-removal-supported: ordinary policy/requirements review reproduces the tested de-bound operations",
-      "runtime_path": "src/ja-JP/frameworks/mimamsa-hermeneutics.md",
+      "adoption_hold": "general-runtime-demoted: ordinary policy/requirements review reproduces the tested de-bound operations",
       "worked_example_paths": [
         "research/framework-candidates/worked-examples/mimamsa-hermeneutics.md",
         "research/framework-candidates/worked-examples/mimamsa-hermeneutics-2.md"
