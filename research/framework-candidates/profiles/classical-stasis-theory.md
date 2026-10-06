@@ -132,8 +132,30 @@ Before returning a stasis pass to the target:
 5. identify what evidence would answer each issue type;
 6. keep historical rhetorical taxonomy as provenance, not target-side authority.
 
-## Runtime adoption synchronization
+## Runtime requalification
 
-The runtime dossier adopts a variant-aware cross-source minimum for separating factual, definitional, evaluative, and procedure/competence questions. The worked example includes both a clarifying case and a case where stasis should be rejected as unhelpful.
+The current runtime dossier uses a variant-aware cross-source minimum for separating factual, definitional, evaluative, and procedure/competence questions. The modern requalification review no longer supports keeping that operation in the general default runtime.
 
-Worked example: `research/framework-candidates/worked-examples/classical-stasis-theory.md`
+On the existing release-incident target, a strong ordinary incident / issue-triage baseline reproduced the target-relevant de-bound operations:
+
+- issue-state separation;
+- fact-before-evaluation;
+- event-to-definition shift detection;
+- evaluation after concession;
+- authority / procedure separation;
+- issue-switch detection;
+- evidence relevance by issue type.
+
+No additional target-side question remained after the historical rhetorical vocabulary was removed.
+
+The profile and source basis should remain available because stasis theory still matters for explicit classical-rhetoric requests, historical or comparative argumentation, and future targets where a distinct operation survives ordinary-baseline comparison.
+
+This is a product-boundary judgment rather than a claim that stasis theory is analytically or historically unimportant.
+
+Worked examples and comparisons:
+
+- `research/framework-candidates/worked-examples/classical-stasis-theory.md`
+- `research/framework-candidates/worked-examples/classical-stasis-theory-negative.md`
+- `research/framework-candidates/comparisons/classical-stasis-vs-ordinary-issue-triage.md`
+- `research/framework-candidates/comparisons/mimamsa-vs-stasis-vs-nyaya.md`
+- `research/framework-candidates/worked-examples/scholastic-disputed-question-comparison.md`
