@@ -188,7 +188,7 @@
         "paṭiccasamuppāda",
         "dependent origination"
       ],
-      "readiness": "adopted",
+      "readiness": "profile-ready",
       "structural_primitives": [
         "conditional arising",
         "causal or conditional sequences",
@@ -225,7 +225,6 @@
           "url": "https://suttacentral.net/sn12.41/en/sujato"
         }
       ],
-      "runtime_path": "src/ja-JP/frameworks/dependent-origination.md",
       "selection_cues": [
         "成立条件と停止条件を見たい",
         "上流の条件をたどりたい",
@@ -235,7 +234,7 @@
         "ask what condition would stop the pattern"
       ],
       "profile_path": "research/framework-candidates/profiles/dependent-origination.md",
-      "adoption_hold": "runtime-removal-supported: ordinary RCA / fault-tree / dependency analysis reproduces tested de-bound operations for general SIer incident analysis",
+      "adoption_hold": "general-runtime-demoted: ordinary RCA / fault-tree / dependency analysis reproduces the tested de-bound operations for general SIer incident analysis",
       "worked_example_paths": [
         "research/framework-candidates/worked-examples/dependent-origination.md"
       ],
