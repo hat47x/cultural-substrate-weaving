@@ -233,7 +233,23 @@
         "inspect arising and cessation conditions",
         "trace upstream conditions",
         "ask what condition would stop the pattern"
-      ]
+      ],
+      "profile_path": "research/framework-candidates/profiles/dependent-origination.md",
+      "adoption_hold": "runtime-removal-supported: ordinary RCA / fault-tree / dependency analysis reproduces tested de-bound operations for general SIer incident analysis",
+      "worked_example_paths": [
+        "research/framework-candidates/worked-examples/dependent-origination.md"
+      ],
+      "negative_example_paths": [
+        "research/framework-candidates/worked-examples/dependent-origination-negative.md"
+      ],
+      "runtime_requalification": {
+        "ordinary_baseline_comparison_paths": [
+          "research/framework-candidates/comparisons/dependent-origination-vs-ordinary-root-cause-analysis.md"
+        ],
+        "near_neighbor_comparison_paths": [
+          "research/framework-candidates/comparisons/patthana-vs-dependent-origination-vs-dependency-analysis.md"
+        ]
+      }
     },
     {
       "id": "rasa",
