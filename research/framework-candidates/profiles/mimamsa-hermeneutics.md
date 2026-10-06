@@ -1,6 +1,6 @@
 # Mīmāṃsā hermeneutics candidate profile
 
-Status: adopted / runtime-corpus / lineage-sensitive
+Status: profile-ready / research-only / lineage-sensitive / no-runtime
 
 ## Identity
 
@@ -139,7 +139,7 @@ See: `research/framework-candidates/comparisons/mimamsa-sentence-meaning-boundar
 
 ## Runtime requalification
 
-The current runtime dossier is `src/ja-JP/frameworks/mimamsa-hermeneutics.md`, but the modern requalification review no longer supports general runtime retention.
+The former runtime dossier has been removed from the default corpus because the modern requalification review no longer supports general runtime retention. The research profile, source basis, examples, and comparisons remain available.
 
 The two target-return examples and the Stasis / Nyāya boundary remain valid descriptions of the candidate. However, the same deployment-policy and runbook targets were re-read with a strong ordinary policy / requirements review. After de-binding, the target-relevant operations were reproduced directly:
 
