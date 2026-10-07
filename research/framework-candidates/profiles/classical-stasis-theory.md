@@ -1,6 +1,6 @@
 # Classical stasis theory candidate profile
 
-Status: profile-ready / research-only / no-runtime
+Status: runtime requalification / adopted candidate / restored-discovery-aware
 
 ## Identity
 
@@ -176,7 +176,7 @@ The reason is not unique formal capability. Ordinary issue triage can represent 
 
 The reason is discovery contribution: on the tested disagreement target, generic ex-ante incident review does not reliably force issue-type discrimination or stasis-switch detection, while stasis contact exposes those jobs directly and the resulting questions survive de-binding.
 
-The operational runtime restoration is intentionally left to a separate mechanical change. Until then this profile remains `profile-ready / no-runtime` even though the research decision supports restoration.
+The operational runtime restoration has now been completed. The framework is again available in the default runtime, with activation limited by the same non-activation boundary and discovery-aware rationale recorded here.
 
 Preserve the non-activation boundary: do not activate stasis merely because a disagreement or incident exists. Activate it when the missing cognitive job is locating what kind of question is actually disputed, determining which evidence can answer it, or detecting an unacknowledged issue switch.
 
