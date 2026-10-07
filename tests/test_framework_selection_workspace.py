@@ -232,6 +232,39 @@ class FrameworkCorpusContractTest(unittest.TestCase):
             [item["candidate_id"] for item in audit["candidates"]],
         )
 
+    def test_wuxing_requalification_has_complete_modern_evidence(self) -> None:
+        inventory_path = ROOT / "research" / "framework-candidates" / "cognitive-operation-inventory.json"
+        data = json.loads(inventory_path.read_text(encoding="utf-8"))
+        row = next(
+            item for item in data["candidates"]
+            if item["id"] == "wuxing"
+        )
+
+        self.assertEqual(row["readiness"], "adopted")
+        self.assertEqual(contract.validate_candidate(ROOT, row), [])
+
+        audit = contract.adopted_requalification_payload(ROOT, data)
+        audited = next(
+            item for item in audit["candidates"]
+            if item["candidate_id"] == "wuxing"
+        )
+        self.assertEqual(audited["evidence_gaps"], [])
+        self.assertIn(
+            "research/framework-candidates/comparisons/wuxing-vs-ordinary-causal-loop-analysis.md",
+            audited["recorded_evidence"]["ordinary_baseline_comparison_paths"],
+        )
+        self.assertIn(
+            "research/framework-candidates/comparisons/wuxing-vs-dependent-origination.md",
+            audited["recorded_evidence"]["near_neighbor_comparison_paths"],
+        )
+
+        registry = workspace.registry_entry_payload(data, "wuxing")
+        self.assertTrue(registry["registry"]["runtime_enabled"])
+        self.assertIn(
+            "runtime-removal-supported",
+            registry["registry"]["adoption_hold"],
+        )
+
     def test_aristotle_four_causes_requalification_evidence_survives_runtime_demotion(self) -> None:
         inventory_path = ROOT / "research" / "framework-candidates" / "cognitive-operation-inventory.json"
         data = json.loads(inventory_path.read_text(encoding="utf-8"))
