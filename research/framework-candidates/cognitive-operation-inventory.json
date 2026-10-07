@@ -72,7 +72,7 @@
         "Wuxing",
         "Five Phases"
       ],
-      "readiness": "adopted",
+      "readiness": "profile-ready",
       "structural_primitives": [
         "five relational phases",
         "generation cycle",
@@ -110,7 +110,6 @@
           "url": "https://iep.utm.edu/wuxing/"
         }
       ],
-      "runtime_path": "src/ja-JP/frameworks/wuxing.md",
       "selection_cues": [
         "支える関係と抑える関係を分けたい",
         "生成と制約の循環を見たい",
@@ -138,7 +137,7 @@
           "research/framework-candidates/comparisons/wuxing-discovery-value.md"
         ]
       },
-      "adoption_hold": "runtime-removal-supported-discovery-aware: capability and ex-ante discovery overlap are both established for the tested SIer autoscaler target"
+      "adoption_hold": "general-runtime-demoted-discovery-aware: capability and ex-ante discovery overlap are both established for the tested SIer autoscaler target"
     },
     {
       "id": "tzolkin",
