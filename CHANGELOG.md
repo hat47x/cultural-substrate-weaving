@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+- Removed Wuxing from the default runtime after completing the discovery-aware requalification. The autoscaler target both admits ordinary feedback/control capability and naturally selects that cognitive job before framework contact; Wuxing remains available as a sourced research candidate with its capability, discovery-value, and near-neighbor evidence preserved.
+
 - Completed the Wuxing discovery-value requalification that was left open by the revised runtime standard. On the same autoscaler-oscillation target, generic incident/reliability analysis naturally selects feedback, delay, damping, stabilization, and over-correction before Wuxing contact, so both capability overlap and discovery overlap are now established; runtime removal is supported under the discovery-aware rule.
 
 - Requalified Huayan under the discovery-aware runtime standard and retained it in the default corpus. Modern DDD/architecture techniques reproduce much of the de-bound capability once selected, but the same-target ex-ante generic architecture baseline does not reliably surface context-defined identity or difference-preserving integration; the Registry now records that discovery contribution explicitly.

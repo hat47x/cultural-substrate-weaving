@@ -113,9 +113,9 @@
       "en_status": "translated"
     },
     "frameworks/portfolio.md": {
-      "ja_sha256": "6f3e3c4313b7b9d9f57dd7a79a555a07a07bead2b3a87dcfd51c695a97c209e6",
+      "ja_sha256": "86926f6fe5bc40f3ad74681dbb36d87dbe4a00320f793debd83cc25181176d4f",
       "en_present": true,
-      "en_source_ja_sha256": "6f3e3c4313b7b9d9f57dd7a79a555a07a07bead2b3a87dcfd51c695a97c209e6",
+      "en_source_ja_sha256": "86926f6fe5bc40f3ad74681dbb36d87dbe4a00320f793debd83cc25181176d4f",
       "en_status": "translated"
     },
     "frameworks/rasa.md": {
@@ -140,12 +140,6 @@
       "ja_sha256": "cb54e7ad5c17178e81bf3c6266b7d4ce84120da138758b88e65c8398eb5d563a",
       "en_present": true,
       "en_source_ja_sha256": "cb54e7ad5c17178e81bf3c6266b7d4ce84120da138758b88e65c8398eb5d563a",
-      "en_status": "translated"
-    },
-    "frameworks/wuxing.md": {
-      "ja_sha256": "cba81110d49980a88d92607f3fbbe25f613074082b75a1ea9d2291cee5695c3c",
-      "en_present": true,
-      "en_source_ja_sha256": "cba81110d49980a88d92607f3fbbe25f613074082b75a1ea9d2291cee5695c3c",
       "en_status": "translated"
     },
     "frameworks/yijing.md": {

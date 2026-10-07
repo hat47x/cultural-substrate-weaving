@@ -97,7 +97,7 @@ runtime retentionは「世界に同等の手法が存在しないこと」を要
 
 2026-10-06の最初の監査時点では、Registry上の`adopted` candidateは19件だった。その後、Mīmāṃsāを現行基準で再資格し、ordinary policy / requirements reviewがtested de-bound operationsを再現したため、general runtimeから外して`profile-ready`へ戻した。
 
-現在の`adopted` candidateは15件である。
+現在の`adopted` candidateは14件である。
 
 Mīmāṃsāに続き、dependent origination（縁起）についても現行基準の再資格を実施した。same-targetでFive Whys、NASA型のfault-tree expansion、通常のdependency analysis、counterfactual / intervention questionと比較した結果、現在runtimeが提供していたcondition-chain、upstream-condition、cessation-counterfactual、dependency-reframing、intervention-pointの各操作はordinary baselineで再現された。
 
@@ -113,7 +113,7 @@ Wuxing（五行）についても、distributed-worker autoscalerのoscillation�
 
 Wuxingについては、その後同じautoscaler targetへdiscovery-value comparisonを追加した。framework名もspecialist method名も与えないgeneric incident baselineから、oscillationという症状を手掛かりにcontroller input/output、repeated reaction、delay、retry、damping、stabilization、over-correctionへ自然に進める。Kubernetes HPAの通常資料もautoscalingをcontrol loopとして扱い、replicaのflapping / thrashingとstabilizationを標準的な運用問題として明示している。
 
-したがってWuxingでは、matched specialist methodによる**capability overlap**だけでなく、targetと通常運用知識から同じfeedback/control jobをframework contact前に選べるという**discovery overlap**も確認できた。Huayanとは逆に、de-binding後にruntime固有のdiscovery contributionが残らない。general SIer runtime removalを、改訂後のdiscovery-aware基準でも支持する。
+したがってWuxingでは、matched specialist methodによる**capability overlap**だけでなく、targetと通常運用知識から同じfeedback/control jobをframework contact前に選べるという**discovery overlap**も確認できた。Huayanとは逆に、de-binding後にruntime固有のdiscovery contributionが残らない。general SIer runtime removalを改訂後のdiscovery-aware基準でも支持し、default runtimeから外して`profile-ready`へ戻した。source basis、研究profile、正例・non-activation例、ordinary capability比較、discovery-value比較、near-neighbor比較、selection cueは保持する。
 
 なお、Mīmāṃsā、dependent origination、classical stasis theory、Aristotle's four causesの4件は、このcapability-overlap / discovery-value分離を導入する前にruntimeから降格した。これらのoperational demotionは直ちに取り消さないが、既存比較が証明しているのは主としてcapability overlapであり、**発見価値がないことまでは確定していない**。4件ともretrospective discovery-value reviewの対象とする。
 

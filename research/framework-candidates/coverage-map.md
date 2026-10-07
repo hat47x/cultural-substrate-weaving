@@ -7,7 +7,7 @@ This map tracks structural diversity. It does not rank frameworks or claim that 
 | Operation family | Adopted core | Sourced / research candidates | Main remaining gap |
 |---|---|---|---|
 | discrete configuration / local change | Yijing | — | high-dimensional state transition without losing positional meaning |
-| dual relational cycle | Wuxing | — | multi-network interaction |
+| dual relational cycle | — | Wuxing (profile-ready / no-runtime) | capability and ex-ante discovery overlap are both established on the autoscaler target; reconsider only for a future target with distinct discovery contribution |
 | systematic combinatorial crossing / unseen combination | Llull Ars | — | higher-order explosion and target-constraint pruning without treating formal coverage as truth |
 | production layers / observer split | Sāṅkhya | theosophical sefirot (profile-ready) | historically bounded differentiated mediation without generic hierarchy collapse |
 | whole–part reciprocity / role-defined identity | Huayan | — | explicit cross-boundary topology and center/periphery geometry |
@@ -57,10 +57,10 @@ Do not start broad efficacy comparison yet.
 
 Registry snapshot on 2026-10-06:
 
-- adopted: 15
-- profile-ready: 19
+- adopted: 14
+- profile-ready: 20
 - research-only: 2
 - defer-lineage-specific: 1
 - total: 37
 
-Adopted-core requalification has now produced four runtime demotions. Mīmāṃsā, dependent origination, classical stasis theory, and Aristotle's four causes each moved to profile-ready after strong ordinary target-side methods reproduced their tested de-bound SIer operations. Continue requalifying the adopted core and filling genuinely different operation families before broad efficacy comparison. Do not use the counts themselves as a quality score.
+Adopted-core requalification has now produced five runtime demotions. Wuxing is the first demotion completed under the discovery-aware standard: both specialist capability overlap and ex-ante discovery overlap were established on the autoscaler target. Mīmāṃsā, dependent origination, classical stasis theory, and Aristotle's four causes remain operationally demoted but require retrospective discovery-value review. Huayan is the first discovery-aware retention case. Continue requalifying the adopted core and filling genuinely different operation families before broad efficacy comparison. Do not use the counts themselves as a quality score.

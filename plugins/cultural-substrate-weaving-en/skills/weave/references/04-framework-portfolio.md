@@ -15,7 +15,6 @@ This file indexes frameworks that CSW carries internally. Adopted does not mean 
 | Framework | Primary contribution | Strong structure | Reference |
 |---|---|---|---|
 | Yijing | re-segmentation, position, change, nesting | two line types, 8 trigrams, 64 hexagrams | [yijing.md](04a-yijing.md) |
-| Wuxing | generation/restraint, cycles, relational roles | five phases, sheng / ke | [wuxing.md](04b-wuxing.md) |
 | Sāṅkhya | layers, production order, observer/process split | 25 tattvas, three guṇas | [sankhya.md](04c-sankhya.md) |
 | Catuṣkoṭi | break binary framing | P / not-P / both / neither | [catuskoti.md](04e-catuskoti.md) |
 | Jain syādvāda | perspectival qualification | sevenfold predication | [jain-sevenfold-predication.md](04f-jain-sevenfold-predication.md) |
@@ -38,7 +37,6 @@ Do not begin with whichever framework name is easiest to recall. Start with the 
 | Missing cognitive view | First candidate | What it especially opens |
 |---|---|---|
 | change one position and inspect the whole configuration | Yijing | position, combination, local mutation and whole state |
-| separate enabling and constraining relations | Wuxing | generation and overcoming as distinct cycles |
 | backtrack from products to production layers | Sāṅkhya | production order and observer/process separation |
 | break a binary proposition frame | Catuṣkoṭi | P, not-P, both, neither |
 | restore standpoint and conditions to a claim | Jain sevenfold predication | conditioned assertion and inexpressible residual |
@@ -56,7 +54,7 @@ Do not begin with whichever framework name is easiest to recall. Start with the 
 
 ### Keep near neighbors distinct
 
-- Yijing, Wuxing, and Maya calendars all address change, but primarily through configuration change, relational cycles, and coupled temporal scales respectively.
+- Yijing and Maya calendars both address change, primarily through configuration change and coupled temporal scales respectively. Wuxing remains available as a research candidate for relational-cycle analysis when explicitly requested.
 - Catuṣkoṭi, Jain predication, Nyāya, stasis theory, and four causes alter reasoning in different places: proposition space, assertion conditions, inferential bridge, dispute state, and explanation type.
 - Huayan and Confucian role/li both foreground relations; Huayan works through whole–part reciprocity while role/li focuses on enacted roles, relations, and patterned conduct.
 - Hadith isnād/matn separates provenance from content and never turns documented transmission into proof of the proposition.
@@ -64,4 +62,4 @@ Do not begin with whichever framework name is easiest to recall. Start with the 
 
 Do not try to explain the whole target with one framework. Open a second framework only when the first pass reveals a different missing cognitive operation.
 
-The portfolio is now materially thicker in long-cycle time, whole–part relations, inference, social roles and ritual context, transmission provenance, route-oriented reasoning, center/periphery spatial structure, explicit threshold/preparation sequences, and systematic unseen-combination generation. Mīmāṃsā was demoted after ordinary policy/requirements review reproduced its tested operations. Dependent origination was likewise demoted after ordinary root-cause, fault-tree, dependency, and counterfactual analysis reproduced its tested SIer operations. Classical stasis theory was demoted after ordinary incident/issue triage reproduced its tested dispute-location operations. Aristotle's four causes was demoted after ordinary systems/design review reproduced its tested explanation-splitting operations. All four remain available as research candidates for explicit, comparative, historical, or educational use. The runtime portfolio remains thin in indexed narrative corpora and lineage-safe mediation layers. Framework count is not a success metric; continue increasing source quality and structural breadth before efficacy testing.
+The portfolio is now materially thicker in long-cycle time, whole–part relations, inference, social roles and ritual context, transmission provenance, route-oriented reasoning, center/periphery spatial structure, explicit threshold/preparation sequences, and systematic unseen-combination generation. Wuxing is now the first framework demoted under the discovery-aware standard: ordinary feedback/control analysis reproduced its tested capability and the autoscaler-oscillation target naturally selected the same cognitive job before framework contact. Huayan is the first framework retained under that same standard because a context-defined identity question survived the ex-ante baseline. Mīmāṃsā, dependent origination, classical stasis theory, and Aristotle's four causes remain operationally demoted but await retrospective discovery-value review. All remain available as research candidates for explicit, comparative, historical, or educational use. The runtime portfolio remains thin in indexed narrative corpora and lineage-safe mediation layers. Framework count is not a success metric; continue increasing source quality and structural breadth before efficacy testing.
