@@ -149,9 +149,11 @@ No additional target-side question remains that requires the Aristotelian substr
 
 The strongest residue is historical explanatory vocabulary and a compact philosophical reminder that "why" is not one question. That remains useful for explicit Aristotle, history-of-philosophy, comparative explanation, or educational work, but it does not currently justify general default runtime selection complexity for SIer design analysis.
 
-The former runtime dossier has now been removed from the default corpus. The research evidence supports preserving Aristotle's four causes as a sourced research candidate while not exposing it as a general default runtime framework.
+The former runtime dossier has now been removed from the default corpus. The comparison above establishes capability overlap with ordinary systems/design review after the relevant explanatory jobs are named.
 
-Reconsider runtime use only for explicit Aristotle, history-of-philosophy, comparative-explanation, educational work, or a future target where a de-bound operation survives strong ordinary-baseline comparison.
+This demotion predates the current distinction between capability overlap and discovery value. The operational removal remains in place, but the evidence does **not yet establish** that an ex-ante generic design review would have selected the same explanatory pluralization before four-causes contact. A retrospective discovery-value comparison is therefore required before treating the demotion rationale as complete.
+
+Reconsider runtime use after that review, as well as for explicit Aristotle, history-of-philosophy, comparative-explanation, educational work, or a future target where a distinct discovery contribution survives target return.
 
 ## Ordinary-baseline references
 
