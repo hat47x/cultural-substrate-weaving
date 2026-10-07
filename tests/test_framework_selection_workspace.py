@@ -265,7 +265,7 @@ class FrameworkCorpusContractTest(unittest.TestCase):
                 payload["interpretation_boundary"],
             )
 
-    def test_dependent_origination_requalification_evidence_survives_runtime_demotion(self) -> None:
+    def test_dependent_origination_requalification_confirms_discovery_aware_demotion(self) -> None:
         inventory_path = ROOT / "research" / "framework-candidates" / "cognitive-operation-inventory.json"
         data = json.loads(inventory_path.read_text(encoding="utf-8"))
         row = next(
@@ -284,12 +284,20 @@ class FrameworkCorpusContractTest(unittest.TestCase):
             registry["runtime_requalification"]["ordinary_baseline_comparison_paths"],
         )
         self.assertIn(
+            "research/framework-candidates/comparisons/dependent-origination-discovery-value.md",
+            registry["runtime_requalification"]["discovery_value_comparison_paths"],
+        )
+        self.assertIn(
             "research/framework-candidates/comparisons/patthana-vs-dependent-origination-vs-dependency-analysis.md",
             registry["runtime_requalification"]["near_neighbor_comparison_paths"],
         )
         self.assertIn(
-            "general-runtime-demoted",
+            "general-runtime-demotion-confirmed-discovery-aware",
             registry["registry"]["adoption_hold"],
+        )
+        self.assertEqual(
+            registry["runtime_requalification"]["discovery_review_state"],
+            "complete-demote-retrospective",
         )
 
         audit = contract.adopted_requalification_payload(ROOT, data)
