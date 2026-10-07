@@ -134,9 +134,9 @@ Before returning a stasis pass to the target:
 
 ## Runtime requalification
 
-The former runtime dossier has been removed from the default corpus because the modern requalification review no longer supports keeping that operation in the general default runtime. The research profile, source basis, examples, and comparisons remain available.
+The former runtime dossier was removed before CSW separated capability overlap from discovery value.
 
-On the existing release-incident target, a strong ordinary incident / issue-triage baseline reproduced the target-relevant de-bound operations:
+On the existing release-incident target, a deliberately constructed ordinary issue-triage baseline can reproduce the target-relevant de-bound operations once the issue-separation job is already known:
 
 - issue-state separation;
 - fact-before-evaluation;
@@ -146,16 +146,45 @@ On the existing release-incident target, a strong ordinary incident / issue-tria
 - issue-switch detection;
 - evidence relevance by issue type.
 
-No additional target-side question remained **once the issue-triage job was already selected** and the historical rhetorical vocabulary was removed.
+That remains valid **capability-overlap** evidence.
 
-This demotion predates the current distinction between capability overlap and discovery value. The operational removal remains in place, but the comparison does not yet establish that a generic ex-ante incident review would have selected fact / definition / evaluation / authority-process separation before stasis contact. A retrospective discovery-value comparison is required before treating the demotion rationale as complete.
+### Discovery-value comparison
 
-The profile and source basis should remain available for that review, for explicit classical-rhetoric requests, historical or comparative argumentation, and future targets where a distinct discovery contribution survives target return.
+See:
+
+- `research/framework-candidates/comparisons/classical-stasis-discovery-value.md`
+
+The retrospective ex-ante comparison starts from ordinary incident/postmortem practice without predefining a fact / definition / evaluation / authority table.
+
+That baseline naturally reconstructs timeline, impact, causes, mitigation, responder decisions, roles, lessons, and corrective actions. It can contain all four disputed statements without necessarily exposing that they answer different **kinds of question**.
+
+Stasis contact adds a distinct discovery move:
+
+- identify the live issue type before treating a reply as a rebuttal;
+- ask what disagreement remains after conceding the fact;
+- ask what remains after fixing the definition;
+- separate evidence relevance by issue type;
+- detect a silent switch from fact to definition, evaluation, or competence/procedure.
+
+After this job is visible, the target-language issue table from the capability comparison becomes an appropriate implementation.
+
+### Retrospective requalification result
+
+The revised evidence supports **runtime restoration**.
+
+The reason is not unique formal capability. Ordinary issue triage can represent the same structure after it has been selected.
+
+The reason is discovery contribution: on the tested disagreement target, generic ex-ante incident review does not reliably force issue-type discrimination or stasis-switch detection, while stasis contact exposes those jobs directly and the resulting questions survive de-binding.
+
+The operational runtime restoration is intentionally left to a separate mechanical change. Until then this profile remains `profile-ready / no-runtime` even though the research decision supports restoration.
+
+Preserve the non-activation boundary: do not activate stasis merely because a disagreement or incident exists. Activate it when the missing cognitive job is locating what kind of question is actually disputed, determining which evidence can answer it, or detecting an unacknowledged issue switch.
 
 Worked examples and comparisons:
 
 - `research/framework-candidates/worked-examples/classical-stasis-theory.md`
 - `research/framework-candidates/worked-examples/classical-stasis-theory-negative.md`
 - `research/framework-candidates/comparisons/classical-stasis-vs-ordinary-issue-triage.md`
+- `research/framework-candidates/comparisons/classical-stasis-discovery-value.md`
 - `research/framework-candidates/comparisons/mimamsa-vs-stasis-vs-nyaya.md`
 - `research/framework-candidates/worked-examples/scholastic-disputed-question-comparison.md`

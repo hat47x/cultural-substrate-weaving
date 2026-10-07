@@ -103,7 +103,11 @@ Mīmāṃsāに続き、dependent origination（縁起）についても現行�
 
 このため、dependent originationもgeneral default runtimeから外して`profile-ready`へ戻した。source basis、研究profile、正例・non-activation例、Paṭṭhāna近接比較、selection cueは保持しており、明示的なBuddhist / comparative-philosophy / historically situated useから再検討できる。
 
-続いてclassical stasis theoryを、既存のrelease-incident target上でordinary incident / issue triageと比較した。事実、定義、評価、手続き・権限の分離、争点移動、issueごとの証拠適合は、target-languageのissue tableとreply-to-issue対応で再現でき、追加のtarget-side questionは残らなかった。このためstasisもgeneral default runtimeから外して`profile-ready`へ戻した。classical rhetoric / historical rhetoric / comparative argumentation / explicit requestではresearch candidateとして保持する。
+続いてclassical stasis theoryを、既存のrelease-incident target上でordinary incident / issue triageと比較した。事実、定義、評価、手続き・権限の分離、争点移動、issueごとの証拠適合は、target-languageのissue tableとreply-to-issue対応で再現できたため、旧基準ではgeneral default runtimeから外して`profile-ready`へ戻した。
+
+しかし改訂後のdiscovery-aware基準で遡及reviewすると、このissue tableは「争点の種類を分ける」という認知jobを既に知った後のmatched specialist baselineだった。framework名もissue taxonomyも与えないgeneric incident / postmortem baselineはtimeline、impact、root cause、mitigation、roles、actionsを自然に扱う一方、fact / definition / evaluation / authorityという異なるanswer typeが同じ会話内で走っていることや、replyがissue typeを切り替えたことを必ずしも前景化しない。
+
+stasis contactは「何を争っているのか」を先に問い、eventを認めても残るdefinition/evaluation、definitionを揃えても残るquality/procedure、そしてissue-specific evidenceとstasis-switchを露出する。この差はde-binding後にもtarget-side questionとして残る。したがってretrospective discovery-value reviewはruntime restorationを支持する。実際のruntime復元は別のmechanical changeへ分離する。
 
 Aristotle's four causesについても現行基準の再資格を実施した。multi-tenant rate-limiterをsame-targetとして、NASA型systems engineeringのstakeholder expectations、constraints、logical decomposition、design solution / behaviorと比較した結果、runtimeが提供していたwhy-splitting、explanation-gap、causal-category-audit、multi-cause-composition、artifact-design-probeはordinary baselineで再現された。
 
@@ -115,7 +119,7 @@ Wuxingについては、その後同じautoscaler targetへdiscovery-value compa
 
 したがってWuxingでは、matched specialist methodによる**capability overlap**だけでなく、targetと通常運用知識から同じfeedback/control jobをframework contact前に選べるという**discovery overlap**も確認できた。Huayanとは逆に、de-binding後にruntime固有のdiscovery contributionが残らない。general SIer runtime removalを改訂後のdiscovery-aware基準でも支持し、default runtimeから外して`profile-ready`へ戻した。source basis、研究profile、正例・non-activation例、ordinary capability比較、discovery-value比較、near-neighbor比較、selection cueは保持する。
 
-なお、Mīmāṃsā、dependent origination、classical stasis theory、Aristotle's four causesの4件は、このcapability-overlap / discovery-value分離を導入する前にruntimeから降格した。これらのoperational demotionは直ちに取り消さないが、既存比較が証明しているのは主としてcapability overlapであり、**発見価値がないことまでは確定していない**。4件ともretrospective discovery-value reviewの対象とする。
+なお、Mīmāṃsā、dependent origination、classical stasis theory、Aristotle's four causesの4件は、このcapability-overlap / discovery-value分離を導入する前にruntimeから降格した。classical stasis theoryは遡及reviewを完了し、discovery contributionが残るためruntime restorationを支持する研究判断へ更新した。残るMīmāṃsā、dependent origination、Aristotle's four causesの3件は、既存比較が主としてcapability overlapを示している段階であり、**発見価値がないことまでは確定していない**。引き続きretrospective discovery-value reviewの対象とする。
 
 Huayan（華厳）は、改訂後のdiscovery-aware基準で再資格した最初のruntime保持例となる。canonical Account統合案をsame-targetとして見ると、bounded-context DDD、context mapping、architecture viewpoints、change-impact analysisを組み合わせたmatched specialist baselineは、Huayanからde-bindしたrole-defined identity、context-role re-identification、perspective-through-node、integration-with-differenceを高い割合で再現できる。
 

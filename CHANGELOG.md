@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+- Revisited classical stasis theory under the discovery-aware standard. The old target-language issue table remains a valid capability-overlap baseline, but generic ex-ante postmortem practice does not reliably surface issue-type mismatch, evidence-by-issue, or silent stasis switches before framework contact; retrospective research now supports restoring stasis to the default runtime, with the mechanical restoration kept as a separate change.
+
 - Removed Wuxing from the default runtime after completing the discovery-aware requalification. The autoscaler target both admits ordinary feedback/control capability and naturally selects that cognitive job before framework contact; Wuxing remains available as a sourced research candidate with its capability, discovery-value, and near-neighbor evidence preserved.
 
 - Completed the Wuxing discovery-value requalification that was left open by the revised runtime standard. On the same autoscaler-oscillation target, generic incident/reliability analysis naturally selects feedback, delay, damping, stabilization, and over-correction before Wuxing contact, so both capability overlap and discovery overlap are now established; runtime removal is supported under the discovery-aware rule.

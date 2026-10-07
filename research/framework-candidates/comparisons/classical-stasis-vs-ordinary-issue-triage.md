@@ -4,7 +4,7 @@ Status: runtime requalification / same-target ordinary-baseline comparison
 
 ## Purpose
 
-Classical stasis theory is already in the CSW runtime corpus. This comparison applies the current Registry standard retroactively:
+Classical stasis theory was previously in the CSW runtime corpus. This comparison records a matched ordinary issue-triage baseline:
 
 > after de-binding, does the framework still add a target-relevant cognitive operation that a strong ordinary incident / issue triage does not already provide?
 
@@ -84,26 +84,26 @@ However, difference from other cultural frameworks is not sufficient for runtime
 
 ## Result
 
-For the tested SIer disagreement target, the ordinary-baseline counter-hypothesis survives.
+For the tested SIer disagreement target, the matched issue-triage baseline reproduces the de-bound stasis **capability**.
 
-The useful output of the stasis pass is an issue taxonomy plus switch detection. A strong incident / requirements / decision-review process can represent those distinctions directly without importing the historical rhetorical framework.
+The useful output of the stasis pass is an issue taxonomy plus switch detection. Once that cognitive job is already selected, a target-language incident / requirements / decision-review table can represent the distinctions directly without carrying historical rhetorical vocabulary.
 
-No additional target-side question remains after the cultural vocabulary is removed.
+This comparison therefore establishes capability overlap. It does **not** establish that a generic incident review would have selected issue-type discrimination or stasis-switch detection before framework contact.
 
 ## Runtime consequence
 
-The current evidence does **not** support keeping classical stasis theory as a general default runtime framework for SIer disagreement analysis.
+Do not use this file alone to justify runtime demotion.
 
-Preserve the profile, source basis, worked examples, and historical boundary because stasis theory remains relevant when:
+The missing ex-ante selection question is evaluated separately in:
 
-- the user explicitly asks for classical rhetoric or stasis analysis;
-- the target is historical rhetoric, legal-rhetorical history, or comparative argumentation;
-- a future target demonstrates a distinct operation not reproduced by ordinary issue triage.
+- `research/framework-candidates/comparisons/classical-stasis-discovery-value.md`
 
-For ordinary incident, design, policy, or review disputes, prefer direct target-language issue triage.
+That retrospective comparison finds that generic postmortem practice can collect the same incident material while leaving fact / definition / evaluation / authority claims mixed as one disagreement. Stasis contact exposes the issue-type mismatch and evidence-boundary job before the target-language issue table is constructed.
+
+Under the revised discovery-aware standard, the combined evidence therefore supports runtime restoration.
 
 ## Product-value consequence
 
-Stasis is a clear example of a culturally grounded framework whose historical structure is useful to understand but whose tested de-bound runtime work can be supplied directly by an ordinary engineering review practice.
+The product value is not that stasis has a representation unavailable to ordinary engineering practice.
 
-Removing it from the default runtime would reduce framework-selection overhead without reducing the tested cognitive coverage.
+It is that a compact framework contact can reveal **which kind of question is actually disputed** and expose silent issue switches before the reviewer has already decided to build an issue-type table. The ordinary table remains the preferred target-side representation after that discovery.

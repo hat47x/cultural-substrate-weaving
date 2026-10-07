@@ -1708,9 +1708,12 @@
           "research/framework-candidates/comparisons/mimamsa-vs-stasis-vs-nyaya.md",
           "research/framework-candidates/worked-examples/scholastic-disputed-question-comparison.md"
         ],
-        "discovery_review_state": "pending-retrospective"
+        "discovery_review_state": "complete-restore",
+        "discovery_value_comparison_paths": [
+          "research/framework-candidates/comparisons/classical-stasis-discovery-value.md"
+        ]
       },
-      "adoption_hold": "general-runtime-demoted: capability-overlap evidence preserved; retrospective discovery-value review pending under the revised requalification standard"
+      "adoption_hold": "runtime-restoration-supported-discovery-aware: issue-type mismatch and stasis-switch detection survive the generic ex-ante incident baseline"
     },
     {
       "id": "hadith-isnad-matn",

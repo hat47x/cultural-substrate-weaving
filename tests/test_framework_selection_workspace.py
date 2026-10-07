@@ -442,7 +442,7 @@ class FrameworkCorpusContractTest(unittest.TestCase):
             [item["candidate_id"] for item in audit["candidates"]],
         )
 
-    def test_classical_stasis_requalification_evidence_survives_runtime_demotion(self) -> None:
+    def test_classical_stasis_retrospective_review_supports_runtime_restoration(self) -> None:
         inventory_path = ROOT / "research" / "framework-candidates" / "cognitive-operation-inventory.json"
         data = json.loads(inventory_path.read_text(encoding="utf-8"))
         row = next(
@@ -450,6 +450,8 @@ class FrameworkCorpusContractTest(unittest.TestCase):
             if item["id"] == "classical-stasis-theory"
         )
 
+        # Research decision is complete, but the mechanical restoration is a
+        # separate change, so this branch remains profile-ready / no-runtime.
         self.assertEqual(row["readiness"], "profile-ready")
         self.assertNotIn("runtime_path", row)
         self.assertEqual(contract.validate_candidate(ROOT, row), [])
@@ -461,12 +463,20 @@ class FrameworkCorpusContractTest(unittest.TestCase):
             registry["runtime_requalification"]["ordinary_baseline_comparison_paths"],
         )
         self.assertIn(
+            "research/framework-candidates/comparisons/classical-stasis-discovery-value.md",
+            registry["runtime_requalification"]["discovery_value_comparison_paths"],
+        )
+        self.assertIn(
             "research/framework-candidates/comparisons/mimamsa-vs-stasis-vs-nyaya.md",
             registry["runtime_requalification"]["near_neighbor_comparison_paths"],
         )
         self.assertIn(
-            "general-runtime-demoted",
+            "runtime-restoration-supported-discovery-aware",
             registry["registry"]["adoption_hold"],
+        )
+        self.assertEqual(
+            registry["runtime_requalification"]["discovery_review_state"],
+            "complete-restore",
         )
 
         audit = contract.adopted_requalification_payload(ROOT, data)
