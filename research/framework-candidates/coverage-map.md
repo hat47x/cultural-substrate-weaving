@@ -30,7 +30,7 @@ This map tracks structural diversity. It does not rank frameworks or claim that 
 | social role / relation-conditioned conduct | Confucian role / li | — | additional role systems that do not duplicate relation mapping |
 | explicit threshold crossing / incorporation / preparation | Shinto shrine threshold / purification | Rites of Passage (profile-ready) | longer liminal/incorporation processes and other culture-specific threshold systems |
 | spatial center-periphery / nested boundary | Tibetan Buddhist mandala | Buddhist mandala umbrella (research-only) | other lineage-specific spatial systems without pan-Buddhist collapse |
-| transmission provenance / chain topology | Hadith isnād / matn | — | other transmission traditions with different branch/content relations |
+| transmission provenance / chain topology | Hadith isnād / matn (demotion-supported; mechanical change pending) | — | key provenance/content and common-origin safeguards are already always-on CSW core; preserve hadith as research provenance and explicit-use candidate |
 | oral / performative sequence preservation / alternate-view fidelity | — | Vedic recitation pathas (profile-ready) | compare against a second oral-memory tradition and ordinary diff/checksum practice before runtime |
 | material / positional record encoding | — | Inka khipu record structure (profile-ready) | other non-textual record systems and tests of distinctness from generic data modeling |
 | prescriptive hermeneutics / sentence-unit interpretation | — | Mīmāṃsā hermeneutics (profile-ready / no-runtime) | retrospective discovery-aware review confirms demotion: ordinary requirements practice both reproduces the capability and naturally selects segmentation / scope / explicit-inferred / conflict work ex ante |
