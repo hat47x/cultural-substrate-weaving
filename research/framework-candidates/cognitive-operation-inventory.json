@@ -1848,7 +1848,7 @@
         }
       ],
       "profile_path": "research/framework-candidates/profiles/mimamsa-hermeneutics.md",
-      "adoption_hold": "general-runtime-demoted: capability-overlap evidence preserved; retrospective discovery-value review pending under the revised requalification standard",
+      "adoption_hold": "general-runtime-demotion-confirmed-discovery-aware: ordinary policy/requirements practice naturally selects segmentation, scope, explicit/inferred, and conflict-review jobs on the tested SIer texts",
       "worked_example_paths": [
         "research/framework-candidates/worked-examples/mimamsa-hermeneutics.md",
         "research/framework-candidates/worked-examples/mimamsa-hermeneutics-2.md"
@@ -1863,7 +1863,10 @@
         "near_neighbor_comparison_paths": [
           "research/framework-candidates/comparisons/mimamsa-vs-stasis-vs-nyaya.md"
         ],
-        "discovery_review_state": "pending-retrospective"
+        "discovery_review_state": "complete-demote-retrospective",
+        "discovery_value_comparison_paths": [
+          "research/framework-candidates/comparisons/mimamsa-discovery-value.md"
+        ]
       },
       "selection_cues": [
         "規則の範囲と例外と文脈補完を分けたい",
