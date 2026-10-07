@@ -133,9 +133,12 @@
         "near_neighbor_comparison_paths": [
           "research/framework-candidates/comparisons/wuxing-vs-dependent-origination.md"
         ],
-        "discovery_review_state": "required-before-demotion"
+        "discovery_review_state": "complete-demote",
+        "discovery_value_comparison_paths": [
+          "research/framework-candidates/comparisons/wuxing-discovery-value.md"
+        ]
       },
-      "adoption_hold": "runtime-removal-on-hold: capability overlap established; discovery-value comparison required before any demotion"
+      "adoption_hold": "runtime-removal-supported-discovery-aware: capability and ex-ante discovery overlap are both established for the tested SIer autoscaler target"
     },
     {
       "id": "tzolkin",
