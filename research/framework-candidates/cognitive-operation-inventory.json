@@ -1779,7 +1779,7 @@
       ],
       "profile_path": "research/framework-candidates/profiles/hadith-isnad-matn.md",
       "runtime_path": "src/ja-JP/frameworks/hadith-isnad-matn.md",
-      "adoption_hold": "religious-tradition-sensitive",
+      "adoption_hold": "runtime-removal-supported-discovery-aware: provenance/content separation, common-origin checking, variant lineage, and provenance-not-truth are already selected by CSW core before framework contact",
       "selection_cues": [
         "内容と伝達経路を分けたい",
         "複数の伝達経路の分岐と合流を見たい",
@@ -1787,7 +1787,25 @@
         "separate content from transmission path",
         "compare branching and convergence of transmission",
         "keep provenance strength separate from proposition truth"
-      ]
+      ],
+      "worked_example_paths": [
+        "research/framework-candidates/worked-examples/hadith-isnad-matn.md"
+      ],
+      "negative_example_paths": [
+        "research/framework-candidates/worked-examples/hadith-isnad-matn-negative.md"
+      ],
+      "runtime_requalification": {
+        "ordinary_baseline_comparison_paths": [
+          "research/framework-candidates/comparisons/hadith-isnad-matn-vs-ordinary-provenance-and-csw-core.md"
+        ],
+        "discovery_value_comparison_paths": [
+          "research/framework-candidates/comparisons/hadith-isnad-matn-discovery-value.md"
+        ],
+        "near_neighbor_comparison_paths": [
+          "research/framework-candidates/comparisons/hadith-isnad-matn-vs-vedic-recitation-pathas.md"
+        ],
+        "discovery_review_state": "complete-demote"
+      }
     },
     {
       "id": "mimamsa-hermeneutics",
