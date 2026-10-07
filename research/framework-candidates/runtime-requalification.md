@@ -123,7 +123,18 @@ Wuxingについては、その後同じautoscaler targetへdiscovery-value compa
 
 したがってWuxingでは、matched specialist methodによる**capability overlap**だけでなく、targetと通常運用知識から同じfeedback/control jobをframework contact前に選べるという**discovery overlap**も確認できた。Huayanとは逆に、de-binding後にruntime固有のdiscovery contributionが残らない。general SIer runtime removalを改訂後のdiscovery-aware基準でも支持し、default runtimeから外して`profile-ready`へ戻した。source basis、研究profile、正例・non-activation例、ordinary capability比較、discovery-value比較、near-neighbor比較、selection cueは保持する。
 
-なお、Mīmāṃsā、dependent origination、classical stasis theory、Aristotle's four causesの4件は、このcapability-overlap / discovery-value分離を導入する前にruntimeから降格した。classical stasis theoryは遡及reviewでdiscovery contributionが残りruntimeへ復帰した。dependent originationとAristotle's four causesは遡及reviewでdiscovery overlapまで確認し、demotionを新基準でも確定した。残るMīmāṃsāだけが、既存比較では主としてcapability overlapを示している段階であり、**発見価値がないことまでは確定していない**。引き続きretrospective discovery-value reviewの対象とする。
+Mīmāṃsāについても最後に遡及discovery-value reviewを行った。tested deployment policy / runbookは自然言語のnormative textであり、ordinary requirements practice自体がframework contact前からrequirement segmentation、one-subject/one-predicate、modifier / exception scope、explicit assumptions、ambiguity、consistency、conflict reviewを自然に要求する。二つのfixtureでMīmāṃsāからde-bindしたprescriptive-unit、syntactic attachment、semantic fit、explicit-vs-supplied、norm-conflict decompositionへframeworkなしで到達できた。
+
+したがってMīmāṃsāでもcapability overlapだけでなく**discovery overlap**が成立し、旧demotionをdiscovery-aware基準でも確定した。
+
+これにより、capability-overlap / discovery-value分離を導入する前に降格した4件の遡及reviewは完了した。結果は一律ではない。
+
+- classical stasis theory: discovery contributionが残りruntimeへ復帰;
+- dependent origination: discovery overlapを確認しdemotion確定;
+- Aristotle's four causes: discovery overlapを確認しdemotion確定;
+- Mīmāṃsā: discovery overlapを確認しdemotion確定。
+
+旧基準降格について、未確認のretrospective discovery-value debtは現在0件である。
 
 Huayan（華厳）は、改訂後のdiscovery-aware基準で再資格した最初のruntime保持例となる。canonical Account統合案をsame-targetとして見ると、bounded-context DDD、context mapping、architecture viewpoints、change-impact analysisを組み合わせたmatched specialist baselineは、Huayanからde-bindしたrole-defined identity、context-role re-identification、perspective-through-node、integration-with-differenceを高い割合で再現できる。
 
