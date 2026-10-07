@@ -1,6 +1,6 @@
 # Wuxing runtime requalification profile
 
-Status: runtime requalification / adopted candidate
+Status: profile-ready / research-only / no-runtime
 
 ## Identity
 
@@ -165,4 +165,6 @@ After de-binding, no additional target-side question remains that is both useful
 
 The strongest remaining value is historical and comparative: Wuxing supplies an important cultural example of relational, cyclical, and non-substantialist organization. That remains useful for explicit Wuxing, Chinese intellectual history, comparative systems thinking, education, and future targets.
 
-For the tested general SIer systems-analysis use, both capability overlap and discovery overlap are established. Runtime removal is therefore supported under the revised discovery-aware standard while preserving Wuxing as a sourced research candidate.
+For the tested general SIer systems-analysis use, both capability overlap and discovery overlap are established. The former runtime dossier has therefore been removed from the default corpus under the revised discovery-aware standard.
+
+Preserve Wuxing as a sourced research candidate for explicit Wuxing, Chinese intellectual history, comparative systems thinking, educational work, and future targets where a distinct discovery contribution can be demonstrated.
