@@ -113,9 +113,9 @@
       "en_status": "translated"
     },
     "frameworks/portfolio.md": {
-      "ja_sha256": "86926f6fe5bc40f3ad74681dbb36d87dbe4a00320f793debd83cc25181176d4f",
+      "ja_sha256": "55b2b8ce8b9522f782b47fff76dc1d631b0a57779a06977116c41ec238805846",
       "en_present": true,
-      "en_source_ja_sha256": "86926f6fe5bc40f3ad74681dbb36d87dbe4a00320f793debd83cc25181176d4f",
+      "en_source_ja_sha256": "55b2b8ce8b9522f782b47fff76dc1d631b0a57779a06977116c41ec238805846",
       "en_status": "translated"
     },
     "frameworks/rasa.md": {
@@ -194,6 +194,12 @@
       "ja_sha256": "74bd46bb0a67ca27106ecf5b965c3da1f0a800540d7a54399ceb27f5acfdd06e",
       "en_present": true,
       "en_source_ja_sha256": "74bd46bb0a67ca27106ecf5b965c3da1f0a800540d7a54399ceb27f5acfdd06e",
+      "en_status": "translated"
+    },
+    "frameworks/classical-stasis-theory.md": {
+      "ja_sha256": "60a5ffb364b4a26da6cc8ad586af0ac4a0ef389adf607e200801ebe65b18a000",
+      "en_present": true,
+      "en_source_ja_sha256": "60a5ffb364b4a26da6cc8ad586af0ac4a0ef389adf607e200801ebe65b18a000",
       "en_status": "translated"
     }
   }
