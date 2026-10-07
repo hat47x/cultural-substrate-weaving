@@ -154,9 +154,25 @@ No additional target-side question remained that required the Mīmāṃsā subst
 
 This is not a judgment against the historical tradition. The comparison establishes that general policy / requirements analysis can reproduce the **tested cognitive operations** after those operations are known.
 
-This demotion predates the current distinction between capability overlap and discovery value. The operational removal remains in place, but the evidence does **not yet establish** that an ex-ante generic review would have selected the same interpretive job before Mīmāṃsā contact. A retrospective discovery-value comparison is therefore required before treating the demotion rationale as complete.
+### Discovery-value comparison
 
-Preserve the research candidate and reconsider runtime use after that review, as well as for comparative hermeneutics, explicit user-requested Mīmāṃsā analysis, historically situated work, or a future target where a distinct discovery contribution survives target return.
+See:
+
+- `research/framework-candidates/comparisons/mimamsa-discovery-value.md`
+
+The retrospective ex-ante comparison starts from ordinary policy / requirements review without naming Mīmāṃsā or Sanskrit interpretive categories.
+
+On both tested texts, normal requirements practice already asks how many independent requirements are present, who acts, what condition or exception applies, what phrase modifies which rule, which assumptions are explicit, and whether requirements are ambiguous or conflicting. The target therefore opens segmentation, scope, explicit/inferred, and conflict work before framework contact.
+
+### Retrospective requalification result
+
+The operational demotion is **confirmed under the discovery-aware standard**.
+
+The reason is not that modern requirements engineering is historically or philosophically equivalent to Mīmāṃsā. Its theories of sentence meaning, Vedic hermeneutics, and Bhāṭṭa / Prābhākara differences remain distinct research content.
+
+The product result is narrower: for the tested SIer policy and runbook targets, both the capability and the ex-ante selection path are already supplied by ordinary requirements practice. After de-binding, no distinct target-side discovery remains at comparable selection cost.
+
+Preserve the research candidate for comparative hermeneutics, explicit user-requested Mīmāṃsā analysis, historically situated work, education, or future targets where a distinct discovery contribution can be demonstrated.
 
 Worked examples:
 

@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+- Completed the final retrospective discovery-value review for the pre-standard runtime demotions. Mīmāṃsā remains research-only because ordinary requirements practice already selects segmentation, attachment/scope, explicit-assumption, ambiguity, and conflict work before framework contact. The legacy review debt is now closed: stasis was restored, while dependent origination, Aristotle's four causes, and Mīmāṃsā were confirmed demoted under the discovery-aware standard.
+
 - Completed retrospective discovery-value review for Aristotle's four causes and confirmed its existing runtime demotion under the revised standard. On the tested rate-limiter design target, ordinary systems-engineering work already selects stakeholder objectives, constraints, logical architecture, design solution, and behavior/mechanism before framework contact; the sourced Aristotelian research candidate remains preserved for explicit, historical, comparative, and educational use.
 
 - Completed retrospective discovery-value review for dependent origination and confirmed its existing runtime demotion under the revised standard. Ordinary post-incident practice already selects contributing conditions, deeper causes, mitigations, corrective actions, and intervention checks before framework contact, so both capability overlap and discovery overlap hold for the tested SIer incident; the sourced Buddhist research candidate remains preserved.

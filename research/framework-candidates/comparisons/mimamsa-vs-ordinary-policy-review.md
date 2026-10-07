@@ -4,7 +4,7 @@ Status: runtime requalification / same-target ordinary-baseline comparison
 
 ## Purpose
 
-Mīmāṃsā is already in the CSW runtime corpus. This comparison applies the current Registry standard retroactively:
+Mīmāṃsā was previously in the CSW runtime corpus. This comparison records a matched ordinary policy / requirements baseline:
 
 > after de-binding, does the framework still add a target-relevant cognitive operation that a strong ordinary policy / requirements review does not already provide?
 
@@ -92,29 +92,28 @@ However, being different from those cultural frameworks is not enough for runtim
 
 ## Result
 
-For this deployment-policy target, the ordinary-baseline counter-hypothesis survives.
+For the deployment-policy target, the matched policy / requirements baseline reproduces the de-bound Mīmāṃsā **capability**.
 
-The Mīmāṃsā-derived pass is historically coherent and provides a useful intellectual lineage for thinking about prescriptive texts, but after de-binding it does not add a distinct operation beyond a strong policy / requirements review.
+The same is true for the second runbook example: once segmentation, modifier scope, exception attachment, explicit/inferred distinction, and rule-conflict review are already selected, ordinary structured review can represent them directly.
 
-The same conclusion also applies to the second runbook example: exception attachment, duration, recovery condition, follow-up action, explicit wording, contextual supplementation, and rule conflict can all be represented directly in an ordinary structured review.
+This file therefore establishes capability overlap. It does **not by itself** establish that those interpretive jobs would have been selected before framework contact.
 
 ## Runtime consequence
 
-The current evidence does **not** justify keeping Mīmāṃsā as a general runtime framework merely for policy, runbook, or requirements interpretation.
+Do not use this file alone to justify runtime demotion.
 
-A runtime removal should preserve the research profile and source basis, because Mīmāṃsā remains a legitimate research substrate and may still matter when:
+The missing ex-ante selection question is evaluated separately in:
 
-- the target is comparative hermeneutics;
-- the user explicitly asks for Mīmāṃsā;
-- the historical interpretive tradition itself is part of the subject;
-- a future target demonstrates a distinct operation not reproduced by ordinary policy review.
+- `research/framework-candidates/comparisons/mimamsa-discovery-value.md`
 
-For ordinary SIer analysis, prefer direct requirements / policy normalization.
+That retrospective comparison finds that ordinary requirements practice already requires singular / independently stated requirements, clear and unambiguous language, explicit assumptions, consistency, conflict review, and stakeholder review for ambiguous or incomplete requirements.
+
+Under the revised discovery-aware standard, the combined evidence confirms the existing runtime demotion for the tested SIer policy/runbook family.
 
 ## Product-value consequence
 
 Runtime cultural diversity is not itself the product goal.
 
-If a framework's de-bound operation is fully reproduced by a simpler ordinary method, retaining it in the default runtime library adds selection complexity and cultural overhead without increasing what CSW can actually ask or distinguish.
+Where ordinary policy / requirements work both reproduces the target-side capability and naturally selects the same segmentation / scope / assumption / conflict jobs ex ante, default runtime exposure adds selection complexity without opening a new target-side cognitive job.
 
-This comparison therefore supports demoting Mīmāṃsā from general runtime adoption while preserving it as a sourced `profile-ready` research candidate.
+Preserve Mīmāṃsā as a sourced research candidate because its historical sentence-meaning theories and hermeneutic lineage remain independently valuable.
