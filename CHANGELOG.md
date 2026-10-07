@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+- Completed the Wuxing discovery-value requalification that was left open by the revised runtime standard. On the same autoscaler-oscillation target, generic incident/reliability analysis naturally selects feedback, delay, damping, stabilization, and over-correction before Wuxing contact, so both capability overlap and discovery overlap are now established; runtime removal is supported under the discovery-aware rule.
+
 - Requalified Huayan under the discovery-aware runtime standard and retained it in the default corpus. Modern DDD/architecture techniques reproduce much of the de-bound capability once selected, but the same-target ex-ante generic architecture baseline does not reliably surface context-defined identity or difference-preserving integration; the Registry now records that discovery contribution explicitly.
 
 - Revised runtime requalification to separate specialist-method capability overlap from ex-ante discovery value. A framework is no longer eligible for demotion merely because a matched specialist method can reproduce its de-bound operations after contact; adopted-framework audits now record a separate discovery-value evidence gap. Wuxing demotion is held pending that comparison, and the four earlier demotions are marked for retrospective discovery-value review.
