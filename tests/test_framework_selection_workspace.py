@@ -150,6 +150,7 @@ class FrameworkCorpusContractTest(unittest.TestCase):
                 "worked": "worked.md",
                 "negative": "negative.md",
                 "baseline": "baseline.md",
+                "discovery": "discovery.md",
                 "neighbor": "neighbor.md",
             }
             for value in paths.values():
@@ -179,6 +180,7 @@ class FrameworkCorpusContractTest(unittest.TestCase):
                 "negative_example_paths": [paths["negative"]],
                 "runtime_requalification": {
                     "ordinary_baseline_comparison_paths": [paths["baseline"]],
+                    "discovery_value_comparison_paths": [paths["discovery"]],
                     "near_neighbor_comparison_paths": [paths["neighbor"]],
                 },
             }
@@ -197,7 +199,71 @@ class FrameworkCorpusContractTest(unittest.TestCase):
                 ],
                 ["baseline.md"],
             )
+            self.assertEqual(
+                payload["candidates"][0]["recorded_evidence"][
+                    "discovery_value_comparison_paths"
+                ],
+                ["discovery.md"],
+            )
             self.assertNotIn('"score"', json.dumps(payload).casefold())
+
+    def test_adopted_requalification_keeps_discovery_gap_when_only_specialist_baseline_exists(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            paths = {
+                "runtime_path": "runtime.md",
+                "profile_path": "profile.md",
+                "worked": "worked.md",
+                "negative": "negative.md",
+                "baseline": "baseline.md",
+                "neighbor": "neighbor.md",
+            }
+            for value in paths.values():
+                (root / value).write_text("fixture\n", encoding="utf-8")
+
+            candidate = {
+                "id": "capability-overlap-only",
+                "readiness": "adopted",
+                "names": ["Capability overlap only"],
+                "structural_primitives": ["structure"],
+                "cognitive_operations": ["distinct-operation"],
+                "useful_for": ["opening a distinct question"],
+                "selection_cues": ["この違いを見たい", "inspect this distinction"],
+                "do_not_assume": ["framework result is target fact"],
+                "sources": [
+                    {"kind": "primary", "title": "A", "url": "https://example.com/a"},
+                    {"kind": "scholarly", "title": "B", "url": "https://example.com/b"},
+                ],
+                "runtime_path": paths["runtime_path"],
+                "profile_path": paths["profile_path"],
+                "worked_example_paths": [paths["worked"]],
+                "negative_example_paths": [paths["negative"]],
+                "runtime_requalification": {
+                    "ordinary_baseline_comparison_paths": [paths["baseline"]],
+                    "near_neighbor_comparison_paths": [paths["neighbor"]],
+                },
+            }
+            data = {
+                "schema": "csw.framework-candidate-inventory/v1",
+                "status": "research-only",
+                "candidates": [candidate],
+            }
+
+            self.assertEqual(contract.validate_candidate(root, candidate), [])
+            payload = contract.adopted_requalification_payload(root, data)
+            audited = payload["candidates"][0]
+            self.assertEqual(
+                audited["evidence_gaps"],
+                ["discovery-value-comparison"],
+            )
+            self.assertEqual(
+                audited["recorded_evidence"]["discovery_value_comparison_paths"],
+                [],
+            )
+            self.assertIn(
+                "specialist method would have been selected",
+                payload["interpretation_boundary"],
+            )
 
     def test_dependent_origination_requalification_evidence_survives_runtime_demotion(self) -> None:
         inventory_path = ROOT / "research" / "framework-candidates" / "cognitive-operation-inventory.json"
@@ -232,7 +298,7 @@ class FrameworkCorpusContractTest(unittest.TestCase):
             [item["candidate_id"] for item in audit["candidates"]],
         )
 
-    def test_wuxing_requalification_has_complete_modern_evidence(self) -> None:
+    def test_wuxing_requalification_exposes_discovery_value_gap_before_demotion(self) -> None:
         inventory_path = ROOT / "research" / "framework-candidates" / "cognitive-operation-inventory.json"
         data = json.loads(inventory_path.read_text(encoding="utf-8"))
         row = next(
@@ -248,10 +314,17 @@ class FrameworkCorpusContractTest(unittest.TestCase):
             item for item in audit["candidates"]
             if item["candidate_id"] == "wuxing"
         )
-        self.assertEqual(audited["evidence_gaps"], [])
+        self.assertEqual(
+            audited["evidence_gaps"],
+            ["discovery-value-comparison"],
+        )
         self.assertIn(
             "research/framework-candidates/comparisons/wuxing-vs-ordinary-causal-loop-analysis.md",
             audited["recorded_evidence"]["ordinary_baseline_comparison_paths"],
+        )
+        self.assertEqual(
+            audited["recorded_evidence"]["discovery_value_comparison_paths"],
+            [],
         )
         self.assertIn(
             "research/framework-candidates/comparisons/wuxing-vs-dependent-origination.md",
@@ -261,8 +334,12 @@ class FrameworkCorpusContractTest(unittest.TestCase):
         registry = workspace.registry_entry_payload(data, "wuxing")
         self.assertTrue(registry["registry"]["runtime_enabled"])
         self.assertIn(
-            "runtime-removal-supported",
+            "runtime-removal-on-hold",
             registry["registry"]["adoption_hold"],
+        )
+        self.assertEqual(
+            registry["runtime_requalification"]["discovery_review_state"],
+            "required-before-demotion",
         )
 
     def test_aristotle_four_causes_requalification_evidence_survives_runtime_demotion(self) -> None:
