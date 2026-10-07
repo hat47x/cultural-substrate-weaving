@@ -16,7 +16,7 @@ This map tracks structural diversity. It does not rank frameworks or claim that 
 | binary-frame disruption | catuṣkoṭi | — | explicit boundary-crossing logic |
 | conditioned perspective | Jain sevenfold predication; Confucian role / li | — | institutional and collective role perspectives beyond dyadic relations |
 | explanatory pluralism | — | Aristotle four causes (profile-ready / no-runtime) | ordinary systems/design review reproduces the tested SIer operations; reconsider only for explicit Aristotle, historical/comparative use, or a distinct future operation |
-| rhetorical issue-state / dispute location | — | Classical stasis theory (profile-ready / restoration-supported) | matched issue triage reproduces capability, but retrospective ex-ante review shows issue-type mismatch and stasis-switch discovery survive the generic incident baseline; mechanical runtime restoration pending |
+| rhetorical issue-state / dispute location | Classical stasis theory | — | runtime restored under discovery-aware review: generic incident practice does not reliably expose issue-type mismatch or stasis switches before framework contact |
 | expression → reception | Rasa | Jo-Ha-Kyū (profile-ready) | narrative sequencing that is not reducible to reception or pacing |
 | embodied observation | — | chakra (defer-lineage-specific) | no current adopted Registry entry; add only with lineage-specific source basis and a distinct embodied operation |
 | coupled periodicity / multi-scale time | Tzolk’in | Stems/Branches (profile-ready) | more than two independently varying cycles and other constrained reachability patterns |
@@ -57,10 +57,10 @@ Do not start broad efficacy comparison yet.
 
 Registry snapshot on 2026-10-06:
 
-- adopted: 14
-- profile-ready: 20
+- adopted: 15
+- profile-ready: 19
 - research-only: 2
 - defer-lineage-specific: 1
 - total: 37
 
-Adopted-core requalification has produced five operational runtime demotions. Wuxing is the first demotion completed under the discovery-aware standard, while Huayan is the first discovery-aware retention case. Retrospective review now supports restoring classical stasis theory because generic incident review does not reliably expose issue-type mismatch or stasis switches before framework contact; mechanical restoration is still pending. Mīmāṃsā, dependent origination, and Aristotle's four causes remain operationally demoted and await retrospective discovery-value review. Continue requalifying the adopted core and filling genuinely different operation families before broad efficacy comparison. Do not use the counts themselves as a quality score.
+Adopted-core requalification has produced five operational runtime demotions and one discovery-aware restoration. Wuxing is the first demotion completed under the discovery-aware standard, Huayan is the first discovery-aware retention case, and classical stasis theory is the first framework restored after retrospective discovery-value review showed that generic incident practice does not reliably expose issue-type mismatch or stasis switches before framework contact. Mīmāṃsā, dependent origination, and Aristotle's four causes remain operationally demoted and await retrospective discovery-value review. Continue requalifying the adopted core and filling genuinely different operation families before broad efficacy comparison. Do not use the counts themselves as a quality score.
