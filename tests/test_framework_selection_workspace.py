@@ -629,11 +629,43 @@ class FrameworkSelectionWorkspaceTest(unittest.TestCase):
         self.assertNotIn('"rank"', encoded)
         self.assertNotIn('"recommendation"', encoded)
 
+    def test_candidate_summary_exposes_runtime_boundary_without_ranking(self) -> None:
+        fixture = json.loads(json.dumps(FIXTURE))
+        fixture["candidates"][0]["runtime_requalification"] = {
+            "discovery_review_state": "complete-retain",
+            "ordinary_baseline_comparison_paths": [
+                "research/framework-candidates/comparisons/alpha-vs-baseline.md"
+            ],
+            "discovery_value_comparison_paths": [
+                "research/framework-candidates/comparisons/alpha-discovery-value.md"
+            ],
+            "near_neighbor_comparison_paths": [
+                "research/framework-candidates/comparisons/alpha-vs-beta.md"
+            ],
+        }
+
+        payload = workspace.candidate_summary(fixture["candidates"][0])
+        boundary = payload["runtime_boundary"]
+        self.assertTrue(boundary["runtime_enabled"])
+        self.assertEqual(boundary["discovery_review_state"], "complete-retain")
+        self.assertEqual(
+            boundary["discovery_value_comparison_paths"],
+            ["research/framework-candidates/comparisons/alpha-discovery-value.md"],
+        )
+        encoded = json.dumps(payload).casefold()
+        self.assertNotIn('"score"', encoded)
+        self.assertNotIn('"rank"', encoded)
+        self.assertNotIn('"recommendation"', encoded)
+
     def test_registry_inspect_exposes_runtime_requalification_as_provenance_only(self) -> None:
         fixture = json.loads(json.dumps(FIXTURE))
         fixture["candidates"][0]["runtime_requalification"] = {
+            "discovery_review_state": "complete-retain",
             "ordinary_baseline_comparison_paths": [
                 "research/framework-candidates/comparisons/alpha-vs-baseline.md"
+            ],
+            "discovery_value_comparison_paths": [
+                "research/framework-candidates/comparisons/alpha-discovery-value.md"
             ],
             "near_neighbor_comparison_paths": [
                 "research/framework-candidates/comparisons/alpha-vs-beta.md"
@@ -649,6 +681,14 @@ class FrameworkSelectionWorkspaceTest(unittest.TestCase):
         self.assertEqual(
             payload["runtime_requalification"]["near_neighbor_comparison_paths"],
             ["research/framework-candidates/comparisons/alpha-vs-beta.md"],
+        )
+        self.assertEqual(
+            payload["runtime_requalification"]["discovery_value_comparison_paths"],
+            ["research/framework-candidates/comparisons/alpha-discovery-value.md"],
+        )
+        self.assertEqual(
+            payload["runtime_requalification"]["discovery_review_state"],
+            "complete-retain",
         )
         self.assertIn(
             "provenance only",
@@ -677,6 +717,38 @@ class FrameworkSelectionWorkspaceTest(unittest.TestCase):
                 payload["authority_boundary"]["interpretation"],
             )
             self.assertNotIn('"score"', json.dumps(payload))
+
+    def test_target_structure_lookup_preserves_runtime_boundary(self) -> None:
+        fixture = json.loads(json.dumps(FIXTURE))
+        fixture["candidates"][0]["readiness"] = "profile-ready"
+        fixture["candidates"][0].pop("runtime_path", None)
+        fixture["candidates"][0]["adoption_hold"] = (
+            "general-runtime-demotion-confirmed-discovery-aware"
+        )
+        fixture["candidates"][0]["runtime_requalification"] = {
+            "discovery_review_state": "complete-demote-retrospective",
+            "discovery_value_comparison_paths": [
+                "research/framework-candidates/comparisons/alpha-discovery-value.md"
+            ],
+        }
+
+        payload = workspace.target_structure_candidates_payload(
+            TYPOLOGY_FIXTURE,
+            fixture,
+            ["TS-condition-chain"],
+        )
+        boundary = payload["target_structures"][0]["mapped_candidates"][0][
+            "candidate"
+        ]["runtime_boundary"]
+        self.assertFalse(boundary["runtime_enabled"])
+        self.assertEqual(
+            boundary["discovery_review_state"],
+            "complete-demote-retrospective",
+        )
+        self.assertIn(
+            "general-runtime-demotion-confirmed-discovery-aware",
+            boundary["adoption_hold"],
+        )
 
     def test_target_structure_lookup_uses_exact_mapping_without_ranking(self) -> None:
         payload = workspace.target_structure_candidates_payload(
@@ -814,6 +886,86 @@ class FrameworkSelectionWorkspaceTest(unittest.TestCase):
                 "inventory order",
                 payload["candidate_order_note"],
             )
+
+    def test_registry_state_audit_detects_runtime_demotion_after_selection(self) -> None:
+        selection = workspace.worksheet_payload(
+            FIXTURE,
+            "inspect a condition structure",
+            ["alpha"],
+            "target baseline",
+            "selection://registry-drift",
+        )
+        workspace.record_contact_disposition(
+            selection,
+            "alpha",
+            contacted=True,
+            reason="baseline left an unresolved condition question",
+        )
+
+        current = json.loads(json.dumps(FIXTURE))
+        alpha = current["candidates"][0]
+        alpha["readiness"] = "profile-ready"
+        alpha.pop("runtime_path", None)
+        alpha["adoption_hold"] = (
+            "general-runtime-demotion-confirmed-discovery-aware"
+        )
+        alpha["runtime_requalification"] = {
+            "discovery_review_state": "complete-demote-retrospective",
+            "ordinary_baseline_comparison_paths": [
+                "research/framework-candidates/comparisons/alpha-vs-baseline.md"
+            ],
+            "discovery_value_comparison_paths": [
+                "research/framework-candidates/comparisons/alpha-discovery-value.md"
+            ],
+        }
+
+        payload = workspace.registry_state_audit_payload(selection, current)
+        audit = payload["candidates"][0]
+        self.assertEqual(audit["state"], "registry_state_drifted")
+        self.assertTrue(
+            audit["workspace_registry_snapshot"]["runtime_enabled"]
+        )
+        self.assertFalse(
+            audit["current_registry_state"]["runtime_enabled"]
+        )
+        self.assertTrue(
+            audit["workspace_matches_contact_snapshot"]
+        )
+        self.assertFalse(
+            audit["contact_snapshot_matches_current"]
+        )
+        self.assertEqual(payload["drifted_candidate_ids"], ["alpha"])
+        encoded = json.dumps(payload).casefold()
+        self.assertNotIn('"score"', encoded)
+        self.assertNotIn('"rank"', encoded)
+        self.assertNotIn('"recommendation"', encoded)
+
+    def test_registry_state_audit_cli_reports_matching_current_registry(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            inventory = Path(tmp) / "inventory.json"
+            selection_path = Path(tmp) / "selection.json"
+            inventory.write_text(json.dumps(FIXTURE), encoding="utf-8")
+            selection = workspace.worksheet_payload(
+                FIXTURE,
+                "inspect a condition structure",
+                ["alpha"],
+                "target baseline",
+                "selection://registry-current",
+            )
+            workspace.save_workspace(selection_path, selection)
+
+            payload = json.loads(
+                self.run_tool(
+                    "audit-registry-state",
+                    str(selection_path),
+                    str(inventory),
+                ).stdout
+            )
+            self.assertEqual(
+                payload["candidates"][0]["state"],
+                "matching_current_registry",
+            )
+            self.assertEqual(payload["drifted_candidate_ids"], [])
 
     def test_target_structure_selection_audit_marks_mapped_and_outside_candidates(self) -> None:
         selection = workspace.worksheet_payload(
@@ -1247,6 +1399,42 @@ class FrameworkSelectionWorkspaceTest(unittest.TestCase):
             "2026-10-03",
         )
         self.assertNotIn('"score"', json.dumps(review))
+
+    def test_contact_snapshot_freezes_registry_boundary(self) -> None:
+        data = workspace.worksheet_payload(
+            FIXTURE,
+            "Need another way to inspect boundaries",
+            ["alpha"],
+            "Target-side baseline before framework contact",
+            "selection://registry-snapshot",
+        )
+        workspace.record_contact_disposition(
+            data,
+            "alpha",
+            contacted=True,
+            reason="A concrete condition gap remained.",
+        )
+
+        snapshot = data["candidates"][0]["contact_record"]["selection_snapshot"]
+        self.assertTrue(snapshot["registry_snapshot"]["runtime_enabled"])
+        self.assertEqual(snapshot["registry_snapshot"]["readiness"], "adopted")
+
+    def test_legacy_workspace_hydrates_runtime_boundary_from_registry_fields(self) -> None:
+        data = workspace.worksheet_payload(
+            FIXTURE,
+            "Need another way to inspect boundaries",
+            ["alpha"],
+            "Target-side baseline before framework contact",
+            "selection://legacy-runtime-boundary",
+        )
+        del data["candidates"][0]["runtime_boundary"]
+
+        workspace.ensure_consideration_fields(data)
+
+        boundary = data["candidates"][0]["runtime_boundary"]
+        self.assertEqual(boundary["readiness"], "adopted")
+        self.assertTrue(boundary["runtime_enabled"])
+        self.assertEqual(boundary["discovery_value_comparison_paths"], [])
 
     def test_non_force_guardrails_externalize_contact_stop_and_survival(self) -> None:
         data = workspace.worksheet_payload(

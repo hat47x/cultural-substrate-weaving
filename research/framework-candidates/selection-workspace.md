@@ -2,14 +2,15 @@
 
 Status: research/toolkit / non-ranking / non-routing
 
-As the framework corpus grows, selection itself becomes a cognitive task. This helper externalizes six parts of that task without deciding them:
+As the framework corpus grows, selection itself becomes a cognitive task. This helper externalizes seven parts of that task without deciding them:
 
 1. state target-side structure hypotheses before framework choice;
 2. compare exact typology mappings and exact operation overlap without ranking;
-3. recall adopted candidates from explicit selection cues written in ordinary Japanese or English;
-4. contrast explicitly chosen near-neighbors by exact operation labels;
-5. create an unfilled worksheet that records why each candidate is being considered and how it must return to the target;
-6. preserve the factual contact / non-contact decision and its selection snapshot so later target-return audit can explain what was actually tried without rewriting the earlier rationale.
+3. preserve current runtime availability and discovery-aware requalification provenance beside every candidate;
+4. recall adopted candidates from explicit selection cues written in ordinary Japanese or English;
+5. contrast explicitly chosen near-neighbors by exact operation labels;
+6. create an unfilled worksheet that records why each candidate is being considered and how it must return to the target;
+7. preserve the factual contact / non-contact decision and its selection snapshot so later target-return audit can explain what was actually tried without rewriting the earlier rationale.
 
 It is not a fit scorer, recommendation engine, or adoption gate.
 
@@ -91,6 +92,9 @@ python "$TOOL" review /tmp/selection.json
 
 python "$TOOL" audit-target-structure /tmp/selection.json "$TYPOLOGY" "$INVENTORY"
 
+# If the Registry has changed since the workspace was created or contact was recorded:
+python "$TOOL" audit-registry-state /tmp/selection.json "$INVENTORY"
+
 python "$TOOL" set-cross-framework /tmp/selection.json \
   --primary-job "成立条件を開く" \
   --second-job "part/whole identityを揺らす" \
@@ -112,7 +116,7 @@ python "$TOOL" audit-living-lab /tmp/selection.json /tmp/round.json
 python "$TOOL" audit-operations /tmp/selection.json /tmp/round.json
 ```
 
-`inspect` is the Registry-0 boundary view for one candidate. It assembles the candidate's native primitives, operations, ordinary-language cues, full source references, profile/source-packet/runtime paths, positive/negative target-return fixtures, readiness, adoption hold, and `do_not_assume` boundary without computing fit, rank, or activation. Use it before deliberate activation when the model or analyst needs to recover what is actually documented rather than reconstructing a framework from memory.
+`inspect` is the Registry-0 boundary view for one candidate. It assembles the candidate's native primitives, operations, ordinary-language cues, full source references, profile/source-packet/runtime paths, positive/negative target-return fixtures, readiness, adoption hold, discovery-review state, ordinary-baseline comparison, discovery-value comparison, near-neighbor comparison, and `do_not_assume` boundary without computing fit, rank, or activation. The same runtime boundary is carried by shortlist/recall/target-structure views so a profile-ready research reference is not silently presented as if it were a current runtime framework. Runtime availability is factual Registry state, not evidence of fit.
 
 The provisional target-structure vocabulary is intentionally a separate first step. `list-target-structures` shows the human-authored target-side vocabulary from the research typology. `structure-lookup` accepts exact target-structure IDs and exposes every mapped framework in framework-inventory order. It does not classify natural language into a target structure and does not choose among the mapped frameworks. This boundary responds to the selection experiments in which direct model/Jev framework choice concentrated on a small number of frameworks: the toolkit makes the target-side structural hypothesis explicit instead of hiding that judgment inside a router.
 
@@ -130,7 +134,9 @@ The shortlist preserves inventory order and computes no score. The contrast is e
 
 Each candidate also has six independent, free-text consideration axes: target connection, structural difference, redundancy/overlap, target-return feasibility, misuse/authority risk, and domain constraint. They are kept separate on purpose; the tool does not collapse them into a score. A distinct `no_framework_option` records why non-activation may be preferable and what would reopen the choice.
 
-`record-contact` records a factual action after deliberation: whether a candidate was actually contacted or deliberately left unused, plus a required free-text reason. At that moment it freezes a small selection snapshot containing the target baseline, recorded target-structure hypotheses, the candidate's role / planned operations / intended job / consideration axes / guardrails, and the pre-contact no-framework rationale. The snapshot is provenance, not evidence that the candidate fit the target. A later edit to the workspace therefore does not silently rewrite why the earlier contact happened.
+`record-contact` records a factual action after deliberation: whether a candidate was actually contacted or deliberately left unused, plus a required free-text reason. At that moment it freezes a small selection snapshot containing the target baseline, recorded target-structure hypotheses, the candidate's role / planned operations / intended job / consideration axes / guardrails, the pre-contact no-framework rationale, and the Registry runtime/requalification state stored when the worksheet was created. The snapshot is provenance, not evidence that the candidate fit the target. A later edit to the workspace therefore does not silently rewrite why the earlier contact happened.
+
+`audit-registry-state` compares each workspace candidate's saved runtime boundary and, when present, its contact-time Registry snapshot with the current inventory. This is useful when a framework has since been demoted, restored, or supplied with stronger ordinary-baseline/discovery-value evidence. Drift does not invalidate historical reasoning. It tells a new selection run to re-read the current Registry before another contact while keeping the old contact decision interpretable in its original state. Matching current Registry state likewise does not establish fit or effectiveness.
 
 After contact, `set-non-activation --remained-viable-after-contact` or `--no-longer-viable-after-contact` can record whether the no-framework path still remained available, with an optional `--post-contact-note`. This is also historical reasoning, not a recommendation or automatic stop condition.
 
@@ -151,6 +157,7 @@ target-side baseline
   -> inspect the typology mapping without ranking
   -> when several target-structure hypotheses remain plausible, contrast exact mappings/operation overlap without ranking
   -> after candidate reasoning is saved, audit whether the recorded typology snapshot still matches before comparing selection against mappings
+  -> if the Registry has changed, audit runtime/requalification drift without rewriting the old selection
   -> shortlist without ranking
   -> contrast plausible near-neighbors
   -> keep no-framework as an explicit option
