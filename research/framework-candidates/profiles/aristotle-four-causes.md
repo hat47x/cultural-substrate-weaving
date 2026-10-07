@@ -151,9 +151,25 @@ The strongest residue is historical explanatory vocabulary and a compact philoso
 
 The former runtime dossier has now been removed from the default corpus. The comparison above establishes capability overlap with ordinary systems/design review after the relevant explanatory jobs are named.
 
-This demotion predates the current distinction between capability overlap and discovery value. The operational removal remains in place, but the evidence does **not yet establish** that an ex-ante generic design review would have selected the same explanatory pluralization before four-causes contact. A retrospective discovery-value comparison is therefore required before treating the demotion rationale as complete.
+### Discovery-value comparison
 
-Reconsider runtime use after that review, as well as for explicit Aristotle, history-of-philosophy, comparative-explanation, educational work, or a future target where a distinct discovery contribution survives target return.
+See:
+
+- `research/framework-candidates/comparisons/aristotle-four-causes-discovery-value.md`
+
+The retrospective ex-ante comparison starts from ordinary engineered-system design work without naming Aristotle or the four causes.
+
+On the tested rate-limiter target, normal design practice already separates stakeholder outcomes, technical requirements / constraints, logical architecture, design solution, behavior, and failure mechanisms. The target therefore opens purpose/objective, constraint/resource, structure, and mechanism work before framework contact.
+
+### Retrospective requalification result
+
+The operational demotion is **confirmed under the discovery-aware standard**.
+
+This does not claim that stakeholder objectives are literally final causes, that technical constraints are material causes, or that modern systems engineering is historically equivalent to Aristotle.
+
+The product result is narrower: for the tested SIer artifact-design target, both the capability and the ex-ante selection path are already supplied by ordinary design practice. After de-binding, no distinct target-side discovery remains at comparable selection cost.
+
+Preserve Aristotle's four causes as a sourced research candidate for explicit Aristotle, history-of-philosophy, comparative-explanation, educational work, or future targets where a distinct discovery contribution can be demonstrated.
 
 ## Ordinary-baseline references
 

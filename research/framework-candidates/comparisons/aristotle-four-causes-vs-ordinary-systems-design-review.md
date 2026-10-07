@@ -4,7 +4,7 @@ Status: runtime requalification / same-target ordinary-baseline comparison
 
 ## Purpose
 
-Aristotle's four causes is currently a default runtime framework and the typology notes that it is one of the model's default picks.
+Aristotle's four causes was previously a default runtime framework and the typology notes that it is one of the model's default picks.
 
 This comparison asks:
 
@@ -105,19 +105,29 @@ Historical conceptual non-equivalence can remain even when runtime cognitive out
 
 ## Result
 
-For this target, the ordinary-baseline counter-hypothesis survives.
+For this target, the matched systems/design baseline reproduces the de-bound four-causes **capability**.
 
-The framework is an elegant compact reminder that explanations differ in kind, but standard systems/design review produces the same concrete questions without cultural-framework selection.
+The framework is an elegant compact reminder that explanations differ in kind. Once objective, constraint/resource, architecture, and mechanism/behavior jobs are already selected, ordinary systems engineering can represent the same target-side questions directly.
+
+This file therefore establishes capability overlap. It does **not by itself** establish that the same explanatory jobs would have been selected before framework contact.
 
 ## Runtime consequence
 
-The current evidence does not support keeping Aristotle's four causes as a general default runtime framework for SIer artifact/design analysis.
+Do not use this file alone to justify runtime demotion.
 
-Preserve the profile, source basis, target-return fixture, selection cues, typology mapping, and explicit Aristotle/comparative-philosophy use.
+The missing ex-ante selection question is evaluated separately in:
+
+- `research/framework-candidates/comparisons/aristotle-four-causes-discovery-value.md`
+
+That retrospective comparison finds that ordinary engineered-system design already begins with stakeholder expectations, technical requirements / constraints, logical decomposition, design solution, and behavior validation. For the tested rate-limiter target, these jobs are selected before four-causes contact.
+
+Under the revised discovery-aware standard, the combined evidence confirms the existing runtime demotion.
 
 ## Product-value consequence
 
-Because the framework is also easy for the model to select, retaining it despite ordinary-baseline equivalence adds selection bias and portfolio complexity without increasing target-side cognitive capability.
+Because this framework is also easy for the model to select, retaining it where both capability overlap and discovery overlap hold would add selection bias and context without opening a new target-side cognitive job.
+
+The historical explanatory theory remains valuable as a research asset; the runtime product boundary remains narrower.
 
 ## Ordinary-baseline references
 
