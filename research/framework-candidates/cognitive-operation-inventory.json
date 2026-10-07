@@ -132,9 +132,10 @@
         ],
         "near_neighbor_comparison_paths": [
           "research/framework-candidates/comparisons/wuxing-vs-dependent-origination.md"
-        ]
+        ],
+        "discovery_review_state": "required-before-demotion"
       },
-      "adoption_hold": "runtime-removal-supported: ordinary signed causal-loop/system-dynamics analysis reproduces the tested de-bound SIer relation/cycle operations"
+      "adoption_hold": "runtime-removal-on-hold: capability overlap established; discovery-value comparison required before any demotion"
     },
     {
       "id": "tzolkin",
@@ -250,7 +251,7 @@
         "ask what condition would stop the pattern"
       ],
       "profile_path": "research/framework-candidates/profiles/dependent-origination.md",
-      "adoption_hold": "general-runtime-demoted: ordinary RCA / fault-tree / dependency analysis reproduces the tested de-bound operations for general SIer incident analysis",
+      "adoption_hold": "general-runtime-demoted: capability-overlap evidence preserved; retrospective discovery-value review pending under the revised requalification standard",
       "worked_example_paths": [
         "research/framework-candidates/worked-examples/dependent-origination.md"
       ],
@@ -263,7 +264,8 @@
         ],
         "near_neighbor_comparison_paths": [
           "research/framework-candidates/comparisons/patthana-vs-dependent-origination-vs-dependency-analysis.md"
-        ]
+        ],
+        "discovery_review_state": "pending-retrospective"
       }
     },
     {
@@ -809,7 +811,7 @@
         "separate material formal efficient and final explanation"
       ],
       "profile_path": "research/framework-candidates/profiles/aristotle-four-causes.md",
-      "adoption_hold": "general-runtime-demoted: ordinary systems/design review reproduces the tested de-bound SIer artifact-analysis operations",
+      "adoption_hold": "general-runtime-demoted: capability-overlap evidence preserved; retrospective discovery-value review pending under the revised requalification standard",
       "worked_example_paths": [
         "research/framework-candidates/worked-examples/aristotle-four-causes.md"
       ],
@@ -822,7 +824,8 @@
         ],
         "near_neighbor_comparison_paths": [
           "research/framework-candidates/comparisons/aristotle-four-causes-vs-dependent-origination.md"
-        ]
+        ],
+        "discovery_review_state": "pending-retrospective"
       }
     },
     {
@@ -1682,9 +1685,10 @@
         "near_neighbor_comparison_paths": [
           "research/framework-candidates/comparisons/mimamsa-vs-stasis-vs-nyaya.md",
           "research/framework-candidates/worked-examples/scholastic-disputed-question-comparison.md"
-        ]
+        ],
+        "discovery_review_state": "pending-retrospective"
       },
-      "adoption_hold": "general-runtime-demoted: ordinary incident/issue triage reproduces the tested de-bound operations"
+      "adoption_hold": "general-runtime-demoted: capability-overlap evidence preserved; retrospective discovery-value review pending under the revised requalification standard"
     },
     {
       "id": "hadith-isnad-matn",
@@ -1812,7 +1816,7 @@
         }
       ],
       "profile_path": "research/framework-candidates/profiles/mimamsa-hermeneutics.md",
-      "adoption_hold": "general-runtime-demoted: ordinary policy/requirements review reproduces the tested de-bound operations",
+      "adoption_hold": "general-runtime-demoted: capability-overlap evidence preserved; retrospective discovery-value review pending under the revised requalification standard",
       "worked_example_paths": [
         "research/framework-candidates/worked-examples/mimamsa-hermeneutics.md",
         "research/framework-candidates/worked-examples/mimamsa-hermeneutics-2.md"
@@ -1826,7 +1830,8 @@
         ],
         "near_neighbor_comparison_paths": [
           "research/framework-candidates/comparisons/mimamsa-vs-stasis-vs-nyaya.md"
-        ]
+        ],
+        "discovery_review_state": "pending-retrospective"
       },
       "selection_cues": [
         "規則の範囲と例外と文脈補完を分けたい",
