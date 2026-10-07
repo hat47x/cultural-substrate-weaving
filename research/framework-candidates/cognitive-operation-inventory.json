@@ -106,8 +106,8 @@
         },
         {
           "kind": "scholarly-reference",
-          "title": "Religious Daoism",
-          "url": "https://plato.stanford.edu/entries/daoism-religion/"
+          "title": "Wuxing (Wu-hsing)",
+          "url": "https://iep.utm.edu/wuxing/"
         }
       ],
       "runtime_path": "src/ja-JP/frameworks/wuxing.md",
@@ -118,7 +118,23 @@
         "separate enabling and constraining relations",
         "inspect generation and restraint cycles",
         "look for relational cycles rather than one-way causation"
-      ]
+      ],
+      "profile_path": "research/framework-candidates/profiles/wuxing.md",
+      "worked_example_paths": [
+        "research/framework-candidates/worked-examples/wuxing.md"
+      ],
+      "negative_example_paths": [
+        "research/framework-candidates/worked-examples/wuxing-negative.md"
+      ],
+      "runtime_requalification": {
+        "ordinary_baseline_comparison_paths": [
+          "research/framework-candidates/comparisons/wuxing-vs-ordinary-causal-loop-analysis.md"
+        ],
+        "near_neighbor_comparison_paths": [
+          "research/framework-candidates/comparisons/wuxing-vs-dependent-origination.md"
+        ]
+      },
+      "adoption_hold": "runtime-removal-supported: ordinary signed causal-loop/system-dynamics analysis reproduces the tested de-bound SIer relation/cycle operations"
     },
     {
       "id": "tzolkin",
