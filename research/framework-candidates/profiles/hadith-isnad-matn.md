@@ -144,8 +144,75 @@ CSW must not collapse these into one "reliability algorithm."
 5. return every factual claim to target-side evidence;
 6. preserve unresolved chain gaps instead of silently filling them.
 
-## Runtime adoption synchronization
+## Runtime requalification
 
-The runtime dossier adopts content/transmission separation, branch/convergence comparison, path auditing, and content-variant comparison. Religious authenticity grading and narrator scoring are not generalized into CSW.
+### Positive target-return fixture
 
-Worked example: `research/framework-candidates/worked-examples/hadith-isnad-matn.md`
+See:
+
+- `research/framework-candidates/worked-examples/hadith-isnad-matn.md`
+
+Three apparent confirmations of one policy claim turn out to descend from one meeting statement. The pass separates content variants from transmission paths and prevents three documents from becoming three independent origins.
+
+### Non-activation fixture
+
+See:
+
+- `research/framework-candidates/worked-examples/hadith-isnad-matn-negative.md`
+
+When the target already has immutable artifact IDs, derivation / quotation edges, explicit common-origin grouping, content diffs, and evidence state separate from provenance, hadith contact adds no target-side job.
+
+### Capability-overlap comparison
+
+See:
+
+- `research/framework-candidates/comparisons/hadith-isnad-matn-vs-ordinary-provenance-and-csw-core.md`
+
+W3C PROV can represent derivation, quotation, revision, agents, and provenance bundles. C2PA explicitly separates verifiable provenance from judgments about whether content is true or factual.
+
+More importantly, CSW's always-on core already requires same-origin derivatives not to count as independent support and keeps discovery path separate from evidence-source independence.
+
+These ordinary/core mechanisms reproduce all current de-bound runtime operations.
+
+### Discovery-value comparison
+
+See:
+
+- `research/framework-candidates/comparisons/hadith-isnad-matn-discovery-value.md`
+
+This is the decisive product-specific test.
+
+Hadith has high intellectual relevance to CSW's provenance discipline, but the framework's most valuable de-bound lessons have already been promoted into the **pre-framework core**:
+
+- same origin != independent support;
+- provenance != proposition truth;
+- discovery path != evidence source;
+- asserted provenance edge != independently verified target support.
+
+Because those safeguards run before framework selection, hadith contact does not open a distinct default-runtime cognitive job on the tested provenance target.
+
+### Near-neighbor comparison
+
+See:
+
+- `research/framework-candidates/comparisons/hadith-isnad-matn-vs-vedic-recitation-pathas.md`
+
+Hadith focuses on content/provenance separation and lineage topology. Vedic recitation pathas focus on ordered-sequence and boundary fidelity. The distinction is real, but framework-to-framework distinctness does not by itself justify runtime retention.
+
+### Requalification result
+
+The current evidence supports removing hadith isnād / matn from **general default runtime** while preserving it as a sourced research candidate.
+
+This is not a judgment that the tradition is unimportant. The opposite is true: its structural distinction has had high product relevance because CSW itself needs strong provenance discipline.
+
+The product reason for demotion is that the relevant cognitive work is now already performed by CSW core before any cultural-framework contact. Keeping the framework in the default selection portfolio would duplicate an always-on safeguard and add selection complexity without opening a new target-side question.
+
+Preserve the research asset for:
+
+- explicit hadith or Islamic intellectual-history work;
+- comparative source criticism;
+- educational explanation of lineage/content non-equivalence;
+- future targets where a tradition-specific transmission operation survives beyond CSW core;
+- intellectual provenance for CSW's own design history.
+
+Do not generalize religious authenticity grades or narrator evaluation into generic trust scoring.
