@@ -111,9 +111,9 @@ Aristotle's four causesについても現行基準の再資格を実施した。
 
 Wuxing（五行）についても、distributed-worker autoscalerのoscillationをsame-targetとして、ordinary signed causal-loop / system-dynamics analysisと比較した。生成／制約という二種類の関係、feedback loop、edgeごとのrole変化、missing link、operating stateによるrelation changeは、target-languageのdirected typed graphで再現でき、追加のtarget-side questionは残らなかった。歴史的な`sheng` / `ke`とmodern causal polarityの同一性は主張せず、tested SIer useでde-bind後の問いが重複するという限定的なruntime product boundaryとして扱う。
 
-この比較で確定したのは、Wuxing contact後に見えたoperationをordinary signed causal-loop / system-dynamics analysisでも再現できるという **capability overlap** までである。framework contact前のgeneric analysisから、そのspecialist methodや同じrelational jobへ自然に到達できたかは未確認である。
+Wuxingについては、その後同じautoscaler targetへdiscovery-value comparisonを追加した。framework名もspecialist method名も与えないgeneric incident baselineから、oscillationという症状を手掛かりにcontroller input/output、repeated reaction、delay、retry、damping、stabilization、over-correctionへ自然に進める。Kubernetes HPAの通常資料もautoscalingをcontrol loopとして扱い、replicaのflapping / thrashingとstabilizationを標準的な運用問題として明示している。
 
-したがってWuxingのruntime removal判断は保留へ戻す。source basis、研究profile、正例・non-activation例、ordinary causal-loop baseline比較、dependent-origination近接比較、selection cueを保持したまま、discovery-value comparisonを追加してからdemotion可否を判断する。
+したがってWuxingでは、matched specialist methodによる**capability overlap**だけでなく、targetと通常運用知識から同じfeedback/control jobをframework contact前に選べるという**discovery overlap**も確認できた。Huayanとは逆に、de-binding後にruntime固有のdiscovery contributionが残らない。general SIer runtime removalを、改訂後のdiscovery-aware基準でも支持する。
 
 なお、Mīmāṃsā、dependent origination、classical stasis theory、Aristotle's four causesの4件は、このcapability-overlap / discovery-value分離を導入する前にruntimeから降格した。これらのoperational demotionは直ちに取り消さないが、既存比較が証明しているのは主としてcapability overlapであり、**発見価値がないことまでは確定していない**。4件ともretrospective discovery-value reviewの対象とする。
 
