@@ -388,7 +388,7 @@ class FrameworkCorpusContractTest(unittest.TestCase):
             "complete-retain",
         )
 
-    def test_aristotle_four_causes_requalification_evidence_survives_runtime_demotion(self) -> None:
+    def test_aristotle_four_causes_requalification_confirms_discovery_aware_demotion(self) -> None:
         inventory_path = ROOT / "research" / "framework-candidates" / "cognitive-operation-inventory.json"
         data = json.loads(inventory_path.read_text(encoding="utf-8"))
         row = next(
@@ -407,12 +407,20 @@ class FrameworkCorpusContractTest(unittest.TestCase):
             registry["runtime_requalification"]["ordinary_baseline_comparison_paths"],
         )
         self.assertIn(
+            "research/framework-candidates/comparisons/aristotle-four-causes-discovery-value.md",
+            registry["runtime_requalification"]["discovery_value_comparison_paths"],
+        )
+        self.assertIn(
             "research/framework-candidates/comparisons/aristotle-four-causes-vs-dependent-origination.md",
             registry["runtime_requalification"]["near_neighbor_comparison_paths"],
         )
         self.assertIn(
-            "general-runtime-demoted",
+            "general-runtime-demotion-confirmed-discovery-aware",
             registry["registry"]["adoption_hold"],
+        )
+        self.assertEqual(
+            registry["runtime_requalification"]["discovery_review_state"],
+            "complete-demote-retrospective",
         )
 
         audit = contract.adopted_requalification_payload(ROOT, data)
