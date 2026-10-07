@@ -1,169 +1,150 @@
-# Wuxing framework profile candidate
+# Wuxing runtime requalification profile
 
-Status: adopted / runtime-corpus
+Status: runtime requalification / adopted candidate
 
 ## Identity
 
 - names: 五行 / Wuxing / Five Phases
-- family: Chinese correlative and process traditions
-- intended CSW use: relation/cycle generator, not elemental personality typing
-- current profile scope: phase relations and transformation only
+- current scope: historically variable Chinese five-phase systems in which Wood, Fire, Earth, Metal, and Water are related through transformation and correlative relations
+- current runtime use: separate enabling / generating relations from constraining / overcoming relations, inspect cycles rather than only one-way chains, and ask how relational role changes with context
+- not intended use: treating the five phases as modern physical substances, forcing every target into five literal components, or importing medicine / politics / calendrical correspondences into unrelated targets
 
 ## Source basis
 
-### Scholarly references
-
-Stanford Encyclopedia of Philosophy, Metaphysics in Chinese Philosophy
+### Stanford Encyclopedia of Philosophy — Metaphysics in Chinese Philosophy
 
 https://plato.stanford.edu/entries/chinese-metaphysics/
 
-This source describes wuxing as wood, earth, fire, water, and metal within a process/cycle-oriented Chinese metaphysical context and explicitly notes generation sheng and overcoming ke progressions.
+This source discusses Wuxing in process- and relation-oriented Chinese metaphysical contexts and records generation and overcoming relations without reducing the phases to Greek-style material elements.
 
-Stanford Encyclopedia of Philosophy, Religious Daoism
+### Internet Encyclopedia of Philosophy — Wuxing
 
-https://plato.stanford.edu/entries/daoism-religion/
+https://iep.utm.edu/wuxing/
 
-Useful for the historical role of the five agents/phases as a system that classifies and relates phenomena across domains.
+This overview treats the five phases as dynamic and interdependent and distinguishes generating and overcoming relations while showing that historical uses and correspondence systems vary.
 
-## Structural core retained by this profile
+## Structural core under requalification
 
-### Five phases
+For current CSW use, culturally specific labels can be removed while retaining these target-side operations:
 
-- Wood
-- Fire
-- Earth/Soil
-- Metal
-- Water
+1. distinguish an enabling / generating relation from a constraining / counteracting relation;
+2. inspect closed feedback paths rather than only one-way chains;
+3. inspect how one node's role changes depending on relation direction and context;
+4. look for a missing or broken relation rather than only a missing node;
+5. observe whether the relation pattern changes over time.
 
-For CSW these are not treated as five physical substances. The first cognitive value is that the system supplies a small closed set of relationally differentiated phases.
-
-### Generation relation
-
-A cycle of generation / production.
-
-Cognitive use:
-
-- ask what enables or feeds what;
-- trace indirect enabling around a loop;
-- identify where a process expected to continue does not.
-
-### Overcoming relation
-
-A distinct cycle of constraint / overcoming.
-
-Cognitive use:
-
-- separate enabling from limiting;
-- ask whether a stable system requires both;
-- expose cases where a proposed solution strengthens one path but removes a necessary constraint.
-
-### Correlative extension
-
-Historically wuxing was extended across many domains.
-
-For this profile, that fact is a caution and optional research direction, not permission to load every correspondence table at once.
+The runtime question is whether these operations remain distinct from strong ordinary signed causal-loop / system-dynamics analysis.
 
 ## Native operation candidates
 
-### generation-pass
-
-Apply only the generation relation as an as-if model.
-
-Questions:
-
-- What feeds the next condition?
-- What depends on a previous phase?
-- Where is the expected handoff absent?
-
-Output type:
-
-- relation-candidate
-- transition-candidate
-- residual
-
-### constraint-pass
-
-Apply only the overcoming/constraint relation.
-
-Questions:
-
-- What limits excess?
-- Which relation acts as a brake rather than a source?
-- Is an apparently negative constraint structurally stabilizing?
-
-Output type:
-
-- counter-relation
-- falsifier
-- observation target
-
 ### dual-relation-pass
 
-Compare generation and constraint without merging them.
+Represent two relation modes over the same target variables: one that enables or amplifies a state and one that constrains or counteracts it.
 
-Questions:
+### relation-role-reversal
 
-- Does the same target pair participate differently under enabling vs limiting views?
-- Is a single causal verb hiding two relation types?
-- Does the proposed improvement create runaway reinforcement by removing constraint?
+Inspect outgoing and incoming relations separately. One target variable may support one neighbor while constraining another and may itself be supported or constrained elsewhere.
 
-Output type:
+### loop-inspection
 
-- distinction
-- relation-candidate
-- counter-view
+Look for closed relation paths and feedback rather than assuming a linear upstream chain.
 
-### cycle-break
+### missing-link-probe
 
-Remove or weaken one link hypothetically.
+Ask whether a target behavior is unexplained because a relevant enabling or constraining edge is absent from the current model.
 
-Questions:
+### phase-change-probe
 
-- Does the cycle still close?
-- Which downstream element becomes unsupported?
-- Does another path compensate?
+Compare the relation graph across operational periods rather than treating each variable as a timeless attribute.
 
-Output type:
+## Positive target-return fixture
 
-- falsifier
-- transition-candidate
-- residual
+See:
+
+- `research/framework-candidates/worked-examples/wuxing.md`
+
+The target is a distributed job-control service whose autoscaler oscillates after traffic spikes.
+
+## Non-activation fixture
+
+See:
+
+- `research/framework-candidates/worked-examples/wuxing-negative.md`
+
+When a target already has a signed / typed causal-loop model with temporal states and evidence links, Wuxing contact adds labels without adding a new cognitive job.
+
+## Ordinary-baseline comparison
+
+See:
+
+- `research/framework-candidates/comparisons/wuxing-vs-ordinary-causal-loop-analysis.md`
+
+The baseline uses ordinary system-dynamics / causal-loop operations:
+
+- directed influence links;
+- explicit polarity or typed enabling / constraining relations;
+- reinforcing and balancing loops;
+- missing-link inspection;
+- state-dependent or time-indexed relation review.
+
+The comparison does not claim that `sheng` and `ke` are philosophically identical to positive and negative causal polarity. It asks only whether the **target-side questions remaining after de-binding** are already generated by ordinary analysis.
+
+## Near-neighbor comparison
+
+See:
+
+- `research/framework-candidates/comparisons/wuxing-vs-dependent-origination.md`
+
+The framework distinction remains intelligible:
+
+- Wuxing foregrounds two relation cycles and relational role changes;
+- dependent origination foregrounds arising / cessation conditions and upstream conditional chains.
+
+Dependent origination is now research-only after ordinary RCA / fault-tree / dependency analysis reproduced its tested SIer operations. Cultural distinctness therefore cannot by itself justify Wuxing runtime retention.
+
+## Target-return questions
+
+- Which target variables enable or amplify another state?
+- Which relations constrain, damp, throttle, or counteract another state?
+- Which closed paths reinforce an excursion, and which paths balance it?
+- Does the same component play different roles on different edges?
+- Is an apparently missing component actually a missing relation?
+- Does the relation pattern change between normal load, spike, recovery, and oscillation?
+- Which edge claims are backed by logs, metrics, tests, or controlled intervention?
+- If all Wuxing vocabulary is removed, what target-side question remains that a signed causal-loop analysis did not already ask?
+
+## Historical / variant boundary
+
+- Wuxing has a long and heterogeneous history; no one modern engineering graph should be presented as the historical system itself.
+- The generating and overcoming cycles are structurally important, but their use across medicine, cosmology, politics, calendrics, and other traditions must not be collapsed into one universal application.
+- `sheng` / `ke` are not asserted to be identical to modern positive / negative causality.
+- The five phases are not treated as five target-side substances or components.
 
 ## What not to import by default
 
-- body organ correspondences;
-- personality typing;
-- colors, directions, planets, sounds, emotions, tastes, seasons as one undifferentiated canonical table;
-- medical diagnosis;
-- feng shui rules;
-- astrology;
-- claims that a target literally possesses one of the five phases.
-
-Specific correspondence layers may be researched later with lineage and source labels.
-
-## Exploratory prompts produced by this profile
-
-- Which relation is generative, and which is constraining?
-- If this is a loop rather than a chain, where does feedback return?
-- What is currently overproduced because its counter-relation is absent?
-- What appears harmful locally but stabilizing globally?
-- If one link is removed, where does the first observable failure appear?
-- Does the target require a five-way classification at all, or is the useful contribution only the relation grammar?
-
-The last question is important: CSW may keep a relation question even when the five-phase assignment itself is discarded.
+- mandatory assignment of exactly five target entities;
+- symbolic correspondences such as organs, seasons, colors, directions, planets, sounds, emotions, or tastes;
+- traditional medical diagnosis or causal claims;
+- an assumption that a neat five-node cycle proves a target mechanism;
+- balance as equal quantities rather than a relation hypothesis;
+- cultural vocabulary as evidence for an edge.
 
 ## De-binding
 
-1. remove Wood/Fire/Earth/Metal/Water labels from the target-facing candidate;
-2. preserve the relation verb that proved useful;
-3. state whether it came from generation, overcoming, or another explicitly sourced relation;
-4. return the candidate to target evidence;
-5. if target material does not support the phase mapping, withdraw the mapping without discarding a surviving question.
+1. remove Wood / Fire / Earth / Metal / Water labels unless provenance matters;
+2. retain only target variables supported by target material;
+3. express relation claims in target vocabulary;
+4. keep enabling / constraining relation types provisional until target evidence supports them;
+5. inspect feedback loops, broken links, role changes, and temporal changes;
+6. compare the resulting questions with ordinary causal-loop / signed-graph analysis;
+7. keep only distinctions that survive that baseline.
 
-## Adoption synchronization
+## Runtime requalification result
 
-This framework is adopted in `src/ja-JP/frameworks/wuxing.md` as a relation/cycle dossier.
+The same-target comparison shows that ordinary signed causal-loop / system-dynamics analysis reproduces the tested target-relevant operations.
 
-Runtime adoption licenses the explicitly sourced generation and overcoming relations, role reversal, cycle-break questions, and de-binding back to target relation verbs. It does not load medical, astrological, directional, or personality correspondence tables.
+The baseline can distinguish enabling and constraining links, preserve direction, expose reinforcing and balancing feedback, reveal missing edges, show one variable participating in several relation roles, and compare graph state over time. On the autoscaler target it generates the same useful questions without assigning five phases or importing historical correspondences.
 
-Target-return example: a five-phase assignment may be discarded after use, while the surviving target question “which enabling relation became unstable because a constraining relation was removed?” remains testable in the target. Historical correspondence layers remain enrichment work rather than part of the adopted core.
+The strongest remaining value is historical and comparative: Wuxing supplies an important cultural example of relational, cyclical, and non-substantialist organization. That remains useful for explicit Wuxing, Chinese intellectual history, comparative systems thinking, or educational work.
+
+For general SIer systems analysis, the current evidence supports removing Wuxing from default runtime while preserving it as a sourced research candidate.
