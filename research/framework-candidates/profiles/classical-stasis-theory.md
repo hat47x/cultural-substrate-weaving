@@ -146,11 +146,11 @@ On the existing release-incident target, a strong ordinary incident / issue-tria
 - issue-switch detection;
 - evidence relevance by issue type.
 
-No additional target-side question remained after the historical rhetorical vocabulary was removed.
+No additional target-side question remained **once the issue-triage job was already selected** and the historical rhetorical vocabulary was removed.
 
-The profile and source basis should remain available because stasis theory still matters for explicit classical-rhetoric requests, historical or comparative argumentation, and future targets where a distinct operation survives ordinary-baseline comparison.
+This demotion predates the current distinction between capability overlap and discovery value. The operational removal remains in place, but the comparison does not yet establish that a generic ex-ante incident review would have selected fact / definition / evaluation / authority-process separation before stasis contact. A retrospective discovery-value comparison is required before treating the demotion rationale as complete.
 
-This is a product-boundary judgment rather than a claim that stasis theory is analytically or historically unimportant.
+The profile and source basis should remain available for that review, for explicit classical-rhetoric requests, historical or comparative argumentation, and future targets where a distinct discovery contribution survives target return.
 
 Worked examples and comparisons:
 
