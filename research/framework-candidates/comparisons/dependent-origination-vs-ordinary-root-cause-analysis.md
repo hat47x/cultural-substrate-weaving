@@ -4,7 +4,7 @@ Status: runtime requalification / same-target ordinary-baseline comparison
 
 ## Purpose
 
-Dependent origination is currently a default runtime framework and the typology notes that it has also been a model default pick.
+Dependent origination was previously a default runtime framework and the typology notes that it has also been a model default pick.
 
 This comparison applies the current requalification question:
 
@@ -113,36 +113,29 @@ A cultural framework being distinct from another cultural framework does not est
 
 ## Result
 
-For this SIer target, the ordinary-baseline counter-hypothesis survives.
+For this SIer target, the matched engineering baseline reproduces the de-bound dependent-origination **capability**.
 
-The dependent-origination pass is coherent and useful, but its tested de-bound operations are supplied directly by ordinary engineering practice. The framework adds historical/philosophical provenance and can serve explicit Buddhist or comparative-philosophy requests, but no additional target-side question remains for general incident analysis.
+The framework pass is coherent and useful, but once upstream-condition search, branching preconditions, dependency analysis, and intervention testing are already selected, ordinary engineering methods can represent those jobs directly.
+
+This file therefore establishes capability overlap. It does **not by itself** establish that the same cognitive job would have been selected before framework contact.
 
 ## Runtime consequence
 
-The current evidence does **not** support keeping dependent origination in the general default runtime for ordinary SIer root-cause or dependency analysis.
+Do not use this file alone to justify runtime demotion.
 
-Preserve:
+The missing ex-ante selection question is evaluated separately in:
 
-- source basis;
-- research profile;
-- positive / negative fixtures;
-- selection cues;
-- target-structure mapping;
-- comparison with Paṭṭhāna;
-- explicit-request and historically situated use.
+- `research/framework-candidates/comparisons/dependent-origination-discovery-value.md`
 
-Remove general runtime exposure if the repository's mechanical demotion checks remain consistent.
+That retrospective comparison finds that ordinary post-incident practice already asks for contributing components / conditions / actions / events, deeper causes, mitigations, preventive actions, and evidence-backed corrective changes before dependent-origination contact.
+
+Under the revised discovery-aware standard, the combined evidence confirms the existing runtime demotion.
 
 ## Product-value consequence
 
-This is especially important because the current typology already notes that dependent origination is a model default pick.
+This matters because dependent origination has been an easy framework for the model to select.
 
-A framework that is both easy for the model to select and fully reproducible by ordinary analysis creates two costs:
-
-- selection bias toward a culturally marked framing;
-- runtime complexity without added cognitive capability.
-
-Demotion would therefore improve both precision and portfolio discipline while preserving the research asset.
+Where both capability overlap and discovery overlap hold, keeping a culturally marked default adds selection bias and context without opening a new target-side cognitive job. Preserving the sourced research candidate while keeping it out of general runtime is therefore the lower-overhead product choice for the tested SIer incident family.
 
 ## Ordinary-baseline references
 

@@ -170,9 +170,25 @@ The strongest framework-specific residue is philosophical provenance: a historic
 
 The former runtime dossier has now been removed from the default corpus. The comparison above establishes capability overlap with ordinary RCA / fault-tree / dependency analysis after the relevant cognitive operations are named.
 
-This demotion predates the current distinction between capability overlap and discovery value. The operational removal remains in place, but the evidence does **not yet establish** that an ex-ante generic incident review would have selected the same upstream-condition / cessation job before dependent-origination contact. A retrospective discovery-value comparison is therefore required before treating the demotion rationale as complete.
+### Discovery-value comparison
 
-Reconsider runtime use after that review, as well as for explicit Buddhist or comparative-philosophy work, historically situated targets, or a future target where a distinct discovery contribution survives target return.
+See:
+
+- `research/framework-candidates/comparisons/dependent-origination-discovery-value.md`
+
+The retrospective ex-ante comparison starts from ordinary post-incident practice without naming Five Whys, FTA, counterfactual causation, or dependent origination in advance.
+
+On the tested rolling-deployment incident, ordinary reliability analysis already asks which components, conditions, actions, and events contributed; what earlier state made the failure path possible; which mitigation or corrective action prevents recurrence; and what observation should change after that intervention. The target therefore opens upstream-condition and cessation-check work before framework contact.
+
+### Retrospective requalification result
+
+The operational demotion is **confirmed under the discovery-aware standard**.
+
+The reason is not that dependent origination is historically unimportant, nor that its arising / cessation formulation is conceptually identical to modern incident analysis.
+
+The product result is narrower: for the tested general SIer incident, both the cognitive capability and the ex-ante selection path are already supplied by ordinary post-incident practice at comparable or lower selection cost. After de-binding, no distinct target-side discovery remains.
+
+Preserve dependent origination as a sourced research candidate for explicit Buddhist, comparative-philosophy, historical, educational, or future targets where a distinct discovery contribution can be demonstrated.
 
 ## References for ordinary baseline
 
