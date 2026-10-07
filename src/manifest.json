@@ -78,11 +78,6 @@
       "skill_reference": "04a-yijing.md"
     },
     {
-      "id": "framework-wuxing",
-      "source": "frameworks/wuxing.md",
-      "skill_reference": "04b-wuxing.md"
-    },
-    {
       "id": "framework-sankhya",
       "source": "frameworks/sankhya.md",
       "skill_reference": "04c-sankhya.md"
@@ -189,7 +184,6 @@
     "03-framework-library.md": [
       "frameworks/portfolio.md",
       "frameworks/yijing.md",
-      "frameworks/wuxing.md",
       "frameworks/sankhya.md",
       "frameworks/catuskoti.md",
       "frameworks/jain-sevenfold-predication.md",
