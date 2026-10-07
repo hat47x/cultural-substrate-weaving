@@ -298,7 +298,7 @@ class FrameworkCorpusContractTest(unittest.TestCase):
             [item["candidate_id"] for item in audit["candidates"]],
         )
 
-    def test_wuxing_requalification_supports_discovery_aware_runtime_demotion(self) -> None:
+    def test_wuxing_requalification_evidence_survives_discovery_aware_runtime_demotion(self) -> None:
         inventory_path = ROOT / "research" / "framework-candidates" / "cognitive-operation-inventory.json"
         data = json.loads(inventory_path.read_text(encoding="utf-8"))
         row = next(
@@ -306,37 +306,37 @@ class FrameworkCorpusContractTest(unittest.TestCase):
             if item["id"] == "wuxing"
         )
 
-        self.assertEqual(row["readiness"], "adopted")
+        self.assertEqual(row["readiness"], "profile-ready")
+        self.assertNotIn("runtime_path", row)
         self.assertEqual(contract.validate_candidate(ROOT, row), [])
 
-        audit = contract.adopted_requalification_payload(ROOT, data)
-        audited = next(
-            item for item in audit["candidates"]
-            if item["candidate_id"] == "wuxing"
-        )
-        self.assertEqual(audited["evidence_gaps"], [])
+        registry = workspace.registry_entry_payload(data, "wuxing")
+        self.assertFalse(registry["registry"]["runtime_enabled"])
         self.assertIn(
             "research/framework-candidates/comparisons/wuxing-vs-ordinary-causal-loop-analysis.md",
-            audited["recorded_evidence"]["ordinary_baseline_comparison_paths"],
+            registry["runtime_requalification"]["ordinary_baseline_comparison_paths"],
         )
         self.assertIn(
             "research/framework-candidates/comparisons/wuxing-discovery-value.md",
-            audited["recorded_evidence"]["discovery_value_comparison_paths"],
+            registry["runtime_requalification"]["discovery_value_comparison_paths"],
         )
         self.assertIn(
             "research/framework-candidates/comparisons/wuxing-vs-dependent-origination.md",
-            audited["recorded_evidence"]["near_neighbor_comparison_paths"],
+            registry["runtime_requalification"]["near_neighbor_comparison_paths"],
         )
-
-        registry = workspace.registry_entry_payload(data, "wuxing")
-        self.assertTrue(registry["registry"]["runtime_enabled"])
         self.assertIn(
-            "runtime-removal-supported-discovery-aware",
+            "general-runtime-demoted-discovery-aware",
             registry["registry"]["adoption_hold"],
         )
         self.assertEqual(
             registry["runtime_requalification"]["discovery_review_state"],
             "complete-demote",
+        )
+
+        audit = contract.adopted_requalification_payload(ROOT, data)
+        self.assertNotIn(
+            "wuxing",
+            [item["candidate_id"] for item in audit["candidates"]],
         )
 
     def test_huayan_requalification_supports_runtime_retention_with_discovery_value(self) -> None:
