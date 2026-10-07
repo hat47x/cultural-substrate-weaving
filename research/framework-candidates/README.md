@@ -114,6 +114,10 @@ Registry-0は文化そのものの正本ではない。文献・系譜・研究�
 - fourteenth-wave-2026-10-02.md
 - fifteenth-wave-2026-10-02.md
 - sixteenth-wave-2026-10-03.md
+- seventeenth-wave-2026-10-05.md
+- eighteenth-wave-2026-10-05.md
+- nineteenth-wave-2026-10-05.md
+- twentieth-wave-2026-10-07.md
 - worked-examples/ 以下のtarget-return例
 - comparisons/ 以下のnear-neighbor / comparative collapse test
 - portfolio-qualitative-audit-2026-10-01.md
@@ -161,6 +165,7 @@ Registry-0は文化そのものの正本ではない。文献・系譜・研究�
 - ifa-odu（profile-ready / living-tradition-sensitive / not-runtime）
 - vedic-recitation-pathas（profile-ready / living-religious-tradition-sensitive / not-runtime）
 - panini-ashtadhyayi-rule-architecture（profile-ready / classical-text-and-commentarial-layer-sensitive）
+- medieval-renga-linked-verse（profile-ready / research-only / collaborative-link-and-release）
 
 医療、宗教、living tradition、系譜差の境界が重い体系は、構造的価値が高くても採用を急がない。採用済みのhadith-isnad-matnとmarshallese-wave-navigationも、宗教上の真正性判定や非公開知識の再現を行わない境界をruntime側に残す。
 

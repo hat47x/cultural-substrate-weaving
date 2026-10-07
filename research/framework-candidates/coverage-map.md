@@ -1,4 +1,4 @@
-# Cognitive-operation coverage map — 2026-10-06
+# Cognitive-operation coverage map — 2026-10-07
 
 Status: research planning / not an efficacy benchmark
 
@@ -27,6 +27,7 @@ This map tracks structural diversity. It does not rank frameworks or claim that 
 | axis/extents reframing vs differentiated mediation | — | Sefer Yetzirah dimensions; theosophical sefirot (both profile-ready) | test distinctness after de-binding while keeping the two historical structures separate |
 | explicit argument / inference structure | Nyāya inference | — | later debate/fallacy layers without flattening Indian logic |
 | adversarial objection preservation / pointwise reply | — | Scholastic disputed question (profile-ready) | compare against ordinary design review, stasis, and Nyāya; do not import master authority or force premature determination |
+| sequential collaborative linking / controlled thematic release | — | Medieval renga linked verse (profile-ready / no-runtime) | compare against independent, round-robin, persona-diverse, and generic local-link + topic-release baselines; preserve local coherence without making diversity itself the goal |
 | social role / relation-conditioned conduct | Confucian role / li | — | additional role systems that do not duplicate relation mapping |
 | explicit threshold crossing / incorporation / preparation | Shinto shrine threshold / purification | Rites of Passage (profile-ready) | longer liminal/incorporation processes and other culture-specific threshold systems |
 | spatial center-periphery / nested boundary | Tibetan Buddhist mandala | Buddhist mandala umbrella (research-only) | other lineage-specific spatial systems without pan-Buddhist collapse |
@@ -58,9 +59,9 @@ Do not start broad efficacy comparison yet.
 Registry snapshot on 2026-10-06:
 
 - adopted: 14
-- profile-ready: 20
+- profile-ready: 21
 - research-only: 2
 - defer-lineage-specific: 1
-- total: 37
+- total: 38
 
-Adopted-core requalification has now produced five runtime demotions. Wuxing is the first demotion completed under the discovery-aware standard: both specialist capability overlap and ex-ante discovery overlap were established on the autoscaler target. Mīmāṃsā, dependent origination, classical stasis theory, and Aristotle's four causes remain operationally demoted but require retrospective discovery-value review. Huayan is the first discovery-aware retention case. Continue requalifying the adopted core and filling genuinely different operation families before broad efficacy comparison. Do not use the counts themselves as a quality score.
+Adopted-core requalification has now produced five runtime demotions. Wuxing is the first demotion completed under the discovery-aware standard: both specialist capability overlap and ex-ante discovery overlap were established on the autoscaler target. Mīmāṃsā, dependent origination, classical stasis theory, and Aristotle's four causes remain operationally demoted but require retrospective discovery-value review. Huayan is the first discovery-aware retention case. Continue requalifying the adopted core and filling genuinely different operation families before broad efficacy comparison. The renga candidate adds a research-only interaction-topology family for local linkage plus controlled thematic release; it must beat a generic facilitation baseline before any runtime promotion. Do not use the counts themselves as a quality score.

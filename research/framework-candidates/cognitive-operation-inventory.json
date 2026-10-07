@@ -2527,6 +2527,79 @@
       "negative_example_paths": [
         "research/framework-candidates/worked-examples/theravada-patthana-conditional-relations-negative.md"
       ]
+    },
+    {
+      "id": "medieval-renga-linked-verse",
+      "names": [
+        "中世連歌",
+        "medieval renga",
+        "linked verse"
+      ],
+      "readiness": "profile-ready",
+      "structural_primitives": [
+        "collaborative linked-verse sequence",
+        "interpretive link to the preceding unit",
+        "constraints on prolonged thematic or categorical repetition",
+        "alternating or multi-author turn-taking",
+        "local continuity with sequence-level movement"
+      ],
+      "cognitive_operations": [
+        "preceding-unit-interpretation",
+        "local-linkage",
+        "thematic-release",
+        "anti-seriation",
+        "collaborative-turn-handoff",
+        "local-coherence-global-divergence"
+      ],
+      "useful_for": [
+        "keeping multi-agent exploration locally connected without letting the first theme dominate the whole sequence",
+        "moving a design discussion into a new target dimension while preserving a traceable link to the previous contribution",
+        "testing whether collaboration structure changes convergence independently of persona diversity"
+      ],
+      "do_not_assume": [
+        "medieval renga, early-modern haikai, and modern renku share one invariant rule system",
+        "poetic mastership grants target-side epistemic or decision authority",
+        "more thematic shifting is always better than convergence",
+        "surface diversity establishes usefulness or target support"
+      ],
+      "sources": [
+        {
+          "kind": "scholarly-monograph",
+          "title": "Linked Verse in Medieval Japan: History, Commentary, Performance",
+          "url": "https://cup.columbia.edu/book/linked-verse-in-medieval-japan/9780231191142/"
+        },
+        {
+          "kind": "scholarly-study",
+          "title": "Linking as Hermeneutical Process",
+          "url": "https://academic.oup.com/stanford-scholarship-online/book/33262/chapter-abstract/285362343"
+        },
+        {
+          "kind": "scholarly-translation-and-contextualization",
+          "title": "Renga by Sasaki Dōyo: Selected from the Tsukubashū (Tsukuba Anthology)",
+          "url": "https://www.cambridge.org/core/journals/asia-pacific-journal/article/renga-by-sasaki-doyo-selected-from-the-tsukubashu-tsukuba-anthology/A2318F9247F8015373A620232D8B77A3"
+        }
+      ],
+      "selection_cues": [
+        "直前の案との接続を保ちながら別の設計次元へ移りたい",
+        "複数agentが最初の案の精緻化だけへ収束している",
+        "局所的一貫性と探索全体の多様性を同時に観察したい",
+        "keep each new contribution linked to the previous one while releasing a dominant theme",
+        "reduce premature convergence without restarting from unrelated random ideas"
+      ],
+      "profile_path": "research/framework-candidates/profiles/medieval-renga-linked-verse.md",
+      "worked_example_paths": [
+        "research/framework-candidates/worked-examples/medieval-renga-linked-verse.md"
+      ],
+      "negative_example_paths": [
+        "research/framework-candidates/worked-examples/medieval-renga-linked-verse-negative.md"
+      ],
+      "runtime_requalification": {
+        "ordinary_baseline_comparison_paths": [
+          "research/framework-candidates/comparisons/renga-vs-multi-agent-brainstorming.md"
+        ],
+        "discovery_review_state": "required-before-runtime"
+      },
+      "adoption_hold": "research-only: compare source-bounded renga contact against a generic local-link plus topic-release rule before any runtime promotion"
     }
   ]
 }
