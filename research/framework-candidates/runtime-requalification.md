@@ -80,6 +80,10 @@ Aristotle's four causesについても現行基準の再資格を実施した。
 
 このため、Aristotle's four causesもgeneral default runtimeから外して`profile-ready`へ戻した。source basis、研究profile、正例・non-activation例、dependent-origination近接比較、selection cueは保持しており、explicit Aristotle / history-of-philosophy / comparative-explanation / educational useから再検討できる。
 
+Wuxing（五行）についても、distributed-worker autoscalerのoscillationをsame-targetとして、ordinary signed causal-loop / system-dynamics analysisと比較した。生成／制約という二種類の関係、feedback loop、edgeごとのrole変化、missing link、operating stateによるrelation changeは、target-languageのdirected typed graphで再現でき、追加のtarget-side questionは残らなかった。歴史的な`sheng` / `ke`とmodern causal polarityの同一性は主張せず、tested SIer useでde-bind後の問いが重複するという限定的なruntime product boundaryとして扱う。
+
+このため、Wuxingもgeneral runtime retentionを支持しない研究判断まで進んでいる。現時点では機械的なruntime removalとは分離し、source basis、研究profile、正例・non-activation例、ordinary causal-loop baseline比較、dependent-origination近接比較、selection cueを保持する。
+
 Mīmāṃsā demotion前に`profile_path`がRegistryに記録されていたadopted candidateは次の9件だった。
 
 - `llull-ars`
@@ -92,10 +96,9 @@ Mīmāṃsā demotion前に`profile_path`がRegistryに記録されていたadop
 - `mimamsa-hermeneutics`
 - `marshallese-wave-navigation`
 
-最初の監査時点では、次の10件がRegistry metadata上`profile_path`を持たなかった。dependent originationは今回の再資格でprofileを追加したため、現在この未整備群に残るのは8件である。
+最初の監査時点では、次の10件がRegistry metadata上`profile_path`を持たなかった。dependent origination、Aristotle's four causes、Wuxingは再資格でprofileを追加したため、現在この未整備群に残るのは7件である。
 
 - `yijing`
-- `wuxing`
 - `tzolkin`
 - `rasa`
 - `huayan`
