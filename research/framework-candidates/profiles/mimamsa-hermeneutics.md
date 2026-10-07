@@ -152,9 +152,11 @@ The two target-return examples and the Stasis / Nyāya boundary remain valid des
 
 No additional target-side question remained that required the Mīmāṃsā substrate for these SIer uses.
 
-This is not a judgment against the historical tradition. It is a product-boundary judgment: general policy / requirements analysis can supply the tested cognitive operations with less cultural overhead.
+This is not a judgment against the historical tradition. The comparison establishes that general policy / requirements analysis can reproduce the **tested cognitive operations** after those operations are known.
 
-The research candidate should therefore be preserved, while general runtime removal is supported. Reconsider runtime use only for comparative hermeneutics, explicit user-requested Mīmāṃsā analysis, historically situated work, or a future target where an operation survives ordinary-baseline comparison.
+This demotion predates the current distinction between capability overlap and discovery value. The operational removal remains in place, but the evidence does **not yet establish** that an ex-ante generic review would have selected the same interpretive job before Mīmāṃsā contact. A retrospective discovery-value comparison is therefore required before treating the demotion rationale as complete.
+
+Preserve the research candidate and reconsider runtime use after that review, as well as for comparative hermeneutics, explicit user-requested Mīmāṃsā analysis, historically situated work, or a future target where a distinct discovery contribution survives target return.
 
 Worked examples:
 
