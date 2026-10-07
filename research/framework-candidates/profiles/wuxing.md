@@ -145,6 +145,8 @@ The same-target comparison shows that ordinary signed causal-loop / system-dynam
 
 The baseline can distinguish enabling and constraining links, preserve direction, expose reinforcing and balancing feedback, reveal missing edges, show one variable participating in several relation roles, and compare graph state over time. On the autoscaler target it generates the same useful questions without assigning five phases or importing historical correspondences.
 
-The strongest remaining value is historical and comparative: Wuxing supplies an important cultural example of relational, cyclical, and non-substantialist organization. That remains useful for explicit Wuxing, Chinese intellectual history, comparative systems thinking, or educational work.
+The same-target comparison establishes **capability overlap** with signed causal-loop / system-dynamics analysis. It does not yet establish that an ordinary ex-ante review would have selected that specialist method, or surfaced the same relational job, before Wuxing contact.
 
-For general SIer systems analysis, the current evidence supports removing Wuxing from default runtime while preserving it as a sourced research candidate.
+The strongest currently established residual is historical and comparative: Wuxing supplies an important cultural example of relational, cyclical, and non-substantialist organization. Whether it also supplies runtime **discovery value** for general SIer work remains an open question.
+
+Therefore runtime removal is **on hold**. Before any demotion, compare an ex-ante generic baseline with Wuxing contact and record whether the framework exposes a cognitive job that the baseline did not naturally select. Preserve Wuxing in the current runtime until that comparison is complete.

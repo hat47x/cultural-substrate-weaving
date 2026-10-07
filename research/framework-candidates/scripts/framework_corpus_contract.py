@@ -26,6 +26,7 @@ PROFILE_DEBINDING_MARKERS = (
 
 RUNTIME_REQUALIFICATION_PATH_FIELDS = (
     "ordinary_baseline_comparison_paths",
+    "discovery_value_comparison_paths",
     "near_neighbor_comparison_paths",
 )
 
@@ -79,6 +80,10 @@ def adopted_requalification_payload(
             root,
             requalification.get("ordinary_baseline_comparison_paths"),
         )
+        discovery_paths, missing_discovery = _existing_path_list(
+            root,
+            requalification.get("discovery_value_comparison_paths"),
+        )
         near_neighbor_paths, missing_near_neighbor = _existing_path_list(
             root,
             requalification.get("near_neighbor_comparison_paths"),
@@ -93,6 +98,8 @@ def adopted_requalification_payload(
             evidence_gaps.append("non-activation-fixture")
         if not baseline_paths or missing_baseline:
             evidence_gaps.append("ordinary-or-no-framework-baseline-comparison")
+        if not discovery_paths or missing_discovery:
+            evidence_gaps.append("discovery-value-comparison")
         if not near_neighbor_paths or missing_near_neighbor:
             evidence_gaps.append("near-neighbor-comparison")
 
@@ -105,12 +112,14 @@ def adopted_requalification_payload(
                 "worked_example_paths": worked_paths,
                 "negative_example_paths": negative_paths,
                 "ordinary_baseline_comparison_paths": baseline_paths,
+                "discovery_value_comparison_paths": discovery_paths,
                 "near_neighbor_comparison_paths": near_neighbor_paths,
             },
             "missing_files": sorted(set(
                 missing_worked
                 + missing_negative
                 + missing_baseline
+                + missing_discovery
                 + missing_near_neighbor
             )),
             "evidence_gaps": evidence_gaps,
@@ -125,8 +134,10 @@ def adopted_requalification_payload(
             "ranking, fit test, or automatic demotion rule. A missing artifact means that "
             "the current Registry does not record that part of the modern requalification "
             "case. It does not establish that the framework is weak, invalid, or should be "
-            "removed. Requalification decisions remain explicit research and product "
-            "judgments."
+            "removed. Specialist-method equivalence establishes capability overlap only; "
+            "it does not establish that the specialist method would have been selected "
+            "before framework contact or that the framework has no discovery value. "
+            "Requalification decisions remain explicit research and product judgments."
         ),
     }
 

@@ -168,9 +168,11 @@ No additional target-side question remains that requires the dependent-originati
 
 The strongest framework-specific residue is philosophical provenance: a historically important paired arising/cessation formulation and an anti-essentialist orientation. That remains valuable for explicit Buddhist, comparative-philosophy, or historically situated work, but it does not currently justify default runtime selection complexity for general SIer analysis.
 
-The former runtime dossier has now been removed from the default corpus. The research evidence supports preserving dependent origination as a sourced research candidate while not exposing it as a general default runtime framework.
+The former runtime dossier has now been removed from the default corpus. The comparison above establishes capability overlap with ordinary RCA / fault-tree / dependency analysis after the relevant cognitive operations are named.
 
-Reconsider runtime use only for explicit Buddhist or comparative-philosophy work, historically situated targets, or a future target where a de-bound operation survives strong ordinary-baseline comparison.
+This demotion predates the current distinction between capability overlap and discovery value. The operational removal remains in place, but the evidence does **not yet establish** that an ex-ante generic incident review would have selected the same upstream-condition / cessation job before dependent-origination contact. A retrospective discovery-value comparison is therefore required before treating the demotion rationale as complete.
+
+Reconsider runtime use after that review, as well as for explicit Buddhist or comparative-philosophy work, historically situated targets, or a future target where a distinct discovery contribution survives target return.
 
 ## References for ordinary baseline
 

@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+- Revised runtime requalification to separate specialist-method capability overlap from ex-ante discovery value. A framework is no longer eligible for demotion merely because a matched specialist method can reproduce its de-bound operations after contact; adopted-framework audits now record a separate discovery-value evidence gap. Wuxing demotion is held pending that comparison, and the four earlier demotions are marked for retrospective discovery-value review.
+
 - Requalified Aristotle's four causes against strong ordinary systems/design review. Stakeholder objectives, constraints/resources, architecture, and behavior/mechanism review reproduced the tested de-bound SIer operations, so the framework was removed from the default runtime corpus while its sourced research profile, examples, comparisons, typology mapping, and explicit-request path remain available.
 
 - Requalified classical stasis theory against strong ordinary incident/issue triage. The tested dispute-location and issue-switch operations were reproducible without the cultural substrate, so stasis theory was removed from the default runtime corpus while its sourced research profile, examples, comparisons, typology mapping, and explicit-request path remain available.
