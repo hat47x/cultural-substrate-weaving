@@ -87,16 +87,20 @@ The ordinary-baseline counter-hypothesis survives.
 
 Both passes ask which relations amplify, constrain, loop, change role, break, or shift over time. The ordinary baseline can also represent delay, evidence, and operating-state dependence without a mandatory five-node topology.
 
-No additional target-side question remains that requires Wuxing contact for this use.
+Once the signed causal-loop job has been selected, no additional target-side question remains that requires Wuxing contact for this use.
 
 ## Runtime consequence
 
-The current evidence does not support keeping Wuxing as a general default runtime framework for SIer feedback / dependency analysis.
+This comparison establishes **capability overlap**, not a complete runtime-removal case.
 
-Preserve its research profile, source basis, target-return fixture, non-activation fixture, selection cues, and explicit Wuxing / Chinese-intellectual-history / comparative-systems use.
+It does not show whether a generic ex-ante review of the autoscaler would have selected signed causal-loop / system-dynamics analysis, or whether Wuxing contact is what first makes enabling-versus-constraining cycles and relation-role changes salient.
+
+Therefore runtime removal is on hold until a discovery-value comparison is recorded on the same or a comparable target.
+
+Preserve the research profile, source basis, target-return fixture, non-activation fixture, selection cues, and explicit Wuxing / Chinese-intellectual-history / comparative-systems use.
 
 ## Product-value consequence
 
-The typology already notes that the prior Wuxing task set failed calibration. Requalification shows a more fundamental product issue: the tested de-bound runtime operations are supplied directly by ordinary causal-loop analysis.
+The typology already notes that the prior Wuxing task set failed calibration. The present comparison adds a different result: the tested de-bound operations are reproducible **after the relevant specialist analysis is chosen**.
 
-Keeping Wuxing in default runtime under that condition adds framework-selection complexity and cultural-label overhead without increasing tested target-side cognitive capability.
+That finding can reduce claims of unique capability, but it cannot by itself establish that Wuxing has no value as a low-selection-cost discovery catalyst. The next product question is whether Wuxing contact exposes a useful relational job that the generic baseline would otherwise leave unopened.
