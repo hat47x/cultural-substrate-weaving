@@ -885,13 +885,37 @@ def registry_state_audit_payload(
             state = "candidate_missing_from_current_inventory"
             workspace_matches_current = False
             contact_matches_current = None if contact_snapshot is None else False
+            workspace_changed_fields: list[str] = []
+            contact_changed_fields: list[str] = []
             missing_candidate_ids.append(candidate_id)
         else:
-            workspace_matches_current = workspace_snapshot == current_boundary
+            boundary_fields = (
+                "readiness",
+                "runtime_enabled",
+                "runtime_path",
+                "adoption_hold",
+                "discovery_review_state",
+                *RUNTIME_BOUNDARY_PATH_FIELDS,
+            )
+            workspace_changed_fields = [
+                key
+                for key in boundary_fields
+                if workspace_snapshot.get(key) != current_boundary.get(key)
+            ]
+            contact_changed_fields = (
+                []
+                if contact_snapshot is None
+                else [
+                    key
+                    for key in boundary_fields
+                    if contact_snapshot.get(key) != current_boundary.get(key)
+                ]
+            )
+            workspace_matches_current = not workspace_changed_fields
             contact_matches_current = (
                 None
                 if contact_snapshot is None
-                else contact_snapshot == current_boundary
+                else not contact_changed_fields
             )
             state = (
                 "matching_current_registry"
@@ -908,7 +932,9 @@ def registry_state_audit_payload(
             "contact_time_registry_snapshot": contact_snapshot,
             "current_registry_state": current_boundary,
             "workspace_matches_current": workspace_matches_current,
+            "workspace_changed_fields": workspace_changed_fields,
             "contact_snapshot_matches_current": contact_matches_current,
+            "contact_changed_fields": contact_changed_fields,
             "workspace_matches_contact_snapshot": (
                 None
                 if contact_snapshot is None

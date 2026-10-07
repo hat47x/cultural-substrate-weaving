@@ -772,6 +772,54 @@ class FrameworkSelectionWorkspaceTest(unittest.TestCase):
         self.assertNotIn('"recommendation"', encoded)
         self.assertIn("no semantic classification", payload["interpretation_boundary"])
 
+    def test_real_target_structure_lookup_preserves_discovery_aware_runtime_boundary(self) -> None:
+        inventory = workspace.load_inventory(
+            ROOT / "research" / "framework-candidates" / "cognitive-operation-inventory.json"
+        )
+        typology = workspace.load_typology(
+            ROOT / "research" / "efficacy-cheap-llm" / "framework-typology.json"
+        )
+
+        payload = workspace.target_structure_candidates_payload(
+            typology,
+            inventory,
+            [
+                "TS-condition-chain",
+                "TS-whole-part-mirroring",
+                "TS-dispute-location",
+            ],
+        )
+        by_structure = {
+            item["id"]: item
+            for item in payload["target_structures"]
+        }
+
+        dependent = by_structure["TS-condition-chain"]["mapped_candidates"][0][
+            "candidate"
+        ]["runtime_boundary"]
+        self.assertFalse(dependent["runtime_enabled"])
+        self.assertEqual(
+            dependent["discovery_review_state"],
+            "complete-demote-retrospective",
+        )
+
+        huayan = by_structure["TS-whole-part-mirroring"]["mapped_candidates"][0][
+            "candidate"
+        ]["runtime_boundary"]
+        self.assertTrue(huayan["runtime_enabled"])
+        self.assertEqual(huayan["discovery_review_state"], "complete-retain")
+
+        stasis = by_structure["TS-dispute-location"]["mapped_candidates"][0][
+            "candidate"
+        ]["runtime_boundary"]
+        self.assertTrue(stasis["runtime_enabled"])
+        self.assertEqual(stasis["discovery_review_state"], "complete-restore")
+
+        encoded = json.dumps(payload).casefold()
+        self.assertNotIn('"score"', encoded)
+        self.assertNotIn('"rank"', encoded)
+        self.assertNotIn('"recommendation"', encoded)
+
     def test_target_structure_lookup_requires_exact_known_id(self) -> None:
         with self.assertRaisesRegex(ValueError, "unknown target structure"):
             workspace.target_structure_candidates_payload(
@@ -935,6 +983,14 @@ class FrameworkSelectionWorkspaceTest(unittest.TestCase):
             audit["contact_snapshot_matches_current"]
         )
         self.assertEqual(payload["drifted_candidate_ids"], ["alpha"])
+        self.assertIn("readiness", audit["workspace_changed_fields"])
+        self.assertIn("runtime_enabled", audit["workspace_changed_fields"])
+        self.assertIn("runtime_path", audit["workspace_changed_fields"])
+        self.assertIn("discovery_review_state", audit["workspace_changed_fields"])
+        self.assertIn(
+            "discovery_value_comparison_paths",
+            audit["workspace_changed_fields"],
+        )
         encoded = json.dumps(payload).casefold()
         self.assertNotIn('"score"', encoded)
         self.assertNotIn('"rank"', encoded)
