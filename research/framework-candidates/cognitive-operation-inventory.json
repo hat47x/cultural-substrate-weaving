@@ -390,7 +390,27 @@
         "read part and whole as mutually defining",
         "re-read the whole from another node",
         "re-identify a part through its containing whole"
-      ]
+      ],
+      "profile_path": "research/framework-candidates/profiles/huayan.md",
+      "adoption_hold": "runtime-retention-supported: matched architecture/DDD methods overlap in capability, while ex-ante generic review does not reliably surface context-defined identity and difference-preserving integration",
+      "worked_example_paths": [
+        "research/framework-candidates/worked-examples/huayan.md"
+      ],
+      "negative_example_paths": [
+        "research/framework-candidates/worked-examples/huayan-negative.md"
+      ],
+      "runtime_requalification": {
+        "ordinary_baseline_comparison_paths": [
+          "research/framework-candidates/comparisons/huayan-vs-ordinary-architecture-and-ddd.md"
+        ],
+        "discovery_value_comparison_paths": [
+          "research/framework-candidates/comparisons/huayan-discovery-value.md"
+        ],
+        "near_neighbor_comparison_paths": [
+          "research/framework-candidates/comparisons/huayan-vs-confucian-role-ritual.md"
+        ],
+        "discovery_review_state": "complete-retain"
+      }
     },
     {
       "id": "jingluo",

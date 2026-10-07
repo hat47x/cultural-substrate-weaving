@@ -342,6 +342,47 @@ class FrameworkCorpusContractTest(unittest.TestCase):
             "required-before-demotion",
         )
 
+    def test_huayan_requalification_supports_runtime_retention_with_discovery_value(self) -> None:
+        inventory_path = ROOT / "research" / "framework-candidates" / "cognitive-operation-inventory.json"
+        data = json.loads(inventory_path.read_text(encoding="utf-8"))
+        row = next(
+            item for item in data["candidates"]
+            if item["id"] == "huayan"
+        )
+
+        self.assertEqual(row["readiness"], "adopted")
+        self.assertEqual(contract.validate_candidate(ROOT, row), [])
+
+        audit = contract.adopted_requalification_payload(ROOT, data)
+        audited = next(
+            item for item in audit["candidates"]
+            if item["candidate_id"] == "huayan"
+        )
+        self.assertEqual(audited["evidence_gaps"], [])
+        self.assertIn(
+            "research/framework-candidates/comparisons/huayan-vs-ordinary-architecture-and-ddd.md",
+            audited["recorded_evidence"]["ordinary_baseline_comparison_paths"],
+        )
+        self.assertIn(
+            "research/framework-candidates/comparisons/huayan-discovery-value.md",
+            audited["recorded_evidence"]["discovery_value_comparison_paths"],
+        )
+        self.assertIn(
+            "research/framework-candidates/comparisons/huayan-vs-confucian-role-ritual.md",
+            audited["recorded_evidence"]["near_neighbor_comparison_paths"],
+        )
+
+        registry = workspace.registry_entry_payload(data, "huayan")
+        self.assertTrue(registry["registry"]["runtime_enabled"])
+        self.assertIn(
+            "runtime-retention-supported",
+            registry["registry"]["adoption_hold"],
+        )
+        self.assertEqual(
+            registry["runtime_requalification"]["discovery_review_state"],
+            "complete-retain",
+        )
+
     def test_aristotle_four_causes_requalification_evidence_survives_runtime_demotion(self) -> None:
         inventory_path = ROOT / "research" / "framework-candidates" / "cognitive-operation-inventory.json"
         data = json.loads(inventory_path.read_text(encoding="utf-8"))

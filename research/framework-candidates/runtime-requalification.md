@@ -117,6 +117,12 @@ Wuxing（五行）についても、distributed-worker autoscalerのoscillation�
 
 なお、Mīmāṃsā、dependent origination、classical stasis theory、Aristotle's four causesの4件は、このcapability-overlap / discovery-value分離を導入する前にruntimeから降格した。これらのoperational demotionは直ちに取り消さないが、既存比較が証明しているのは主としてcapability overlapであり、**発見価値がないことまでは確定していない**。4件ともretrospective discovery-value reviewの対象とする。
 
+Huayan（華厳）は、改訂後のdiscovery-aware基準で再資格した最初のruntime保持例となる。canonical Account統合案をsame-targetとして見ると、bounded-context DDD、context mapping、architecture viewpoints、change-impact analysisを組み合わせたmatched specialist baselineは、Huayanからde-bindしたrole-defined identity、context-role re-identification、perspective-through-node、integration-with-differenceを高い割合で再現できる。
+
+しかしframework contact前のgeneric architecture reviewは、ownership、duplication、API、consistency、migration、availability、cost等を自然に扱えても、「同じAccountというidentity自体がcontaining wholeによって成立しているのではないか」「統合後もどの差異を残すべきか」という認知仕事を必ずしも開かない。Huayan contact後にその問いが露出すると、DDDが適切な検証・実装手法として選びやすくなる。
+
+したがってHuayanの保持根拠はunique formal capabilityではなく、**通常入口からは開きにくい認知jobを低い選定負荷で露出し、target-return後にも具体的なarchitecture decisionとして残すdiscovery contribution** に置く。これは、再資格監査がdemotionだけでなくruntime retentionも同じ証拠原則で説明できる最初の例である。
+
 Mīmāṃsā demotion前に`profile_path`がRegistryに記録されていたadopted candidateは次の9件だった。
 
 - `llull-ars`

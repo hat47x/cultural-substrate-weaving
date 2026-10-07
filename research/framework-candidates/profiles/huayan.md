@@ -1,6 +1,6 @@
-# Huayan framework profile candidate
+# Huayan runtime requalification profile
 
-Status: adopted / runtime-corpus research companion
+Status: runtime requalification / adopted candidate / Chinese-Huayan-bounded
 
 ## Identity
 
@@ -180,7 +180,7 @@ Outputs:
 
 This profile is centered on Chinese Huayan and especially Fazang because that is where the present source basis is strongest.
 
-Before profile-ready status, distinguish at least:
+When extending the current scope, continue to distinguish at least:
 
 - Avatamsaka Sutra background;
 - Fazang's specific whole-part and mutual-inclusion arguments;
@@ -209,6 +209,71 @@ Before returning a candidate to the target:
 4. identify what target-side source/card would support or push back on the relation;
 5. retain differences that resist whole-field integration;
 6. use target-return audit if the candidate survives only after weakening or reframing.
+
+## Runtime requalification
+
+### Positive target-return fixture
+
+See:
+
+- `research/framework-candidates/worked-examples/huayan.md`
+
+The target is a proposal to consolidate Identity, Billing, Support, and Analytics representations of `Account` into one canonical Account service.
+
+Huayan contact asks whether "Account" remains the same part when the containing whole changes, and whether one integrated model would erase operationally important role-specific differences.
+
+### Non-activation fixture
+
+See:
+
+- `research/framework-candidates/worked-examples/huayan-negative.md`
+
+When the target already contains explicit bounded contexts, context-specific models, context maps, multiple architecture views, and preserved translation differences, Huayan adds little beyond renaming existing work.
+
+### Capability-overlap comparison
+
+See:
+
+- `research/framework-candidates/comparisons/huayan-vs-ordinary-architecture-and-ddd.md`
+
+A deliberately assembled specialist baseline using bounded-context DDD, context mapping, architecture viewpoints, and change-impact analysis can reproduce much of Huayan's de-bound representational capability.
+
+This establishes capability overlap, not absence of discovery value.
+
+### Discovery-value comparison
+
+See:
+
+- `research/framework-candidates/comparisons/huayan-discovery-value.md`
+
+The ex-ante generic architecture baseline on the same target naturally asks about ownership, duplication, interfaces, consistency, availability, migration, and cost. It does not necessarily question whether the shared `Account` identity itself is produced by the containing whole.
+
+Huayan contact exposes that missing cognitive job. Once visible, bounded-context DDD becomes an appropriate specialist implementation/verification method.
+
+### Near-neighbor comparison
+
+See:
+
+- `research/framework-candidates/comparisons/huayan-vs-confucian-role-ritual.md`
+
+Both can make role/context visible, but Huayan centers part/whole co-definition and integration-with-difference, while Confucian role/li centers enacted relation-position, obligation, and patterned conduct.
+
+## Requalification result
+
+The current evidence supports retaining Huayan in default runtime.
+
+The retention basis is deliberately narrow:
+
+- **not** unique formal representational capability;
+- **not** Buddhist authority or metaphysical truth;
+- **not** the absence of modern equivalent techniques;
+- **but** a compact discovery move that makes role-defined whole/part identity and difference-preserving integration salient before the appropriate specialist technique has necessarily been selected.
+
+On the canonical-Account fixture, generic architecture review can plausibly optimize consolidation while leaving the identity assumption intact. Huayan contact changes the review object from "how should we centralize this duplicated entity?" to "is this actually the same entity across these wholes?"
+
+After de-binding, that question survives as a concrete architecture decision. A matched DDD/context-mapping baseline can then represent the answer precisely.
+
+This retention claim should weaken if natural-work evidence shows that generic CSW analysis routinely reaches the same context-sensitive identity questions without Huayan contact at comparable selection cost.
 
 ## Adoption note
 
