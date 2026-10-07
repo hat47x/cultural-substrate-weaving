@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+- Completed retrospective discovery-value review for dependent origination and confirmed its existing runtime demotion under the revised standard. Ordinary post-incident practice already selects contributing conditions, deeper causes, mitigations, corrective actions, and intervention checks before framework contact, so both capability overlap and discovery overlap hold for the tested SIer incident; the sourced Buddhist research candidate remains preserved.
+
 - Restored classical stasis theory to the default runtime after the retrospective discovery-aware review supported restoration. Canonical ja/en dossiers, generated plugin references, manifest membership, portfolio entries, translation metadata, Registry readiness, and focused contracts are synchronized; the restoration rationale remains issue-type mismatch and stasis-switch discovery rather than unique formal capability.
 
 - Revisited classical stasis theory under the discovery-aware standard. The old target-language issue table remains a valid capability-overlap baseline, but generic ex-ante postmortem practice does not reliably surface issue-type mismatch, evidence-by-issue, or silent stasis switches before framework contact; retrospective research now supports restoring stasis to the default runtime, with the mechanical restoration kept as a separate change.
