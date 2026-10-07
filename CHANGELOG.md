@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+- Restored classical stasis theory to the default runtime after the retrospective discovery-aware review supported restoration. Canonical ja/en dossiers, generated plugin references, manifest membership, portfolio entries, translation metadata, Registry readiness, and focused contracts are synchronized; the restoration rationale remains issue-type mismatch and stasis-switch discovery rather than unique formal capability.
+
 - Revisited classical stasis theory under the discovery-aware standard. The old target-language issue table remains a valid capability-overlap baseline, but generic ex-ante postmortem practice does not reliably surface issue-type mismatch, evidence-by-issue, or silent stasis switches before framework contact; retrospective research now supports restoring stasis to the default runtime, with the mechanical restoration kept as a separate change.
 
 - Removed Wuxing from the default runtime after completing the discovery-aware requalification. The autoscaler target both admits ordinary feedback/control capability and naturally selects that cognitive job before framework contact; Wuxing remains available as a sourced research candidate with its capability, discovery-value, and near-neighbor evidence preserved.
