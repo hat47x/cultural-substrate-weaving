@@ -253,7 +253,7 @@
         "ask what condition would stop the pattern"
       ],
       "profile_path": "research/framework-candidates/profiles/dependent-origination.md",
-      "adoption_hold": "general-runtime-demoted: capability-overlap evidence preserved; retrospective discovery-value review pending under the revised requalification standard",
+      "adoption_hold": "general-runtime-demotion-confirmed-discovery-aware: ordinary post-incident practice naturally selects contributing-condition, mitigation, and cessation-check jobs on the tested SIer incident",
       "worked_example_paths": [
         "research/framework-candidates/worked-examples/dependent-origination.md"
       ],
@@ -267,7 +267,10 @@
         "near_neighbor_comparison_paths": [
           "research/framework-candidates/comparisons/patthana-vs-dependent-origination-vs-dependency-analysis.md"
         ],
-        "discovery_review_state": "pending-retrospective"
+        "discovery_review_state": "complete-demote-retrospective",
+        "discovery_value_comparison_paths": [
+          "research/framework-candidates/comparisons/dependent-origination-discovery-value.md"
+        ]
       }
     },
     {
