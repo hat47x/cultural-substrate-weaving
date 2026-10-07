@@ -97,7 +97,7 @@ runtime retentionは「世界に同等の手法が存在しないこと」を要
 
 2026-10-06の最初の監査時点では、Registry上の`adopted` candidateは19件だった。その後、Mīmāṃsāを現行基準で再資格し、ordinary policy / requirements reviewがtested de-bound operationsを再現したため、general runtimeから外して`profile-ready`へ戻した。
 
-現在の`adopted` candidateは14件である。
+現在の`adopted` candidateは15件である。
 
 Mīmāṃsāに続き、dependent origination（縁起）についても現行基準の再資格を実施した。same-targetでFive Whys、NASA型のfault-tree expansion、通常のdependency analysis、counterfactual / intervention questionと比較した結果、現在runtimeが提供していたcondition-chain、upstream-condition、cessation-counterfactual、dependency-reframing、intervention-pointの各操作はordinary baselineで再現された。
 
@@ -107,7 +107,7 @@ Mīmāṃsāに続き、dependent origination（縁起）についても現行�
 
 しかし改訂後のdiscovery-aware基準で遡及reviewすると、このissue tableは「争点の種類を分ける」という認知jobを既に知った後のmatched specialist baselineだった。framework名もissue taxonomyも与えないgeneric incident / postmortem baselineはtimeline、impact、root cause、mitigation、roles、actionsを自然に扱う一方、fact / definition / evaluation / authorityという異なるanswer typeが同じ会話内で走っていることや、replyがissue typeを切り替えたことを必ずしも前景化しない。
 
-stasis contactは「何を争っているのか」を先に問い、eventを認めても残るdefinition/evaluation、definitionを揃えても残るquality/procedure、そしてissue-specific evidenceとstasis-switchを露出する。この差はde-binding後にもtarget-side questionとして残る。したがってretrospective discovery-value reviewはruntime restorationを支持する。実際のruntime復元は別のmechanical changeへ分離する。
+stasis contactは「何を争っているのか」を先に問い、eventを認めても残るdefinition/evaluation、definitionを揃えても残るquality/procedure、そしてissue-specific evidenceとstasis-switchを露出する。この差はde-binding後にもtarget-side questionとして残る。したがってretrospective discovery-value reviewはruntime restorationを支持し、mechanical restorationも完了した。classical stasis theoryは再びdefault runtimeのadopted candidateとして利用できる。
 
 Aristotle's four causesについても現行基準の再資格を実施した。multi-tenant rate-limiterをsame-targetとして、NASA型systems engineeringのstakeholder expectations、constraints、logical decomposition、design solution / behaviorと比較した結果、runtimeが提供していたwhy-splitting、explanation-gap、causal-category-audit、multi-cause-composition、artifact-design-probeはordinary baselineで再現された。
 

@@ -1641,7 +1641,7 @@
         "constitutio",
         "古典修辞学の争点論"
       ],
-      "readiness": "profile-ready",
+      "readiness": "adopted",
       "structural_primitives": [
         "fact / conjecture issue",
         "definition / naming issue",
@@ -1713,7 +1713,8 @@
           "research/framework-candidates/comparisons/classical-stasis-discovery-value.md"
         ]
       },
-      "adoption_hold": "runtime-restoration-supported-discovery-aware: issue-type mismatch and stasis-switch detection survive the generic ex-ante incident baseline"
+      "adoption_hold": "runtime-restored-discovery-aware: issue-type mismatch and stasis-switch detection survive the generic ex-ante incident baseline",
+      "runtime_path": "src/ja-JP/frameworks/classical-stasis-theory.md"
     },
     {
       "id": "hadith-isnad-matn",

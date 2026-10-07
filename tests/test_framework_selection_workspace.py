@@ -442,7 +442,7 @@ class FrameworkCorpusContractTest(unittest.TestCase):
             [item["candidate_id"] for item in audit["candidates"]],
         )
 
-    def test_classical_stasis_retrospective_review_supports_runtime_restoration(self) -> None:
+    def test_classical_stasis_runtime_restoration_preserves_discovery_aware_evidence(self) -> None:
         inventory_path = ROOT / "research" / "framework-candidates" / "cognitive-operation-inventory.json"
         data = json.loads(inventory_path.read_text(encoding="utf-8"))
         row = next(
@@ -450,14 +450,15 @@ class FrameworkCorpusContractTest(unittest.TestCase):
             if item["id"] == "classical-stasis-theory"
         )
 
-        # Research decision is complete, but the mechanical restoration is a
-        # separate change, so this branch remains profile-ready / no-runtime.
-        self.assertEqual(row["readiness"], "profile-ready")
-        self.assertNotIn("runtime_path", row)
+        self.assertEqual(row["readiness"], "adopted")
+        self.assertEqual(
+            row["runtime_path"],
+            "src/ja-JP/frameworks/classical-stasis-theory.md",
+        )
         self.assertEqual(contract.validate_candidate(ROOT, row), [])
 
         registry = workspace.registry_entry_payload(data, "classical-stasis-theory")
-        self.assertFalse(registry["registry"]["runtime_enabled"])
+        self.assertTrue(registry["registry"]["runtime_enabled"])
         self.assertIn(
             "research/framework-candidates/comparisons/classical-stasis-vs-ordinary-issue-triage.md",
             registry["runtime_requalification"]["ordinary_baseline_comparison_paths"],
@@ -471,7 +472,7 @@ class FrameworkCorpusContractTest(unittest.TestCase):
             registry["runtime_requalification"]["near_neighbor_comparison_paths"],
         )
         self.assertIn(
-            "runtime-restoration-supported-discovery-aware",
+            "runtime-restored-discovery-aware",
             registry["registry"]["adoption_hold"],
         )
         self.assertEqual(
@@ -480,10 +481,11 @@ class FrameworkCorpusContractTest(unittest.TestCase):
         )
 
         audit = contract.adopted_requalification_payload(ROOT, data)
-        self.assertNotIn(
-            "classical-stasis-theory",
-            [item["candidate_id"] for item in audit["candidates"]],
+        audited = next(
+            item for item in audit["candidates"]
+            if item["candidate_id"] == "classical-stasis-theory"
         )
+        self.assertEqual(audited["evidence_gaps"], [])
 
     def test_repository_typology_covers_inventory_candidate_ids_exactly(self) -> None:
         inventory = workspace.load_inventory(

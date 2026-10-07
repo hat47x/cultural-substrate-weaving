@@ -118,6 +118,11 @@
       "skill_reference": "04l-confucian-role-ritual.md"
     },
     {
+      "id": "framework-classical-stasis-theory",
+      "source": "frameworks/classical-stasis-theory.md",
+      "skill_reference": "04m-classical-stasis-theory.md"
+    },
+    {
       "id": "framework-hadith-isnad-matn",
       "source": "frameworks/hadith-isnad-matn.md",
       "skill_reference": "04n-hadith-isnad-matn.md"
@@ -192,6 +197,7 @@
       "frameworks/huayan.md",
       "frameworks/nyaya-five-member-inference.md",
       "frameworks/confucian-role-ritual.md",
+      "frameworks/classical-stasis-theory.md",
       "frameworks/hadith-isnad-matn.md",
       "frameworks/marshallese-wave-navigation.md",
       "frameworks/shinto-threshold-purification.md",
