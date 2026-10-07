@@ -34,10 +34,36 @@ frameworkの有効性、優劣、適合度、真偽を判定しない。証拠�
    - frameworkを使わない方がよい条件、途中で止める条件が具体例で追えるか。
 4. **ordinary / no-framework baseline comparison**
    - 通常の分析・設計・レビューで同じ問いが出ないかを比較した記録があるか。
-5. **near-neighbor comparison**
+5. **discovery-value comparison**
+   - framework出力を見た後のspecialist-method一致だけでなく、framework contact前の通常入口から同じ認知operationへ到達できたかを比較した記録があるか。
+6. **near-neighbor comparison**
    - 似た認知operationを持つ既存frameworkとの差を同じtargetまたは比較可能な条件で説明できるか。
 
 監査結果には`evidence_gaps`を出すが、score、rank、recommendation、automatic demotionは出さない。
+
+## 能力重複と発見価値を分ける
+
+ordinary baseline比較には、少なくとも二つの異なる問いがある。
+
+1. **capability overlap**
+   - framework contactから得た問い・区別を、通常の専門手法でも再現できるか。
+2. **discovery value**
+   - その専門手法をまだ選んでいない状態から、frameworkなしで同じ認知operationへ到達できるか。
+
+前者だけで「frameworkは不要」と結論しない。
+
+frameworkの出力を見た後で、それに最も似た専門手法を探せば、かなりの確率で同じ操作を再現できる。これは能力の重複を示すが、CSWの本質価値である「現在の理解では出にくい問い・区別・関係・構成との出会い」を否定しない。
+
+したがって再資格では、比較対象を次のように分ける。
+
+- **generic / ex-ante baseline**: framework contact前のtarget記述と通常の汎用分析だけで何が出るか。
+- **matched specialist baseline**: framework contact後のoperationを再現できる既知の専門手法があるか。
+- **discovery-value comparison**: generic baselineからそのspecialist baselineを自然に選べたか、またはframework contactが初めてその認知仕事を露出したか。
+- **near-neighbor comparison**: 他のframework固有operationと混同していないか。
+
+matched specialist baselineは、原則としてtarget構造や事前に利用可能だった標準手法から選ぶ。framework出力を見た後で初めて選んだ手法は、その選定経路を明示し、能力重複の証拠として扱っても、発見価値が無いことの証拠にはしない。
+
+runtime retentionは「世界に同等の手法が存在しないこと」を要求しない。通常の入口からは出にくい認知operationを、文化体系との接触が低い選定負荷で開き、target-return後にも有用な差が残るなら、そのdiscovery contributionを採用根拠として記録できる。
 
 ## Structured requalification metadata
 
@@ -54,6 +80,9 @@ frameworkの有効性、優劣、適合度、真偽を判定しない。証拠�
   "runtime_requalification": {
     "ordinary_baseline_comparison_paths": [
       "research/framework-candidates/comparisons/example-vs-ordinary-baseline.md"
+    ],
+    "discovery_value_comparison_paths": [
+      "research/framework-candidates/comparisons/example-discovery-value.md"
     ],
     "near_neighbor_comparison_paths": [
       "research/framework-candidates/comparisons/example-vs-neighbor.md"
@@ -82,7 +111,11 @@ Aristotle's four causesについても現行基準の再資格を実施した。
 
 Wuxing（五行）についても、distributed-worker autoscalerのoscillationをsame-targetとして、ordinary signed causal-loop / system-dynamics analysisと比較した。生成／制約という二種類の関係、feedback loop、edgeごとのrole変化、missing link、operating stateによるrelation changeは、target-languageのdirected typed graphで再現でき、追加のtarget-side questionは残らなかった。歴史的な`sheng` / `ke`とmodern causal polarityの同一性は主張せず、tested SIer useでde-bind後の問いが重複するという限定的なruntime product boundaryとして扱う。
 
-このため、Wuxingもgeneral runtime retentionを支持しない研究判断まで進んでいる。現時点では機械的なruntime removalとは分離し、source basis、研究profile、正例・non-activation例、ordinary causal-loop baseline比較、dependent-origination近接比較、selection cueを保持する。
+この比較で確定したのは、Wuxing contact後に見えたoperationをordinary signed causal-loop / system-dynamics analysisでも再現できるという **capability overlap** までである。framework contact前のgeneric analysisから、そのspecialist methodや同じrelational jobへ自然に到達できたかは未確認である。
+
+したがってWuxingのruntime removal判断は保留へ戻す。source basis、研究profile、正例・non-activation例、ordinary causal-loop baseline比較、dependent-origination近接比較、selection cueを保持したまま、discovery-value comparisonを追加してからdemotion可否を判断する。
+
+なお、Mīmāṃsā、dependent origination、classical stasis theory、Aristotle's four causesの4件は、このcapability-overlap / discovery-value分離を導入する前にruntimeから降格した。これらのoperational demotionは直ちに取り消さないが、既存比較が証明しているのは主としてcapability overlapであり、**発見価値がないことまでは確定していない**。4件ともretrospective discovery-value reviewの対象とする。
 
 Mīmāṃsā demotion前に`profile_path`がRegistryに記録されていたadopted candidateは次の9件だった。
 
@@ -124,9 +157,9 @@ raw framework countや文化圏では順序を決めない。
 - target-returnやnon-activationの境界が不明瞭だと誤用が大きい;
 - 既存研究材料を再利用して低コストで再資格できる。
 
-一つのframeworkを再資格するときも、採用維持を前提にしない。ordinary baselineと同じoperationしか残らなければ、research referenceへの後退やruntimeからの除外を正当な結果として扱う。
+一つのframeworkを再資格するときも、採用維持を前提にしない。ただし、matched specialist baselineが同じoperationを再現したことだけで除外を決めない。そのspecialist methodをframework contact前に選べたか、generic analysisだけで同じ問いが立ったかを別に確認する。
 
-逆に、baselineや近接frameworkでは出ない問い・区別・構成が残れば、その差をruntime採用根拠として明示する。
+capability overlapに加えてdiscovery contributionも残らない場合は、research referenceへの後退やruntimeからの除外を正当な結果として扱う。逆に、generic baselineや近接frameworkでは出にくい問い・区別・構成がframework contactから生じ、target-return後にも残れば、その差をruntime採用根拠として明示する。
 
 ## Product value
 
