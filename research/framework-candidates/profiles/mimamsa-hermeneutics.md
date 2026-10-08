@@ -119,7 +119,7 @@ See: `research/framework-candidates/comparisons/mimamsa-sentence-meaning-boundar
 - later Vedānta use of hermeneutic devices as if it were identical to early Mīmāṃsā;
 - Sanskrit linguistic assumptions as universal facts about all languages.
 
-## Exploratory prompts
+## Target-return questions
 
 - Is this one prescription or several?
 - What is the purpose that supposedly makes these clauses one unit?

@@ -83,6 +83,7 @@ Status: research-only
 
 - `cognitive-operation-inventory.json`
   - framework identity、readiness、native primitive、cognitive operation、selection cue、source、misuse boundary、artifact pathのmachine-readable正本。
+  - 各体系の`discovery_hypothesis`は、通常の入口が見落としやすい認知作業の仮説と、その判定状態（未検証／発見価値の記録／重複の記録）を持つ。適合度や順位ではない。
 - `framework-corpus-contract.md` / `scripts/framework_corpus_contract.py`
   - sourced/profile/runtime materializationの品質下限。
 - `scripts/framework_selection_workspace.py inspect`
@@ -118,6 +119,7 @@ Registry-0は文化そのものの正本ではない。文献・系譜・研究�
 - comparisons/ 以下のnear-neighbor / comparative collapse test
 - portfolio-qualitative-audit-2026-10-01.md
 - near-neighbor-differentiation-2026-10-01.md
+- crossing-value-2026-10-08.md（採用中核での交差の価値と一般化）
 - profiles/ 以下の各体系profile
 - source-packets/ 以下のpre-profile資料層
 

@@ -56,6 +56,7 @@
         }
       ],
       "runtime_path": "src/ja-JP/frameworks/yijing.md",
+      "profile_path": "research/framework-candidates/profiles/yijing.md",
       "selection_cues": [
         "配置の一部を変えたときの全体差",
         "位置の組合せを変えて見たい",
@@ -63,7 +64,14 @@
         "change one position and inspect the whole configuration",
         "recompose a state after a local change",
         "inspect positions and combinations"
-      ]
+      ],
+      "discovery_hypothesis": {
+        "ordinary_entry_tends_to": "Describes the current state as a list of attributes or one classification and examines each attribute separately.",
+        "exposed_cognitive_job": "Treats the state as a configuration of positioned binary differences, so a change at one position can be examined for its effect on the whole configuration and on neighboring configurations.",
+        "weakens_if": "Generic sensitivity or what-if analysis on the same target reaches configuration-level, position-dependent change questions without Yijing contact at comparable selection cost.",
+        "evidence_state": "unreviewed_hypothesis",
+        "authored_basis": "AI analyst hypothesis drafted 2026-10-08 from the runtime dossier's native operations and target-return questions. It is not a discovery-value comparison, not a fit judgment, and not target-side evidence."
+      }
     },
     {
       "id": "wuxing",
@@ -137,7 +145,17 @@
           "research/framework-candidates/comparisons/wuxing-discovery-value.md"
         ]
       },
-      "adoption_hold": "general-runtime-demoted-discovery-aware: capability and ex-ante discovery overlap are both established for the tested SIer autoscaler target"
+      "adoption_hold": "general-runtime-demoted-discovery-aware: capability and ex-ante discovery overlap are both established for the tested SIer autoscaler target",
+      "discovery_hypothesis": {
+        "ordinary_entry_tends_to": "Generic incident review of an oscillating system moves from the symptom to control-loop delay, retry, damping, and stabilization.",
+        "exposed_cognitive_job": "Makes two distinct relation types (generation and constraint) and their loops explicit, including relation changes by operating state.",
+        "weakens_if": "A future target where dual generation/constraint loops are not suggested by the symptom or by ordinary practice yields questions that survive de-binding.",
+        "evidence_state": "discovery_overlap_recorded",
+        "evidence_paths": [
+          "research/framework-candidates/comparisons/wuxing-discovery-value.md"
+        ],
+        "authored_basis": "Summary of the recorded discovery-value comparison. The comparison file, not this summary, is the authority for the verdict."
+      }
     },
     {
       "id": "tzolkin",
@@ -189,6 +207,7 @@
         }
       ],
       "runtime_path": "src/ja-JP/frameworks/maya-calendars.md",
+      "profile_path": "research/framework-candidates/profiles/tzolkin.md",
       "adopted_as": "maya-calendars",
       "selection_cues": [
         "複数周期と長い時間尺度を同時に見たい",
@@ -197,7 +216,14 @@
         "hold coupled cycles and long time scales together",
         "separate partial from full recurrence",
         "inspect phase desynchronization across cycles"
-      ]
+      ],
+      "discovery_hypothesis": {
+        "ordinary_entry_tends_to": "Tracks one dominant cycle or one timeline and treats 'it happened again' as a single kind of recurrence.",
+        "exposed_cognitive_job": "Keeps several cycles separate and distinguishes partial recurrence (one cycle repeats) from full recurrence of the joint state, including phase desynchronization across time scales.",
+        "weakens_if": "Ordinary seasonality or time-series review on the same target separates coupled cycles and partial versus full recurrence before calendar contact.",
+        "evidence_state": "unreviewed_hypothesis",
+        "authored_basis": "AI analyst hypothesis drafted 2026-10-08 from the runtime dossier's native operations and target-return questions. It is not a discovery-value comparison, not a fit judgment, and not target-side evidence."
+      }
     },
     {
       "id": "dependent-origination",
@@ -271,6 +297,16 @@
         "discovery_value_comparison_paths": [
           "research/framework-candidates/comparisons/dependent-origination-discovery-value.md"
         ]
+      },
+      "discovery_hypothesis": {
+        "ordinary_entry_tends_to": "Ordinary post-incident practice asks which conditions contributed and which mitigation would stop recurrence.",
+        "exposed_cognitive_job": "Traces the upstream conditions an outcome depends on and asks what would make the outcome cease.",
+        "weakens_if": "A future target where condition-chain and cessation questions are not selected ex ante by ordinary practice yields distinct questions.",
+        "evidence_state": "discovery_overlap_recorded",
+        "evidence_paths": [
+          "research/framework-candidates/comparisons/dependent-origination-discovery-value.md"
+        ],
+        "authored_basis": "Summary of the recorded discovery-value comparison. The comparison file, not this summary, is the authority for the verdict."
       }
     },
     {
@@ -322,6 +358,7 @@
         }
       ],
       "runtime_path": "src/ja-JP/frameworks/rasa.md",
+      "profile_path": "research/framework-candidates/profiles/rasa.md",
       "selection_cues": [
         "表現内容と受け手の経験を分けたい",
         "受け手側で何が生じるか見たい",
@@ -329,7 +366,14 @@
         "separate represented content from receiver experience",
         "inspect what emerges for the audience",
         "separate affective composition from reception"
-      ]
+      ],
+      "discovery_hypothesis": {
+        "ordinary_entry_tends_to": "Evaluates the quality of the expression or content, or labels the receiver's response with a generic emotion word.",
+        "exposed_cognitive_job": "Separates what was produced from the experience it organizes in the receiver and asks which combination of situation, expression, and response produces the dominant reception.",
+        "weakens_if": "Ordinary audience, UX, or communication review reaches the production/reception split and an ingredient-level account of reception without rasa contact.",
+        "evidence_state": "unreviewed_hypothesis",
+        "authored_basis": "AI analyst hypothesis drafted 2026-10-08 from the runtime dossier's native operations and target-return questions. It is not a discovery-value comparison, not a fit judgment, and not target-side evidence."
+      }
     },
     {
       "id": "huayan",
@@ -415,6 +459,16 @@
           "research/framework-candidates/comparisons/huayan-vs-confucian-role-ritual.md"
         ],
         "discovery_review_state": "complete-retain"
+      },
+      "discovery_hypothesis": {
+        "ordinary_entry_tends_to": "Generic architecture review asks about ownership, duplication, interfaces, consistency, migration, availability, and cost.",
+        "exposed_cognitive_job": "Questions whether a shared identity such as one 'Account' is produced by each containing whole, and which role-specific differences an integration must preserve.",
+        "weakens_if": "Natural-work evidence shows generic analysis routinely reaching context-defined identity questions without Huayan contact at comparable selection cost.",
+        "evidence_state": "discovery_contribution_recorded",
+        "evidence_paths": [
+          "research/framework-candidates/comparisons/huayan-discovery-value.md"
+        ],
+        "authored_basis": "Summary of the recorded discovery-value comparison. The comparison file, not this summary, is the authority for the verdict."
       }
     },
     {
@@ -628,6 +682,7 @@
       ],
       "readiness": "adopted",
       "runtime_path": "src/ja-JP/frameworks/sankhya.md",
+      "profile_path": "research/framework-candidates/profiles/sankhya.md",
       "structural_primitives": [
         "puruṣa / prakṛti distinction",
         "twenty-five tattvas in classical formulation",
@@ -672,7 +727,14 @@
         "backtrack from products to production layers",
         "separate observer from generated process",
         "trace a production sequence upstream"
-      ]
+      ],
+      "discovery_hypothesis": {
+        "ordinary_entry_tends_to": "Treats the visible product or symptom as the starting point and analyzes it at the layer where it appears.",
+        "exposed_cognitive_job": "Backtracks from the visible product to upstream production layers and asks whether the observer's position is mixed into the process being observed.",
+        "weakens_if": "Ordinary root-cause or layered-architecture review separates production layers and observer position on the same target before Sāṅkhya contact.",
+        "evidence_state": "unreviewed_hypothesis",
+        "authored_basis": "AI analyst hypothesis drafted 2026-10-08 from the runtime dossier's native operations and target-return questions. It is not a discovery-value comparison, not a fit judgment, and not target-side evidence."
+      }
     },
     {
       "id": "catuskoti",
@@ -683,6 +745,7 @@
       ],
       "readiness": "adopted",
       "runtime_path": "src/ja-JP/frameworks/catuskoti.md",
+      "profile_path": "research/framework-candidates/profiles/catuskoti.md",
       "structural_primitives": [
         "P",
         "not-P",
@@ -726,7 +789,14 @@
         "break a binary proposition frame",
         "open both and neither possibilities",
         "question the predicate behind a binary choice"
-      ]
+      ],
+      "discovery_hypothesis": {
+        "ordinary_entry_tends_to": "Accepts the binary framing of the question (is it X or not) and gathers evidence for one side.",
+        "exposed_cognitive_job": "Audits the predicate itself by opening 'both' and 'neither', exposing mixed time, layer, actor, or definition inside a seemingly binary question.",
+        "weakens_if": "Ordinary critical-thinking or requirements review questions the binary frame and the malformed predicate on the same target without catuṣkoṭi contact.",
+        "evidence_state": "unreviewed_hypothesis",
+        "authored_basis": "AI analyst hypothesis drafted 2026-10-08 from the runtime dossier's native operations and target-return questions. It is not a discovery-value comparison, not a fit judgment, and not target-side evidence."
+      }
     },
     {
       "id": "jain-sevenfold-predication",
@@ -739,6 +809,7 @@
       ],
       "readiness": "adopted",
       "runtime_path": "src/ja-JP/frameworks/jain-sevenfold-predication.md",
+      "profile_path": "research/framework-candidates/profiles/jain-sevenfold-predication.md",
       "structural_primitives": [
         "conditioned predication",
         "standpoint or circumstance",
@@ -782,7 +853,14 @@
         "restore standpoint and conditions to a claim",
         "turn an assertion into a qualified assertion",
         "rotate perspectives without forcing one absolute statement"
-      ]
+      ],
+      "discovery_hypothesis": {
+        "ordinary_entry_tends_to": "States a claim as generally true or false, or resolves conflicting claims by choosing one of them.",
+        "exposed_cognitive_job": "Binds each assertion back to the standpoint, scale, time, and definition under which it holds and keeps what cannot yet be asserted as a residual.",
+        "weakens_if": "Ordinary scoping or assumption review states the conditions of each claim on the same target before Jain contact at comparable selection cost.",
+        "evidence_state": "unreviewed_hypothesis",
+        "authored_basis": "AI analyst hypothesis drafted 2026-10-08 from the runtime dossier's native operations and target-return questions. It is not a discovery-value comparison, not a fit judgment, and not target-side evidence."
+      }
     },
     {
       "id": "aristotle-four-causes",
@@ -854,6 +932,16 @@
         "discovery_value_comparison_paths": [
           "research/framework-candidates/comparisons/aristotle-four-causes-discovery-value.md"
         ]
+      },
+      "discovery_hypothesis": {
+        "ordinary_entry_tends_to": "Engineered-system design separates stakeholder outcomes, requirements and constraints, logical architecture, design solution, and behavior.",
+        "exposed_cognitive_job": "Splits one 'why' into material, formal, efficient, and final explanatory kinds and audits which kind is missing.",
+        "weakens_if": "A future target outside engineered-system design where explanatory kinds are not separated ex ante yields distinct questions.",
+        "evidence_state": "discovery_overlap_recorded",
+        "evidence_paths": [
+          "research/framework-candidates/comparisons/aristotle-four-causes-discovery-value.md"
+        ],
+        "authored_basis": "Summary of the recorded discovery-value comparison. The comparison file, not this summary, is the authority for the verdict."
       }
     },
     {
@@ -1117,7 +1205,20 @@
         "systematically cross distinctions that are not usually combined",
         "surface combinations that have never been examined",
         "generate new questions from binary and ternary combinations"
-      ]
+      ],
+      "worked_example_paths": [
+        "research/framework-candidates/worked-examples/llull-ars.md"
+      ],
+      "negative_example_paths": [
+        "research/framework-candidates/worked-examples/llull-ars-negative-boundary.md"
+      ],
+      "discovery_hypothesis": {
+        "ordinary_entry_tends_to": "Crosses only the distinctions that come to mind together or that prior discussion has already paired.",
+        "exposed_cognitive_job": "Enumerates binary and ternary combinations of explicitly chosen distinctions and returns never-crossed combinations as questions, pruned by target constraints.",
+        "weakens_if": "Ordinary morphological analysis or combinatorial test design is naturally selected ex ante on the same target and yields the same unseen-combination questions.",
+        "evidence_state": "unreviewed_hypothesis",
+        "authored_basis": "AI analyst hypothesis drafted 2026-10-08 from the runtime dossier's native operations and target-return questions. It is not a discovery-value comparison, not a fit judgment, and not target-side evidence."
+      }
     },
     {
       "id": "five-aggregates",
@@ -1324,7 +1425,17 @@
         "inspect the bridge from reason to conclusion",
         "separate thesis reason example and application",
         "find a missing inferential bridge"
-      ]
+      ],
+      "worked_example_paths": [
+        "research/framework-candidates/worked-examples/nyaya-five-member-inference.md"
+      ],
+      "discovery_hypothesis": {
+        "ordinary_entry_tends_to": "Accepts 'therefore' and evaluates the conclusion or the evidence rather than the bridge between them.",
+        "exposed_cognitive_job": "Unfolds an argument into thesis, reason, general rule with example, application, and conclusion, so applying the rule to this target is checked as a separate step.",
+        "weakens_if": "Ordinary argument mapping or warrant checking is selected ex ante on the same target and exposes the same application gap.",
+        "evidence_state": "unreviewed_hypothesis",
+        "authored_basis": "AI analyst hypothesis drafted 2026-10-08 from the runtime dossier's native operations and target-return questions. It is not a discovery-value comparison, not a fit judgment, and not target-side evidence."
+      }
     },
     {
       "id": "confucian-role-ritual",
@@ -1384,7 +1495,17 @@
         "separate role name from enacted conduct",
         "inspect expectations carried by relationships",
         "ask how patterned interaction changes meaning"
-      ]
+      ],
+      "worked_example_paths": [
+        "research/framework-candidates/worked-examples/confucian-role-ritual.md"
+      ],
+      "discovery_hypothesis": {
+        "ordinary_entry_tends_to": "Takes individual choices or organizational titles as the unit of explanation.",
+        "exposed_cognitive_job": "Maps which relation carries which expectation, checks whether role names match enacted conduct, and asks how patterned interaction changes what an act means.",
+        "weakens_if": "Ordinary role, RACI, or stakeholder analysis reaches relation-conditioned expectation and name-behavior mismatch on the same target before contact.",
+        "evidence_state": "unreviewed_hypothesis",
+        "authored_basis": "AI analyst hypothesis drafted 2026-10-08 from the runtime dossier's native operations and target-return questions. It is not a discovery-value comparison, not a fit judgment, and not target-side evidence."
+      }
     },
     {
       "id": "shinto-threshold-purification",
@@ -1460,7 +1581,17 @@
         "inspect preparation around an explicitly marked threshold",
         "separate preparation from the central action",
         "inspect closure return and re-entry state"
-      ]
+      ],
+      "worked_example_paths": [
+        "research/framework-candidates/worked-examples/shinto-threshold-purification.md"
+      ],
+      "discovery_hypothesis": {
+        "ordinary_entry_tends_to": "Treats entering a central activity as one step, or attends only to the central activity itself.",
+        "exposed_cognitive_job": "Separates a marked threshold, approach, preparation, central act, and return, and asks what state change preparation produces and what closure restores.",
+        "weakens_if": "Ordinary onboarding, checklist, or pre-flight practice separates threshold, preparation, and return on the same target before contact.",
+        "evidence_state": "unreviewed_hypothesis",
+        "authored_basis": "AI analyst hypothesis drafted 2026-10-08 from the runtime dossier's native operations and target-return questions. It is not a discovery-value comparison, not a fit judgment, and not target-side evidence."
+      }
     },
     {
       "id": "buddhist-mandala",
@@ -1636,7 +1767,17 @@
         "read a field through center directions gates and nested boundaries",
         "look for multiple enclosures rather than one inside outside split",
         "inspect directional roles and mediated entry"
-      ]
+      ],
+      "worked_example_paths": [
+        "research/framework-candidates/worked-examples/tibetan-buddhist-mandala.md"
+      ],
+      "discovery_hypothesis": {
+        "ordinary_entry_tends_to": "Models a space or an organization as inside/outside or as a single hierarchy.",
+        "exposed_cognitive_job": "Asks what makes the center central and exposes nested enclosures, directional roles, gates, and an approach sequence from outside to center.",
+        "weakens_if": "Ordinary access-control or zoning analysis exposes nested boundaries and gated approach paths on the same target ex ante.",
+        "evidence_state": "unreviewed_hypothesis",
+        "authored_basis": "AI analyst hypothesis drafted 2026-10-08 from the runtime dossier's native operations and target-return questions. It is not a discovery-value comparison, not a fit judgment, and not target-side evidence."
+      }
     },
     {
       "id": "classical-stasis-theory",
@@ -1720,7 +1861,17 @@
         ]
       },
       "adoption_hold": "runtime-restored-discovery-aware: issue-type mismatch and stasis-switch detection survive the generic ex-ante incident baseline",
-      "runtime_path": "src/ja-JP/frameworks/classical-stasis-theory.md"
+      "runtime_path": "src/ja-JP/frameworks/classical-stasis-theory.md",
+      "discovery_hypothesis": {
+        "ordinary_entry_tends_to": "Generic incident or postmortem review reconstructs timeline, impact, causes, mitigation, roles, and corrective actions.",
+        "exposed_cognitive_job": "Classifies each live disagreement by the kind of question it answers (fact, definition, quality, procedure or authority) and detects replies that silently switch issue type.",
+        "weakens_if": "Generic reviews on further targets reliably surface issue-type mismatch and stasis switches without stasis contact.",
+        "evidence_state": "discovery_contribution_recorded",
+        "evidence_paths": [
+          "research/framework-candidates/comparisons/classical-stasis-discovery-value.md"
+        ],
+        "authored_basis": "Summary of the recorded discovery-value comparison. The comparison file, not this summary, is the authority for the verdict."
+      }
     },
     {
       "id": "hadith-isnad-matn",
@@ -1805,6 +1956,16 @@
           "research/framework-candidates/comparisons/hadith-isnad-matn-vs-vedic-recitation-pathas.md"
         ],
         "discovery_review_state": "complete-demote"
+      },
+      "discovery_hypothesis": {
+        "ordinary_entry_tends_to": "CSW's always-on provenance discipline already separates same-origin from independent support and provenance from content truth before any framework is selected.",
+        "exposed_cognitive_job": "Separates transmitted content from its transmission path and treats chains that share an origin as non-independent.",
+        "weakens_if": "A future target shows a tradition-specific transmission operation that survives beyond CSW core provenance rules.",
+        "evidence_state": "discovery_overlap_recorded",
+        "evidence_paths": [
+          "research/framework-candidates/comparisons/hadith-isnad-matn-discovery-value.md"
+        ],
+        "authored_basis": "Summary of the recorded discovery-value comparison. The comparison file, not this summary, is the authority for the verdict."
       }
     },
     {
@@ -1893,7 +2054,17 @@
         "separate rule scope exceptions and contextual supplementation",
         "identify the boundaries of a prescriptive unit",
         "decompose an apparent norm conflict"
-      ]
+      ],
+      "discovery_hypothesis": {
+        "ordinary_entry_tends_to": "Requirements practice segments requirements and reviews modifier scope, explicit assumptions, ambiguity, consistency, and conflicts.",
+        "exposed_cognitive_job": "Decomposes normative text into prescriptive units, syntactic attachment, and explicit versus supplied content.",
+        "weakens_if": "A future normative-text target where ordinary requirements practice does not select these jobs ex ante yields distinct questions.",
+        "evidence_state": "discovery_overlap_recorded",
+        "evidence_paths": [
+          "research/framework-candidates/comparisons/mimamsa-discovery-value.md"
+        ],
+        "authored_basis": "Summary of the recorded discovery-value comparison. The comparison file, not this summary, is the authority for the verdict."
+      }
     },
     {
       "id": "marshallese-wave-navigation",
@@ -1963,7 +2134,18 @@
         "reason through local route cues rather than a literal map",
         "return from a preparatory model to live observations",
         "ask whether disturbance is informative"
-      ]
+      ],
+      "worked_example_paths": [
+        "research/framework-candidates/worked-examples/marshallese-wave-navigation.md",
+        "research/framework-candidates/worked-examples/marshallese-wave-navigation-non-navigation.md"
+      ],
+      "discovery_hypothesis": {
+        "ordinary_entry_tends_to": "Plans against an absolute map or plan and treats deviations as noise.",
+        "exposed_cognitive_job": "Represents progress as a relative route of expected cues, separates what the prior model teaches from what must be re-sensed in the field, and reads disturbance as a signal.",
+        "weakens_if": "Ordinary checkpoint, observability, or adaptive-planning practice reaches cue sequences and model-versus-field return on the same target before contact.",
+        "evidence_state": "unreviewed_hypothesis",
+        "authored_basis": "AI analyst hypothesis drafted 2026-10-08 from the runtime dossier's native operations and target-return questions. It is not a discovery-value comparison, not a fit judgment, and not target-side evidence."
+      }
     },
     {
       "id": "sefer-yetzirah-dimensions",

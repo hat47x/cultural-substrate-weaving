@@ -207,6 +207,89 @@ class FrameworkCorpusContractTest(unittest.TestCase):
             )
             self.assertNotIn('"score"', json.dumps(payload).casefold())
 
+    def _hypothesis_candidate(self, **hypothesis_overrides: object) -> dict:
+        hypothesis = {
+            "ordinary_entry_tends_to": "generic review lists attributes",
+            "exposed_cognitive_job": "asks how one position changes the whole",
+            "weakens_if": "generic review reaches the same job ex ante",
+            "evidence_state": "unreviewed_hypothesis",
+            "authored_basis": "analyst hypothesis from the dossier",
+        }
+        hypothesis.update(hypothesis_overrides)
+        return {
+            "id": "hypothesis-candidate",
+            "readiness": "research-only",
+            "discovery_hypothesis": {
+                key: value for key, value in hypothesis.items() if value is not None
+            },
+        }
+
+    def test_repository_adopted_core_records_discovery_hypothesis_state(self) -> None:
+        inventory_path = ROOT / "research" / "framework-candidates" / "cognitive-operation-inventory.json"
+        data = json.loads(inventory_path.read_text(encoding="utf-8"))
+        payload = contract.adopted_requalification_payload(ROOT, data)
+        states = {
+            row["candidate_id"]: row["discovery_hypothesis_state"]
+            for row in payload["candidates"]
+        }
+        self.assertNotIn(None, states.values())
+        self.assertEqual(states["huayan"], "discovery_contribution_recorded")
+        self.assertEqual(states["classical-stasis-theory"], "discovery_contribution_recorded")
+        self.assertEqual(states["hadith-isnad-matn"], "discovery_overlap_recorded")
+
+        for row in data["candidates"]:
+            hypothesis = row.get("discovery_hypothesis")
+            if not hypothesis:
+                continue
+            discovery_paths = (row.get("runtime_requalification") or {}).get(
+                "discovery_value_comparison_paths"
+            )
+            if discovery_paths:
+                self.assertNotEqual(hypothesis["evidence_state"], "unreviewed_hypothesis", row["id"])
+            if hypothesis["evidence_state"] == "unreviewed_hypothesis":
+                self.assertIn("not target-side evidence", hypothesis["authored_basis"], row["id"])
+
+    def test_discovery_hypothesis_accepts_unreviewed_hypothesis_without_paths(self) -> None:
+        candidate = self._hypothesis_candidate()
+        self.assertEqual(contract.validate_candidate(ROOT, candidate), [])
+
+    def test_unreviewed_discovery_hypothesis_cannot_carry_evidence_paths(self) -> None:
+        candidate = self._hypothesis_candidate(evidence_paths=["README.md"])
+        errors = contract.validate_candidate(ROOT, candidate)
+        self.assertTrue(any("must not carry evidence_paths" in error for error in errors), errors)
+
+    def test_unreviewed_discovery_hypothesis_conflicts_with_recorded_comparison(self) -> None:
+        candidate = self._hypothesis_candidate()
+        candidate["runtime_requalification"] = {
+            "discovery_value_comparison_paths": ["README.md"],
+        }
+        errors = contract.validate_candidate(ROOT, candidate)
+        self.assertTrue(any("marked unreviewed" in error for error in errors), errors)
+
+    def test_recorded_discovery_state_requires_existing_evidence_paths(self) -> None:
+        missing = self._hypothesis_candidate(evidence_state="discovery_overlap_recorded")
+        errors = contract.validate_candidate(ROOT, missing)
+        self.assertTrue(any("requires evidence_paths" in error for error in errors), errors)
+
+        absent_file = self._hypothesis_candidate(
+            evidence_state="discovery_contribution_recorded",
+            evidence_paths=["research/does-not-exist.md"],
+        )
+        errors = contract.validate_candidate(ROOT, absent_file)
+        self.assertTrue(any("missing discovery_hypothesis evidence file" in error for error in errors), errors)
+
+        present = self._hypothesis_candidate(
+            evidence_state="discovery_contribution_recorded",
+            evidence_paths=["README.md"],
+        )
+        self.assertEqual(contract.validate_candidate(ROOT, present), [])
+
+    def test_discovery_hypothesis_rejects_unknown_state_and_missing_text(self) -> None:
+        candidate = self._hypothesis_candidate(evidence_state="supported", weakens_if=" ")
+        errors = contract.validate_candidate(ROOT, candidate)
+        self.assertTrue(any("evidence_state must be one of" in error for error in errors), errors)
+        self.assertTrue(any("weakens_if is required" in error for error in errors), errors)
+
     def test_adopted_requalification_keeps_discovery_gap_when_only_specialist_baseline_exists(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
             root = Path(tmp)
