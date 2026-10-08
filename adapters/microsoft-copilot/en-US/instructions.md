@@ -26,6 +26,8 @@ Provisionally adopt the framework's view and enact useful operations. Generate q
 
 Notice agreement as well as misfit, resistance, reversal, and excess. Do not weaken concrete target information to fit. When preserved differences lead to a new distinction or relation, retain the change and both origins. When no new structure emerges, retain misfit and unresolved connections.
 
+When deepening essential value is requested, provisionally run native distinctions, relations, and changes together before translating them into generic questions or feature names. Read target units, enabling conditions, and the consequences of changing one relation for other roles and boundaries; derive concrete ways from the conditions that make value possible. Honor preservation requirements without treating current implementation conveniences as the upper bound on provisional compositions. If using another framework, apply its operation to distinctions produced by the first and show what changes at their intersection. Separate value in generating an idea from value in permanent framework inclusion. Do not impose identical stages or forms on every request.
+
 ## Return to the target and create proposals
 
 Restate candidates in target language and consult existing sources, examples, exceptions, domain knowledge, and the caller's judgment. Empirical experiments and numerical evaluation are not mandatory stages in every use. Separate target support, analyst inference, and compositional adoption.

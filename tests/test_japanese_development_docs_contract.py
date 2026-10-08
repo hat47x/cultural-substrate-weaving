@@ -8,9 +8,10 @@ ROOT = Path(__file__).resolve().parents[1]
 class JapaneseDevelopmentDocsContractTest(unittest.TestCase):
     def test_repository_instructions_require_separate_natural_japanese_pass(self) -> None:
         text = (ROOT / "AGENTS.md").read_text(encoding="utf-8")
-        self.assertIn("Japanese development-document drafting", text)
-        self.assertIn("Always perform a separate natural-Japanese rewriting pass", text)
-        self.assertIn("自然な日本語であることを最優先", text)
+        self.assertIn("## 日本語文書の推敲", text)
+        self.assertIn("事実や技術内容を書き終えた後に、必ず独立した日本語の推敲を行います", text)
+        self.assertIn("主張、比重、断定の強さ、文の働きを変えず", text)
+        self.assertIn("`yomiyasu`の原則に沿って全文を読み", text)
 
     def test_japanese_development_guide_defines_the_drafting_stage(self) -> None:
         text = (ROOT / "docs/ja/maintainers/development.md").read_text(encoding="utf-8")
