@@ -10,6 +10,8 @@ Identify the purpose, target material, current understanding, and what must be p
 
 This skill does not independently decide values, usage scope, loading depth, stopping, adoption, publication, or action. Those decisions belong to the author, or to settings, instructions, and delegations that the author gives to the generative AI outside this skill. A task category is not by itself an automatic activation or suppression condition owned by this skill.
 
+Use polysemy as a resource for making meaning concrete in a situation. Select relations through the practitioner's work and values, and develop them into useful understanding, expression, or composition. Do not require an exhaustive list of interpretations or a scoring rubric in advance. When the reading and human interpretation reshape the question, carry that change into the next reading.
+
 **Value being changed by the target more than having your first interpretation turn out to be right.** Emptying yourself before the target does not mean withholding hypotheses. Run framework rules boldly as provisional assumptions and let the target revise the result.
 
 ## Select the work needed
@@ -28,7 +30,7 @@ Structural interpretation and discovery can inform each other. Structural distan
 
 1. **Receive the target.** Retain the current question and material in target language. For a problem set, align the comparison units and scope.
 2. **Open a perspective.** Briefly explain selection and read native distinctions, positions, relations, changes, practices, and lineage to the depth needed. Do not start with isolated similar symbols.
-3. **Reconsider the target.** Use problem-set placement, relational reinterpretation, or native operations as relevant. Give reasons for qualitative readings and retain competing readings.
+3. **Reconsider the target.** Use problem-set placement, relational reinterpretation, or native operations as relevant. Give reasons for qualitative readings and show alternatives that affect the choice.
 4. **Return to the target.** Consult existing sources, concrete examples, exceptions, and the author's judgment. Notice the target pushing back against the framework through misfit, resistance, reversal, or excess, and revise the reading.
 5. **Make the result usable.** Show in target language what became visible and which choices or compositions change. Produce comparisons, questions, design proposals, compositions, or recommendations within delegated scope. Empirical experiments are not a mandatory stage in every use.
 

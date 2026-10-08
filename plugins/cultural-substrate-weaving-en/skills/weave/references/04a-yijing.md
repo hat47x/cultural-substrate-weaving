@@ -12,6 +12,29 @@ The Yijing / Zhouyi is a composite textual and commentarial tradition. CSW first
 
 Do not reduce Yijing to generic yin–yang balance or assume later operations are universally canonical. Attribution to a specific hexagram requires an assignment procedure independent of resemblance.
 
+## Map a situation to six lines and vary the reading
+
+When the caller specifies a six-line mapping or changing lines, begin exploration from that instruction. Briefly retain what each position represents and which distinction yin and yang express. Read positions bottom to top; when using hexagram names, check the correspondence against the line sequence and lower and upper trigrams. Separate analyst mappings, such as six project layers, from traditional Yijing definitions. Provisional exploratory placement does not require first completing the external convention needed for attribution use.
+
+Change lines as specified or delegated and read how positional roles, relations between trigrams, and enabling conditions change. When changing several lines, consider intermediate hexagrams and order where useful. Even with the same final hexagram, different relations may come into focus along the route. Distinguish the structural operation of flipping a line, relations read from the text or commentary, and concrete target applications.
+
+Keep the initial placement, changed lines, route, and resulting questions or proposals traceable. Short prose is sufficient. Line counts and trial counts are not outcomes; develop what the practitioner can understand, compose, or choose through the reading.
+
+## Reread the Well across different tasks
+
+The Well's third line describes a cleaned well that remains unused; the fourth concerns repairing the well; the fifth describes water being used. Read these differences through a source, access to it, and drawing from it for use.
+
+The following are CSW illustrative constructions applying those relations to knowledge use. They are neither situation diagnoses through six-line assignment nor traditional divinatory judgments.
+
+| Current task | Relation in focus | Concrete proposal |
+|---|---|---|
+| Deepen exploration | What to draw from a source and how to use it | Vary relational positions or recipients; develop a composition in which the human generates further meaning |
+| Choose a composition with others | Different users reaching the same source | Provide paths from each person's question to the same source material and relation |
+| Reuse earlier knowledge | Maintain the well and continue using it | Connect the current question to the original relation, earlier uses, and human-added meaning |
+
+These readings share distinctions between source, access, and use while changing their concrete applications through work and values. Other concerns can produce other readings. The reading and the practitioner's response can also deepen the next question.
+
 Sources:
 - https://plato.stanford.edu/entries/chinese-change/
 - https://plato.stanford.edu/entries/chinese-change/appendix.html
+- [Zhouyi, Well, lines three through five and the Image commentary](https://zh.wikisource.org/zh-hant/周易/井). Source text used for the example; applying it to knowledge use is a CSW construction.

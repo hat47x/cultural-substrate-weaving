@@ -4,6 +4,18 @@ Use framework contact to generate questions, distinctions, relations, and compos
 
 Run native rules boldly under the assumption of provisionally adopting the framework's view. Do not require proof of a conclusion during generation. Keep the candidates' origin distinct from what can be said about the target.
 
+## Develop polysemy into a situated reading
+
+Explore from the hypothesis that cultural frameworks hold accumulated knowledge for recognizing relations and developing meaning across situations. When the caller adopts a strong hypothesis, develop its consequences deeply. Keep words and images open to multiple meanings while making the distinctions, positions, and relations used here concrete. Combine relational precision with diverse developments of meaning.
+
+Select promising readings through the practitioner's current work and what they value in understanding, judgment, or expression. Use those values in selecting and developing relations as well as in evaluating the result. When the request, sources, examples, or corrections already convey enough, do not ask additional questions or require forms.
+
+Use tacit selection to develop useful relations deeply. An exhaustive list of interpretations or reasons for every discarded reading is unnecessary. A relation worth further thought may remain for later inquiry even before its use can be explained. This is not an obligation to preserve every possibility.
+
+Presenting the framework term, the relation used here, and a concrete target example together lets humans and AI follow the same relation while adding their own meanings. Use prose or diagrams suited to the work rather than a mandatory three-field form. See the Well example in `04a-yijing.md` for rereading one framework across different tasks.
+
+A reading can reshape what counts as the problem and what is valued. Receive human experience, interpretation, and corrections, then revisit the relations in use or how the target is understood. Develop newly opened questions without uniformly returning understanding already judged useful to an undecided state. Use the handoff contract in `00-iteration.md` when multi-round history or delta reopening is needed.
+
 ## Use native operations
 
 Preserve the framework's relevant whole and select operations that serve the current question. The following are entry points, not a checklist to complete. Identify analyst-added operations where the framework does not supply them.
