@@ -20,6 +20,20 @@ Preserve the framework's relevant whole and select operations that serve the cur
 
 The first neat correspondence need not close exploration. When moving to another operation, explain what it should reveal. Operation count, framework count, and reading volume are not outcomes.
 
+## Deepen essential structure
+
+When deepening essential value is requested, provisionally run the framework's distinctions, relations, and changes together before translating an operation into generic questions or feature names. Read what counts as one unit in the target, what makes it possible, and what changes when its relations or conditions change. Develop a promising perspective and retain concrete target details that resist it.
+
+Develop the consequences of changing one relation for other roles, boundaries, and enabling conditions. Distinctions such as unchanged source wording with a changed role, or identical states with different meanings because of their paths, can yield structural candidates absent from the previous explanation. Separate actual target changes from analyst assumptions. Identify consequences added by the analyst rather than specified by the framework.
+
+When using another framework, select a perspective with low conceptual coupling and examine what can vary separately and which dependencies remain. Apply the second operation to distinctions or compositions produced by the first, then read which relations change at their intersection. Follow `methods/perspective-analysis.md` for orthogonality judgment. Two juxtaposed questions do not establish a third structure.
+
+Derive conditions under which value becomes possible and concrete ways to satisfy those conditions. Explain what can newly be distinguished, understood, or composed alongside what is preserved. Honor entrusted preservation requirements; do not treat current representations or implementation conveniences as the upper bound on value when considering provisional compositions. Actual changes follow external delegation.
+
+A conventional method's ability to express the same result differs from framework contact directing attention toward that question. Separate value in generating an idea from value in keeping a framework permanently in the final artifact. Contact without discernible value need not be adopted. Judge depth through what changed from the previous understanding and how that difference serves the purpose, rather than framework count, idea count, or unusualness.
+
+This guidance applies when deep discovery is sought; it does not impose identical stages or forms on every request. Do not supply absent structure to force a framework that lacks distinctions, relations, or changes into the pattern.
+
 ## Receive differences from contact
 
 Attend to agreement as well as misfit, resistance, reversal, excess, and mutual revision. Do not weaken target material to retain a candidate. Split, revise, or leave the correspondence undecided.

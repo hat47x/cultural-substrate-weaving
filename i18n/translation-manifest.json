@@ -35,9 +35,9 @@
       "en_status": "translated"
     },
     "core/discovery-pathway.md": {
-      "ja_sha256": "2ea6f7532a8e6102964d4069b1cb750306c5bc7487b21fa21f927a09667bb3a0",
+      "ja_sha256": "ff8bb5ac200759d20878c4bae5576b7db59347c0bf44b410c6164fc5c77ea0ae",
       "en_present": true,
-      "en_source_ja_sha256": "2ea6f7532a8e6102964d4069b1cb750306c5bc7487b21fa21f927a09667bb3a0",
+      "en_source_ja_sha256": "ff8bb5ac200759d20878c4bae5576b7db59347c0bf44b410c6164fc5c77ea0ae",
       "en_status": "translated"
     },
     "core/iteration.md": {
@@ -62,6 +62,12 @@
       "ja_sha256": "996f19f47dc1ba9654f2e4aece502bedbcb5af0e0b4a253678ac4b4518efae0b",
       "en_present": true,
       "en_source_ja_sha256": "996f19f47dc1ba9654f2e4aece502bedbcb5af0e0b4a253678ac4b4518efae0b",
+      "en_status": "translated"
+    },
+    "frameworks/classical-stasis-theory.md": {
+      "ja_sha256": "60a5ffb364b4a26da6cc8ad586af0ac4a0ef389adf607e200801ebe65b18a000",
+      "en_present": true,
+      "en_source_ja_sha256": "60a5ffb364b4a26da6cc8ad586af0ac4a0ef389adf607e200801ebe65b18a000",
       "en_status": "translated"
     },
     "frameworks/confucian-role-ritual.md": {
@@ -194,12 +200,6 @@
       "ja_sha256": "74bd46bb0a67ca27106ecf5b965c3da1f0a800540d7a54399ceb27f5acfdd06e",
       "en_present": true,
       "en_source_ja_sha256": "74bd46bb0a67ca27106ecf5b965c3da1f0a800540d7a54399ceb27f5acfdd06e",
-      "en_status": "translated"
-    },
-    "frameworks/classical-stasis-theory.md": {
-      "ja_sha256": "60a5ffb364b4a26da6cc8ad586af0ac4a0ef389adf607e200801ebe65b18a000",
-      "en_present": true,
-      "en_source_ja_sha256": "60a5ffb364b4a26da6cc8ad586af0ac4a0ef389adf607e200801ebe65b18a000",
       "en_status": "translated"
     }
   }
