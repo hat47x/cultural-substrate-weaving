@@ -45,7 +45,7 @@ The currently adopted CSW structure can be stated without Buddhist vocabulary:
 
 The runtime question is whether this structure remains a distinct cognitive generator after comparison with strong ordinary engineering analysis.
 
-## Current cognitive operations
+## Native operation candidates
 
 ### condition-chain
 

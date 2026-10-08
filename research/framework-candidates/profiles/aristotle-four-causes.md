@@ -35,7 +35,7 @@ The current CSW use can be de-bound as five operations:
 
 The runtime question is whether this remains distinct from strong ordinary systems/design review.
 
-## Current cognitive operations
+## Native operation candidates
 
 ### why-splitting
 

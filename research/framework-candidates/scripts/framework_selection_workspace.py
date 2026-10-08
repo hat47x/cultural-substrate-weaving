@@ -403,6 +403,8 @@ def candidate_summary(row: dict[str, Any]) -> dict[str, Any]:
     for key in ("adoption_hold", "profile_path", "runtime_path", "source_packet_path"):
         if row.get(key):
             result[key] = row[key]
+    if isinstance(row.get("discovery_hypothesis"), dict):
+        result["discovery_hypothesis"] = dict(row["discovery_hypothesis"])
     return result
 
 

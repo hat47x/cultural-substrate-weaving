@@ -30,6 +30,19 @@ RUNTIME_REQUALIFICATION_PATH_FIELDS = (
     "near_neighbor_comparison_paths",
 )
 
+DISCOVERY_HYPOTHESIS_TEXT_FIELDS = (
+    "ordinary_entry_tends_to",
+    "exposed_cognitive_job",
+    "weakens_if",
+    "authored_basis",
+)
+DISCOVERY_UNREVIEWED = "unreviewed_hypothesis"
+DISCOVERY_RECORDED_STATES = {
+    "discovery_contribution_recorded",
+    "discovery_overlap_recorded",
+}
+DISCOVERY_EVIDENCE_STATES = {DISCOVERY_UNREVIEWED} | DISCOVERY_RECORDED_STATES
+
 
 def _list_of_nonempty_strings(value: Any) -> bool:
     return (
@@ -103,10 +116,14 @@ def adopted_requalification_payload(
         if not near_neighbor_paths or missing_near_neighbor:
             evidence_gaps.append("near-neighbor-comparison")
 
+        hypothesis = row.get("discovery_hypothesis")
         rows.append({
             "candidate_id": row.get("id"),
             "runtime_path": row.get("runtime_path"),
             "adoption_hold": row.get("adoption_hold"),
+            "discovery_hypothesis_state": (
+                hypothesis.get("evidence_state") if isinstance(hypothesis, dict) else None
+            ),
             "recorded_evidence": {
                 "profile_path": profile_path if profile_recorded else None,
                 "worked_example_paths": worked_paths,
@@ -232,6 +249,60 @@ def validate_candidate(root: Path, row: dict[str, Any]) -> list[str]:
                             f"{field} file: {value}"
                         )
 
+    errors.extend(_validate_discovery_hypothesis(root, item_id, row))
+    return errors
+
+
+def _validate_discovery_hypothesis(
+    root: Path,
+    item_id: str,
+    row: dict[str, Any],
+) -> list[str]:
+    hypothesis = row.get("discovery_hypothesis")
+    if hypothesis is None:
+        return []
+    if not isinstance(hypothesis, dict):
+        return [f"{item_id}: discovery_hypothesis must be an object when present"]
+
+    errors: list[str] = []
+    for field in DISCOVERY_HYPOTHESIS_TEXT_FIELDS:
+        value = hypothesis.get(field)
+        if not isinstance(value, str) or not value.strip():
+            errors.append(f"{item_id}: discovery_hypothesis.{field} is required")
+
+    state = hypothesis.get("evidence_state")
+    if state not in DISCOVERY_EVIDENCE_STATES:
+        errors.append(
+            f"{item_id}: discovery_hypothesis.evidence_state must be one of "
+            f"{sorted(DISCOVERY_EVIDENCE_STATES)}"
+        )
+        return errors
+
+    paths = hypothesis.get("evidence_paths")
+    if state == DISCOVERY_UNREVIEWED:
+        # An unreviewed hypothesis must not look as if it carried support.
+        if paths is not None:
+            errors.append(
+                f"{item_id}: unreviewed discovery_hypothesis must not carry evidence_paths"
+            )
+        requalification = row.get("runtime_requalification")
+        if isinstance(requalification, dict) and requalification.get(
+            "discovery_value_comparison_paths"
+        ):
+            errors.append(
+                f"{item_id}: discovery_hypothesis is marked unreviewed although a "
+                "discovery-value comparison is recorded"
+            )
+        return errors
+
+    if not _list_of_nonempty_strings(paths):
+        errors.append(
+            f"{item_id}: discovery_hypothesis.evidence_state {state} requires evidence_paths"
+        )
+        return errors
+    for value in paths:
+        if not (root / value).is_file():
+            errors.append(f"{item_id}: missing discovery_hypothesis evidence file: {value}")
     return errors
 
 
