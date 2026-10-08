@@ -50,6 +50,12 @@ CONSIDERATION_FIELDS = {
     "domain_constraint": "domain_constraint",
 }
 
+RUNTIME_BOUNDARY_PATH_FIELDS = (
+    "ordinary_baseline_comparison_paths",
+    "discovery_value_comparison_paths",
+    "near_neighbor_comparison_paths",
+)
+
 
 def load_inventory(path: Path) -> dict[str, Any]:
     data = json.loads(path.read_text(encoding="utf-8"))
@@ -352,6 +358,26 @@ def _norm(value: str) -> str:
     return " ".join(value.casefold().split())
 
 
+def runtime_boundary_payload(row: dict[str, Any]) -> dict[str, Any]:
+    requalification = row.get("runtime_requalification")
+    if not isinstance(requalification, dict):
+        requalification = {}
+
+    readiness = str(row.get("readiness", ""))
+    runtime_path = row.get("runtime_path")
+    payload: dict[str, Any] = {
+        "readiness": row.get("readiness"),
+        "runtime_enabled": readiness == "adopted" and bool(runtime_path),
+        "runtime_path": runtime_path,
+        "adoption_hold": row.get("adoption_hold"),
+        "discovery_review_state": requalification.get("discovery_review_state"),
+    }
+    for key in RUNTIME_BOUNDARY_PATH_FIELDS:
+        values = requalification.get(key, [])
+        payload[key] = list(values) if isinstance(values, list) else []
+    return payload
+
+
 def candidate_summary(row: dict[str, Any]) -> dict[str, Any]:
     sources = row.get("sources", [])
     source_kinds = sorted({
@@ -372,6 +398,7 @@ def candidate_summary(row: dict[str, Any]) -> dict[str, Any]:
             "count": len(sources) if isinstance(sources, list) else 0,
             "kinds": source_kinds,
         },
+        "runtime_boundary": runtime_boundary_payload(row),
     }
     for key in ("adoption_hold", "profile_path", "runtime_path", "source_packet_path"):
         if row.get(key):
@@ -411,6 +438,7 @@ def registry_entry_payload(
         if row.get(key)
     }
 
+    runtime_boundary = runtime_boundary_payload(row)
     readiness = str(row.get("readiness", ""))
     runtime_path = row.get("runtime_path")
     return {
@@ -419,7 +447,7 @@ def registry_entry_payload(
         "registry": {
             "readiness": readiness,
             "adoption_hold": row.get("adoption_hold"),
-            "runtime_enabled": readiness == "adopted" and bool(runtime_path),
+            "runtime_enabled": runtime_boundary["runtime_enabled"],
             "artifacts": artifacts,
             "sources": sources,
         },
@@ -442,21 +470,20 @@ def registry_entry_payload(
             "negative_example_paths": list(row.get("negative_example_paths", [])),
         },
         "runtime_requalification": {
+            "discovery_review_state": runtime_boundary["discovery_review_state"],
             "ordinary_baseline_comparison_paths": list(
-                row.get("runtime_requalification", {}).get(
-                    "ordinary_baseline_comparison_paths",
-                    [],
-                )
-            ) if isinstance(row.get("runtime_requalification"), dict) else [],
+                runtime_boundary["ordinary_baseline_comparison_paths"]
+            ),
+            "discovery_value_comparison_paths": list(
+                runtime_boundary["discovery_value_comparison_paths"]
+            ),
             "near_neighbor_comparison_paths": list(
-                row.get("runtime_requalification", {}).get(
-                    "near_neighbor_comparison_paths",
-                    [],
-                )
-            ) if isinstance(row.get("runtime_requalification"), dict) else [],
+                runtime_boundary["near_neighbor_comparison_paths"]
+            ),
             "interpretation": (
-                "These paths are recorded requalification provenance only. "
-                "They do not establish fit, truth, effectiveness, or continued runtime adoption."
+                "These fields are recorded requalification provenance only. "
+                "Runtime availability is a Registry state, not framework fit, target truth, "
+                "effectiveness, or a recommendation to activate."
             ),
         },
         "interpretation_boundary": (
@@ -618,6 +645,7 @@ def worksheet_payload(
             "profile_path": row.get("profile_path"),
             "runtime_path": row.get("runtime_path"),
             "source_packet_path": row.get("source_packet_path"),
+            "runtime_boundary": runtime_boundary_payload(row),
             "role": "unassigned",
             "planned_operations": [],
             "intended_cognitive_job": "",
@@ -825,6 +853,112 @@ def target_structure_selection_audit_payload(
     }
 
 
+def registry_state_audit_payload(
+    workspace: dict[str, Any],
+    inventory: dict[str, Any],
+) -> dict[str, Any]:
+    ensure_consideration_fields(workspace)
+    current_by_id = by_id(inventory)
+    audits = []
+    drifted_candidate_ids: list[str] = []
+    missing_candidate_ids: list[str] = []
+
+    for row in workspace.get("candidates", []):
+        candidate_id = str(row.get("id", "")).strip()
+        workspace_snapshot = dict(row.get("runtime_boundary", {}))
+        contact_record = row.get("contact_record")
+        contact_snapshot = None
+        if isinstance(contact_record, dict):
+            selection_snapshot = contact_record.get("selection_snapshot")
+            if isinstance(selection_snapshot, dict):
+                registry_snapshot = selection_snapshot.get("registry_snapshot")
+                if isinstance(registry_snapshot, dict):
+                    contact_snapshot = dict(registry_snapshot)
+
+        current_row = current_by_id.get(candidate_id)
+        current_boundary = (
+            runtime_boundary_payload(current_row)
+            if isinstance(current_row, dict)
+            else None
+        )
+        if current_boundary is None:
+            state = "candidate_missing_from_current_inventory"
+            workspace_matches_current = False
+            contact_matches_current = None if contact_snapshot is None else False
+            workspace_changed_fields: list[str] = []
+            contact_changed_fields: list[str] = []
+            missing_candidate_ids.append(candidate_id)
+        else:
+            boundary_fields = (
+                "readiness",
+                "runtime_enabled",
+                "runtime_path",
+                "adoption_hold",
+                "discovery_review_state",
+                *RUNTIME_BOUNDARY_PATH_FIELDS,
+            )
+            workspace_changed_fields = [
+                key
+                for key in boundary_fields
+                if workspace_snapshot.get(key) != current_boundary.get(key)
+            ]
+            contact_changed_fields = (
+                []
+                if contact_snapshot is None
+                else [
+                    key
+                    for key in boundary_fields
+                    if contact_snapshot.get(key) != current_boundary.get(key)
+                ]
+            )
+            workspace_matches_current = not workspace_changed_fields
+            contact_matches_current = (
+                None
+                if contact_snapshot is None
+                else not contact_changed_fields
+            )
+            state = (
+                "matching_current_registry"
+                if workspace_matches_current
+                else "registry_state_drifted"
+            )
+            if not workspace_matches_current:
+                drifted_candidate_ids.append(candidate_id)
+
+        audits.append({
+            "candidate_id": candidate_id,
+            "state": state,
+            "workspace_registry_snapshot": workspace_snapshot,
+            "contact_time_registry_snapshot": contact_snapshot,
+            "current_registry_state": current_boundary,
+            "workspace_matches_current": workspace_matches_current,
+            "workspace_changed_fields": workspace_changed_fields,
+            "contact_snapshot_matches_current": contact_matches_current,
+            "contact_changed_fields": contact_changed_fields,
+            "workspace_matches_contact_snapshot": (
+                None
+                if contact_snapshot is None
+                else workspace_snapshot == contact_snapshot
+            ),
+        })
+
+    return {
+        "format": "csw.framework-registry-selection-audit/v0",
+        "workspace_ref": workspace.get("workspace_ref", ""),
+        "candidates": audits,
+        "drifted_candidate_ids": drifted_candidate_ids,
+        "missing_candidate_ids": missing_candidate_ids,
+        "interpretation_boundary": (
+            "This audit compares historical selection-time Registry state with the current "
+            "Registry. Drift does not invalidate the historical selection, and matching does "
+            "not establish framework fit or effectiveness. Current runtime availability and "
+            "requalification provenance should be re-read before a new contact, while old "
+            "contact-time reasoning remains historical provenance. No score, ranking, "
+            "recommendation, or automatic activation decision is produced."
+        ),
+    }
+
+
 def load_workspace(path: Path) -> dict[str, Any]:
     data = json.loads(path.read_text(encoding="utf-8"))
     if not isinstance(data, dict) or data.get("format") != WORKSPACE_FORMAT:
@@ -849,6 +983,34 @@ def load_workspace(path: Path) -> dict[str, Any]:
 
 def ensure_consideration_fields(data: dict[str, Any]) -> None:
     for row in data.get("candidates", []):
+        boundary = row.get("runtime_boundary")
+        if boundary is None:
+            boundary = runtime_boundary_payload(row)
+            row["runtime_boundary"] = boundary
+        if not isinstance(boundary, dict):
+            raise ValueError(
+                f"candidate runtime_boundary must be an object: {row.get('id', '')}"
+            )
+        fallback_boundary = runtime_boundary_payload(row)
+        for key in (
+            "readiness",
+            "runtime_enabled",
+            "runtime_path",
+            "adoption_hold",
+            "discovery_review_state",
+        ):
+            boundary.setdefault(key, fallback_boundary.get(key))
+        for key in RUNTIME_BOUNDARY_PATH_FIELDS:
+            values = boundary.get(key, [])
+            if not isinstance(values, list) or any(
+                not isinstance(value, str) for value in values
+            ):
+                raise ValueError(
+                    f"candidate runtime_boundary.{key} must be an array of strings: "
+                    f"{row.get('id', '')}"
+                )
+            boundary.setdefault(key, [])
+
         axes = row.get("consideration_axes")
         if axes is None:
             axes = {}
@@ -1151,6 +1313,9 @@ def _selection_snapshot_for_candidate(
         "target_structure_hypotheses": json.loads(
             json.dumps(data.get("target_structure_hypotheses", []))
         ),
+        "registry_snapshot": json.loads(
+            json.dumps(row.get("runtime_boundary", {}))
+        ),
         "candidate_reasoning": {
             "role": row.get("role"),
             "planned_operations": list(row.get("planned_operations", [])),
@@ -1231,6 +1396,7 @@ def review_payload(data: dict[str, Any]) -> dict[str, Any]:
         rows.append({
             "candidate_id": row.get("id"),
             "role": row.get("role"),
+            "runtime_boundary": dict(row["runtime_boundary"]),
             "consideration_axes": dict(axes),
             "non_force_guardrails": dict(row["non_force_guardrails"]),
             "contact_record": dict(row["contact_record"]),
@@ -2104,6 +2270,15 @@ def cmd_audit_target_structure(args: argparse.Namespace) -> None:
     )
 
 
+def cmd_audit_registry_state(args: argparse.Namespace) -> None:
+    print_json(
+        registry_state_audit_payload(
+            load_workspace(args.workspace),
+            load_inventory(args.inventory),
+        )
+    )
+
+
 def cmd_audit_living_lab(args: argparse.Namespace) -> None:
     print_json(
         audit_living_lab_payload(
@@ -2293,6 +2468,17 @@ def build_parser() -> argparse.ArgumentParser:
     audit_target_structure.add_argument("typology", type=Path)
     audit_target_structure.add_argument("inventory", type=Path)
     audit_target_structure.set_defaults(func=cmd_audit_target_structure)
+
+    audit_registry_state = sub.add_parser(
+        "audit-registry-state",
+        help=(
+            "compare selection-time runtime/requalification Registry state with the "
+            "current inventory without invalidating historical reasoning"
+        ),
+    )
+    audit_registry_state.add_argument("workspace", type=Path)
+    audit_registry_state.add_argument("inventory", type=Path)
+    audit_registry_state.set_defaults(func=cmd_audit_registry_state)
 
     shortlist = sub.add_parser("shortlist")
     shortlist.add_argument("inventory", type=Path)
@@ -2490,6 +2676,7 @@ def main() -> None:
             "structure-contrast",
             "set-target-structure",
             "audit-target-structure",
+            "audit-registry-state",
             "audit-map",
             "audit-living-lab",
             "audit-operations",
