@@ -71,7 +71,7 @@ class ResearchTensionEmergenceTests(unittest.TestCase):
     def test_evaluation_does_not_reward_forced_sublation(self) -> None:
         ja = (ROOT / "src/ja-JP/governance/evaluation.md").read_text(encoding="utf-8")
         en = (ROOT / "src/en-US/governance/evaluation.md").read_text(encoding="utf-8")
-        self.assertIn("止揚を成功quotaにしない", ja)
+        self.assertIn("止揚を必達目標にしない", ja)
         self.assertIn("Do not make sublation a success quota", en)
         self.assertIn("第三構造が立たず、緊張だけが残ることも正常な結果", ja)
         self.assertIn("normal result for tension to remain without a third structure", en)
