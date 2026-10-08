@@ -20,3 +20,4 @@
 | 2026-10-08 13:13:15 +0900 | `.living-lab/strategy-trials/t2/I2/NOTICE.md`（Git無視） | `ab359281225811d5a9d4d58140b72a3773e4d364cc707f686074d54ba6bc31f8` | T2の通知 I2。再開者の起動前に固定 |
 | 2026-10-08 13:13:15 +0900 | `.living-lab/strategy-trials/t2/I3/NOTICE.md`（Git無視） | `cb77b29a4b159bfba31170dda9b9113d17de7c9fdab944430f64fcd6736bd690` | T2の通知 I3。再開者の起動前に固定 |
 | 2026-10-08 13:13:15 +0900 | `.living-lab/strategy-trials/t2/I4/NOTICE.md`（Git無視） | `9cc5d49c1a48ab17365a740e186c4f50d3b22119f882c708556c009d0e59ca92` | T2の通知 I4。再開者の起動前に固定 |
+| 2026-10-08 13:21:21 +0900 | `T3-preregistration.md` | `78e22c0470da108e79b607658a38ebf2d4c146f2b11e63f1258d50263cb830bf` | T3の案件確定・生成の前に固定 |
