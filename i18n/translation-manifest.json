@@ -17,9 +17,9 @@
   },
   "files": {
     "ROUTER.md": {
-      "ja_sha256": "6003692c186d4d7175cf385235538efbfaeb1c3b382eb06d964cf18e6d1dc757",
+      "ja_sha256": "b49b29c4cd4db987276d1a269aafafd4773036cf014883163b761f17f3389acc",
       "en_present": true,
-      "en_source_ja_sha256": "6003692c186d4d7175cf385235538efbfaeb1c3b382eb06d964cf18e6d1dc757",
+      "en_source_ja_sha256": "b49b29c4cd4db987276d1a269aafafd4773036cf014883163b761f17f3389acc",
       "en_status": "translated"
     },
     "core/activation.md": {
@@ -35,9 +35,9 @@
       "en_status": "translated"
     },
     "core/discovery-pathway.md": {
-      "ja_sha256": "ff8bb5ac200759d20878c4bae5576b7db59347c0bf44b410c6164fc5c77ea0ae",
+      "ja_sha256": "7b3ec20e2beaa12b54c03844a8b1a387fdf98db09785a2ff25dd98d8e23106bb",
       "en_present": true,
-      "en_source_ja_sha256": "ff8bb5ac200759d20878c4bae5576b7db59347c0bf44b410c6164fc5c77ea0ae",
+      "en_source_ja_sha256": "7b3ec20e2beaa12b54c03844a8b1a387fdf98db09785a2ff25dd98d8e23106bb",
       "en_status": "translated"
     },
     "core/iteration.md": {
@@ -149,15 +149,15 @@
       "en_status": "translated"
     },
     "frameworks/yijing.md": {
-      "ja_sha256": "e5b6bec2a0a24b2d62ad60127042769a02e76745b9c78be8533c084b8587a898",
+      "ja_sha256": "948d1e249bf0239958f63b021130c9f34f5af4a4dfbf31adf5f08e9a59f17ac4",
       "en_present": true,
-      "en_source_ja_sha256": "e5b6bec2a0a24b2d62ad60127042769a02e76745b9c78be8533c084b8587a898",
+      "en_source_ja_sha256": "948d1e249bf0239958f63b021130c9f34f5af4a4dfbf31adf5f08e9a59f17ac4",
       "en_status": "translated"
     },
     "governance/evaluation.md": {
-      "ja_sha256": "dae444654ce7066ec826697fb5f96d949292d827f54033c3bd35e34a520ed611",
+      "ja_sha256": "4a36d85501d496b777ab4d072fca7d5ade7a4dd008113ef29d1fb3ba0097b41c",
       "en_present": true,
-      "en_source_ja_sha256": "dae444654ce7066ec826697fb5f96d949292d827f54033c3bd35e34a520ed611",
+      "en_source_ja_sha256": "4a36d85501d496b777ab4d072fca7d5ade7a4dd008113ef29d1fb3ba0097b41c",
       "en_status": "translated"
     },
     "governance/governance-and-records.md": {

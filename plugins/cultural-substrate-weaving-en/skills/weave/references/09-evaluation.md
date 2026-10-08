@@ -2,9 +2,19 @@
 
 Read this before finalizing an application result to check skill-specific increment, provenance, and over-application.
 
+## Assess usefulness through the practitioner's values
+
+Center evaluation on how this reading served the practitioner's valued work, understanding, judgment, or expression. Articulating a concern, distinguishing two problems, explaining an intention, choosing a composition, or understanding why to preserve something without acting can each be an outcome. When understanding or making sense of something is the purpose, external action changes are not required outcomes.
+
+Receive evaluation criteria from the practitioner's context, including values discovered during inquiry. Do not require a scoring rubric in advance, reasons for every candidate's adoption or rejection, or comparative experiments every time. Brief responses or corrections can identify what was useful and what needs rereading. Retaining a distinction worth further thought can also be judged as gaining a direction for inquiry.
+
+Separate judgments of usefulness from support for factual claims about the target. Receive the practitioner's report of usefulness as their judgment and distinguish it from an AI's assessment of potential use. Adoption alone does not move a reading to `target_supported`.
+
 ## 11. Check the result
 
-1. A domain-method **baseline** and preservation set were established.
+Select the applicable checks according to the request and the operations performed.
+
+1. When making a comparison, a domain-method **baseline** was established. Entrusted preservation requirements were honored in the deliverable.
 2. When affinity synthesis was used, semantic units, evidence state, provenance, isolates, and unresolved material were preserved.
 3. When a cultural framework was used, target-side unresolved structure and the questions or relations actually supplied by the framework remained distinguishable.
 4. `not_loaded / probe / preview / full / enacted` were distinguished, and depth itself was not treated as success.
@@ -24,6 +34,8 @@ Read this before finalizing an application result to check skill-specific increm
 Look at target-side or real-work changes rather than framework count or mapping count.
 
 - A concrete question, falsification condition, or research target appeared.
+- What counts as the problem and what is valued became more concrete.
+- A difference helped understanding, making sense, expressing an intention, or sharing with others.
 - Search or observation targets changed.
 - affinity-synthesis groupings, relations, or blanks were reconfigured.
 - New findings gained support from target-side material.
@@ -82,7 +94,7 @@ If the user later corrects or withdraws a judgment, preserve that later history 
 - Whenever misfit appears, hidden elements, passages, or intentions are invented on the target side to protect the framework reading.
 - Framework-native structure is weakened into a generic metaphor only to fit the target.
 - Producing a third structure becomes a goal in itself and unsupported synthesis prose is added to satisfy it.
-- Explanation volume grows while artifacts, research, or decisions do not move.
+- Explanation volume grows without useful changes in the practitioner's understanding, expression, composition, or choices.
 - Observation overhead becomes heavier than the real task.
 - Illumination turns into form-filling or excessive hedging and thins out generative richness.
 
@@ -100,4 +112,4 @@ What survives into later real work matters, but it does not by itself prove a ca
 
 This skill does not define domain-specific quality criteria, expert correctness, or operational procedure. Use domain skills, sources, standards, or professional procedures as the baseline when needed.
 
-The evaluation task for this skill is to **record traceable differences in questions, material arrangement, research, composition, or decisions, including information produced by target/framework tension, while keeping the provenance of any assessment separate from those differences.**
+Trace changes in questions, understanding, expression, material arrangement, research, composition, and decisions during framework contact or material synthesis. Include information produced by target/framework tension. Assess these changes through the practitioner's values while preserving who judged what and keeping assessment provenance distinct.

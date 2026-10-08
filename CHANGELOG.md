@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+- Added situated use of polysemy: select and deepen relations through practitioner values, let human interpretation reshape the question, and assess usefulness in understanding, expression, composition, and choice. Added caller-directed six-line exploration and a worked Well example across exploration, shared choice, and reuse. Kept usefulness judgments separate from factual support and aligned both locales and the self-contained Microsoft 365 profile.
+
 - Clarified deep discovery on request: run native relations together, develop consequences for target units and enabling conditions, and derive concrete compositions before narrowing to feature lists. Separate catalytic discovery value from permanent framework inclusion; retain attribution, external delegation, and split-method ownership. Added a qualitative SUI artifact analysis and five worked design derivations without new empirical experiments.
 
 - Completed the final retrospective discovery-value review for the pre-standard runtime demotions. Mīmāṃsā remains research-only because ordinary requirements practice already selects segmentation, attachment/scope, explicit-assumption, ambiguity, and conflict work before framework contact. The legacy review debt is now closed: stasis was restored, while dependent origination, Aristotle's four causes, and Mīmāṃsā were confirmed demoted under the discovery-aware standard.

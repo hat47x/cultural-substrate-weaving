@@ -141,3 +141,11 @@ The Japanese prose received a separate yomiyasu pass. The protected source blobs
 The Japanese and English transformation reference was re-read after the caller clarified orthogonality. Both now prioritize minimal conceptual overlap and mutual dependence, close approximation to mathematical orthogonality or statistical independence, and highly independent elements isolated through intersection. Qualitative selection remains available without requiring experiments, and origin, target support, and third-structure boundaries are retained. The corresponding perspective-analysis and system-selection pairs were also compared.
 
 Only the transformation source blob in this protected snapshot changed. Translation hashes were refreshed after semantic alignment and the Japanese prose pass. This is the authoring AI's bilingual alignment check, not independent English review or sibling-Skill promotion approval.
+
+## Situated-polysemy and practitioner-value re-review — 2026-10-09
+
+The Japanese and English Router and evaluation pairs were re-read after incorporating the caller's design direction. Both select and deepen readings through the practitioner's work and values, allow human interpretation to reshape the question, and treat useful understanding and expression as outcomes without requiring external action changes. Alternatives are shown when they affect the choice; exhaustive interpretation lists and advance scoring rubrics are not mandatory.
+
+The protected boundaries remain aligned: informative tension can generate candidates, correspondence is not synthesis, sublation is not a success quota, and adoption or usefulness alone does not establish target-side factual support. The Japanese wording for the success-quota boundary was made natural without changing its meaning. Attribution, external delegation, and sibling-method ownership remain distinct.
+
+Only the two changed Japanese source blobs, `ROUTER.md` and `governance/evaluation.md`, were refreshed by computing their exact bytes after this review. The other four protected sources retain their prior snapshots. Translation-manifest hashes were synchronized separately. This is the authoring AI's bilingual alignment check, not independent English review, practitioner-use evidence, or authorization to promote sibling research Skills.

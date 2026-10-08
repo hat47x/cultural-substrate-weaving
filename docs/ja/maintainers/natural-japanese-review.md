@@ -1,6 +1,6 @@
 # 日本語文書の推敲記録
 
-- 最新の更新文書の見直し: 2026-10-08
+- 最新の更新文書の見直し: 2026-10-09
 - 初回の開発文書一括見直し: 2026-09-01
 - 対象: 公開トップページ、利用者向けガイド、公開リリース文、日本語で記述する利用者向け実行文、開発・保守・研究・実験・運用文書
 - 原則: 内容と技術的な意味を確定した後、自然な日本語であることを最優先して文書全体を読み直す
@@ -45,6 +45,7 @@ Microsoft 365向けのこの2ファイルは、生成物そのものではなく
 - `docs/ja/maintainers/affinity-representation-existing-skill-review.md`
 - `docs/ja/maintainers/core-value-and-embodiment-policy.md`
 - `docs/ja/maintainers/generative-depth-and-product-wisdom.md`
+- `docs/ja/maintainers/situated-polysemy-and-practical-value.md`
 - `docs/ja/maintainers/value-first-product-design.md`
 - `docs/ja/maintainers/value-first-material-synthesis.md`
 - `docs/ja/maintainers/framework-corpus-expansion-2026-10-01.md`
@@ -222,3 +223,11 @@ SUI Sensemakingに関する保守者向け文書の本文、見出し、参照�
 案内を追加した`docs/README.md`と`value-first-product-design.md`も全文を通読した。両文書は追加した案内以外に推敲による本文変更を加えていない。`src/ja-JP/core/discovery-pathway.md`とMicrosoft 365の日本語限定指示は全文を読み直し、対象の具体性の表し方を整え、長い段落を分けた。対応する英語との意味も照合した。操作一覧、比較表、識別子、帰属の境界は保持した。
 
 静的な文章検査と初稿との差分を確認した。文脈上必要な「正本」、索引のリスト、主張の意味を担う否定、実行案内の文末は、指摘を消すためだけに変更していない。既存の鮮度記録が古かった`README.md`も全文を読み直し、本文は変更せず確認日を更新した。本記録も全文を読み直した。今回の確認は担当AIによる推敲であり、独立した人手査読や方法の効果測定ではない。
+
+## 2026-10-09の多義性と実務上の価値の反映
+
+`docs/ja/maintainers/situated-polysemy-and-practical-value.md`、案内を追加した`docs/README.md`、Microsoft 365の日本語限定指示を、内容確定後に独立した工程で全文通読した。日本語の実行本文では、入口、発見、易、振り返りの各文書も全文を読み直した。外部の`yomiyasu`を併用し、語順、助詞、長い段落、不要な英語の挿入を整えた。対応する英語との意味も照合した。
+
+実務者の価値観に即した読みの深まり、人間の解釈による問いの更新、有益性の判断と対象の事実についての支持の区別を保った。易の例は説明用の構成であり、実際の利用で観測した結果とは書いていない。識別子、比較表、操作一覧、文脈上必要な用語は残した。
+
+本記録も全文を読み直し、過去の確認内容は保った。既存検査が参照していた「止揚を成功quotaにしない」は、本文の推敲に合わせて「止揚を必達目標にしない」へ揃えた。今回の確認は担当AIによる文章と意味の確認であり、独立した人手査読や方法の効果測定ではない。

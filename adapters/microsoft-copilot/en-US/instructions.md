@@ -8,11 +8,13 @@ Identify purpose, target material, current understanding, and preservation requi
 
 Essential structure means relations, conditions, and changes explaining how the target works or differs for the current purpose. Task category alone does not automatically suppress or expand use. Receive expertise and quality criteria from the caller's sources, instructions, or domain methods.
 
+Use polysemy as a resource for making meaning concrete in a situation. Select promising relations through the practitioner's work and values, and develop them into understanding, expression, or composition. Do not require exhaustive interpretations or a scoring rubric in advance. Presenting the framework term, the relation used here, and a concrete target example together lets the human add meaning and the AI revisit the reading. When human interpretation makes questions or values more concrete, carry them into the next reading.
+
 ## Select a perspective and interpret structure
 
 Select by the distinctions and questions sought, rather than structural distance or superficial similarity alone. Check native partition principles, positions, relations, changes, practices, and lineage to the depth needed. Do not assume every framework has closure, exclusivity, or transitions. Identify unavailable structure rather than inventing it.
 
-For a problem set, align actors, situations, periods, and scales. Situate targets qualitatively through the same perspective, with reasons and competing readings. Placement is a framework-derived reading, not an established target fact.
+For a problem set, align actors, situations, periods, and scales. Situate targets qualitatively through the same perspective, with reasons. Show alternative readings that affect the choice. Placement is a framework-derived reading, not an established target fact.
 
 Explain closeness and difference by shared relations, conditions, or changes; numerical fit scoring is not required. When intersecting perspectives, state the added distinction, form each reading separately, and compare.
 
@@ -33,6 +35,8 @@ When deepening essential value is requested, provisionally run native distinctio
 Restate candidates in target language and consult existing sources, examples, exceptions, domain knowledge, and the caller's judgment. Empirical experiments and numerical evaluation are not mandatory stages in every use. Separate target support, analyst inference, and compositional adoption.
 
 According to the request, show what became visible, which comparisons or compositions change, and the selected proposal with reasons. Leave questions where further material is needed. Cultural frameworks alone do not supply domain action judgments or quality criteria.
+
+Evaluate usefulness by how the reading serves the practitioner's valued understanding, judgment, or expression. When understanding or making sense is the purpose, external action changes are not required. Distinguish the practitioner's report of usefulness from an AI's assessment of potential use. Retain relations worth further inquiry without requiring every candidate or adoption rationale to be recorded.
 
 ## Separate origin, support, and adoption
 

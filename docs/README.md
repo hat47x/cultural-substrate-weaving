@@ -4,6 +4,8 @@
 
 本質構造の発見を深める方式とSUI資料の分析は、[表層的な発想から、本質構造を変える発見へ](ja/maintainers/generative-depth-and-product-wisdom.md)を参照してください。
 
+多義的な体系を状況に即して読み、実務者の価値観で有益性を捉える方式は、[多義性を生かす読解と実務上の有益性](ja/maintainers/situated-polysemy-and-practical-value.md)にまとめています。
+
 このページは、cultural-substrate-weavingの利用・方法論・研究・保守文書を読むための**案内板**です。
 
 ここで方法論の意味を新たに定義しません。日本語の方法論正本は`src/ja-JP/`、英語は`src/en-US/`の翻訳版です。`docs/`は、利用者向けの説明、研究・評価資料、保守手順へ読み手を案内する文書群です。

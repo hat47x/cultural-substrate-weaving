@@ -50,7 +50,7 @@ REQUIRED: dict[str, tuple[str, ...]] = {
     ),
     "src/ja-JP/governance/evaluation.md": (
         "## 一致より、情報を生んだ緊張を見る",
-        "止揚を成功quotaにしない",
+        "止揚を必達目標にしない",
         "第三構造が生じなかった場合も、それを失敗として捏造で埋めていない",
     ),
     "src/en-US/core/cognitive-stance.md": (
