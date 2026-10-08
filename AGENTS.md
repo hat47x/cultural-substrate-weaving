@@ -75,19 +75,17 @@ Use a lightweight Git Flow around versioned development lines.
 - If `main` advances while a develop line is active, reconcile those changes into the develop line before release rather than letting the branches silently diverge.
 - GitHub Actions are disabled, and `main` currently has no branch protection or repository ruleset. Local checks express and diagnose repository policy; they do not imply that GitHub will reject an invalid direct push.
 
-## Japanese development-document drafting
+## 日本語文書の推敲
 
-For Japanese public user guides and Japanese development, maintainer, research, experiment, and operational documents, completing the factual or technical content is not the final drafting step.
+日本語の利用案内、開発者向け説明、研究記録、実験記録、運用文書では、事実や技術内容を書き終えた後に、必ず独立した日本語の推敲を行います。
 
-1. Draft the facts, structure, constraints, and technical meaning first.
-2. Check that the draft preserves the intended meaning, identifiers, schema field names, commands, and evidence boundaries.
-3. **Always perform a separate natural-Japanese rewriting pass after the content is settled.** Treat natural Japanese as the highest-priority prose criterion at this stage. Rewrite awkward word order, missing or overloaded particles, excessive noun chains, literal translations, and unnecessary English insertions while preserving technical meaning.
-4. Reread the whole document as continuous Japanese prose rather than validating only changed lines. A locally correct sentence may still be unnatural in the surrounding paragraph.
-5. Keep literal identifiers and established technical terms when they are needed for precision, but do not let their English wording determine the surrounding Japanese syntax.
+1. まず事実、構成、制約、技術上の意味を確定する。
+2. 主張、比重、断定の強さ、文の働きを変えず、識別子、構造定義の項目名、コマンド、根拠の範囲を守る。
+3. `yomiyasu`の原則に沿って全文を読み、主語と述語、助詞、文のつながり、不要な名詞の連結や直訳調の表現を整える。
+4. 用語や見出しは日本語を優先し、必要な場合だけ英語を併記する。ただし、正式名称、API、識別子、列挙値、コマンドは翻訳しない。
+5. 変更行だけでなく前後の段落を通読する。直す必要がない文章は、差分を作るために書き換えない。
 
-In short: **自然な日本語であることを最優先し、内容確定後に必ず独立した推敲工程を通す。** A first draft, generated draft, or literal translation is not considered complete until this pass has been performed.
-
-Apply this rule to the scoped Japanese public guides and development documents, including existing files. When an existing document is reviewed and no wording change is needed, record the review without forcing a cosmetic diff.
+この原則は既存の日本語文書にも適用します。見直して変更しなかった文書は、その事実を記録します。意味の正本や公開済み配布物と英語版の対応関係は、各管理規則に従います。
 
 ## Working rules
 
