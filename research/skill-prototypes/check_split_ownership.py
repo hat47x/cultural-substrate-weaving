@@ -262,10 +262,10 @@ def main() -> None:
     require(
         "README.md",
         (
-            "このresearch branchでは方法分離を試験中です",
-            "これはまだ公開済みの三Skill構成を意味しません",
-            "英語の `SKILL.en.md` と `METHOD.en.md` の初期版",
-            "English (`en-US`) | translated draft",
+            "現在の研究用ブランチでは、方法の分離を試験中です",
+            "これは、三つのスキルが公開済みであることを意味しません",
+            "英語版の`SKILL.en.md`と`METHOD.en.md`の草稿",
+            "英語 (`en-US`) | 翻訳草稿",
         ),
         errors,
     )
