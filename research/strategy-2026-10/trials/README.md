@@ -8,7 +8,7 @@
 |---|---|---|---|
 | T0 分類試験 | [T0-preregistration.md](T0-preregistration.md) | 2026-10-08 | [T0-result.md](T0-result.md)。U3は十項目の維持で決着。提案T0-1〜6は設計草案へ反映済み（2026-10-08） |
 | T1 往復・復元試験 | [T1-preregistration.md](T1-preregistration.md) | 2026-10-08 | [T1-result.md](T1-result.md)。原文は内容、系譜の記録は来歴を担い、互いに代わらない。U1の仮置きを維持 |
-| T2 失効・再開試験 | [T2-preregistration.md](T2-preregistration.md) | 未実施（T1の後） | — |
+| T2 失効・再開試験 | [T2-preregistration.md](T2-preregistration.md) | 2026-10-08 | [T2-result.md](T2-result.md)。4変更とも見逃し無し、影響なしの断定と決定の書き換えも無し。段階0を終了 |
 | T3 CSWの対照 | 未作成（段階0の後） | — | — |
 
 事前登録の固定は [prereg-ledger.md](prereg-ledger.md) に記録する。呼び名は [terminology-mapping.md](terminology-mapping.md) に従う。

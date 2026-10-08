@@ -15,3 +15,8 @@
 | 2026-10-08 13:03:39 +0900 | `.living-lab/strategy-trials/t1/materials/M5.md`（Git無視） | `c273701900be42b757c4575fa8d9f94586509a38fb6067bd32c2c61bc7b4ce71` | T1材料の抜粋。作成者Aの起動前に固定。出典の版は各ファイル冒頭のgit hash-object |
 | 2026-10-08 13:08:16 +0900 | `.living-lab/strategy-trials/t1/answer-key.md`（Git無視） | `cf7af989fd6e92f009ff8c4652f9581912db43cb236c066e5b6fd28abd903765` | T1正解表。復元者の起動前に固定 |
 | 2026-10-08 13:08:16 +0900 | `.living-lab/strategy-trials/t1/records/` 18件の連結（ファイル名順）（Git無視） | `9cc74bfc802d39d148053036870185f2591092d629a6d7b4bc8ef948af2b13fc` | T1記録一式。復元者の起動前に固定 |
+| 2026-10-08 13:13:15 +0900 | `.living-lab/strategy-trials/t2/injection-spec.md`（Git無視） | `fd991339af448fd799394e89bf0e5431894e9cbda99e24b8037834c693ab7d6d` | T2の注入と期待値。再開者の起動前に固定 |
+| 2026-10-08 13:13:15 +0900 | `.living-lab/strategy-trials/t2/I1/NOTICE.md`（Git無視） | `41148bb0628323d7a6a27223be3aa960ea241a7a2d3bca8e721e5d271d4f5e08` | T2の通知 I1。再開者の起動前に固定 |
+| 2026-10-08 13:13:15 +0900 | `.living-lab/strategy-trials/t2/I2/NOTICE.md`（Git無視） | `ab359281225811d5a9d4d58140b72a3773e4d364cc707f686074d54ba6bc31f8` | T2の通知 I2。再開者の起動前に固定 |
+| 2026-10-08 13:13:15 +0900 | `.living-lab/strategy-trials/t2/I3/NOTICE.md`（Git無視） | `cb77b29a4b159bfba31170dda9b9113d17de7c9fdab944430f64fcd6736bd690` | T2の通知 I3。再開者の起動前に固定 |
+| 2026-10-08 13:13:15 +0900 | `.living-lab/strategy-trials/t2/I4/NOTICE.md`（Git無視） | `9cc5d49c1a48ab17365a740e186c4f50d3b22119f882c708556c009d0e59ca92` | T2の通知 I4。再開者の起動前に固定 |
