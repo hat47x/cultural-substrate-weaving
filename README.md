@@ -4,13 +4,13 @@
 
 **文化体系の視点から対象の本質構造を捉え直し、発見を使える問い・比較・構成へ具体化する補助AIスキル**です。研究者が異質な概念との出会いから深い発見をする体験を出発点に、文化的・思想的・伝統的体系を一時的な認知場として開きます。問題群の共通性や違いを読み直す働きと、体系固有の操作から新しい問いを得る働きを、依頼に合わせて組み合わせます。
 
-> **このresearch branchでは方法分離を試験中です。** 日本語canonical sourceと英語CSW runtimeでは、一回の材料統合を `affinity-synthesis`、複数roundの差分再開を `iterative-inquiry-synthesis` という独立Methodへ委ねるthin-CSW構造を適用しました。2つのsibling prototypeには、日本語research realizationに加えて英語の `SKILL.en.md` と `METHOD.en.md` の初期版も置いています。これはまだ公開済みの三Skill構成を意味しません。CSWの配布物は再生成しますが、三スキルの公開配布、英語prototypeの独立査読、補助的なresearch reference / evalの言語整理は未完です。
+> **現在の研究用ブランチでは、方法の分離を試験中です。** 日本語の意味上の正本と英語版のCSW実行内容には、一回の材料統合を`affinity-synthesis`へ、複数回の差分に基づく再開を`iterative-inquiry-synthesis`へ委ねる、CSW本体の責務を絞った構成を適用しました。2つの関連する試作スキルには、日本語の研究用実装に加え、英語版の`SKILL.en.md`と`METHOD.en.md`の草稿も置いています。これは、三つのスキルが公開済みであることを意味しません。CSWの配布物は再生成しますが、三スキルの公開配布、英語の試作版に対する独立した査読、補助的な研究資料・評価資料の言語整理は未完了です。
 
 本リポジトリの方法群は、執筆、経営、ソフトウェア開発、法務などの領域固有知識や品質基準を置き換えません。必要な領域能力は、依頼側のコンテキストまたは併用する領域スキルから受け取ります。
 
-> **現在は検証段階です。** v0.4.0でWeb Chat Living Labを導入し、公開済み方法論を実作業の中で観測しています。公開記録には、あらかじめ観測系を置いたprospectiveな記録と、自然な作業を後から匿名化・抽象化したretrospectiveな記録を区別して含めています。公開観測はまだ限定的であり、現時点で方法の有効性が確立したとは扱いません。→ **[Web Chat Living Lab](docs/ja/experiments/web-chat-living-lab.md)** / **[公開観測記録](research/living-lab/observations/)**
+> **現在は検証段階です。** v0.4.0でWeb Chat Living Labを導入し、公開済み方法論を実作業の中で観測しています。公開記録には、事前に観測の手順を定めた記録（prospective）と、自然な作業を後から匿名化・抽象化した記録（retrospective）を区別して含めています。公開観測はまだ限定的であり、現時点で方法の有効性が確立したとは扱いません。→ **[Web Chat Living Lab](docs/ja/experiments/web-chat-living-lab.md)** / **[公開観測記録](research/living-lab/observations/)**
 
-## Research branchの三層
+## 研究用ブランチにおける三つの方法
 
 ```text
 cultural-substrate-weaving
@@ -33,11 +33,11 @@ iterative-inquiry-synthesis   [research prototype]
   → 履歴・残差・停止／再開条件を保持
 ```
 
-方法定義とAgent Skill realizationは分けています。将来、既存の外部Skillが同じ不変条件と評価fixtureを満たすなら、独自realizationを縮小・置換できる設計を目指しています。
+方法の定義と、エージェントスキルとしての実装は分けています。将来、外部の既存スキルが同じ不変条件と評価用データを満たせるなら、独自実装を縮小・置換できる設計を目指します。
 
 ## インストール
 
-以下は現在の `cultural-substrate-weaving` 配布物の利用方法です。research prototypeの `affinity-synthesis` / `iterative-inquiry-synthesis` を独立公開済みとみなさないでください。
+以下は現在の `cultural-substrate-weaving` 配布物の利用方法です。研究用の試作である`affinity-synthesis`と`iterative-inquiry-synthesis`は、まだ独立公開されていません。
 
 **Claude Code**
 
@@ -64,8 +64,8 @@ codex plugin marketplace add hat47x/cultural-substrate-weaving
 
 | 言語 | 状態 | 備考 |
 |---|---|---|
-| 日本語 (`ja-JP`) | 意味上の正本 | thin-CSWと2つのresearch sibling realizationの正本 |
-| English (`en-US`) | translated draft | thin-CSW runtimeは翻訳済み。2 sibling Skillのruntime / Method Definition初期英訳も追加済み。独立査読と補助research資料の整理は未完 |
+| 日本語 (`ja-JP`) | 意味上の正本 | 責務を絞ったCSWと、関連する2つの研究用実装の正本 |
+| 英語 (`en-US`) | 翻訳草稿 | 責務を絞ったCSWの実行内容は翻訳済み。関連する2つのスキルの実行内容・方法定義の初期英訳も追加済み。独立査読と補助研究資料の整理は未完了 |
 
 ## 対応プラットフォーム
 
@@ -93,7 +93,7 @@ GitHub Actionsは現在使用していません。ローカルまたは同等の
 
 - `src/ja-JP/`: CSW runtimeの意味上の正本
 - `src/en-US/`: CSW runtimeの英語翻訳
-- `research/skill-prototypes/`: 分離中のMethod Definition / Skill realization / eval / representation。日本語research正本と英語realization draftを含む
+- `research/skill-prototypes/`: 分離中の方法定義・スキル実装・評価・表現形式。日本語の研究用正本と英語の実装草稿を含む
 - `i18n/`: 用語集、翻訳元ハッシュ、査読方針
 - `adapters/`: プラットフォームと言語ごとのテンプレート
 - `scripts/`: 多言語成果物の生成・検証
