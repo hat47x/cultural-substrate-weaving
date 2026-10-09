@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+- Requalified Nyāya five-member inference under the discovery-aware runtime standard and retained it. Toulmin-style argument methods can reproduce much of the de-bound capability once selected, but ordinary incident/RCA review does not reliably separate the observed reason, the generalized relation that licenses the inference, and application of that relation to the current target; Nyāya remains a bounded catalyst for exposing that inferential bridge.
+
 - Removed Hadith isnād / matn from the default runtime after discovery-aware requalification showed that its most valuable de-bound safeguards—content/provenance separation, common-origin detection, variant lineage, and provenance-not-truth—are already always-on CSW core behavior before framework selection. The sourced profile, positive/negative fixtures, provenance comparison, discovery-value evidence, and historical/intellectual provenance remain available for explicit and comparative use.
 
 - Added situated use of polysemy: select and deepen relations through practitioner values, let human interpretation reshape the question, and assess usefulness in understanding, expression, composition, and choice. Added caller-directed six-line exploration and a worked Well example across exploration, shared choice, and reuse. Kept usefulness judgments separate from factual support and aligned both locales and the self-contained Microsoft 365 profile.
