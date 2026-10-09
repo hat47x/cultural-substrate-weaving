@@ -148,6 +148,12 @@ Nyāya five-member inferenceについてもdiscovery-aware基準で再資格し�
 
 Nyāya contactはこのreason → generalized relation → target applicationの橋を低い選定負荷で露出し、de-binding後にも具体的な検査質問として残す。したがってruntime保持を支持する。ただしdirect interventionで因果がすでに十分確かめられている場合や、target自身がwarrant/application/counterexampleを明示している場合はnon-activationとする。
 
+Catuṣkoṭi（四句分別）についても同じ基準で再資格した。yes/noのmigration statusをsame-targetとして見ると、binary defectを認識した後であればordinary requirements / state reviewがscope分割、multi-state、not-applicable、aggregation ruleでde-bound outputを再現できる。このためunique representationを保持理由にはしない。
+
+一方、generic ex-ante reviewは曖昧さを解消し、正しいscope・predicate・state modelへ整える方向へ進みやすく、修正前のbinary frameに対してboth / neitherを意図的に当て、「どのhidden dimensionでPとnot-Pが共存するか」「どこでpredicate自体が適用不能か」を先に露出することまでは必須ではない。Catuṣkoṭi contactは、この残差をstate modelへ回収する前に見える形にする。
+
+したがってruntime保持を支持する。ただしmixed / not-applicable / scope / aggregationがtarget側ですでに明示されている場合や、validなbinary decisionを単に曖昧化するだけになる場合はnon-activationとする。
+
 Huayan（華厳）は、改訂後のdiscovery-aware基準で再資格した最初のruntime保持例となる。canonical Account統合案をsame-targetとして見ると、bounded-context DDD、context mapping、architecture viewpoints、change-impact analysisを組み合わせたmatched specialist baselineは、Huayanからde-bindしたrole-defined identity、context-role re-identification、perspective-through-node、integration-with-differenceを高い割合で再現できる。
 
 しかしframework contact前のgeneric architecture reviewは、ownership、duplication、API、consistency、migration、availability、cost等を自然に扱えても、「同じAccountというidentity自体がcontaining wholeによって成立しているのではないか」「統合後もどの差異を残すべきか」という認知仕事を必ずしも開かない。Huayan contact後にその問いが露出すると、DDDが適切な検証・実装手法として選びやすくなる。

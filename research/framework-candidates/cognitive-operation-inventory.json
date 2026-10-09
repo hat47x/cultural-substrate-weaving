@@ -791,12 +791,34 @@
         "question the predicate behind a binary choice"
       ],
       "discovery_hypothesis": {
-        "ordinary_entry_tends_to": "Accepts the binary framing of the question (is it X or not) and gathers evidence for one side.",
-        "exposed_cognitive_job": "Audits the predicate itself by opening 'both' and 'neither', exposing mixed time, layer, actor, or definition inside a seemingly binary question.",
-        "weakens_if": "Ordinary critical-thinking or requirements review questions the binary frame and the malformed predicate on the same target without catuṣkoṭi contact.",
-        "evidence_state": "unreviewed_hypothesis",
-        "authored_basis": "AI analyst hypothesis drafted 2026-10-08 from the runtime dossier's native operations and target-return questions. It is not a discovery-value comparison, not a fit judgment, and not target-side evidence."
-      }
+        "ordinary_entry_tends_to": "Clarifies the yes/no predicate, scope, and aggregation rule, often repairing the binary frame before exploring what it excludes.",
+        "exposed_cognitive_job": "Forces both and neither as exploratory counter-positions, exposing mixed scope/time and cases where the predicate itself does not apply.",
+        "weakens_if": "The target already represents mixed/not-applicable states and explicit scope/aggregation, or ordinary review independently opens both/neither and predicate failure before framework contact.",
+        "evidence_state": "discovery_contribution_recorded",
+        "evidence_paths": [
+          "research/framework-candidates/comparisons/catuskoti-discovery-value.md"
+        ],
+        "authored_basis": "Summary of the recorded discovery-value comparison. The comparison file, not this summary, is the authority for the verdict."
+      },
+      "worked_example_paths": [
+        "research/framework-candidates/worked-examples/catuskoti.md"
+      ],
+      "negative_example_paths": [
+        "research/framework-candidates/worked-examples/catuskoti-negative.md"
+      ],
+      "runtime_requalification": {
+        "ordinary_baseline_comparison_paths": [
+          "research/framework-candidates/comparisons/catuskoti-vs-ordinary-state-requirements-review.md"
+        ],
+        "discovery_value_comparison_paths": [
+          "research/framework-candidates/comparisons/catuskoti-discovery-value.md"
+        ],
+        "near_neighbor_comparison_paths": [
+          "research/framework-candidates/comparisons/catuskoti-vs-jain-sevenfold-predication.md"
+        ],
+        "discovery_review_state": "complete-retain"
+      },
+      "adoption_hold": "runtime-retention-supported: ordinary state/requirements review can represent the resolved distinctions, while ex-ante review does not reliably force both/neither/predicate-failure probes before repairing the binary frame"
     },
     {
       "id": "jain-sevenfold-predication",
