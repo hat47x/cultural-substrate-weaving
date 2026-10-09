@@ -1,6 +1,6 @@
 # Hadith isnād / matn candidate profile
 
-Status: adopted / runtime-corpus
+Status: profile-ready / research-only / religious-tradition-sensitive / no-runtime
 
 ## Identity
 
@@ -201,7 +201,7 @@ Hadith focuses on content/provenance separation and lineage topology. Vedic reci
 
 ### Requalification result
 
-The current evidence supports removing hadith isnād / matn from **general default runtime** while preserving it as a sourced research candidate.
+The current evidence supports removing hadith isnād / matn from **general default runtime** while preserving it as a sourced research candidate. The mechanical runtime demotion is now complete.
 
 This is not a judgment that the tradition is unimportant. The opposite is true: its structural distinction has had high product relevance because CSW itself needs strong provenance discipline.
 
