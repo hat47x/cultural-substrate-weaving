@@ -17,6 +17,20 @@ CSW does not reduce Huayan mutual inclusion to “everything is the same” or �
 - mutual-dependence probe: ask whether an apparently intrinsic property is sustained by surrounding relations or roles;
 - whole-bias / part-bias counter-view: test both over-holistic and over-atomized explanations.
 
+## Read whole and difference through the six aspects
+
+Fascicle 4 of Fazang's Huayan Yicheng Jiaoyi Fenqi Zhang discusses six aspects—wholeness, particularity, sameness, difference, completion, and dissolution (總・別・同・異・成・壞)—through rafters and tiles constituting one building. Do not treat them as six temporal stages or mutually exclusive states.
+
+| Aspects | Source relation | Operation to try on the target |
+|---|---|---|
+| Wholeness and particularity | One building and the different parts constituting it | Change the whole and reread the same part's role |
+| Sameness and difference | Jointly constituting the same building while rafters and tiles remain distinct | Read the shared function and identify differences retained without uniform shape or properties |
+| Completion and dissolution | The whole's arising through conditions while parts retain their respective natures | Read conditions for the whole's constitution together with those preserving particularity |
+
+Here, dissolution is not a temporal stage in which a completed building collapses. Sameness does not turn a tile into the shape of a rafter. Use the simultaneous reading of constituting a whole and preserving differences among parts.
+
+For example, in a human deliberation over an AI proposal, checked sources, framework-generated questions, and human judgments can be composed as different roles constituting one deliberation. A changed question can invite rereading the proposal's role while retaining distinctions in origin and support. This is a relationally generated composition; material classification and synthesis procedures remain with a separate method.
+
 ## Questions returned to the target
 
 - Would this part have the same identity outside the present whole?
@@ -68,10 +82,11 @@ Before returning a candidate to the target:
 3. retain which relation was framework-generated;
 4. return to target-side source/card material and test whether the relation is independently supported;
 5. keep differences that resist integration as residuals;
-6. preserve weakening or reframing through target-return audit on the same stable ID.
+6. retain what changed and its origin when target return weakens a candidate; use the handoff contract in `core/iteration.md` when history management or delta reopening is needed.
 
 ## Sources
 
+- [Official CBETA XML, T1866, Huayan Yicheng Jiaoyi Fenqi Zhang, fascicle 4](https://raw.githubusercontent.com/cbeta-org/xml-p5/master/T/T45/T45n1866.xml). Six-aspects section, T45, p0507c03–p0508c22; primary source checked for the aspects and rafter/building relations.
 - Stanford Encyclopedia of Philosophy, Huayan Buddhism
   - https://plato.stanford.edu/entries/buddhism-huayan/
 - Stanford Encyclopedia of Philosophy, Analysis — Fazang's whole-part analysis

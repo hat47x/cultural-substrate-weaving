@@ -35,9 +35,9 @@
       "en_status": "translated"
     },
     "core/discovery-pathway.md": {
-      "ja_sha256": "7b3ec20e2beaa12b54c03844a8b1a387fdf98db09785a2ff25dd98d8e23106bb",
+      "ja_sha256": "96e026389aa80996798171fd102082b1560240652a3c520c5ea2e55054c1b7ab",
       "en_present": true,
-      "en_source_ja_sha256": "7b3ec20e2beaa12b54c03844a8b1a387fdf98db09785a2ff25dd98d8e23106bb",
+      "en_source_ja_sha256": "96e026389aa80996798171fd102082b1560240652a3c520c5ea2e55054c1b7ab",
       "en_status": "translated"
     },
     "core/iteration.md": {
@@ -77,9 +77,9 @@
       "en_status": "translated"
     },
     "frameworks/huayan.md": {
-      "ja_sha256": "ac360fba7203efef5f4baf070e0dd4d0e6d61b2a1430c8cd8bff14c024407544",
+      "ja_sha256": "10f7f377f77c2ae9b787e3992ff5fe22cca146f34fd47e46f29aab98cd077afa",
       "en_present": true,
-      "en_source_ja_sha256": "ac360fba7203efef5f4baf070e0dd4d0e6d61b2a1430c8cd8bff14c024407544",
+      "en_source_ja_sha256": "10f7f377f77c2ae9b787e3992ff5fe22cca146f34fd47e46f29aab98cd077afa",
       "en_status": "translated"
     },
     "frameworks/jain-sevenfold-predication.md": {
@@ -143,9 +143,9 @@
       "en_status": "translated"
     },
     "frameworks/yijing.md": {
-      "ja_sha256": "948d1e249bf0239958f63b021130c9f34f5af4a4dfbf31adf5f08e9a59f17ac4",
+      "ja_sha256": "045d4b685761b93080df3a7647cb08950781ca3ae500b6266f1c8ef08b877f51",
       "en_present": true,
-      "en_source_ja_sha256": "948d1e249bf0239958f63b021130c9f34f5af4a4dfbf31adf5f08e9a59f17ac4",
+      "en_source_ja_sha256": "045d4b685761b93080df3a7647cb08950781ca3ae500b6266f1c8ef08b877f51",
       "en_status": "translated"
     },
     "governance/evaluation.md": {
@@ -191,9 +191,9 @@
       "en_status": "translated"
     },
     "methods/transformation.md": {
-      "ja_sha256": "74bd46bb0a67ca27106ecf5b965c3da1f0a800540d7a54399ceb27f5acfdd06e",
+      "ja_sha256": "f884cf1682540ae07b54d5ecc3797669339e575ff87c212877a287399a3da567",
       "en_present": true,
-      "en_source_ja_sha256": "74bd46bb0a67ca27106ecf5b965c3da1f0a800540d7a54399ceb27f5acfdd06e",
+      "en_source_ja_sha256": "f884cf1682540ae07b54d5ecc3797669339e575ff87c212877a287399a3da567",
       "en_status": "translated"
     }
   }

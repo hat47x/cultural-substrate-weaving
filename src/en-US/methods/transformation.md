@@ -82,9 +82,23 @@ When layers of differing depth are involved, make the layer distinction explicit
 
 **Isolate highly independent elements by intersecting highly orthogonal frameworks.** Select combinations with minimal conceptual overlap and mutual dependence that closely approximate mathematical orthogonality or statistical independence, using reasoned qualitative judgment. Read each perspective independently before examining intersections. Explain which distinction each contributes and proceed according to purpose and delegation. See `methods/perspective-analysis.md` for qualitative comparison. When one framework supplies positions and another partitions the same target differently, their intersections provide an entry for considering positions neither framework names alone.
 
-When combining multiple frameworks, verify axis independence. Each axis needs a rationale independent of the target and a distinct classification principle. Do not derive a global axis from one member of the comparison group. Extract structures independently from each target before comparison.
+When combining multiple frameworks as independent classification axes, verify axis independence. Each axis needs a rationale independent of the target and a distinct classification principle. Do not derive a global axis from one member of the comparison group. Extract structures independently from each target before comparison.
 
 When crossing continuous frameworks, preserve them as continuous quantities. If a sparse matrix fits the target, keep it sparse.
+
+## Compose operations from multiple frameworks on the same relation
+
+Alongside intersecting classification axes, compose different operations on one concrete relation. First read each framework's relations and operations through its native structure, then identify the shared target in this use. Trace where the second operation acts on the first result and what it changes. Connect through target relations rather than assuming identically named elements are the connection points.
+
+For example, in a human reading an AI proposal, the Well's distinctions between source, access, and use separate proposal quality from usability through the present question. Applying Huayan's whole–part operation to this relation of use shifts the unit from the proposal alone to sources, proposal, interpreter, and unresolved questions jointly constituting a deliberation while retaining differences. A changed question can prompt rereading the same proposal's role. This is an illustrative reading constructed through two frameworks, not a confirmed target finding.
+
+Reversing the order can begin with whole–part relations that preserve each person's different questions and judgments, then apply the Well to that whole to foreground access from different questions to the same source. Order can change what counts as one target and what is asked next. Use such comparison where helpful without requiring both orders. For nested operations, identify whether the operation acts on the whole or one relation within it.
+
+Separate operations on a fixed state, interpretation of intermediate meanings, and reselection of the next operation in response to the reading. Operations reaching the same formal endpoint can yield different intermediate questions. If interpretation changes the correspondence or boundary, identify that change rather than claiming the original formal operations alone produced another endpoint. See `frameworks/yijing.md` for a concrete example and `frameworks/huayan.md` for reading whole and difference together.
+
+Retain both origins and target return for relations generated through composition. Juxtaposed findings alone do not establish a third structure; rereading the same material through another framework does not add independent target evidence.
+
+## Revisit multi-framework use
 
 When using multiple frameworks, observable states include:
 

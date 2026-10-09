@@ -13,7 +13,7 @@
       "reviewed_at": "2026-10-08"
     },
     "adapters/microsoft-copilot/ja-JP/instructions.md": {
-      "git_blob_sha": "2e316ef464c0c678eae2ec3fc7fb0af95316308b",
+      "git_blob_sha": "3eaea1337b3c477a9ac44d8ee6cf10689fbbac43",
       "reviewed_at": "2026-10-09"
     },
     "adapters/microsoft-copilot/ja-JP/package-readme.txt": {
@@ -105,7 +105,7 @@
       "reviewed_at": "2026-10-05"
     },
     "docs/ja/maintainers/natural-japanese-review.md": {
-      "git_blob_sha": "ddd6e748c3d81eed14319b634d276cdc862b862a",
+      "git_blob_sha": "e1f6a1e0705dc28a9a06375bf770b956697c11c3",
       "reviewed_at": "2026-10-09"
     },
     "docs/ja/maintainers/official-sources.md": {
@@ -125,7 +125,7 @@
       "reviewed_at": "2026-09-27"
     },
     "docs/ja/maintainers/situated-polysemy-and-practical-value.md": {
-      "git_blob_sha": "132b7fc930fba1f541562473a9d1f75d866c2160",
+      "git_blob_sha": "27e4ede4dca2fd9cdc477435b8529b1bd894d5c1",
       "reviewed_at": "2026-10-09"
     },
     "docs/ja/maintainers/skill-improvement-direction.md": {

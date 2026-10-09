@@ -20,6 +20,21 @@ Change lines as specified or delegated and read how positional roles, relations 
 
 Keep the initial placement, changed lines, route, and resulting questions or proposals traceable. Short prose is sufficient. Line counts and trial counts are not outcomes; develop what the practitioner can understand, compose, or choose through the reading.
 
+## Two routes to the same Well
+
+Provisionally start from Oppression (Kun, 困) to demonstrate line operations. Use `0` for yin and `1` for yang, ordered bottom to top. Kun is `(0,1,0,1,1,0)`, with Kan below and Dui above.
+
+| Flip order | Intermediate hexagram | Endpoint |
+|---|---|---|
+| Line 3, then line 4 | Great Preponderance (Da Guo, 大過), `(0,1,1,1,1,0)`; Xun below, Dui above | Well (Jing, 井), `(0,1,1,0,1,0)`; Xun below, Kan above |
+| Line 4, then line 3 | Repeated Kan (坎), `(0,1,0,0,1,0)`; Kan below and above | The same Well |
+
+This example does not diagnose a situation through all six lines. Provisionally map line 3 to exploratory `0` versus explicit `1` relations, and line 4 to open `0` versus fixed `1` composition, then read the intermediate states. These are analyst assignments.
+
+Making relations explicit first passes through Da Guo's strong middle and weak ends, suggesting whether entrances and reception support the strength of explicit relations. Opening the composition first passes through Kan's recurring danger and the Image's account of repeated conduct and teaching, suggesting how repeated reading and checking might address uncertainty introduced by opening the composition. Both reach the Well, but yield different intermediate questions. These practical reinterpretations are CSW constructions.
+
+Flips at distinct fixed positions commute: order alone does not change the final lines. Intermediate hexagrams and their readings differ. If a response prompts changing the assignment or selecting different lines next, identify that change rather than describing the original fixed flips as order-dependent. These routes are illustrative comparisons, not a traditional multiple-changing-line divination procedure.
+
 ## Reread the Well across different tasks
 
 The Well's third line describes a cleaned well that remains unused; the fourth concerns repairing the well; the fifth describes water being used. Read these differences through a source, access to it, and drawing from it for use.
@@ -38,3 +53,4 @@ Sources:
 - https://plato.stanford.edu/entries/chinese-change/
 - https://plato.stanford.edu/entries/chinese-change/appendix.html
 - [Zhouyi, Well, lines three through five and the Image commentary](https://zh.wikisource.org/zh-hant/周易/井). Source text used for the example; applying it to knowledge use is a CSW construction.
+- [Zhouyi: Oppression](https://zh.wikisource.org/zh-hant/周易/困), [Great Preponderance](https://zh.wikisource.org/zh-hant/周易/大過), and [Kan](https://zh.wikisource.org/zh-hant/周易/坎). Source texts for the two routes' trigrams and intermediate readings.

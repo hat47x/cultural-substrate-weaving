@@ -149,3 +149,11 @@ The Japanese and English Router and evaluation pairs were re-read after incorpor
 The protected boundaries remain aligned: informative tension can generate candidates, correspondence is not synthesis, sublation is not a success quota, and adoption or usefulness alone does not establish target-side factual support. The Japanese wording for the success-quota boundary was made natural without changing its meaning. Attribution, external delegation, and sibling-method ownership remain distinct.
 
 Only the two changed Japanese source blobs, `ROUTER.md` and `governance/evaluation.md`, were refreshed by computing their exact bytes after this review. The other four protected sources retain their prior snapshots. Translation-manifest hashes were synchronized separately. This is the authoring AI's bilingual alignment check, not independent English review, practitioner-use evidence, or authorization to promote sibling research Skills.
+
+## Relational-operation composition re-review — 2026-10-09
+
+The Japanese and English `methods/transformation.md` pair was re-read after the Japanese prose pass. Both distinguish intersecting independent classification axes from composing operations on the same concrete relation, preserve each framework's native structure, and identify where a subsequent operation acts. The shared Well/Huayan example and its reversed order are illustrative constructions, with no mandatory comparison of both orders. Formal state operations, intermediate interpretation, and reselection after a response remain distinct in both locales.
+
+Existing tension, third-structure, independent-support, delegation, and non-exhaustive depth-layer boundaries remain aligned. Only the transformation source blob changes in this protected snapshot; the discovery, Yijing, Huayan, and Microsoft 365 pairs are tracked outside `scope_files` by their existing source-tracking mechanisms. The Huayan return clause delegates history management through the existing iteration handoff instead of requiring the framework module to implement stable-ID audit internally.
+
+The reviewed Japanese source blob was computed from the final source bytes after this reading; translation hashes were refreshed separately. This is the authoring AI's bilingual alignment check, not independent English review or sibling-Skill promotion approval.

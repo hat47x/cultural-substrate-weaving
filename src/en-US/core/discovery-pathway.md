@@ -38,7 +38,11 @@ When deepening essential value is requested, provisionally run the framework's d
 
 Develop the consequences of changing one relation for other roles, boundaries, and enabling conditions. Distinctions such as unchanged source wording with a changed role, or identical states with different meanings because of their paths, can yield structural candidates absent from the previous explanation. Separate actual target changes from analyst assumptions. Identify consequences added by the analyst rather than specified by the framework.
 
-When using another framework, select a perspective with low conceptual coupling and examine what can vary separately and which dependencies remain. Apply the second operation to distinctions or compositions produced by the first, then read which relations change at their intersection. Follow `methods/perspective-analysis.md` for orthogonality judgment. Two juxtaposed questions do not establish a third structure.
+Alongside varying an element's properties, vary what counts as one target and the whole within which it has a role. The same proposal has different relations to sources and people when it is stored material, a basis for deliberation, or a reason for a decision. Unchanged wording can still accompany a shift from the proposal itself to the proposal and its relations of use. See `frameworks/huayan.md` for reading a part's role through a changed whole.
+
+A recipient can also participate in the relation through which knowledge becomes concrete. Depending on purpose, use either adapting a completed explanation to its recipient or composing an explanation through the recipient's questions and interpretations. In the latter, changes can affect explanatory units and the relations developed, as well as wording. Return differences received from human responses to the next operation to develop further meaning through the same framework.
+
+When using another framework, distinguish reading intersections of independent perspectives from applying a second operation to a relation exposed by the first. Use `methods/perspective-analysis.md` for axis orthogonality and `methods/transformation.md` for composing operations on the same relation. Where useful, vary order or nesting and read which questions, roles, and units change and what remains. Determine order dependence for each operation. See the two-route example in `frameworks/yijing.md` for fixed line flips versus differing intermediate readings.
 
 Derive conditions under which value becomes possible and concrete ways to satisfy those conditions. Explain what can newly be distinguished, understood, or composed alongside what is preserved. Honor entrusted preservation requirements; do not treat current representations or implementation conveniences as the upper bound on value when considering provisional compositions. Actual changes follow external delegation.
 
@@ -71,6 +75,8 @@ Target return can use existing sources, concrete examples, exceptions, domain ju
 | Research, observation, or trial | Where and how to obtain further material when needed |
 
 Research and trials are one exit among several. If the request calls for design or composition and existing sources plus qualitative judgment permit choosing, proceed to a concrete proposal. Receive domain-specific action judgments and quality criteria from the caller.
+
+Alongside the current answer, retaining a relation that supports reinterpretation can make the knowledge usable in another situation. For a composition derived from delivering a proposal to a recipient, briefly indicate the relation preserved here and what can vary with recipient or purpose. Connect the relation to the present concrete example rather than leaving only an abstraction. Do not require a reuse form or preservation of every candidate.
 
 ## Carry useful provenance
 

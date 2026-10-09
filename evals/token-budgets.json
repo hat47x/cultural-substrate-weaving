@@ -57,7 +57,8 @@
     "Value-first reconstruction (2026-10-05): starting develop corpus was ja-JP 181191 / en-US 168324, above the stale 101357 / 101009 ceilings after prior framework-dossier additions. Current corpus ja-JP 165912 / en-US 150836. Preserved the selectively loaded framework library; replaced encounter-first routing with purpose-led perspective analysis and discovery, added qualitative problem-set comparison, removed duplicated operation instructions, and kept affinity synthesis separate. Set corpus tripwires to the measured reduced corpus; retained entry/reference budgets. This is distribution accounting, not an efficacy measurement.",
     "Caller-directed orthogonality correction (2026-10-05): corpus ja-JP 165912 -> 167434, en-US 150836 -> 152405. Added low conceptual overlap/dependence, close mathematical/statistical approximation as the selection aim, independent variation and intersection criteria, and the Wuxing / five great elements reference example. Qualitative judgment remains distinct from proof or measurement; experiments are not prerequisites. Corpus tripwires follow the explicit source delta; entry/reference ceilings are unchanged.",
     "Deep-discovery clarification (2026-10-08): ja-JP 158238 -> 160709 (+2471 bytes), en-US 145699 -> 148119 (+2420 bytes). Bought optional native-structure development across target units, roles, enabling conditions, and consequences before feature translation, plus low-coupling intersection and separation of catalytic discovery from permanent framework inclusion. No fixed count, required experiment, or domain procedure was introduced. Tripwires follow measured current corpus including earlier framework reclassification; entry/reference ceilings are unchanged. This accounts for distribution size, not method efficacy.",
-    "Situated polysemy and practitioner usefulness (2026-10-09): ja-JP 160709 -> 167459 (+6750 bytes), en-US 148119 -> 154839 (+6720 bytes). Bought value-directed selection and deepening of relations, human reinterpretation that reshapes context, optional caller-directed six-line exploration, and a Well example across three tasks. Understanding and expression count as outcomes without mandatory action changes or exhaustive interpretation logs. Usefulness remains separate from factual support; sibling-method ownership is unchanged. Corpus tripwires follow measured source growth; entry/reference ceilings are unchanged. This is distribution accounting, not an efficacy measurement."
+    "Situated polysemy and practitioner usefulness (2026-10-09): ja-JP 160709 -> 167459 (+6750 bytes), en-US 148119 -> 154839 (+6720 bytes). Bought value-directed selection and deepening of relations, human reinterpretation that reshapes context, optional caller-directed six-line exploration, and a Well example across three tasks. Understanding and expression count as outcomes without mandatory action changes or exhaustive interpretation logs. Usefulness remains separate from factual support; sibling-method ownership is unchanged. Corpus tripwires follow measured source growth; entry/reference ceilings are unchanged. This is distribution accounting, not an efficacy measurement.",
+    "Relational-generativity deepening (2026-10-09): ja-JP 167459 -> 172359, en-US 154839 -> 160215. Bought role and unit reinterpretation, recipient participation in concretization, composition of native operations on shared target relations, a two-route Yijing example separating commuting flips from intermediate readings, and Fazang's six-aspect whole/difference reading with primary-source locations. Huayan prose was polished and history handling returned to the iteration handoff. No new mandatory schema, operation count, experiment, or domain procedure. Corpus tripwires follow measured source growth; entry/reference ceilings are unchanged. This is distribution accounting, not an efficacy measurement."
   ],
   "router_max_bytes": {
     "ja-JP": 10000,
@@ -76,8 +77,8 @@
     "en-US": 14566
   },
   "corpus_max_bytes": {
-    "ja-JP": 167459,
-    "en-US": 154839
+    "ja-JP": 172359,
+    "en-US": 160215
   },
   "m365_instructions_max_chars": 8000,
   "gpt_knowledge_max_files": 10
