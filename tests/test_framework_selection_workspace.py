@@ -1418,6 +1418,32 @@ class FrameworkSelectionWorkspaceTest(unittest.TestCase):
             )
             self.assertNotIn('"score"', json.dumps(payload))
 
+    def test_hadith_demotion_requires_explicit_profile_ready_recall(self) -> None:
+        inventory = workspace.load_inventory(
+            ROOT / "research" / "framework-candidates" / "cognitive-operation-inventory.json"
+        )
+        hadith = next(
+            row for row in workspace.candidates(inventory)
+            if row["id"] == "hadith-isnad-matn"
+        )
+        cue = hadith["selection_cues"][0]
+
+        default_payload = workspace.recall_payload(inventory, cue)
+        self.assertNotIn(
+            "hadith-isnad-matn",
+            [row["candidate"]["id"] for row in default_payload["candidates"]],
+        )
+
+        research_payload = workspace.recall_payload(
+            inventory,
+            cue,
+            readiness=["profile-ready"],
+        )
+        self.assertIn(
+            "hadith-isnad-matn",
+            [row["candidate"]["id"] for row in research_payload["candidates"]],
+        )
+
     def test_real_inventory_adopted_candidates_have_selection_cues(self) -> None:
         inventory = workspace.load_inventory(
             ROOT / "research" / "framework-candidates" / "cognitive-operation-inventory.json"
