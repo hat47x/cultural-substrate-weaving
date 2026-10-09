@@ -142,6 +142,12 @@ Hadith isnād / matnについても、現在のCSW product structureを基準に
 
 このためhadithの高いproduct relevanceは否定しないが、その最重要operationはすでにalways-on coreへ吸収済みであり、default runtime frameworkとしては**capability overlapとdiscovery overlapの両方**が成立する。一般runtimeからのdemotionを支持し、mechanical demotionも完了した。歴史的・宗教的・比較source-criticism用のresearch candidateとして保持する。
 
+Nyāya five-member inferenceについてもdiscovery-aware基準で再資格した。matched specialist baselineとしてToulmin型のclaim / grounds / warrant / backing / qualifier / rebuttalを用いると、argument-unfolding、reason-rule-separation、example/counterexample、application audit、inference-gap detectionの多くを再現できる。したがってunique formal capabilityだけではruntime保持を説明できない。
+
+一方、framework名もargument-mapping手法も与えないgeneric incident / RCA baselineは、root cause、evidence、contributing factors、reproduction、elimination、corrective actionを自然に扱うものの、「観察された理由」「その理由から結論へ進む一般化」「その一般化が今回の対象に適用できるか」を独立した三つの検査点として必ずしも外在化しない。別事例で成立したR + C → failureという関係を、C未確認の現在targetへそのまま移すような推論飛躍が残り得る。
+
+Nyāya contactはこのreason → generalized relation → target applicationの橋を低い選定負荷で露出し、de-binding後にも具体的な検査質問として残す。したがってruntime保持を支持する。ただしdirect interventionで因果がすでに十分確かめられている場合や、target自身がwarrant/application/counterexampleを明示している場合はnon-activationとする。
+
 Huayan（華厳）は、改訂後のdiscovery-aware基準で再資格した最初のruntime保持例となる。canonical Account統合案をsame-targetとして見ると、bounded-context DDD、context mapping、architecture viewpoints、change-impact analysisを組み合わせたmatched specialist baselineは、Huayanからde-bindしたrole-defined identity、context-role re-identification、perspective-through-node、integration-with-differenceを高い割合で再現できる。
 
 しかしframework contact前のgeneric architecture reviewは、ownership、duplication、API、consistency、migration、availability、cost等を自然に扱えても、「同じAccountというidentity自体がcontaining wholeによって成立しているのではないか」「統合後もどの差異を残すべきか」という認知仕事を必ずしも開かない。Huayan contact後にその問いが露出すると、DDDが適切な検証・実装手法として選びやすくなる。
