@@ -75,8 +75,64 @@ Before returning an exploratory Nyāya pass to the target:
 4. ask whether the reason and example are independently supported by target-side material;
 5. preserve failed applications or counterexamples as residuals rather than repairing the argument automatically.
 
-## Runtime adoption synchronization
+## Runtime requalification
 
-The minimal runtime dossier adopts argument unfolding, reason/rule separation, example/counterexample probing, application audit, and inference-gap detection. It does not treat the five-member form as a universal truth validator or as the whole of Indian logic.
+### Positive target-return fixture
 
-Worked example: `research/framework-candidates/worked-examples/nyaya-five-member-inference.md`
+See:
+
+- `research/framework-candidates/worked-examples/nyaya-five-member-inference.md`
+
+The fixture exposes a compressed causal claim whose comparison case may not actually apply to the current batch.
+
+### Non-activation fixture
+
+See:
+
+- `research/framework-candidates/worked-examples/nyaya-five-member-inference-negative.md`
+
+When the target already externalizes claim, observed reason, generalized relation, application conditions, counterexamples, direct intervention, and evidence links, Nyāya adds no cognitive job.
+
+### Capability-overlap comparison
+
+See:
+
+- `research/framework-candidates/comparisons/nyaya-five-member-inference-vs-toulmin-argument-review.md`
+
+Toulmin-style argument review can reproduce much of the de-bound capability by separating claim, grounds, warrant, backing, qualifier, and rebuttal. Nyāya therefore does not need runtime retention on the claim that no other method can represent the inferential bridge.
+
+### Discovery-value comparison
+
+See:
+
+- `research/framework-candidates/comparisons/nyaya-five-member-inference-discovery-value.md`
+
+The ex-ante comparison uses ordinary incident/RCA review without naming Nyāya or argument mapping.
+
+That baseline naturally asks for root causes, evidence, contributing factors, reproduction, elimination, and corrective action. It does not, however, reliably force a three-way separation between:
+
+- the observation functioning as a reason;
+- the generalized relation that licenses the inference;
+- application of that relation to the current target.
+
+Nyāya contact makes this bridge explicit and turns analogy or warrant overreach into an inspectable target-side question.
+
+### Near-neighbor comparison
+
+See:
+
+- `research/framework-candidates/comparisons/mimamsa-vs-stasis-vs-nyaya.md`
+
+Stasis locates the kind of issue under dispute; Mīmāṃsā scopes prescriptive text; Nyāya inspects the reason-to-conclusion bridge. Near-neighbor distinctness is preserved without using it as the sole retention argument.
+
+### Requalification result
+
+Runtime retention is supported under the discovery-aware standard.
+
+The reason is **discovery contribution**, not unique formal capability.
+
+Retain Nyāya when the missing cognitive job is an unstated warrant, an analogy leap, or an unchecked application of a general relation to the present target.
+
+Do not activate it when a direct target-side intervention already settles the claim or when the target already makes claim, warrant, application conditions, and counterexamples explicit.
+
+The minimal runtime dossier remains bounded to argument unfolding, reason/rule separation, example/counterexample probing, application audit, and inference-gap detection. It does not treat the five-member form as a universal truth validator or as the whole of Indian logic.
