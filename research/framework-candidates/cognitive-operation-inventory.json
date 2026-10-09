@@ -1430,12 +1430,31 @@
         "research/framework-candidates/worked-examples/nyaya-five-member-inference.md"
       ],
       "discovery_hypothesis": {
-        "ordinary_entry_tends_to": "Accepts 'therefore' and evaluates the conclusion or the evidence rather than the bridge between them.",
-        "exposed_cognitive_job": "Unfolds an argument into thesis, reason, general rule with example, application, and conclusion, so applying the rule to this target is checked as a separate step.",
-        "weakens_if": "Ordinary argument mapping or warrant checking is selected ex ante on the same target and exposes the same application gap.",
-        "evidence_state": "unreviewed_hypothesis",
-        "authored_basis": "AI analyst hypothesis drafted 2026-10-08 from the runtime dossier's native operations and target-return questions. It is not a discovery-value comparison, not a fit judgment, and not target-side evidence."
-      }
+        "ordinary_entry_tends_to": "Collects evidence and identifies a root cause, but often leaves the generalized warrant and its application to the current target implicit.",
+        "exposed_cognitive_job": "Separates observed reason, the general relation that licenses the inference, and application of that relation to the present target.",
+        "weakens_if": "A direct intervention already settles the claim or the target already externalizes claim, warrant, application conditions, and counterexamples.",
+        "evidence_state": "discovery_contribution_recorded",
+        "evidence_paths": [
+          "research/framework-candidates/comparisons/nyaya-five-member-inference-discovery-value.md"
+        ],
+        "authored_basis": "Summary of the recorded discovery-value comparison. The comparison file, not this summary, is the authority for the verdict."
+      },
+      "negative_example_paths": [
+        "research/framework-candidates/worked-examples/nyaya-five-member-inference-negative.md"
+      ],
+      "runtime_requalification": {
+        "ordinary_baseline_comparison_paths": [
+          "research/framework-candidates/comparisons/nyaya-five-member-inference-vs-toulmin-argument-review.md"
+        ],
+        "discovery_value_comparison_paths": [
+          "research/framework-candidates/comparisons/nyaya-five-member-inference-discovery-value.md"
+        ],
+        "near_neighbor_comparison_paths": [
+          "research/framework-candidates/comparisons/mimamsa-vs-stasis-vs-nyaya.md"
+        ],
+        "discovery_review_state": "complete-retain"
+      },
+      "adoption_hold": "runtime-retention-supported: specialist argument models overlap in capability, while generic ex-ante incident review does not reliably separate observed reason, generalized relation, and application to the current target"
     },
     {
       "id": "confucian-role-ritual",
