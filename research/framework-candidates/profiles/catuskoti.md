@@ -77,3 +77,62 @@ Translate the surviving insight back into target terms: different time, layer, a
 ## What this framework does not license
 
 It does not settle formal logic disputes or establish ontological contradictions in the target.
+
+
+## Runtime requalification
+
+### Positive target-return fixture
+
+See:
+
+- `research/framework-candidates/worked-examples/catuskoti.md`
+
+A yes/no migration dashboard collapses completed, incomplete, partial, and out-of-scope components into one Boolean. The four-corner pass exposes mixed scope and predicate inapplicability before the target is normalized into a better state model.
+
+### Non-activation fixture
+
+See:
+
+- `research/framework-candidates/worked-examples/catuskoti-negative.md`
+
+When the target already has an explicit multi-state model, mixed state, not-applicable state, scope, transition rules, and aggregation, catuṣkoṭi adds no target-side job.
+
+### Capability-overlap comparison
+
+See:
+
+- `research/framework-candidates/comparisons/catuskoti-vs-ordinary-state-requirements-review.md`
+
+Once the binary defect is recognized, ordinary requirements/state modeling can reproduce the de-bound output through explicit scope, multi-state representation, not-applicable/don't-care values, and aggregation rules.
+
+### Discovery-value comparison
+
+See:
+
+- `research/framework-candidates/comparisons/catuskoti-discovery-value.md`
+
+Ordinary review strongly supports clarity, unambiguous predicates, correct scope/level, consistency, and explicit not-applicable conditions. It does not, however, require the reviewer to inhabit both and neither before repairing the model.
+
+Catuṣkoṭi's discovery contribution is the earlier probe:
+
+- where do P and not-P each appear to hold under hidden dimensions?;
+- where does neither expose inapplicability or a missing category?;
+- is P itself the wrong predicate at the current level?
+
+### Near-neighbor comparison
+
+See:
+
+- `research/framework-candidates/comparisons/catuskoti-vs-jain-sevenfold-predication.md`
+
+Catuṣkoṭi primarily disrupts the proposition frame. Jain sevenfold predication primarily binds assertions to standpoint/condition. The two should not be collapsed into generic multi-valued logic.
+
+### Requalification result
+
+Runtime retention is supported under the discovery-aware standard.
+
+The reason is not unique four-valued capability. Ordinary modeling can represent the resolved distinctions.
+
+The reason is **discovery contribution**: the both/neither/predicate-failure probes expose residuals before the analyst has already decided how to repair the binary frame.
+
+Preserve the non-activation boundary. Do not use catuṣkoṭi when mixed/not-applicable states, scope, and aggregation are already explicit, and do not use "both" or "neither" to evade a binary decision whose predicate is already valid and fixed.
