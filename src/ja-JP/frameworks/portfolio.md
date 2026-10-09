@@ -24,7 +24,6 @@
 | ニヤーヤ五支推論 | 推論の展開、理由と規則の分離、適用の監査 | 主張・理由・例・適用・結論 | [nyaya-five-member-inference.md](nyaya-five-member-inference.md) |
 | 儒家の役割・礼 | 役割視点、関係上の期待、定型的相互作用 | role / relation / li / practice | [confucian-role-ritual.md](confucian-role-ritual.md) |
 | 古典stasis theory | 争点種別の分離、証拠適合、争点切替の検出 | 事実 / 定義 / 評価 / 手続き・権限 | [classical-stasis-theory.md](classical-stasis-theory.md) |
-| ハディースisnād / matn | 内容と伝承経路の分離、枝分かれ・本文異同 | matn / isnād / variant / provenance | [hadith-isnad-matn.md](hadith-isnad-matn.md) |
 | マーシャル諸島の波航海術 | 相対経路、手掛かり系列、モデルと現場の往復 | route cue / training model / situated sensing | [marshallese-wave-navigation.md](marshallese-wave-navigation.md) |
 | 神社参拝の境界・清め | 境界、事前準備、参加状態の変化、退出 | torii / approach / temizu / central act | [shinto-threshold-purification.md](shinto-threshold-purification.md) |
 | チベット仏教マンダラ | 中心・方位・門・多重境界・接近経路 | center / directions / gates / nested enclosure | [tibetan-buddhist-mandala.md](tibetan-buddhist-mandala.md) |
@@ -47,7 +46,6 @@
 | 理由から結論への橋を検査したい | ニヤーヤ五支論証 | 理由、例証、適用、結論の接続 |
 | 役割名、関係、実際の行動を分けたい | 儒家の役割・礼 | relation-conditioned action、定型的相互作用 |
 | 何を争っているのか、問いの種類を分けたい | 古典stasis theory | 事実、定義、評価、手続き・権限、争点切替 |
-| 内容と伝達経路を分けたい | ハディースisnād / matn | 本文、伝承鎖、分岐・合流、異同 |
 | 地図より局所的な手掛かりで経路を見たい | マーシャル諸島の波航海術 | 相対経路、cue sequence、model / environment return |
 | 明示された境界を越える前後の準備を見たい | 神社参拝の境界・清め | threshold、preparation、central act、return |
 | 中心・方位・門を持つ空間として見たい | チベット仏教マンダラ | center / periphery、directions、gates、nested boundaries |
@@ -59,13 +57,13 @@
 - 易とマヤ暦体系はいずれも変化を扱うが、易は配置の変化、マヤ暦体系は複数周期と時間尺度を主に開く。五行は関係循環を開くresearch candidateとして、明示指定時に参照できる。
 - 四句分別、ジャイナ七分法、ニヤーヤ、古典stasis theoryは、命題空間、述定条件、推論の橋、争点の種類をそれぞれ別に扱う。アリストテレス四原因は説明の種類を比較するresearch candidateとして参照できる。
 - 華厳と儒家の役割・礼はいずれも関係を扱う。華厳は全体と部分の相互規定を、儒家の役割・礼は具体的な役割・関係・行為の適合を主に見る。
-- ハディースisnād / matnは来歴と内容を分ける。来歴が明確であることを内容の真実性へ変換しない。
+- ハディースisnād / matnはresearch candidateとして保持する。来歴と内容の分離、共通起源の二重計上防止、来歴と内容真偽の非同一性は現在CSW coreの常時規則として扱う。
 - マーシャル諸島の波航海術はnetwork一般ではなく、事前モデルと現場の手掛かりを往復する経路探索を主に開く。
 
 一つの体系で対象を説明し切ろうとしない。第一候補で新しい問いが生じた後、別の認知操作が必要になったときだけ第二候補を開く。
 
 ## ポートフォリオとしての不足を残す
 
-暦・長周期、whole-part、論証、争点定位、役割・礼、伝承経路、経路探索は一段厚くなった。中心・周縁・方位を持つ空間構造と、明示的な境界通過・事前準備も一段厚く、未検討の組合せを体系的に開く操作も備える。五行はdiscovery-aware基準で初めて降格を完了し、華厳は同じ基準でcontext-defined identityのdiscovery contributionが残るためruntimeに保持した。古典stasis theoryは遡及reviewにより、generic incident reviewではissue-type mismatchやstasis-switchが必ずしも開かれないことを確認し、runtimeへ復帰した。Mīmāṃsā、縁起、アリストテレス四原因はoperationally demotedのまま、discovery valueの遡及reviewを残す。いずれも明示指定・比較研究・歴史的対象ではresearch candidateを参照できる。一方、索引付き物語コーパスと、系譜差を保った媒介層はまだ薄い。似た体系の数を埋めるのでなく、現在ない認知操作を優先して増やす。
+暦・長周期、whole-part、論証、争点定位、役割・礼、経路探索は一段厚くなった。中心・周縁・方位を持つ空間構造と、明示的な境界通過・事前準備も一段厚く、未検討の組合せを体系的に開く操作も備える。五行、縁起、アリストテレス四原因、Mīmāṃsāはdiscovery-aware基準でruntime外となり、古典stasis theoryは遡及reviewでruntimeへ復帰した。ハディースisnād / matnは、最重要の来歴操作がCSW coreへ吸収済みであるためdefault runtimeから外した。これらは明示指定・比較研究・歴史的対象ではresearch candidateとして参照できる。一方、索引付き物語コーパスと、系譜差を保った媒介層はまだ薄い。似た体系の数を埋めるのでなく、現在ない認知操作を優先して増やす。
 
 体系数自体は成功指標ではない。ただし異質な構造へ接触できる母集団が狭ければ「出会う」機能そのものが痩せる。効果検証を急ぐ前に、構造的な重複を抑えながら質と量を増やす。
