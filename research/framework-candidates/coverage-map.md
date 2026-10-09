@@ -30,7 +30,7 @@ This map tracks structural diversity. It does not rank frameworks or claim that 
 | social role / relation-conditioned conduct | Confucian role / li | — | additional role systems that do not duplicate relation mapping |
 | explicit threshold crossing / incorporation / preparation | Shinto shrine threshold / purification | Rites of Passage (profile-ready) | longer liminal/incorporation processes and other culture-specific threshold systems |
 | spatial center-periphery / nested boundary | Tibetan Buddhist mandala | Buddhist mandala umbrella (research-only) | other lineage-specific spatial systems without pan-Buddhist collapse |
-| transmission provenance / chain topology | Hadith isnād / matn (demotion-supported; mechanical change pending) | — | key provenance/content and common-origin safeguards are already always-on CSW core; preserve hadith as research provenance and explicit-use candidate |
+| transmission provenance / chain topology | — | Hadith isnād / matn (profile-ready / no-runtime) | discovery-aware demotion complete: key provenance/content and common-origin safeguards are already always-on CSW core; preserve hadith as research provenance and explicit-use candidate |
 | oral / performative sequence preservation / alternate-view fidelity | — | Vedic recitation pathas (profile-ready) | compare against a second oral-memory tradition and ordinary diff/checksum practice before runtime |
 | material / positional record encoding | — | Inka khipu record structure (profile-ready) | other non-textual record systems and tests of distinctness from generic data modeling |
 | prescriptive hermeneutics / sentence-unit interpretation | — | Mīmāṃsā hermeneutics (profile-ready / no-runtime) | retrospective discovery-aware review confirms demotion: ordinary requirements practice both reproduces the capability and naturally selects segmentation / scope / explicit-inferred / conflict work ex ante |
@@ -57,10 +57,10 @@ Do not start broad efficacy comparison yet.
 
 Registry snapshot on 2026-10-06:
 
-- adopted: 15
-- profile-ready: 19
+- adopted: 14
+- profile-ready: 20
 - research-only: 2
 - defer-lineage-specific: 1
 - total: 37
 
-Adopted-core requalification has produced five operational runtime demotions and one discovery-aware restoration. Wuxing was demoted directly under the discovery-aware standard; dependent origination, Aristotle's four causes, and Mīmāṃsā are earlier demotions now retrospectively confirmed under that standard; Huayan is the first discovery-aware retention case; and classical stasis theory is the first framework restored after retrospective review. All pre-standard demotions have now received retrospective discovery-value review. Continue requalifying the remaining adopted core and filling genuinely different operation families before broad efficacy comparison. Do not use the counts themselves as a quality score.
+Adopted-core requalification has produced six operational runtime demotions and one discovery-aware restoration. Wuxing was demoted directly under the discovery-aware standard; dependent origination, Aristotle's four causes, and Mīmāṃsā are earlier demotions now retrospectively confirmed under that standard; Huayan is the first discovery-aware retention case; and classical stasis theory is the first framework restored after retrospective review. Hadith isnād / matn is the first adopted framework demoted because its strongest discovery jobs have already been absorbed into always-on CSW core. All pre-standard demotions have now received retrospective discovery-value review. Continue requalifying the remaining adopted core and filling genuinely different operation families before broad efficacy comparison. Do not use the counts themselves as a quality score.

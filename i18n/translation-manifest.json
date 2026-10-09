@@ -76,12 +76,6 @@
       "en_source_ja_sha256": "dbb5a333c84b419b5b1294694f6b59ac2940323188e25dc7d13175983b891c75",
       "en_status": "translated"
     },
-    "frameworks/hadith-isnad-matn.md": {
-      "ja_sha256": "3a19f1abde8ed60e4785244d1b0b737232d643c5e877bd6c8cb11fb884002658",
-      "en_present": true,
-      "en_source_ja_sha256": "3a19f1abde8ed60e4785244d1b0b737232d643c5e877bd6c8cb11fb884002658",
-      "en_status": "translated"
-    },
     "frameworks/huayan.md": {
       "ja_sha256": "ac360fba7203efef5f4baf070e0dd4d0e6d61b2a1430c8cd8bff14c024407544",
       "en_present": true,
@@ -119,9 +113,9 @@
       "en_status": "translated"
     },
     "frameworks/portfolio.md": {
-      "ja_sha256": "55b2b8ce8b9522f782b47fff76dc1d631b0a57779a06977116c41ec238805846",
+      "ja_sha256": "2713490663ad623e1fd53dc2f23e7190f5c5065e519b66e515538319a6bca2c9",
       "en_present": true,
-      "en_source_ja_sha256": "55b2b8ce8b9522f782b47fff76dc1d631b0a57779a06977116c41ec238805846",
+      "en_source_ja_sha256": "2713490663ad623e1fd53dc2f23e7190f5c5065e519b66e515538319a6bca2c9",
       "en_status": "translated"
     },
     "frameworks/rasa.md": {

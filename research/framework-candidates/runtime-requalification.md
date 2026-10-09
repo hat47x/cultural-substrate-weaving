@@ -97,7 +97,7 @@ runtime retentionは「世界に同等の手法が存在しないこと」を要
 
 2026-10-06の最初の監査時点では、Registry上の`adopted` candidateは19件だった。その後、Mīmāṃsāを現行基準で再資格し、ordinary policy / requirements reviewがtested de-bound operationsを再現したため、general runtimeから外して`profile-ready`へ戻した。
 
-現在の`adopted` candidateは15件である。
+現在の`adopted` candidateは14件である。
 
 Mīmāṃsāに続き、dependent origination（縁起）についても再資格した。旧比較ではsame-targetへFive Whys、fault-tree expansion、dependency analysis、counterfactual / intervention questionを適用し、condition-chain、upstream-condition、cessation-counterfactual、dependency-reframing、intervention-pointを再現できたためgeneral default runtimeから外した。
 
@@ -140,7 +140,7 @@ Hadith isnād / matnについても、現在のCSW product structureを基準に
 
 さらに重要なのは、CSW core自身がframework selection前から、同一資料の転載・派生を独立支持として数えないこと、発見経路と証拠源の独立性を分けること、framework-generated materialを独立したtarget-side supportなしにtarget_supportedへ上げないことを要求している点である。
 
-このためhadithの高いproduct relevanceは否定しないが、その最重要operationはすでにalways-on coreへ吸収済みであり、default runtime frameworkとしては**capability overlapとdiscovery overlapの両方**が成立する。一般runtimeからのdemotionを支持し、歴史的・宗教的・比較source-criticism用のresearch candidateとして保持する。
+このためhadithの高いproduct relevanceは否定しないが、その最重要operationはすでにalways-on coreへ吸収済みであり、default runtime frameworkとしては**capability overlapとdiscovery overlapの両方**が成立する。一般runtimeからのdemotionを支持し、mechanical demotionも完了した。歴史的・宗教的・比較source-criticism用のresearch candidateとして保持する。
 
 Huayan（華厳）は、改訂後のdiscovery-aware基準で再資格した最初のruntime保持例となる。canonical Account統合案をsame-targetとして見ると、bounded-context DDD、context mapping、architecture viewpoints、change-impact analysisを組み合わせたmatched specialist baselineは、Huayanからde-bindしたrole-defined identity、context-role re-identification、perspective-through-node、integration-with-differenceを高い割合で再現できる。
 

@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+- Removed Hadith isnād / matn from the default runtime after discovery-aware requalification showed that its most valuable de-bound safeguards—content/provenance separation, common-origin detection, variant lineage, and provenance-not-truth—are already always-on CSW core behavior before framework selection. The sourced profile, positive/negative fixtures, provenance comparison, discovery-value evidence, and historical/intellectual provenance remain available for explicit and comparative use.
+
 - Added situated use of polysemy: select and deepen relations through practitioner values, let human interpretation reshape the question, and assess usefulness in understanding, expression, composition, and choice. Added caller-directed six-line exploration and a worked Well example across exploration, shared choice, and reuse. Kept usefulness judgments separate from factual support and aligned both locales and the self-contained Microsoft 365 profile.
 
 - Clarified deep discovery on request: run native relations together, develop consequences for target units and enabling conditions, and derive concrete compositions before narrowing to feature lists. Separate catalytic discovery value from permanent framework inclusion; retain attribution, external delegation, and split-method ownership. Added a qualitative SUI artifact analysis and five worked design derivations without new empirical experiments.

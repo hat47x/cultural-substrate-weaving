@@ -235,7 +235,15 @@ class FrameworkCorpusContractTest(unittest.TestCase):
         self.assertNotIn(None, states.values())
         self.assertEqual(states["huayan"], "discovery_contribution_recorded")
         self.assertEqual(states["classical-stasis-theory"], "discovery_contribution_recorded")
-        self.assertEqual(states["hadith-isnad-matn"], "discovery_overlap_recorded")
+        self.assertNotIn("hadith-isnad-matn", states)
+        hadith = next(
+            row for row in data["candidates"]
+            if row["id"] == "hadith-isnad-matn"
+        )
+        self.assertEqual(
+            hadith["discovery_hypothesis"]["evidence_state"],
+            "discovery_overlap_recorded",
+        )
 
         for row in data["candidates"]:
             hypothesis = row.get("discovery_hypothesis")
@@ -550,6 +558,47 @@ class FrameworkCorpusContractTest(unittest.TestCase):
         audit = contract.adopted_requalification_payload(ROOT, data)
         self.assertNotIn(
             "mimamsa-hermeneutics",
+            [item["candidate_id"] for item in audit["candidates"]],
+        )
+
+    def test_hadith_requalification_confirms_discovery_aware_runtime_demotion(self) -> None:
+        inventory_path = ROOT / "research" / "framework-candidates" / "cognitive-operation-inventory.json"
+        data = json.loads(inventory_path.read_text(encoding="utf-8"))
+        row = next(
+            item for item in data["candidates"]
+            if item["id"] == "hadith-isnad-matn"
+        )
+
+        self.assertEqual(row["readiness"], "profile-ready")
+        self.assertNotIn("runtime_path", row)
+        self.assertEqual(contract.validate_candidate(ROOT, row), [])
+
+        registry = workspace.registry_entry_payload(data, "hadith-isnad-matn")
+        self.assertFalse(registry["registry"]["runtime_enabled"])
+        self.assertIn(
+            "research/framework-candidates/comparisons/hadith-isnad-matn-vs-ordinary-provenance-and-csw-core.md",
+            registry["runtime_requalification"]["ordinary_baseline_comparison_paths"],
+        )
+        self.assertIn(
+            "research/framework-candidates/comparisons/hadith-isnad-matn-discovery-value.md",
+            registry["runtime_requalification"]["discovery_value_comparison_paths"],
+        )
+        self.assertIn(
+            "research/framework-candidates/comparisons/hadith-isnad-matn-vs-vedic-recitation-pathas.md",
+            registry["runtime_requalification"]["near_neighbor_comparison_paths"],
+        )
+        self.assertIn(
+            "general-runtime-demoted-discovery-aware",
+            registry["registry"]["adoption_hold"],
+        )
+        self.assertEqual(
+            registry["runtime_requalification"]["discovery_review_state"],
+            "complete-demote",
+        )
+
+        audit = contract.adopted_requalification_payload(ROOT, data)
+        self.assertNotIn(
+            "hadith-isnad-matn",
             [item["candidate_id"] for item in audit["candidates"]],
         )
 
@@ -1368,6 +1417,32 @@ class FrameworkSelectionWorkspaceTest(unittest.TestCase):
                 ["alpha"],
             )
             self.assertNotIn('"score"', json.dumps(payload))
+
+    def test_hadith_demotion_requires_explicit_profile_ready_recall(self) -> None:
+        inventory = workspace.load_inventory(
+            ROOT / "research" / "framework-candidates" / "cognitive-operation-inventory.json"
+        )
+        hadith = next(
+            row for row in workspace.candidates(inventory)
+            if row["id"] == "hadith-isnad-matn"
+        )
+        cue = hadith["selection_cues"][0]
+
+        default_payload = workspace.recall_payload(inventory, cue)
+        self.assertNotIn(
+            "hadith-isnad-matn",
+            [row["candidate"]["id"] for row in default_payload["candidates"]],
+        )
+
+        research_payload = workspace.recall_payload(
+            inventory,
+            cue,
+            readiness=["profile-ready"],
+        )
+        self.assertIn(
+            "hadith-isnad-matn",
+            [row["candidate"]["id"] for row in research_payload["candidates"]],
+        )
 
     def test_real_inventory_adopted_candidates_have_selection_cues(self) -> None:
         inventory = workspace.load_inventory(
