@@ -1,24 +1,24 @@
-# Microsoft 365 Copilot Agentを作る
+# Microsoft 365 Copilotでエージェントを作成する
 
-このリポジトリでは、Microsoft 365 Copilot向けの宣言型エージェント素材を、日本語版と英語版で生成します。導入方法は、画面操作だけで完結するAgent Builderと、Agents Toolkit CLIを使う方法の二つです。特別な組織展開要件がなければ、Agent Builderから始めるのが簡単です。
+このリポジトリでは、Microsoft 365 Copilot向けに、日本語と英語の宣言型エージェントの素材を生成します。導入方法は、画面だけで設定するAgent Builderと、コマンドで操作するAgents Toolkit CLIの二つです。組織内への特別な展開要件がなければ、Agent Builderから始める方が簡単です。
 
-手元の資料だけで完結する材料統合や構造探索では、Web検索は必須ではありません。現在の事実、外部の文脈、追加の出典探索が必要な課題では、利用するテナントでWeb検索によるグラウンディングが許可されているか確認してください。
+手元にある資料だけで完結する材料の統合や構造の探索では、Web検索は必須ではありません。現在の事実、外部の文脈、追加の出典を調べる必要がある場合は、利用する組織の環境でWeb検索を根拠の確認に使えるか確かめてください。
 
-## 現在のMicrosoft 365版の位置づけ
+## Microsoft 365版で対応する範囲
 
-Microsoft 365 Copilotでは、Knowledgeは主として事実のグラウンディングに使うものであり、エージェントの実行指示をInstructionsからKnowledgeへ退避する用途は前提にできません。
+Microsoft 365 Copilotでは、Knowledgeは主に事実を裏付ける情報として使います。エージェントが実行する指示をInstructionsからKnowledgeへ移しても、続けて実行されるとは想定できません。
 
-そのため、Microsoft 365向けには、8,000文字以内で自己完結する**限定アダプター**を用意しています。エージェントの実行指示として扱うのは、`instructions.txt`に書かれた範囲だけです。
+そのため、Microsoft 365向けには、8,000文字以内で必要な指示が完結する**限定的な接続方式**を用意しています。エージェントへの実行指示となるのは、`instructions.txt`に書かれている範囲だけです。
 
-このアダプターは、文化体系の視点による構造読解、発見、帰属保持、対象への返却、具体化を扱います。親和図法の材料統合と複数回の継続管理は別スキルへ委ね、内部手順を埋め込みません。別スキルを呼べない環境では、その不足を示します。CSWの構造読解と発見だけで足りる依頼は、その範囲で進められます。
+このアダプターは、文化体系の視点による構造読解、発見、帰属保持、対象への返却、具体化を扱います。親和図法の材料統合と複数回の継続管理は別スキルへ委ね、内部手順を埋め込みません。別のスキルを呼び出せない環境では、対応できない範囲を明示します。CSWの構造読解と発見だけで足りる依頼は、その範囲で進められます。
 
-`method-reference/`には、CSW runtimeや関連する方法資料を、人間が確認するための参照として同梱します。Agent BuilderやSharePointのKnowledgeへアップロードして、`instructions.txt`の続きをエージェントに実行させるためのファイルではありません。
+`method-reference/`には、CSWの実行内容と関連資料を、人が確認できる参照資料として含めます。Agent BuilderやSharePointのKnowledgeへアップロードして、`instructions.txt`の続きをエージェントに実行させるためのファイルではありません。
 
 対象となる業務資料、調査資料、組織内文書などをKnowledgeへ追加し、対象側の事実グラウンディングに使うことはできます。
 
-この限定アダプターは、他の対応プラットフォームと同等の完全なCSW／分離Method実行を保証しません。詳細な体系固有操作、Taihekiの特例、高度な長期研究設計、完全な親和統合の図解・lineage、完全なround履歴管理などが必要な場合は、より適した実行形態を使ってください。設計経緯と境界の整理はIssue #96に残しています。
+この限定的な接続方式は、ほかの対応環境と同じようにCSWや分離した手法のすべてを実行できることまでは保証しません。詳細な体系固有操作、Taihekiの特例、高度な長期研究設計、完全な親和統合の図解・lineage、完全なround履歴管理などが必要な場合は、より適した実行形態を使ってください。設計経緯と境界の整理はIssue #96に残しています。
 
-## パッケージを取得する
+## 配布ファイルを取得する
 
 [GitHub Releases](https://github.com/hat47x/cultural-substrate-weaving/releases)から`cultural-substrate-weaving-m365-copilot-ja-JP-vX.Y.Z.zip`を取得し、展開します。中には次が含まれています。
 
@@ -27,13 +27,13 @@ Microsoft 365 Copilotでは、Knowledgeは主として事実のグラウンデ�
 - `README.txt`: パッケージ内の役割分担と制約
 - `agent-project/`: Agents Toolkit CLI向けのプロジェクト
 
-GitHub Releaseで配布する標準パッケージには、**テナント固有の情報を含めません**。特定テナントのSharePoint URLや、実際の`.env` / `.env.*`ファイルは入れません。`agent-project/env/`に含めるのは、安全な`.example`テンプレートだけです。テナント固有の設定は、組織へ展開するときに明示的に与えます。
+GitHub Releasesで配布する標準ファイルには、**組織固有の情報を含めません**。特定テナントのSharePoint URLや、実際の`.env` / `.env.*`ファイルは入れません。`agent-project/env/`に含めるのは、安全な`.example`テンプレートだけです。テナント固有の設定は、組織へ展開するときに明示的に与えます。
 
-## 方法A：Agent Builder（画面操作だけで作成）
+## 方法A：Agent Builderを画面から設定する
 
 Microsoft 365 Copilotライセンスがあれば、CLIやコード編集を使わずに作成できます。この方法では、`agent-project/`、Node.js、Visual Studio Codeは不要です。
 
-このリポジトリでは、用意済みの`instructions.txt`をそのまま反映しやすいよう、自然言語による自動生成ではなく手動設定を使います。
+このリポジトリでは、用意した`instructions.txt`の内容をそのまま設定できるよう、自然言語による自動生成ではなく、手動で設定します。
 
 1. microsoft365.com/chat、office.com/chat、またはTeamsでMicrosoft 365 Copilotを開き、「新しいエージェント」を選びます。
 2. 「設定にスキップ」を選び、Configureタブを開きます。
@@ -44,7 +44,7 @@ Microsoft 365 Copilotライセンスがあれば、CLIやコード編集を使�
 7. 「Try it」タブで、問題群を読み直す依頼や、発見を構成案にする依頼を試します。必要な作業が限定アダプターの範囲内に収まっているかも確認してください。
 8. 作成後は、「Share」ボタンから特定の人やグループへ直接共有できます。組織全体で使えるようにする場合は、右上の「…」メニューから「Submit to your org catalog」を選び、管理者の承認を経て組織のAgent Storeへ公開します。
 
-## 方法B：Agents Toolkit CLI（組織展開などの高度な構成向け）
+## 方法B：Agents Toolkit CLIで組織向けに設定する
 
 AppSourceへの配布、テナント全体での管理配布、SharePointサイトを使った対象資料のグラウンディングなど、Agent Builderだけでは対応できない構成が必要な場合に使います。
 
@@ -55,7 +55,7 @@ AppSourceへの配布、テナント全体での管理配布、SharePointサイ�
 
 ### 1. SharePoint Knowledgeへ対象資料を用意する
 
-SharePointをKnowledgeとして使う場合は、CSWや親和図法の実行規則ではなく、エージェントが対象について参照する業務資料・調査資料・組織内文書を置きます。パッケージ内の`method-reference/`をSharePointへ置き、`instructions`の続きを実行させる構成にはしません。
+SharePointを参照情報（Knowledge）の置き場として使う場合は、CSWや親和図法の実行規則ではなく、対象を調べるための業務資料、調査資料、組織内文書を置きます。パッケージ内の`method-reference/`をSharePointへ置き、`instructions`の続きを実行させる構成にはしません。
 
 1. エージェントが参照する対象資料を、一つのSharePointサイトまたはドキュメントライブラリへ用意します。
 2. リポジトリをクローンします。
@@ -107,7 +107,7 @@ atk package --env dev
 atk validate --env dev
 ```
 
-テナント固有のAgents Toolkitパッケージは、この展開経路で作成します。公開GitHub Release用の`make package`とは目的が異なります。
+組織固有の設定を含むAgents Toolkitの配布ファイルは、この手順で作成します。公開GitHub Release用の`make package`とは目的が異なります。
 
 ### 4. 試験して公開する
 
