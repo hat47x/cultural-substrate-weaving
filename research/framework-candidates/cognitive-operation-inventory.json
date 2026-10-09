@@ -1880,7 +1880,7 @@
         "isnād / matn",
         "ハディース伝承鎖と本文"
       ],
-      "readiness": "adopted",
+      "readiness": "profile-ready",
       "structural_primitives": [
         "report content (matn)",
         "attributed transmission chain (isnād)",
@@ -1929,8 +1929,7 @@
         }
       ],
       "profile_path": "research/framework-candidates/profiles/hadith-isnad-matn.md",
-      "runtime_path": "src/ja-JP/frameworks/hadith-isnad-matn.md",
-      "adoption_hold": "runtime-removal-supported-discovery-aware: provenance/content separation, common-origin checking, variant lineage, and provenance-not-truth are already selected by CSW core before framework contact",
+      "adoption_hold": "general-runtime-demoted-discovery-aware: provenance/content separation, common-origin checking, variant lineage, and provenance-not-truth are already selected by CSW core before framework contact",
       "selection_cues": [
         "内容と伝達経路を分けたい",
         "複数の伝達経路の分岐と合流を見たい",
