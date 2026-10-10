@@ -1,14 +1,14 @@
 # Documentation / ドキュメント
 
-現在の本質価値と実装方針は、[本質価値から組み直すプロダクト構成](ja/maintainers/value-first-product-design.md)にまとめています。既存文書を読み解く際に用いた親和図法の記録は、[文書材料の親和統合記録](ja/maintainers/value-first-material-synthesis.md)を参照してください。
+現在の製品が持つ本質的な価値と実装方針は、[本質価値から組み直すプロダクト構成](ja/maintainers/value-first-product-design.md)で説明しています。既存文書の検討で用いた親和図法の記録は、[文書材料の親和統合記録](ja/maintainers/value-first-material-synthesis.md)を参照してください。
 
 本質構造の発見を深める方式とSUI資料の分析は、[表層的な発想から、本質構造を変える発見へ](ja/maintainers/generative-depth-and-product-wisdom.md)を参照してください。
 
 多義的な体系を状況に即して読み、実務者の価値観で有益性を捉える方式は、[多義性を生かす読解と実務上の有益性](ja/maintainers/situated-polysemy-and-practical-value.md)にまとめています。
 
-このページは、cultural-substrate-weavingの利用・方法論・研究・保守文書を読むための**案内板**です。
+このページは、cultural-substrate-weavingの利用方法、方法論、研究、保守に関する文書を探すための案内です。
 
-ここで方法論の意味を新たに定義しません。日本語の方法論正本は`src/ja-JP/`、英語は`src/en-US/`の翻訳版です。`docs/`は、利用者向けの説明、研究・評価資料、保守手順へ読み手を案内する文書群です。
+このページで方法論の意味を新たに定義することはありません。方法論の日本語の正本は`src/ja-JP/`にあり、`src/en-US/`はその英語翻訳です。`docs/`には、利用者向けの説明、研究・評価資料、保守手順と、これらの文書への案内を置いています。
 
 > 全文書を順番に読む必要はありません。目的に応じて入口を選んでください。
 
@@ -46,7 +46,7 @@
 - [呼ぶ側が用意するもの](ja/usage-context.md)
 - [Microsoft 365 Copilot向けガイド](ja/platforms/microsoft-copilot.md)
 
-方法論の細かな判断基準を確認するときは、説明文書だけで完結させず、必要に応じて[`src/ja-JP/ROUTER.md`](../src/ja-JP/ROUTER.md)と`src/ja-JP/core/`へ戻ります。
+方法論の判断基準を詳しく確認する場合は、説明文書だけで判断せず、必要に応じて[`src/ja-JP/ROUTER.md`](../src/ja-JP/ROUTER.md)と`src/ja-JP/core/`の正本を確認します。
 
 ## English usage
 
@@ -67,7 +67,7 @@ The English methodology under `src/en-US/` follows the Japanese semantic source.
 - [公開観測記録](../research/living-lab/observations/)
 - [プロダクト品質の監査・実験記録](../research/product-quality/)
 
-研究・観測文書では、`prospective` / `retrospective`、対象側の証拠、未測定の効果などの区別を保持します。観測記録が存在することだけで、本スキル全体の有効性が確立したとは扱いません。
+研究や観測の文書では、事前に計画した観測（`prospective`）と事後に整理した観測（`retrospective`）、対象に関する証拠、未測定の効果を区別します。観測の記録があるというだけで、このスキル全体の有効性が確立したとはみなしません。
 
 ## Maintainers / 保守
 
@@ -100,4 +100,4 @@ generated plugin / release artifact
   != hand-edited source of truth
 ```
 
-意味や運用が変わった場合は、まず対応する正本・契約を更新し、この案内板には読み手の導線に関わる変更だけを反映します。
+方法論の意味や運用の規則を変更する場合は、まず対応する正本や契約を更新します。この案内には、読む順序や参照先に関わる変更だけを反映します。
