@@ -373,6 +373,17 @@
         "weakens_if": "Ordinary audience, UX, or communication review reaches the production/reception split and an ingredient-level account of reception without rasa contact.",
         "evidence_state": "unreviewed_hypothesis",
         "authored_basis": "AI analyst hypothesis drafted 2026-10-08 from the runtime dossier's native operations and target-return questions. It is not a discovery-value comparison, not a fit judgment, and not target-side evidence."
+      },
+      "worked_example_paths": [
+        "research/framework-candidates/worked-examples/rasa-expression-reception.md"
+      ],
+      "negative_example_paths": [
+        "research/framework-candidates/worked-examples/rasa-non-activation.md"
+      ],
+      "runtime_requalification": {
+        "ordinary_baseline_comparison_paths": [
+          "research/framework-candidates/comparisons/rasa-vs-ordinary-ui-review.md"
+        ]
       }
     },
     {
