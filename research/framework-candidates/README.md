@@ -115,57 +115,43 @@ Registry-0は文化そのものの正本ではない。文献・系譜・研究�
 - fourteenth-wave-2026-10-02.md
 - fifteenth-wave-2026-10-02.md
 - sixteenth-wave-2026-10-03.md
+- seventeenth-wave-2026-10-05.md
+- eighteenth-wave-2026-10-05.md
+- nineteenth-wave-2026-10-05.md
 - worked-examples/ 以下のtarget-return例
 - comparisons/ 以下のnear-neighbor / comparative collapse test
 - portfolio-qualitative-audit-2026-10-01.md
 - near-neighbor-differentiation-2026-10-01.md
 - crossing-value-2026-10-08.md（採用中核での交差の価値と一般化）
+- runtime-requalification.md（実行時採用の再資格と比較資料）
+- framework-corpus-contract.md（候補の資料品質と採用段階の規約）
 - profiles/ 以下の各体系profile
 - source-packets/ 以下のpre-profile資料層
 
-### runtime採用済み
+### 採用状態を確認する
 
-- yijing
-- wuxing
-- sankhya
-- dependent-origination
-- catuskoti
-- jain-sevenfold-predication
-- aristotle-four-causes
-- rasa
-- maya-calendars
-- huayan
-- nyaya-five-member-inference
-- confucian-role-ritual
-- classical-stasis-theory
-- hadith-isnad-matn
-- marshallese-wave-navigation
-- shinto-threshold-purification
-- tibetan-buddhist-mandala
-- mimamsa-hermeneutics
-- llull-ars
-採用済みでも研究を打ち切らない。runtimeが使う最小構造核と、独立Skill相当まで厚くする研究は分ける。
+採用・研究段階の現在値は `cognitive-operation-inventory.json` を正本とする。複数チャットで採用・降格・研究が並行するため、ここには体系の固定一覧や件数を複製しない。
 
-### 量を増やす側の候補
+一覧は、リポジトリのルートから次のように取得する。
 
-- twenty-four-solar-terms（profile-ready / regional-ecological-context-sensitive）
-- heavenly-stems-earthly-branches（profile-ready / early-calendrical-layer-bounded）
-- five-aggregates（profile-ready / Buddhist-tradition-sensitive）
-- jo-ha-kyu（profile-ready / Zeami-Noh-bounded）
-- rites-of-passage
-- buddhist-mandala
-- jingluo
-- sefirot（research umbrella / lineage split required）
-- sefer-yetzirah-dimensions（profile-ready / text-version-sensitive）
-- theosophical-sefirot（profile-ready / religious-lineage-sensitive）
-- inka-khipu-record-structure（profile-ready / undeciphered-semantics-sensitive）
-- chakra
-- ifa-odu（profile-ready / living-tradition-sensitive / not-runtime）
-- vedic-recitation-pathas（profile-ready / living-religious-tradition-sensitive / not-runtime）
-- panini-ashtadhyayi-rule-architecture（profile-ready / classical-text-and-commentarial-layer-sensitive）
+```sh
+python research/framework-candidates/scripts/framework_selection_workspace.py registry-snapshot research/framework-candidates/cognitive-operation-inventory.json
+```
 
-医療、宗教、living tradition、系譜差の境界が重い体系は、構造的価値が高くても採用を急がない。採用済みのhadith-isnad-matnとmarshallese-wave-navigationも、宗教上の真正性判定や非公開知識の再現を行わない境界をruntime側に残す。
+表示されるのは段階ごとの体系識別子・件数と、現時点で実行時に利用可能な体系の識別子である。表示順は台帳の記載順であって、適合度や推奨順位ではない。
 
-当面は効果比較を増やさない。profile-ready / skill-candidateの母集団を増やし、source basis、lineage、structural core、native operation、de-binding、target-return questionを揃えることを優先する。
+個別体系の資料、使いどころ、使用してはならない前提は `inspect` で確認する。
 
-readinessの最低条件は `framework-corpus-contract.md` と `scripts/framework_corpus_contract.py` で固定する。profile-readyは通常言語cue、正例、負例、de-bindingまでを必須とし、候補数の増加で品質下限を落とさない。
+```sh
+python research/framework-candidates/scripts/framework_selection_workspace.py inspect research/framework-candidates/cognitive-operation-inventory.json huayan
+```
+
+`adopted` は体系が実行時資料として取り込まれている状態を表すだけで、その対象に適しているとは限らない。`profile-ready` は十分な資料を備えた研究候補であり、採用済みと同義ではない。現在の採用判断と、通常の分析による再発見可能性の検討については [実行時採用の再資格](runtime-requalification.md) を参照する。
+
+### 研究を進める際の境界
+
+文化体系の数を増やすこと自体は目標にしない。類似した体系を評価するときは [近接候補の差分](near-neighbor-differentiation-2026-10-01.md) と `comparisons/` の具体例を参照し、対象へ戻したときに独自の問いが残るかを検討する。
+
+また、体系に触れてから類似の通常手法を見つけられることと、**体系に触れる前からその手法を自然に選べること**を区別する。広範な順位付けや単純な効果比較は行わず、具体的な対象での発見価値、通常手法との重複、使用しない判断、文化・医療・宗教上の境界を記録する。
+
+研究候補はそのまま実行時へ昇格させない。資料の整備、比較例、反例、対象側の検証を経て、必要な場合にだけ個別に採用を判断する。
