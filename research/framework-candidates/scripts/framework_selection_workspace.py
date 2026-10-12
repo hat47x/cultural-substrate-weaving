@@ -342,6 +342,34 @@ def candidates(data: dict[str, Any]) -> list[dict[str, Any]]:
     return list(data.get("candidates", []))
 
 
+def registry_snapshot_payload(data: dict[str, Any]) -> dict[str, Any]:
+    """Report live Registry membership without treating readiness as quality or fit."""
+    grouped: dict[str, list[str]] = {}
+    runtime_enabled_ids: list[str] = []
+    for row in candidates(data):
+        state = str(row.get("readiness", ""))
+        item_id = str(row["id"])
+        grouped.setdefault(state, []).append(item_id)
+        if state == "adopted" and row.get("runtime_path"):
+            runtime_enabled_ids.append(item_id)
+
+    return {
+        "format": "csw.framework-registry-snapshot/v1",
+        "inventory_schema": data.get("schema"),
+        "candidate_count": len(candidates(data)),
+        "readiness_groups": [
+            {"readiness": state, "count": len(ids), "candidate_ids": ids}
+            for state, ids in grouped.items()
+        ],
+        "runtime_enabled_ids": runtime_enabled_ids,
+        "interpretation_boundary": (
+            "This snapshot reflects the current inventory, not a dated or manually "
+            "maintained README list. Readiness and runtime availability do not "
+            "indicate framework quality, target fit, ranking, or activation."
+        ),
+    }
+
+
 def by_id(data: dict[str, Any]) -> dict[str, dict[str, Any]]:
     return {str(row["id"]): row for row in candidates(data)}
 
@@ -2415,6 +2443,12 @@ def build_parser() -> argparse.ArgumentParser:
     )
     sub = parser.add_subparsers(dest="command", required=True)
 
+    registry_snapshot = sub.add_parser(
+        "registry-snapshot",
+        help="show live Registry readiness groups without ranking or activation",
+    )
+    registry_snapshot.add_argument("inventory", type=Path)
+
     inspect = sub.add_parser(
         "inspect",
         help=(
@@ -2695,7 +2729,9 @@ def main() -> None:
             args.func(args)
             return
         data = load_inventory(args.inventory)
-        if args.command == "inspect":
+        if args.command == "registry-snapshot":
+            print_json(registry_snapshot_payload(data))
+        elif args.command == "inspect":
             print_json(registry_entry_payload(data, args.candidate_id))
         elif args.command == "shortlist":
             print_json(shortlist_payload(data, args.term, args.field, args.readiness))
