@@ -112,6 +112,14 @@ class FrameworkCorpusContractTest(unittest.TestCase):
         data = json.loads(inventory_path.read_text(encoding="utf-8"))
         self.assertEqual(contract.validate_inventory(ROOT, data), [])
 
+    def test_candidate_readme_uses_live_registry_state(self) -> None:
+        readme = (
+            ROOT / "research" / "framework-candidates" / "README.md"
+        ).read_text(encoding="utf-8")
+        self.assertIn("registry-snapshot", readme)
+        self.assertIn("cognitive-operation-inventory.json", readme)
+        self.assertNotIn("### runtime採用済み", readme)
+
     def test_repository_adopted_requalification_audit_is_non_authoritative(self) -> None:
         inventory_path = ROOT / "research" / "framework-candidates" / "cognitive-operation-inventory.json"
         data = json.loads(inventory_path.read_text(encoding="utf-8"))
