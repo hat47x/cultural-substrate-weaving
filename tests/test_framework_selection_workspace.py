@@ -804,6 +804,51 @@ class FrameworkSelectionWorkspaceTest(unittest.TestCase):
             capture_output=True,
         )
 
+    def test_registry_snapshot_reports_live_readiness_without_ranking(self) -> None:
+        payload = workspace.registry_snapshot_payload(FIXTURE)
+        self.assertEqual(payload["candidate_count"], 3)
+        self.assertEqual(
+            [(row["readiness"], row["count"], row["candidate_ids"])
+             for row in payload["readiness_groups"]],
+            [
+                ("adopted", 1, ["alpha"]),
+                ("profile-ready", 1, ["beta"]),
+                ("sourced-candidate", 1, ["gamma"]),
+            ],
+        )
+        self.assertEqual(payload["runtime_enabled_ids"], ["alpha"])
+        encoded = json.dumps(payload).casefold()
+        self.assertNotIn('"score"', encoded)
+        self.assertNotIn('"rank"', encoded)
+        self.assertNotIn('"recommendation"', encoded)
+        self.assertIn("not a dated", payload["interpretation_boundary"])
+        self.assertIn("not", payload["interpretation_boundary"])
+
+    def test_registry_snapshot_cli_reads_inventory_on_each_call(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            inventory = Path(tmp) / "inventory.json"
+            inventory.write_text(json.dumps(FIXTURE), encoding="utf-8")
+            initial = json.loads(
+                self.run_tool("registry-snapshot", str(inventory)).stdout
+            )
+            self.assertEqual(initial["runtime_enabled_ids"], ["alpha"])
+
+            changed = json.loads(json.dumps(FIXTURE))
+            changed["candidates"][0]["readiness"] = "profile-ready"
+            changed["candidates"][0].pop("runtime_path")
+            inventory.write_text(json.dumps(changed), encoding="utf-8")
+            updated = json.loads(
+                self.run_tool("registry-snapshot", str(inventory)).stdout
+            )
+            self.assertEqual(updated["runtime_enabled_ids"], [])
+            self.assertEqual(
+                updated["readiness_groups"][0]["candidate_ids"],
+                ["alpha", "beta"],
+            )
+            self.assertNotEqual(
+                initial["readiness_groups"], updated["readiness_groups"]
+            )
+
     def test_registry_inspect_exposes_provenance_without_authority(self) -> None:
         fixture = json.loads(json.dumps(FIXTURE))
         fixture["candidates"][1]["worked_example_paths"] = [
