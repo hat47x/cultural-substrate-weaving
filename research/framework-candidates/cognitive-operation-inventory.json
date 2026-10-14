@@ -840,8 +840,7 @@
         "saptabhaṅgī",
         "sevenfold predication"
       ],
-      "readiness": "adopted",
-      "runtime_path": "src/ja-JP/frameworks/jain-sevenfold-predication.md",
+      "readiness": "profile-ready",
       "profile_path": "research/framework-candidates/profiles/jain-sevenfold-predication.md",
       "structural_primitives": [
         "conditioned predication",
@@ -915,7 +914,7 @@
         ],
         "discovery_review_state": "complete-demote"
       },
-      "adoption_hold": "runtime-removal-supported-discovery-aware: ordinary requirements, scenarios, and performance review already select standpoint/condition/metric qualification before framework contact on the tested SIer targets; qualitative finding, not universal no-value proof"
+      "adoption_hold": "general-runtime-demoted-discovery-aware: tested standpoint/condition/metric qualification is already selected by ordinary SIer review ex ante; retain sourced research and reopening conditions"
     },
     {
       "id": "aristotle-four-causes",

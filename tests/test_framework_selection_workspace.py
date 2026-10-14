@@ -245,7 +245,9 @@ class FrameworkCorpusContractTest(unittest.TestCase):
         self.assertEqual(states["classical-stasis-theory"], "discovery_contribution_recorded")
         self.assertEqual(states["nyaya-five-member-inference"], "discovery_contribution_recorded")
         self.assertEqual(states["catuskoti"], "discovery_contribution_recorded")
-        self.assertEqual(states["jain-sevenfold-predication"], "discovery_overlap_recorded")
+        self.assertNotIn("jain-sevenfold-predication", states)
+        jain = next(row for row in data["candidates"] if row["id"] == "jain-sevenfold-predication")
+        self.assertEqual(jain["discovery_hypothesis"]["evidence_state"], "discovery_overlap_recorded")
         self.assertNotIn("hadith-isnad-matn", states)
         hadith = next(
             row for row in data["candidates"]
@@ -490,34 +492,53 @@ class FrameworkCorpusContractTest(unittest.TestCase):
             "complete-retain",
         )
 
-    def test_jain_discovery_review_supports_demotion_before_runtime_change(self) -> None:
+    def test_jain_requalification_evidence_survives_runtime_demotion(self) -> None:
         inventory_path = ROOT / "research" / "framework-candidates" / "cognitive-operation-inventory.json"
         data = json.loads(inventory_path.read_text(encoding="utf-8"))
         row = next(item for item in data["candidates"] if item["id"] == "jain-sevenfold-predication")
 
-        # This is the research decision; distribution remains adopted until
-        # a separate mechanical demotion.
-        self.assertEqual(row["readiness"], "adopted")
+        self.assertEqual(row["readiness"], "profile-ready")
+        self.assertNotIn("runtime_path", row)
         self.assertEqual(contract.validate_candidate(ROOT, row), [])
-        audit = contract.adopted_requalification_payload(ROOT, data)
-        reviewed = next(item for item in audit["candidates"] if item["candidate_id"] == row["id"])
-        self.assertEqual(reviewed["evidence_gaps"], [])
+        registry = workspace.registry_entry_payload(data, row["id"])
+        self.assertFalse(registry["registry"]["runtime_enabled"])
         self.assertIn(
             "research/framework-candidates/comparisons/jain-sevenfold-vs-ordinary-conditional-requirements.md",
-            reviewed["recorded_evidence"]["ordinary_baseline_comparison_paths"],
+            registry["runtime_requalification"]["ordinary_baseline_comparison_paths"],
         )
         self.assertIn(
             "research/framework-candidates/comparisons/jain-sevenfold-discovery-value.md",
-            reviewed["recorded_evidence"]["discovery_value_comparison_paths"],
+            registry["runtime_requalification"]["discovery_value_comparison_paths"],
         )
         self.assertIn(
             "research/framework-candidates/comparisons/catuskoti-vs-jain-sevenfold-predication.md",
-            reviewed["recorded_evidence"]["near_neighbor_comparison_paths"],
+            registry["runtime_requalification"]["near_neighbor_comparison_paths"],
         )
-        registry = workspace.registry_entry_payload(data, row["id"])
-        self.assertTrue(registry["registry"]["runtime_enabled"])
         self.assertEqual(registry["runtime_requalification"]["discovery_review_state"], "complete-demote")
-        self.assertIn("runtime-removal-supported-discovery-aware", registry["registry"]["adoption_hold"])
+        self.assertIn("general-runtime-demoted-discovery-aware", registry["registry"]["adoption_hold"])
+
+        audit = contract.adopted_requalification_payload(ROOT, data)
+        self.assertNotIn(row["id"], [item["candidate_id"] for item in audit["candidates"]])
+
+    def test_jain_demotion_requires_explicit_research_recall(self) -> None:
+        inventory = workspace.load_inventory(
+            ROOT / "research" / "framework-candidates" / "cognitive-operation-inventory.json"
+        )
+        jain = next(
+            row for row in workspace.candidates(inventory)
+            if row["id"] == "jain-sevenfold-predication"
+        )
+        cue = jain["selection_cues"][0]
+
+        default = workspace.recall_payload(inventory, cue)
+        self.assertNotIn(
+            jain["id"], [row["candidate"]["id"] for row in default["candidates"]]
+        )
+
+        research = workspace.recall_payload(inventory, cue, readiness=["profile-ready"])
+        self.assertIn(
+            jain["id"], [row["candidate"]["id"] for row in research["candidates"]]
+        )
 
     def test_catuskoti_requalification_supports_runtime_retention_with_discovery_value(self) -> None:
         inventory_path = ROOT / "research" / "framework-candidates" / "cognitive-operation-inventory.json"
