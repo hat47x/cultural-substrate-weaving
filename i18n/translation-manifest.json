@@ -82,12 +82,6 @@
       "en_source_ja_sha256": "10f7f377f77c2ae9b787e3992ff5fe22cca146f34fd47e46f29aab98cd077afa",
       "en_status": "translated"
     },
-    "frameworks/jain-sevenfold-predication.md": {
-      "ja_sha256": "23e923b488b6ef7e2290a922a2d5f39ce0b1f9a472413101e444121681b3fa5b",
-      "en_present": true,
-      "en_source_ja_sha256": "23e923b488b6ef7e2290a922a2d5f39ce0b1f9a472413101e444121681b3fa5b",
-      "en_status": "translated"
-    },
     "frameworks/llull-ars.md": {
       "ja_sha256": "ee49d48f476982efe82810985036a8593c105993e2d0cb94a570d69d5c2fbc81",
       "en_present": true,
@@ -113,9 +107,9 @@
       "en_status": "translated"
     },
     "frameworks/portfolio.md": {
-      "ja_sha256": "2713490663ad623e1fd53dc2f23e7190f5c5065e519b66e515538319a6bca2c9",
+      "ja_sha256": "83024e4f5f8ba109499febdd60d343bb98a1ad1886ee54fc5db0b143911510b0",
       "en_present": true,
-      "en_source_ja_sha256": "2713490663ad623e1fd53dc2f23e7190f5c5065e519b66e515538319a6bca2c9",
+      "en_source_ja_sha256": "83024e4f5f8ba109499febdd60d343bb98a1ad1886ee54fc5db0b143911510b0",
       "en_status": "translated"
     },
     "frameworks/rasa.md": {
