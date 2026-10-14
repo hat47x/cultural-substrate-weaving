@@ -888,12 +888,34 @@
         "rotate perspectives without forcing one absolute statement"
       ],
       "discovery_hypothesis": {
-        "ordinary_entry_tends_to": "States a claim as generally true or false, or resolves conflicting claims by choosing one of them.",
-        "exposed_cognitive_job": "Binds each assertion back to the standpoint, scale, time, and definition under which it holds and keeps what cannot yet be asserted as a residual.",
-        "weakens_if": "Ordinary scoping or assumption review states the conditions of each claim on the same target before Jain contact at comparable selection cost.",
-        "evidence_state": "unreviewed_hypothesis",
-        "authored_basis": "AI analyst hypothesis drafted 2026-10-08 from the runtime dossier's native operations and target-return questions. It is not a discovery-value comparison, not a fit judgment, and not target-side evidence."
-      }
+        "ordinary_entry_tends_to": "Ordinary SIer scope, performance, requirements and scenario review qualifies claims by component, audience, time, metric and precondition before cultural-framework contact.",
+        "exposed_cognitive_job": "Conditioned standpoint-specific claims, cross-perspective comparison and unresolved predicate/representation gaps.",
+        "weakens_if": "A new target shows perspective rotation or genuine inexpressibility questions absent from ex-ante requirements/CSW core/Catuṣkoṭi baselines at comparable cost.",
+        "evidence_state": "discovery_overlap_recorded",
+        "evidence_paths": [
+          "research/framework-candidates/comparisons/jain-sevenfold-discovery-value.md"
+        ],
+        "authored_basis": "Bounded qualitative desk comparison on two fixtures; not a blinded effectiveness study. The comparison file documents the decision and reopening criteria."
+      },
+      "worked_example_paths": [
+        "research/framework-candidates/worked-examples/jain-sevenfold-predication.md"
+      ],
+      "negative_example_paths": [
+        "research/framework-candidates/worked-examples/jain-sevenfold-predication-negative.md"
+      ],
+      "runtime_requalification": {
+        "ordinary_baseline_comparison_paths": [
+          "research/framework-candidates/comparisons/jain-sevenfold-vs-ordinary-conditional-requirements.md"
+        ],
+        "discovery_value_comparison_paths": [
+          "research/framework-candidates/comparisons/jain-sevenfold-discovery-value.md"
+        ],
+        "near_neighbor_comparison_paths": [
+          "research/framework-candidates/comparisons/catuskoti-vs-jain-sevenfold-predication.md"
+        ],
+        "discovery_review_state": "complete-demote"
+      },
+      "adoption_hold": "runtime-removal-supported-discovery-aware: ordinary requirements, scenarios, and performance review already select standpoint/condition/metric qualification before framework contact on the tested SIer targets; qualitative finding, not universal no-value proof"
     },
     {
       "id": "aristotle-four-causes",
