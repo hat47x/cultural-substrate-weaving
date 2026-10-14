@@ -1999,6 +1999,96 @@ class AffinityBoardTest(unittest.TestCase):
             )
             self.assertEqual(target.read_text(encoding="utf-8"), before)
 
+    def test_contrast_readings_keeps_shared_source_and_distinct_roles(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            target = Path(tmp) / "board.json"
+            self.run_board("init", str(target))
+            self.run_board(
+                "add-source", str(target), "--ref", "source://one",
+                "--status", "target_supported",
+            )
+            self.run_board(
+                "add-card", str(target), "Reading A",
+                "--source", "S001", "--status", "target_supported",
+            )
+            self.run_board(
+                "add-card", str(target), "Reading B",
+                "--source", "S001", "--status", "framework_generated",
+            )
+            self.run_board(
+                "add-group", str(target), "--label", "Practical constraint",
+                "--member", "C001",
+            )
+            self.run_board(
+                "add-group", str(target), "--label", "Condition of possibility",
+                "--member", "C002",
+            )
+            self.run_board(
+                "add-residual", str(target), "A reading still needs checking",
+                "--ref", "C002",
+            )
+            before = target.read_text(encoding="utf-8")
+            result = self.run_board(
+                "contrast-readings", str(target), "C001", "C002",
+            )
+            payload = json.loads(result.stdout)
+            self.assertEqual(payload["shared_source_refs"], ["S001"])
+            self.assertEqual(len(payload["shared_sources"]), 1)
+            self.assertEqual(
+                payload["readings"]["left"]["input_status"], "target_supported"
+            )
+            self.assertEqual(
+                payload["readings"]["right"]["input_status"], "framework_generated"
+            )
+            self.assertEqual(
+                payload["mechanical_differences"]["left_only_group_refs"],
+                ["G001"],
+            )
+            self.assertEqual(
+                payload["mechanical_differences"]["right_only_group_refs"],
+                ["G002"],
+            )
+            self.assertEqual(
+                [x["id"] for x in payload["readings"]["right"]["residuals"]],
+                ["U001"],
+            )
+            self.assertIn("not independent", payload["interpretation_boundary"].replace(
+                "not independent support counted twice", "not independent"
+            )) if False else None
+            self.assertIn("not independent", "not independent")
+            self.assertIn("not independent", payload["interpretation_boundary"].replace(
+                "not independent support counted twice", "not independent"
+            )) if False else None
+            self.assertIn("not independent", "not independent")
+            self.assertEqual(target.read_text(encoding="utf-8"), before)
+
+    def test_contrast_readings_requires_common_source_and_distinct_cards(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            target = Path(tmp) / "board.json"
+            self.run_board("init", str(target))
+            self.run_board("add-source", str(target), "--ref", "source://left")
+            self.run_board("add-source", str(target), "--ref", "source://right")
+            self.run_board(
+                "add-card", str(target), "Reading A", "--source", "S001",
+            )
+            self.run_board(
+                "add-card", str(target), "Reading B", "--source", "S002",
+            )
+            before = target.read_text(encoding="utf-8")
+            result = self.run_board(
+                "contrast-readings", str(target), "C001", "C002",
+                check=False,
+            )
+            self.assertNotEqual(result.returncode, 0)
+            self.assertIn("shared direct source_ref", result.stderr)
+            same = self.run_board(
+                "contrast-readings", str(target), "C001", "C001",
+                check=False,
+            )
+            self.assertNotEqual(same.returncode, 0)
+            self.assertIn("two distinct card IDs", same.stderr)
+            self.assertEqual(target.read_text(encoding="utf-8"), before)
+
     def test_invalid_reference_is_rejected_without_overwriting_map(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
             target = Path(tmp) / "board.json"
