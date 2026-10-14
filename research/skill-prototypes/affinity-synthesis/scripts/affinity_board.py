@@ -1304,6 +1304,111 @@ def cmd_focus(args: argparse.Namespace) -> None:
     )
 
 
+def contrast_readings_payload(
+    data: dict[str, Any], left_ref: str, right_ref: str
+) -> dict[str, Any]:
+    """Juxtapose two explicit readings of one source without adjudicating them."""
+    if left_ref == right_ref:
+        raise ValueError("contrast-readings requires two distinct card IDs")
+
+    left = find_item(data, "card", left_ref)
+    right = find_item(data, "card", right_ref)
+    left_sources = [str(value) for value in left.get("source_refs", [])]
+    right_sources = [str(value) for value in right.get("source_refs", [])]
+    shared_ids = sorted(set(left_sources) & set(right_sources))
+    if not shared_ids:
+        raise ValueError(
+            "contrast-readings requires at least one shared direct source_ref"
+        )
+
+    shared_sources = [
+        source
+        for source in objects(data, "sources")
+        if str(source.get("id", "")) in shared_ids
+    ]
+
+    def reading(card: dict[str, Any]) -> dict[str, Any]:
+        card_id = str(card["id"])
+        focus = focus_payload(data, card_id)
+        groups = [
+            find_item(data, "group", group_id)
+            for group_id in focus["member_of_groups"]
+        ]
+        relations = focus["endpoint_relations"] + focus["basis_relations"]
+        return {
+            "id": card_id,
+            "text": card.get("text", ""),
+            "input_status": card.get("input_status", "(unspecified)"),
+            "source_refs": list(card.get("source_refs", [])),
+            "preservation_note": card.get("preservation_note"),
+            "group_contexts": [
+                {
+                    "id": group.get("id"),
+                    "label": group.get("label"),
+                    "preserved_differences": group.get("preserved_differences", []),
+                    "transformation_audit": group.get("transformation_audit"),
+                }
+                for group in groups
+            ],
+            "relations": relations,
+            "residuals": focus["residuals"],
+            "questions": focus["questions"],
+            "catalytic_trace": card.get("catalytic_trace"),
+            "cross_field_trace": card.get("cross_field_trace"),
+        }
+
+    left_view = reading(left)
+    right_view = reading(right)
+    left_groups = {str(g["id"]) for g in left_view["group_contexts"]}
+    right_groups = {str(g["id"]) for g in right_view["group_contexts"]}
+    left_relations = {str(r["id"]) for r in left_view["relations"]}
+    right_relations = {str(r["id"]) for r in right_view["relations"]}
+
+    return {
+        "format": "affinity-reading-contrast",
+        "version": "0.1",
+        "shared_sources": shared_sources,
+        "shared_source_refs": shared_ids,
+        "readings": {"left": left_view, "right": right_view},
+        "mechanical_differences": {
+            "wording_differs": left.get("text") != right.get("text"),
+            "input_status_differs": (
+                left.get("input_status") != right.get("input_status")
+            ),
+            "shared_group_refs": sorted(left_groups & right_groups),
+            "left_only_group_refs": sorted(left_groups - right_groups),
+            "right_only_group_refs": sorted(right_groups - left_groups),
+            "left_only_relation_refs": sorted(left_relations - right_relations),
+            "right_only_relation_refs": sorted(right_relations - left_relations),
+        },
+        "questions_for_return_check": [
+            "What different role does the same source play in each context?",
+            "Which target-side material supports or limits each reading?",
+            "What must remain unresolved rather than forced into one reading?",
+        ],
+        "interpretation_boundary": (
+            "Shared source records are one provenance path, not independent "
+            "support counted twice. Context, wording, status, and relations "
+            "are displayed, not ranked or verified by this tool."
+        ),
+    }
+
+
+def cmd_contrast_readings(args: argparse.Namespace) -> None:
+    data = load_map(args.map)
+    errors, warnings = validate(data)
+    if errors:
+        raise ValueError("map is invalid:\n- " + "\n- ".join(errors))
+    warn_lines(warnings)
+    print(
+        json.dumps(
+            contrast_readings_payload(data, args.left, args.right),
+            ensure_ascii=False,
+            indent=2,
+        )
+    )
+
+
 def _items_by_id(data: dict[str, Any], section: str) -> dict[str, dict[str, Any]]:
     result: dict[str, dict[str, Any]] = {}
     for item in objects(data, section):
@@ -2129,6 +2234,18 @@ def build_parser() -> argparse.ArgumentParser:
     clear_position.add_argument("map", type=Path)
     clear_position.add_argument("ref")
     clear_position.set_defaults(func=cmd_clear_position)
+
+    contrast = sub.add_parser(
+        "contrast-readings",
+        help=(
+            "juxtapose two explicit cards sharing a source, including contextual "
+            "roles and open differences, without ranking either reading"
+        ),
+    )
+    contrast.add_argument("map", type=Path)
+    contrast.add_argument("left")
+    contrast.add_argument("right")
+    contrast.set_defaults(func=cmd_contrast_readings)
 
     focus = sub.add_parser(
         "focus",

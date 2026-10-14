@@ -146,6 +146,9 @@ python scripts/affinity_board.py handoff-add-check /tmp/board.json \
 # Reopen only the local semantic neighborhood of one stable ref.
 python scripts/affinity_board.py focus /tmp/board.json G001
 
+# Compare two explicitly different readings of the same source in context.
+python scripts/affinity_board.py contrast-readings /tmp/board.json C001 C002
+
 # Compare two saved snapshots mechanically by stable ID.
 python scripts/affinity_board.py diff /tmp/before.json /tmp/after.json
 
@@ -176,6 +179,7 @@ Design constraints:
 - `update-handoff` only records refs/provenance/guardrails selected from the current synthesis; it does not reopen them or start another round;
 - `handoff-add-check` records a possible next check as a candidate, without executing, prioritizing, or treating it as required work;
 - `add-narrative` requires at least one explicit `--basis` ref so map ↔ narrative return-check remains inspectable.
+- `contrast-readings` is read-only and requires a common direct source. It contrasts already explicit cards, group roles, relations, and unresolved material, without ranking interpretations or double-counting shared evidence;
 - `focus` is read-only and one-hop: it exposes the selected artifact plus directly connected membership, relation, resonance, narrative, residual, question, source, handoff context, and that ref's explicit layout position without recursively reopening the whole map. Handoff `do_not_assume` guardrails are surfaced only when the selected ref is actually carried or referenced by a next-check candidate.
 - `diff` is read-only and mechanical: it reports stable-ID additions/removals/field changes, group membership changes, handoff changes, and layout changes, but it does not infer touched-but-unchanged state or semantic justification.
 - `status` surfaces ungrouped cards, multiple direct memberships, singleton groups, narratives, residuals, questions, and validation warnings.
