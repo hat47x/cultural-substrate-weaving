@@ -1562,12 +1562,12 @@
       "profile_path": "research/framework-candidates/profiles/confucian-role-ritual.md",
       "runtime_path": "src/ja-JP/frameworks/confucian-role-ritual.md",
       "selection_cues": [
-        "役割名と実際の行動を分けたい",
-        "関係ごとの期待を見たい",
-        "定型的なやり取りが意味を変えるか見たい",
-        "separate role name from enacted conduct",
-        "inspect expectations carried by relationships",
-        "ask how patterned interaction changes meaning"
+        "定例の発言順や承認の型が、同じ言葉の意味や異議の出しやすさを変えていないか",
+        "形式上の相談・承認は完了したのに、反復された相互作用の中で期待がずれていないか",
+        "関係上の期待が定型的なやり取りを通じて変わる仕組みを検討したい",
+        "inspect whether a repeated interaction pattern changes the social meaning of an otherwise identical utterance",
+        "probe how meeting rituals shape expectations or perceived permission despite correct formal accountability",
+        "compare enacted relational practices across meetings before assuming a role-title problem"
       ],
       "worked_example_paths": [
         "research/framework-candidates/worked-examples/confucian-role-ritual.md"
