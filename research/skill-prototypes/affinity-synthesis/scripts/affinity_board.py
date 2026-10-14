@@ -1398,7 +1398,7 @@ def cmd_contrast_readings(args: argparse.Namespace) -> None:
     data = load_map(args.map)
     errors, warnings = validate(data)
     if errors:
-        raise ValueError("map is invalid:\\n- " + "\\n- ".join(errors))
+        raise ValueError("map is invalid:\n- " + "\n- ".join(errors))
     warn_lines(warnings)
     print(
         json.dumps(

@@ -2052,14 +2052,7 @@ class AffinityBoardTest(unittest.TestCase):
                 [x["id"] for x in payload["readings"]["right"]["residuals"]],
                 ["U001"],
             )
-            self.assertIn("not independent", payload["interpretation_boundary"].replace(
-                "not independent support counted twice", "not independent"
-            )) if False else None
-            self.assertIn("not independent", "not independent")
-            self.assertIn("not independent", payload["interpretation_boundary"].replace(
-                "not independent support counted twice", "not independent"
-            )) if False else None
-            self.assertIn("not independent", "not independent")
+            self.assertIn("one provenance path", payload["interpretation_boundary"])
             self.assertEqual(target.read_text(encoding="utf-8"), before)
 
     def test_contrast_readings_requires_common_source_and_distinct_cards(self) -> None:
