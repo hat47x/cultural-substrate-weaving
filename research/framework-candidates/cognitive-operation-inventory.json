@@ -1573,12 +1573,31 @@
         "research/framework-candidates/worked-examples/confucian-role-ritual.md"
       ],
       "discovery_hypothesis": {
-        "ordinary_entry_tends_to": "Takes individual choices or organizational titles as the unit of explanation.",
-        "exposed_cognitive_job": "Maps which relation carries which expectation, checks whether role names match enacted conduct, and asks how patterned interaction changes what an act means.",
-        "weakens_if": "Ordinary role, RACI, or stakeholder analysis reaches relation-conditioned expectation and name-behavior mismatch on the same target before contact.",
-        "evidence_state": "unreviewed_hypothesis",
-        "authored_basis": "AI analyst hypothesis drafted 2026-10-08 from the runtime dossier's native operations and target-return questions. It is not a discovery-value comparison, not a fit judgment, and not target-side evidence."
-      }
+        "ordinary_entry_tends_to": "Generic project incident review first checks designated accountability, authorization, escalation and recorded consultation. It need not inspect performed meeting order as constitutive of an invitation's meaning.",
+        "exposed_cognitive_job": "Probe whether patterned relational conduct changes the perceived possibility/meaning of objection while formal decision rights stay fixed, using participant reports and falsifiable before/after observations.",
+        "weakens_if": "An unprompted generic human-factors/facilitation review already selects this enacted-interaction question before framework contact, or target evidence fails to show any pattern-dependent difference.",
+        "evidence_state": "discovery_contribution_recorded",
+        "evidence_paths": [
+          "research/framework-candidates/comparisons/confucian-role-li-discovery-value.md"
+        ],
+        "authored_basis": "Bounded qualitative desk comparison of two hypothetical SIer targets, not a blind efficacy trial or empirical causal result."
+      },
+      "negative_example_paths": [
+        "research/framework-candidates/worked-examples/confucian-role-ritual-negative.md"
+      ],
+      "runtime_requalification": {
+        "ordinary_baseline_comparison_paths": [
+          "research/framework-candidates/comparisons/confucian-role-li-vs-ordinary-raci-routines.md"
+        ],
+        "discovery_value_comparison_paths": [
+          "research/framework-candidates/comparisons/confucian-role-li-discovery-value.md"
+        ],
+        "near_neighbor_comparison_paths": [
+          "research/framework-candidates/comparisons/huayan-vs-confucian-role-ritual.md"
+        ],
+        "discovery_review_state": "complete-retain"
+      },
+      "adoption_hold": "runtime-retention-supported: ordinary RACI finds formal role mismatches, but generic incident review does not reliably probe how repeated enacted interaction changes the meaning of an otherwise identical invitation; bounded qualitative result, not causal proof"
     },
     {
       "id": "shinto-threshold-purification",
