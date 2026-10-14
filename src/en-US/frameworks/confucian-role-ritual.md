@@ -30,3 +30,15 @@ Do not import historical family, gender, political, or status hierarchy as a mod
   - https://plato.stanford.edu/entries/confucius/
 - Stanford Encyclopedia of Philosophy, Chinese Ethics
   - https://plato.stanford.edu/entries/ethics-chinese/
+
+## Contact selection boundary
+
+Do not activate this framework for an ordinary role-title/authority mismatch that a RACI matrix, approval logs, or access-rights review already exposes.
+
+Consider bounded contact only where **a repeated enacted interaction and participants' relational positions may change the meaning of the same utterance or consultation**, and where ordinary project review has not already surfaced that cognitive job.
+
+Example: a formally valid consultation ends with "any objections?" after the lead has already announced a recommendation. Did participants experience this as an invitation or as a closing formula? This is a **question, not a causal finding**.
+
+Return to target evidence: meeting sequence, participant accounts, actual speech, alternate explanations, before/after or comparison cases, and counterexamples. Do not infer motives from silence or declare a ritualized pattern the cause without evidence.
+
+No-framework is correct if organizational-routines, facilitation, or human-factors analysis has already opened and investigated this question. Remove historical Confucian terms and hierarchy from the target-facing result. Use only provisional, testable questions about enacted interaction and role-positioned expectations.
