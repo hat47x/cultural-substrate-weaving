@@ -88,11 +88,6 @@
       "skill_reference": "04e-catuskoti.md"
     },
     {
-      "id": "framework-jain-sevenfold-predication",
-      "source": "frameworks/jain-sevenfold-predication.md",
-      "skill_reference": "04f-jain-sevenfold-predication.md"
-    },
-    {
       "id": "framework-rasa",
       "source": "frameworks/rasa.md",
       "skill_reference": "04h-rasa.md"
@@ -186,7 +181,6 @@
       "frameworks/yijing.md",
       "frameworks/sankhya.md",
       "frameworks/catuskoti.md",
-      "frameworks/jain-sevenfold-predication.md",
       "frameworks/rasa.md",
       "frameworks/maya-calendars.md",
       "frameworks/huayan.md",
