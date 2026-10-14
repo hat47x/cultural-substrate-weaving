@@ -245,6 +245,7 @@ class FrameworkCorpusContractTest(unittest.TestCase):
         self.assertEqual(states["classical-stasis-theory"], "discovery_contribution_recorded")
         self.assertEqual(states["nyaya-five-member-inference"], "discovery_contribution_recorded")
         self.assertEqual(states["catuskoti"], "discovery_contribution_recorded")
+        self.assertEqual(states["jain-sevenfold-predication"], "discovery_overlap_recorded")
         self.assertNotIn("hadith-isnad-matn", states)
         hadith = next(
             row for row in data["candidates"]
@@ -488,6 +489,35 @@ class FrameworkCorpusContractTest(unittest.TestCase):
             registry["runtime_requalification"]["discovery_review_state"],
             "complete-retain",
         )
+
+    def test_jain_discovery_review_supports_demotion_before_runtime_change(self) -> None:
+        inventory_path = ROOT / "research" / "framework-candidates" / "cognitive-operation-inventory.json"
+        data = json.loads(inventory_path.read_text(encoding="utf-8"))
+        row = next(item for item in data["candidates"] if item["id"] == "jain-sevenfold-predication")
+
+        # This is the research decision; distribution remains adopted until
+        # a separate mechanical demotion.
+        self.assertEqual(row["readiness"], "adopted")
+        self.assertEqual(contract.validate_candidate(ROOT, row), [])
+        audit = contract.adopted_requalification_payload(ROOT, data)
+        reviewed = next(item for item in audit["candidates"] if item["candidate_id"] == row["id"])
+        self.assertEqual(reviewed["evidence_gaps"], [])
+        self.assertIn(
+            "research/framework-candidates/comparisons/jain-sevenfold-vs-ordinary-conditional-requirements.md",
+            reviewed["recorded_evidence"]["ordinary_baseline_comparison_paths"],
+        )
+        self.assertIn(
+            "research/framework-candidates/comparisons/jain-sevenfold-discovery-value.md",
+            reviewed["recorded_evidence"]["discovery_value_comparison_paths"],
+        )
+        self.assertIn(
+            "research/framework-candidates/comparisons/catuskoti-vs-jain-sevenfold-predication.md",
+            reviewed["recorded_evidence"]["near_neighbor_comparison_paths"],
+        )
+        registry = workspace.registry_entry_payload(data, row["id"])
+        self.assertTrue(registry["registry"]["runtime_enabled"])
+        self.assertEqual(registry["runtime_requalification"]["discovery_review_state"], "complete-demote")
+        self.assertIn("runtime-removal-supported-discovery-aware", registry["registry"]["adoption_hold"])
 
     def test_catuskoti_requalification_supports_runtime_retention_with_discovery_value(self) -> None:
         inventory_path = ROOT / "research" / "framework-candidates" / "cognitive-operation-inventory.json"

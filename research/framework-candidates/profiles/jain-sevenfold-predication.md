@@ -72,3 +72,22 @@ Do not reduce syāt to casual uncertainty or generic “everything is relative.�
 ## What this framework does not license
 
 It does not license generic relativism, epistemic evasion, or unsupported claims about the nature of reality.
+
+
+## Discovery-aware runtime requalification
+
+This review compares the de-bound target-side operations against **unprompted, ordinary SIer analysis**, not merely a specialist method selected after framework contact.
+
+- Positive worked example: `research/framework-candidates/worked-examples/jain-sevenfold-predication.md`
+- Non-activation fixture: `research/framework-candidates/worked-examples/jain-sevenfold-predication-negative.md`
+- Ordinary capability comparison: `research/framework-candidates/comparisons/jain-sevenfold-vs-ordinary-conditional-requirements.md`
+- Ex-ante discovery comparison: `research/framework-candidates/comparisons/jain-sevenfold-discovery-value.md`
+- Near-neighbor: `research/framework-candidates/comparisons/catuskoti-vs-jain-sevenfold-predication.md`
+
+The two fixed SIer targets are migration completion across differently scoped paths and a vague API performance assertion with different route/percentile observations. Both need conditions, metrics, audience, scope, and an evidence boundary before a defensible target-facing assertion can be made.
+
+A requirements/performance review naturally selects these jobs without first seeing syādvāda or a matched Jain-derived claim matrix. A Gherkin/behavior-driven specification likewise makes initial conditions and observable outcomes explicit. Indescribability does not generate an additional target-side question on these fixtures beyond not-applicable, unresolved predicate, or unsupported aggregate claims.
+
+**Product decision:** capability overlap and bounded qualitative discovery overlap support **general runtime demotion**, preserving this dossier and its sources as a `profile-ready` research candidate after a separate mechanical change. This branch records the research decision only; `readiness=adopted` and the current runtime dossier remain in place until mechanical removal.
+
+The result is not a claim of philosophical identity with requirements engineering or a controlled efficacy experiment. The case should be reopened if a target demonstrably elicits a new standpoint-rotation or representational-gap question beyond generic review, CSW core, and the Catuṣkoṭi binary-frame probe. Historical `syāt`, anekāntavāda, and indescribability are not merely software booleans or seven ordinary truth values.

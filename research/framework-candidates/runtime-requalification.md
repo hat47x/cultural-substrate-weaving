@@ -154,6 +154,10 @@ Catuṣkoṭi（四句分別）についても同じ基準で再資格した。y
 
 したがってruntime保持を支持する。ただしmixed / not-applicable / scope / aggregationがtarget側ですでに明示されている場合や、validなbinary decisionを単に曖昧化するだけになる場合はnon-activationとする。
 
+ジャイナ七分法（anekāntavāda / syādvāda）についても、四句分別との名称差を採否の根拠にせず再資格した。固定対象を①read/write/batch/out-of-scopeが混在するmigration status、②internal p95とmobile p99で評価が異なるAPIの「速い」という主張、とした。条件付き述定・視点回転・矛盾分解はtarget-side outputとして有用だが、ordinary requirements / performance reviewもframework接触前からscope、actor、metric、time、assumption、acceptance condition、N/Aを要求する。Cucumber/GherkinのGiven/When/Thenもpreconditionとobservable outcomeを明示する。
+
+`indescribability` 由来の残差についても、tested tasksではnot-applicable、未定義述語、根拠不足の集約を分ける通常手法で保持でき、新規のtarget-side questionが観察されない。したがってcapability overlapに加え、限定した定性的なdiscovery overlapを記録し、general default runtimeからのdemotionを**支持**する。機械的除去は別変更に分け、歴史的な七分法・系譜・言表不能性をsoftware stateに還元しない。blind experimentは未実施であり、新たなtargetで通常手法や四句分別からは出ない視点・表現上の発見が示されれば再検討する。
+
 Huayan（華厳）は、改訂後のdiscovery-aware基準で再資格した最初のruntime保持例となる。canonical Account統合案をsame-targetとして見ると、bounded-context DDD、context mapping、architecture viewpoints、change-impact analysisを組み合わせたmatched specialist baselineは、Huayanからde-bindしたrole-defined identity、context-role re-identification、perspective-through-node、integration-with-differenceを高い割合で再現できる。
 
 しかしframework contact前のgeneric architecture reviewは、ownership、duplication、API、consistency、migration、availability、cost等を自然に扱えても、「同じAccountというidentity自体がcontaining wholeによって成立しているのではないか」「統合後もどの差異を残すべきか」という認知仕事を必ずしも開かない。Huayan contact後にその問いが露出すると、DDDが適切な検証・実装手法として選びやすくなる。

@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+- Requalified Jain sevenfold predication with two fixed SIer targets and separate ordinary capability, ex-ante discovery, near-neighbor, and non-activation evidence. Conditional assertions and standpoint/metric qualification were already selected by ordinary requirements/performance review on these tasks, so general-runtime demotion is supported pending a separate mechanical change; historical lineage and a future-discovery reopening condition remain explicit.
+
 - Requalified Catuṣkoṭi under the discovery-aware runtime standard and retained it. Ordinary requirements/state modeling can represent mixed and not-applicable states once a Boolean framing defect is recognized, but generic ex-ante review does not reliably force both/neither/predicate-failure probes before repairing the frame; runtime use remains bounded to binary-frame disruption rather than four-valued truth assignment.
 
 - Requalified Nyāya five-member inference under the discovery-aware runtime standard and retained it. Toulmin-style argument methods can reproduce much of the de-bound capability once selected, but ordinary incident/RCA review does not reliably separate the observed reason, the generalized relation that licenses the inference, and application of that relation to the current target; Nyāya remains a bounded catalyst for exposing that inferential bridge.
