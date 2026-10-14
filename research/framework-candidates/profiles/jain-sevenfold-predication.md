@@ -1,6 +1,6 @@
 # Jain anekāntavāda / syādvāda / sevenfold predication profile
 
-Status: adopted / runtime-corpus
+Status: profile-ready / research-only / no-runtime
 
 ## Identity
 
@@ -88,6 +88,8 @@ The two fixed SIer targets are migration completion across differently scoped pa
 
 A requirements/performance review naturally selects these jobs without first seeing syādvāda or a matched Jain-derived claim matrix. A Gherkin/behavior-driven specification likewise makes initial conditions and observable outcomes explicit. Indescribability does not generate an additional target-side question on these fixtures beyond not-applicable, unresolved predicate, or unsupported aggregate claims.
 
-**Product decision:** capability overlap and bounded qualitative discovery overlap support **general runtime demotion**, preserving this dossier and its sources as a `profile-ready` research candidate after a separate mechanical change. This branch records the research decision only; `readiness=adopted` and the current runtime dossier remain in place until mechanical removal.
+**Product decision:** capability overlap and bounded qualitative discovery overlap support **general runtime demotion**, preserving this dossier and its sources as a `profile-ready` research candidate after a separate mechanical change, now completed. `readiness=profile-ready` and the default runtime dossier has been removed.
+
+The mechanical runtime demotion is complete. The framework remains available by explicit research selection, not default adopted recall.
 
 The result is not a claim of philosophical identity with requirements engineering or a controlled efficacy experiment. The case should be reopened if a target demonstrably elicits a new standpoint-rotation or representational-gap question beyond generic review, CSW core, and the Catuṣkoṭi binary-frame probe. Historical `syāt`, anekāntavāda, and indescribability are not merely software booleans or seven ordinary truth values.

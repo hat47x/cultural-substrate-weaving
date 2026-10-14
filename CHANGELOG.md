@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+- Removed Jain sevenfold predication from default runtime after the bounded discovery-aware comparison; scope, time, metric, and context-conditioned assertion are already selected by ordinary SIer requirements/performance review on the tested fixtures. Research lineage, examples, limitations, and explicit profile-ready recall remain available.
+
 - Requalified Jain sevenfold predication with two fixed SIer targets and separate ordinary capability, ex-ante discovery, near-neighbor, and non-activation evidence. Conditional assertions and standpoint/metric qualification were already selected by ordinary requirements/performance review on these tasks, so general-runtime demotion is supported pending a separate mechanical change; historical lineage and a future-discovery reopening condition remain explicit.
 
 - Requalified Catuṣkoṭi under the discovery-aware runtime standard and retained it. Ordinary requirements/state modeling can represent mixed and not-applicable states once a Boolean framing defect is recognized, but generic ex-ante review does not reliably force both/neither/predicate-failure probes before repairing the frame; runtime use remains bounded to binary-frame disruption rather than four-valued truth assignment.

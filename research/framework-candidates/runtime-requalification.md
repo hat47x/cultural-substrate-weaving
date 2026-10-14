@@ -97,7 +97,7 @@ runtime retentionは「世界に同等の手法が存在しないこと」を要
 
 2026-10-06の最初の監査時点では、Registry上の`adopted` candidateは19件だった。その後、Mīmāṃsāを現行基準で再資格し、ordinary policy / requirements reviewがtested de-bound operationsを再現したため、general runtimeから外して`profile-ready`へ戻した。
 
-現在の`adopted` candidateは14件である。
+現在の`adopted` candidateは13件である。
 
 Mīmāṃsāに続き、dependent origination（縁起）についても再資格した。旧比較ではsame-targetへFive Whys、fault-tree expansion、dependency analysis、counterfactual / intervention questionを適用し、condition-chain、upstream-condition、cessation-counterfactual、dependency-reframing、intervention-pointを再現できたためgeneral default runtimeから外した。
 
@@ -156,7 +156,7 @@ Catuṣkoṭi（四句分別）についても同じ基準で再資格した。y
 
 ジャイナ七分法（anekāntavāda / syādvāda）についても、四句分別との名称差を採否の根拠にせず再資格した。固定対象を①read/write/batch/out-of-scopeが混在するmigration status、②internal p95とmobile p99で評価が異なるAPIの「速い」という主張、とした。条件付き述定・視点回転・矛盾分解はtarget-side outputとして有用だが、ordinary requirements / performance reviewもframework接触前からscope、actor、metric、time、assumption、acceptance condition、N/Aを要求する。Cucumber/GherkinのGiven/When/Thenもpreconditionとobservable outcomeを明示する。
 
-`indescribability` 由来の残差についても、tested tasksではnot-applicable、未定義述語、根拠不足の集約を分ける通常手法で保持でき、新規のtarget-side questionが観察されない。したがってcapability overlapに加え、限定した定性的なdiscovery overlapを記録し、general default runtimeからのdemotionを**支持**する。機械的除去は別変更に分け、歴史的な七分法・系譜・言表不能性をsoftware stateに還元しない。blind experimentは未実施であり、新たなtargetで通常手法や四句分別からは出ない視点・表現上の発見が示されれば再検討する。
+`indescribability` 由来の残差についても、tested tasksではnot-applicable、未定義述語、根拠不足の集約を分ける通常手法で保持でき、新規のtarget-side questionが観察されない。したがってcapability overlapに加え、限定した定性的なdiscovery overlapを記録し、general default runtimeからのdemotionを**支持**する。機械的除去も完了し、`profile-ready / no-runtime`として歴史的な七分法・系譜・言表不能性を保持する。blind experimentは未実施であり、新たなtargetで通常手法や四句分別からは出ない視点・表現上の発見が示されれば再検討する。
 
 Huayan（華厳）は、改訂後のdiscovery-aware基準で再資格した最初のruntime保持例となる。canonical Account統合案をsame-targetとして見ると、bounded-context DDD、context mapping、architecture viewpoints、change-impact analysisを組み合わせたmatched specialist baselineは、Huayanからde-bindしたrole-defined identity、context-role re-identification、perspective-through-node、integration-with-differenceを高い割合で再現できる。
 

@@ -14,7 +14,7 @@ This map tracks structural diversity. It does not rank frameworks or claim that 
 | conditional chain / cessation | — | dependent origination (profile-ready / no-runtime) | retrospective discovery-aware review confirms demotion: ordinary post-incident practice both reproduces the capability and naturally selects contributing-condition / mitigation / cessation-check work ex ante |
 | typed conditional network / multi-condition convergence | — | Theravāda Paṭṭhāna conditional relations (profile-ready) | compare against ordinary typed dependency graphs / fault trees before runtime; do not import the twenty-four-condition taxonomy |
 | binary-frame disruption | catuṣkoṭi | — | discovery-aware retention: ordinary modeling can resolve mixed/N-A states, but ex-ante review does not reliably force both/neither/predicate-failure probes before repairing the binary frame |
-| conditioned perspective | Confucian role / li; Jain sevenfold predication (demotion-supported; mechanical change pending) | — | Jain's tested standpoint/condition qualification overlaps ordinary SIer requirements and performance review ex ante; historical distinctness remains, future representational residuals can reopen research |
+| conditioned perspective | Confucian role / li | Jain sevenfold predication (profile-ready / no-runtime) | Jain's tested standpoint/condition qualification overlaps ordinary SIer requirements and performance review ex ante; historical distinctness remains, future representational residuals can reopen research |
 | explanatory pluralism | — | Aristotle four causes (profile-ready / no-runtime) | retrospective discovery-aware review confirms demotion: ordinary engineered-system design both reproduces the capability and naturally selects objective / constraint / structure / behavior-mechanism jobs ex ante |
 | rhetorical issue-state / dispute location | Classical stasis theory | — | runtime restored under discovery-aware review: generic incident practice does not reliably expose issue-type mismatch or stasis switches before framework contact |
 | expression → reception | Rasa | Jo-Ha-Kyū (profile-ready) | narrative sequencing that is not reducible to reception or pacing |
@@ -57,8 +57,8 @@ Do not start broad efficacy comparison yet.
 
 Registry snapshot on 2026-10-06:
 
-- adopted: 14
-- profile-ready: 20
+- adopted: 13
+- profile-ready: 21
 - research-only: 2
 - defer-lineage-specific: 1
 - total: 37
