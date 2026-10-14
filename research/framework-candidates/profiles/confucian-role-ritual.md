@@ -156,3 +156,32 @@ Each may become a separate layer or candidate.
 The runtime dossier adopts role perspective, role-name/behavior comparison, relation-obligation mapping, ritual-context shifts, and practice-as-hypothesis. Historical hierarchy remains outside target-side normative authority.
 
 Worked example: `research/framework-candidates/worked-examples/confucian-role-ritual.md`
+
+
+## Discovery-aware runtime requalification
+
+### Same-target examples
+
+- Positive, including a formal-roles case and a repeated-interaction case:
+  `research/framework-candidates/worked-examples/confucian-role-ritual.md`
+- Explicit non-activation:
+  `research/framework-candidates/worked-examples/confucian-role-ritual-negative.md`
+
+### Comparisons
+
+- Strong matched ordinary capability (RACI, decision logs, organizational routines):
+  `research/framework-candidates/comparisons/confucian-role-li-vs-ordinary-raci-routines.md`
+- Ex-ante generic entry versus framework discovery:
+  `research/framework-candidates/comparisons/confucian-role-li-discovery-value.md`
+- Huayan near-neighbor:
+  `research/framework-candidates/comparisons/huayan-vs-confucian-role-ritual.md`
+
+### Result: bounded runtime retention
+
+For the first target, "the owner failed to decide," ordinary RACI/approval review already separates title, accountable responsibility, permission and enacted function. That is strong **capability and discovery overlap**; this use alone would not justify runtime selection.
+
+For the second target, formal consultation is correct but an established public meeting sequence may alter whether the same "any objections?" prompt functions as invitation or closure. A generic project incident review need not select the enacted-interaction question ex ante. Role/li contact can expose that job, which organizational-routine research can subsequently investigate and express in target language. This gives **plausible bounded discovery value**, not unique analytic capability and not an experimentally demonstrated causal effect.
+
+Retain the runtime dossier for patterned relational interaction, role-conditioned meaning, and repeated practice **only when these are missing jobs**. Do not activate merely because a role title, stakeholder, RACI chart, or disagreement exists. If a generic facilitation/organizational-routines review has already considered enactment and independent participant interpretations, no-framework is valid.
+
+The bounded target return is observational: meeting sequence, formal authority, participant accounts, alternative hypotheses, and falsifiers. Do not import historical hierarchy, prescribe subordination, infer silent participants' mental states, or claim that repeated ritual caused a disposition without target-side evidence.
