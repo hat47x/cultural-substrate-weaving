@@ -245,6 +245,7 @@ class FrameworkCorpusContractTest(unittest.TestCase):
         self.assertEqual(states["classical-stasis-theory"], "discovery_contribution_recorded")
         self.assertEqual(states["nyaya-five-member-inference"], "discovery_contribution_recorded")
         self.assertEqual(states["catuskoti"], "discovery_contribution_recorded")
+        self.assertEqual(states["confucian-role-ritual"], "discovery_contribution_recorded")
         self.assertNotIn("jain-sevenfold-predication", states)
         jain = next(row for row in data["candidates"] if row["id"] == "jain-sevenfold-predication")
         self.assertEqual(jain["discovery_hypothesis"]["evidence_state"], "discovery_overlap_recorded")
@@ -538,6 +539,38 @@ class FrameworkCorpusContractTest(unittest.TestCase):
         research = workspace.recall_payload(inventory, cue, readiness=["profile-ready"])
         self.assertIn(
             jain["id"], [row["candidate"]["id"] for row in research["candidates"]]
+        )
+
+    def test_confucian_role_li_retains_only_bounded_discovery_job(self) -> None:
+        inventory_path = ROOT / "research" / "framework-candidates" / "cognitive-operation-inventory.json"
+        data = json.loads(inventory_path.read_text(encoding="utf-8"))
+        row = next(item for item in data["candidates"] if item["id"] == "confucian-role-ritual")
+
+        self.assertEqual(row["readiness"], "adopted")
+        self.assertEqual(contract.validate_candidate(ROOT, row), [])
+        audit = contract.adopted_requalification_payload(ROOT, data)
+        reviewed = next(item for item in audit["candidates"] if item["candidate_id"] == row["id"])
+        self.assertEqual(reviewed["evidence_gaps"], [])
+        self.assertIn(
+            "research/framework-candidates/comparisons/confucian-role-li-vs-ordinary-raci-routines.md",
+            reviewed["recorded_evidence"]["ordinary_baseline_comparison_paths"],
+        )
+        self.assertIn(
+            "research/framework-candidates/comparisons/confucian-role-li-discovery-value.md",
+            reviewed["recorded_evidence"]["discovery_value_comparison_paths"],
+        )
+        self.assertIn(
+            "research/framework-candidates/comparisons/huayan-vs-confucian-role-ritual.md",
+            reviewed["recorded_evidence"]["near_neighbor_comparison_paths"],
+        )
+        registry = workspace.registry_entry_payload(data, row["id"])
+        self.assertTrue(registry["registry"]["runtime_enabled"])
+        self.assertEqual(
+            registry["runtime_requalification"]["discovery_review_state"], "complete-retain"
+        )
+        self.assertIn("runtime-retention-supported", registry["registry"]["adoption_hold"])
+        self.assertEqual(
+            row["discovery_hypothesis"]["evidence_state"], "discovery_contribution_recorded"
         )
 
     def test_catuskoti_requalification_supports_runtime_retention_with_discovery_value(self) -> None:

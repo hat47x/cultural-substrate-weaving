@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+- Requalified Confucian role/li under the discovery-aware standard. Ordinary RACI/authorization review already exposes title-to-authority mismatches and specialist organizational-routines analysis can represent enacted meeting patterns, but generic ex-ante incident review need not ask how a repeated interaction sequence changes the meaning of an otherwise identical invitation. Kept bounded runtime use for that falsifiable discovery question, including no-activation, alternative explanations, and historical non-authority boundaries.
+
 - Removed Jain sevenfold predication from default runtime after the bounded discovery-aware comparison; scope, time, metric, and context-conditioned assertion are already selected by ordinary SIer requirements/performance review on the tested fixtures. Research lineage, examples, limitations, and explicit profile-ready recall remain available.
 
 - Requalified Jain sevenfold predication with two fixed SIer targets and separate ordinary capability, ex-ante discovery, near-neighbor, and non-activation evidence. Conditional assertions and standpoint/metric qualification were already selected by ordinary requirements/performance review on these tasks, so general-runtime demotion is supported pending a separate mechanical change; historical lineage and a future-discovery reopening condition remain explicit.

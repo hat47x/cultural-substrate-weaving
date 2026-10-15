@@ -42,7 +42,7 @@ Do not begin with whichever framework name is easiest to recall. Start with the 
 | hold coupled cycles and long time scales together | Maya calendar systems | phase difference, partial/full recurrence, long-span coordinate |
 | read part and whole as mutually defining | Huayan | whole–part reciprocity and node perspective |
 | inspect the bridge from reason to conclusion | Nyāya five-member inference | reason, example, application, conclusion |
-| separate role-name, relation, and enacted conduct | Confucian role / li | relation-conditioned action and patterned interaction |
+| examine whether recurring meeting forms or relational positions change an utterance's meaning | Confucian role / li | bounded patterned-interaction probe; do not activate for a RACI-solvable title/authority mismatch |
 | locate what kind of question is actually disputed | Classical stasis theory | fact, definition, evaluation, competence/procedure, issue switches |
 | reason through local route cues rather than a literal map | Marshallese wave navigation | relative route, cue sequence, model/environment return |
 | inspect preparation around an explicitly marked threshold | Shinto shrine threshold / purification | threshold, preparation, central act, return |
@@ -54,7 +54,7 @@ Do not begin with whichever framework name is easiest to recall. Start with the 
 
 - Yijing and Maya calendars both address change, primarily through configuration change and coupled temporal scales respectively. Wuxing remains available as a research candidate for relational-cycle analysis when explicitly requested.
 - Catuṣkoṭi, Nyāya, and classical stasis theory alter reasoning in different places: proposition space, inferential bridge, and dispute state. Jain sevenfold predication remains a sourced research candidate for standpoint-conditioned assertions; ordinary requirements/performance work already opens that cognitive job on the tested SIer targets. Aristotle's four causes remains a research candidate for explanation-type comparison.
-- Huayan and Confucian role/li both foreground relations; Huayan works through whole–part reciprocity while role/li focuses on enacted roles, relations, and patterned conduct.
+- Huayan and Confucian role/li both foreground relations; Huayan works through whole–part reciprocity while role/li narrowly probes the changing meaning of speech and expectation within repeated enacted interactions beyond an ordinary RACI audit.
 - Hadith isnād/matn remains a research candidate. Content/provenance separation, common-origin de-duplication, and the provenance-not-truth boundary are now always-on CSW core rules.
 - Marshallese wave navigation contributes model/environment return and cue-sequence wayfinding rather than generic network representation.
 

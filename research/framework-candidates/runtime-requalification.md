@@ -99,6 +99,12 @@ runtime retentionは「世界に同等の手法が存在しないこと」を要
 
 現在の`adopted` candidateは13件である。
 
+儒家の役割・礼（Confucian role/li）もdiscovery-aware基準で再資格した。通常のRACI・承認記録によって「ownerという肩書き」と実際の承認権限の不一致はframework接触前から検出できるため、これは保持理由としない。またFeldman/Pentlandのorganizational routines（ostensive/performative）を意図的に選べば、定型的な会議の型と実際のやり取りを比較できるため、unique analytic capabilityとも主張しない。
+
+一方、仮想の定例リリース会議で、正式な相談・承認権限は整っているのに、lead engineerの推薦後に行う「異議はありますか」が、発言順序と反復された関係の中で実質的に締めの合図になっていないかという問いは、通常の事故・責任分担reviewで必ずしも開かれない。role/li contactは同じ文言の意味が**行為される型と関係位置**によって変わる可能性を仮説として露出する。この問いを録音・関係者の解釈・前後比較・代替仮説へ戻せる場合に限りruntime保持を支持する。因果や沈黙の動機は未検証であり、歴史的な身分序列を規範として持ち込まない。human-factors / routine reviewがex-anteに同じ問いをすでに開いていればnon-activationとする。
+
+証拠は `research/framework-candidates/comparisons/confucian-role-li-vs-ordinary-raci-routines.md`、`research/framework-candidates/comparisons/confucian-role-li-discovery-value.md`、`research/framework-candidates/comparisons/huayan-vs-confucian-role-ritual.md`、正負fixtureへ分離した。比較は定性的な机上レビューであり、blind efficacyや実組織の因果効果を主張しない。
+
 Mīmāṃsāに続き、dependent origination（縁起）についても再資格した。旧比較ではsame-targetへFive Whys、fault-tree expansion、dependency analysis、counterfactual / intervention questionを適用し、condition-chain、upstream-condition、cessation-counterfactual、dependency-reframing、intervention-pointを再現できたためgeneral default runtimeから外した。
 
 改訂後のdiscovery-aware基準で遡及reviewすると、ordinary post-incident practice自体がframework contact前から「どのcomponents / conditions / actions / eventsが寄与したか」「どのmitigation / corrective actionで再発を防ぐか」「変更後に何が変わるべきか」を自然に問う。tested rolling-deployment incidentでも、stale capability、heartbeat、credential state、dispatch window、queue redeliveryなどの条件群と介入後のfailure cessationへframeworkなしで到達できる。

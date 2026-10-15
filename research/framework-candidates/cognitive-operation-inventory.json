@@ -1562,23 +1562,42 @@
       "profile_path": "research/framework-candidates/profiles/confucian-role-ritual.md",
       "runtime_path": "src/ja-JP/frameworks/confucian-role-ritual.md",
       "selection_cues": [
-        "役割名と実際の行動を分けたい",
-        "関係ごとの期待を見たい",
-        "定型的なやり取りが意味を変えるか見たい",
-        "separate role name from enacted conduct",
-        "inspect expectations carried by relationships",
-        "ask how patterned interaction changes meaning"
+        "定例の発言順や承認の型が、同じ言葉の意味や異議の出しやすさを変えていないか",
+        "形式上の相談・承認は完了したのに、反復された相互作用の中で期待がずれていないか",
+        "関係上の期待が定型的なやり取りを通じて変わる仕組みを検討したい",
+        "inspect whether a repeated interaction pattern changes the social meaning of an otherwise identical utterance",
+        "probe how meeting rituals shape expectations or perceived permission despite correct formal accountability",
+        "compare enacted relational practices across meetings before assuming a role-title problem"
       ],
       "worked_example_paths": [
         "research/framework-candidates/worked-examples/confucian-role-ritual.md"
       ],
       "discovery_hypothesis": {
-        "ordinary_entry_tends_to": "Takes individual choices or organizational titles as the unit of explanation.",
-        "exposed_cognitive_job": "Maps which relation carries which expectation, checks whether role names match enacted conduct, and asks how patterned interaction changes what an act means.",
-        "weakens_if": "Ordinary role, RACI, or stakeholder analysis reaches relation-conditioned expectation and name-behavior mismatch on the same target before contact.",
-        "evidence_state": "unreviewed_hypothesis",
-        "authored_basis": "AI analyst hypothesis drafted 2026-10-08 from the runtime dossier's native operations and target-return questions. It is not a discovery-value comparison, not a fit judgment, and not target-side evidence."
-      }
+        "ordinary_entry_tends_to": "Generic project incident review first checks designated accountability, authorization, escalation and recorded consultation. It need not inspect performed meeting order as constitutive of an invitation's meaning.",
+        "exposed_cognitive_job": "Probe whether patterned relational conduct changes the perceived possibility/meaning of objection while formal decision rights stay fixed, using participant reports and falsifiable before/after observations.",
+        "weakens_if": "An unprompted generic human-factors/facilitation review already selects this enacted-interaction question before framework contact, or target evidence fails to show any pattern-dependent difference.",
+        "evidence_state": "discovery_contribution_recorded",
+        "evidence_paths": [
+          "research/framework-candidates/comparisons/confucian-role-li-discovery-value.md"
+        ],
+        "authored_basis": "Bounded qualitative desk comparison of two hypothetical SIer targets, not a blind efficacy trial or empirical causal result."
+      },
+      "negative_example_paths": [
+        "research/framework-candidates/worked-examples/confucian-role-ritual-negative.md"
+      ],
+      "runtime_requalification": {
+        "ordinary_baseline_comparison_paths": [
+          "research/framework-candidates/comparisons/confucian-role-li-vs-ordinary-raci-routines.md"
+        ],
+        "discovery_value_comparison_paths": [
+          "research/framework-candidates/comparisons/confucian-role-li-discovery-value.md"
+        ],
+        "near_neighbor_comparison_paths": [
+          "research/framework-candidates/comparisons/huayan-vs-confucian-role-ritual.md"
+        ],
+        "discovery_review_state": "complete-retain"
+      },
+      "adoption_hold": "runtime-retention-supported: ordinary RACI finds formal role mismatches, but generic incident review does not reliably probe how repeated enacted interaction changes the meaning of an otherwise identical invitation; bounded qualitative result, not causal proof"
     },
     {
       "id": "shinto-threshold-purification",
