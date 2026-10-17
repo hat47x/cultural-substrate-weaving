@@ -57,3 +57,23 @@ python research/framework-candidates/scripts/record_trial_response.py \
 ## 既存評価との関係
 
 `research/efficacy-cheap-llm/` には、体系なしの比較条件（B0）を含む以前の合成課題研究がある。ただし、その課題、依頼文、比較設定は本試行と異なる。以前のB0結果をこの固定入力に対する独立レビュー結果として転用しない。以前の研究で観測した、体系選択の偏りや根拠のない構造の強制を検討する材料として参照するにとどめる。
+
+## 二経路の記録整合性を点検する（回答取得後のみ）
+
+通常レビューと体系接触後の回答を取得したら、両方の原文ファイルおよび `record_trial_response.py` の記録JSONを指定して、`audit_trial_pair.py` を実行できる。
+
+```sh
+python research/framework-candidates/scripts/audit_trial_pair.py \
+  --target research/framework-candidates/trials/requirements-review-target-v1.json \
+  --baseline-record /path/to/baseline-provenance.json \
+  --baseline-response /path/to/baseline-raw.md \
+  --contact-record /path/to/contact-provenance.json \
+  --contact-response /path/to/contact-raw.md \
+  --output /path/to/pair-audit.json
+```
+
+この読み取り専用監査は、二つの回答が同じ固定入力を指し、記録された段階と生データのSHA-256が一致するかを確認する。対象の変更、段階の取り違え、回答バイト列の変更、報告方法の欠落を個別に表示する。また、通常レビューで体系への事前接触を申告している場合、接触歴が不明な場合、同一回答が両経路に使われている場合は注意として表示する。
+
+`trace-complete` は**記録上の整合性が取れた**という意味に限る。盲検、別担当による独立性、実施順序、実際の発見、ターゲット側の裏付けは保証しない。回答の質問が同義か、体系接触後に本質的な認知作業が増えたかは、原文と対象資料を別途比較する。
+
+本監査のテストは合成回答のみで実施する。現時点でレビュー回答そのものは存在しないため、`pair-audit.json` や判定結果を仮作成して実証済みとは記載しない。
