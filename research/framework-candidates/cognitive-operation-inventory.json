@@ -1688,6 +1688,20 @@
       "worked_example_paths": [
         "research/framework-candidates/worked-examples/shinto-threshold-purification.md"
       ],
+      "negative_example_paths": [
+        "research/framework-candidates/worked-examples/shinto-threshold-non-activation.md"
+      ],
+      "runtime_requalification": {
+        "ordinary_baseline_comparison_paths": [
+          "research/framework-candidates/comparisons/shinto-threshold-vs-ordinary-change-control.md"
+        ],
+        "discovery_value_comparison_paths": [
+          "research/framework-candidates/comparisons/shinto-threshold-discovery-value.md"
+        ],
+        "near_neighbor_comparison_paths": [
+          "research/framework-candidates/comparisons/shinto-threshold-vs-rites-of-passage-and-mandala.md"
+        ]
+      },
       "discovery_hypothesis": {
         "ordinary_entry_tends_to": "Treats entering a central activity as one step, or attends only to the central activity itself.",
         "exposed_cognitive_job": "Separates a marked threshold, approach, preparation, central act, and return, and asks what state change preparation produces and what closure restores.",
