@@ -251,3 +251,16 @@ Llull後期Arsについて、既存の正例・非適用例・近接体系比較
 - [接触前の方法選択と発見仮説](comparisons/llull-ars-discovery-value.md)：generic requirements reviewの時点で組合せ法が自然に選ばれるかを、体系接触後の再現可能性とは別の問いとして残す。
 
 資料参照は揃ったが、独立した初回レビュー、業務上の実測、追加の発見の有無は未確認である。**ファイル参照の充足は発見価値の受理ではない**。採用状態は `adopted`、発見仮説は `unreviewed_hypothesis` のままとし、保持・降格の結論を追加しない。
+
+## 2026-10-17：神社参拝の境界・清めの暫定比較
+
+神社参拝の境界・準備・中心行為・退出の操作について、既存の本番変更の構成例を通常のchange controlと比較した。
+
+- [非適用例](worked-examples/shinto-threshold-non-activation.md)：変更管理で境界・準備・復旧を扱えている場合や、対象に境界がない場合には活性化しない。
+- [能力比較](comparisons/shinto-threshold-vs-ordinary-change-control.md)：通常の変更管理も体系接触前から承認、準備、実行、検証、復旧を扱う。
+- [発見価値の机上検討](comparisons/shinto-threshold-discovery-value.md)：本番変更という対象だけから通常手法を選べるため、追加発見の根拠は未取得。
+- [近接体系との比較](comparisons/shinto-threshold-vs-rites-of-passage-and-mandala.md)：歴史・構造上の違いを、対象での効果と混同しない。
+
+神社本庁による現代の参拝案内と、國學院大學が区別する手水・修祓等を一つの普遍的手順へ統合しない。宗教上の清めをシステムの認可・衛生の事実へ移さない。
+
+これは資料の整備と定性的な机上監査にとどまる。独立した初回レビュー・実務上の観測は未取得で、採用状態 `adopted` と発見仮説 `unreviewed_hypothesis` を維持する。
