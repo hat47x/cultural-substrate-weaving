@@ -124,6 +124,7 @@ Registry-0は文化そのものの正本ではない。文献・系譜・研究�
 - near-neighbor-differentiation-2026-10-01.md
 - crossing-value-2026-10-08.md（採用中核での交差の価値と一般化）
 - runtime-requalification.md（実行時採用の再資格と比較資料）
+- trials/README.md（Llullの体系接触前レビュー入力と未評価の原記録の扱い。独立レビュー結果は未取得）
 - framework-corpus-contract.md（候補の資料品質と採用段階の規約）
 - profiles/ 以下の各体系profile
 - source-packets/ 以下のpre-profile資料層
