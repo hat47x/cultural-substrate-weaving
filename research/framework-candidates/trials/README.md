@@ -111,3 +111,21 @@ python research/framework-candidates/scripts/precontact_review_packet.py \
 回答が取得された場合のみ、原文のバイト列を `record_trial_response.py` で記録し、同じ入力条件の別レビューと `audit_trial_pair.py` で追跡する。これらのツールは独立性や発見の有効性を証明しない。**現時点でSāṅkhya対象の初回レビュー回答は未取得**。
 
 関連：[通常のdata lineageとの比較](../comparisons/sankhya-vs-ordinary-data-lineage-review.md)、[発見価値の机上検討](../comparisons/sankhya-discovery-value.md)。
+
+## Rasa：保存失敗画面の通常UXレビュー
+
+[元のRasa構成例](../worked-examples/rasa-expression-reception.md)にある、大量明細を入力した直後の赤い保存失敗画面・エラー文言・唯一のOKボタンをそのまま使い、[固定入力](rasa-save-error-target-v1.json)を追加した。画面内容や利用者の反応が不明である部分を補わず、普通のUXレビューに同じ情報を与える。
+
+内部JSONには研究体系を識別できる非配布メタデータが含まれる。初回レビュー担当には、次の生成器で可視項目だけを書き出したMarkdownを渡す。
+
+```sh
+python research/framework-candidates/scripts/precontact_review_packet.py \
+  research/framework-candidates/trials/rasa-save-error-target-v1.json \
+  --output /tmp/rasa-initial-review.md
+```
+
+初回の担当者が通常のエラー回復・画面設計・利用者調査を選び、Rasa接触時と同じ問いを既に挙げた場合はそのまま記録する。本人が感情を報告していない限り、体験・困惑・不快感を観測事実としない。
+
+回答が取得された場合は、元の回答バイト列と実施条件を既存の `record_trial_response.py` で保持し、同一入力を使った後続の体系接触後の出力と `audit_trial_pair.py` で整合性を点検する。**この文書は独立レビュー実施報告ではない**。
+
+参照：[通常のUIレビューとの能力比較](../comparisons/rasa-vs-ordinary-ui-review.md)、[体系接触前の発見価値](../comparisons/rasa-discovery-value.md)。
