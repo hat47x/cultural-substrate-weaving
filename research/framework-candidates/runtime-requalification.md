@@ -242,3 +242,12 @@ historically adopted
 この追加によって、台帳上の具体例・非適用例・通常手法比較の参照は埋まった。ただし比較は独立した実行や利用者観察ではなく、発見価値を支持する証拠には数えない。したがって `discovery_hypothesis` は `unreviewed_hypothesis` を維持し、採用・降格も行わない。
 
 次の判断には、初回の通常レビューと体系接触後の出力を独立に記録し、体系なしでは生じにくい問いが対象へ戻って残るかを検証する必要がある。
+
+## 2026-10-17：Llull後期Arsの能力重複と発見仮説の分離
+
+Llull後期Arsについて、既存の正例・非適用例・近接体系比較に加え、同じ要件レビュー対象に対する二つの資料をRegistryへ結び付けた。
+
+- [通常の要件レビュー／組合せテストとの能力比較](comparisons/llull-ars-vs-ordinary-combinatorial-review.md)：同じ三軸を通常のcombinatorial testingや決定表で交差できるため、組合せ生成をLlull固有の分析能力として主張しない。
+- [接触前の方法選択と発見仮説](comparisons/llull-ars-discovery-value.md)：generic requirements reviewの時点で組合せ法が自然に選ばれるかを、体系接触後の再現可能性とは別の問いとして残す。
+
+資料参照は揃ったが、独立した初回レビュー、業務上の実測、追加の発見の有無は未確認である。**ファイル参照の充足は発見価値の受理ではない**。採用状態は `adopted`、発見仮説は `unreviewed_hypothesis` のままとし、保持・降格の結論を追加しない。
