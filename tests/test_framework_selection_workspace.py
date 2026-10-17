@@ -120,6 +120,32 @@ class FrameworkCorpusContractTest(unittest.TestCase):
         self.assertIn("cognitive-operation-inventory.json", readme)
         self.assertNotIn("### runtime採用済み", readme)
 
+    def test_llull_requalification_record_remains_unreviewed_despite_paths(self) -> None:
+        inventory_path = (
+            ROOT / "research" / "framework-candidates" / "cognitive-operation-inventory.json"
+        )
+        inventory = json.loads(inventory_path.read_text(encoding="utf-8"))
+        row = next(item for item in inventory["candidates"] if item["id"] == "llull-ars")
+        self.assertEqual(row["readiness"], "adopted")
+        self.assertEqual(
+            row["discovery_hypothesis"]["evidence_state"], "unreviewed_hypothesis"
+        )
+        evidence = row["runtime_requalification"]
+        for field in (
+            "ordinary_baseline_comparison_paths",
+            "discovery_value_comparison_paths",
+            "near_neighbor_comparison_paths",
+        ):
+            self.assertTrue(evidence.get(field), field)
+            for path in evidence[field]:
+                self.assertTrue((ROOT / path).is_file(), path)
+
+        audit = contract.adopted_requalification_payload(ROOT, inventory)
+        llull = next(item for item in audit["candidates"] if item["candidate_id"] == "llull-ars")
+        self.assertEqual(llull["discovery_hypothesis_state"], "unreviewed_hypothesis")
+        self.assertEqual(llull["evidence_gaps"], [])
+        # File completeness is not evidence of independent discovery or a retention verdict.
+
     def test_repository_adopted_requalification_audit_is_non_authoritative(self) -> None:
         inventory_path = ROOT / "research" / "framework-candidates" / "cognitive-operation-inventory.json"
         data = json.loads(inventory_path.read_text(encoding="utf-8"))
