@@ -33,3 +33,27 @@ python research/framework-candidates/scripts/precontact_review_packet.py researc
 この段階では結果欄を埋めない。元の初回質問を後から書き換えない。問いの数、組合せの網羅、資料ファイルの存在だけで発見効果や体系の採用可否を判定しない。
 
 参照：[Llullと通常の組合せ分析](../comparisons/llull-ars-vs-ordinary-combinatorial-review.md)、[Llullの発見価値の検討](../comparisons/llull-ars-discovery-value.md)。
+
+## 初回回答を受け取った場合の記録
+
+回答の原文は、書き換えず別ファイルへ保存する。回答が存在しない現時点では、実施記録を作成しない。
+
+`../scripts/record_trial_response.py` は、元入力の可視項目の指紋、回答本文のSHA-256、回答ファイルの場所、回答者が申告した方法と事前接触状況を**未評価の原記録**としてJSON化する。回答本文はメタデータへ複製しない。
+
+```sh
+python research/framework-candidates/scripts/record_trial_response.py \
+  research/framework-candidates/trials/requirements-review-target-v1.json \
+  /path/to/raw-response.md \
+  --phase unprimed-baseline \
+  --method-as-reported "回答者が最初に選んだ方法" \
+  --exposure-as-reported unknown \
+  --output /path/to/response-provenance.json
+```
+
+`--phase framework-contact` は体系接触後の回答を別に記録する場合に用いる。回答者が「体系を知らなかった」と申告しても、それは第三者による独立性確認ではない。作成される `status: raw-response-captured-unassessed` は、発見、正確性、実務有効性、体系の採用判断を示さない。
+
+回答原文に機密情報・個人情報が含まれる場合は、公開リポジトリに保存しない。公開可能な検証用材料と、アクセス管理を要する実務証拠を区別する。
+
+## 既存評価との関係
+
+`research/efficacy-cheap-llm/` には、体系なしの比較条件（B0）を含む以前の合成課題研究がある。ただし、その課題、依頼文、比較設定は本試行と異なる。以前のB0結果をこの固定入力に対する独立レビュー結果として転用しない。以前の研究で観測した、体系選択の偏りや根拠のない構造の強制を検討する材料として参照するにとどめる。
