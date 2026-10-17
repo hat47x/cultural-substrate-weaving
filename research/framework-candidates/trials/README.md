@@ -77,3 +77,19 @@ python research/framework-candidates/scripts/audit_trial_pair.py \
 `trace-complete` は**記録上の整合性が取れた**という意味に限る。盲検、別担当による独立性、実施順序、実際の発見、ターゲット側の裏付けは保証しない。回答の質問が同義か、体系接触後に本質的な認知作業が増えたかは、原文と対象資料を別途比較する。
 
 本監査のテストは合成回答のみで実施する。現時点でレビュー回答そのものは存在しないため、`pair-audit.json` や判定結果を仮作成して実証済みとは記載しない。
+
+## Marshallese wave navigation：独立した通常レビューの入力
+
+[従来の分散処理障害の正例](../worked-examples/marshallese-wave-navigation.md)のO1–O7をそのまま含む、別対象の[固定入力](marshallese-observability-target-v1.json)を追加した。初回分析の対象にはSREのtrace・retry・zone情報が初めから含まれる。通常手法を不自然に弱めるために観測情報を削除しない。
+
+この入力JSONには研究上の内部情報を含むため、レビュー担当には**生成したMarkdownだけ**を渡す。次のコマンドで生成する。
+
+```sh
+python research/framework-candidates/scripts/precontact_review_packet.py \
+  research/framework-candidates/trials/marshallese-observability-target-v1.json \
+  --output /tmp/marshallese-initial-review.md
+```
+
+結果を取得した場合は、元回答の生バイト列を `record_trial_response.py` で保存し、同じ入力の体系接触後の回答と `audit_trial_pair.py` で照合できる。ここに示すコマンドは**試験を実施したという記録ではない**。
+
+初回にOpenTelemetry、distributed tracing、SRE troubleshootingを自然に選んで同じ問いを出した場合には、その重複を削らず記録する。体系接触後にできた問いの数だけで発見の優劣を決めない。[通常手法との机上比較](../comparisons/marshallese-vs-ordinary-observability.md)および[発見仮説](../comparisons/marshallese-discovery-value.md)を参照する。
