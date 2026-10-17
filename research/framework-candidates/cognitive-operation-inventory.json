@@ -1266,6 +1266,17 @@
       "negative_example_paths": [
         "research/framework-candidates/worked-examples/llull-ars-negative-boundary.md"
       ],
+      "runtime_requalification": {
+        "ordinary_baseline_comparison_paths": [
+          "research/framework-candidates/comparisons/llull-ars-vs-ordinary-combinatorial-review.md"
+        ],
+        "discovery_value_comparison_paths": [
+          "research/framework-candidates/comparisons/llull-ars-discovery-value.md"
+        ],
+        "near_neighbor_comparison_paths": [
+          "research/framework-candidates/comparisons/llull-vs-yijing-vs-catuskoti.md"
+        ]
+      },
       "discovery_hypothesis": {
         "ordinary_entry_tends_to": "Crosses only the distinctions that come to mind together or that prior discussion has already paired.",
         "exposed_cognitive_job": "Enumerates binary and ternary combinations of explicitly chosen distinctions and returns never-crossed combinations as questions, pruned by target constraints.",
