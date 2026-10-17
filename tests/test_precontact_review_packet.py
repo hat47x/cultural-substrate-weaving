@@ -98,6 +98,27 @@ class PrecontactReviewPacketTest(unittest.TestCase):
         revised["provided_information"][0] += " 追加"
         self.assertNotEqual(rendered, packet.render_packet(revised))
 
+    def test_rasa_save_error_review_packet_omits_theory_and_private_prompt(self) -> None:
+        path = (
+            ROOT / "research" / "framework-candidates" / "trials"
+            / "rasa-save-error-target-v1.json"
+        )
+        source = json.loads(path.read_text(encoding="utf-8"))
+        rendered = packet.render_packet(source)
+        self.assertIn("入力に誤りがあります。最初からやり直してください。", rendered)
+        self.assertIn("O6: この画面を見た利用者", rendered)
+        self.assertIn("入力指紋（SHA-256）", rendered)
+        for hidden in ("Rasa", "rasa", "ラサ論", "bhāva", "Nāṭyaśāstra", "internal_research_context"):
+            self.assertNotIn(hidden, rendered)
+
+        hidden_only_change = copy.deepcopy(source)
+        hidden_only_change["internal_research_context"] = "revised internal context"
+        self.assertEqual(rendered, packet.render_packet(hidden_only_change))
+
+        material_change = copy.deepcopy(source)
+        material_change["provided_information"][0] += " 追加情報"
+        self.assertNotEqual(rendered, packet.render_packet(material_change))
+
     def test_cli_writes_same_packet_without_private_metadata(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
             output = Path(tmp) / "review-request.md"
