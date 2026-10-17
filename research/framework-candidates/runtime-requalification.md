@@ -292,3 +292,17 @@ Registry上は `adopted`、`adoption_hold: living-tradition-sensitive`、`discov
 IEPとGRETILの古典文献を出典とするが、puruṣaをダッシュボード閲覧者と同一視せず、宗教・形而上学の理論をデータ計測の事実へ移さない。
 
 採用状態は `adopted`、`discovery_hypothesis.evidence_state` は `unreviewed_hypothesis` を維持する。記録の完全性が改善したことと、独立した発見価値が証明されたことは別である。
+
+## 2026-10-18：Rasaの発見価値を通常UXレビューと照合
+
+既存のRasaの仮想UI保存失敗画面を固定し、表現／構成／受け手の経験を分ける認知操作が、**通常のエラー回復・ユーザビリティレビュー**でどこまで事前に開かれるかを整理した。
+
+- [正例](worked-examples/rasa-expression-reception.md)と[非適用例](worked-examples/rasa-non-activation.md)は既存のものを維持した。
+- [通常のUXとの能力比較](comparisons/rasa-vs-ordinary-ui-review.md)は、入力保持、エラー原因、復旧、色・時機・文面・受け手を最初から扱えることを示す。
+- [接触前の発見価値](comparisons/rasa-discovery-value.md)では、Nielsen Norman Groupのerror-message guidanceなどの強い普通手法を基準に、通常入口からの重複を明示した。独立した初回レビュー・利用者観察は未取得である。
+- [序破急との近接比較](comparisons/rasa-vs-jo-ha-kyu-and-ordinary-reception.md)は、受容経験と展開の緩急という異なる問いを整理し、文化由来の構造差をruntimeでの発見有効性に直結させない。
+- [体系名を伏せた固定入力](trials/rasa-save-error-target-v1.json)は元のエラー画面の与件と未知事項を保持する。独立回答は未取得。
+
+Nāṭyaśāstraの美的rasaと、現代の利用者が抱く一時的な不快感・心理状態は同一視しない。実測の受け手の反応がない限り仮説に留める。
+
+この研究で記録したのは強い普通手法との**能力重複と初回選択可能性**であり、追加発見の実測でもruntimeの降格決定でもない。Registryは `adopted`、`unreviewed_hypothesis` を維持する。
