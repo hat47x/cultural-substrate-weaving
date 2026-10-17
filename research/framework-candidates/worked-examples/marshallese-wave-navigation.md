@@ -170,6 +170,12 @@ Nothing in the target output claims:
 
 The cultural framework only supplied a temporary generator for route/cue/model-return questions. All retained claims are target-side observations or explicitly marked hypotheses.
 
+## 再資格時の比較境界（2026-10-17追記）
+
+本例の「generic graph以上」という差は、**静的なノード・エッジ図だけ**との比較である。通常のSRE実務は図だけで完結せず、distributed tracing、requestごとの経路、metrics/logs、runtimeと設計図の不一致、条件つき仮説検査を含む。同じO1–O7を使った[強い通常手法との比較](../comparisons/marshallese-vs-ordinary-observability.md)では、上記の五操作は大幅に重複する。[接触前の方法選択の検討](../comparisons/marshallese-discovery-value.md)も参照。
+
+この節の追加は元の仮想観測や文化的な境界を変更しない。ただし、以下の暫定的な「追加価値」評価を、実際の通常障害調査に対する独自発見や保持決定の証拠として引用してはいけない。独立の初回レビューとtarget-side corroborationは未取得である。
+
 ## Result
 
 The profile passes this first target-return test provisionally.
