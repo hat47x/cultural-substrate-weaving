@@ -175,6 +175,40 @@ class FrameworkCorpusContractTest(unittest.TestCase):
         self.assertEqual(shinto["evidence_gaps"], [])
         self.assertEqual(shinto["discovery_hypothesis_state"], "unreviewed_hypothesis")
 
+    def test_marshallese_requalification_keeps_source_and_runtime_boundaries(self) -> None:
+        inventory_path = (
+            ROOT / "research" / "framework-candidates" / "cognitive-operation-inventory.json"
+        )
+        inventory = json.loads(inventory_path.read_text(encoding="utf-8"))
+        row = next(
+            item for item in inventory["candidates"]
+            if item["id"] == "marshallese-wave-navigation"
+        )
+        self.assertEqual(row["readiness"], "adopted")
+        self.assertEqual(row["adoption_hold"], "living-tradition-sensitive")
+        self.assertEqual(row["discovery_hypothesis"]["evidence_state"], "unreviewed_hypothesis")
+        self.assertEqual(len(row["worked_example_paths"]), 2)
+        self.assertEqual(len(row["negative_example_paths"]), 1)
+        for path in (
+            row["profile_path"],
+            row["runtime_path"],
+            *row["worked_example_paths"],
+            *row["negative_example_paths"],
+            *row["runtime_requalification"]["ordinary_baseline_comparison_paths"],
+            *row["runtime_requalification"]["discovery_value_comparison_paths"],
+            *row["runtime_requalification"]["near_neighbor_comparison_paths"],
+        ):
+            self.assertTrue((ROOT / path).is_file(), path)
+
+        audited = contract.adopted_requalification_payload(ROOT, inventory)
+        marshallese = next(
+            item for item in audited["candidates"]
+            if item["candidate_id"] == "marshallese-wave-navigation"
+        )
+        self.assertEqual(marshallese["evidence_gaps"], [])
+        self.assertEqual(marshallese["discovery_hypothesis_state"], "unreviewed_hypothesis")
+        # Complete documentary references do not demonstrate incremental discovery.
+
     def test_repository_adopted_requalification_audit_is_non_authoritative(self) -> None:
         inventory_path = ROOT / "research" / "framework-candidates" / "cognitive-operation-inventory.json"
         data = json.loads(inventory_path.read_text(encoding="utf-8"))
