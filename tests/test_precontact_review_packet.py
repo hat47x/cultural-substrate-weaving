@@ -52,6 +52,31 @@ class PrecontactReviewPacketTest(unittest.TestCase):
                 packet.render_packet(bad)
         self.assertNotIn("result", packet.render_packet(self.source).lower())
 
+    def test_marshallese_incident_packet_is_target_only(self) -> None:
+        path = (
+            ROOT / "research" / "framework-candidates" / "trials"
+            / "marshallese-observability-target-v1.json"
+        )
+        source = json.loads(path.read_text(encoding="utf-8"))
+        rendered = packet.render_packet(source)
+        self.assertIn("O1: queue Q-A", rendered)
+        self.assertIn("O7: P-X", rendered)
+        self.assertIn("入力指紋（SHA-256）", rendered)
+        self.assertNotIn("Marshallese", rendered)
+        self.assertNotIn("wave-navigation", rendered)
+        self.assertNotIn("internal_research_context", rendered)
+        self.assertNotIn("航海", rendered)
+        self.assertNotIn("局所的な手掛かり", rendered)
+        changed = copy.deepcopy(source)
+        changed["internal_research_context"] = "Different internal hypothesis"
+        self.assertEqual(rendered, packet.render_packet(changed))
+        self.assertNotEqual(
+            packet.fingerprint(packet.visible_target(source)),
+            packet.fingerprint(packet.visible_target(
+                {**source, "context": source["context"] + "追記"}
+            )),
+        )
+
     def test_cli_writes_same_packet_without_private_metadata(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
             output = Path(tmp) / "review-request.md"
