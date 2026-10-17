@@ -34,7 +34,7 @@ class RecordTrialResponseTest(unittest.TestCase):
             "exposure_as_reported": "unknown",
         }
         options.update(changes)
-        return record.response_record(self.target, self.response, **options)
+        return record.response_record(self.target, self.response.encode("utf-8"), **options)
 
     def test_records_hashes_not_text_or_automatic_verdict(self) -> None:
         output = self.make_record()
@@ -75,8 +75,27 @@ class RecordTrialResponseTest(unittest.TestCase):
                 self.make_record(**kwargs)
         with self.assertRaises(ValueError):
             record.response_record(
-                self.target, " ", phase="unprimed-baseline",
+                self.target, b" ", phase="unprimed-baseline",
                 response_reference="x", method_as_reported="",
+                exposure_as_reported="unknown",
+            )
+
+    def test_crlf_response_is_hashed_as_original_bytes(self) -> None:
+        crlf = "first\\r\\nsecond\\r\\n".encode("utf-8")
+        result = record.response_record(
+            self.target, crlf, phase="unprimed-baseline",
+            response_reference="crlf.md", method_as_reported="",
+            exposure_as_reported="unknown",
+        )
+        self.assertEqual(result["response_sha256"], hashlib.sha256(crlf).hexdigest())
+        self.assertNotEqual(
+            result["response_sha256"],
+            hashlib.sha256(crlf.decode("utf-8").replace("\\r\\n", "\\n").encode()).hexdigest(),
+        )
+        with self.assertRaises(ValueError):
+            record.response_record(
+                self.target, b"\\xff", phase="unprimed-baseline",
+                response_reference="invalid.md", method_as_reported="",
                 exposure_as_reported="unknown",
             )
 
