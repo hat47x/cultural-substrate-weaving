@@ -119,6 +119,38 @@ class PrecontactReviewPacketTest(unittest.TestCase):
         material_change["provided_information"][0] += " 追加情報"
         self.assertNotEqual(rendered, packet.render_packet(material_change))
 
+    def test_yijing_two_path_packet_fixes_same_endpoint_without_framework_leak(self) -> None:
+        path = (
+            ROOT / "research" / "framework-candidates" / "trials"
+            / "yijing-two-path-rollout-target-v1.json"
+        )
+        source = json.loads(path.read_text(encoding="utf-8"))
+        displayed = packet.render_packet(source)
+        self.assertIn("110001→111001→111101", displayed)
+        self.assertIn("110001→110101→111101", displayed)
+        self.assertIn("入力指紋（SHA-256）", displayed)
+        for hidden in ("Yijing", "易経", "六爻", "hexagram", "internal_research_context"):
+            self.assertNotIn(hidden, displayed)
+
+        changed_metadata = copy.deepcopy(source)
+        changed_metadata["internal_research_context"] = "changed secret hypothesis"
+        self.assertEqual(displayed, packet.render_packet(changed_metadata))
+        changed_visible = copy.deepcopy(source)
+        changed_visible["provided_information"][2] += " 変更"
+        self.assertNotEqual(displayed, packet.render_packet(changed_visible))
+
+        start = (1, 1, 0, 0, 0, 1)
+        def flip(state, index):
+            values = list(state)
+            values[index] ^= 1
+            return tuple(values)
+        intermediate_a = flip(start, 2)
+        intermediate_b = flip(start, 3)
+        self.assertNotEqual(intermediate_a, intermediate_b)
+        self.assertEqual(flip(intermediate_a, 3), flip(intermediate_b, 2))
+        self.assertEqual(flip(intermediate_a, 3), (1, 1, 1, 1, 0, 1))
+        # Same endpoint is a bit-vector property, not proof of safe migration.
+
     def test_cli_writes_same_packet_without_private_metadata(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
             output = Path(tmp) / "review-request.md"
