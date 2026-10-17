@@ -264,3 +264,16 @@ Llull後期Arsについて、既存の正例・非適用例・近接体系比較
 神社本庁による現代の参拝案内と、國學院大學が区別する手水・修祓等を一つの普遍的手順へ統合しない。宗教上の清めをシステムの認可・衛生の事実へ移さない。
 
 これは資料の整備と定性的な机上監査にとどまる。独立した初回レビュー・実務上の観測は未取得で、採用状態 `adopted` と発見仮説 `unreviewed_hypothesis` を維持する。
+
+## 2026-10-17：Marshallese wave navigation の強い通常手法との再比較
+
+既存の分散処理障害の仮想正例（Q-A、S-B、P-X、S-C、retry振動、zone latency）に対し、一般的な静的グラフではなく**初回から自然に選べるSRE troubleshooting / distributed tracing / observability**を比較対象とした。
+
+- [通常の障害調査との能力比較](comparisons/marshallese-vs-ordinary-observability.md)：五つのde-bound操作はいずれも通常手法と大きく重なる。静的図とlive tracesの差や異常の相関は、対象情報に最初から含まれている。
+- [体系接触前の発見可能性](comparisons/marshallese-discovery-value.md)：同じ対象から通常手法を自然に選ぶ可能性が強い。独立した初回レビューは未取得のため、discovery overlapの実測や採用判断ではない。
+- [非適用例](worked-examples/marshallese-wave-navigation-negative-boundary.md)：通常のobservabilityが既に同じ問いを扱う場合、および実質的な経路構造のない作業には活性化しない。
+- [近接航法伝統](comparisons/marshallese-vs-vaeakau-taumako.md)：文化間の違いをソフトウェアでの認知作用の追加価値と混同しない。
+
+公開のSmithsonian資料、Genzによる航海者や航海学校の差異を越えて、非公開の実践知や統一的な航法体系を推測しない。特に実際の航行・安全判断には使用しない。
+
+Registry上は `adopted`、`adoption_hold: living-tradition-sensitive`、`discovery_hypothesis.evidence_state: unreviewed_hypothesis` を維持。机上の能力重複から直ちに降格せず、独立した比較や対象資料に戻した検証を別工程として残す。
