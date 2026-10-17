@@ -2255,6 +2255,20 @@
         "research/framework-candidates/worked-examples/marshallese-wave-navigation.md",
         "research/framework-candidates/worked-examples/marshallese-wave-navigation-non-navigation.md"
       ],
+      "negative_example_paths": [
+        "research/framework-candidates/worked-examples/marshallese-wave-navigation-negative-boundary.md"
+      ],
+      "runtime_requalification": {
+        "ordinary_baseline_comparison_paths": [
+          "research/framework-candidates/comparisons/marshallese-vs-ordinary-observability.md"
+        ],
+        "discovery_value_comparison_paths": [
+          "research/framework-candidates/comparisons/marshallese-discovery-value.md"
+        ],
+        "near_neighbor_comparison_paths": [
+          "research/framework-candidates/comparisons/marshallese-vs-vaeakau-taumako.md"
+        ]
+      },
       "discovery_hypothesis": {
         "ordinary_entry_tends_to": "Plans against an absolute map or plan and treats deviations as noise.",
         "exposed_cognitive_job": "Represents progress as a relative route of expected cues, separates what the prior model teaches from what must be re-sensed in the field, and reads disturbance as a signal.",
