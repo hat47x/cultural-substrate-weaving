@@ -383,6 +383,12 @@
       "runtime_requalification": {
         "ordinary_baseline_comparison_paths": [
           "research/framework-candidates/comparisons/rasa-vs-ordinary-ui-review.md"
+        ],
+        "discovery_value_comparison_paths": [
+          "research/framework-candidates/comparisons/rasa-discovery-value.md"
+        ],
+        "near_neighbor_comparison_paths": [
+          "research/framework-candidates/comparisons/rasa-vs-jo-ha-kyu-and-ordinary-reception.md"
         ]
       }
     },
