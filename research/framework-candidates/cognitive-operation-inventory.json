@@ -739,6 +739,23 @@
         "separate observer from generated process",
         "trace a production sequence upstream"
       ],
+      "worked_example_paths": [
+        "research/framework-candidates/worked-examples/sankhya-layer-observer.md"
+      ],
+      "negative_example_paths": [
+        "research/framework-candidates/worked-examples/sankhya-non-activation.md"
+      ],
+      "runtime_requalification": {
+        "ordinary_baseline_comparison_paths": [
+          "research/framework-candidates/comparisons/sankhya-vs-ordinary-data-lineage-review.md"
+        ],
+        "discovery_value_comparison_paths": [
+          "research/framework-candidates/comparisons/sankhya-discovery-value.md"
+        ],
+        "near_neighbor_comparison_paths": [
+          "research/framework-candidates/comparisons/sankhya-vs-dependent-origination-and-huayan.md"
+        ]
+      },
       "discovery_hypothesis": {
         "ordinary_entry_tends_to": "Treats the visible product or symptom as the starting point and analyzes it at the layer where it appears.",
         "exposed_cognitive_job": "Backtracks from the visible product to upstream production layers and asks whether the observer's position is mixed into the process being observed.",
