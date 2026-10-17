@@ -83,9 +83,9 @@ def audit_pair(
         cautions.append("baseline-self-reports-prior-framework-contact")
     if baseline["reported_exposure"] == "unknown":
         cautions.append("baseline-prior-exposure-unknown")
-    if not (baseline["reported_method"] or "").strip():
+    if not isinstance(baseline["reported_method"], str) or not baseline["reported_method"].strip():
         cautions.append("baseline-method-not-reported")
-    if not (contact["reported_method"] or "").strip():
+    if not isinstance(contact["reported_method"], str) or not contact["reported_method"].strip():
         cautions.append("contact-method-not-reported")
     if baseline["response_sha256"] == contact["response_sha256"]:
         cautions.append("identical-response-bytes")
