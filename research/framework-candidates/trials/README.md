@@ -93,3 +93,21 @@ python research/framework-candidates/scripts/precontact_review_packet.py \
 結果を取得した場合は、元回答の生バイト列を `record_trial_response.py` で保存し、同じ入力の体系接触後の回答と `audit_trial_pair.py` で照合できる。ここに示すコマンドは**試験を実施したという記録ではない**。
 
 初回にOpenTelemetry、distributed tracing、SRE troubleshootingを自然に選んで同じ問いを出した場合には、その重複を削らず記録する。体系接触後にできた問いの数だけで発見の優劣を決めない。[通常手法との机上比較](../comparisons/marshallese-vs-ordinary-observability.md)および[発見仮説](../comparisons/marshallese-discovery-value.md)を参照する。
+
+## Sāṅkhya：成功率ダッシュボードの初回レビュー入力
+
+[生成層・観測者の仮想事例](../worked-examples/sankhya-layer-observer.md)のO1–O6を固定した、[入力JSON](sankhya-dashboard-target-v1.json)を追加した。内部には体系を識別できる研究メタデータがあるため、**JSONをそのまま無接触レビューの担当者へ渡さない**。
+
+既存の共通生成器で、表示対象の項目だけを使った配布用Markdownを生成する：
+
+```sh
+python research/framework-candidates/scripts/precontact_review_packet.py \
+  research/framework-candidates/trials/sankhya-dashboard-target-v1.json \
+  --output /tmp/sankhya-initial-review.md
+```
+
+部署別表示差、分類設定変更、event→集計→filterの系列は与件として保持する。通常レビューから情報を削り、体系がないと分からない課題へ作り替えてはいけない。
+
+回答が取得された場合のみ、原文のバイト列を `record_trial_response.py` で記録し、同じ入力条件の別レビューと `audit_trial_pair.py` で追跡する。これらのツールは独立性や発見の有効性を証明しない。**現時点でSāṅkhya対象の初回レビュー回答は未取得**。
+
+関連：[通常のdata lineageとの比較](../comparisons/sankhya-vs-ordinary-data-lineage-review.md)、[発見価値の机上検討](../comparisons/sankhya-discovery-value.md)。
