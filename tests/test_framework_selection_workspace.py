@@ -239,6 +239,29 @@ class FrameworkCorpusContractTest(unittest.TestCase):
         self.assertEqual(sankhya["discovery_hypothesis_state"], "unreviewed_hypothesis")
         # File completeness is not independent discovery or a runtime verdict.
 
+    def test_rasa_requalification_preserves_unreviewed_runtime_boundary(self) -> None:
+        inventory_path = ROOT / "research" / "framework-candidates" / "cognitive-operation-inventory.json"
+        data = json.loads(inventory_path.read_text(encoding="utf-8"))
+        row = next(item for item in data["candidates"] if item["id"] == "rasa")
+        self.assertEqual(row["readiness"], "adopted")
+        self.assertEqual(row["discovery_hypothesis"]["evidence_state"], "unreviewed_hypothesis")
+        self.assertEqual(len(row["worked_example_paths"]), 1)
+        self.assertEqual(len(row["negative_example_paths"]), 1)
+        for path in (
+            row["profile_path"], row["runtime_path"],
+            *row["worked_example_paths"], *row["negative_example_paths"],
+            *row["runtime_requalification"]["ordinary_baseline_comparison_paths"],
+            *row["runtime_requalification"]["discovery_value_comparison_paths"],
+            *row["runtime_requalification"]["near_neighbor_comparison_paths"],
+        ):
+            self.assertTrue((ROOT / path).is_file(), path)
+
+        audited = contract.adopted_requalification_payload(ROOT, data)
+        rasa = next(item for item in audited["candidates"] if item["candidate_id"] == "rasa")
+        self.assertEqual(rasa["evidence_gaps"], [])
+        self.assertEqual(rasa["discovery_hypothesis_state"], "unreviewed_hypothesis")
+        # Documentation is complete; independent discovery and target outcomes remain unknown.
+
     def test_repository_adopted_requalification_audit_is_non_authoritative(self) -> None:
         inventory_path = ROOT / "research" / "framework-candidates" / "cognitive-operation-inventory.json"
         data = json.loads(inventory_path.read_text(encoding="utf-8"))
