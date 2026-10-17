@@ -262,6 +262,29 @@ class FrameworkCorpusContractTest(unittest.TestCase):
         self.assertEqual(rasa["discovery_hypothesis_state"], "unreviewed_hypothesis")
         # Documentation is complete; independent discovery and target outcomes remain unknown.
 
+    def test_yijing_requalification_has_paths_without_discovery_acceptance(self) -> None:
+        inventory_path = ROOT / "research" / "framework-candidates" / "cognitive-operation-inventory.json"
+        inventory = json.loads(inventory_path.read_text(encoding="utf-8"))
+        row = next(item for item in inventory["candidates"] if item["id"] == "yijing")
+        self.assertEqual(row["readiness"], "adopted")
+        self.assertEqual(row["discovery_hypothesis"]["evidence_state"], "unreviewed_hypothesis")
+        self.assertEqual(len(row["worked_example_paths"]), 1)
+        self.assertEqual(len(row["negative_example_paths"]), 1)
+        paths = (
+            row["profile_path"], row["runtime_path"],
+            *row["worked_example_paths"], *row["negative_example_paths"],
+            *row["runtime_requalification"]["ordinary_baseline_comparison_paths"],
+            *row["runtime_requalification"]["discovery_value_comparison_paths"],
+            *row["runtime_requalification"]["near_neighbor_comparison_paths"],
+        )
+        for path in paths:
+            self.assertTrue((ROOT / path).is_file(), path)
+        audited = contract.adopted_requalification_payload(ROOT, inventory)
+        yijing = next(x for x in audited["candidates"] if x["candidate_id"] == "yijing")
+        self.assertEqual(yijing["evidence_gaps"], [])
+        self.assertEqual(yijing["discovery_hypothesis_state"], "unreviewed_hypothesis")
+        # Evidence paths prove documentation completeness, not discovery value.
+
     def test_repository_adopted_requalification_audit_is_non_authoritative(self) -> None:
         inventory_path = ROOT / "research" / "framework-candidates" / "cognitive-operation-inventory.json"
         data = json.loads(inventory_path.read_text(encoding="utf-8"))
