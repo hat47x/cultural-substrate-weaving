@@ -277,3 +277,18 @@ Llull後期Arsについて、既存の正例・非適用例・近接体系比較
 公開のSmithsonian資料、Genzによる航海者や航海学校の差異を越えて、非公開の実践知や統一的な航法体系を推測しない。特に実際の航行・安全判断には使用しない。
 
 Registry上は `adopted`、`adoption_hold: living-tradition-sensitive`、`discovery_hypothesis.evidence_state: unreviewed_hypothesis` を維持。机上の能力重複から直ちに降格せず、独立した比較や対象資料に戻した検証を別工程として残す。
+
+## 2026-10-18：Sāṅkhyaの生成層・観測位置の暫定再資格
+
+固定した架空の注文成功率ダッシュボード（表示低下、gateway counterとの差、event→分類→集計→filter、10:00の分類変更、部署別表示差）で、古典Sāṅkhyaに由来する生成系列・観照側の分離という認知操作を評価した。
+
+- [正例](worked-examples/sankhya-layer-observer.md)では、対象側の検証可能な質問へ戻し、25 tattvaや三guṇaを対象の構成原理に強制しない。
+- [非適用例](worked-examples/sankhya-non-activation.md)では、通常のdata lineage・metric definitionで十分な場合に体系を開かない。
+- [能力比較](comparisons/sankhya-vs-ordinary-data-lineage-review.md)では、ETL/data lineage・SREの普通の技法が同じ対象への問いをほぼ再現できる。
+- [発見価値の机上検討](comparisons/sankhya-discovery-value.md)では、同じ対象の与件だけから通常技法の自然選択が想定でき、体系追加による発見の実測証拠はない。
+- [近接比較](comparisons/sankhya-vs-dependent-origination-and-huayan.md)では、生成層、条件介入、関係により成立する同一性の重点を分ける。
+- [無接触レビューの固定入力](trials/sankhya-dashboard-target-v1.json)を追加した。初回レビューの独立回答は未取得。
+
+IEPとGRETILの古典文献を出典とするが、puruṣaをダッシュボード閲覧者と同一視せず、宗教・形而上学の理論をデータ計測の事実へ移さない。
+
+採用状態は `adopted`、`discovery_hypothesis.evidence_state` は `unreviewed_hypothesis` を維持する。記録の完全性が改善したことと、独立した発見価値が証明されたことは別である。
