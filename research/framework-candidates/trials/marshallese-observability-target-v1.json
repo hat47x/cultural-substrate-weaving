@@ -1,0 +1,22 @@
+{
+  "format": "csw.precontact-review-target/v1",
+  "internal_research_context": "Marshallese wave-navigation discovery-aware requalification. Internal metadata: do not distribute this JSON or the hypothesis to baseline reviewers.",
+  "title": "分散データ処理の障害調査：初回レビュー",
+  "context": "次の事例は比較研究のために作成した仮想の業務システムです。提示された観測条件以外のシステム内部や実装状況は確定していません。",
+  "provided_information": [
+    "O1: queue Q-Aの処理段階は正常に完了している。",
+    "O2: service S-Bへの引継ぎ後から、再試行回数の振動が見られる。",
+    "O3: 下流のservice S-Cへ仕事が到達する場合もあり、全経路が止まっているわけではない。",
+    "O4: 静的な構成図では、S-BがS-Cを直接呼び出すことになっている。",
+    "O5: 一部の実行時traceには、S-BとS-Cの間にproxy P-Xが現れる。",
+    "O6: あるdeployment zoneを通った場合に、latencyの急増がより大きく観測される。",
+    "O7: P-Xまたはdeployment zoneが再試行の原因だと示す証拠は、まだ得られていない。"
+  ],
+  "not_provided": [
+    "各requestのtraceやspanの原データ、計測のsampling条件",
+    "serviceの実装、version、retry policy、proxyの挿入条件",
+    "zoneごとの成功例・失敗例の母数と時刻の対応",
+    "変更履歴、実行可能な切分け試験、実施済み調査の結果"
+  ],
+  "review_request": "初めてこの障害調査を任された担当者として、最初に行う分析とその選択理由、優先する確認質問を記述してください。与件から分かること、単なる仮説、別の資料が必要なことを区別してください。"
+}
