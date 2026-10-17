@@ -129,3 +129,21 @@ python research/framework-candidates/scripts/precontact_review_packet.py \
 回答が取得された場合は、元の回答バイト列と実施条件を既存の `record_trial_response.py` で保持し、同一入力を使った後続の体系接触後の出力と `audit_trial_pair.py` で整合性を点検する。**この文書は独立レビュー実施報告ではない**。
 
 参照：[通常のUIレビューとの能力比較](../comparisons/rasa-vs-ordinary-ui-review.md)、[体系接触前の発見価値](../comparisons/rasa-discovery-value.md)。
+
+## 易経：二経路の状態遷移レビュー
+
+[6位置の仮想移行例](../worked-examples/yijing-positioned-transition.md)を同一の対象として使う[固定入力](yijing-two-path-rollout-target-v1.json)を追加した。位置3→4と4→3では最終構成が一致しても中間状態が異なること、実システムの安全性は未確認であることを与件に明記している。
+
+内部JSONの `internal_research_context` にある文化体系名や期待される発見は、初回担当者へ渡さない。共通のpacket生成器で、依頼文に必要な項目だけ出力する：
+
+```sh
+python research/framework-candidates/scripts/precontact_review_packet.py \
+  research/framework-candidates/trials/yijing-two-path-rollout-target-v1.json \
+  --output /tmp/yijing-initial-review.md
+```
+
+**固定された2bitの反転順序が可換であること**と、データ移行操作・状態遷移・rollbackに副作用があるかを混同しない。通常レビュー担当が最初からstate-transition testing、状態機械、feature flagの依存確認を選んだ場合、同じ問いをそのまま初回記録へ残す。後から回答を編集して易経固有の発見を作らない。
+
+独立した回答を実際に取得した場合のみ、既存の回答原文保存と二経路の整合性監査を適用する。入力の準備は盲検成立・効果測定の実施とは異なる。
+
+関連：[通常の状態遷移テストとの比較](../comparisons/yijing-vs-ordinary-state-transition-review.md)、[体系接触前の発見価値](../comparisons/yijing-discovery-value.md)。
