@@ -28,6 +28,10 @@ class PrecontactReviewPacketTest(unittest.TestCase):
         self.assertIn("最新・古い・欠落", result)
         self.assertIn("最初に自然に選ぶ確認方法", result)
         self.assertIn("入力指紋（SHA-256）", result)
+        frozen_packet = (
+            ROOT / "research" / "framework-candidates" / "trials" / "reviewer-packet-v1.md"
+        ).read_text(encoding="utf-8")
+        self.assertEqual(result, frozen_packet)
         for hidden in ("Llull", "llull", "Ars", "ars", "組合せ", "combinatorial", "framework", "internal_research_context"):
             self.assertNotIn(hidden, result)
 
