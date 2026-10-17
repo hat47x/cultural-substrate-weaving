@@ -65,6 +65,23 @@
         "recompose a state after a local change",
         "inspect positions and combinations"
       ],
+      "worked_example_paths": [
+        "research/framework-candidates/worked-examples/yijing-positioned-transition.md"
+      ],
+      "negative_example_paths": [
+        "research/framework-candidates/worked-examples/yijing-non-activation.md"
+      ],
+      "runtime_requalification": {
+        "ordinary_baseline_comparison_paths": [
+          "research/framework-candidates/comparisons/yijing-vs-ordinary-state-transition-review.md"
+        ],
+        "discovery_value_comparison_paths": [
+          "research/framework-candidates/comparisons/yijing-discovery-value.md"
+        ],
+        "near_neighbor_comparison_paths": [
+          "research/framework-candidates/comparisons/llull-vs-yijing-vs-catuskoti.md"
+        ]
+      },
       "discovery_hypothesis": {
         "ordinary_entry_tends_to": "Describes the current state as a list of attributes or one classification and examines each attribute separately.",
         "exposed_cognitive_job": "Treats the state as a configuration of positioned binary differences, so a change at one position can be examined for its effect on the whole configuration and on neighboring configurations.",
