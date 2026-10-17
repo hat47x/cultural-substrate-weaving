@@ -21,7 +21,7 @@ EXPOSURES = ("unknown", "reported-none", "reported-prior-contact")
 
 def response_record(
     target: dict[str, Any],
-    raw_response: str,
+    raw_response: bytes,
     *,
     phase: str,
     response_reference: str,
@@ -32,8 +32,12 @@ def response_record(
         raise ValueError(f"phase must be one of: {', '.join(PHASES)}")
     if exposure_as_reported not in EXPOSURES:
         raise ValueError(f"exposure_as_reported must be one of: {', '.join(EXPOSURES)}")
-    if not isinstance(raw_response, str) or not raw_response.strip():
-        raise ValueError("raw response must be a nonempty string")
+    if not isinstance(raw_response, bytes) or not raw_response.strip():
+        raise ValueError("raw response must be nonempty UTF-8 bytes")
+    try:
+        raw_response.decode("utf-8")
+    except UnicodeDecodeError as exc:
+        raise ValueError("raw response must be UTF-8 encoded") from exc
     if not isinstance(response_reference, str) or not response_reference.strip():
         raise ValueError("response_reference must identify the stored raw response")
     if not isinstance(method_as_reported, str):
@@ -44,7 +48,7 @@ def response_record(
         "status": "raw-response-captured-unassessed",
         "phase": phase,
         "target_visible_sha256": fingerprint(visible_target(target)),
-        "response_sha256": hashlib.sha256(raw_response.encode("utf-8")).hexdigest(),
+        "response_sha256": hashlib.sha256(raw_response).hexdigest(),
         "raw_response_reference": response_reference,
         "method_as_reported": method_as_reported,
         "exposure_as_reported": exposure_as_reported,
@@ -68,10 +72,10 @@ def main() -> None:
     args = parser.parse_args()
 
     target = json.loads(args.target.read_text(encoding="utf-8"))
-    text = args.response.read_text(encoding="utf-8")
+    raw_bytes = args.response.read_bytes()
     payload = response_record(
         target,
-        text,
+        raw_bytes,
         phase=args.phase,
         response_reference=str(args.response),
         method_as_reported=args.method_as_reported,
