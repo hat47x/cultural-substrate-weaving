@@ -306,3 +306,18 @@ IEPとGRETILの古典文献を出典とするが、puruṣaをダッシュボー
 Nāṭyaśāstraの美的rasaと、現代の利用者が抱く一時的な不快感・心理状態は同一視しない。実測の受け手の反応がない限り仮説に留める。
 
 この研究で記録したのは強い普通手法との**能力重複と初回選択可能性**であり、追加発見の実測でもruntimeの降格決定でもない。Registryは `adopted`、`unreviewed_hypothesis` を維持する。
+
+## 2026-10-18：易経の位置・中間遷移の暫定再資格
+
+易経から借りた位置・構成・反転の認知操作を、固定した6位置のデータ移行例（初期`110001`、終点`111101`）で再検討した。位置3→4の中間状態は`111001`、位置4→3は`110101`となる。両方とも終点は同じだが、実システムの副作用・安全性は構成の算術から決まらない。
+
+- [正例](worked-examples/yijing-positioned-transition.md)：原典の爻の位置と、CSW側で仮に割り当てたfeature flagを分離し、中間状態の検査質問を作った。
+- [非適用例](worked-examples/yijing-non-activation.md)：通常の状態遷移分析で十分な場合、または6位置・2値の対応が不自然な場合は適用しない。
+- [通常手法との能力比較](comparisons/yijing-vs-ordinary-state-transition-review.md)：state-transition / model-based testingが同じ中間状態・依存関係・rollback質問を扱う。
+- [接触前の発見価値](comparisons/yijing-discovery-value.md)：feature flag移行という依頼から普通の状態遷移手法が自然に選ばれるため、独自の追加発見は未実証。
+- [近接体系の比較](comparisons/llull-vs-yijing-vs-catuskoti.md)：Llullは組合せ交差、易経は位置変化、四句分別は命題枠の点検。体系名の違いは効果の証明ではない。
+- [体系名を伏せた固定入力](trials/yijing-two-path-rollout-target-v1.json)：同じ経路の情報を通常側にも与える。独立した初回レビューは未取得。
+
+易経は六十四卦・爻辞・複数層の注釈伝統を持つ。固定されたビット反転の可換性を伝統の唯一の変化規則へ拡張せず、六個のflagに卦名・吉凶を帰属しない。
+
+今回の資料は能力重複とex-anteの検討にとどまり、実測のdiscovery overlapでもruntime降格判断でもない。Registryの `adopted`、`discovery_hypothesis.evidence_state: unreviewed_hypothesis` を維持する。
