@@ -1,0 +1,21 @@
+{
+  "format": "csw.precontact-review-target/v1",
+  "internal_research_context": "Yijing position/recomposition core-value requalification. Keep internal: baseline must not see cultural names or hypothetical hoped-for discovery.",
+  "title": "段階的なデータ移行：二つの切替順序の初回レビュー",
+  "context": "これは架空の業務データ移行です。6つの二値条件の初期・終点と二つの候補経路が与えられています。これらの状態が実際のシステムで存在・到達可能か、実行時に安全かはまだ検証されていません。以下のビットは左から位置1〜6を意味します。",
+  "provided_information": [
+    "O1: 位置1は旧/新read compatibility、位置2はwrite compatibility、位置3はdual-write、位置4はbackfill検証完了、位置5は新形式へのread switch、位置6は旧形式へのrollback経路の利用可能性をそれぞれ表す。1はその条件が成り立つ仮の値。",
+    "O2: 初期状態は110001、両位置変更後の終点は111101である。",
+    "O3: 位置3を先に変える経路は110001→111001→111101となる。",
+    "O4: 位置4を先に変える経路は110001→110101→111101となる。",
+    "O5: 位置3と位置4の二つの固定bitを反転する限り、どちらの順番でも終点は同じだが中間状態は異なる。",
+    "O6: 実際のfeature flag依存、書込みイベント、データ整合条件、ログ、rollback実行結果はまだ提供されていない。"
+  ],
+  "not_provided": [
+    "各flagが実際に独立変更可能であるかと禁じられた状態",
+    "backfillと継続更新・dual-writeの処理順序、データ差分",
+    "read switchやrollbackへ進むための不変条件、実行時の観測",
+    "切替経路のテスト・承認・実施結果"
+  ],
+  "review_request": "初めてこの移行設計をレビューする立場として、最初に選ぶ方法とその理由、優先して確かめる問い、対象資料を提案してください。定義済みの二値状態と実際のシステム状態を混同せず、構成例で確定できることと追加証拠を要することを区別してください。"
+}
