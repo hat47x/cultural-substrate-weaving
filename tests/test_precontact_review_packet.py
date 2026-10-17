@@ -77,6 +77,27 @@ class PrecontactReviewPacketTest(unittest.TestCase):
             )),
         )
 
+    def test_sankhya_dashboard_packet_hides_internal_research_context(self) -> None:
+        path = (
+            ROOT / "research" / "framework-candidates" / "trials"
+            / "sankhya-dashboard-target-v1.json"
+        )
+        source = json.loads(path.read_text(encoding="utf-8"))
+        rendered = packet.render_packet(source)
+        self.assertIn("注文成功率", rendered)
+        self.assertIn("O3: ダッシュボード", rendered)
+        self.assertIn("入力指紋（SHA-256）", rendered)
+        self.assertNotIn("Sankhya", rendered)
+        self.assertNotIn("サーンキヤ", rendered)
+        self.assertNotIn("puruṣa", rendered)
+        self.assertNotIn("internal_research_context", rendered)
+
+        revised = copy.deepcopy(source)
+        revised["internal_research_context"] = "different private hypothesis"
+        self.assertEqual(rendered, packet.render_packet(revised))
+        revised["provided_information"][0] += " 追加"
+        self.assertNotEqual(rendered, packet.render_packet(revised))
+
     def test_cli_writes_same_packet_without_private_metadata(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
             output = Path(tmp) / "review-request.md"
