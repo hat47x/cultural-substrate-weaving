@@ -81,7 +81,7 @@ class RecordTrialResponseTest(unittest.TestCase):
             )
 
     def test_crlf_response_is_hashed_as_original_bytes(self) -> None:
-        crlf = "first\\r\\nsecond\\r\\n".encode("utf-8")
+        crlf = "first\r\nsecond\r\n".encode("utf-8")
         result = record.response_record(
             self.target, crlf, phase="unprimed-baseline",
             response_reference="crlf.md", method_as_reported="",
@@ -90,11 +90,11 @@ class RecordTrialResponseTest(unittest.TestCase):
         self.assertEqual(result["response_sha256"], hashlib.sha256(crlf).hexdigest())
         self.assertNotEqual(
             result["response_sha256"],
-            hashlib.sha256(crlf.decode("utf-8").replace("\\r\\n", "\\n").encode()).hexdigest(),
+            hashlib.sha256(crlf.decode("utf-8").replace("\r\n", "\n").encode()).hexdigest(),
         )
         with self.assertRaises(ValueError):
             record.response_record(
-                self.target, b"\\xff", phase="unprimed-baseline",
+                self.target, b"\xff", phase="unprimed-baseline",
                 response_reference="invalid.md", method_as_reported="",
                 exposure_as_reported="unknown",
             )
