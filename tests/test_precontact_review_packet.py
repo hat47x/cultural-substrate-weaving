@@ -151,6 +151,40 @@ class PrecontactReviewPacketTest(unittest.TestCase):
         self.assertEqual(flip(intermediate_a, 3), (1, 1, 1, 1, 0, 1))
         # Same endpoint is a bit-vector property, not proof of safe migration.
 
+    def test_tzolkin_coupled_schedule_packet_hides_calendar_hypothesis(self) -> None:
+        path = (
+            ROOT / "research" / "framework-candidates" / "trials"
+            / "tzolkin-coupled-schedules-target-v1.json"
+        )
+        source = json.loads(path.read_text(encoding="utf-8"))
+        rendered = packet.render_packet(source)
+        self.assertIn("schedule Aは6時間ごと", rendered)
+        self.assertIn("t=30では両方", rendered)
+        self.assertIn("入力指紋（SHA-256）", rendered)
+        for hidden in (
+            "Tzolk", "Maya", "マヤ", "Calendar Round",
+            "Chol Q", "Haab", "internal_research_context"
+        ):
+            self.assertNotIn(hidden, rendered)
+
+        hidden_change = copy.deepcopy(source)
+        hidden_change["internal_research_context"] = "different internal premise"
+        self.assertEqual(rendered, packet.render_packet(hidden_change))
+
+        visible_change = copy.deepcopy(source)
+        visible_change["provided_information"][1] = "O2: schedule Bは12時間ごとに実行する。"
+        self.assertNotEqual(rendered, packet.render_packet(visible_change))
+
+        a_period, b_period = 6, 10
+        # Full recurrence for synchronized starts is LCM(6,10)=30.
+        from math import gcd
+        recurrence = a_period * b_period // gcd(a_period, b_period)
+        self.assertEqual(recurrence, 30)
+        self.assertEqual(recurrence % a_period, 0)
+        self.assertEqual(recurrence % b_period, 0)
+        self.assertNotEqual(6 % b_period, 0)
+        self.assertNotEqual(10 % a_period, 0)
+
     def test_cli_writes_same_packet_without_private_metadata(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
             output = Path(tmp) / "review-request.md"
