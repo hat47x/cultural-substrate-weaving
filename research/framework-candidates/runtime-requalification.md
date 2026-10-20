@@ -321,3 +321,18 @@ Nāṭyaśāstraの美的rasaと、現代の利用者が抱く一時的な不快
 易経は六十四卦・爻辞・複数層の注釈伝統を持つ。固定されたビット反転の可換性を伝統の唯一の変化規則へ拡張せず、六個のflagに卦名・吉凶を帰属しない。
 
 今回の資料は能力重複とex-anteの検討にとどまり、実測のdiscovery overlapでもruntime降格判断でもない。Registryの `adopted`、`discovery_hypothesis.evidence_state: unreviewed_hypothesis` を維持する。
+
+## 2026-10-20：Maya calendars の複合周期を通常の周期分析と再比較
+
+Tzolk’in / Chol Q’ij、Haab、Calendar Round、Long Countから抽出した「複数周期・部分再来・複合再来・長期座標」というoperationを、6時間周期Aと10時間周期Bの架空scheduler targetで再資格した。
+
+- [正例](worked-examples/tzolkin-coupled-cycle.md)：Aだけ、Bだけ、A/B同時の再来を分け、LCM=30時間の複合位相を対象側の問いへ戻した。
+- [非適用例](worked-examples/tzolkin-non-activation.md)：通常のscheduler/time-series reviewが同じ周期・offset・trendを扱う場合、または対象に周期がない場合は活性化しない。
+- [通常手法との比較](comparisons/tzolkin-vs-ordinary-periodicity-review.md)：recurrence rule、LCM、NISTのseasonality / spectral analysisでde-bound operationをほぼ再現できる。
+- [発見価値の机上検討](comparisons/tzolkin-discovery-value.md)：周期が与件で明示される今回の対象では、普通の運用分析を体系接触前から自然に選べる。
+- [近接比較](comparisons/stems-branches-vs-maya-calendars.md)：Stems/Branchesの制約付き到達状態と、Maya calendar dossierの広いmulti-scale recurrenceを区別する。
+- [体系名を伏せた固定入力](trials/tzolkin-coupled-schedules-target-v1.json)：通常側にも同じ周期情報を与える。独立レビュー回答は未取得。
+
+Smithsonian NMAIのLiving Maya Timeが扱う暦はliving Maya communitiesの文化・実践に結びつく。CSWの6/10/30時間は単なる業務側fixtureであり、260日・365日・18,980日、day sign、儀礼的意味を対応させない。
+
+今回得たのは**強い能力重複とordinary ex-ante selectionの机上上の懸念**であり、測定済みのdiscovery overlapでもruntime降格判断でもない。Registryは `adopted`、`adopted_as: maya-calendars`、`discovery_hypothesis.evidence_state: unreviewed_hypothesis` を維持する。
