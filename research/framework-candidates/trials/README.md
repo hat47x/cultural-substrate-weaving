@@ -147,3 +147,23 @@ python research/framework-candidates/scripts/precontact_review_packet.py \
 独立した回答を実際に取得した場合のみ、既存の回答原文保存と二経路の整合性監査を適用する。入力の準備は盲検成立・効果測定の実施とは異なる。
 
 関連：[通常の状態遷移テストとの比較](../comparisons/yijing-vs-ordinary-state-transition-review.md)、[体系接触前の発見価値](../comparisons/yijing-discovery-value.md)。
+
+## Maya calendars：二つの定期処理の初回レビュー
+
+[6時間周期と10時間周期の構成例](../worked-examples/tzolkin-coupled-cycle.md)を同一条件で使う[固定入力](tzolkin-coupled-schedules-target-v1.json)を追加した。通常側にもA/Bの周期、t=30での再同時実行、因果未確認という情報を同じように与える。
+
+元JSONの `internal_research_context` には研究体系の識別情報があるため、初回レビュー担当へJSONそのものを渡さない。共通生成器で可視項目だけを出力する：
+
+```sh
+python research/framework-candidates/scripts/precontact_review_packet.py \
+  research/framework-candidates/trials/tzolkin-coupled-schedules-target-v1.json \
+  --output /tmp/tzolkin-initial-review.md
+```
+
+初回担当がscheduler設定、LCM、offset、time-series seasonalityを自然に選ぶ場合、その事実を後から弱めない。「片方の周期だけ戻ること」と「複合位相が戻ること」を普通の分析ですでに区別できていれば、Maya calendar接触後の同じ問いを追加発見と数えない。
+
+同じschedule位相が戻っても、release version、queue、traffic等が同一とは限らない。時刻の一致を因果や「完全に同じ状況」の証拠にしない。
+
+回答を実際に取得した場合のみ、既存の `record_trial_response.py` と `audit_trial_pair.py` で原文・入力指紋・段階を記録する。**現時点では独立した初回回答は未取得**。
+
+関連：[通常の周期分析との比較](../comparisons/tzolkin-vs-ordinary-periodicity-review.md)、[接触前の発見価値](../comparisons/tzolkin-discovery-value.md)。
