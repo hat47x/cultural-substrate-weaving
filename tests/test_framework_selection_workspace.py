@@ -285,6 +285,32 @@ class FrameworkCorpusContractTest(unittest.TestCase):
         self.assertEqual(yijing["discovery_hypothesis_state"], "unreviewed_hypothesis")
         # Evidence paths prove documentation completeness, not discovery value.
 
+    def test_tzolkin_requalification_has_complete_paths_without_discovery_verdict(self) -> None:
+        inventory_path = ROOT / "research" / "framework-candidates" / "cognitive-operation-inventory.json"
+        inventory = json.loads(inventory_path.read_text(encoding="utf-8"))
+        row = next(item for item in inventory["candidates"] if item["id"] == "tzolkin")
+        self.assertEqual(row["readiness"], "adopted")
+        self.assertEqual(row["adopted_as"], "maya-calendars")
+        self.assertEqual(row["discovery_hypothesis"]["evidence_state"], "unreviewed_hypothesis")
+        self.assertEqual(len(row["worked_example_paths"]), 1)
+        self.assertEqual(len(row["negative_example_paths"]), 1)
+
+        paths = (
+            row["profile_path"], row["runtime_path"],
+            *row["worked_example_paths"], *row["negative_example_paths"],
+            *row["runtime_requalification"]["ordinary_baseline_comparison_paths"],
+            *row["runtime_requalification"]["discovery_value_comparison_paths"],
+            *row["runtime_requalification"]["near_neighbor_comparison_paths"],
+        )
+        for path in paths:
+            self.assertTrue((ROOT / path).is_file(), path)
+
+        payload = contract.adopted_requalification_payload(ROOT, inventory)
+        tzolkin = next(x for x in payload["candidates"] if x["candidate_id"] == "tzolkin")
+        self.assertEqual(tzolkin["evidence_gaps"], [])
+        self.assertEqual(tzolkin["discovery_hypothesis_state"], "unreviewed_hypothesis")
+        # Documentary completeness is not independent discovery or efficacy.
+
     def test_repository_adopted_requalification_audit_is_non_authoritative(self) -> None:
         inventory_path = ROOT / "research" / "framework-candidates" / "cognitive-operation-inventory.json"
         data = json.loads(inventory_path.read_text(encoding="utf-8"))
