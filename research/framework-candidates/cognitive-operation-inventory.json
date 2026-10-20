@@ -234,6 +234,23 @@
         "separate partial from full recurrence",
         "inspect phase desynchronization across cycles"
       ],
+      "worked_example_paths": [
+        "research/framework-candidates/worked-examples/tzolkin-coupled-cycle.md"
+      ],
+      "negative_example_paths": [
+        "research/framework-candidates/worked-examples/tzolkin-non-activation.md"
+      ],
+      "runtime_requalification": {
+        "ordinary_baseline_comparison_paths": [
+          "research/framework-candidates/comparisons/tzolkin-vs-ordinary-periodicity-review.md"
+        ],
+        "discovery_value_comparison_paths": [
+          "research/framework-candidates/comparisons/tzolkin-discovery-value.md"
+        ],
+        "near_neighbor_comparison_paths": [
+          "research/framework-candidates/comparisons/stems-branches-vs-maya-calendars.md"
+        ]
+      },
       "discovery_hypothesis": {
         "ordinary_entry_tends_to": "Tracks one dominant cycle or one timeline and treats 'it happened again' as a single kind of recurrence.",
         "exposed_cognitive_job": "Keeps several cycles separate and distinguishes partial recurrence (one cycle repeats) from full recurrence of the joint state, including phase desynchronization across time scales.",
