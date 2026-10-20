@@ -167,3 +167,13 @@ python research/framework-candidates/scripts/precontact_review_packet.py \
 回答を実際に取得した場合のみ、既存の `record_trial_response.py` と `audit_trial_pair.py` で原文・入力指紋・段階を記録する。**現時点では独立した初回回答は未取得**。
 
 関連：[通常の周期分析との比較](../comparisons/tzolkin-vs-ordinary-periodicity-review.md)、[接触前の発見価値](../comparisons/tzolkin-discovery-value.md)。
+
+## 実施前の必須確認：初回レビューの独立性
+
+Maya calendars、易経、Rasa、Llull等の固定入力は、**独立した初回回答を収集するための準備**であって、独立性の成立や追加発見を証明するものではない。
+
+初回レビューの担当者には `internal_research_context` を含むJSONを渡さず、`precontact_review_packet.py` が出力した可視項目だけを渡す。既に体系名・期待結果・比較資料に触れた同じ会話／担当AIの回答を、独立した初回回答として記録しない。
+
+原文を変更せず保管し、取得後にのみ `record_trial_response.py` で入力と回答の指紋を記録する。回答取得後の評価では、単なる問いの言い換え、通常分析で既出の問い、対象資料に支持されない推測、実際に新しい検証を促す問いを分ける。第三者の接触履歴が自己申告だけの場合は検証済みの独立性とは記さない。
+
+この手順を満たす回答が得られるまで、Registryの `unreviewed_hypothesis` を実証済みへ変更しない。独立性の確認不能は、その体系の能力がないことの証明でもない。
