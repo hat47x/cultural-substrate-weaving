@@ -101,9 +101,20 @@ Tzolk’in／Chol Q’ijの260日周期、Haabの365日周期、その組合せ�
 
 『ナーティヤ・シャーストラ』に由来するラサとバーヴァの関係では、演者が表すものと、観客が味わう美的経験を同じ感情として扱わない。表現・身体・文脈・受容の関係を見る。八つを中心とする整理と、後代の寂静を加える整理を区別する。
 
+第6・7章の組成を読むときは、次の働きを分けます。各語を埋めるチェック表ではなく、場面のどこを動かすかを見つけるための区別です。
+
+| 語 | 読む働き |
+|---|---|
+| ヴィバーヴァ（vibhāva） | 情緒が具体化する人物・対象・状況などの条件 |
+| アヌバーヴァ（anubhāva） | 言葉、身振り、身体の動きなどの表出。観客自身の反応とは分ける |
+| ヴィヤビチャーリ・バーヴァ（vyabhicāribhāva） | 持続する基調に関わる一時的な情動状態 |
+| スターイ・バーヴァ（sthāyibhāva） | 構成の中で中心となる持続的な情動 |
+
+第6章は材料や調味の組合せから味が成立する比喩で、この関係を説明します。同じ身振りでも、誰に向けられ、どんな場面に置かれ、何と組み合わさるかを変えて読めます。人物の所作、作品内の情動、読者が味わう経験を一つの心理状態へまとめません。
+
 執筆では、人物の悲しみを説明するだけでなく、所作、間、音、場面の配置が、読者にどんな味わいを開くかを考える。読者の反応は設計上の予想であり、実際の受容の確認とは分ける。一般心理学の普遍感情分類や、実在人物の感情診断にしない。
 
-資料：[『ナーティヤ・シャーストラ』第6章・Ghosh英訳と注](https://www.wisdomlib.org/hinduism/book/the-natyashastra/d/doc209700.html)、[第7章](https://www.wisdomlib.org/hinduism/book/the-natyashastra/d/doc209702.html)。受容の研究は[The Alchemy of Rasa in the Performer–Spectator Interaction](https://doi.org/10.1017/S0266464X11000455)も入口になる。
+資料：用語と組成は[公開サンスクリット本文と英訳](https://www.siva.sh/natyashastra/6/1/31-35)でも確認できます。後代の解釈を第6・7章へ一括して戻しません。[『ナーティヤ・シャーストラ』第6章・Ghosh英訳と注](https://www.wisdomlib.org/hinduism/book/the-natyashastra/d/doc209700.html)、[第7章](https://www.wisdomlib.org/hinduism/book/the-natyashastra/d/doc209702.html)。受容の研究は[The Alchemy of Rasa in the Performer–Spectator Interaction](https://doi.org/10.1017/S0266464X11000455)も入口になる。
 
 ## サーンキヤ — 観照と生成、混合と展開
 
