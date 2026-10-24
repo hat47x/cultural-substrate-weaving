@@ -1,3 +1,0 @@
-## Cultural substrate weaving
-
-Use the installed `cultural-substrate-weaving` when reading structure or making discoveries through cultural perspectives is within the author's request or project delegation. Return candidates to existing material and qualitative judgment, then make them usable as questions, comparisons, or compositions. Delegate affinity-diagramming synthesis to a separate skill. Task category alone does not automatically suppress use. Domain knowledge and quality criteria come from project material, instructions, or domain skills. An available external `yomiyasu` may polish settled Japanese prose when appropriate.

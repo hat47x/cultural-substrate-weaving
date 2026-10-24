@@ -1,9 +1,0 @@
-{
-  "schema": "csw.production-skill-set/v1",
-  "skills": [
-    {
-      "id": "cultural-substrate-weaving",
-      "source_manifest": "src/manifest.json"
-    }
-  ]
-}

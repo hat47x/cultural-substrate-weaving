@@ -1,3 +1,0 @@
-- Read this problem set through distinct cultural perspectives and explain shared structure and differences.
-- Infer the essential value from these documents and propose a concrete composition that embodies it.
-- Use framework-native operations to open new questions, then return them to the existing material and make them usable.

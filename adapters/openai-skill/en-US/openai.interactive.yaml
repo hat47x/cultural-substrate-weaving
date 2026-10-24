@@ -1,6 +1,0 @@
-interface:
-  display_name: "Cultural Substrate Weaving — English"
-  short_description: "Read essential structure through cultural perspectives"
-  default_prompt: "Use $cultural-substrate-weaving. Re-read this target through cultural perspectives and turn the result into usable questions, comparisons, or a proposed composition. Use existing material and qualitative judgment. Delegate material synthesis to an available separate affinity-diagramming skill when needed."
-policy:
-  allow_implicit_invocation: true
