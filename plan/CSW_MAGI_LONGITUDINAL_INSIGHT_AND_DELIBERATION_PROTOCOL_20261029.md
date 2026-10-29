@@ -117,7 +117,7 @@ Uに矛盾したEを得たときに、Uを破棄する、条件付きの旧仮�
 ### 7.3 先行研究の位置づけ
 
 - Chan et al., *Formulating or Fixating* (CHI 2024, DOI: https://doi.org/10.1145/3613904.3642653) は、例示の**提示方法**が探索中の固定化や問題理解に関係することを182人の実験で検討した。CSWで「いつ何を想起させるか」を考える参考だが、CSWの記憶に関する因果効果は示していない。
-- Barbot et al., *What kind of questions do creative people ask?* (2023, https://doi.org/10.1016/j.yjoc.2023.100062) は質問の種類と創造性指標の関連を検討した。Uを記憶する効果や縦断的な創造を証明した研究ではない。
+- Acar, Berthiaume & Johnson, *What kind of questions do creative people ask?* (2023, https://doi.org/10.1016/j.yjoc.2023.100062) は質問の種類と創造性指標の関連を検討した。Uを記憶する効果や縦断的な創造を証明した研究ではない。
 - Anderson, R. Bjork & E. Bjork, *Remembering can cause forgetting* (1994, https://doi.org/10.1037/0278-7393.20.5.1063) は**人間の記憶の検索誘導性忘却**に関する実験であり、LLMのメモリ機構で同現象が起きると直接主張する根拠にはしない。
 
 ### 7.4 三者鼎談の検討候補
