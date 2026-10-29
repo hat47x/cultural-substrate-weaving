@@ -26,7 +26,7 @@
 
 ## 将来構想の参考文書
 
-[CSW-MAGI 三者協調・継続改善構想](plan/CSW_MAGI_COLLABORATION_PLAN.md)と[追加議論の論点台帳](plan/CSW_MAGI_OPEN_DESIGN_QUESTIONS.md)に、生成者・批評者・媒介者の協調、三者鼎談、成功事例の本質探究と継続学習の案をまとめています。どちらも**未実装の計画案**です。現在の3 Skillを変更する手順でも、固定の役割分担や記録を利用者に要求する文書でもありません。詳細議論が必要な項目はIssue化を留保しています。
+[CSW-MAGI 三者協調・継続改善構想](plan/CSW_MAGI_COLLABORATION_PLAN.md)、[研究マップ（根拠・前提・検証優先順位）](plan/CSW_MAGI_ASSUMPTION_CONTEXT_AND_EVIDENCE_MAP_20261029.md)、[追加議論の論点台帳](plan/CSW_MAGI_OPEN_DESIGN_QUESTIONS.md)に、生成者・批評者・媒介者の協調、三者鼎談、成功事例の本質探究と継続学習の案をまとめています。どちらも**未実装の計画案**です。現在の3 Skillを変更する手順でも、固定の役割分担や記録を利用者に要求する文書でもありません。詳細議論が必要な項目はIssue化を留保しています。
 
 ## 執筆から学ぶ
 
