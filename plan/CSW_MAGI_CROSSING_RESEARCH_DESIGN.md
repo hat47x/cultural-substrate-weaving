@@ -20,6 +20,10 @@
 - 多者討論の迎合 (ACL 2025): https://aclanthology.org/2025.findings-acl.1141/
 - 討論と投票の寄与の切分け (NeurIPS 2025): https://proceedings.neurips.cc/paper_files/paper/2025/hash/934252acd87f254d5d4672fbde283bd2-Abstract-Conference.html
 
+### 一般認知機構としての拡張仮説（2026-11-01、NOT RUN）
+
+本書のH1〜H6、RC-01〜RC-22と井×六相の既存ケースを置き換えず、[Reframeの最小モデルと識別実験](CSW_COGNITIVE_REFRAMING_RESEARCH_NOTE_20261101.md)に、**源泉の意味／対象への適用／認知制御**の分離、介入前後のFrameDelta、発見経路（H-Entry）と構造的寄与（H-Mechanism）の競合、事後説明を排する比較条件を整理した。これは認知一般に関する仮説の射程を明示するための補助資料であり、当面の検証対象は執筆、実験はNOT RUNである。新しいruntime schema、役割、受入ID、必須の記録票を導入しない。
+
 ## 2. 「何が交差したか」を分ける
 
 まず**体系Aと体系Bの接触**と、**その接触を対象T（作品・原稿）へ返す過程**を区別する。A→T→BとB→T→Aは別の探索になり得るが、順序に効果があるかは未確認である。三つの認知的役割（生成者・批評者・媒介者）と、ここでいうA/B/Tの三項関係を混同しない。
