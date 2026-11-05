@@ -833,3 +833,15 @@ CSWは文化体系との自由な接触を、affinity-synthesisは問いや残�
 三役の**生成者・批評者・媒介者は認知的な役割**であり、TEIのPrincipal、業務OperationのOwner、あるいはCSWの3 Skillへ一対一に対応しない。将来の研究では同じ抽象的手つきが別領域の具体的な問いを開けるかを観察できるが、**領域外の操作の適法性・業務受理・実装済みMethod契約の検証に転用しない**。
 
 初回[固定R-D四セル](CSW_MAGI_RD_FIRST_RUN_INPUTS_20261102.md)は先行する別の小課題であり、その入力や比較条件を変更しない。後段のR-Aでは、文化体系固有の解釈が本文へ生んだ行為・問いを、一般的な関係の類推や資料の再読と区別する。Methodの一般的可搬性、三者協調の効果、実作者の採否、外部領域の実接続はいずれも **NOT RUN**。
+
+### 26.4 SOZA M47の参照Method実装を、CSWの創作効果から切り離して読む（2026-11-05横断実査）
+
+**根拠の位置づけ**：別プロジェクトSOZAの利用者保存資料 `M47_IMPLEMENTATION_REPORT.md` と `COGNITIVE_METHOD_DEFINITION_REALIZATION_APPLICATION_v1.md` を原文で確認した。M47では、KJとcultural-substrate-weavingを**認知Methodの参照パック**として記述し、Goの `cognitivemethod` 実装、Method定義とRealization、Application Recordの境界について、**適合試験65/65 PASSと報告**されている。これは保存された実装報告の確認であり、**このCSWリポジトリでSOZAコードを取得・再実行して試験した結果ではない**。
+
+そこで実装された境界は、`Method Definition ≠ Realization ≠ Method Application Record ≠ Recommendation / Decision / Action / Provider Execution` である。CSW参照Methodは特に、**文化的原典／そこから導いた対応・着想／探索の誘導権限**を同一視しない。実現物はSkillやpromptなどの交換可能な形を取り、Application Recordは**実際の入出力や未解決事項という外部に表れた成果**を参照する。モデルの非公開の思考過程を収集する必要も、形式的なMethod適合性が創作上の意味や作者の受理を保証することもない。
+
+この他プロジェクトの成果によって、§26.2の「方法の説明」「実現物」「適用の記録」を分ける抽象的な考え方に**実装例がある**ことは示せる。しかし、**①その実装が動くこと、②同じ版のCSW Skillをモデルが実際に読んだこと、③文化体系との接触が作品に固有の寄与をもたらしたこと、④著者が採用したこと**はそれぞれ別命題である。M47参照Realizationが、現在のCSW `main`、研究ブランチ、Draft PR #594の**どのSkill本文の内容ハッシュと一致するかは未照合**であり、65/65の成功を現行3 Skillの検証成功として移さない。
+
+**既存比較への具体的な接続**：[R-D固定初回4入力](CSW_MAGI_RD_FIRST_RUN_INPUTS_20261102.md)は工房の設定・条件文を直接渡すもので、CSW SkillやM47のMethodパックの適用を比較する条件ではない。したがって、今後R-Dの散文生成が成功・失敗しても、**CSW Methodの効果**として数えない。文化体系固有の追加寄与を検証するのは、従来どおり[交差研究設計§16–19](CSW_MAGI_CROSSING_RESEARCH_DESIGN.md)の**後続R-A（G対T、必要ならK）**であり、その際に実際に提示したSkill／参考資料の版・範囲、モデル条件、出力本文、著者の選択を区別すればよい。SOZAのMethod schema・Runtime・テスト基盤を、この執筆向けCSWに取り込む必要はない。
+
+**証拠の上限**：他プロジェクトの実装報告に記された限定的な契約適合と、CSW側の研究区別を文書で照合した。**NOT RUN**：SOZAコードの本ターンでの再実行、M47実現物と現行CSW Skillの内容一致試験、独立モデルの創作比較、文化体系の固有効果、実作者による採否。
