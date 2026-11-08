@@ -34,6 +34,8 @@
 
 研究の理論的射程を検討するため、[一般認知機構としてのReframe研究メモ](plan/CSW_COGNITIVE_REFRAMING_RESEARCH_NOTE_20261101.md)も置いています。体系の固有性と認知的な枠組みの変更を、単なる類推や通常の推敲からどう識別するかを整理した**未実行の研究案**です。一般認知への展開は将来の検証課題であり、執筆向け3 Skillの役割や手順は変えません。
 
+執筆以外への応用は、[YI Constellationの開発実践とDSHを使う研究計画](plan/CSW_YIC_PRACTICE_AND_DSH_RESEARCH_20261108.md)で別枠として検討しています。現行3 Skillの用途や必須手順を変えるものではなく、CSW固有の効果とHarnessの効果は未実証です。
+
 ## 研究を検証するときの入口
 
 通常の執筆で実験や記録票を使う必要はありません。CSW-MAGIの初回R-Dを研究として実行する場合、生成モデルへ渡すのは**次のうち該当する1ファイルの本文だけ**です：[C1-A](plan/rd-first-run-inputs-v1/C1-A.txt)／[C1-B](plan/rd-first-run-inputs-v1/C1-B.txt)／[C2-A](plan/rd-first-run-inputs-v1/C2-A.txt)／[C2-B](plan/rd-first-run-inputs-v1/C2-B.txt)。**研究者向けの条件・評価説明**は[初回R-Dの固定入力と監査記録](plan/CSW_MAGI_RD_FIRST_RUN_INPUTS_20261102.md)を参照し、生成側へ文書全体を渡さないでください。**4つのTXTは固定本文・記録済みSHA-256と静的に一致していますが、独立モデルへの実投入と出力評価は NOT RUN**です。
