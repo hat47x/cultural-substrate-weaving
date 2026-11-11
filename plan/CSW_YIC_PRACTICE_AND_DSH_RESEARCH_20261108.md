@@ -159,3 +159,46 @@ YIC固有のPlugin/API/Role/OS用語をCSW本体に持ち込む必要がある�
 - YIC共通Harness： [TAI #168](https://github.com/hat47x/tai-pleroma/issues/168)、[TAI #232](https://github.com/hat47x/tai-pleroma/issues/232)、[TAI #422](https://github.com/hat47x/tai-pleroma/issues/422)。YICの価値適正化におけるCSW比較は既存VA-CSW-01に接続し、別の横断Owner／評価基盤を作らない。
 - TEI： [#2509](https://github.com/hat47x/tei-platform/issues/2509)、[#2515](https://github.com/hat47x/tei-platform/issues/2515)、[#3262](https://github.com/hat47x/tei-platform/issues/3262)、[Draft #3515](https://github.com/hat47x/tei-platform/pull/3515)。H2/H3・Design Context Query・Independent Expectedの既存Ownerに証拠を返す。
 - CSW：現行の3 Skillの開放的な探索と執筆を優先する。[R-D初回固定入力](CSW_MAGI_RD_FIRST_RUN_INPUTS_20261102.md)は変更しない。**今回の確定成果は責務境界と反証可能な比較計画の整理まで。CSW×YIC効果、実DSH適用、Ownerによる採用、Skill改善の実証はNOT RUN。**
+
+---
+
+<!-- csw-sui-shared-harness-selection-20261111 -->
+## 10. 後続研究候補：SUI Canvasと共有Harnessによる双方向の親和探索（2026-11-11）
+
+**状態：研究・設計提案／実SUI UI接続、外部Harness同一Session、CSWの有効性比較はNOT RUN。** 本節は前述M0〜M5・B0/B1/B2・H2/H3に追加する*任意の後続縦切り*であり、固定R-D入力・現行3 Skillの本文・執筆時の自由度・各Productの権限を変更しない。共有Activity／Sessionの識別と資格は[TAI #271](https://github.com/hat47x/tai-pleroma/issues/271)、Harness選定・実配信は[TAI #168](https://github.com/hat47x/tai-pleroma/issues/168)、SUIの意味形成価値は[SUI #3400](https://github.com/hat47x/sui-sensemaking/issues/3400)、許可済みAgent Projectionは[SUI #3368](https://github.com/hat47x/sui-sensemaking/issues/3368)がOwner。
+
+### 10.1 目指す利用体験と責務
+
+- **CSW**：材料から仮の束・表札・異質な関係・新しい問いを発見する方法。文化的体系Skill、親和図法Skill、執筆フローSkillは必要なものだけ使用し、生成前に固定分類・評価点・全工程実行を強制しない。「KJ法に学ぶ」のであり、公式KJ法の完全実装とは主張しない。
+- **SUI**：Card/Island/Edge/Canvasの元Identity・出典・自由な空間配置・未決・人の訂正・保存・Reviewを所有する。CSWがCanvasの正本や人のAccepted Meaningを持たない。既存SUIの未レビューCard/関係は、外部Skillで見られると仮定しない。
+- **外部Harness**：一つの活動の会話・Tool・Skill実利用をつなぎ、複数Product UIから選択Refと指示を受ける。各UI内の独立Agent Loopは不要。実Harnessでの**同じlive Session継続**と**別SessionへのActivity再開**は別の実証結果とする。新中央Session Host・共通権限DBを追加しない。
+- **SEI／TEI／SHO等**：探索の問い・競合仮説をSEIに、構造化候補の限定的な写像をTEIに、文章化候補をSHOに引き渡せる。ただしUI表示、投影、保存、意味受理、実業務Effectは別。CSWの比喩・仮説が外部Productの事実・承認へ自動昇格しない。
+
+### 10.2 双方向Selection：自然言語で選び、人間が補正し、逆も可能
+
+UI選択→自然言語指示に限定しない。**自然言語でCard/Island群を抽出→SUI Canvasに候補表示→人間が囲み・追加・除外・移動で補正→同じHarness Activityへ補正後の選択を戻す**経路も試す。GUIのみ、AIのみ、GUI→AI、AI→GUIの四方式を同じ対象集合・目的で比較する。
+
+設計上は選択要求（意味条件／対象範囲／Source・View revision）、実際に照会できた候補、提案集合、追加・除外という人の補正、最終の選択Refを区別する。例えば `S=(Q-E)∪A`（Q=許可済み照会結果、E=人による除外、A=人による追加）。**提案の選択集合は保存済みMeaningでも、操作資格でもない。** 配置、近接、囲み、関係線、包含、因果、表札、正式レビューは異なる意味を持ち得る。孤立Card・保留・複数所属・別のまとまり案を保持し、元材料を同義の重複Cardへ水増ししない。
+
+動的条件（「今の状況に合う全Card」）と、特定Revisionに固定した候補集合を分離する。表示切替、並べ替え、仮想描画、Source変更、他利用者の訂正、A→B→Aがあれば、古い画面座標や同一ラベルだけで対象を確定しない。AIの自動選択はProviderが返した**許可済み範囲**を超えず、未閲覧部分を「該当0件」と扱わない。人の修正から「この理由で選んだ」と勝手に心理的意味を補完しない。
+
+### 10.3 小さい縦切りと独立Expected（いずれもNOT RUN）
+
+| Case | 合成操作／反例 | 独立Expected |
+| --- | --- | --- |
+| CSG-01 | SUI 6〜12 Cardを2 Islandに仮配置。曖昧なCardと孤立Cardを含む。CSWあり／なしで別の束・表札案を提示 | 元Cardと出典に戻れ、表札は新解釈として示され、空間配置だけで事実・因果・人の採用を確定しない |
+| CSG-02 | プロンプトで選択したCard群の誤検出を人がCanvas上で除外し、漏れを追加。その状態で次のAI指示 | 実際に選択されたID/Revisionと補正差分が反映され、古いAI抽出条件や画面座標だけで上書きされない |
+| CSG-03 | 人が範囲選択した後、AIが別のまとまりを提示。複数の対立案・保留・複数所属あり | 人が試し・戻し・別案比較でき、Preview、保存、Review、Accepted Meaningが区別される |
+| CSG-04 | 同一SessionでSUI→SEI→TEI→SUIへ往復。別Harness Sessionへの再開も対照 | Activity目的・必要なRef・未決を引継ぎ、各ProductはSource/Disclosure/Grantを再評価。実同一SessionとActivity再構成を取り違えない |
+| CSG-05 | 一部Cardが非公開／未レビュー、別Revision、部分取得、外部Tool応答欠落 | ID・件数・関連やエラー差分の秘密漏洩なし。非取得と不存在、候補と確認済みを区別。未観測はunknown |
+| CSG-06 | AIとCanvas補正で完成した束が、元のMaterialの重要な違和感を吸収し過ぎる | 著者／利用者は孤立札・反対案・変更理由へ戻れ、流暢な統合や採用率を品質の代用にしない |
+
+最初の実証は**公開の小さな合成資料、read-only Agent Projection、Previewだけ**に限る。SUIで現に提供されているAgent API/ToolとScopeを確認し、実在しないSelection/Write APIをSkillで創作しない。書込みやCanvasの自動配置は独立の後続Gate。実OS Read-deny、Tool Reply完全受領、送出先観測が未成立なら機微Sourceを外部Harnessへ渡さない。
+
+### 10.4 比較の切り分け・次の判断
+
+方法の軸（B0通常支援／B1一般的発想／B2 CSW）と、操作の軸（U0テキスト・手動列挙／U1 SUI Canvas＋Selection補正）を区別し、必要な組合せだけ同じ材料・Harness・実版・提示時間・Tool資格で試す。最初から全組合せの大規模実験にしない。**Harness H2/H3の輸送・Skill Load評価はさらに別軸**とし、初回四Sessionを新しいUI試験で汚染しない。
+
+結果は候補数・見栄えより、元の材料で見落とした具体的関係、新しい問い、保留の維持、誤分類からの回復、著者の採否、同じ作業への再説明・操作負荷を比較する。Canvasだけが有効、CSWだけが有効、併用効果なし、むしろ誘導が増える、いずれも有効な結果。成果をCSW Skillへ反映するかは既存#593と執筆実作で判断し、YIC独自操作語を本体Skillに常設しない。
+
+**導入順**：①既存SUIのread-only公開投影と選択Identityの棚卸し → ②プロンプト選択と人間補正の合成Preview → ③任意CSW Skill実Load／他方式との比較 → ④SEI/TEIへの限定Handoff → ⑤実ユーザー価値・現在資格・書込みの独立受入。上位Productの正式要件・保存API・新共通Bridge ABIは実証まで未採用。
