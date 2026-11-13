@@ -94,6 +94,10 @@ B0/B1/B2で**実際の問題解決・反例の発見・設計の具体性・採�
 - **比較割付**は事前に固定した独立Session・同一Task・同一Source/Tool許可・同一Model条件を確保する。過去の探索Sessionを後から正式対照へ編入しない。
 - **実効安全性**は許可Read成功だけでなく、禁止Readの**OS/Process上の拒否**、Network／Log／Telemetry等の送出経路、権限の現行性を観測する。合成・非機密の閉域試行を先行させる。未証明の外部送出安全性を前提に私的原稿・Token・秘密SourceをDSHへ渡さない。
 
+**ローカル保存面の限定実測をCSWへ接続（2026-11-13、CSW側試行はNOT RUN）**：[TEI #2515のH6-E6記録](https://github.com/hat47x/tei-platform/issues/2515#issuecomment-6715885926)・[merged Evidence PR #3309](https://github.com/hat47x/tei-platform/pull/3309)では、DSH 0.2.2-rc.1／Windows／headless／read-onlyの**合成Canaryを実Toolで読んだ1 Session**に限り、headless stdoutとローカル永続`session.v4.jsonl.zstd`の`tool/result`に同じCanaryが残った。Sessionファイルは**連結9 zstd frame**で、最初のframeだけ展開すると内容を見落とす。局所調査した`storages`・`cache`・`attachments`では当該Canaryが見つからなかったが、全Sink・別SessionからのRead・削除／保持期間・暗号化・外部Providerへの実送出は**未確認**である。
+
+この観測を、**実際のTool受領／ローカル永続保存／HTTPやModelへの送出／別Readerへの実効Read可否**を分けて扱う根拠とする。Session Log拡張のHTTP設定を無効化しても、ローカル保存の消失を証明したことにはならない。通常のCSW執筆に新たな検査を義務化せず、外部Harnessへ**非公開原稿・著者の作業記録・秘密Source**を渡す場合だけ、利用するHost・Profileで実効のアクセス範囲と保存面を別途確認する。未確認なら公開・合成材料の探索にとどめ、機密を渡して安全性を試さない。これはCSW×DSHの品質・安全性を新たにPASSとするものではなく、G0/G1等の既存Harness/OS Ownerの確認を再利用する。CSW独自のLog Store、削除機構、Runtime Gateを作らない。
+
 **確認済みのDSH基線（2026-11-07、CSWの実証ではない）**：TEI #2509／TAI #168の4 Session資料により、H3-A/Bでは同一5,482 byteのProduct Skill本文と参照7,710 byteのTool Readが発生した。一方H2-Aは既存h2-08 Sessionの再利用で、4件を事前独立割付した比較ではない。**比較適格0/4、CSWを使ったB0/B1/B2試験はNOT RUN**。この限定実績を「CSW×DSHの効果」へ流用しない。
 
 DSH公式のCordis／Profile／Bundle／patch／headless・sdk-minimal構成は**実験環境の候補**であり、CSWの認知方法の保存先ではない。版、Profile実効構成（例：`--dump-config`）、Skill実byte、許可Tool、Host/OS条件を実行時に固定する。専用Cordis Pluginは、Skillテキストと既存Profile／Toolで不足する**反証可能な具体的能力**（実Skill受領の可観測性、試行分離、必要なTool結果の保全など）が明らかになったときだけ比較する。CSWの恒久的なAgent Loopや専用永続Storeを先に作らない。
