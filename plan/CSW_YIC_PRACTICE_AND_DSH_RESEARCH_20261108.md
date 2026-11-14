@@ -98,6 +98,10 @@ B0/B1/B2で**実際の問題解決・反例の発見・設計の具体性・採�
 
 この観測を、**実際のTool受領／ローカル永続保存／HTTPやModelへの送出／別Readerへの実効Read可否**を分けて扱う根拠とする。Session Log拡張のHTTP設定を無効化しても、ローカル保存の消失を証明したことにはならない。通常のCSW執筆に新たな検査を義務化せず、外部Harnessへ**非公開原稿・著者の作業記録・秘密Source**を渡す場合だけ、利用するHost・Profileで実効のアクセス範囲と保存面を別途確認する。未確認なら公開・合成材料の探索にとどめ、機密を渡して安全性を試さない。これはCSW×DSHの品質・安全性を新たにPASSとするものではなく、G0/G1等の既存Harness/OS Ownerの確認を再利用する。CSW独自のLog Store、削除機構、Runtime Gateを作らない。
 
+**成果を渡すことと旧Sessionを見せることを分ける（2026-11-14、後続研究案・NOT RUN）**：[TAI #234の複数UI設計](https://github.com/hat47x/tai-pleroma/issues/234#issuecomment-6856979920) と[Draft #648](https://github.com/hat47x/tai-pleroma/pull/648) は、**現在の資料・成果の開示／Activityの限定引継ぎ／同じNative Sessionの過去履歴の閲覧／複数UIからの同時操作**を別資格として扱う。CSWの具体例では、著者がMAGIとの非公開の試行錯誤から選んだ一場面を編集者へ見せてよい場合でも、当該Sessionの**不採用案、元の非公開原稿、旧Tool結果、著者がまだ明示していない判断**まで見せてよいとは限らない。成果本文の引き渡しは、旧Transcriptの全体開示と同じ行為ではない。
+
+**後続CSW×Harnessの扱い**：現時点のRecipient/Scopeで新しい本文を渡せることと、旧Sessionに残るすべての内容をそのRecipientが読めることを区別する。旧履歴の閲覧資格を実Hostで確かめられない場合、Live Sessionの共有を成功と扱わず、**必要な目的・許可された成果・未決事項だけを選択的に新Sessionへ受け渡す**方式を比較候補とする。複数画面から同じSessionを操作するなら、実Native Turnの帰属・直列化・遅着の確認はさらに別であり、編集者の閲覧許可を著者の採否・書換え権限へ拡張しない。これは**CSWの新しい権限正本・Activity Store・二画面機能の実装要求ではない**。既存のProduct/TAI/Host Ownerの証拠へ帰属させ、通常の執筆と固定R-Dには追加Gateを設けない。複数UIの実接続・許可外閲覧拒否・共同操作・CSWの著者受理は **NOT RUN**。
+
 **確認済みのDSH基線（2026-11-07、CSWの実証ではない）**：TEI #2509／TAI #168の4 Session資料により、H3-A/Bでは同一5,482 byteのProduct Skill本文と参照7,710 byteのTool Readが発生した。一方H2-Aは既存h2-08 Sessionの再利用で、4件を事前独立割付した比較ではない。**比較適格0/4、CSWを使ったB0/B1/B2試験はNOT RUN**。この限定実績を「CSW×DSHの効果」へ流用しない。
 
 DSH公式のCordis／Profile／Bundle／patch／headless・sdk-minimal構成は**実験環境の候補**であり、CSWの認知方法の保存先ではない。版、Profile実効構成（例：`--dump-config`）、Skill実byte、許可Tool、Host/OS条件を実行時に固定する。専用Cordis Pluginは、Skillテキストと既存Profile／Toolで不足する**反証可能な具体的能力**（実Skill受領の可観測性、試行分離、必要なTool結果の保全など）が明らかになったときだけ比較する。CSWの恒久的なAgent Loopや専用永続Storeを先に作らない。
