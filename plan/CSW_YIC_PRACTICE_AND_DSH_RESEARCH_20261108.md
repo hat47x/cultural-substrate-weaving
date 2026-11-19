@@ -1,6 +1,6 @@
 # CSW × YI Constellation：開発実践からの認知方法改善とDSH適用研究
 
-- 状態：**横断研究計画／実験未実施／製品要件・現行Skillへの採用なし**（2026-11-08）。
+- 状態：**横断研究計画／CSW×YICの独立比較は未実施／製品要件・現行Skillへの採用なし**（2026-11-08策定、2026-11-19横断再照合）。
 - 目的：YI Constellation（以下YIC）の開発課題を、CSWが対象を捉え直す力を磨く実践的研究の場として使う。YIC側への貢献とCSW自体の改善を**別の成果**として観測する。
 - 所有境界：CSWは認知方法と文化体系の読解、各YIC Productは仕様・意味・実装・検証、TAIは横断価値とHarness接続、OS/Hostは実効権限を担う。新しい共通Agent Loop、正本Store、Registry、権限機構を設けない。
 - 適用範囲：本資料は**実験者向けの任意の計画**である。公開済みの執筆向け3 Skill、著者による採否、R-D固定4入力、通常の執筆フローは変更しない。CSWをYICの必須開発Gateや第七製品にしない。
@@ -91,7 +91,7 @@ B0/B1/B2で**実際の問題解決・反例の発見・設計の具体性・採�
 
 - **実Skillの読み込み**は「配置した」「検索候補に現れた」「Toolで本文を受領した」「回答で実際に参照した」の観測境界を分ける。最後の段階の内部因果利用は外形から証明しきれない。
 - **Toolの事実**は「実Tool起動」「Requested」「Returned」「Harnessが受領」「Consumerへ提示」「回答の根拠に使った」を区別する。56 Call／55 Resultのような欠落を正常完了の一語で隠さない。
-- **比較割付**は事前に固定した独立Session・同一Task・同一Source/Tool許可・同一Model条件を確保する。過去の探索Sessionを後から正式対照へ編入しない。
+- **比較割付**は事前に固定した独立Session・同一Task・同一Source/Tool許可・同一Model条件を確保する。過去の探索Sessionを後から正式対照へ編入しない。**Session IDが別でも入力文脈が独立とは限らない**。[TEI merged #3745](https://github.com/hat47x/tei-platform/pull/3745)で、DSHの親Turn完了後にforkした子Sessionの初回モデル要求へ親の合成Canaryが継承される限定実測がある。各セルを独立rootで開始することを優先し、Nativeのroot／seed／inherited event／実際にモデルへ渡った事前文脈を可能な範囲で照合する。親IDが空でも独立性の証明にはならない。[TAI merged #649](https://github.com/hat47x/tai-pleroma/pull/649)のSK-02合成82ケース成功は判定器の回帰であり、実隔離やCSW試験の成功ではない。
 - **実効安全性**は許可Read成功だけでなく、禁止Readの**OS/Process上の拒否**、Network／Log／Telemetry等の送出経路、権限の現行性を観測する。合成・非機密の閉域試行を先行させる。未証明の外部送出安全性を前提に私的原稿・Token・秘密SourceをDSHへ渡さない。
 
 **ローカル保存面の限定実測をCSWへ接続（2026-11-13、CSW側試行はNOT RUN）**：[TEI #2515のH6-E6記録](https://github.com/hat47x/tei-platform/issues/2515#issuecomment-6715885926)・[merged Evidence PR #3309](https://github.com/hat47x/tei-platform/pull/3309)では、DSH 0.2.2-rc.1／Windows／headless／read-onlyの**合成Canaryを実Toolで読んだ1 Session**に限り、headless stdoutとローカル永続`session.v4.jsonl.zstd`の`tool/result`に同じCanaryが残った。Sessionファイルは**連結9 zstd frame**で、最初のframeだけ展開すると内容を見落とす。局所調査した`storages`・`cache`・`attachments`では当該Canaryが見つからなかったが、全Sink・別SessionからのRead・削除／保持期間・暗号化・外部Providerへの実送出は**未確認**である。
@@ -105,6 +105,8 @@ B0/B1/B2で**実際の問題解決・反例の発見・設計の具体性・採�
 **確認済みのDSH基線（2026-11-07、CSWの実証ではない）**：TEI #2509／TAI #168の4 Session資料により、H3-A/Bでは同一5,482 byteのProduct Skill本文と参照7,710 byteのTool Readが発生した。一方H2-Aは既存h2-08 Sessionの再利用で、4件を事前独立割付した比較ではない。**比較適格0/4、CSWを使ったB0/B1/B2試験はNOT RUN**。この限定実績を「CSW×DSHの効果」へ流用しない。
 
 DSH公式のCordis／Profile／Bundle／patch／headless・sdk-minimal構成は**実験環境の候補**であり、CSWの認知方法の保存先ではない。版、Profile実効構成（例：`--dump-config`）、Skill実byte、許可Tool、Host/OS条件を実行時に固定する。専用Cordis Pluginは、Skillテキストと既存Profile／Toolで不足する**反証可能な具体的能力**（実Skill受領の可観測性、試行分離、必要なTool結果の保全など）が明らかになったときだけ比較する。CSWの恒久的なAgent Loopや専用永続Storeを先に作らない。
+
+**ハーネス選択はベンダー中立とする（2026-11-19補足）**：DSHを技術的に先行させるのは、OSSとしての実装検査のしやすさとTEIのPlugin構想との親和性による。YICの利用者向け契約・Skill・成果の採否は、DSHのProfile／Native Session形式に依存させない。[TAI merged #730](https://github.com/hat47x/tai-pleroma/pull/730)ではCodex非対話JSONLの最小Adapterと合成契約テストが加わったが、実Codex起動・TEI MCP往復・SkillやSession再開の対応は未実証または未対応である。DSHとCodexを同等の**実能力が実証済み**とせず、利用可能なCapabilityと不支持時の縮退を明示して比較する。
 
 ## 5. CSW自身へ何を持ち帰るか
 
@@ -139,7 +141,7 @@ YIC固有のPlugin/API/Role/OS用語をCSW本体に持ち込む必要がある�
 
 保存されない候補、検索されない候補、提示されない候補、採用されない候補は異なる。不完全な観測から「異論なし」「有益な候補なし」「忘れた」を導かない。同一Sourceと同一LLMの三役出力を独立Evidenceの三票として加算しない。課題ごとの対象集合・可視性・新旧Revisionが変われば、成立範囲を再照合する。非公開原稿・個人情報・Secret・raw Tool応答はPublic GitHubへ置かず、公開できる抽象化された知見と実記録を分離する。
 
-## 7. 実施順序と小さな受入条件（全て新規実験はNOT RUN）
+## 7. 実施順序と小さな受入条件（CSW×YICの新規実験はNOT RUN）
 
 | 段階 | 最小の作業 | 次へ進める条件／不成立時 |
 | --- | --- | --- |
@@ -167,3 +169,21 @@ YIC固有のPlugin/API/Role/OS用語をCSW本体に持ち込む必要がある�
 - YIC共通Harness： [TAI #168](https://github.com/hat47x/tai-pleroma/issues/168)、[TAI #232](https://github.com/hat47x/tai-pleroma/issues/232)、[TAI #422](https://github.com/hat47x/tai-pleroma/issues/422)。YICの価値適正化におけるCSW比較は既存VA-CSW-01に接続し、別の横断Owner／評価基盤を作らない。
 - TEI： [#2509](https://github.com/hat47x/tei-platform/issues/2509)、[#2515](https://github.com/hat47x/tei-platform/issues/2515)、[#3262](https://github.com/hat47x/tei-platform/issues/3262)、[Draft #3515](https://github.com/hat47x/tei-platform/pull/3515)。H2/H3・Design Context Query・Independent Expectedの既存Ownerに証拠を返す。
 - CSW：現行の3 Skillの開放的な探索と執筆を優先する。[R-D初回固定入力](CSW_MAGI_RD_FIRST_RUN_INPUTS_20261102.md)は変更しない。**今回の確定成果は責務境界と反証可能な比較計画の整理まで。CSW×YIC効果、実DSH適用、Ownerによる採用、Skill改善の実証はNOT RUN。**
+
+
+## 10. 11月19日の横断再照合：実際の対象への往復を中心にする
+
+**研究上の更新であり、CSWの実使用・独立評価・YICの正式受理はNOT RUN。** [TAI merged #648](https://github.com/hat47x/tai-pleroma/pull/648)が整理した、Activityの引継ぎ、Native Sessionの再接続・履歴閲覧、Product Operationの再開は別の仕事である。CSWでも「前の問いを引き継ぐ」「同じ会話を再開する」「元資料を実際に読み直す」「生成案を現行の成果物に適用する」を同じ成功と数えない。TEIのセルフビルドと[TAI #168](https://github.com/hat47x/tai-pleroma/issues/168)の隔離された外部Harness比較は引き続き独立した優先作業であり、CSWはどちらにも新しい必須Gateを追加しない。
+
+### 一つの対象を用いた最小の往復（次の比較候補）
+
+1. **対象へ戻る**：公開・合成TEIの一つのSubjectとそのSource Revisionを固定し、現在のread-only Reader／CLIが本当に読んだものを確認する。画面上の選択文字列や古い会話の記述だけで、実対象が存在し続けると決めない。[TEI #4597](https://github.com/hat47x/tei-platform/pull/4597)のPin負例では、Workspace A→B→Aに戻ってもCatalog・Model Revision・World／Source Index Fingerprintが異なれば再Pinが必要である。これはPinの保守的な局所検査であり、Source意味の完全同一性や現在Grantの証明ではない。
+2. **問いを育てる**：既存のB0／B1／B2で、一件の実際の設計上の問いから新たな関係・代案・負例が得られるかを比較する。文化体系の名前や候補数ではなく、元の契約に戻ったとき新しく判別できることを重視する。旧v39／DGの負結果を保持し、文化体系固有の増分を先取りしない。
+3. **選択的に届ける**：CSWの候補や未決を別のUI・編集者・Harnessへ渡す場合、対象の現在のScope・開示資格と、渡す成果本文の範囲をその時点で確認する。旧Native Sessionの全Transcript・不採用案・Tool結果の閲覧資格まで拡大しない。受け渡し先が現行Sourceを自分で読み直したことと、引用・要約したPayloadだけを受領したことは別の観測である。
+4. **結果から学ぶ**：修正の提案、Ownerの採用、実際のファイル差分、実Providerの結果、執筆者の選択を別々に記録する。著者がAI案を採用しても元案の由来は変わらないが、著者自身による実質的な改稿まで元AIの出力と同一視しない。[CSW merged #600](https://github.com/hat47x/cultural-substrate-weaving/pull/600)のMAGI研究で明確になった区別を用い、新しい帰属SchemaをCSW本体へ課さない。
+
+### SUI Canvasの候補は実装決定ではない
+
+[SUI #3400](https://github.com/hat47x/sui-sensemaking/issues/3400)の価値研究と、[CSW PR #599](https://github.com/hat47x/cultural-substrate-weaving/pull/599)の**未マージで閉じた提案**は、AIが提示する候補と人間の配置・保留・訂正を往復させる構想の参照先である。現時点でCSWの標準経路や既存計画の正式な次工程として扱わない。まずSUI自身のread-only投影・選択の同一性・元材料への復帰が確認できた範囲で、B0/B1/B2（認知方法）とCanvas有無（UI）の**別の差**を探索する。Native Session共有と実書込みはさらに後続の別資格とし、CSWの比較や初回DSH四Slotの前提にしない。
+
+**本節を追加したことによって実証済みになったのは何もない。** 次の情報増分は研究票を増やすことではなく、一つの公開対象での実Source読取、実際の生成と回答全文、独立した比較・採否、または既存G0/G1/G2の実隔離・送出・Replyの結果から得る。実行の記録がない項目はNOT RUNのまま保持する。
