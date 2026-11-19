@@ -78,6 +78,10 @@ CSWにProductの仕様・認可・実行を肩代わりさせない。TEIの共�
 - **観測**：三条件それぞれの実際の入力、読めたSource／Skillの本文、出力全文、未解決の問い、かかった時間・費用、回答に含まれる誤認を残す。DSHを使う場合も、同じrootからforkした別Sessionを独立反復に数えない。現行の実隔離資格がなければ、公開・合成資料を用いる同一環境内の比較に限定し、DSHのH2/H3有効性を主張しない。
 - **生成後に独立して読む**：TEI #5669で既に確認済みの性質を言い直しただけか、それまで未検証の境界を**既存のSource／Operation／テストで確かめられる問い**へ変えたか。正規のReview／Accept／Source保存・再読込と、単なるPreview／旧候補の失効を混同していないか。新しいWriter・Host・Registryの追加を当然視していないか。良い問いでも、Ownerにとっての採用価値と実装結果は後で別に確認する。
 
+**評価者側で確認した実コードの継ぎ目（2026-11-19、CX試行は未実施）**：TEI `main` の照合時点 `b11f8e45f14990bcc7f619579a3cb2135bc5abe0` で、[Wails `StudioBridge`](https://github.com/hat47x/tei-platform/blob/b11f8e45f14990bcc7f619579a3cb2135bc5abe0/cmd/tei-studio/main.go#L27-L106) は `CatalogWorkspace`／`InspectSubject` のほか `ExecuteCommand` と `ExecuteCommandWithReferenceStore` を公開している。しかし後者の参照ストアは**呼出し中だけのメモリ上の業務効果**で、設計Sourceの保存手段ではない。同じBridgeのSHO文書入口も、SHO側CLIの結果を表示するもので、Studio自身の編集・保存を実装するものではない。[Host `ReadOnly`](https://github.com/hat47x/tei-platform/blob/b11f8e45f14990bcc7f619579a3cb2135bc5abe0/internal/studiohost/readonly.go#L157-L213) はWorkspace許可一覧からRootを選び、Inspectorのtyped Serviceを呼ぶが、現在のSource Authoring Writerの資格をこの型や名前から推定できない。
+
+ここでの**独立Expectedの追加ではなく、既存Sourceに戻るための確認点**は、「既存Commandを呼べる」→「モデルSourceを書き換えられる」という短絡を候補回答がしていないか、Reference側のShared Acceptance実績を**製品Wails内のSource Writer接続済み**と誤読していないか、という二点に絞る。実際に有効なSource Writerと一意のSource出現・原byte／Revision・現在Grantが既存Operationsで束縛できるかはTEI #4583／[製品優先計画](https://github.com/hat47x/tei-platform/blob/main/plan/NOW.md)のOwner判断へ返す。CX0/CX1/CX2の生成側へこの評価者用文面を渡さず、固定した同一Source版から共通課題文だけを配信する。候補の優劣は実出力と独立評価が得られるまで判断しない。
+
 **出口**：CX2に追加価値が見えなければ、その結果を残し、Skill改訂を行わない。発見があれば、TEIの既存[#4583](https://github.com/hat47x/tei-platform/issues/4583)のOwnerに**一つの検証可能な問い**として返す。CSW側は、その問いが文化体系のどの意味・関係・操作から生じたかを遡れる場合に限り、[#593](https://github.com/hat47x/cultural-substrate-weaving/issues/593)で執筆への移転可能性を検討する。実際の三条件生成、独立評価、Owner採否はまだ行っていない。TEIの「受注の一変更」初回利用者検収やStudioの製品保存を、この研究で止めない。
 
 ### 初期の判別カード（合成・未実行）
