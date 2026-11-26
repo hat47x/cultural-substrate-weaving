@@ -70,7 +70,7 @@ CSWにProductの仕様・認可・実行を肩代わりさせない。TEIの共�
 
 最初のCX比較は、抽象的なPlugin全体ではなく、**すでに製品画面で操作できた一つの候補を、実際の変更として保存するには何が必要か**に絞る。TEI [merged #5669](https://github.com/hat47x/tei-platform/pull/5669)では、生成したWindows Wailsの実WebView2で、`studio.inspection_response.snapshot_fingerprint` の必須指定について、Host Catalogからの選択→Inspect→候補ボタンの実クリック→型付きJSONの表示→Workspace切替後の候補失効を一つの試行で確認した。一方、CodeMirrorはread-onlyで、Source byteは不変、製品内のAccept／Save UIはない。これは**候補を操作できたという実証**であって、製品Studioからの書込やセルフビルドの完了ではない。
 
-**実行前に固定する材料**：TEIのその時点の対象コミット、`cmd/tei-studio/test/desktop_webview_smoke.py`の該当箇所、[製品の優先計画](https://github.com/hat47x/tei-platform/blob/main/plan/NOW.md)のStudio段落、対象と二つの公開・合成Workspaceの版。TEIの既存試験が何を確かめたかは、生成者にも全条件共通で渡す。一方、評価者が事前に選んだ独立Expected・未公表の負例・他条件の回答は渡さない。実行時に新しいmainを使う場合は、対象と証拠を改めて固定し、古いCIの成功を新しい版の成功に読み替えない。
+**実行前に固定する材料**：初回は11月19日の照合版 `b11f8e45f14990bcc7f619579a3cb2135bc5abe0` を用いる。同版の `cmd/tei-studio/test/desktop_webview_smoke.py` の該当箇所、[製品の優先計画](https://github.com/hat47x/tei-platform/blob/b11f8e45f14990bcc7f619579a3cb2135bc5abe0/plan/NOW.md) のStudio段落、対象と二つの公開・合成Workspaceの版をそろえる。既存試験で確認したことは三条件の生成側にも渡すが、評価者が事前に選んだ独立Expected・未公表の負例・他条件の回答・後続の実装や試験結果は渡さない。検索や会話履歴を通じて後続の資料を読んだかどうかも確認し、不明なら未確認と記録する。新しいmainを対象にする場合は別の比較として、その版の資料と未解決の問いを改めて定める。古いCIの成功を新しい版の成功に読み替えない。
 
 **三条件に共通する問い**：「この未審査候補を、利用者が正式に保存した変更として扱えるようにするには、現状の実装と試験に照らして何を確かめる必要があるか。今ある説明の言い換えではなく、次に実行すると区別がつく問いや試験を提案してください。今回はソースコードを変更しません。」
 
@@ -81,6 +81,10 @@ CSWにProductの仕様・認可・実行を肩代わりさせない。TEIの共�
 **評価者側で確認した実コードの継ぎ目（2026-11-19、CX試行は未実施）**：TEI `main` の照合時点 `b11f8e45f14990bcc7f619579a3cb2135bc5abe0` で、[Wails `StudioBridge`](https://github.com/hat47x/tei-platform/blob/b11f8e45f14990bcc7f619579a3cb2135bc5abe0/cmd/tei-studio/main.go#L27-L106) は `CatalogWorkspace`／`InspectSubject` のほか `ExecuteCommand` と `ExecuteCommandWithReferenceStore` を公開している。しかし後者の参照ストアは**呼出し中だけのメモリ上の業務効果**で、設計Sourceの保存手段ではない。同じBridgeのSHO文書入口も、SHO側CLIの結果を表示するもので、Studio自身の編集・保存を実装するものではない。[Host `ReadOnly`](https://github.com/hat47x/tei-platform/blob/b11f8e45f14990bcc7f619579a3cb2135bc5abe0/internal/studiohost/readonly.go#L157-L213) はWorkspace許可一覧からRootを選び、Inspectorのtyped Serviceを呼ぶが、現在のSource Authoring Writerの資格をこの型や名前から推定できない。
 
 ここでの**独立Expectedの追加ではなく、既存Sourceに戻るための確認点**は、「既存Commandを呼べる」→「モデルSourceを書き換えられる」という短絡を候補回答がしていないか、Reference側のShared Acceptance実績を**製品Wails内のSource Writer接続済み**と誤読していないか、という二点に絞る。実際に有効なSource Writerと一意のSource出現・原byte／Revision・現在Grantが既存Operationsで束縛できるかはTEI #4583／[製品優先計画](https://github.com/hat47x/tei-platform/blob/main/plan/NOW.md)のOwner判断へ返す。CX0/CX1/CX2の生成側へこの評価者用文面を渡さず、固定した同一Source版から共通課題文だけを配信する。候補の優劣は実出力と独立評価が得られるまで判断しない。
+
+**既知の解決策と新しい着想の区別（2026-11-26）**：上記の固定版の優先計画にも、Source原byte・出現位置の再確認、Writer Grant、正式なAcceptと結果照会が必要だと書かれている。これらを回答に含めただけでは新しい発見とは数えない。後続のTEI [#5734](https://github.com/hat47x/tei-platform/pull/5734) は候補の根拠と未確認事項の表示、[#5747](https://github.com/hat47x/tei-platform/pull/5747) は原文を変えないSource移動後の実Host再読込、[#5749](https://github.com/hat47x/tei-platform/pull/5749) と [#5764](https://github.com/hat47x/tei-platform/pull/5764) は旧指紋の拒否と現在版の再Inspectを確認した。いずれも製品Studioの正式なSource保存を実証したものではない。これらは初回の生成側に渡す資料ではなく、評価者が過去の課題を振り返るための資料とする。
+
+評価では、共通資料に書かれた解決策の理解、既知の関係から導いた新しい問い、既存資料にない具体的な検証案を区別する。後続のTEIで同じ案が実現していても、それだけでCSWが独自に発見したとは言えない。生成時に読んだ資料と回答の記録を照合し、CX0/CX1にも同じ着想が現れるかを調べる。初回比較はまだ実施していない。
 
 **出口**：CX2に追加価値が見えなければ、その結果を残し、Skill改訂を行わない。発見があれば、TEIの既存[#4583](https://github.com/hat47x/tei-platform/issues/4583)のOwnerに**一つの検証可能な問い**として返す。CSW側は、その問いが文化体系のどの意味・関係・操作から生じたかを遡れる場合に限り、[#593](https://github.com/hat47x/cultural-substrate-weaving/issues/593)で執筆への移転可能性を検討する。実際の三条件生成、独立評価、Owner採否はまだ行っていない。TEIの「受注の一変更」初回利用者検収やStudioの製品保存を、この研究で止めない。
 
